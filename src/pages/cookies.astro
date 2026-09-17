@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, consentCategories } from '../lib/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const necessary = [
+  { key: 'lp:region', purpose: 'Remembers which edition (India, Europe, United States) you chose so the front page can offer it again.', lifetime: 'Until you clear browser data' },
+  { key: 'lp:locale', purpose: 'The currency you picked in a calculator.', lifetime: 'Until you clear browser data' },
+  { key: 'lp:progress', purpose: 'Lessons you have finished and quiz scores, so you can pick up where you left off. Stays on this device unless you copy it with a sync code.', lifetime: 'Until you clear browser data' },
+  { key: 'lp:consent', purpose: 'Your answer in the Privacy choices dialog, so we do not ask again. Stores only your choices and the date.', lifetime: 'Until you clear browser data or change your choice' },
+  { key: 'lp:agegate', purpose: 'On the sign-in page only: remembers for this browser session that you answered the age question, so it is not asked twice.', lifetime: 'Closes with the browser tab' },
+];
+---
+
+<BaseLayout
+  title="Cookies and storage — LaunchPad"
+  description="LaunchPad sets no cookies. Here is exactly what your browser stores, why, and how to change it."
+  path=""
+>
+  <section class="section">
+    <div class="container column prose">
+      <span class="eyebrow">Legal</span>
+      <h1>Cookies and storage</h1>
+      <p class="lede">
+        LaunchPad sets no cookies. It uses your browser's local storage for a handful of
+        preferences that make the site work. Nothing in it identifies you and none of it is sent
+        to us.
+      </p>
+      <p class="updated">Last updated {site.legalUpdated}.</p>
+
+      <h2>What is stored, and why</h2>
+      <p>
+        These entries are strictly necessary for features you asked for (remembering a choice you
+        made, keeping your own progress), so no consent banner is needed for them. You can see
+        this list any time from <strong>Privacy choices</strong> in the footer.
+      </p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th scope="col">Name</th><th scope="col">Purpose</th><th scope="col">Lifetime</th></tr>
+          </thead>
+          <tbody>
+            {necessary.map((row) => (
+              <tr>
+                <th scope="row"><code>{row.key}</code></th>
+                <td>{row.purpose}</td>
+                <td>{row.lifetime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Optional things that need your say</h2>
+      <p>
+        Two optional categories exist in the site's design. Neither is switched on today. If one
+        is ever enabled, a small banner will ask before anything runs, "Reject all" will be as
+        easy as "Accept all", and this page will describe exactly what changes.
+      </p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th scope="col">Category</th><th scope="col">What it would do</th><th scope="col">Status</th></tr>
+          </thead>
+          <tbody>
+            {consentCategories.map((c) => (
+              <tr>
+                <th scope="row">{c.label}</th>
+                <td>{c.description}</td>
+                <td>{c.active ? 'Available — asks first' : 'Not in use'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Changing or clearing it</h2>
+      <ul>
+        <li>Open <strong>Privacy choices</strong> in the footer to review everything and change any optional choice.</li>
+        <li>Clearing your browser's site data for this site removes all of the above.</li>
+        <li>If your browser sends the <strong>Global Privacy Control</strong> signal, we treat it as "reject all" for optional categories automatically.</li>
+      </ul>
+
+      <h2>Embedded content</h2>
+      <p>
+        Videos from other sites are shown as a still image with a play button. Nothing is
+        requested from the other site until you tap play, and only if you have allowed that
+        category. Once a video plays, the other site (for example YouTube) may set its own cookies
+        under its own policy.
+      </p>
+
+      <p>
+        Questions: <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>. See also
+        <a href={`${base}/privacy`}>Privacy</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

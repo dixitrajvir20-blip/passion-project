@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+---
+
+<BaseLayout
+  title="Accessibility — LaunchPad"
+  description="LaunchPad aims for WCAG 2.2 AA. What we do, what we know is not finished, and how to tell us about a barrier."
+  path=""
+>
+  <section class="section">
+    <div class="container column prose">
+      <span class="eyebrow">Legal</span>
+      <h1>Accessibility</h1>
+      <p class="lede">
+        LaunchPad is meant to work for everyone, on any phone, with a keyboard, a screen reader,
+        larger text or no motion. This page says how far along that is and how to tell us when
+        something gets in the way.
+      </p>
+      <p class="updated">Last updated {site.legalUpdated}.</p>
+
+      <h2>Our target</h2>
+      <p>
+        We aim to meet the <a href="https://www.w3.org/TR/WCAG22/" rel="noopener noreferrer">Web Content Accessibility Guidelines (WCAG) 2.2</a>
+        at level AA on every page. Until an independent audit has been done, the honest status is
+        <strong>partially conformant</strong>: the parts we have checked pass, and we check more
+        with every release.
+      </p>
+
+      <h2>What we do</h2>
+      <ul>
+        <li>Body text is set in Atkinson Hyperlegible Next, a typeface designed for low-vision readers, at 17px or larger, and the layout survives 200% zoom.</li>
+        <li>Every colour pair used for text meets at least 4.5:1 contrast in both light and dark mode; the figures are published in our design documentation.</li>
+        <li>Everything works with a keyboard alone, with a visible focus ring, and the sticky header never hides the focused element.</li>
+        <li>Buttons and links have at least a 44×44 pixel target. Nothing is conveyed by colour alone.</li>
+        <li>Animations are short, optional and switched off when your system asks for reduced motion.</li>
+        <li>Calculators explain their results in a sentence, not only in a number, and every input has a visible label.</li>
+        <li>Automated checks (axe-core) run on every page, on phone and desktop sizes, before any change is published, and the build fails on serious issues.</li>
+      </ul>
+
+      <h2>Known limitations</h2>
+      <ul>
+        <li>Lessons are still being written; interactive lessons and charts will ship with text alternatives and data tables, and this list will name anything that falls short.</li>
+        <li>Content is in English only for now. Hindi is planned for the India edition.</li>
+      </ul>
+
+      <h2>Tell us about a barrier</h2>
+      <p>
+        If something does not work for you, email
+        <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> with the page address and
+        what happened. We aim to reply within five days and to fix real barriers in the next
+        release.
+      </p>
+
+      <h2>How this was assessed</h2>
+      <p>
+        Self-assessment against WCAG 2.2 AA using automated testing (axe-core via Playwright at
+        360px and 1280px), manual keyboard and screen-reader checks, and contrast calculations
+        for every token in the design system. Technologies relied on: HTML, CSS, JavaScript and
+        WAI-ARIA.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

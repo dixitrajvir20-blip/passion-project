@@ -1,0 +1,69 @@
+/* Sign-in flow. One thing per screen, one primary action, calm. */
+
+.signin { max-width: 440px; margin: 0 auto; }
+.signin-card {
+  background: var(--bg-2);
+  border-radius: var(--radius-l);
+  padding: var(--space-6);
+}
+@media (min-width: 640px) { .signin-card { padding: var(--space-7); } }
+.signin-card h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-h3);
+}
+.signin-card p { font-size: var(--text-md); }
+.signin-card .field { margin-bottom: var(--space-4); }
+.signin-card .field > label { font-size: var(--text-md); }
+.signin-card input, .signin-card select { background: var(--bg); }
+.signin-actions { display: grid; gap: var(--space-2); margin-top: var(--space-5); }
+.signin-actions .btn { width: 100%; }
+.signin-alt { text-align: center; margin-top: var(--space-4); }
+.signin-alt .btn-link::after { content: none; }
+.signin-status { margin: var(--space-3) 0 0; font-size: var(--text-sm); }
+.signin-status:empty { margin: 0; }
+.signin-card h2:focus-visible { outline-offset: 6px; }
+
+.code-input {
+  font-family: var(--font-display);
+  font-size: var(--text-result);
+  letter-spacing: 0.35em;
+  text-align: center;
+  font-weight: 600;
+  padding-left: 0.35em;
+}
+
+.preview-note {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  background: color-mix(in srgb, var(--gold) 22%, var(--bg));
+  color: var(--ink);
+  border-radius: var(--radius-m);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-5);
+}
+.preview-note strong { white-space: nowrap; }
+.preview-code {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  letter-spacing: 0.2em;
+  color: var(--ink);
+}
+
+.email-echo { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+
+.sync-code {
+  display: block;
+  width: 100%;
+  min-height: 96px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  resize: vertical;
+}
+.merge-counts { display: flex; gap: var(--space-5); margin: var(--space-4) 0; }
+.merge-counts div { flex: 1; }
+.merge-counts .figure { font-size: var(--text-result); margin-bottom: var(--space-1); }
+.merge-counts .hint { margin: 0; }
