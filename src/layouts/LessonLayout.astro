@@ -15,6 +15,7 @@ import MarginExplorer from '../islands/MarginExplorer.tsx';
 import SplitExplorer from '../islands/SplitExplorer.tsx';
 import LessonScript from '../components/lesson/LessonScript.astro';
 import { getRegion } from '../lib/regions';
+import { site } from '../lib/site';
 import { lessonPath, type Lesson } from '../lib/lessons';
 import { marginChoices, marginSteps, splitChoices, splitSteps, type Choice, type Step } from '../lib/lesson-math';
 import '../styles/lesson.css';
@@ -38,6 +39,29 @@ const terms = await Promise.all(
     return entry;
   }),
 );
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const year = d.lastReviewed.getFullYear();
+// Search engines and reuse tools read the licence from here; people read it at the foot of the page.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: d.title,
+  description: d.summary,
+  url: pageUrl,
+  inLanguage: d.lang,
+  isAccessibleForFree: true,
+  learningResourceType: 'lesson',
+  educationalLevel: d.level,
+  timeRequired: `PT${d.readingMinutes}M`,
+  dateModified: d.lastReviewed.toISOString().slice(0, 10),
+  author: { '@type': 'Person', name: d.author.name },
+  publisher: { '@type': 'Organization', name: site.name },
+  copyrightHolder: { '@type': 'Person', name: site.owner },
+  copyrightYear: year,
+  license: site.contentLicence.url,
+  audience: { '@type': 'EducationalAudience', educationalRole: 'student', audienceType: 'ages 15-21' },
+};
 
 const reviewed = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(d.lastReviewed);
 
@@ -70,6 +94,11 @@ if (d.practice?.kind === 'split') {
   regionSub="learn"
   path="learn"
 >
+  <Fragment slot="head">
+    <link rel="license" href={site.contentLicence.url} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
+  </Fragment>
+
   <article class="lesson" data-lesson-id={lesson.id} data-locale={region.locale}>
     <header class="lesson-head">
       <div class="container">
@@ -237,6 +266,21 @@ if (d.practice?.kind === 'split') {
               ))}
             </ul>
             <p>For learning only. Not financial, legal, or tax advice. <a href={`${base}/disclaimer`}>Why we say that</a>.</p>
+
+            <h2 id="reuse">Copyright and reuse</h2>
+            <p>
+              © {year} {site.owner} and LaunchPad contributors. You may copy, share and adapt this lesson
+              for non-commercial use, such as a class, a club or a handout, as long as you credit it,
+              link back, and share your version under the same licence:{' '}
+              <a href={site.contentLicence.url} rel="license noopener noreferrer">{site.contentLicence.fullName} ({site.contentLicence.name})</a>.
+            </p>
+            <p>
+              To credit it: “{d.title}”, {site.name}, <span class="cite-url">{pageUrl}</span>.
+            </p>
+            <p>
+              The {site.name} name and logo are not covered by that licence. Documents we link to
+              belong to their publishers, and are linked rather than copied for that reason.
+            </p>
           </footer>
 
           <div class="lesson-next">

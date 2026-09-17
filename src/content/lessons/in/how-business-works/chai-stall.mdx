@@ -18,7 +18,7 @@ prediction:
     - text: "About 130 cups"
       why: "That is ₹2,000 divided by the ₹15 price. But ₹8 of every ₹15 goes straight back into tea, milk and the cup, so only ₹7 is left to pay the rent."
     - text: "About 290 cups"
-      why: "₹7 is kept from each cup, and ₹2,000 ÷ ₹7 is 286. Everything before that cup pays the fixed costs. Profit starts after it."
+      why: "₹7 is kept from each cup, and ₹2,000 ÷ ₹7 rounds up to 286. Every cup before that pays the fixed costs. Profit starts after it."
     - text: "It profits from the first cup"
       why: "Each cup does leave ₹7 behind, but the rent is owed whether or not anyone turns up. Until the month's fixed costs are covered, that ₹7 is not profit yet."
   answer: 1
@@ -69,18 +69,18 @@ quiz:
       - text: "How many customers came back?"
         why: "Useful for next month, but it says nothing about whether this month's sales covered this month's costs."
       - text: "What does he keep per cup, and what are his fixed costs?"
-        why: "Cups sold × what he keeps per cup, compared with fixed costs, is the whole answer. 300 cups at ₹7 is ₹2,100, which only just clears ₹2,000."
+        why: "Cups sold × what he keeps per cup, compared with fixed costs, is the whole answer. At ₹7 a cup, 300 cups bring in ₹2,100, which only just clears ₹2,000 of fixed costs."
       - text: "What is his price?"
         why: "Price alone says nothing. ₹15 is a good price if a cup costs ₹8 to make and a terrible one if it costs ₹14."
     answer: 1
-  - q: "A stall is profitable this month, but most regulars pay at the end of the week. On Wednesday the milk supplier wants cash. What is the problem called?"
+  - q: "A stall is profitable this month, but most regulars pay at the end of the week. On Wednesday the milk supplier wants cash and the box is empty. What should the owner look at first?"
     options:
-      - text: "Low margin"
+      - text: "The margin on each cup"
         why: "The margin is fine: each cup still leaves money behind. The trouble is when that money arrives."
-      - text: "High fixed costs"
+      - text: "The monthly fixed costs"
         why: "The rent has not changed. What changed is that sales have been made but not yet paid for."
-      - text: "Cash flow"
-        why: "Money earned but not yet received cannot pay a supplier. Profit is about the month; cash flow is about Wednesday."
+      - text: "When money comes in, against when bills fall due"
+        why: "This is cash flow. Money earned but not yet received cannot pay a supplier. Profit is about the month; cash flow is about Wednesday."
     answer: 2
 
 transfer:
@@ -88,15 +88,15 @@ transfer:
   - "When you price something of your own, even tuition or a resold phone case. Start from what one unit costs you."
   - "When a regular asks to pay you later. That is fine, as long as you can still buy tomorrow's supplies."
 
-glossary: [margin, variable-cost, fixed-cost, break-even, udhaar, cash-flow, upi]
+glossary: [margin, variable-cost, fixed-cost, break-even, udhaar, cash-flow, working-capital, upi]
 tool: break-even
 
 sources:
-  - title: "PM SVANidhi: working-capital loans for street vendors"
-    url: "https://pmsvanidhi.mohua.gov.in/"
-    publisher: "Ministry of Housing and Urban Affairs, Government of India"
-  - title: "FoSCoS: registration for petty food businesses"
-    url: "https://foscos.fssai.gov.in/"
+  - title: "PM SVANidhi FAQs: street vendors, vending certificates and working capital (30 May 2026)"
+    url: "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/may/doc2026530879701.pdf"
+    publisher: "Press Information Bureau, Government of India"
+  - title: "FAQs on FSSAI licence and registration: who must register as a petty food business"
+    url: "https://fssai.gov.in/upload/uploadfiles/files/FAQs_Licensing_Registration_21_06_2021.pdf"
     publisher: "Food Safety and Standards Authority of India"
 ---
 
@@ -104,7 +104,7 @@ sources:
 
 Forget the queue for a moment and look at a single cup. The customer pays ₹15. Tea leaves, milk, sugar, ginger and the paper cup cost about ₹8. The stall keeps ₹7.
 
-That ₹7 is the <Term id="margin">margin</Term>. **Every decision about a small business starts here**, because if one sale does not leave money behind, a thousand sales will not either.
+That ₹7 is the <Term id="margin">margin</Term>. Every decision about a small business starts here. **If one sale does not leave money behind, a thousand sales will not either.**
 
 The ₹8 is a <Term id="variable-cost">variable cost</Term>: make more cups, spend more on milk.
 
@@ -112,7 +112,7 @@ The ₹8 is a <Term id="variable-cost">variable cost</Term>: make more cups, spe
 
 Some costs arrive whatever happens. The spot on the pavement, the municipal licence, the food safety registration, the gas cylinder. Call it ₹2,000 a month. These are <Term id="fixed-cost">fixed costs</Term>, and they are owed on a rainy Tuesday with four customers just as much as on a busy Friday.
 
-So the ₹7 from each cup has a job before it is profit. It pays down the ₹2,000 first. The cup that finishes that job is the <Term id="break-even">break-even</Term> point.
+**So the ₹7 from each cup has a job before it is profit.** It pays down the ₹2,000 first. The cup that finishes that job is the <Term id="break-even">break-even</Term> point.
 
 <svg class="chart" viewBox="0 0 320 96" role="img" aria-labelledby="cup-title cup-desc">
   <title id="cup-title">Where the ₹15 from one cup goes</title>
@@ -131,8 +131,8 @@ So the ₹7 from each cup has a job before it is profit. It pays down the ₹2,0
 
 ## Why the busy stall is short of cash
 
-Now the twist the sums leave out. Many regulars do not pay per cup. They drink all week and settle on Saturday. That is <Term id="udhaar">udhaar</Term>, and it is how small shops keep customers.
+Now the twist the sums leave out. Many regulars do not pay per cup. They drink all week and settle on Saturday. That is <Term id="udhaar">udhaar</Term>, the same credit a <Hi>kirana</Hi> shop gives its regulars.
 
-But the milk supplier wants cash on Wednesday. A stall can be making a profit for the month and still have an empty cash box midweek. That gap between earning money and holding it is <Term id="cash-flow">cash flow</Term>, and it can close a business that is doing well.
+But the milk supplier wants cash on Wednesday. **A stall can be in profit for the month and still have an empty cash box midweek.** That gap between earning money and holding it is <Term id="cash-flow">cash flow</Term>, and it can close a business that is doing well.
 
-Payments by <Term id="upi">UPI</Term> QR code help here: the money lands the same day, and there is a record of it.
+So the owner keeps cash ready for tomorrow's milk. That is the stall's <Term id="working-capital">working capital</Term>. A <Term id="upi">UPI</Term> QR code helps a little: a regular with no change can still pay today, and the record shows who has paid.

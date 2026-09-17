@@ -112,7 +112,12 @@ describe('lesson content', () => {
         const sections = lesson.body.split(/^## /m).slice(1);
         for (const section of sections) {
           const [heading, ...rest] = section.split('\n');
-          const text = rest.join(' ').replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/^\|.*\|$/gm, ' ').replace(/<[^>]+>/g, '');
+          // Drop table rows line by line BEFORE joining: once joined, `^…$` no longer matches a row.
+          const text = rest
+            .filter((line) => !/^\s*\|.*\|\s*$/.test(line))
+            .join(' ')
+            .replace(/<svg[\s\S]*?<\/svg>/g, ' ')
+            .replace(/<[^>]+>/g, '');
           expect(words(text), `"${heading}" is ${words(text)} words`).toBeLessThanOrEqual(120);
         }
       });
@@ -175,6 +180,17 @@ describe('lesson content', () => {
           expect(lesson.data.reportTo.phone).toBe('1930');
           expect(lesson.data.reportTo.url).toContain('cybercrime.gov.in');
         }
+      });
+
+      it('is written, not copied: any quotation is short, and nothing is embedded from elsewhere', () => {
+        // docs/CONTENT_GUIDE.md, "Copyright and reuse". Facts are free to use; wording is not.
+        const quoted = lesson.body.split('\n').filter((line) => line.startsWith('>')).join(' ').replace(/^>\s?/gm, '');
+        expect(words(quoted), 'a blockquote may be 25 words at most').toBeLessThanOrEqual(25);
+        for (const match of lesson.prose.matchAll(/[“"]([^”"]{0,600})[”"]/g)) {
+          expect(words(match[1]), `quotation too long: "${match[1].slice(0, 60)}…"`).toBeLessThanOrEqual(25);
+        }
+        // Screenshots, stock photos and hot-linked media are out; diagrams are drawn inline.
+        expect(lesson.body).not.toMatch(/<img|!\[[^\]]*\]\(|<iframe|<video|<embed|<object/i);
       });
 
       it('cites at least two https sources', () => {

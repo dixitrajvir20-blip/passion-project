@@ -52,6 +52,24 @@ quiz:
 - Scam articles: describe patterns, never link to scam sites. End each with the official reporting route for that edition (India: 1930 / cybercrime.gov.in; US: reportfraud.ftc.gov; EU: the national authority).
 - Write per edition: use the currency, rails, institutions and example businesses from `REGIONAL_TEACHING.md` for the edition the lesson belongs to, not a generic average.
 
+## Copyright and reuse (must follow)
+LaunchPad's lessons are licensed **CC BY-NC-SA 4.0** and the code is **MIT** (PROJECT_BRIEF §12). Every lesson page
+carries the notice, a `rel="license"` link and the licence in its structured data; that is automatic. What writers control:
+
+- **Write it yourself.** Read the source, close it, then write. Never paste from a source and edit it into shape: a
+  reworded paragraph is still a copy. Facts, numbers and ideas are free to use; the wording is not.
+- **Quote rarely and briefly.** At most one short quote per lesson, 25 words or fewer, in quotation marks, with the source
+  named in the same sentence. `tests/unit/lessons.test.ts` fails a blockquote longer than that.
+- **Link, don't copy.** Government and regulator documents are copyrighted too (in India, by the Government under the
+  Copyright Act). Summarise in your own words and link to the original; never reproduce a table, chart or page from one.
+- **Images and diagrams.** Draw your own (inline SVG with tokens). No screenshots of apps, websites or documents, no stock
+  photos, no logos or brand marks of any bank, app, regulator or company. A photo is allowed only if you took it, or it is
+  CC0 / CC BY with the credit written in the caption, and nobody in it can be identified without their consent.
+- **Your contribution.** You keep the copyright in what you write and license it to readers under CC BY-NC-SA 4.0 by
+  submitting it. You are credited by first name and country. Writers under 18 need a parent's or teacher's OK first.
+- **Do not use AI-generated text or images that imitate a named source, author or brand.**
+- **Not covered by the licence:** the LaunchPad name and logo, and anything belonging to a third party that we link to.
+
 ## Starter article list (24)
 **Money Basics:** Your first paycheck or pocket money: where it should go · Needs vs wants and the 50/30/20 idea · Compound growth explained with small monthly amounts · Saving vs investing: what's the difference? · UPI, cards, and "buy now, pay later" · Credit scores: US scores vs CIBIL in India · Scams that target students · Inflation: why the same money buys less
 

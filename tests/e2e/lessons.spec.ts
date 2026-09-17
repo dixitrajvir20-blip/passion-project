@@ -183,3 +183,76 @@ test('every link out of a lesson is safe against tab-napping', async ({ page }) 
     await expect(link).not.toHaveAttribute('target', '_blank');
   }
 });
+
+test('every lesson says who owns it and how it may be reused, for people and for machines', async ({ page }) => {
+  await page.goto(LESSON);
+  const notice = page.locator('.lesson-fine');
+  await expect(notice).toContainText('©');
+  await expect(notice).toContainText('non-commercial');
+  await expect(notice).toContainText('To credit it');
+  await expect(notice).toContainText('name and logo are not covered');
+
+  const deed = notice.getByRole('link', { name: /Creative Commons/ });
+  await expect(deed).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-nc-sa/4.0/');
+  await expect(deed).toHaveAttribute('rel', /license/);
+
+  await expect(page.locator('head link[rel="license"]')).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-nc-sa/4.0/');
+  const data = await page.locator('head script[type="application/ld+json"]').allTextContents();
+  const lesson = data.map((text) => JSON.parse(text)).find((d) => d['@type'] === 'LearningResource');
+  expect(lesson.license).toBe('https://creativecommons.org/licenses/by-nc-sa/4.0/');
+  expect(lesson.copyrightHolder.name).toBe('Rajvir Dixit');
+  expect(lesson.isAccessibleForFree).toBe(true);
+});
+
+test.describe('the scam drill with JavaScript off', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('every situation can be decided and revealed, in the lesson and in the tool', async ({ page }) => {
+    for (const path of ['in/learn/money-basics/upi-scam', 'in/tools/spot-the-fake']) {
+      await page.goto(path);
+      const situations = page.locator('.drill-list > li');
+      expect(await situations.count()).toBeGreaterThanOrEqual(5);
+      const first = situations.first();
+      await expect(first.locator('.mock-screen')).toContainText('A made-up screen for practice');
+      await first.locator('input[type=radio]').first().check();
+      await first.locator('summary').click();
+      await expect(first.locator('.answer')).toBeVisible();
+    }
+  });
+});
+
+test('mock screens never carry a real brand, bank or agency name', async ({ page }) => {
+  await page.goto('in/tools/spot-the-fake');
+  const screens = (await page.locator('.mock-screen .ms-from, .mock-screen .ms-action').allTextContents()).join(' | ');
+  // A made-up screen that names a real institution is impersonation, and teaches the wrong tell.
+  expect(screens).not.toMatch(/\b(RBI|Reserve Bank|NPCI|SEBI|CBI|SBI|HDFC|ICICI|Axis|Paytm|PhonePe|Google Pay|GPay|BHIM|Amazon|Flipkart|WhatsApp)\b/i);
+});
+
+test('a situation practised in the tool is scheduled under the lesson it came from', async ({ page }) => {
+  await page.goto('in/tools/spot-the-fake');
+  const first = page.locator('.drill-list > li').first();
+  await first.locator('input[type=radio]').first().check();
+  await first.locator('summary').click();
+  await expect(first.locator('.poll-status')).toHaveText(/Correct\.|Not quite\./);
+  const ids = await page.evaluate(() => Object.keys(JSON.parse(window.localStorage.getItem('lp:progress')!).review));
+  expect(ids).toEqual(['in/money-basics/upi-scam#d1']);
+});
+
+test('the scam lesson ends with the official reporting route, as a tappable number', async ({ page }) => {
+  await page.goto('in/learn/money-basics/upi-scam');
+  const report = page.locator('.report');
+  await expect(report.getByRole('link', { name: '1930' })).toHaveAttribute('href', 'tel:1930');
+  await expect(report.getByRole('link', { name: 'cybercrime.gov.in' })).toHaveAttribute('href', /^https:\/\/cybercrime\.gov\.in/);
+});
+
+test('the first-earnings lesson has a working split explorer and hands off to the budget planner', async ({ page }) => {
+  await page.goto('in/learn/money-basics/first-earnings');
+  const explorer = page.locator('.explorer');
+  await explorer.scrollIntoViewIfNeeded();
+  await waitForIslands(page);
+  await explorer.getByRole('button', { name: '₹8,000' }).click();
+  await expect(explorer).toContainText('₹3,200'); // Needs at 40% of 8,000
+  await explorer.getByRole('button', { name: 'More for Savings' }).click();
+  await expect(explorer).toContainText(/more than came in/);
+  await expect(explorer).not.toContainText(/too much|should/i);
+});

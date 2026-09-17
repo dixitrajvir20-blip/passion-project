@@ -72,12 +72,17 @@ describe('split', () => {
     expect(splitSteps(pocket).map((s) => s.result)).toEqual([{ money: 1500 }, { money: 900 }, { money: 600 }]);
   });
 
-  it('asks for one share and hides it among the other shares and a ÷ slip', () => {
+  it('asks for one share and hides it among real percentage slips, not amounts already on screen', () => {
     const choices = splitChoices(pocket, 'Savings');
+    expect(choices.filter((c) => c.correct)).toHaveLength(1);
     expect(choices.find((c) => c.correct)!.value).toEqual({ money: 600 });
     const values = choices.map((c) => ('money' in c.value ? c.value.money : 0));
-    expect(values).toEqual([150, 600, 900, 1500]);
+    // 3000 × 20% = 600 (right); ÷ 20 = 150; decimal slip = 60; 20% of what is left after needs = 300
+    expect(values).toEqual([60, 150, 300, 600]);
     expect(choices.find((c) => 'money' in c.value && c.value.money === 150)!.why).toContain('divides by 20');
+    // None of the wrong answers is just another line's amount (1,500 or 900), which the reader can already see.
+    expect(values).not.toContain(1500);
+    expect(values).not.toContain(900);
   });
 
   it('fails loudly on a share that does not exist', () => {

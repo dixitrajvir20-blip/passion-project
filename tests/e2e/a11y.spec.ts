@@ -19,6 +19,9 @@ const PAGES = [
   'eu/tools/break-even',
   'us/tools/loan',
   'in/learn/how-business-works/chai-stall',
+  'in/learn/money-basics/upi-scam',
+  'in/learn/money-basics/first-earnings',
+  'in/tools/spot-the-fake',
 ];
 
 for (const path of PAGES) {

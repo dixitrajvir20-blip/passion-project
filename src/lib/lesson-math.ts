@@ -97,29 +97,36 @@ export function splitSteps(n: SplitNumbers): Step[] {
   }));
 }
 
-/** "How much goes to <target>?" with the slips: another line's share, and ÷ instead of %. */
+/**
+ * "How much goes to <target>?" The other shares' amounts are already on screen in the given steps,
+ * so they make poor wrong answers. These are the slips people actually make with a percentage.
+ */
 export function splitChoices(n: SplitNumbers, targetLabel: string): Choice[] {
   const target = n.shares.find((s) => s.label === targetLabel);
   if (!target) throw new Error(`No share called "${targetLabel}".`);
-  const amount = (percent: number) => Math.round((n.income * percent) / 100);
+  const first = n.shares[0];
+  const amount = Math.round((n.income * target.percent) / 100);
 
   const candidates: Choice[] = [
-    { value: { money: amount(target.percent) }, correct: true, why: `${target.percent}% of the total: multiply by ${target.percent}, divide by 100.` },
-    ...n.shares
-      .filter((s) => s.label !== targetLabel)
-      .map((s) => ({
-        value: { money: amount(s.percent) },
-        correct: false,
-        why: `That is the ${s.label.toLowerCase()} share (${s.percent}%), not ${targetLabel.toLowerCase()}.`,
-      })),
+    { value: { money: amount }, correct: true, why: `${target.percent}% of the total: multiply by ${target.percent}, then divide by 100.` },
     {
       value: { money: Math.round(n.income / target.percent) },
       correct: false,
       why: `That divides by ${target.percent}. A percentage means "out of 100", so it is × ${target.percent} ÷ 100.`,
     },
+    {
+      value: { money: Math.round((n.income * target.percent) / 1000) },
+      correct: false,
+      why: `The decimal point slipped one place. ${target.percent}% is ${(target.percent / 100).toFixed(2)} of the total, not ${(target.percent / 1000).toFixed(3)}.`,
+    },
+    {
+      value: { money: Math.round(((n.income - (n.income * first.percent) / 100) * target.percent) / 100) },
+      correct: false,
+      why: `That takes ${target.percent}% of what is left after ${first.label.toLowerCase()}. Every share is a share of the whole amount.`,
+    },
   ];
 
-  return dedupe(candidates).slice(0, 4).sort((a, b) => num(a) - num(b));
+  return dedupe(candidates).sort((a, b) => num(a) - num(b));
 }
 
 function num(choice: Choice): number {

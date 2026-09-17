@@ -14,6 +14,16 @@ export const site = {
   /** Replace with a real mailbox before launch. Used on Privacy, Terms, Accessibility. */
   contactEmail: 'hello@launchpad-project.example',
   repo: 'https://github.com/dixitrajvir20-blip/passion-project',
+  /**
+   * Who owns what (docs/PROJECT_BRIEF.md §12). Lessons and other text are shared so teachers and
+   * clubs can reuse them with credit; the code is open source. The name and logo are neither.
+   */
+  contentLicence: {
+    name: 'CC BY-NC-SA 4.0',
+    fullName: 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International',
+    url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
+  },
+  codeLicence: { name: 'MIT' },
   /** Dates shown on the legal pages. Bump when the text changes. */
   legalUpdated: '17 September 2026',
   /** Accounts stay off until the backend, the legal review and the parent-consent flow exist. */

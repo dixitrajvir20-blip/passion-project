@@ -70,6 +70,7 @@ const jsonLd = {
     {/* Only build-time constants from src/lib/site.ts belong in jsonLd. "<" is escaped anyway so a
         future per-page field can never close the script element. */}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
