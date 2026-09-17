@@ -2,6 +2,10 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Any author `display` beats the browser's own [hidden] rule, so `<button class="btn" hidden>` would
+   show. Controls that only work with JavaScript are rendered hidden; this keeps them hidden. */
+[hidden] { display: none !important; }
+
 html {
   -webkit-text-size-adjust: 100%;
   background: var(--bg);

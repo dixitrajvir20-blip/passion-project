@@ -1,0 +1,36 @@
+---
+/**
+ * The same problem with new numbers, worked up to the last step, which the reader does. A step
+ * someone completes is practice; a step hidden behind a "show answer" is just more reading. The
+ * wrong options are the slips people actually make, each with its own explanation.
+ */
+import Poll from './Poll.astro';
+import Worked from './Worked.astro';
+import { money, number, localeByCode } from '../../lib/format';
+import type { Choice, Step } from '../../lib/lesson-math';
+
+interface Props {
+  context: string;
+  /** Steps already done for the reader. */
+  given: Step[];
+  question: string;
+  choices: Choice[];
+  localeCode: string;
+}
+
+const { context, given, question, choices, localeCode } = Astro.props;
+const locale = localeByCode(localeCode);
+const show = (value: Choice['value']) =>
+  'money' in value ? money(value.money, locale, Number.isInteger(value.money) ? 0 : 2) : number(value.count, locale);
+---
+
+<div class="practice">
+  <Worked context={context} steps={given} localeCode={localeCode} />
+  <Poll
+    id="practice"
+    question={question}
+    options={choices.map((choice) => ({ text: show(choice.value), why: choice.why }))}
+    answer={choices.findIndex((choice) => choice.correct)}
+    revealLabel="Check my answer"
+  />
+</div>

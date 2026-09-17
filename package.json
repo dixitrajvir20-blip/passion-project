@@ -16,7 +16,8 @@
     "test:a11y": "playwright test tests/e2e/a11y.spec.ts",
     "screenshots": "node scripts/screenshots.mjs screenshots",
     "contrast": "node scripts/contrast-check.mjs",
-    "ship-check": "npm run build && npm run test:unit && npm run test:e2e"
+    "ship-check": "npm run build && npm run budget && npm run contrast && npm run test:unit && npm run test:e2e",
+    "budget": "node scripts/js-budget.mjs"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LessonList from '../../../../components/lesson/LessonList.astro';
+import ProgressMarks from '../../../../components/lesson/ProgressMarks.astro';
+import { REGIONS, getRegion, type TrackSlug } from '../../../../lib/regions';
+import { inTrack, lessonsFor } from '../../../../lib/lessons';
+import '../../../../styles/lesson.css';
+
+export function getStaticPaths() {
+  return REGIONS.flatMap((r) => r.tracks.map((t) => ({ params: { region: r.code, track: t.slug } })));
+}
+
+const { region: code, track: slug } = Astro.params;
+const region = getRegion(code!);
+const track = region.tracks.find((t) => t.slug === slug)!;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const prefix = `${base}/${region.code}`;
+const lessons = inTrack(await lessonsFor(region.code), track.slug as TrackSlug);
+---
+
+<BaseLayout
+  title={`${track.title} — LaunchPad ${region.name}`}
+  description={`${track.summary} Short lessons written for ${region.name}.`}
+  region={region.code}
+  regionSub={`learn/${track.slug}`}
+  path="learn"
+>
+  <section class="section" data-review-region={region.code}>
+    <div class="container">
+      <div class="column">
+        <p class="crumb"><a href={`${prefix}/learn`}>← All tracks</a></p>
+        <h1>{track.title}</h1>
+        <p class="lede">{track.summary}</p>
+        <ProgressMarks reviewHref={`${prefix}/review`} />
+        <LessonList lessons={lessons} planned={track.planned} />
+        <p class="practice">
+          Rather do than read? <a href={`${prefix}/tools`}>Open the calculators</a> and put your own numbers in.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .crumb { font-size: var(--text-sm); margin-bottom: var(--space-4); }
+  .crumb a { text-decoration: none; }
+  .crumb a:hover { text-decoration: underline; }
+  .lede { margin-bottom: var(--space-6); }
+  .practice { margin-top: var(--space-7); }
+</style>

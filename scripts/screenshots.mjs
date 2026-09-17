@@ -10,7 +10,10 @@ import { join } from 'node:path';
 
 const out = process.argv[2] ?? 'screenshots';
 const base = process.env.BASE_URL ?? 'http://localhost:4321/passion-project/';
-const pages = ['', 'in', 'in/learn', 'in/tools/break-even', 'account', 'privacy', 'glossary'];
+const pages = [
+  '', 'in', 'in/learn', 'in/learn/how-business-works', 'in/learn/how-business-works/chai-stall',
+  'in/review', 'in/tools/break-even', 'account', 'privacy', 'glossary',
+];
 const viewports = [
   { name: '360', width: 360, height: 800, isMobile: true, deviceScaleFactor: 2 },
   { name: '1280', width: 1280, height: 800, isMobile: false, deviceScaleFactor: 1 },

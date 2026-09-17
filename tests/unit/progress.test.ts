@@ -1,5 +1,17 @@
 import { describe, it, expect } from 'vitest';
-import { emptyProgress, exportCode, importCode, isProgress, markDone, merge } from '../../src/lib/progress';
+import {
+  BOX_DAYS,
+  emptyProgress,
+  exportCode,
+  importCode,
+  isProgress,
+  markDone,
+  merge,
+  nextReturn,
+  readyItems,
+  recordQuiz,
+  schedule,
+} from '../../src/lib/progress';
 
 describe('progress', () => {
   it('marks a lesson done once', () => {
@@ -46,5 +58,78 @@ describe('progress', () => {
     expect(m.done.sort()).toEqual(['x', 'y']);
     expect(m.quiz.x.correct).toBe(3);
     expect(m.updatedAt).toBe('2026-02-01');
+  });
+
+  describe('spaced review', () => {
+    const t0 = new Date('2026-09-17T09:00:00Z');
+    const days = (n: number) => new Date(t0.getTime() + n * 86_400_000);
+
+    it('a first right answer comes back tomorrow, then at widening gaps', () => {
+      let p = schedule(emptyProgress(t0), 'in/a#q1', true, t0);
+      expect(p.review!['in/a#q1']).toEqual({ box: 1, due: days(1).toISOString() });
+      p = schedule(p, 'in/a#q1', true, days(1));
+      expect(p.review!['in/a#q1'].box).toBe(2);
+      expect(p.review!['in/a#q1'].due).toBe(days(1 + BOX_DAYS[2]).toISOString());
+    });
+
+    it('a miss goes back to tomorrow however far it had climbed', () => {
+      let p = emptyProgress(t0);
+      for (let i = 0; i < 4; i++) p = schedule(p, 'x#q1', true, t0);
+      expect(p.review!['x#q1'].box).toBe(4);
+      p = schedule(p, 'x#q1', false, t0);
+      expect(p.review!['x#q1']).toEqual({ box: 1, due: days(1).toISOString() });
+    });
+
+    it('never climbs past the monthly box', () => {
+      let p = emptyProgress(t0);
+      for (let i = 0; i < 9; i++) p = schedule(p, 'x#q1', true, t0);
+      expect(p.review!['x#q1'].box).toBe(5);
+    });
+
+    it('offers only what is ready, longest-waiting first, and caps the list', () => {
+      let p = emptyProgress(t0);
+      p = schedule(p, 'late#q1', true, days(-5)); // came back 4 days ago
+      p = schedule(p, 'recent#q1', true, days(-1)); // came back today
+      p = schedule(p, 'future#q1', true, t0); // tomorrow
+      expect(readyItems(p, t0)).toEqual(['late#q1', 'recent#q1']);
+      for (let i = 0; i < 20; i++) p = schedule(p, `bulk#q${i}`, true, days(-3));
+      expect(readyItems(p, t0)).toHaveLength(10);
+    });
+
+    it('reports when the next check returns, optionally for one lesson', () => {
+      let p = schedule(emptyProgress(t0), 'in/a#q1', true, t0);
+      p = schedule(p, 'in/b#q1', true, days(2));
+      expect(nextReturn(p)?.toISOString()).toBe(days(1).toISOString());
+      expect(nextReturn(p, 'in/b#')?.toISOString()).toBe(days(3).toISOString());
+      expect(nextReturn(emptyProgress(t0))).toBeNull();
+    });
+
+    it('keeps the lower box when two devices disagree, so review is never skipped', () => {
+      const a = schedule(schedule(emptyProgress(t0), 'x#q1', true, t0), 'x#q1', true, t0); // box 2
+      const b = schedule(emptyProgress(t0), 'x#q1', false, t0); // box 1
+      expect(merge(a, b).review!['x#q1'].box).toBe(1);
+      expect(merge(b, a).review!['x#q1'].box).toBe(1);
+    });
+
+    it('still imports a sync code made before reviews existed', () => {
+      const old = { v: 1, done: ['in/a'], quiz: {}, updatedAt: '2026-01-01T00:00:00Z' };
+      const code = 'LP1.' + btoa(JSON.stringify(old));
+      expect(importCode(code)).toEqual(old);
+      expect(merge(importCode(code)!, emptyProgress(t0)).review).toBeUndefined();
+    });
+
+    it('rejects a review record with an impossible box or a date that is not one', () => {
+      const base = { v: 1, done: [], quiz: {}, updatedAt: 'x' };
+      expect(isProgress({ ...base, review: { 'a#q1': { box: 3, due: '2026-09-20T00:00:00Z' } } })).toBe(true);
+      expect(isProgress({ ...base, review: { 'a#q1': { box: 9, due: '2026-09-20T00:00:00Z' } } })).toBe(false);
+      expect(isProgress({ ...base, review: { 'a#q1': { box: 1, due: 'soon' } } })).toBe(false);
+      expect(isProgress({ ...base, review: [] })).toBe(false);
+    });
+
+    it('records a quiz result without touching the done list', () => {
+      const p = recordQuiz(emptyProgress(t0), 'in/a', 2, 3, t0);
+      expect(p.quiz['in/a']).toEqual({ correct: 2, total: 3, at: t0.toISOString() });
+      expect(p.done).toEqual([]);
+    });
   });
 });

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SubNav from '../../components/SubNav.astro';
 import { REGIONS, getRegion } from '../../lib/regions';
+import { inTrack, lessonsFor } from '../../lib/lessons';
 
 export function getStaticPaths() {
   return REGIONS.map((r) => ({ params: { region: r.code } }));
@@ -9,6 +10,7 @@ export function getStaticPaths() {
 
 const { region: code } = Astro.params;
 const region = getRegion(code!);
+const lessons = await lessonsFor(region.code);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
 ---
@@ -88,10 +90,14 @@ const prefix = `${base}/${region.code}`;
       </div>
       <div class="grid grid-3" data-reveal-group>
         {region.tracks.map((track) => (
-          <a class="card card-arrow" href={`${prefix}/learn`} data-reveal>
+          <a class="card card-arrow" href={`${prefix}/learn/${track.slug}`} data-reveal>
             <h3>{track.title}</h3>
             <p>{track.summary}</p>
-            <p class="card-meta">{track.lessons.length} lessons</p>
+            <p class="card-meta">
+              {inTrack(lessons, track.slug).length > 0
+                ? `${inTrack(lessons, track.slug).length} ready, ${track.planned.length} being written`
+                : `${track.planned.length} lessons being written`}
+            </p>
           </a>
         ))}
       </div>

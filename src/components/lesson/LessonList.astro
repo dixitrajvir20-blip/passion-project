@@ -1,0 +1,35 @@
+---
+/**
+ * A track's lessons. Published ones are links with two quiet marks (read, checks done) filled in
+ * from this device's progress; planned ones are plain text, not tappable-looking tiles, so a
+ * screen-reader user does not meet a run of dead stops.
+ */
+import { lessonPath, type Lesson } from '../../lib/lessons';
+
+interface Props {
+  lessons: Lesson[];
+  planned: string[];
+}
+
+const { lessons, planned } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<ol class="lesson-list">
+  {lessons.map((lesson) => (
+    <li>
+      <a class="lesson-row" href={`${base}/${lessonPath(lesson)}`} data-lesson-row={lesson.id}>
+        <span class="lesson-title">{lesson.data.title}</span>
+        <span class="lesson-sub">{lesson.data.summary}</span>
+        <span class="lesson-marks">
+          {lesson.data.readingMinutes} min
+          <span data-mark="read" hidden> · Read</span>
+          <span data-mark="checks" hidden> · Checks done</span>
+        </span>
+      </a>
+    </li>
+  ))}
+  {planned.map((title) => (
+    <li class="lesson-planned">{title} <span class="muted">(being written)</span></li>
+  ))}
+</ol>

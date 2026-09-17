@@ -21,7 +21,7 @@ interface Props {
 const NECESSARY = [
   { key: 'lp:region', what: 'Which edition you chose, so the front page can offer it again.' },
   { key: 'lp:locale', what: 'The currency you picked in a calculator.' },
-  { key: 'lp:progress', what: 'Lessons you have finished and quiz scores. Stays on this device.' },
+  { key: 'lp:progress', what: 'Lessons you have finished, quiz scores, and when each quick-check question comes back for review. Stays on this device.' },
   { key: 'lp:consent', what: 'Your answer on this screen, so we do not ask again.' },
 ];
 

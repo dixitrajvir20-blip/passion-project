@@ -1,0 +1,38 @@
+/* Inline explorables: one or two things to change, a sentence that answers, then the full tool. */
+
+.explorer { background: var(--bg-2); border-radius: var(--radius-l); padding: var(--space-5); margin: var(--space-5) 0; }
+@media (min-width: 640px) { .explorer { padding: var(--space-6); } }
+.explorer-label { margin: 0 0 var(--space-2); color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
+.explorer-presets { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-5); }
+.preset {
+  min-height: 44px;
+  min-width: 64px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-ui);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.preset:hover { background: var(--bg-3); }
+/* Fill and weight carry the state, not colour alone. */
+.preset[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 700; }
+
+.explorer-figure { margin: 0; font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; line-height: 1; letter-spacing: var(--tracking-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.explorer-figure.is-loss { color: var(--error); }
+.explorer-says { margin: var(--space-3) 0 0; color: var(--ink-2); font-size: var(--text-md); }
+.explorer-prompts { margin: var(--space-5) 0 0; padding: var(--space-4) 0 0 var(--space-5); border-top: 1px solid var(--line); color: var(--ink-2); font-size: var(--text-ui); }
+.explorer-actions { margin: var(--space-4) 0 0; }
+
+.split-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.split-row { display: grid; grid-template-columns: 1fr auto; gap: var(--space-1) var(--space-3); align-items: center; margin: 0; padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
+.split-name { color: var(--ink); font-weight: 700; }
+.split-hint { grid-column: 1 / -1; color: var(--muted); font-size: var(--text-sm); }
+.split-amount { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; text-align: right; }
+.split-step { display: inline-flex; align-items: center; gap: var(--space-2); grid-column: 1 / -1; }
+.split-step button { min-width: 44px; min-height: 44px; border: 1px solid var(--line-strong); border-radius: var(--radius-pill); background: var(--bg); color: var(--ink); font-size: var(--text-md); font-weight: 700; cursor: pointer; }
+.split-step button:hover { background: var(--bg-3); }
+.split-step output { min-width: 4ch; text-align: center; font-variant-numeric: tabular-nums; color: var(--ink-2); }

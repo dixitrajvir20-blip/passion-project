@@ -9,10 +9,17 @@ export interface Stat {
   source: Source;
 }
 
+export type TrackSlug = 'money-basics' | 'start-something' | 'how-business-works';
+
 export interface Track {
+  slug: TrackSlug;
   title: string;
   summary: string;
-  lessons: string[];
+  /**
+   * Titles still to be written, shown as plain text. Published lessons are NOT listed here:
+   * they come from the content collection (src/content/lessons), so a title lives in one place.
+   */
+  planned: string[];
 }
 
 export interface ToolScenario {
@@ -99,19 +106,20 @@ export const REGIONS: Region[] = [
     ],
     tracks: [
       {
+        slug: 'money-basics',
         title: 'Money basics',
         summary: 'What to do with money once you have some, and how to keep it.',
-        lessons: [
-          'Your first earnings: where they should go',
-          'Spotting a UPI scam before you tap',
+        planned: [
+          'Your first offer letter: CTC vs in-hand',
           'Loan apps: how to tell a real one from a trap',
           'Compound growth on ₹500 a month',
         ],
       },
       {
+        slug: 'start-something',
         title: 'Start something',
         summary: 'Turning an idea into something real, starting with almost nothing.',
-        lessons: [
+        planned: [
           'Test an idea in a weekend without spending',
           'Pricing when everyone around you is cheaper',
           'Break-even: how many cups before you profit?',
@@ -119,10 +127,10 @@ export const REGIONS: Region[] = [
         ],
       },
       {
+        slug: 'how-business-works',
         title: 'How business works',
         summary: 'The machinery underneath the shops and stalls you already know.',
-        lessons: [
-          'How a chai stall makes money',
+        planned: [
           'Where the money actually goes in a kirana store',
           'Supply and demand at your local market',
           'Government schemes you may already qualify for',
@@ -197,9 +205,10 @@ export const REGIONS: Region[] = [
     ],
     tracks: [
       {
+        slug: 'money-basics',
         title: 'Money basics',
         summary: 'Building a cushion and keeping debt visible.',
-        lessons: [
+        planned: [
           'Your first pay: what to do in the first week',
           'Building three months of cover, slowly',
           'Buy now, pay later: seeing the debt',
@@ -207,9 +216,10 @@ export const REGIONS: Region[] = [
         ],
       },
       {
+        slug: 'start-something',
         title: 'Start something',
         summary: 'Selling into a single market made of 27 rulebooks.',
-        lessons: [
+        planned: [
           'Test an idea without spending',
           'Pricing for customers in another country',
           'Break-even with platform fees included',
@@ -217,9 +227,10 @@ export const REGIONS: Region[] = [
         ],
       },
       {
+        slug: 'how-business-works',
         title: 'How business works',
         summary: 'Where profit comes from, and which rights you already have.',
-        lessons: [
+        planned: [
           'Reading a simple income statement',
           'Consumer rights you can actually use',
           'Supply and demand around you',
@@ -295,9 +306,10 @@ export const REGIONS: Region[] = [
     ],
     tracks: [
       {
+        slug: 'money-basics',
         title: 'Money basics',
         summary: 'The decisions that shape the next ten years.',
-        lessons: [
+        planned: [
           'Your first paycheck: reading the deductions',
           'How a credit score actually moves',
           'Student loans as a monthly payment',
@@ -305,9 +317,10 @@ export const REGIONS: Region[] = [
         ],
       },
       {
+        slug: 'start-something',
         title: 'Start something',
         summary: 'Earning on your own terms without a surprise tax bill.',
-        lessons: [
+        planned: [
           'Test an idea in a weekend',
           'Pricing your work, not your time',
           'Break-even after platform fees',
@@ -315,9 +328,10 @@ export const REGIONS: Region[] = [
         ],
       },
       {
+        slug: 'how-business-works',
         title: 'How business works',
         summary: 'Where profit comes from and who takes a cut.',
-        lessons: [
+        planned: [
           'Reading a simple income statement',
           'What a platform’s fees really cost you',
           'Supply and demand around you',

@@ -14,7 +14,8 @@ const PAGES = [
   'accessibility',
   'disclaimer',
   'account',
-  ...REGIONS.flatMap((r) => [r, `${r}/learn`, `${r}/tools`, `${r}/tools/break-even`]),
+  ...REGIONS.flatMap((r) => [r, `${r}/learn`, `${r}/learn/money-basics`, `${r}/review`, `${r}/tools`, `${r}/tools/break-even`]),
+  'in/learn/how-business-works/chai-stall',
 ];
 
 for (const path of PAGES) {
@@ -52,3 +53,11 @@ test('the skip link takes keyboard users straight to the content', async ({ page
   await page.keyboard.press('Enter');
   await expect(page.locator('#main')).toBeFocused();
 });
+
+for (const path of PAGES) {
+  test(`/${path} never scrolls sideways`, async ({ page }) => {
+    await page.goto(path);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, 'horizontal overflow in px').toBeLessThanOrEqual(0);
+  });
+}
