@@ -1,0 +1,46 @@
+/* Calculator shell. Shared by every tool island; keep tool-specific rules out of here. */
+
+.tool-grid { display: grid; gap: var(--space-6); }
+@media (min-width: 900px) {
+  .tool-grid { grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: start; }
+}
+.tool .inputs h2, .tool .results h2 { margin-top: 0; font-size: var(--text-h3); }
+.tool .field { margin-bottom: var(--space-5); }
+.tool .field > label { font-size: var(--text-md); }
+.tool .btn-row { margin-top: var(--space-2); }
+
+.tool .results {
+  background: var(--bg-2);
+  border-radius: var(--radius-l);
+  padding: var(--space-6);
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-4));
+}
+.tool .result-block { padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
+.tool .result-block:last-of-type { border-bottom: 0; }
+.tool .result-label { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+.tool .result-value {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-display);
+  font-size: var(--text-result);
+  font-weight: 700;
+  letter-spacing: var(--tracking-heading);
+  color: var(--ink);
+}
+.tool .result-value.is-loss { color: var(--error); }
+.tool .plain { margin: var(--space-5) 0 0; font-size: var(--text-md); }
+.tool .copied { min-height: 24px; margin: var(--space-2) 0 0; color: var(--success); font-size: var(--text-sm); }
+
+.tool .how { margin-top: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); }
+.tool summary { cursor: pointer; font-weight: 700; color: var(--ink); min-height: 44px; display: flex; align-items: center; gap: var(--space-2); list-style: none; }
+.tool summary::-webkit-details-marker { display: none; }
+/* display:flex removes the native marker, so the control says what it is with its own. */
+.tool summary::before { content: '›'; font-family: var(--font-display); color: var(--muted); transition: transform var(--dur-fast) var(--ease); }
+.tool details[open] > summary::before { transform: rotate(90deg); }
+.tool .formula {
+  font-family: var(--font-display);
+  background: var(--bg-2);
+  border-radius: var(--radius-m);
+  padding: var(--space-3) var(--space-4);
+  font-variant-numeric: tabular-nums;
+}

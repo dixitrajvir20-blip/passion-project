@@ -1,35 +1,68 @@
 # LaunchPad
 
-Free, global learning hub that teaches business ideas, entrepreneurship, and money skills to people aged 15-21, especially those without a financial adviser or family guidance (for example, students in India with internet but no advisor).
-Articles + interactive tools + quizzes, built for phones and slow connections. Owner: Rajvir Dixit (college passion project; grew out of his school club, Business Lab).
+Free, global learning hub teaching money and business to ages 15–21, especially those without an
+adviser or family guidance (for example, students in India with internet but no advisor). Lessons +
+interactive calculators + quizzes, built for phones and slow connections, with a separate edition
+for the money system each reader lives in. Owner: Rajvir Dixit (college passion project; grew out
+of his school club, Business Lab).
 
-Read these before feature work:
-- @docs/PROJECT_BRIEF.md: scope, pages, tools, roadmap, acceptance criteria
-- @docs/DESIGN.md: visual system and the "don't look AI-made" rules
-- @docs/CONTENT_GUIDE.md: article schema, voice, and legal limits on finance content
-- docs/KICKOFF_PROMPTS.md is for Rajvir; docs/LaunchPad_Build_Brief.pdf is the same plan as a PDF
+## Read before feature work
+- @docs/BRAND_GUIDE.md — the blue/gold/black brand: colour (with contrast figures), type, logo, voice, anti-slop checklist
+- @docs/DESIGN.md — how the brand is built in code: tokens, components, the advanced visual layer, motion
+- @docs/PROJECT_BRIEF.md — scope, pages, tools, roadmap, performance budget, acceptance criteria
+- @docs/CONTENT_GUIDE.md — lesson schema, voice, and the legal limits on finance content
+- @docs/LEARNING_DESIGN.md — evidence-based lesson template and teaching formats
+- @docs/REGIONAL_TEACHING.md — what's local per edition (rails, scams, regulators, formats)
+- @docs/SECURITY.md — threat model and risk register (static site + future accounts)
+- @docs/LEGAL_AND_PRIVACY.md — cookies, children's rules, financial-content limits, by region
+- @docs/AUTH_AND_ACCOUNTS.md — the optional accounts design (preview only today)
+- @docs/BOSS_PLAYBOOK.md — how this gets built, sprint by sprint, with the gates
+- docs/KICKOFF_PROMPTS.md is Rajvir's paste-in prompts; the *_Build_Brief.pdf files are these docs as PDFs
 
-## Current state (Sept 2026)
-- Plain HTML/CSS/JS, no build step: index.html, about.html, articles/index.html, css/style.css, js/main.js, assets/.
-- Run locally: `python3 -m http.server 8000` (also in .claude/launch.json), then open http://localhost:8000.
-- GitHub remote: dixitrajvir20-blip/passion-project. Planned hosting: GitHub Pages.
-- Known gaps vs DESIGN.md: the hero has an eyebrow badge above the H1 and a stats row (both on the "looks AI-made" checklist); the font stack uses system fonts incl. Roboto/Arial; no tools, quizzes, glossary, or article pages yet.
+## Current state (Sept 2026) — Phase 1
+- **Astro 7 static build** with **Preact islands**, deployed to **GitHub Pages** under
+  `/passion-project` (`astro.config.mjs` sets `base`; every internal link goes through it).
+- Three editions — **India `/in`, Europe `/eu`, United States `/us`** — rendered from one
+  `src/lib/regions.ts` data file, switched by a tab on every page. The front page asks the reader
+  to choose rather than guessing from their IP.
+- **Blue/gold/black brand** applied: tokens in `src/styles/tokens.css`, display font Bricolage
+  Grotesque + body Atkinson Hyperlegible Next (both self-hosted, no CDN). Original launch-pad logo.
+- **Break-even calculator** works end to end in all three editions/currencies; maths is pure
+  functions with Vitest tests.
+- **Legal pages** live: `/privacy`, `/cookies`, `/terms`, `/accessibility`, `/disclaimer`, plus a
+  **consent manager** (no banner today because nothing optional is on), `security.txt`, `SECURITY.md`.
+- **Accounts are a preview only** at `/account` (passkey + email-code + sync-code flow), wired to a
+  stub provider that stores nothing. Gated behind `PUBLIC_ACCOUNTS_ENABLED` (default off).
+- **Security**: strict CSP (meta, per-inline hashes), pinned GitHub Actions, Dependabot with
+  cooldown, `.npmrc ignore-scripts`, least-privilege workflows, CodeQL.
+- **Not built yet**: lesson pages/content engine, the other four calculators, quiz + search, i18n/
+  Hindi, the real account backend. See docs/PROJECT_BRIEF.md §roadmap and docs/BOSS_PLAYBOOK.md.
 
 ## Stack
-- Recommended next step (PROJECT_BRIEF section 8): move to Astro (static output, still deploys to GitHub Pages) before content and tools grow. IMPORTANT: ask Rajvir before migrating. Never migrate or delete existing pages silently.
-- Either way: no Tailwind, no UI kits. Plain CSS with custom properties (tokens in DESIGN.md). Interactive tools as small islands (Preact if Astro, vanilla JS modules if not).
-- Calculator math lives in pure functions with unit tests (Vitest). Pages get Playwright + axe checks once the build exists.
-- Analytics: cookieless only (Plausible or Umami). Never Google Analytics, Meta pixel, or other trackers.
+- Astro static output, Preact islands (`client:load`/`client:visible`), plain CSS custom
+  properties. No Tailwind, no UI kits. Calculator maths as pure functions with Vitest; pages get
+  Playwright + `@axe-core/playwright`.
+- Fonts self-hosted and subset. Money via `Intl.NumberFormat` on the chosen locale (en-IN shows
+  1,00,000). Cross-document View Transitions + IntersectionObserver reveals, both behind
+  `prefers-reduced-motion` and `@supports`.
+- Analytics: cookieless only, and off until documented on `/privacy`. Never GA, Meta pixel, or any
+  third-party tracker or font.
 
 ## Hard rules
-- IMPORTANT: No accounts, logins, forms that collect personal data, or third-party trackers in v1. Progress lives in localStorage only.
-- No stock tips, buy/sell calls, or "best fund to buy." Education only. Indian market prices in examples must be at least 3 months old.
-- Every page must meet WCAG 2.2 AA, work by keyboard, and meet the mobile performance budget in PROJECT_BRIEF.md.
-- Money is formatted with `Intl.NumberFormat` using the chosen locale and currency (en-IN shows 1,00,000).
-- Follow DESIGN.md. No purple gradients, glowing shadows, emoji icons, or fonts from its banned list.
-- Keep user-facing text in one place per locale (JSON) once i18n starts; don't scatter strings.
+- **Tokens only.** No raw hex, px radius/size, shadow or font-family in a component. No `style=""`
+  attributes and no runtime-injected `<style>` — the CSP blocks them. Add or reuse a token.
+- **Education, not advice.** No buy/sell/hold, no named securities with prices or targets, no
+  promised returns. Market data ≥30 days old (SEBI). No product recommendations.
+- **Privacy-first.** No accounts, personal-data forms, or third-party trackers on by default.
+  Progress is localStorage; documented keys only. Honour Global Privacy Control.
+- **Accessibility is enforced.** WCAG 2.2 AA, keyboard, both appearances, reduced motion; `npm run
+  test:e2e` fails on any serious/critical axe issue at 360px and 1280px. `npm run contrast` must pass.
+- Follow BRAND_GUIDE.md and DESIGN.md. No purple/gradients, glows, glassmorphism-as-decoration,
+  stat banners without sources, default fonts, ALL CAPS labels, or emoji icons.
 
 ## Workflow
-- For anything touching more than 2 files: plan first, then build.
-- Prove it works: run tests/build, and for UI changes screenshot at 360px and 1280px and compare against DESIGN.md.
-- Small commits with clear messages on a feature branch. Don't push or merge without Rajvir's OK.
+- Plan first for anything over two files; then build. Prove it with `npm run ship-check` (build +
+  unit + e2e/axe + contrast) and screenshots at 360px and 1280px, light and dark.
+- Ask the reviewer subagents (design-reviewer, content-reviewer, a11y-perf-auditor,
+  security-reviewer) before committing the kind of change each covers.
+- Small commits on a feature branch. **Never push, merge, or deploy** — Rajvir does that.

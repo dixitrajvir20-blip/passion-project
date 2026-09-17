@@ -13,23 +13,26 @@ const tail = sub ? `/${sub}` : '';
 ---
 
 <nav class="region-tabs" aria-label="Choose your edition">
-  <ul>
-    {REGIONS.map((region) => (
-      <li>
-        <a
-          href={`${base}/${region.code}${tail}`}
-          aria-current={region.code === current ? 'true' : undefined}
-          data-region={region.code}
-        >
-          {region.tab}
-        </a>
-      </li>
-    ))}
-  </ul>
+  <div class="container">
+    <ul>
+      {REGIONS.map((region) => (
+        <li>
+          <a
+            href={`${base}/${region.code}${tail}`}
+            aria-current={region.code === current ? 'true' : undefined}
+            data-region={region.code}
+          >
+            {region.tab}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
 </nav>
 
 <script>
-  // Remember the edition so the front page can offer it next time.
+  // Remember the edition so the front page can offer it next time. Preference only:
+  // exempt from consent (WP29 Opinion 04/2012; UK PECR preference exception).
   const current = document.querySelector('.region-tabs a[aria-current]');
   if (current instanceof HTMLElement && current.dataset.region) {
     try {
@@ -42,40 +45,37 @@ const tail = sub ? `/${sub}` : '';
 
 <style>
   .region-tabs {
-    border-bottom: 1px solid var(--line);
-    background: var(--paper-2);
+    background: var(--bg);
+    padding: var(--space-3) 0 0;
   }
-
   ul {
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
     gap: var(--space-1);
     list-style: none;
-    margin: 0 auto;
-    padding: 0 var(--space-5);
-    max-width: 1120px;
+    margin: 0;
+    padding: var(--space-1);
+    background: var(--bg-2);
+    border-radius: var(--radius-pill);
   }
-
+  li { margin: 0; }
   a {
-    display: inline-block;
-    padding: var(--space-3) var(--space-4);
+    display: inline-flex;
+    align-items: center;
     min-height: 44px;
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-pill);
     color: var(--ink-2);
     text-decoration: none;
-    font-size: 16px;
-    border-bottom: 3px solid transparent;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    transition: background var(--dur-fast), color var(--dur-fast);
   }
-
-  a:hover {
-    color: var(--ink);
-    background: var(--paper);
-  }
-
-  /* Weight and underline carry the state, not colour alone. */
+  a:hover { color: var(--ink); background: var(--bg-3); }
+  /* Weight and fill carry the state, not colour alone. */
   a[aria-current] {
     color: var(--ink);
+    background: var(--bg);
     font-weight: 700;
-    border-bottom-color: var(--accent);
-    background: var(--paper);
   }
 </style>

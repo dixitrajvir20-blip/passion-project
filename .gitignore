@@ -1,7 +1,16 @@
 .DS_Store
-.claude/
 node_modules/
 dist/
 .astro/
 test-results/
 playwright-report/
+screenshots/
+.env
+.env.*
+# Personal Claude Code settings stay local; shared agents, skills and hooks are committed.
+.claude/settings.local.json
+.claude/*.local.*
+_launchpad_src_snapshot.tgz
+# Leftovers from the Cowork kit hand-off; delete when done, never commit.
+_to_delete/
+Business_Lab_Hub_*

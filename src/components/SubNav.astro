@@ -1,0 +1,98 @@
+---
+/**
+ * Sticky in-page navigation for long pages (Apple product-page style). The active item
+ * follows the section in view; without JS it is a plain list of anchor links.
+ */
+interface Props {
+  items: { id: string; label: string }[];
+  label?: string;
+}
+const { items, label = 'On this page' } = Astro.props;
+---
+
+<nav class="subnav" aria-label={label} data-subnav>
+  <div class="container">
+    <ul>
+      {items.map((item) => (
+        <li><a href={`#${item.id}`} data-target={item.id}>{item.label}</a></li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const nav = document.querySelector('[data-subnav]');
+  if (nav) {
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[data-target]'));
+    const sections = links
+      .map((l) => document.getElementById(l.dataset.target!))
+      .filter((s): s is HTMLElement => s !== null);
+
+    if ('IntersectionObserver' in window && sections.length) {
+      const setActive = (id: string) => {
+        for (const link of links) {
+          if (link.dataset.target === id) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        }
+      };
+      const io = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (visible) setActive(visible.target.id);
+        },
+        { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 1] },
+      );
+      sections.forEach((s) => io.observe(s));
+    }
+
+    // Shadow the bar once it is stuck.
+    const sentinel = document.createElement('div');
+    nav.before(sentinel);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => nav.classList.toggle('is-stuck', !e.isIntersecting), {
+        rootMargin: `-${getComputedStyle(document.documentElement).getPropertyValue('--header-h') || '52px'} 0px 0px 0px`,
+        threshold: 1,
+      }).observe(sentinel);
+    }
+  }
+</script>
+
+<style>
+  .subnav {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 30;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--dur);
+  }
+  .subnav.is-stuck { border-bottom-color: var(--line); }
+  @media (prefers-reduced-transparency: reduce) { .subnav { background: var(--bg); backdrop-filter: none; } }
+  ul {
+    display: flex;
+    gap: var(--space-2) var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  ul::-webkit-scrollbar { display: none; }
+  li { margin: 0; flex: none; }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+  }
+  a:hover { color: var(--ink); }
+  a[aria-current] { color: var(--ink); border-bottom-color: var(--accent); }
+</style>

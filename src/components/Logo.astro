@@ -1,0 +1,29 @@
+---
+/**
+ * The LaunchPad mark: an L whose upright is a launch arrow (gold) and whose foot is the
+ * pad (blue), on a navy tile. Inline so it inherits nothing and needs no request.
+ */
+interface Props {
+  size?: number;
+  /** Decorative when the wordmark sits next to it; labelled when used alone. */
+  labelled?: boolean;
+  class?: string;
+}
+const { size = 28, labelled = false, class: className = '' } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 64 64"
+  role={labelled ? 'img' : undefined}
+  aria-hidden={labelled ? undefined : 'true'}
+  aria-label={labelled ? 'LaunchPad' : undefined}
+  focusable="false"
+>
+  <rect width="64" height="64" rx="14" fill="#0B1240" />
+  <path d="M25 47V19" stroke="#F2C14E" stroke-width="6" stroke-linecap="round" fill="none" />
+  <path d="M15 28 25 18 35 28" stroke="#F2C14E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <path d="M25 47h24" stroke="#5FA0F5" stroke-width="6" stroke-linecap="round" fill="none" />
+</svg>

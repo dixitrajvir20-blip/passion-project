@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { breakEven, profitAtUnits } from '../lib/finance';
 import { LOCALES, money, number, localeByCode } from '../lib/format';
+import './tools.css';
 
 const LOCALE_KEY = 'lp:locale';
 
@@ -43,11 +44,18 @@ export default function BreakEven({
 
   // Applied after mount, not in the initial state: the server renders DEFAULTS, and
   // hydration leaves server-rendered input values alone, so shared links would show
-  // the default numbers while calculating the shared ones.
+  // the default numbers while calculating the shared ones. Anything typed into the
+  // static inputs before the JS arrived (slow 4G is the target device) is adopted too,
+  // so a fast reader's numbers are never silently reset; a shared link still wins.
   useEffect(() => {
+    const fromDom: Partial<Fields> = {};
+    for (const key of ['fixed', 'variable', 'price', 'units'] as const) {
+      const el = document.getElementById(`be-${key}`);
+      if (el instanceof HTMLInputElement && el.value !== defaults[key]) fromDom[key] = el.value;
+    }
     const fromQuery = readQuery();
-    if (Object.keys(fromQuery).length > 0) {
-      setFields((current) => ({ ...current, ...fromQuery }));
+    if (Object.keys(fromDom).length > 0 || Object.keys(fromQuery).length > 0) {
+      setFields((current) => ({ ...current, ...fromDom, ...fromQuery }));
     }
 
     try {
@@ -59,6 +67,8 @@ export default function BreakEven({
   }, []);
 
   const locale = localeByCode(localeCode);
+  // Decimals only when there are any: ₹7 beside ₹4,290 reads as one panel, ₹7.00 does not.
+  const exact = (value: number) => money(value, locale, Number.isInteger(value) ? 0 : 2);
 
   const onLocaleChange = (code: string) => {
     setLocaleCode(code);
@@ -175,7 +185,7 @@ export default function BreakEven({
             {!result.viable && (
               <span class="error" id="be-price-error">
                 Your price needs to be higher than the cost to make one. At this price every
-                sale loses {money(Math.abs(result.contributionMargin), locale, 2)}.
+                sale loses {exact(Math.abs(result.contributionMargin))}.
               </span>
             )}
           </p>
@@ -209,11 +219,11 @@ export default function BreakEven({
 
           <div class="result-block">
             <p class="result-label">You keep this much per sale</p>
-            <p class="result-value numbers">{money(result.contributionMargin, locale, 2)}</p>
+            <p class="result-value numbers">{exact(result.contributionMargin)}</p>
           </div>
 
           <div class="result-block">
-            <p class="result-label">{unitName} to break even each month</p>
+            <p class="result-label">{unitName[0].toUpperCase() + unitName.slice(1)} to break even each month</p>
             <p class="result-value numbers">
               {result.viable ? number(result.units!, locale) : 'Not reachable'}
             </p>
@@ -237,7 +247,7 @@ export default function BreakEven({
 
           <p class="plain">
             {result.viable
-              ? `You keep ${money(result.contributionMargin, locale, 2)} from every sale. Once you have sold ${number(result.units!, locale)} ${unitName} in a month, your fixed costs are covered and everything after that is profit.`
+              ? `You keep ${exact(result.contributionMargin)} from every sale. Once you have sold ${number(result.units!, locale)} ${unitName} in a month, your fixed costs are covered and everything after that is profit.`
               : 'Right now each sale costs you more than it brings in, so selling more makes the loss bigger. Raise the price or cut the cost to make one.'}
           </p>
         </div>
@@ -257,41 +267,6 @@ export default function BreakEven({
           "not reachable" instead of showing a number.
         </p>
       </details>
-
-      <style>{`
-        .tool-grid { display: grid; gap: var(--space-6); }
-        @media (min-width: 900px) {
-          .tool-grid { grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: start; }
-        }
-        .inputs h2, .results h2 { margin-top: 0; font-size: 20px; }
-        .field { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-5); max-width: none; }
-        label { font-weight: 700; color: var(--ink); font-size: 16px; }
-        .hint { color: var(--muted); font-size: 15px; }
-        input, select {
-          font-family: var(--font-body);
-          font-size: 17px;
-          font-variant-numeric: tabular-nums;
-          min-height: 44px;
-          padding: var(--space-2) var(--space-3);
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          background: var(--paper);
-          color: var(--ink);
-        }
-        input:focus-visible, select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-        .error { color: var(--error); font-size: 15px; font-weight: 700; }
-        input[aria-invalid='true'] { border-color: var(--error); }
-        .results { background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--space-5); }
-        .result-block { padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
-        .result-label { margin: 0; color: var(--muted); font-size: 15px; }
-        .result-value { margin: var(--space-1) 0 0; font-family: var(--font-head); font-size: 28px; font-weight: 700; color: var(--ink); }
-        .result-value.is-loss { color: var(--error); }
-        .plain { margin: var(--space-5) 0 0; }
-        .copied { min-height: 24px; margin: var(--space-2) 0 0; color: var(--accent); font-size: 15px; }
-        .how { margin-top: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); }
-        summary { cursor: pointer; font-weight: 700; color: var(--ink); min-height: 24px; padding: var(--space-2) 0; }
-        .formula { background: var(--paper-2); border-radius: var(--radius); padding: var(--space-3) var(--space-4); }
-      `}</style>
     </div>
   );
 }

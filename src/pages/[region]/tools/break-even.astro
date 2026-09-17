@@ -25,8 +25,8 @@ const { fixed, variable, price, units, unitName, fixedHint, variableHint, scenar
 >
   <section class="section">
     <div class="container">
-      <p class="crumb"><a href={`${prefix}/tools`}>Tools</a></p>
       <div class="column">
+        <p class="crumb"><a href={`${prefix}/tools`}>← All calculators</a></p>
         <h1>Break-even calculator</h1>
         <p class="answers">
           Answers one question: how many do you have to sell before you stop losing money?
@@ -53,8 +53,10 @@ const { fixed, variable, price, units, unitName, fixedHint, variableHint, scenar
 </BaseLayout>
 
 <style>
-  .crumb { font-size: 15px; margin-bottom: var(--space-4); }
-  .answers { font-size: 19px; color: var(--ink-2); margin-bottom: var(--space-3); }
+  .crumb { font-size: var(--text-sm); margin-bottom: var(--space-4); }
+  .crumb a { text-decoration: none; }
+  .crumb a:hover { text-decoration: underline; }
+  .answers { font-size: var(--text-lg); color: var(--ink-2); margin-bottom: var(--space-3); }
   .scenario { color: var(--muted); margin-bottom: var(--space-7); }
   .note { margin-top: var(--space-7); }
 </style>

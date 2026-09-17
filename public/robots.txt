@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /passion-project/account/
+
+Sitemap: https://dixitrajvir20-blip.github.io/passion-project/sitemap-index.xml

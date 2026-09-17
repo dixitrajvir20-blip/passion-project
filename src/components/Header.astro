@@ -1,4 +1,7 @@
 ---
+import Logo from './Logo.astro';
+import { site } from '../lib/site';
+
 interface Props {
   /** Region code when inside an edition; links stay global without one. */
   region?: string;
@@ -24,14 +27,26 @@ const links = region
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="wordmark" href={region ? prefix : `${base}/`}>LaunchPad</a>
+    <a class="brand" href={region ? prefix : `${base}/`} aria-label="LaunchPad home">
+      <Logo size={26} />
+      <span class="wordmark">LaunchPad</span>
+    </a>
     <nav aria-label="Main">
       <ul>
         {links.map((l) => (
           <li>
-            <a href={l.to} aria-current={path === l.key ? 'page' : undefined}>{l.label}</a>
+            <a href={l.to} aria-current={path === l.key ? 'page' : undefined} data-astro-prefetch>
+              {l.label}
+            </a>
           </li>
         ))}
+        {site.accountsEnabled && (
+          <li class="nav-account">
+            <a class="btn btn-secondary btn-sm" href={`${base}/account`} aria-current={path === 'account' ? 'page' : undefined}>
+              Sign in
+            </a>
+          </li>
+        )}
       </ul>
     </nav>
   </div>
@@ -39,52 +54,77 @@ const links = region
 
 <style>
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
     border-bottom: 1px solid var(--line);
-    background: var(--paper);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .site-header { background: var(--bg); }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .site-header { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
   }
 
   .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-5);
-    min-height: var(--header-h);
-    flex-wrap: wrap;
+    gap: var(--space-4);
+    height: var(--header-h);
   }
 
-  .wordmark {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 19px;
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
     color: var(--ink);
     text-decoration: none;
     padding: var(--space-2) 0;
+    min-height: 44px;
   }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-wordmark);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  /* On narrow screens the mark alone is the brand, so the whole nav fits on one 52px row. */
+  @media (max-width: 639px) { .wordmark { display: none; } }
 
   nav ul {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-5);
+    align-items: center;
+    gap: var(--space-4);
     list-style: none;
     margin: 0;
     padding: 0;
   }
+  @media (min-width: 640px) { nav ul { gap: var(--space-5); } }
+  nav li { margin: 0; }
 
-  nav a {
-    display: inline-block;
+  nav a:not(.btn) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     color: var(--ink-2);
     text-decoration: none;
-    font-size: 16px;
-    padding: var(--space-3) 0;
-    min-height: 24px;
+    font-size: var(--text-sm);
+    font-weight: 400;
+    transition: color var(--dur-fast);
   }
-
-  nav a:hover { color: var(--accent); text-decoration: underline; }
-
-  nav a[aria-current='page'] {
+  nav a:not(.btn):hover { color: var(--ink); }
+  nav a:not(.btn)[aria-current='page'] {
     color: var(--ink);
     font-weight: 700;
     text-decoration: underline;
     text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+    text-decoration-color: var(--accent);
   }
+  .nav-account { margin-left: var(--space-2); }
 </style>

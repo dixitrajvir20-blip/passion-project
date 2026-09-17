@@ -29,6 +29,7 @@ const terms = [
   <section class="section">
     <div class="container">
       <div class="column">
+        <span class="eyebrow">Reference</span>
         <h1>Glossary</h1>
         <p class="lede">
           Every term defined in plain language, with an example. If a lesson uses a word
@@ -58,24 +59,24 @@ const terms = [
 </BaseLayout>
 
 <style>
-  .lede { font-size: 19px; color: var(--ink-2); margin-bottom: var(--space-7); }
+  .lede { margin-bottom: var(--space-7); }
   .terms { margin: 0; display: grid; gap: var(--space-4); }
   @media (min-width: 900px) { .terms { grid-template-columns: repeat(2, 1fr); gap: var(--space-5); } }
   .entry {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--paper-2);
-    padding: var(--space-5);
+    border-radius: var(--radius-l);
+    background: var(--bg-2);
+    padding: var(--space-6);
   }
   dt {
-    font-family: var(--font-head);
+    font-family: var(--font-display);
     font-weight: 700;
-    font-size: 19px;
+    font-size: var(--text-h3);
+    letter-spacing: var(--tracking-heading);
     color: var(--ink);
     margin-bottom: var(--space-2);
   }
   dd { margin: 0; }
-  dd p { margin-bottom: var(--space-2); font-size: 16px; }
-  .example { font-size: 15px; margin-bottom: 0; }
+  dd p { margin-bottom: var(--space-2); font-size: var(--text-ui); }
+  .example { font-size: var(--text-sm); margin-bottom: 0; }
   .note { margin-top: var(--space-7); }
 </style>

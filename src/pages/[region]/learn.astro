@@ -22,16 +22,18 @@ const prefix = `${base}/${region.code}`;
   <section class="section">
     <div class="container">
       <div class="column">
+        <span class="eyebrow">{region.name} edition</span>
         <h1>Learn</h1>
         <p class="lede">
-          Three tracks, written for {region.name}. Start anywhere — each lesson stands on
-          its own and takes under ten minutes.
+          Three tracks, written for {region.name}. Start anywhere — each lesson stands on its own
+          and takes under ten minutes.
         </p>
       </div>
 
-      <div class="tracks">
-        {region.tracks.map((track) => (
-          <article class="track">
+      <div class="tracks" data-reveal-group>
+        {region.tracks.map((track, index) => (
+          <article class="track card" data-reveal>
+            <p class="track-index numbers">Track {index + 1}</p>
             <h2>{track.title}</h2>
             <p>{track.summary}</p>
             <ol class="lessons">
@@ -43,9 +45,9 @@ const prefix = `${base}/${region.code}`;
 
       <div class="column">
         <p class="note">
-          The lessons are being written, so these titles are the plan rather than finished
-          pages. The <a href={`${prefix}/tools/break-even`}>break-even calculator</a> already
-          works with {region.name} numbers.
+          The lessons are being written, so these titles are the plan rather than finished pages.
+          The <a href={`${prefix}/tools/break-even`}>break-even calculator</a> already works with
+          {region.name} numbers.
         </p>
       </div>
     </div>
@@ -53,17 +55,13 @@ const prefix = `${base}/${region.code}`;
 </BaseLayout>
 
 <style>
-  .lede { font-size: 19px; color: var(--ink-2); margin-bottom: var(--space-7); }
+  .lede { margin-bottom: var(--space-7); }
   .tracks { display: grid; gap: var(--space-5); }
   @media (min-width: 900px) { .tracks { grid-template-columns: repeat(3, 1fr); } }
-  .track {
-    background: var(--paper-2);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: var(--space-5);
-  }
-  .track h2 { margin-top: 0; font-size: 22px; }
-  .lessons { margin: 0; padding-left: var(--space-5); color: var(--ink-2); font-size: 16px; }
-  .lessons li + li { margin-top: var(--space-2); }
+  .track-index { font-size: var(--text-sm); color: var(--muted); margin-bottom: var(--space-2); }
+  .track h2 { margin-top: 0; font-size: var(--text-h3); }
+  .track > p { font-size: var(--text-ui); }
+  .lessons { margin: var(--space-4) 0 0; padding-left: var(--space-5); color: var(--ink-2); font-size: var(--text-ui); }
+  .lessons li { margin-bottom: var(--space-2); }
   .note { margin-top: var(--space-7); }
 </style>

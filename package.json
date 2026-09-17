@@ -9,15 +9,20 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vitest run tests/unit",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test tests/e2e/a11y.spec.ts",
+    "screenshots": "node scripts/screenshots.mjs screenshots",
+    "contrast": "node scripts/contrast-check.mjs",
+    "ship-check": "npm run build && npm run test:unit && npm run test:e2e"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dixitrajvir20-blip/passion-project.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "bugs": {
     "url": "https://github.com/dixitrajvir20-blip/passion-project/issues"
@@ -35,5 +40,8 @@
     "@playwright/test": "^1.63.0",
     "vitest": "^5.0.1"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  }
 }

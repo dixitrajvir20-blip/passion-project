@@ -1,6 +1,14 @@
 # Project Brief: LaunchPad
 
-Version 1.1, Sept 17, 2026. Author: Rajvir Dixit (with research help from Claude).
+Version 2.0, 17 September 2026. Author: Rajvir Dixit (with research help from Claude).
+
+This brief is the scope and roadmap. It now has companion docs that go deeper, and they win on
+their subject if they ever disagree with this file: `BRAND_GUIDE.md` and `DESIGN.md` (look and
+build), `LEARNING_DESIGN.md` (how lessons teach), `REGIONAL_TEACHING.md` (what's local per
+edition), `SECURITY.md`, `LEGAL_AND_PRIVACY.md`, `AUTH_AND_ACCOUNTS.md`, and `BOSS_PLAYBOOK.md`
+(the phased build plan and gates). What changed in v2: the site is now Astro with three live
+editions (India/Europe/US), the brand is blue/gold/black, and the accounts and advanced-visual
+work below is specified rather than hypothetical.
 
 ## 1. Vision
 LaunchPad is a free, clean, fast website where anyone aged 15-21, anywhere in the world, can learn how money and business work, then practice with interactive tools. It's a hub: short articles on ideas that affect this age group, plus calculators, quizzes, and builders you can use on a phone.
@@ -27,7 +35,7 @@ LaunchPad is a free, clean, fast website where anyone aged 15-21, anywhere in th
 6. **Do, don't just read.** Every article ends with a tool, a quiz, or a small challenge.
 7. **Honest.** Sources on every article, clear "education, not advice" limits.
 8. **Accessible to everyone.** WCAG 2.2 AA minimum.
-9. **Human-designed look.** See DESIGN.md.
+9. **Human-designed look, quietly advanced.** See BRAND_GUIDE.md and DESIGN.md. Modern web-platform features (View Transitions, scroll-reveal, frosted bars, container/anchor queries) are used only as progressive enhancement behind `@supports`/`prefers-reduced-motion`, so the page is complete with them off. The test: does it still look finished with the feature disabled?
 10. **Built to last cheaply.** Static site, free hosting tier, no servers to maintain in v1.
 
 ## 4. Scope
@@ -50,10 +58,11 @@ LaunchPad is a free, clean, fast website where anyone aged 15-21, anywhere in th
 - Offline reading (PWA: cache read articles)
 - Teacher/club kit pages (printable lesson plans for Business Lab-style clubs)
 
-### Later (only after legal review)
-- More languages (Spanish, Portuguese, Swahili, Arabic with RTL)
-- Moderated community Q&A
-- Optional accounts (requires parental-consent handling for under-18 users in India, and in EU countries below their age of digital consent)
+### Later (gated; see BOSS_PLAYBOOK.md phases 5-6)
+- More editions and languages (Hindi first, then Brazil/Portuguese, Nigeria, Kenya, MENA/Arabic RTL, SE Asia — research in REGIONAL_TEACHING.md)
+- Optional accounts, live (the preview at `/account` exists now; the backend, parental-consent verification and legal sign-off are Phase 6 — see AUTH_AND_ACCOUNTS.md)
+- Cookieless analytics, only once documented on `/privacy`
+- Moderated community Q&A (only after a moderation plan exists; out of scope until then)
 
 ### Non-goals
 - Stock tips or personalized financial advice
@@ -113,7 +122,7 @@ All math lives in `src/lib/*.ts` as pure functions with unit tests. All money us
 | **Side-Hustle Profit** | Units sold/month, price, cost per unit, platform fees %, hours/month | Monthly profit, profit per hour | Helps compare "is this worth my time?" |
 | **Loan / EMI** | Principal, annual rate, months | EMI, total interest, total paid, amortization table | EMI = P·r·(1+r)^n / ((1+r)^n − 1), r = monthly rate. Handle rate = 0. |
 
-**Quiz component.** Multiple choice (and true/false). One question at a time, instant feedback with a 1-2 sentence explanation, score at the end, retry. Stores "passed" (≥80%) in localStorage under `bh:progress`. Retrieval practice (quizzing) is a well-studied way to strengthen long-term learning, so every lesson gets one.
+**Quiz component.** Multiple choice (and true/false). One question at a time, instant feedback with a 1-2 sentence explanation, score at the end, retry. Stores "passed" (≥80%) in localStorage under `lp:progress` (see `src/lib/progress.ts`; the same record powers the cross-device sync code). Retrieval practice (quizzing) is a well-studied way to strengthen long-term learning, so every lesson gets one.
 
 **Glossary popover.** `<Term id="compound-interest">` renders a button with `aria-expanded`. It opens a popover, closes on Esc or tap outside, and returns focus.
 
@@ -122,9 +131,17 @@ All math lives in `src/lib/*.ts` as pure functions with unit tests. All money us
 **v2: "Run a Chai Stall" simulator.** 4 weekly rounds. Choose price, cups to prepare, and one promotion. See sales, waste, and profit. Teaches demand, cost, and trade-offs. Deterministic seeded randomness so outcomes can be tested.
 
 ## 8. Tech architecture
-**Where the project is now:** plain HTML/CSS/JS with no build step (home, about, and an articles index), hosted from the GitHub repo `passion-project`, with GitHub Pages planned.
+**Where the project is now (Phase 1):** an Astro static build with Preact islands, deployed to
+GitHub Pages under `/passion-project`, with three editions (`/in`, `/eu`, `/us`) rendered from
+`src/lib/regions.ts`, the break-even calculator, the full legal layer, a consent manager, an
+account preview, and a strict security posture. The blue/gold/black brand from `BRAND_GUIDE.md`
+is applied. See `CLAUDE.md` "Current state" for the exact list and `BOSS_PLAYBOOK.md` for what's next.
 
-**Recommended path:** migrate to Astro in Phase 0, before there are dozens of articles and tools. Astro still outputs plain static files, so GitHub Pages keeps working (deploy with the official Astro GitHub Action). Gotchas: for a project site at `https://<user>.github.io/passion-project/`, set `site` and `base: "/passion-project"` in `astro.config`, and use Astro's link helpers so every link respects the base path. Keep old URLs working (`about.html` → `/about/`) with redirects or `build.format: "file"`. Rajvir approves the migration before it starts.
+**Base-path gotcha (still true, still bites):** for a project site at
+`https://<user>.github.io/passion-project/`, `astro.config.mjs` sets `site` and
+`base: "/passion-project"`, and every internal link goes through `import.meta.env.BASE_URL`.
+Playwright's `baseURL` needs the trailing slash or `new URL(path, base)` drops the base. Don't
+regress this.
 
 - Astro static site, `output: "static"`. MDX content collections for `articles`, `tracks`, `glossary`, `tools` (metadata).
 - Preact islands for tools, quiz, glossary popovers, and the locale/currency picker. Default `client:visible`.
@@ -188,7 +205,7 @@ public/         favicon, social images
 - **Why:** India's DPDP Rules (notified Nov 13, 2025) treat anyone under 18 as a child and require verifiable parental consent to process their data; the main obligations take effect May 13, 2027. The EU GDPR (Art. 8) sets a digital consent age between 13 and 16 depending on the country. The US COPPA covers under-13s. Collecting nothing avoids all of this in v1.
 - **Analytics:** cookieless and privacy-first (Plausible or Umami); no cookie banner needed when no personal data or cookies are used. Aggregate events only.
 - **No third-party embeds** that track (if YouTube is ever used, use `youtube-nocookie.com` and click-to-load).
-- **Finance content limits:** education only, no buy/sell recommendations, no performance promises. India's SEBI (Jan 2025) bars unregistered people from giving investment advice under the label of education and requires market prices used in educational material to be at least 3 months old. Apply that rule to all Indian market examples (and use historical data everywhere as good practice).
+- **Finance content limits:** education only, no buy/sell recommendations, no performance promises. India's SEBI rule (Jan 2025, updated May 2026) bars unregistered people from giving investment advice under the label of education and requires market prices used in educational material to be lagged (the three-month rule was updated to 30 days for education-only use). We standardise on the stricter, simpler rule everywhere: no named securities with prices or targets, data ≥30 days old or fictional, no returns claims. See `LEGAL_AND_PRIVACY.md`.
 - **Disclaimer** on every article and tool: "For learning only. Not financial, legal, or tax advice."
 - **Contributors:** first name + country only by default; writers under 18 need a parent's or teacher's OK; no personal stories that identify others.
 - **Licensing:** code MIT; articles CC BY-NC-SA 4.0 (lets teachers reuse with credit).

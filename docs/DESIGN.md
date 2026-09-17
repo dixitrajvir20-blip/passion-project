@@ -1,110 +1,112 @@
-# DESIGN.md: LaunchPad
+# LaunchPad design system
 
-Goal: **clean, interactive, human-made, easy to use.** It should feel like a well-edited student magazine plus a set of good tools, not a template or an AI-generated landing page.
+Version 2.0 · 17 September 2026. Supersedes the green v1. Read `docs/BRAND_GUIDE.md` first —
+this file is how the brand is built in code. The machine source of truth is
+`src/styles/tokens.css`; this document explains the rules behind it and how to extend them.
 
-## 1. Personality
-- Confident, calm, practical. Like a sharp older student explaining something over lunch.
-- Editorial, not "startup SaaS." Real structure, real content, very little decoration.
-- Keeps LaunchPad's existing deep green as the brand accent (already in css/style.css).
+## 0. The two jobs
 
-## 2. Color tokens (contrast checked on `--paper`)
-```css
-:root {
-  --paper:        #FBFAF7; /* page background (warm off-white) */
-  --paper-2:      #F4F1EA; /* section / card background */
-  --ink:          #16181D; /* headings + primary text (17.0:1) */
-  --ink-2:        #3A3F4B; /* body text (10.1:1) */
-  --muted:        #5B6270; /* captions, meta (5.9:1): smallest text allowed */
-  --line:         #E3DED3; /* borders, dividers (decorative only) */
-  --accent:       #1C5D3A; /* LaunchPad green: buttons (white text 7.9:1), links (7.5:1) */
-  --accent-deep:  #154A2E; /* hover / pressed (9.8:1) */
-  --accent-soft:  #E6F2EA; /* tinted panels; accent text on it is 6.8:1 */
-  --highlight:    #F2C14E; /* highlight fills only, always with --ink text (10.6:1) */
-  --error:        #B42318; /* (6.3:1) */
-  --focus:        #1C5D3A; /* 2px outline + 2px offset */
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #12161B;  --paper-2: #1A2027;
-    --ink:   #EDEBE6;  --ink-2:   #D5D2CB;  --muted: #B9BEC8;
-    --line:  #2B333D;  --accent:  #8FD1A8;  --accent-deep: #B5E3C6;
-    --accent-soft: #1D3327;
-  }
-}
-```
-Rules: one dominant color (dark ink on warm paper), one accent (green), one highlight (warm yellow) used sparingly (highlighted numbers, the "In 30 seconds" box). In dark mode, buttons use `--accent` with `--paper` text (10.3:1). Never put text in light grays like `#9AA0AE` (fails contrast).
+Every screen has to do two things at once, and the tension between them is the whole design:
 
-## 3. Typography
-- Headings: **Literata** (serif, readable, warm), weights 600/700.
-- Body and UI: **Atkinson Hyperlegible Next** (made for legibility, distinct from the usual defaults), weights 400/700.
-- Hindi (v2): **Noto Serif Devanagari** (headings) + **Noto Sans Devanagari** (body).
-- Numbers in tools: body font with `font-variant-numeric: tabular-nums`.
-- Scale (mobile → desktop): body 17px → 18px; line-height 1.6; H1 32 → 44px; H2 24 → 30px; measure 60-72ch.
-- Sentence case for headings and buttons. No ALL CAPS labels.
-- **Banned fonts** (overused in AI-generated sites): Inter, Roboto, Arial, Space Grotesk, Geist, Instrument Serif, Poppins, Montserrat. Don't use a serif italic on a single word inside a sans headline.
+- **Feel at home** — familiar patterns, system-like controls, nothing to learn.
+- **Be unmistakable** — you could crop out the logo and still know it's LaunchPad.
 
-## 4. Layout
-- Left-aligned, editorial. Content column max 720px; tools use a 2-column layout at ≥ 900px (inputs left, results right).
-- Spacing scale (px): 4, 8, 12, 16, 24, 32, 48, 64, 96.
-- Radius: 6px on inputs, buttons, and cards (the current CSS uses 10px; bring it down). No pill-shaped everything.
-- Shadows: none by default. A single 1px border (`--line`) defines cards. No glows, no layered colored shadows.
-- **One card style** across the site. Don't invent variants per section.
-- Sticky header is small (≤ 56px) and must never hide the focused element.
+Resolve it the way Apple does: structure and controls are quiet and conventional; identity lives
+in the type, the one accent, the navy, and one or two signature moments per page.
 
-## 5. Components
-- **Button:** primary (green bg, white text), secondary (ink border, transparent), text link. Min height 44px. Verb-first labels ("Try the calculator").
-- **Card:** paper-2 bg, 1px line border, 6px radius, title + one line + meta. Whole card clickable with a real link inside.
-- **Callout "In 30 seconds":** no colored left border; use a full soft marigold tint background (`color-mix(in srgb, var(--marigold) 22%, var(--paper))`) with ink text and a small heading.
-- **Term (glossary):** dotted underline, button semantics, popover.
-- **ToolShell:** title, "answers:" line, inputs, live results, "What this means," collapsible "How it works," reset + copy-link.
-- **Quiz:** one question per view, big tappable options (full-width), feedback text in success/error colors plus an icon and words (not color alone).
-- **Progress mark:** a small check next to finished lessons. No streaks, badges, confetti, or leaderboards in v1.
+## 1. Tokens
 
-## 6. Imagery and icons
-- Prefer simple, custom diagrams (SVG) that explain an idea: a supply/demand curve, a cash flow arrow, a chai-stall cost breakdown.
-- Photos only if real (club events with consent) or clearly credited. No generic stock "diverse team high-fiving," no 3D blobs, no abstract gradient orbs.
-- Icons: one outline set (for example Phosphor or Lucide), 1.5px stroke, only where they add meaning (tool type, warning). Never emoji as icons. Never an icon in a colored circle above every card.
+All colour, type, space, radius and motion are CSS custom properties in `src/styles/tokens.css`,
+redefined under `prefers-color-scheme: dark` and nudged under `prefers-contrast: more`. Rules:
 
-## 7. Motion
-- Only functional: results updating (150-200ms fade/number tween), popovers opening, accordions.
-- No parallax, no scroll-jacking, no floating decorative animations.
-- Respect `prefers-reduced-motion: reduce` (turn tweens off).
+- No raw hex, px radius, px font-size, shadow or `font-family` in a component. Add a token.
+- No `style=""` attributes and no runtime-injected `<style>`. The site ships a strict Content
+  Security Policy with per-inline hashes (see `docs/SECURITY.md`); an inline style attribute or a
+  script-built style tag is blocked. Put the value in a stylesheet or a token and toggle a class.
+- Stagger and index values (`--i`) are set with `:nth-child` rules in `base.css`, not inline.
 
-## 8. Writing in the interface (microcopy)
-- Plain and direct. "Start learning," not "Unlock your potential."
-- Avoid hype words: revolutionize, unlock, supercharge, seamless, empower, elevate, journey, game-changer, "in today's fast-paced world."
-- Don't talk down ("Hey kids!") and don't try too hard to be cool. Teens reject "kiddie" design; young adults dislike being patronized.
-- Numbers and examples > adjectives.
+## 2. Colour in practice
 
-## 9. The "does this look AI-made?" checklist (fail any → fix it)
-- [ ] Centered hero with a badge/pill above a giant headline
-- [ ] Purple/lavender or rainbow gradients, glowing blurred shadows
-- [ ] Three identical feature cards with an icon on top
-- [ ] "1, 2, 3" step rows or a stat banner ("10K+ users") with made-up numbers
-- [ ] Emoji used as icons in nav or lists
-- [ ] Permanent dark mode with low-contrast gray body text
-- [ ] Colored left-border accent on every card
-- [ ] Glassmorphism panels
-- [ ] ALL CAPS section labels everywhere
-- [ ] Generic copy ("Empowering the next generation of leaders")
-- [ ] Mixed card styles and inconsistent spacing
-- [ ] Banned fonts from section 3
+Palette, roles and every contrast figure are in the brand guide §2. In code:
 
-## 10. Usability rules for 15-21 year-olds
-- Content in short chunks with clear H2s; one idea per section; bold the key sentence.
-- Aim for reading level around grade 8 (Hemingway/Flesch-Kincaid). Define every term the first time.
-- Speed is part of the design: slow pages lose teens.
-- Interactivity must do something (calculate, test, decide), not decorate.
-- No forced sign-up. Sharing = copy link.
-- Labels over icons in navigation. Max 5 top-level items.
-- Big touch targets, forgiving inputs (accept "1,00,000" and "100000").
+- Links and button fills: `--accent` / `--accent-text`. Focus ring: `--focus`.
+- Gold is a fill or a mark, never small text on light. Eyebrows use `--gold-text`.
+- Cards and alternating bands: `--bg-2`. Deep sections: `.section-dark` (navy) re-maps tokens.
+- `color-mix()` is allowed for tints (e.g. the callout is `color-mix(in srgb, var(--gold) 20%,
+  var(--bg))`), with a solid fallback where a mix would fail contrast.
+- Verify with `npm run contrast` — it parses the tokens and checks every pair.
 
-## 11. Screens to verify on every UI change
-- 360×800 (budget Android), 390×844 (iPhone), 768×1024 (tablet), 1280×800 (laptop)
-- Light and dark mode, 200% zoom, keyboard-only pass, reduced motion on
+## 3. Type
 
-## 12. Fix list for the current pages
-- Remove the eyebrow line above the H1 ("Free · Global · For ages 15-21"); fold that info into the intro sentence.
-- Remove the hero stats row (Free / Global / Plain); say it in one plain sentence instead.
-- Replace the system font stack (it falls back to Roboto/Arial) with the fonts in section 3.
-- Left-align the hero; keep one card style for topics and articles.
+Bricolage Grotesque (display) + Atkinson Hyperlegible Next (body), self-hosted and subset,
+preloaded (`atkinson-latin`, `bricolage-latin`). Scale and rules in the brand guide §3. The
+banned-font list there is enforced in review.
+
+## 4. Components (all in `src/components`, `src/islands`, `base.css`)
+
+- **Button** `.btn` — pill, 44px min height. `.btn` (blue fill), `.btn-secondary` (grey),
+  `.btn-link` (text + ›). One primary per view. `.btn-lg` for hero CTAs.
+- **Card** `.card` — flat `--bg-2`, 20px radius, no border, no shadow. `.card-arrow` adds a
+  corner arrow that slides on hover. `.card-outline` for "coming soon" placeholders.
+- **Callout** `.callout` — soft gold tint behind black text, for an "in 30 seconds" summary.
+- **Figure** `.figure` — a large display number for editorial statistics; always beside its
+  sentence and source link, never in a bare banner.
+- **Eyebrow** `.eyebrow` — small dark-gold label above a heading. A text label, not a pill.
+- **Header** — sticky, frosted (`backdrop-filter`), with a `prefers-reduced-transparency`
+  fallback to a solid bar. Mark-only on phones so the row fits 52px.
+- **RegionTabs** — pill segmented control; the active edition is a white pill, state carried by
+  fill and weight, not colour alone.
+- **SubNav** — sticky in-page nav for long pages; the active section follows the viewport via
+  IntersectionObserver and gets `aria-current`; a sentinel adds a hairline when stuck.
+- **ConsentManager** island — banner + `<dialog>` privacy-choices panel (see `docs/LEGAL_AND_PRIVACY.md`).
+- **SignIn** island — the account flow (see `docs/AUTH_AND_ACCOUNTS.md`).
+- **Tool shell** — `.tool` in `src/islands/tools.css`: two columns, inputs left, a sticky
+  results panel right, a "how this works" `<details>` with the formula.
+
+## 5. The advanced visual layer (progressive enhancement)
+
+Everything here is additive: the page is complete and correct without it. Each feature sits
+behind `@supports` and/or `prefers-reduced-motion`, so old browsers and reduced-motion users get
+a clean static page. Support notes are current as of September 2026.
+
+- **Cross-document View Transitions** (`@view-transition { navigation: auto }`): a short root
+  fade between pages. Chrome + Safari; Firefox degrades to an instant swap. We do *not* use
+  Astro's `<ClientRouter/>` — native cross-doc transitions do the job and keep the JS budget and
+  the CSP simple. Reduced motion disables it.
+- **Reveal on enter**: content rises 14px and fades as it scrolls in. Driven by IntersectionObserver
+  (universal), *not* `animation-timeline: view()` — that has no Firefox support yet, and the JS
+  version gives us a safety net that guarantees content is never left hidden. Starts hidden only
+  when `.js` is present, so no-JS readers see everything; a 1.5s timeout reveals anything the
+  observer misses. Off under reduced motion.
+- **Frosted sticky header and sub-nav**: `backdrop-filter: blur()` with a solid-background
+  fallback via `@supports not` and `prefers-reduced-transparency`.
+- **Scroll-state, container queries, anchor positioning, Popover API, customizable `<select>`**:
+  approved for use *only* behind `@supports`, because Firefox and/or Safari support is still
+  partial in 2026. Prefer a plain sticky + IntersectionObserver pattern (as SubNav does) until a
+  feature is Baseline. Document the fallback next to any use.
+- **`color-mix()`, `light-dark()`, `clamp()` fluid type, `text-wrap: balance/pretty`,
+  `:has()`, `@property`**: safe to use directly; all are widely available. `light-dark()` is
+  available but we keep explicit light/dark token blocks so the values are auditable.
+
+When you reach for something new, the test is: does the page still look finished with the
+feature off? If not, it's decoration, and it doesn't ship.
+
+## 6. Motion
+
+`--dur` 240ms default, `--ease` `cubic-bezier(0.2,0.7,0.2,1)`. Everything animated is gated
+behind `prefers-reduced-motion: no-preference`, and the global reduce-motion block collapses all
+durations to ~0. Never animate a frequent interaction (typing, tab switches you do constantly),
+never make motion the only signal, always let it be interrupted.
+
+## 7. Screens to verify before shipping UI
+
+360×800, 390×844, 768×1024, 1280×800, in light and dark, plus: 200% zoom, keyboard-only, reduced
+motion, `prefers-contrast: more`. `npm run screenshots` captures the 360/1280 light/dark set.
+
+## 8. What "AI-made" looks like, and our answers
+
+The brand guide §8 is the checklist. In one line each: default fonts → Bricolage + Atkinson;
+blue→purple gradients → one flat accent; three identical icon cards → varied editorial sections;
+glows and glass decoration → one shadow, frosting only on functional bars; stat banners →
+figures with sources; centred hero + badge → left-aligned editions, a text eyebrow; hype copy →
+specific numbers. The design-reviewer subagent checks these on every change.

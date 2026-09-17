@@ -1,5 +1,7 @@
 # CONTENT_GUIDE.md: articles, voice, and limits
 
+Version 1.1 · 17 September 2026. Read `LEARNING_DESIGN.md` for how a lesson teaches (the hook → concept → worked example → explorable → check template) and `REGIONAL_TEACHING.md` for what's local to each edition. This file is the schema, the voice, and the hard limits.
+
 ## Article frontmatter (Zod schema in src/content/config.ts)
 ```yaml
 ---
@@ -45,9 +47,10 @@ quiz:
 ## Finance content limits (must follow)
 - Education only. Never say what to buy, sell, or hold. No named "best" funds, stocks, or coins.
 - No performance promises ("you'll make 12%"). Illustrative rates must be labeled as examples.
-- Indian market examples: prices/data at least 3 months old (SEBI, Jan 2025). Use historical data everywhere.
+- Indian market examples: no named security with a price or target; any market data at least 30 days old (SEBI, Jan 2025, updated May 2026) or fictional. Use historical/lagged data everywhere as good practice. See `LEGAL_AND_PRIVACY.md`.
 - Point to official sources for tax and legal questions (for example, the tax authority of that country).
-- Scam articles: describe patterns, never link to scam sites.
+- Scam articles: describe patterns, never link to scam sites. End each with the official reporting route for that edition (India: 1930 / cybercrime.gov.in; US: reportfraud.ftc.gov; EU: the national authority).
+- Write per edition: use the currency, rails, institutions and example businesses from `REGIONAL_TEACHING.md` for the edition the lesson belongs to, not a generic average.
 
 ## Starter article list (24)
 **Money Basics:** Your first paycheck or pocket money: where it should go · Needs vs wants and the 50/30/20 idea · Compound growth explained with small monthly amounts · Saving vs investing: what's the difference? · UPI, cards, and "buy now, pay later" · Credit scores: US scores vs CIBIL in India · Scams that target students · Inflation: why the same money buys less

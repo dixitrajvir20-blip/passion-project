@@ -2,6 +2,8 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import RegionTabs from '../components/RegionTabs.astro';
+import ConsentManager from '../islands/ConsentManager.tsx';
+import { site, consentCategories, CONSENT_VERSION } from '../lib/site';
 import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -13,10 +15,27 @@ interface Props {
   region?: string;
   /** Sub-path the region tabs should preserve when switching edition. */
   regionSub?: string;
+  /** Social image, relative to the site root. */
+  image?: string;
+  noindex?: boolean;
 }
 
-const { title, description, path = '', region, regionSub = '' } = Astro.props;
+const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(`${base}${image}`, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: new URL(`${base}/`, Astro.site).toString(),
+  description: site.description,
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  audience: { '@type': 'EducationalAudience', educationalRole: 'student', audienceType: 'ages 15-21' },
+  publisher: { '@type': 'Person', name: site.owner },
+};
 ---
 
 <!doctype html>
@@ -26,15 +45,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0b0f" />
     <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
-    <link
-      rel="preload"
-      href={`${base}/fonts/atkinson-latin.woff2`}
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="apple-touch-icon" href={`${base}/icons/icon-192.png`} />
+    <link rel="manifest" href={`${base}/manifest.webmanifest`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" href={`${base}/fonts/atkinson-latin.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}/fonts/bricolage-latin.woff2`} as="font" type="font/woff2" crossorigin />
+
+    {/* Only build-time constants from src/lib/site.ts belong in jsonLd. "<" is escaped anyway so a
+        future per-page field can never close the script element. */}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -44,5 +79,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <slot />
     </main>
     <Footer region={region} />
+    <ConsentManager client:load categories={consentCategories} version={CONSENT_VERSION} />
   </body>
 </html>
+
+<script>
+  // Mark JS as available so reveal animations can start hidden without hiding content
+  // from anyone whose JS never runs.
+  document.documentElement.classList.add('js');
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach((el) => el.classList.add('is-in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
+    );
+    items.forEach((el) => io.observe(el));
+    // Safety net: nothing stays hidden if the observer never fires (find-in-page, odd
+    // scroll containers, very fast readers). After this, only the entrance is animated.
+    window.setTimeout(() => items.forEach((el) => el.classList.add('is-in')), 1500);
+  }
+</script>

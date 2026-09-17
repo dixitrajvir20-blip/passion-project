@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubNav from '../../components/SubNav.astro';
 import { REGIONS, getRegion } from '../../lib/regions';
 
 export function getStaticPaths() {
@@ -21,30 +22,40 @@ const prefix = `${base}/${region.code}`;
   <section class="section intro">
     <div class="container">
       <div class="column">
-        <h1>Learn how money and business actually work.</h1>
+        <span class="eyebrow">{region.name} edition</span>
+        <h1>Learn how money actually works.</h1>
         <p class="lede">{region.intro}</p>
         <div class="btn-row">
-          <a class="btn" href={`${prefix}/learn`}>Start learning</a>
-          <a class="btn btn-secondary" href={`${prefix}/tools/break-even`}>Try a calculator</a>
+          <a class="btn btn-lg" href={`${prefix}/learn`}>Start learning</a>
+          <a class="btn btn-secondary btn-lg" href={`${prefix}/tools/break-even`}>Try a calculator</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section-alt">
+  <SubNav
+    items={[
+      { id: 'why', label: 'Why this edition' },
+      { id: 'covers', label: 'What it covers' },
+      { id: 'tracks', label: 'Tracks' },
+      { id: 'calculator', label: 'Calculator' },
+    ]}
+  />
+
+  <section id="why" class="section section-alt">
     <div class="container">
-      <div class="column">
-        <h2 class="section-head">Why this edition exists</h2>
-        <p>{region.problem}</p>
+      <div class="column" data-reveal>
+        <h2>Why this edition exists</h2>
+        <p class="lede">{region.problem}</p>
       </div>
 
-      <ul class="list-plain stats">
+      <ul class="list-plain figures" data-reveal-group>
         {region.stats.map((stat) => (
-          <li class="stat">
-            <p class="figure numbers">{stat.figure}</p>
+          <li class="stat" data-reveal>
+            <p class="figure">{stat.figure}</p>
             <p class="stat-label">{stat.label}</p>
             <p class="stat-source">
-              <a href={stat.source.url} rel="noopener">{stat.source.title}</a>
+              <a href={stat.source.url} rel="noopener noreferrer">{stat.source.title}</a>
             </p>
           </li>
         ))}
@@ -52,64 +63,79 @@ const prefix = `${base}/${region.code}`;
     </div>
   </section>
 
-  <section class="section">
+  <section id="covers" class="section">
     <div class="container">
-      <h2 class="section-head">What this edition covers</h2>
-      <p class="muted">The problems that actually show up here, rather than a general syllabus.</p>
-      <div class="grid">
+      <div class="column" data-reveal>
+        <h2>What this edition covers</h2>
+        <p class="lede">The problems that actually show up here, rather than a general syllabus.</p>
+      </div>
+      <ul class="list-plain covers" data-reveal-group>
         {region.problems.map((problem) => (
-          <article class="card">
+          <li data-reveal>
             <h3>{problem.title}</h3>
             <p>{problem.body}</p>
-          </article>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="tracks" class="section section-alt">
+    <div class="container">
+      <div class="column" data-reveal>
+        <h2>Three tracks</h2>
+        <p class="lede">Start anywhere. Each lesson stands on its own and takes under ten minutes.</p>
+      </div>
+      <div class="grid grid-3" data-reveal-group>
+        {region.tracks.map((track) => (
+          <a class="card card-arrow" href={`${prefix}/learn`} data-reveal>
+            <h3>{track.title}</h3>
+            <p>{track.summary}</p>
+            <p class="card-meta">{track.lessons.length} lessons</p>
+          </a>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section section-alt">
+  <section id="calculator" class="section section-dark">
     <div class="container">
-      <div class="column">
-        <h2 class="section-head">Start with the calculator</h2>
-        <p>{region.breakEven.scenario} Put your own numbers in and see how many {region.breakEven.unitName} you need to sell before you stop losing money.</p>
-        <p><a class="btn" href={`${prefix}/tools/break-even`}>Open the calculator</a></p>
+      <div class="column" data-reveal>
+        <span class="eyebrow">Calculator</span>
+        <h2>Start with break-even.</h2>
+        <p class="lede">
+          {region.breakEven.scenario} Put your own numbers in and see how many {region.breakEven.unitName} you
+          need to sell before you stop losing money.
+        </p>
+        <p><a class="btn btn-secondary btn-lg" href={`${prefix}/tools/break-even`}>Open the calculator</a></p>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container column">
-      <p class="note">{region.note}</p>
+  <section class="section-tight">
+    <div class="container">
+      <p class="note column">{region.note}</p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .intro { padding-top: var(--space-8); }
-  .lede { font-size: 19px; color: var(--ink-2); }
-  @media (min-width: 900px) { .lede { font-size: 21px; } }
-  .btn-row { margin-top: var(--space-6); }
-  .section-head { margin-top: 0; }
-  .grid { margin-top: var(--space-5); }
+  @media (min-width: 900px) { .intro { padding-top: var(--space-9); } }
+  .intro .btn-row { margin-top: var(--space-6); }
+  .grid { margin-top: var(--space-6); }
 
-  .stats { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
-  @media (min-width: 900px) { .stats { grid-template-columns: repeat(3, 1fr); } }
+  .figures { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
+  @media (min-width: 900px) { .figures { grid-template-columns: repeat(3, 1fr); gap: var(--space-5); } }
+  .stat { background: var(--bg); border-radius: var(--radius-l); padding: var(--space-6); }
+  .stat-label { margin: 0 0 var(--space-3); font-size: var(--text-ui); }
 
-  .stat {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--paper);
-    padding: var(--space-5);
-  }
-  .figure {
-    font-family: var(--font-head);
-    font-size: 34px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 0 0 var(--space-2);
-  }
-  .stat-label { margin: 0 0 var(--space-3); font-size: 16px; }
-  .stat-source { margin: 0; font-size: 14px; }
+  .covers { display: grid; gap: var(--space-5); margin-top: var(--space-6); }
+  @media (min-width: 900px) { .covers { grid-template-columns: repeat(2, 1fr); gap: var(--space-6) var(--space-8); } }
+  .covers li { border-top: 1px solid var(--line); padding-top: var(--space-4); }
+  .covers h3 { margin-bottom: var(--space-2); }
+  .covers p { margin: 0; font-size: var(--text-ui); }
+  .stat-source { margin: 0; font-size: var(--text-xs); }
   .stat-source a { color: var(--muted); }
-  .stat-source a:hover { color: var(--accent); }
+  .stat-source a:hover { color: var(--accent-text); }
 </style>

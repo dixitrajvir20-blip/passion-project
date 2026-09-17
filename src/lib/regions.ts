@@ -72,7 +72,7 @@ export const REGIONS: Region[] = [
       },
       {
         figure: '₹805 crore',
-        label: 'lost to UPI fraud across 10.64 lakh incidents in the year to November',
+        label: 'lost to UPI fraud across 10.64 lakh incidents between April and November 2025',
         source: {
           title: 'Government figures reported to Parliament',
           url: 'https://the420.in/india-upi-fraud-data-fy26-parliament-digital-payments/',
@@ -139,7 +139,7 @@ export const REGIONS: Region[] = [
       variableHint: 'What one cup costs you: tea, milk, sugar, cup.',
       scenario: 'A chai stall, worked out in rupees.',
     },
-    note: 'Indian market examples use data at least three months old, following SEBI’s January 2025 rules on educational material. Nothing here is investment advice.',
+    note: 'Indian market examples use prices at least 30 days old and never name a security with a target, following SEBI’s education-only rules (January 2025, updated May 2026). Nothing here is investment advice.',
   },
   {
     code: 'eu',
