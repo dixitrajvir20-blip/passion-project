@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('break-even updates live as the numbers change', async ({ page }) => {
-  await page.goto('tools/break-even');
+  await page.goto('in/tools/break-even');
 
   const results = page.locator('.results');
   await expect(results).toContainText('286');
@@ -11,7 +11,7 @@ test('break-even updates live as the numbers change', async ({ page }) => {
 });
 
 test('a price below cost explains the problem instead of showing a number', async ({ page }) => {
-  await page.goto('tools/break-even');
+  await page.goto('in/tools/break-even');
 
   await page.getByLabel('Price you charge').fill('5');
 
@@ -21,7 +21,7 @@ test('a price below cost explains the problem instead of showing a number', asyn
 });
 
 test('shared links restore the numbers in the inputs, not just the results', async ({ page }) => {
-  await page.goto('tools/break-even?fixed=5000&variable=8&price=20&units=600');
+  await page.goto('in/tools/break-even?fixed=5000&variable=8&price=20&units=600');
 
   await expect(page.getByLabel('Fixed costs per month')).toHaveValue('5000');
   await expect(page.getByLabel('Price you charge')).toHaveValue('20');
@@ -29,7 +29,7 @@ test('shared links restore the numbers in the inputs, not just the results', asy
 });
 
 test('reset returns the tool to its starting numbers', async ({ page }) => {
-  await page.goto('tools/break-even');
+  await page.goto('in/tools/break-even');
 
   await page.getByLabel('Price you charge').fill('99');
   await page.getByRole('button', { name: 'Reset' }).click();
@@ -38,7 +38,7 @@ test('reset returns the tool to its starting numbers', async ({ page }) => {
 });
 
 test('currency choice changes the formatting', async ({ page }) => {
-  await page.goto('tools/break-even');
+  await page.goto('in/tools/break-even');
 
   await expect(page.locator('.results')).toContainText('₹');
   await page.getByLabel('Currency').selectOption('en-US');

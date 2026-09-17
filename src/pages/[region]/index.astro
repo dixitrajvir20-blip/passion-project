@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { REGIONS, getRegion } from '../../lib/regions';
+
+export function getStaticPaths() {
+  return REGIONS.map((r) => ({ params: { region: r.code } }));
+}
+
+const { region: code } = Astro.params;
+const region = getRegion(code!);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const prefix = `${base}/${region.code}`;
+---
+
+<BaseLayout
+  title={`LaunchPad ${region.name} — learn how money and business work`}
+  description={`Free lessons and calculators on money and business for ages 15 to 21 in ${region.name}. ${region.problem}`}
+  region={region.code}
+  regionSub=""
+>
+  <section class="section intro">
+    <div class="container">
+      <div class="column">
+        <h1>Learn how money and business actually work.</h1>
+        <p class="lede">{region.intro}</p>
+        <div class="btn-row">
+          <a class="btn" href={`${prefix}/learn`}>Start learning</a>
+          <a class="btn btn-secondary" href={`${prefix}/tools/break-even`}>Try a calculator</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="column">
+        <h2 class="section-head">Why this edition exists</h2>
+        <p>{region.problem}</p>
+      </div>
+
+      <ul class="list-plain stats">
+        {region.stats.map((stat) => (
+          <li class="stat">
+            <p class="figure numbers">{stat.figure}</p>
+            <p class="stat-label">{stat.label}</p>
+            <p class="stat-source">
+              <a href={stat.source.url} rel="noopener">{stat.source.title}</a>
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-head">What this edition covers</h2>
+      <p class="muted">The problems that actually show up here, rather than a general syllabus.</p>
+      <div class="grid">
+        {region.problems.map((problem) => (
+          <article class="card">
+            <h3>{problem.title}</h3>
+            <p>{problem.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="column">
+        <h2 class="section-head">Start with the calculator</h2>
+        <p>{region.breakEven.scenario} Put your own numbers in and see how many {region.breakEven.unitName} you need to sell before you stop losing money.</p>
+        <p><a class="btn" href={`${prefix}/tools/break-even`}>Open the calculator</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container column">
+      <p class="note">{region.note}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro { padding-top: var(--space-8); }
+  .lede { font-size: 19px; color: var(--ink-2); }
+  @media (min-width: 900px) { .lede { font-size: 21px; } }
+  .btn-row { margin-top: var(--space-6); }
+  .section-head { margin-top: 0; }
+  .grid { margin-top: var(--space-5); }
+
+  .stats { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
+  @media (min-width: 900px) { .stats { grid-template-columns: repeat(3, 1fr); } }
+
+  .stat {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper);
+    padding: var(--space-5);
+  }
+  .figure {
+    font-family: var(--font-head);
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 var(--space-2);
+  }
+  .stat-label { margin: 0 0 var(--space-3); font-size: 16px; }
+  .stat-source { margin: 0; font-size: 14px; }
+  .stat-source a { color: var(--muted); }
+  .stat-source a:hover { color: var(--accent); }
+</style>

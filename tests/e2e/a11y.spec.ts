@@ -1,15 +1,27 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+const REGIONS = ['in', 'eu', 'us'];
+
 // Relative, no leading slash: these must resolve under the /passion-project base.
-const PAGES = ['', 'learn', 'tools', 'tools/break-even', 'glossary', 'about', 'privacy', 'disclaimer'];
+const PAGES = [
+  '',
+  'glossary',
+  'about',
+  'privacy',
+  'disclaimer',
+  ...REGIONS.flatMap((r) => [r, `${r}/learn`, `${r}/tools`, `${r}/tools/break-even`]),
+];
 
 for (const path of PAGES) {
   test(`/${path} has no serious or critical accessibility issues`, async ({ page }) => {
     await page.goto(path);
     // Guard against silently auditing the 404 page if a base path ever breaks.
     await expect(page.locator('h1')).not.toContainText('That page does not exist');
-    const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
 
     const blocking = results.violations.filter(
       (v) => v.impact === 'serious' || v.impact === 'critical',

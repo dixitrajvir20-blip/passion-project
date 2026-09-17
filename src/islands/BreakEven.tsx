@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { breakEven, profitAtUnits } from '../lib/finance';
-import { LOCALES, money, number, localeByCode, DEFAULT_LOCALE } from '../lib/format';
+import { LOCALES, money, number, localeByCode } from '../lib/format';
 
 const LOCALE_KEY = 'lp:locale';
 
@@ -11,7 +11,13 @@ interface Fields {
   units: string;
 }
 
-const DEFAULTS: Fields = { fixed: '2000', variable: '8', price: '15', units: '400' };
+interface Props {
+  defaults: Fields;
+  unitName: string;
+  fixedHint: string;
+  variableHint: string;
+  localeCode: string;
+}
 
 function readQuery(): Partial<Fields> {
   if (typeof window === 'undefined') return {};
@@ -24,9 +30,15 @@ function readQuery(): Partial<Fields> {
   return out;
 }
 
-export default function BreakEven() {
-  const [fields, setFields] = useState<Fields>(DEFAULTS);
-  const [localeCode, setLocaleCode] = useState(DEFAULT_LOCALE.code);
+export default function BreakEven({
+  defaults,
+  unitName,
+  fixedHint,
+  variableHint,
+  localeCode: initialLocale,
+}: Props) {
+  const [fields, setFields] = useState<Fields>(defaults);
+  const [localeCode, setLocaleCode] = useState(initialLocale);
   const [copied, setCopied] = useState(false);
 
   // Applied after mount, not in the initial state: the server renders DEFAULTS, and
@@ -78,7 +90,7 @@ export default function BreakEven() {
   const profit = profitAtUnits(nums.fixed, nums.variable, nums.price, nums.units);
 
   const reset = () => {
-    setFields({ ...DEFAULTS });
+    setFields({ ...defaults });
     setCopied(false);
   };
 
@@ -116,7 +128,7 @@ export default function BreakEven() {
           <p class="field">
             <label for="be-fixed">Fixed costs per month</label>
             <span class="hint" id="be-fixed-hint">
-              Costs you pay whatever you sell: stall rent, licence, subscriptions.
+              {fixedHint}
             </span>
             <input
               id="be-fixed"
@@ -133,7 +145,7 @@ export default function BreakEven() {
           <p class="field">
             <label for="be-variable">Cost to make one</label>
             <span class="hint" id="be-variable-hint">
-              What one unit costs you: ingredients, packaging, delivery.
+              {variableHint}
             </span>
             <input
               id="be-variable"
@@ -169,7 +181,7 @@ export default function BreakEven() {
           </p>
 
           <p class="field">
-            <label for="be-units">Units you expect to sell per month</label>
+            <label for="be-units">How many {unitName} you expect to sell per month</label>
             <input
               id="be-units"
               type="number"
@@ -201,7 +213,7 @@ export default function BreakEven() {
           </div>
 
           <div class="result-block">
-            <p class="result-label">Units to break even each month</p>
+            <p class="result-label">{unitName} to break even each month</p>
             <p class="result-value numbers">
               {result.viable ? number(result.units!, locale) : 'Not reachable'}
             </p>
@@ -216,7 +228,7 @@ export default function BreakEven() {
 
           <div class="result-block">
             <p class="result-label">
-              Profit at {number(nums.units, locale)} units
+              Profit at {number(nums.units, locale)} {unitName}
             </p>
             <p class={`result-value numbers ${profit < 0 ? 'is-loss' : ''}`}>
               {money(profit, locale)}
@@ -225,7 +237,7 @@ export default function BreakEven() {
 
           <p class="plain">
             {result.viable
-              ? `You keep ${money(result.contributionMargin, locale, 2)} from every sale. Once you have sold ${number(result.units!, locale)} in a month, your fixed costs are covered and everything after that is profit.`
+              ? `You keep ${money(result.contributionMargin, locale, 2)} from every sale. Once you have sold ${number(result.units!, locale)} ${unitName} in a month, your fixed costs are covered and everything after that is profit.`
               : 'Right now each sale costs you more than it brings in, so selling more makes the loss bigger. Raise the price or cut the cost to make one.'}
           </p>
         </div>
@@ -240,7 +252,7 @@ export default function BreakEven() {
         <p>Break-even is your fixed costs divided by that margin, rounded up to a whole unit:</p>
         <p class="formula numbers">fixed costs ÷ margin per unit = units to break even</p>
         <p>
-          It rounds up because you cannot sell part of a cup. If the margin is zero or
+          It rounds up because you cannot sell part of one. If the margin is zero or
           negative there is no break-even point at all — that is why the calculator says
           "not reachable" instead of showing a number.
         </p>

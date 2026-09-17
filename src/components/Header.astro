@@ -1,24 +1,35 @@
 ---
-const base = import.meta.env.BASE_URL;
-const href = (p: string) => `${base.replace(/\/$/, '')}/${p}`.replace(/\/+$/, '') || '/';
-const { path = '' } = Astro.props;
+interface Props {
+  /** Region code when inside an edition; links stay global without one. */
+  region?: string;
+  path?: string;
+}
 
-const links = [
-  { label: 'Learn', to: 'learn' },
-  { label: 'Tools', to: 'tools' },
-  { label: 'Glossary', to: 'glossary' },
-  { label: 'About', to: 'about' },
-];
+const { region, path = '' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const prefix = region ? `${base}/${region}` : base;
+
+const links = region
+  ? [
+      { label: 'Learn', to: `${prefix}/learn`, key: 'learn' },
+      { label: 'Tools', to: `${prefix}/tools`, key: 'tools' },
+      { label: 'Glossary', to: `${base}/glossary`, key: 'glossary' },
+      { label: 'About', to: `${base}/about`, key: 'about' },
+    ]
+  : [
+      { label: 'Glossary', to: `${base}/glossary`, key: 'glossary' },
+      { label: 'About', to: `${base}/about`, key: 'about' },
+    ];
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="wordmark" href={href('')}>LaunchPad</a>
+    <a class="wordmark" href={region ? prefix : `${base}/`}>LaunchPad</a>
     <nav aria-label="Main">
       <ul>
         {links.map((l) => (
           <li>
-            <a href={href(l.to)} aria-current={path === l.to ? 'page' : undefined}>{l.label}</a>
+            <a href={l.to} aria-current={path === l.key ? 'page' : undefined}>{l.label}</a>
           </li>
         ))}
       </ul>

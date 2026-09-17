@@ -1,6 +1,11 @@
 ---
-const base = import.meta.env.BASE_URL;
-const href = (p: string) => `${base.replace(/\/$/, '')}/${p}`.replace(/\/+$/, '') || '/';
+interface Props {
+  region?: string;
+}
+
+const { region } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const prefix = region ? `${base}/${region}` : base;
 ---
 
 <footer class="site-footer">
@@ -9,12 +14,12 @@ const href = (p: string) => `${base.replace(/\/$/, '')}/${p}`.replace(/\/+$/, ''
       <p class="wordmark">LaunchPad</p>
       <nav aria-label="Footer">
         <ul>
-          <li><a href={href('learn')}>Learn</a></li>
-          <li><a href={href('tools')}>Tools</a></li>
-          <li><a href={href('glossary')}>Glossary</a></li>
-          <li><a href={href('about')}>About</a></li>
-          <li><a href={href('privacy')}>Privacy</a></li>
-          <li><a href={href('disclaimer')}>Disclaimer</a></li>
+          {region && <li><a href={`${prefix}/learn`}>Learn</a></li>}
+          {region && <li><a href={`${prefix}/tools`}>Tools</a></li>}
+          <li><a href={`${base}/glossary`}>Glossary</a></li>
+          <li><a href={`${base}/about`}>About</a></li>
+          <li><a href={`${base}/privacy`}>Privacy</a></li>
+          <li><a href={`${base}/disclaimer`}>Disclaimer</a></li>
         </ul>
       </nav>
     </div>
