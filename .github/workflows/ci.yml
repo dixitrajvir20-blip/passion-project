@@ -5,21 +5,29 @@ on:
     branches: [main]
   pull_request:
 
+# Least privilege by default; jobs raise only what they need.
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Actions are pinned to full commit SHAs (docs/SECURITY.md, risk 2). Dependabot bumps them.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
-          node-version: 24
+          node-version: 22
           cache: npm
-      - run: npm ci
+      # --ignore-scripts: no dependency runs code at install time (Shai-Hulud-style worms).
+      - run: npm ci --ignore-scripts
+      - run: npm audit --audit-level=high
       - run: npm run build
       - run: npm run test:unit
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         if: failure()
         with:
           name: playwright-report

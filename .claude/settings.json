@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build)",
+      "Bash(npm run dev*)",
+      "Bash(npm run preview*)",
+      "Bash(npm run test*)",
+      "Bash(npm run check)",
+      "Bash(npm run contrast)",
+      "Bash(npm run screenshots*)",
+      "Bash(npm run ship-check)",
+      "Bash(npx vitest*)",
+      "Bash(npx playwright test*)",
+      "Bash(npx astro *)",
+      "Bash(node scripts/*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git switch*)",
+      "Bash(git branch*)",
+      "Bash(git stash*)"
+    ],
+    "deny": [
+      "Bash(git push*)",
+      "Bash(git merge*)",
+      "Bash(git rebase*)",
+      "Bash(git reset --hard*)",
+      "Bash(rm -rf*)",
+      "Bash(npm publish*)",
+      "Bash(curl*)",
+      "Bash(wget*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [{ "type": "command", "command": "bash .claude/hooks/protect-files.sh" }]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [{ "type": "command", "command": "bash .claude/hooks/stop-gate.sh", "timeout": 180 }]
+      }
+    ]
+  }
+}
