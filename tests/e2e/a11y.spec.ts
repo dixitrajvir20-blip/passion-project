@@ -14,7 +14,10 @@ const PAGES = [
   'accessibility',
   'disclaimer',
   'account',
-  ...REGIONS.flatMap((r) => [r, `${r}/learn`, `${r}/learn/money-basics`, `${r}/review`, `${r}/tools`, `${r}/tools/break-even`]),
+  ...REGIONS.flatMap((r) => [r, `${r}/learn`, `${r}/learn/money-basics`, `${r}/review`, `${r}/tools`]),
+  ...['break-even', 'budget', 'savings', 'side-hustle', 'loan'].map((tool) => `in/tools/${tool}`),
+  'eu/tools/break-even',
+  'us/tools/loan',
   'in/learn/how-business-works/chai-stall',
 ];
 

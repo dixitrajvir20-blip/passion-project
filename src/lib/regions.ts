@@ -33,6 +33,20 @@ export interface ToolScenario {
   scenario: string;
 }
 
+export interface BudgetRow {
+  name: string;
+  amount: string;
+  category: 'needs' | 'wants' | 'savings';
+}
+
+/** Opening numbers for each calculator. Examples to be replaced, never predictions. */
+export interface ToolDefaults {
+  budget: { income: string; incomeHint: string; rows: BudgetRow[] };
+  savings: { start: string; monthly: string; rate: string; years: string };
+  sideHustle: { units: string; price: string; cost: string; fee: string; hours: string; unitName: string; scenario: string };
+  loan: { principal: string; rate: string; months: string; scenario: string };
+}
+
 export interface Region {
   code: string;
   name: string;
@@ -46,6 +60,7 @@ export interface Region {
   problems: { title: string; body: string }[];
   tracks: Track[];
   breakEven: ToolScenario;
+  tools: ToolDefaults;
   note: string;
 }
 
@@ -146,6 +161,23 @@ export const REGIONS: Region[] = [
       fixedHint: 'What you pay every month whatever you sell: stall rent, licence, gas cylinder.',
       variableHint: 'What one cup costs you: tea, milk, sugar, cup.',
       scenario: 'A chai stall, worked out in rupees.',
+    },
+    tools: {
+      budget: {
+        income: '8000',
+        incomeHint: 'A stipend, tuition income, a first part-time wage, or pocket money.',
+        rows: [
+          { name: 'Travel to college or work', amount: '1200', category: 'needs' },
+          { name: 'Phone and data', amount: '400', category: 'needs' },
+          { name: 'Given at home', amount: '1500', category: 'needs' },
+          { name: 'Food outside', amount: '1500', category: 'wants' },
+          { name: 'Subscriptions', amount: '300', category: 'wants' },
+          { name: 'Put aside', amount: '1600', category: 'savings' },
+        ],
+      },
+      savings: { start: '0', monthly: '500', rate: '6', years: '10' },
+      sideHustle: { units: '40', price: '250', cost: '110', fee: '5', hours: '30', unitName: 'orders', scenario: 'Reselling phone cases on Instagram and WhatsApp.' },
+      loan: { principal: '50000', rate: '12', months: '24', scenario: 'A ₹50,000 loan for a second-hand scooter.' },
     },
     note: 'Indian market examples use prices at least 30 days old and never name a security with a target, following SEBI’s education-only rules (January 2025, updated May 2026). Nothing here is investment advice.',
   },
@@ -248,6 +280,24 @@ export const REGIONS: Region[] = [
       variableHint: 'What one order costs you: materials, packaging, postage.',
       scenario: 'A small online shop selling across the EU.',
     },
+    tools: {
+      budget: {
+        income: '950',
+        incomeHint: 'An apprentice wage, a student job, or a grant.',
+        rows: [
+          { name: 'Room or rent share', amount: '380', category: 'needs' },
+          { name: 'Transport pass', amount: '49', category: 'needs' },
+          { name: 'Phone', amount: '15', category: 'needs' },
+          { name: 'Food', amount: '200', category: 'needs' },
+          { name: 'Going out', amount: '120', category: 'wants' },
+          { name: 'Subscriptions', amount: '20', category: 'wants' },
+          { name: 'Buffer', amount: '100', category: 'savings' },
+        ],
+      },
+      savings: { start: '0', monthly: '50', rate: '2.5', years: '10' },
+      sideHustle: { units: '30', price: '18', cost: '6', fee: '10', hours: '25', unitName: 'orders', scenario: 'A small online shop selling across the EU.' },
+      loan: { principal: '2000', rate: '8', months: '24', scenario: 'A €2,000 loan for a laptop.' },
+    },
     note: 'Tax and registration rules differ in every member state. This edition explains the principle and points to your national authority rather than guessing which of 27 answers applies to you.',
   },
   {
@@ -348,6 +398,23 @@ export const REGIONS: Region[] = [
       fixedHint: 'What you pay every month whatever you sell: shop fees, software, storage.',
       variableHint: 'What one order costs you: blank product, printing, shipping.',
       scenario: 'A custom-print side hustle, after platform fees.',
+    },
+    tools: {
+      budget: {
+        income: '1200',
+        incomeHint: 'Take-home pay from a part-time job, after the deductions on the stub.',
+        rows: [
+          { name: 'Gas or transit', amount: '160', category: 'needs' },
+          { name: 'Phone', amount: '45', category: 'needs' },
+          { name: 'Food', amount: '250', category: 'needs' },
+          { name: 'Eating out', amount: '150', category: 'wants' },
+          { name: 'Subscriptions', amount: '30', category: 'wants' },
+          { name: 'Savings', amount: '240', category: 'savings' },
+        ],
+      },
+      savings: { start: '0', monthly: '50', rate: '4', years: '10' },
+      sideHustle: { units: '25', price: '25', cost: '9', fee: '12', hours: '20', unitName: 'orders', scenario: 'A custom-print shop on a marketplace that takes a cut.' },
+      loan: { principal: '10000', rate: '6.5', months: '120', scenario: 'A $10,000 student loan repaid over ten years.' },
     },
     note: 'Education only, with no recommendation of any named financial product. Tax questions point to the IRS, and anything set by state law says so.',
   },

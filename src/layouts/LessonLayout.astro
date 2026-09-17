@@ -13,6 +13,7 @@ import Practice from '../components/lesson/Practice.astro';
 import Drill from '../components/lesson/Drill.astro';
 import MarginExplorer from '../islands/MarginExplorer.tsx';
 import SplitExplorer from '../islands/SplitExplorer.tsx';
+import LessonScript from '../components/lesson/LessonScript.astro';
 import { getRegion } from '../lib/regions';
 import { lessonPath, type Lesson } from '../lib/lessons';
 import { marginChoices, marginSteps, splitChoices, splitSteps, type Choice, type Step } from '../lib/lesson-math';
@@ -260,91 +261,5 @@ if (d.practice?.kind === 'split') {
       </div>
     ))}
   </article>
+  <LessonScript />
 </BaseLayout>
-
-<script>
-  import { loadProgress, markDone, nextReturn, recordQuiz, saveProgress, schedule } from '../lib/progress';
-
-  const root = document.querySelector<HTMLElement>('[data-lesson-id]');
-  if (root) {
-    const lessonId = root.dataset.lessonId!;
-    const locale = root.dataset.locale ?? 'en';
-    const storage = (() => {
-      try {
-        return window.localStorage;
-      } catch {
-        return undefined;
-      }
-    })();
-
-    // Terms: swap the jump link for an in-place popover where the platform has one. The
-    // browser handles Esc, tap-outside and returning focus to the button.
-    if ('popover' in HTMLElement.prototype) {
-      for (const link of root.querySelectorAll<HTMLAnchorElement>('a.term[data-term]')) {
-        const pop = document.getElementById(`pop-${link.dataset.term}`);
-        if (!pop) continue;
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'term';
-        button.setAttribute('popovertarget', pop.id);
-        if (link.lang) button.lang = link.lang;
-        button.textContent = link.textContent;
-        link.replaceWith(button);
-      }
-    }
-
-    // Checks: score the first reveal of each, schedule it for review, and once every quick-check
-    // question has been looked at, record the result and say when they come back.
-    const checks = Array.from(root.querySelectorAll<HTMLElement>('.poll[data-check-id]'));
-    const quiz = checks.filter((poll) => poll.dataset.checkId!.includes('#q'));
-    const seen = new Map<string, boolean>();
-    const returnLine = root.querySelector<HTMLElement>('[data-return-line]');
-
-    for (const poll of checks) {
-      const details = poll.querySelector('details');
-      const status = poll.querySelector<HTMLElement>('.poll-status');
-      details?.addEventListener('toggle', () => {
-        const id = poll.dataset.checkId!;
-        if (!details.open || seen.has(id)) return;
-        const picked = poll.querySelector<HTMLInputElement>('input:checked');
-        const correct = picked !== null && picked.value === poll.dataset.answer;
-        seen.set(id, correct);
-        if (status) {
-          status.textContent =
-            picked === null ? 'No pick this time, so this one comes back tomorrow.' : correct ? 'Correct.' : 'Not quite.';
-        }
-
-        let progress = schedule(loadProgress(storage), id, correct);
-        const quizDone = quiz.length > 0 && quiz.every((q) => seen.has(q.dataset.checkId!));
-        if (quizDone && id.includes('#q')) {
-          const right = quiz.filter((q) => seen.get(q.dataset.checkId!)).length;
-          progress = recordQuiz(progress, lessonId, right, quiz.length);
-          const back = nextReturn(progress, `${lessonId}#`);
-          if (returnLine && back) {
-            const when = new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long' }).format(back);
-            // A date and a full stop. Never "due", never a count of what is owed.
-            returnLine.textContent = `${right} of ${quiz.length}. These questions come back from ${when}. Nothing to do until then.`;
-            returnLine.hidden = false;
-          }
-        }
-        saveProgress(storage, progress);
-      });
-    }
-
-    // "Mark as read" is separate from the quick check on purpose: a bookmark is not a reward,
-    // and nobody should have to pass a quiz to keep their place.
-    const button = root.querySelector<HTMLButtonElement>('[data-mark-read]');
-    const marked = root.querySelector<HTMLElement>('[data-marked]');
-    if (button && marked) {
-      const show = (done: boolean) => {
-        button.hidden = done;
-        marked.textContent = done ? 'Marked as read.' : '';
-      };
-      show(loadProgress(storage).done.includes(lessonId));
-      button.addEventListener('click', () => {
-        saveProgress(storage, markDone(loadProgress(storage), lessonId));
-        show(true);
-      });
-    }
-  }
-</script>

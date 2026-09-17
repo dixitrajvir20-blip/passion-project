@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { REGIONS, getRegion } from '../../../lib/regions';
+import { toolsFor } from '../../../lib/tools';
+import { lessonsFor } from '../../../lib/lessons';
 
 export function getStaticPaths() {
   return REGIONS.map((r) => ({ params: { region: r.code } }));
@@ -11,27 +13,14 @@ const region = getRegion(code!);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
 
-const tools = [
-  {
-    title: 'Break-even calculator',
-    answers: 'How many do I need to sell before I stop losing money?',
-    to: `${prefix}/tools/break-even`,
-    ready: true,
-  },
-  { title: 'Budget planner', answers: 'Where does my money actually go each month?', ready: false },
-  {
-    title: 'Savings and compound growth',
-    answers: 'What does a small monthly amount turn into over years?',
-    ready: false,
-  },
-  { title: 'Side-hustle profit', answers: 'Is this worth the hours I put into it?', ready: false },
-  { title: 'Loan repayments', answers: 'What does borrowing this actually cost me?', ready: false },
-];
+// "Spot the fake" is built from its lesson's situations, so it exists once that lesson does.
+const hasDrill = (await lessonsFor(region.code)).some((lesson) => lesson.data.explorable?.kind === 'drill');
+const tools = toolsFor(region.code).filter((tool) => tool.slug !== 'spot-the-fake' || hasDrill);
 ---
 
 <BaseLayout
   title={`Calculators — LaunchPad ${region.name}`}
-  description="Free calculators for break-even, budgeting, savings growth and loan repayments. Nothing you type leaves your browser."
+  description="Free calculators for break-even, budgeting, savings growth, side-hustle profit and loan repayments. Nothing you type leaves your browser."
   region={region.code}
   regionSub="tools"
   path="tools"
@@ -43,26 +32,17 @@ const tools = [
         <h1>Calculators</h1>
         <p class="lede">
           Each one answers a single question using your own numbers. Nothing you type is sent
-          anywhere — the maths runs in your browser.
+          anywhere: the maths runs in your browser.
         </p>
       </div>
 
       <ul class="list-plain tool-list" data-reveal-group>
         {tools.map((tool) => (
           <li data-reveal>
-            {tool.ready ? (
-              <a class="card card-arrow" href={tool.to}>
-                <h3>{tool.title}</h3>
-                <p>{tool.answers}</p>
-                <p class="card-meta">Ready to use</p>
-              </a>
-            ) : (
-              <div class="card card-outline">
-                <h3>{tool.title}</h3>
-                <p>{tool.answers}</p>
-                <p class="card-meta">Coming soon</p>
-              </div>
-            )}
+            <a class="card card-arrow" href={`${prefix}/tools/${tool.slug}`}>
+              <h2>{tool.title}</h2>
+              <p>{tool.answers}</p>
+            </a>
           </li>
         ))}
       </ul>
@@ -74,4 +54,6 @@ const tools = [
   .lede { margin-bottom: var(--space-7); }
   .tool-list { display: grid; gap: var(--space-4); }
   @media (min-width: 640px) { .tool-list { grid-template-columns: repeat(2, 1fr); } }
+  .tool-list h2 { font-size: var(--text-h3); padding-right: var(--space-7); }
+  .tool-list .card { min-height: 100%; }
 </style>

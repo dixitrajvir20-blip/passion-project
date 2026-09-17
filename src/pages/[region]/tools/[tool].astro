@@ -1,0 +1,146 @@
+---
+/**
+ * Every calculator page, from one template: what it answers, the example it opens on, the tool,
+ * the lessons that use it, and the edition's note. client:load, not client:visible: on a phone
+ * the tool sits below the fold, and a calculator that looks ready but ignores taps is worse than
+ * a moment of JavaScript.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BreakEven from '../../../islands/BreakEven.tsx';
+import BudgetPlanner from '../../../islands/BudgetPlanner.tsx';
+import CompoundGrowth from '../../../islands/CompoundGrowth.tsx';
+import SideHustle from '../../../islands/SideHustle.tsx';
+import LoanEmi from '../../../islands/LoanEmi.tsx';
+import Drill from '../../../components/lesson/Drill.astro';
+import LessonScript from '../../../components/lesson/LessonScript.astro';
+import { REGIONS, getRegion } from '../../../lib/regions';
+import { toolsFor, type ToolMeta } from '../../../lib/tools';
+import { lessonPath, lessonsFor, type Lesson } from '../../../lib/lessons';
+import '../../../styles/lesson.css';
+
+export async function getStaticPaths() {
+  const paths: { params: { region: string; tool: string }; props: { tool: ToolMeta; drill?: Lesson; related: Lesson[] } }[] = [];
+  for (const region of REGIONS) {
+    const lessons = await lessonsFor(region.code);
+    for (const tool of toolsFor(region.code)) {
+      const drill = tool.slug === 'spot-the-fake' ? lessons.find((l) => l.data.explorable?.kind === 'drill') : undefined;
+      if (tool.slug === 'spot-the-fake' && !drill) continue; // nothing to practise until its lesson exists
+      const related = drill ? [drill] : lessons.filter((l) => l.data.tool === tool.slug);
+      paths.push({ params: { region: region.code, tool: tool.slug }, props: { tool, drill, related } });
+    }
+  }
+  return paths;
+}
+
+const { region: code } = Astro.params;
+const { tool, drill, related } = Astro.props;
+const region = getRegion(code!);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const prefix = `${base}/${region.code}`;
+const t = region.tools;
+
+const scenario: Record<string, string> = {
+  'break-even': region.breakEven.scenario,
+  'side-hustle': t.sideHustle.scenario,
+  loan: t.loan.scenario,
+  budget: 'A first month of money with a job for every part of it.',
+  savings: 'A small amount, put aside every month.',
+};
+---
+
+<BaseLayout
+  title={`${tool.title} — LaunchPad ${region.name}`}
+  description={`${tool.answers} Free, and nothing you type is sent anywhere.`}
+  region={region.code}
+  regionSub={tool.regions ? 'tools' : `tools/${tool.slug}`}
+  path="tools"
+>
+  <section class="section">
+    <div class="container">
+      <div class="column">
+        <p class="crumb"><a href={`${prefix}/tools`}>← All calculators</a></p>
+        <h1>{tool.title}</h1>
+        <p class="answers">{tool.intro}</p>
+        {scenario[tool.slug] && (
+          <p class="scenario">It opens on an example: {scenario[tool.slug].charAt(0).toLowerCase() + scenario[tool.slug].slice(1)} Change any number to match your own.</p>
+        )}
+      </div>
+
+      {tool.slug === 'break-even' && (
+        <BreakEven
+          client:load
+          defaults={{ fixed: region.breakEven.fixed, variable: region.breakEven.variable, price: region.breakEven.price, units: region.breakEven.units }}
+          unitName={region.breakEven.unitName}
+          fixedHint={region.breakEven.fixedHint}
+          variableHint={region.breakEven.variableHint}
+          localeCode={region.locale}
+        />
+      )}
+      {tool.slug === 'budget' && <BudgetPlanner client:load defaults={t.budget} localeCode={region.locale} />}
+      {tool.slug === 'savings' && <CompoundGrowth client:load defaults={t.savings} localeCode={region.locale} />}
+      {tool.slug === 'side-hustle' && (
+        <SideHustle
+          client:load
+          defaults={{ units: t.sideHustle.units, price: t.sideHustle.price, cost: t.sideHustle.cost, fee: t.sideHustle.fee, hours: t.sideHustle.hours }}
+          unitName={t.sideHustle.unitName}
+          localeCode={region.locale}
+        />
+      )}
+      {tool.slug === 'loan' && (
+        <LoanEmi client:load defaults={{ principal: t.loan.principal, rate: t.loan.rate, months: t.loan.months }} localeCode={region.locale} />
+      )}
+
+      {drill && drill.data.explorable?.kind === 'drill' && (
+        <div class="column" data-lesson-id={drill.id} data-locale={region.locale}>
+          <Drill
+            lessonId={drill.id}
+            intro={drill.data.explorable.intro}
+            scenarios={drill.data.explorable.scenarios}
+            reflection={drill.data.explorable.reflection}
+            localeCode={region.locale}
+          />
+          {drill.data.reportTo && (
+            <p class="report">
+              {drill.data.reportTo.label}{' '}
+              {drill.data.reportTo.phone && (
+                <>Call <a href={`tel:${drill.data.reportTo.phone}`}><strong class="numbers">{drill.data.reportTo.phone}</strong></a> or report at{' '}</>
+              )}
+              <a href={drill.data.reportTo.url} rel="noopener noreferrer">{new URL(drill.data.reportTo.url).hostname}</a>.
+            </p>
+          )}
+        </div>
+      )}
+
+      <div class="column">
+        {related.length > 0 && (
+          <div class="related">
+            <h2>{drill ? 'The lesson behind this' : 'Lessons that use this'}</h2>
+            <ul>
+              {related.map((lesson) => (
+                <li><a href={`${base}/${lessonPath(lesson)}`}>{lesson.data.title}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {/* The edition's market-data note only where a rate is involved; elsewhere it is noise. */}
+        <p class="note">
+          For learning only. Not financial, legal, or tax advice. The numbers it opens with are an
+          example, not a prediction. {tool.slug === 'savings' && region.note}
+        </p>
+      </div>
+    </div>
+  </section>
+  {drill && <LessonScript />}
+</BaseLayout>
+
+<style>
+  .crumb { font-size: var(--text-sm); margin-bottom: var(--space-4); }
+  .crumb a { text-decoration: none; }
+  .crumb a:hover { text-decoration: underline; }
+  .answers { font-size: var(--text-lg); color: var(--ink-2); margin-bottom: var(--space-3); }
+  .scenario { color: var(--muted); margin-bottom: var(--space-7); }
+  .related { margin-top: var(--space-7); }
+  .related h2 { font-size: var(--text-h3); margin-top: 0; }
+  .related ul { padding-left: var(--space-5); }
+  .note { margin-top: var(--space-7); }
+</style>

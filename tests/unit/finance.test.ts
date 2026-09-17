@@ -3,6 +3,7 @@ import {
   breakEven,
   profitAtUnits,
   emi,
+  amortization,
   compoundGrowth,
   sideHustleProfit,
   budgetSplit,
@@ -170,5 +171,41 @@ describe('format', () => {
     expect(parseAmount('')).toBeNull();
     expect(parseAmount('abc')).toBeNull();
     expect(parseAmount('.')).toBeNull();
+  });
+});
+
+describe('amortization', () => {
+  it('ends at exactly zero and adds up to what emi() says', () => {
+    const rows = amortization(100000, 12, 24);
+    expect(rows).toHaveLength(2);
+    expect(rows.at(-1)!.balance).toBe(0);
+    const paid = rows.reduce((sum, r) => sum + r.paid, 0);
+    expect(paid).toBeCloseTo(emi(100000, 12, 24).totalPaid, 0);
+    const interest = rows.reduce((sum, r) => sum + r.interest, 0);
+    expect(interest).toBeCloseTo(emi(100000, 12, 24).totalInterest, 0);
+  });
+
+  it('charges the most interest in the first year, when the most is owed', () => {
+    const rows = amortization(10000, 6.5, 120);
+    expect(rows).toHaveLength(10);
+    expect(rows[0].interest).toBeGreaterThan(rows[9].interest);
+    expect(rows[0].balance).toBeLessThan(10000);
+  });
+
+  it('has a final part-year row when the term is not a whole number of years', () => {
+    const rows = amortization(5000, 8, 18);
+    expect(rows.map((r) => r.year)).toEqual([1, 2]);
+    expect(rows.at(-1)!.balance).toBe(0);
+  });
+
+  it('charges no interest at a zero rate', () => {
+    const rows = amortization(12000, 0, 12);
+    expect(rows[0].interest).toBe(0);
+    expect(rows[0].paid).toBeCloseTo(12000, 6);
+  });
+
+  it('returns nothing for a loan with no term or no amount', () => {
+    expect(amortization(1000, 5, 0)).toEqual([]);
+    expect(amortization(0, 5, 12)).toEqual([]);
   });
 });

@@ -44,3 +44,31 @@
   padding: var(--space-3) var(--space-4);
   font-variant-numeric: tabular-nums;
 }
+
+.tool .notice { margin: var(--space-4) 0 0; color: var(--muted); font-size: var(--text-sm); }
+.tool .how + .how { margin-top: var(--space-5); padding-top: var(--space-4); }
+.tool .table-wrap { margin-top: var(--space-3); }
+
+/* Savings chart. The viewBox is 320 wide and the chart never renders much wider than that, so
+   the labels stay near their token size instead of scaling up with the drawing. Two lines, told
+   apart by dash pattern and direct labels as well as colour, and always a table underneath. */
+.growth { margin: var(--space-7) 0 0; }
+.growth-chart { display: block; width: 100%; max-width: 440px; height: auto; }
+.growth-chart .axis { stroke: var(--chart-grid); stroke-width: 1; }
+.growth-chart .line-a { fill: none; stroke: var(--series-1); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.growth-chart .line-b { fill: none; stroke: var(--series-2); stroke-width: 2; }
+.growth-chart .chart-text { fill: var(--ink-2); font-family: var(--font-body); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
+.growth-chart .chart-text.strong { fill: var(--ink); font-weight: 700; }
+.growth figcaption { margin-top: var(--space-3); }
+.growth summary { font-weight: 400; color: var(--accent-text); }
+
+/* Budget lines: name on its own row on a phone, one row from 640px. */
+.budget-rows { border: 0; margin: 0 0 var(--space-5); padding: 0; min-width: 0; }
+.budget-rows legend { padding: 0; margin-bottom: var(--space-2); color: var(--ink); font-size: var(--text-md); font-weight: 700; }
+.budget-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto; gap: var(--space-2); align-items: center; padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+.budget-row .budget-name { grid-column: 1 / -1; }
+.budget-rows > .btn { margin-top: var(--space-3); }
+@media (min-width: 640px) {
+  .budget-row { grid-template-columns: 2fr 1fr 1fr auto; }
+  .budget-row .budget-name { grid-column: auto; }
+}

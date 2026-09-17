@@ -12,7 +12,8 @@ const out = process.argv[2] ?? 'screenshots';
 const base = process.env.BASE_URL ?? 'http://localhost:4321/passion-project/';
 const pages = [
   '', 'in', 'in/learn', 'in/learn/how-business-works', 'in/learn/how-business-works/chai-stall',
-  'in/review', 'in/tools/break-even', 'account', 'privacy', 'glossary',
+  'in/review', 'in/tools', 'in/tools/break-even', 'in/tools/savings', 'in/tools/budget', 'in/tools/loan',
+  'account', 'privacy', 'glossary',
 ];
 const viewports = [
   { name: '360', width: 360, height: 800, isMobile: true, deviceScaleFactor: 2 },

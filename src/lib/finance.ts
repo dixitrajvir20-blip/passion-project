@@ -154,3 +154,39 @@ export function budgetSplit(income: number, lines: BudgetLine[]): BudgetResult {
     leftover: income - spent,
   };
 }
+
+export interface ScheduleYear {
+  year: number;
+  paid: number;
+  interest: number;
+  /** What is still owed at the end of that year. */
+  balance: number;
+}
+
+/**
+ * A loan's repayment schedule, summarised by year. The last payment absorbs rounding, so the
+ * balance ends at exactly zero rather than at a few paise either side of it.
+ */
+export function amortization(principal: number, annualRatePercent: number, months: number): ScheduleYear[] {
+  if (months <= 0 || principal <= 0) return [];
+  const payment = emi(principal, annualRatePercent, months).emi;
+  const r = annualRatePercent / 100 / 12;
+
+  const years: ScheduleYear[] = [];
+  let balance = principal;
+  let paid = 0;
+  let interest = 0;
+  for (let month = 1; month <= months; month++) {
+    const monthInterest = balance * r;
+    const towardsLoan = month === months ? balance : payment - monthInterest;
+    balance = Math.max(0, balance - towardsLoan);
+    paid += towardsLoan + monthInterest;
+    interest += monthInterest;
+    if (month % 12 === 0 || month === months) {
+      years.push({ year: Math.ceil(month / 12), paid, interest, balance });
+      paid = 0;
+      interest = 0;
+    }
+  }
+  return years;
+}
