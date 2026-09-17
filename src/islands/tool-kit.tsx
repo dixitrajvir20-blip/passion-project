@@ -137,27 +137,50 @@ export function NumberField({ id, label, value, onInput, hint, error, min = '0',
   );
 }
 
-/** Reset and copy-link. The link carries the inputs in the query string and nothing else. */
+/**
+ * Reset, copy-link, and Share where the device has a share sheet (most phones). The link carries
+ * the inputs in the query string and nothing else; nothing is sent anywhere by this site.
+ */
 export function ToolActions({ query, onReset }: { query: Record<string, string>; onReset: () => void }) {
-  const [copied, setCopied] = useState('');
-  const copy = async () => {
+  const [said, setSaid] = useState('');
+  const [canShare, setCanShare] = useState(false);
+
+  // After mount, so the server-rendered markup and the first client render agree.
+  useEffect(() => setCanShare(typeof navigator.share === 'function'), []);
+
+  const link = () => {
     const url = new URL(window.location.href);
     url.search = new URLSearchParams(query).toString();
-    try {
-      await navigator.clipboard.writeText(url.toString());
-      setCopied('Link copied.');
-    } catch {
-      setCopied('Copying is blocked here. The address bar has the same link once you change a number.');
-    }
-    window.setTimeout(() => setCopied(''), 4000);
+    return url.toString();
   };
+  const say = (text: string) => {
+    setSaid(text);
+    window.setTimeout(() => setSaid(''), 4000);
+  };
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(link());
+      say('Link copied.');
+    } catch {
+      say('Copying is blocked here. Use your browser\u2019s share or copy-address option instead.');
+    }
+  };
+  const share = async () => {
+    try {
+      await navigator.share({ title: document.title, url: link() });
+    } catch {
+      // Closing the share sheet is not an error worth reporting.
+    }
+  };
+
   return (
     <>
       <div class="btn-row">
-        <button type="button" class="btn btn-secondary" onClick={() => { onReset(); setCopied(''); }}>Reset</button>
+        <button type="button" class="btn btn-secondary" onClick={() => { onReset(); setSaid(''); }}>Reset</button>
         <button type="button" class="btn btn-secondary" onClick={copy}>Copy link to these numbers</button>
+        {canShare && <button type="button" class="btn btn-secondary" onClick={share}>Share</button>}
       </div>
-      <p class="copied" role="status">{copied}</p>
+      <p class="copied" role="status">{said}</p>
     </>
   );
 }

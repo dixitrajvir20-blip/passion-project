@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { budgetSplit, type BudgetCategory } from '../lib/finance';
 import { money, number } from '../lib/format';
-import { CurrencyField, HowItWorks, NumberField, Result, toNumber, useFields, useLocale } from './tool-kit';
+import { CurrencyField, HowItWorks, NumberField, Result, ToolActions, toNumber, useFields, useLocale } from './tool-kit';
 import './tools.css';
 
 interface Row {
@@ -45,7 +45,6 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
   const { fields, set, reset: resetIncome } = useFields('bp', { income: defaults.income });
   const { locale, code, choose } = useLocale(localeCode);
   const [rows, setRows] = useState<Row[]>(defaults.rows);
-  const [copied, setCopied] = useState('');
 
   useEffect(() => {
     const shared = new URLSearchParams(window.location.search).get('rows');
@@ -65,18 +64,6 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
   const reset = () => {
     resetIncome();
     setRows(defaults.rows);
-    setCopied('');
-  };
-  const copy = async () => {
-    const url = new URL(window.location.href);
-    url.search = new URLSearchParams({ income: fields.income, rows: encodeRows(rows) }).toString();
-    try {
-      await navigator.clipboard.writeText(url.toString());
-      setCopied('Link copied.');
-    } catch {
-      setCopied('Copying is blocked here.');
-    }
-    window.setTimeout(() => setCopied(''), 4000);
   };
 
   return (
@@ -130,11 +117,7 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
             <button type="button" class="btn btn-secondary" onClick={add} disabled={rows.length >= MAX_ROWS}>Add a line</button>
           </fieldset>
 
-          <div class="btn-row">
-            <button type="button" class="btn btn-secondary" onClick={reset}>Reset</button>
-            <button type="button" class="btn btn-secondary" onClick={copy}>Copy link to these numbers</button>
-          </div>
-          <p class="copied" role="status">{copied}</p>
+          <ToolActions query={{ income: fields.income, rows: encodeRows(rows) }} onReset={reset} />
         </div>
 
         <div class="results">
