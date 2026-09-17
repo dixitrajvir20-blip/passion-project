@@ -1,0 +1,52 @@
+:root {
+  --paper:        #FBFAF7;
+  --paper-2:      #F4F1EA;
+  --ink:          #16181D;
+  --ink-2:        #3A3F4B;
+  --muted:        #5B6270;
+  --line:         #E3DED3;
+  --accent:       #1C5D3A;
+  --accent-deep:  #154A2E;
+  --accent-soft:  #E6F2EA;
+  --highlight:    #F2C14E;
+  --error:        #B42318;
+  --focus:        #1C5D3A;
+
+  --on-accent: #FFFFFF;
+
+  --font-head: 'Literata', Georgia, 'Times New Roman', serif;
+  --font-body: 'Atkinson Hyperlegible Next', 'Helvetica Neue', sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  --radius: 6px;
+  --measure: 72ch;
+  --column: 720px;
+  --header-h: 56px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #12161B;
+    --paper-2: #1A2027;
+    --ink: #EDEBE6;
+    --ink-2: #D5D2CB;
+    --muted: #B9BEC8;
+    --line: #2B333D;
+    --accent: #8FD1A8;
+    --accent-deep: #B5E3C6;
+    --accent-soft: #1D3327;
+    --focus: #8FD1A8;
+
+    /* Dark-mode buttons invert: accent fill needs dark text for 10.3:1. */
+    --on-accent: #12161B;
+  }
+}

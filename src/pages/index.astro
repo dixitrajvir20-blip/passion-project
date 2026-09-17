@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const href = (p: string) => `${base}/${p}`;
+
+const startHere = [
+  {
+    title: 'How a chai stall makes money',
+    summary: 'Unit economics explained with one cup of tea.',
+    meta: 'How business works · 5 min',
+  },
+  {
+    title: 'What to do with your first paycheck',
+    summary: 'A simple order of operations when nobody has shown you how.',
+    meta: 'Money basics · 6 min',
+  },
+  {
+    title: 'Test a business idea in a weekend',
+    summary: 'Find out if anyone wants it before you spend anything building it.',
+    meta: 'Start something · 7 min',
+  },
+];
+
+const tools = [
+  {
+    title: 'Break-even calculator',
+    summary: 'How many do you need to sell before you stop losing money?',
+    to: 'tools/break-even',
+    ready: true,
+  },
+  { title: 'Budget planner', summary: 'Where your money actually goes each month.', to: 'tools', ready: false },
+  { title: 'Savings growth', summary: 'What small monthly amounts turn into over years.', to: 'tools', ready: false },
+  { title: 'Loan / EMI', summary: 'What borrowing really costs once interest is added.', to: 'tools', ready: false },
+];
+---
+
+<BaseLayout
+  title="LaunchPad — learn how money and business work"
+  description="A free learning hub where anyone aged 15 to 21 can learn how money and business work, then practise with calculators built for phones."
+  path=""
+>
+  <section class="section intro">
+    <div class="container">
+      <div class="column">
+        <h1>Learn how money and business actually work.</h1>
+        <p class="lede">
+          LaunchPad is a free hub for anyone aged 15 to 21, anywhere in the world. Short
+          lessons you can read on a phone, and calculators you can use on your own numbers.
+          No sign-up, no ads, nothing to buy.
+        </p>
+        <div class="btn-row">
+          <a class="btn" href={href('learn')}>Start learning</a>
+          <a class="btn btn-secondary" href={href('tools')}>Try a calculator</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-head">Start here</h2>
+      <p class="muted">Three lessons that make the rest easier to follow.</p>
+      <div class="grid grid-3">
+        {startHere.map((item) => (
+          <article class="card">
+            <h3>{item.title}</h3>
+            <p>{item.summary}</p>
+            <p class="card-meta">{item.meta}</p>
+          </article>
+        ))}
+      </div>
+      <p class="note soon">
+        These lessons are being written now. The break-even calculator below already works.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-head">Calculators</h2>
+      <p class="muted">Put your own numbers in and see what happens.</p>
+      <div class="grid">
+        {tools.map((tool) =>
+          tool.ready ? (
+            <a class="card" href={href(tool.to)}>
+              <h3>{tool.title}</h3>
+              <p>{tool.summary}</p>
+              <p class="card-meta">Ready to use</p>
+            </a>
+          ) : (
+            <article class="card">
+              <h3>{tool.title}</h3>
+              <p>{tool.summary}</p>
+              <p class="card-meta">Coming soon</p>
+            </article>
+          ),
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="column">
+        <h2 class="section-head">Why this exists</h2>
+        <p>
+          Most money and business advice assumes you already have something: savings to
+          risk, a parent who has done it before, or an adviser to call. Plenty of people
+          have none of those, and the advice that reaches them is usually selling a course.
+        </p>
+        <p>
+          LaunchPad is free, has nothing to sell, and explains the idea underneath rather
+          than assuming one country's banking system.
+        </p>
+        <p><a href={href('about')}>More about the project</a></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro { padding-top: var(--space-8); }
+  .lede { font-size: 19px; color: var(--ink-2); }
+  @media (min-width: 900px) { .lede { font-size: 21px; } }
+  .btn-row { margin-top: var(--space-6); }
+  .section-head { margin-top: 0; }
+  .grid { margin-top: var(--space-5); }
+  .soon { margin-top: var(--space-5); }
+</style>

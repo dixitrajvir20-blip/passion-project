@@ -1,0 +1,79 @@
+---
+const base = import.meta.env.BASE_URL;
+const href = (p: string) => `${base.replace(/\/$/, '')}/${p}`.replace(/\/+$/, '') || '/';
+const { path = '' } = Astro.props;
+
+const links = [
+  { label: 'Learn', to: 'learn' },
+  { label: 'Tools', to: 'tools' },
+  { label: 'Glossary', to: 'glossary' },
+  { label: 'About', to: 'about' },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="wordmark" href={href('')}>LaunchPad</a>
+    <nav aria-label="Main">
+      <ul>
+        {links.map((l) => (
+          <li>
+            <a href={href(l.to)} aria-current={path === l.to ? 'page' : undefined}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-height: var(--header-h);
+    flex-wrap: wrap;
+  }
+
+  .wordmark {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--ink);
+    text-decoration: none;
+    padding: var(--space-2) 0;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    display: inline-block;
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 16px;
+    padding: var(--space-3) 0;
+    min-height: 24px;
+  }
+
+  nav a:hover { color: var(--accent); text-decoration: underline; }
+
+  nav a[aria-current='page'] {
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+</style>

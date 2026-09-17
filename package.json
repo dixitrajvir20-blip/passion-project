@@ -1,0 +1,39 @@
+{
+  "name": "launchpad",
+  "version": "0.1.0",
+  "description": "Free business and money education for ages 15-21, worldwide.",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run tests/unit",
+    "test:e2e": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dixitrajvir20-blip/passion-project.git"
+  },
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/dixitrajvir20-blip/passion-project/issues"
+  },
+  "homepage": "https://github.com/dixitrajvir20-blip/passion-project#readme",
+  "dependencies": {
+    "@astrojs/mdx": "^8.0.1",
+    "@astrojs/preact": "^6.0.5",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.3",
+    "preact": "^10.29.8"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "vitest": "^5.0.1"
+  },
+  "private": true
+}

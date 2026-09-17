@@ -1,0 +1,73 @@
+---
+const base = import.meta.env.BASE_URL;
+const href = (p: string) => `${base.replace(/\/$/, '')}/${p}`.replace(/\/+$/, '') || '/';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-cols">
+      <p class="wordmark">LaunchPad</p>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href={href('learn')}>Learn</a></li>
+          <li><a href={href('tools')}>Tools</a></li>
+          <li><a href={href('glossary')}>Glossary</a></li>
+          <li><a href={href('about')}>About</a></li>
+          <li><a href={href('privacy')}>Privacy</a></li>
+          <li><a href={href('disclaimer')}>Disclaimer</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="muted small disclaimer">
+      For learning only. Not financial, legal, or tax advice.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    background: var(--paper-2);
+    padding: var(--space-7) 0 var(--space-6);
+    margin-top: var(--space-8);
+  }
+
+  .footer-cols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .wordmark {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    display: inline-block;
+    color: var(--ink-2);
+    font-size: 16px;
+    padding: var(--space-2) 0;
+    text-decoration: none;
+  }
+  a:hover { color: var(--accent); text-decoration: underline; }
+
+  .disclaimer {
+    margin: var(--space-6) 0 0;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const tracks = [
+  {
+    title: 'Money basics',
+    summary:
+      'What to do with money once you have some: where it goes, why it loses value, and how small amounts grow.',
+    lessons: [
+      'Your first paycheck or pocket money: where it should go',
+      'Needs, wants, and the 50/30/20 idea',
+      'Compound growth explained with small monthly amounts',
+      'Scams that target students',
+    ],
+  },
+  {
+    title: 'Start something',
+    summary:
+      'Turning an idea into something real, starting with almost no money and no contacts.',
+    lessons: [
+      'Test a business idea in a weekend without spending money',
+      'Pricing your first product',
+      'Break-even: how many do you need to sell?',
+      'Selling online: where your first customers actually are',
+    ],
+  },
+  {
+    title: 'How business works',
+    summary:
+      'The machinery underneath: where profit comes from, and why businesses make the choices they do.',
+    lessons: [
+      'How a chai stall makes money',
+      'What an income statement tells you',
+      'Supply and demand around you',
+      'How businesses use AI, and where it goes wrong',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Learn — LaunchPad"
+  description="Three tracks covering money basics, starting a business, and how businesses actually work. Short lessons written for ages 15 to 21."
+  path="learn"
+>
+  <section class="section">
+    <div class="container">
+      <div class="column">
+        <h1>Learn</h1>
+        <p class="lede">
+          Three tracks. Start anywhere — each lesson stands on its own and takes under ten
+          minutes.
+        </p>
+      </div>
+
+      <div class="tracks">
+        {tracks.map((track) => (
+          <article class="track">
+            <h2>{track.title}</h2>
+            <p>{track.summary}</p>
+            <ol class="lessons">
+              {track.lessons.map((lesson) => (
+                <li>{lesson}</li>
+              ))}
+            </ol>
+          </article>
+        ))}
+      </div>
+
+      <div class="column">
+        <p class="note">
+          The lessons are being written now, so the titles above are the plan rather than
+          finished pages. The <a href={`${base}/tools/break-even`}>break-even calculator</a>
+          from the "Start something" track already works.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 19px; color: var(--ink-2); margin-bottom: var(--space-7); }
+  .tracks { display: grid; gap: var(--space-6); }
+  @media (min-width: 900px) { .tracks { grid-template-columns: repeat(3, 1fr); gap: var(--space-5); } }
+  .track {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+  }
+  .track h2 { margin-top: 0; font-size: 22px; }
+  .lessons { margin: 0; padding-left: var(--space-5); color: var(--ink-2); font-size: 16px; }
+  .lessons li + li { margin-top: var(--space-2); }
+  .note { margin-top: var(--space-7); }
+</style>

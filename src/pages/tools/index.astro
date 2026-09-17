@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const tools = [
+  {
+    title: 'Break-even calculator',
+    answers: 'How many do I need to sell before I stop losing money?',
+    to: 'tools/break-even',
+    ready: true,
+  },
+  {
+    title: 'Budget planner',
+    answers: 'Where does my money actually go each month?',
+    ready: false,
+  },
+  {
+    title: 'Savings and compound growth',
+    answers: 'What does a small monthly amount turn into over years?',
+    ready: false,
+  },
+  {
+    title: 'Side-hustle profit',
+    answers: 'Is this worth the hours I put into it?',
+    ready: false,
+  },
+  {
+    title: 'Loan / EMI',
+    answers: 'What does borrowing this actually cost me?',
+    ready: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Calculators — LaunchPad"
+  description="Free calculators for break-even, budgeting, savings growth, side-hustle profit and loan repayments. Built for phones, no sign-up."
+  path="tools"
+>
+  <section class="section">
+    <div class="container">
+      <div class="column">
+        <h1>Calculators</h1>
+        <p class="lede">
+          Each one answers a single question using your own numbers. Nothing you type is
+          sent anywhere — the maths runs in your browser.
+        </p>
+      </div>
+
+      <ul class="list-plain tool-list">
+        {tools.map((tool) => (
+          <li>
+            {tool.ready ? (
+              <a class="card" href={`${base}/${tool.to}`}>
+                <h3>{tool.title}</h3>
+                <p>{tool.answers}</p>
+                <p class="card-meta">Ready to use</p>
+              </a>
+            ) : (
+              <div class="card">
+                <h3>{tool.title}</h3>
+                <p>{tool.answers}</p>
+                <p class="card-meta">Coming soon</p>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 19px; color: var(--ink-2); margin-bottom: var(--space-7); }
+  .tool-list { display: grid; gap: var(--space-4); }
+  @media (min-width: 640px) { .tool-list { grid-template-columns: repeat(2, 1fr); } }
+</style>
