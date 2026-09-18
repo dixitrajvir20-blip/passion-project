@@ -1,0 +1,5 @@
+{
+  "term": "Cooling-off period",
+  "define": "The first days after taking a loan, when you can still back out. For digital loans from RBI-regulated lenders it is at least one day: you repay the loan and the cost for those days, with no penalty.",
+  "example": "You borrow on Monday and find on Tuesday you do not need it. Within the cooling-off period you can hand it back without a penalty, though a small processing fee may be kept."
+}

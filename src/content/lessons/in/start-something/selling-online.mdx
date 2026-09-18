@@ -1,0 +1,296 @@
+---
+title: "Selling on WhatsApp and Instagram, one parcel at a time"
+summary: "Posting can take nearly half of what a sale leaves. Price it in, and call a sale paid only when your app shows it."
+region: in
+track: start-something
+order: 4
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "LaunchPad editor"
+lastReviewed: 2026-09-18
+
+situation: "You make beaded earrings and post photos on your WhatsApp status and an Instagram page. Friends of friends start messaging to order. Ten sales in, it feels like it is working, but there is less money at the end of the month than you expected."
+
+prediction:
+  q: "Your earrings sell for ₹250 a pair. Beads, hooks and packing cost ₹90 a pair, and posting each order costs ₹70, which you do not charge the buyer. Your phone data and tools cost ₹1,200 a month. How many pairs must you sell in a month before you make any profit?"
+  options:
+    - text: "5 pairs"
+      why: "That is ₹1,200 ÷ ₹250, as if the whole price were yours. But ₹160 of every ₹250 goes on making, packing and posting the pair."
+    - text: "8 pairs"
+      why: "That counts ₹160 kept per pair and leaves out the courier. ₹1,200 ÷ ₹160 is 7.5, so 8. But the ₹70 for posting comes out of the same ₹250."
+    - text: "14 pairs"
+      why: "You keep ₹250 − ₹90 − ₹70 = ₹90 a pair. ₹1,200 ÷ ₹90 is 13.3, so 14. Leaving out delivery would have put the count at 8."
+  answer: 2
+
+takeaways:
+  - "What one order leaves you is the price minus making, packing and posting it. Delivery is a cost of the sale, even when the buyer never sees it."
+  - "A sale is paid when the money shows in your own UPI or bank app. A screenshot, a code sent to you or a request to approve is never proof."
+  - "Cash on delivery puts the risk on you, because a refused parcel costs postage both ways. Ask new buyers for something upfront."
+
+worked:
+  kind: margin
+  context: "Your earrings from the top of the page: ₹250 a pair, ₹160 to make, pack and post one, and ₹1,200 a month for phone data and tools."
+  unitName: pairs
+  fixed: 1200
+  variable: 160
+  price: 250
+
+explorable:
+  kind: drill
+  intro: "Six chats of the kind a new seller gets in the first month. At least one is an ordinary order, so refusing everyone is not the answer. Decide what you would do, then look."
+  scenarios:
+    - screen:
+        kind: chat
+        from: "Kabir (new buyer)"
+        lines:
+          - "Sent ₹2,500 by mistake, I meant ₹250."
+          - "Please return ₹2,250 to my other number today."
+          - "Screenshot attached. It is for my mother's fees."
+        action: "Send ₹2,250"
+      check:
+        q: "Kabir ordered one pair at ₹250 an hour ago. This arrives with a screenshot of a ₹2,500 payment. What do you do?"
+        options:
+          - text: "Send the ₹2,250 back, since the screenshot shows the payment"
+            why: "A screenshot is a picture, and pictures can be edited. The tell is a refund to a different number, in a hurry, with a sad reason attached."
+          - text: "Open your own UPI or bank app and see what actually arrived"
+            why: "Your account history is the only proof. Often nothing extra arrived at all. If it really did, do not send it on to another number; ask your bank how to return it."
+          - text: "Send half now and the rest once he confirms"
+            why: "Half of money that may never have arrived is still your own money leaving. The slip is acting on the picture before checking your account."
+        answer: 1
+    - screen:
+        kind: qr
+        from: "Sana (new buyer)"
+        lines:
+          - "Paying for 3 pairs now."
+          - "Scan this code and enter your PIN to receive ₹750."
+        action: "Scan to receive"
+      check:
+        q: "Sana wants three pairs and says she will pay first. Instead of asking for your UPI ID, she sends this code. What do you do?"
+        options:
+          - text: "Scan it, as long as the amount shown is ₹750"
+            why: "The amount is not the tell. Scanning a code starts a payment from your side, so ₹750 would leave you, not arrive."
+          - text: "Scan it, but stop before the PIN page"
+            why: "The scan already opens a payment to her, one tap from done. The cue came earlier: a code sent to you so that you can receive."
+          - text: "Leave the code. Send her your own UPI ID or QR code to pay into"
+            why: "A code tells a phone where to send money. The buyer scans the seller's code, never the other way round. A real buyer is happy to pay into yours."
+        answer: 2
+    - screen:
+        kind: chat
+        from: "Rhea (new buyer)"
+        lines:
+          - "Payment done, see screenshot."
+          - "Please post today, it is a birthday gift."
+          - "Bank server is slow, it will show in 2 hours."
+        action: "Post the parcel now"
+      check:
+        q: "Rhea's screenshot shows ₹570 paid for two pairs with delivery. Your own app shows nothing from her. What do you do?"
+        options:
+          - text: "Wait until the money shows in your own app, then post"
+            why: "UPI money usually lands within seconds. Until it reaches your account, you have not been paid, whatever the picture says. A real buyer can wait."
+          - text: "Post it now, since the screenshot has a transaction number"
+            why: "A number on a picture can be typed in by anyone. The tell is a promise that the money will show later, together with a rush."
+          - text: "Post it, and ask her to pay again if the money never comes"
+            why: "Once the parcel has gone, you have nothing left to ask with. Your own app already answered the question before you packed."
+        answer: 0
+    - screen:
+        kind: chat
+        from: "Meera (buyer)"
+        lines:
+          - "Paid ₹320 to your UPI ID for one pair with delivery."
+          - "Please send it to Nagpur. Address below."
+        action: "Pack and post"
+      check:
+        q: "You sent Meera your UPI ID and the price with delivery. You open your own UPI app, and ₹320 from her is in the history. What do you do?"
+        options:
+          - text: "Ask her for a screenshot as well before posting"
+            why: "Her screenshot adds nothing your own app does not already show. The credit in your history is the proof."
+          - text: "Pack and post it, then send her the tracking number"
+            why: "The money is in your account, you checked it yourself, and the amount matches. This is an ordinary sale, and the tracking number builds trust for her next order."
+          - text: "Refuse, because buyers who pay first are often scams"
+            why: "Paying first is how an honest online sale usually works. The risk is in what a buyer asks you to do, not in a buyer paying you."
+        answer: 1
+    - screen:
+        kind: chat
+        from: "Arjun (new buyer)"
+        lines:
+          - "Want 6 pairs for my sisters, cash on delivery."
+          - "The address is in another state. Send today please."
+        action: "Post 6 pairs on cash on delivery"
+      check:
+        q: "You have never sold to Arjun before. Six pairs come to ₹1,500, and you pay the courier whether or not he accepts the parcel. What do you do?"
+        options:
+          - text: "Post all six today on cash on delivery"
+            why: "If the parcel is refused, you pay postage both ways and get nothing, while six pairs sit with the courier. The tell is a big first order with nothing at stake for the buyer."
+          - text: "Refuse, because cash on delivery is always a scam"
+            why: "Plenty of honest buyers prefer to pay at the door. The question is only who carries the cost if the parcel comes back."
+          - text: "Ask him to pay the delivery charge upfront by UPI, and the rest on delivery"
+            why: "A small advance shows the order is real and covers your postage if it is refused. An honest buyer can usually agree to that."
+        answer: 2
+    - screen:
+        kind: request
+        from: "AK Traders (merchant)"
+        amount: 1000
+        lines:
+          - "Payment request to you"
+          - "Note: Bulk order advance. Approve to receive."
+        action: "Approve and enter UPI PIN"
+      check:
+        q: "A buyer who says he runs a shop wants 20 pairs to resell. He says his advance will come as a request from his shop account, and this appears. What do you do?"
+        options:
+          - text: "Decline it, and send him your UPI ID or QR code to pay into"
+            why: "A request is a bill. Approving it pays out, whatever the note says. A shop paying you uses your UPI ID or scans your code, like any other buyer."
+          - text: "Approve it, since it comes from a shop account"
+            why: "A shop name on a request proves nothing about which way the money moves. The tell is the note: approve to receive."
+          - text: "Approve it, since a bulk order is worth a small risk"
+            why: "There is no order here yet, only a bill. Approving it and entering your PIN sends ₹1,000 to him."
+        answer: 0
+  reflection: "Pick the chat you were least sure about. What did you look at first: the message, or your own app?"
+
+practice:
+  kind: margin
+  context: "A friend sells hand-painted tote bags at ₹450. Cloth, paint and packing cost ₹210 a bag, posting one costs ₹90, and her monthly costs are ₹1,800."
+  unitName: bags
+  fixed: 1800
+  variable: 300
+  price: 450
+
+quiz:
+  - q: "Your post says ₹250 a pair with free delivery, priced for the ₹70 it costs to post nearby. Orders from far away cost ₹120 to post. What change keeps every sale worth making?"
+    options:
+      - text: "Keep free delivery everywhere, since far orders still make money"
+        why: "They do, but only ₹250 − ₹90 − ₹120 = ₹40 each, not ₹90. The more far orders come in, the thinner the month."
+      - text: "Charge far buyers the extra after they have paid"
+        why: "A charge that appears after payment breaks the trust the post built. Delivery belongs in the price the buyer sees before paying."
+      - text: "Keep free delivery nearby, and state a ₹50 extra for far areas in the post"
+        why: "₹300 − ₹90 − ₹120 leaves ₹90, the same as a nearby sale. Saying it in the post means no buyer is surprised."
+    answer: 2
+  - q: "Last month 2 of your 20 cash-on-delivery parcels were refused, and each cost ₹140 in postage both ways. The other 18 kept ₹90 each. What is the most useful change?"
+    options:
+      - text: "Stop selling online, since the refusals show it does not work"
+        why: "The 18 good sales kept ₹1,620 and the refusals cost ₹280. The selling works; the leak is in one way of being paid."
+      - text: "Ask new buyers for the delivery charge upfront, and keep cash on delivery for repeat buyers"
+        why: "Refusals come from buyers with nothing at stake. A small advance covers your postage if they refuse, and regulars keep the easy option."
+      - text: "Add ₹14 to every price to cover the refusals"
+        why: "₹280 spread over 20 parcels is ₹14 each, charged to the buyers who did pay. It hides the leak instead of closing it."
+    answer: 1
+  - q: "Your earrings get plenty of likes but few orders. People comment asking the price and the delivery charge, and many drift off before you reply. What do you change first?"
+    options:
+      - text: "Put the price, the delivery charge and the posting time in every post"
+        why: "Each question a buyer has to ask is a point where they can drift off. A post that answers them does part of the selling while you are in class."
+      - text: "Post more often, so more people see the earrings"
+        why: "More people seeing the same post meet the same missing answers. The drop-off happens at the question, not before it."
+      - text: "Cut the price to ₹199 to get attention"
+        why: "The people asking did not know the price yet, so price was not what stopped them. A cut lowers what you keep on every pair."
+    answer: 0
+  - q: "You have a table at a college fest. A buyer holds up a payment successful screen on her phone and turns to leave, with five people waiting behind her. What do you do?"
+    options:
+      - text: "Let her go, since the screen looked real"
+        why: "Her screen shows what her phone says. Only your own app shows what reached you."
+      - text: "Ask her to wait while you check the credit in your own app"
+        why: "It takes a few seconds. A queue is when a failed or faked payment slips through, and checking every sale makes it routine, not personal."
+      - text: "Ask the next person in the queue whether they saw the screen too"
+        why: "A witness sees the same picture. Proof of payment lives in your account, not on her phone."
+    answer: 1
+
+transfer:
+  - "The first time someone asks the price under your post. Answer with the full price, delivery included, and add it to the post for the next person."
+  - "Whenever a buyer sends a screenshot, a code or a request. Open your own app first: it is the only record that counts."
+  - "When you sell at a college fest or a weekend market. The rule is the same: paid means in your account."
+  - "When the courier changes its rates. Redo the sum of what one order leaves before you take the next one."
+
+glossary: [margin, variable-cost, fixed-cost, upi, qr-code, upi-pin, collect-request, overpayment-scam, cash-on-delivery, cash-flow]
+tool: side-hustle
+
+reportTo:
+  phone: "1930"
+  url: "https://cybercrime.gov.in"
+  label: "If a fake buyer has taken money from you, report it fast. A quick report gives the banks a chance to block the money before it moves on."
+
+sources:
+  - title: "Business Studies Part II, Class 12, Chapter 10: Marketing, product cost and physical distribution (NCERT, 2024 print)"
+    url: "https://ncert.nic.in/textbook/pdf/lebs202.pdf"
+    publisher: "National Council of Educational Research and Training"
+  - title: "Financial Awareness Messages (FAME), fourth edition, Message 13: UPI dos and don'ts (February 2024)"
+    url: "https://www.rbi.org.in/commonman/images/FAME202426022024.pdf"
+    publisher: "Reserve Bank of India, Financial Inclusion and Development Department"
+  - title: "Advisory: cybercriminals tampering with QR codes to defraud citizens (26 April 2022)"
+    url: "https://cybercrime.gov.in/Webform/theme/resources/advisories/CybercriminalsTamperingwithQRCodestodefraudCitizens.pdf"
+    publisher: "Indian Cyber Crime Coordination Centre (I4C), Ministry of Home Affairs"
+  - title: "Steps for reporting financial cyber frauds: helpline 1930 and the reporting portal (as read on 18 September 2026)"
+    url: "https://cybercrime.gov.in/uploadmedia/instructions_citizenreportingcyberfrauds.pdf"
+    publisher: "National Cyber Crime Reporting Portal, Ministry of Home Affairs"
+---
+
+## What one order really costs
+
+Look at one order. A pair of earrings sells for ₹250. Beads, hooks, a box and an envelope cost ₹90. That leaves ₹160.
+
+Then you post it. Say the courier charges ₹70 for a small parcel. Now one pair leaves ₹90, and that ₹90 is your <Term id="margin">margin</Term>.
+
+**Delivery is part of what one sale costs, even when the buyer never sees it.** Like the beads, it is a <Term id="variable-cost">variable cost</Term>: every extra parcel adds another ₹70. India's Class 12 business studies textbook counts getting a product to the buyer as part of its cost, next to making it.
+
+Your phone data and tools cost the same each month, however many pairs you sell. Those are <Term id="fixed-cost">fixed costs</Term>.
+
+<svg class="chart" viewBox="0 0 320 176" role="img" aria-labelledby="parcel-title parcel-desc">
+  <title id="parcel-title">Where ₹250 from one pair goes, without and with the courier</title>
+  <desc id="parcel-desc">Two bars for one pair sold at ₹250. With the courier left out, ₹90 goes on making and packing and ₹160 is kept. With the courier counted, ₹90 goes on making and packing, ₹70 on the courier, and ₹90 is kept.</desc>
+  <text class="chart-label" x="0" y="14">Making, packing ₹90</text>
+  <text class="chart-label" x="320" y="14" text-anchor="end">Kept ₹160</text>
+  <rect class="chart-b" x="0" y="22" width="114" height="28" rx="6" />
+  <rect class="chart-a" x="118" y="22" width="202" height="28" rx="6" />
+  <text class="chart-note" x="0" y="68">Courier left out</text>
+  <text class="chart-label" x="0" y="92">Making, packing ₹90</text>
+  <text class="chart-label" x="320" y="92" text-anchor="end">Kept ₹90</text>
+  <rect class="chart-b" x="0" y="100" width="112" height="28" rx="6" />
+  <rect class="chart-b" x="116" y="100" width="88" height="28" rx="6" />
+  <rect class="chart-a" x="208" y="100" width="112" height="28" rx="6" />
+  <text class="chart-label" x="160" y="146" text-anchor="middle">Courier ₹70</text>
+  <text class="chart-note" x="0" y="170">Courier counted</text>
+</svg>
+
+| One pair at ₹250 | Courier left out | Courier counted |
+| --- | --- | --- |
+| Making and packing | ₹90 | ₹90 |
+| Courier | ₹0 | ₹70 |
+| Kept | ₹160 | ₹90 |
+
+## Free delivery is never free
+
+You can put delivery inside the price, or show it as its own charge. Either works, as long as it is counted somewhere.
+
+**Say the full price, delivery included, before anyone pays.** A charge that turns up after payment feels like a trick, even when it is fair.
+
+Parcels to far-away places often cost more to post. Say that in the post too: one price nearby, and a stated extra for further away. When the courier changes its rates, redo the sum.
+
+## A post a stranger can trust
+
+A buyer cannot pick up your earrings, so the post has to do what your hands would. Use photos you took yourself, in daylight, with a coin or a hand for size. Put the price and the delivery charge in the same post. Say how many days posting takes, and what happens if a pair arrives broken.
+
+**Every question a buyer has to ask is a place to give up.** Answer them before they are asked.
+
+Share messages from happy buyers only with their OK, with names and numbers hidden. Reply when you said you would. On a small page, being reliable is most of the brand.
+
+## Paid means in your own account
+
+To be paid by <Term id="upi">UPI</Term>, you need only your UPI ID or your own <Term id="qr-code">QR code</Term>. The buyer types or scans it and pays. Your only job is to check.
+
+**A sale is paid when the money shows in your own UPI or bank app, and not before.** A screenshot is a picture, and pictures can be edited. A text saying you have been credited can come from anyone.
+
+UPI money usually lands within seconds. So open your app and find the credit before you pack. A real buyer will not mind the minute it takes.
+
+## The fake buyer's few tricks
+
+A fake buyer mostly tries to make you pay them. Your <Term id="upi-pin">UPI PIN</Term> only ever sends money, so any step that needs it is money leaving you.
+
+The tricks repeat. A code sent to you so that you can receive: scanning only ever pays. A <Term id="collect-request">collect request</Term> with a note saying approve to receive. A screenshot with a rush. An <Term id="overpayment-scam">overpayment</Term>, where the buyer claims to have sent too much and wants the extra back.
+
+India's national cybercrime centre warns that criminals send or swap codes to steer payments to themselves. **Whatever the story, check your own app before anything leaves you.** If money has gone, call 1930 or report at cybercrime.gov.in straight away.
+
+## Cash on delivery moves the risk to you
+
+With <Term id="cash-on-delivery">cash on delivery</Term>, the buyer pays the courier at the door. The courier passes the money on to you later. Some buyers trust it more on a first order from a stranger.
+
+The risk sits with you. If the buyer refuses the parcel, you usually pay to send it and again to get it back. At ₹70 each way that is ₹140, and you receive nothing. **One refused parcel costs more than the ₹90 a good sale leaves.**
+
+Money arriving days later also squeezes your <Term id="cash-flow">cash flow</Term>: next week's beads need paying for now. Two fixes: keep cash on delivery for buyers who have ordered before, or ask a new buyer to pay the delivery charge first.

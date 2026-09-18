@@ -1,0 +1,190 @@
+---
+title: "Pricing for customers in another country"
+summary: "Postage, returns and VAT change what you keep from a sale abroad. Price from the full cost, not the home price."
+region: eu
+track: start-something
+order: 2
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "LaunchPad editor"
+lastReviewed: 2026-09-18
+
+situation: "You print tote bags at home in Portugal and sell them online for €20. A buyer in Austria messages to ask if you post there. Before you say yes, you want to know if €20 still works."
+
+prediction:
+  q: "At home a bag sells for €20. It costs €9 to make, pack and post, so you keep €11. Post to Austria costs €5 more, and you offer free delivery. What price abroad keeps the same €11 per bag?"
+  options:
+    - text: "€20, the same as at home"
+      why: "The bag is the same, but the sale is not. The extra €5 of post comes out of the €11, so each bag abroad leaves €6."
+    - text: "€25"
+      why: "Making and sending the bag abroad costs €14, and €25 − €14 leaves €11. That is before returns and VAT, which come next."
+    - text: "€40, double for abroad"
+      why: "Doubling adds €20 to cover a cost of €5. The extra is not wrong in itself, but buyers compare prices, and it was not needed to keep €11."
+  answer: 1
+
+takeaways:
+  - "A sale abroad costs more to finish than a sale at home. Postage and packing come out of what you keep unless the price covers them."
+  - "Online buyers in the EU can cancel within 14 days without a reason. Set aside a little of every price for the orders that come back."
+  - "Each country sets its own VAT rates and limits. If you charge VAT, that part of the price is not yours, and your own tax authority has the rules."
+
+worked:
+  kind: margin
+  context: "Your bag, sold to Austria at €25 with free delivery. Each bag costs €6 to make, €8 to pack and post, and €1 set aside for returns: €15 in all. The shop costs €180 a month. No VAT is charged in this example."
+  unitName: bags
+  fixed: 180
+  variable: 15
+  price: 25
+
+explorable:
+  kind: margin
+  unitName: bags
+  fixed: 180
+  variable: 15
+  prices: [15, 18, 20, 25, 30]
+  prompts:
+    - "Tap €20, your home price. Post abroad takes most of what you kept. Compare the bags needed with the answer at €25."
+    - "Tap €15, the full cost of one sale abroad. What does the answer become, and why?"
+
+practice:
+  kind: margin
+  context: "A friend in Belgium sells plain notebooks to buyers in France and the Netherlands for €22, with free delivery. Each costs €5 to make, €6 to pack and post, and €1 set aside for returns. Her shop costs €120 a month."
+  unitName: notebooks
+  fixed: 120
+  variable: 12
+  price: 22
+
+quiz:
+  - q: "A buyer in Austria sends back a plain bag nine days after it arrived, with no reason given. Your shop page said buyers pay the return post. What do you do?"
+    options:
+      - text: "Refuse, because nothing is wrong with the bag"
+        why: "Online buyers in the EU can cancel within 14 days of delivery without giving a reason. A fault is not needed, so refusing breaks the rule."
+      - text: "Refund the price and the standard delivery charge, and let the buyer pay the return post"
+        why: "That is the rule. The buyer was told about return post before ordering, so that cost is theirs. The refund is due within 14 days of being told."
+      - text: "Refund the price, but keep the delivery charge the buyer paid"
+        why: "The standard delivery charge comes back too. Only extra paid for a faster option, such as express post, can be kept."
+    answer: 1
+  - q: "Two orders arrive on the same day. A buyer in Ireland wants a plain bag. A buyer in Belgium wants a bag printed with her own name. Which order needs room in its price for a possible return?"
+    options:
+      - text: "Both, since any online order can be cancelled"
+        why: "Personalised goods are an exception to the 14-day right. The named bag was made for one person, so it cannot come back just because she changed her mind."
+      - text: "Only the plain bag"
+        why: "The plain bag can come back within 14 days for any reason. The bag with a name on it was made to order, so the right does not cover it."
+      - text: "Neither, since both buyers are in other countries"
+        why: "The 14 days apply to online buyers across the EU. Selling across a border does not remove them."
+    answer: 1
+  - q: "A friend runs a similar shop in Belgium and charges VAT. She tells you to use her rate for your shop in Portugal. What do you do?"
+    options:
+      - text: "Use her rate, since VAT is an EU tax"
+        why: "The EU sets shared rules, but each country sets its own rates. Her rate belongs to her country, not yours."
+      - text: "Ask your own national tax authority whether you charge VAT, and at what rate"
+        why: "Rates and the limits for small sellers are national. Your own tax authority can say whether you charge VAT at all, and at what rate."
+      - text: "Leave VAT out, since online sales are not taxed"
+        why: "Online sales are covered by VAT like any other sale. Some small sellers are exempt, but that is a national rule to check, not something to assume."
+    answer: 1
+  - q: "Your shop page shows a bag at €20, and post to Austria is €7 on top. When must the buyer see the €27 total?"
+    options:
+      - text: "On the invoice sent after the order"
+        why: "By then the buyer has already agreed to pay. The total, with every extra charge, has to be clear before the order is placed."
+      - text: "On the order page, just before they place the order"
+        why: "That is the rule: the full price with delivery is shown before the buyer commits. A buyer who sees €27 up front is not surprised later."
+      - text: "Only if the buyer asks"
+        why: "The total is not something to wait to be asked about. Every buyer must be shown it, with extra charges, before ordering."
+    answer: 1
+  - q: "Post to Spain costs you €5 and post to Finland costs €9. You want one price with free delivery for both. Which postage do you build the price on?"
+    options:
+      - text: "The €5 to Spain, the cheaper one"
+        why: "Every order to Finland then costs €4 more than the price allows, and it comes out of what you keep."
+      - text: "The €9 to Finland, the more expensive one"
+        why: "One price with free delivery has to cover the most expensive trip. If that makes the price too high for nearer buyers, show postage by country instead."
+      - text: "The average, €7"
+        why: "An average works only if orders split evenly. If most go to Finland, each of those loses €2 against the plan."
+    answer: 1
+
+transfer:
+  - "When a buyer from another country asks if you post there. Work out the full cost of that one sale before you say yes."
+  - "When you set up a shop page. Say who pays return post, and show the total price before the order is placed."
+  - "When your sales abroad grow. The VAT rules change with how much you sell, so check again with your national tax authority."
+  - "When you buy online yourself. The same 14 days protect you as a buyer."
+
+glossary: [margin, variable-cost, right-of-withdrawal, vat, fixed-cost]
+tool: break-even
+
+sources:
+  - title: "E-commerce, distance and off-premises selling (Your Europe, last checked 12 July 2026)"
+    url: "https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm"
+    publisher: "European Commission, Your Europe"
+  - title: "Returns: cancelling a purchase made online (Your Europe, last checked 28 April 2026)"
+    url: "https://europa.eu/youreurope/citizens/consumers/shopping/returns/index_en.htm"
+    publisher: "European Commission, Your Europe"
+  - title: "VAT rules and rates (Your Europe, last checked 13 July 2026)"
+    url: "https://europa.eu/youreurope/business/taxation/vat/vat-rules-rates/index_en.htm"
+    publisher: "European Commission, Your Europe"
+  - title: "Cross-border VAT: selling online to customers in other EU countries (Your Europe, last checked 13 July 2026)"
+    url: "https://europa.eu/youreurope/business/taxation/vat/cross-border-vat/index_en.htm"
+    publisher: "European Commission, Your Europe"
+  - title: "VAT exemptions for small businesses (Your Europe, last checked 12 July 2026)"
+    url: "https://europa.eu/youreurope/business/taxation/vat/vat-exemptions/index_en.htm"
+    publisher: "European Commission, Your Europe"
+---
+
+## One bag, two trips
+
+Look at a single bag. At home in Portugal it sells for €20. The blank bag and the ink cost €6, the packaging €1 and the post €2. You keep €11. That €11 is your <Term id="margin">margin</Term>.
+
+Now send the same bag to Austria. The bag and the ink cost the same. The post does not: in this example it costs €7, not €2. Postage is a <Term id="variable-cost">variable cost</Term>, because every sale pays it again.
+
+**Keep the €20 price with free delivery, and the extra €5 comes straight out of the €11.** The bag is the same. The sale is not.
+
+## Returns belong in the price
+
+Online buyers in the EU have a <Term id="right-of-withdrawal">right of withdrawal</Term> when they buy from a business. For goods, they have 14 days from delivery to change their mind, with no reason needed.
+
+If they cancel, you refund the price and the standard delivery charge, within 14 days of being told. They pay the return post only if your shop said so before they ordered. Leave out the cancellation details and they get up to a year longer.
+
+Goods made to order or personalised, and food that spoils quickly, are not covered.
+
+**Some bags will come back, and the post you paid to send them is gone.** A little set aside from every sale, €1 here, covers them.
+
+## VAT: part of the price may not be yours
+
+<Term id="vat">VAT</Term> is a tax on sales. The buyer pays it inside the price, and a seller who charges it passes that part to the tax authority. **If you charge VAT, work out what you keep from the price without it.**
+
+Each EU country sets its own VAT rates, within shared EU rules. The standard rate cannot be lower than 15%.
+
+Many small sellers do not charge VAT at all. Each country sets a yearly sales limit under which a small business can apply to be exempt. No country's limit is above €85,000.
+
+## Whose VAT, when you sell abroad
+
+For a seller who does charge VAT, the buyer's country starts to matter. While online sales to buyers in other EU countries stay under €10,000 a year in total, your own country's VAT applies. Above that, the buyer's country's rate applies. One registration at home can cover the sales to every EU country.
+
+So one price can hold a different amount of tax in Austria, Ireland and Belgium. **The rules on who charges what are national, so ask your own tax authority before you start.** A friend's answer from another country is not yours.
+
+## One price for many countries
+
+You can show one price with delivery included, or a price plus postage by country. Either way, the buyer must see the total, with every extra charge, before placing the order.
+
+One price with free delivery is simpler to show. It works when it covers the most expensive country you post to. Here is €25 for one bag sent to Austria.
+
+<svg class="chart" viewBox="0 0 320 124" role="img" aria-labelledby="abroad-title abroad-desc">
+  <title id="abroad-title">Where €25 from one bag sold abroad goes</title>
+  <desc id="abroad-desc">A single bar in four parts. Making the bag is €6, packing and post abroad is €8, the amount set aside for returns is €1, and €10 is kept.</desc>
+  <rect class="chart-b" x="0" y="26" width="74" height="36" rx="6" />
+  <rect class="chart-a" x="78" y="26" width="99" height="36" rx="6" />
+  <rect class="chart-b" x="181" y="26" width="12" height="36" rx="6" />
+  <rect class="chart-a" x="197" y="26" width="123" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Making €6</text>
+  <text class="chart-label" x="320" y="16" text-anchor="end">Kept €10</text>
+  <text class="chart-label" x="78" y="80">Pack and post €8</text>
+  <text class="chart-label" x="193" y="98" text-anchor="end">Returns €1</text>
+  <text class="chart-note" x="0" y="118">One bag sold to Austria at €25, free delivery</text>
+</svg>
+
+| Where €25 goes | Amount |
+| --- | --- |
+| Making the bag | €6 |
+| Packing and post abroad | €8 |
+| Set aside for returns | €1 |
+| Kept | €10 |
+
+The €10 kept then pays the <Term id="fixed-cost">fixed costs</Term>, like the shop fee, before any of it is profit. **Price from the full cost of one sale abroad, not from the price at home.** If you sell in złoty or koruna, every step is the same.

@@ -1,0 +1,5 @@
+{
+  "term": "MRP (maximum retail price)",
+  "define": "The highest price a shop may charge for a packaged product. It is printed on the pack. A shop may sell below it, but not above it.",
+  "example": "A bag of atta marked ₹270 can be sold for ₹265, but not for ₹280."
+}

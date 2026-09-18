@@ -1,0 +1,276 @@
+---
+title: "Loan apps: how to tell a real one from a trap"
+summary: "A lawful loan app names the RBI-registered lender behind it, shows the full cost first, and never needs your contacts."
+region: in
+track: money-basics
+order: 4
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "LaunchPad editor"
+lastReviewed: 2026-09-18
+
+situation: "Your exam fee of ₹4,000 is due on Friday and you are ₹2,500 short. Between two reels, an ad promises ₹5,000 in ten minutes: no documents, no credit check, just install and tap Allow."
+
+prediction:
+  q: "You install the app. Before it shows a rate or a lender's name, it asks to see your contacts, photos and call history. What is that request most likely for?"
+  options:
+    - text: "Checking who you are, so it can approve you fast"
+      why: "Identity is checked through KYC, with your ID and a selfie. RBI's rules bar apps that lend for banks and NBFCs from reading contacts, files and call logs at all."
+    - text: "Having people to pressure if a payment is late"
+      why: "A lender does not need your friends' numbers to check you. An app outside the rules takes the list so it can reach your family and friends if you fall behind."
+    - text: "Nothing special. Most apps ask for these"
+      why: "Many apps ask for a lot, but a lending app working for a bank or NBFC is barred from these three. The request itself tells you which kind of app this is."
+  answer: 1
+
+takeaways:
+  - "A lawful loan app lends for a bank or an NBFC and names it before you agree. Check the app and the lender on RBI's own lists."
+  - "Before you sign, you get a Key Facts Statement with the APR: the yearly cost with every charge included. A fee left off it cannot be added later without your consent."
+  - "An app that wants your contacts, photos or call history is outside RBI's rules. Threats go to 1930 or cybercrime.gov.in, and the lender to RBI's Sachet portal."
+
+worked:
+  kind: loan
+  context: "A lender on RBI's list shows its Key Facts Statement for ₹5,000, repaid over 3 months. The rate, 48% a year, is a made-up example of a high one. Nothing is taken off first: the full ₹5,000 arrives."
+  principal: 5000
+  rate: 48
+  months: 3
+
+explorable:
+  kind: drill
+  intro: "Six screens of the kind that turn up after one search for a quick loan. One is an ordinary, lawful offer, so refusing everything is not the answer. Decide what you would do, then look."
+  scenarios:
+    - screen:
+        kind: message
+        from: "Instant Loan Offers"
+        lines:
+          - "Pre-approved: ₹5,000 in 10 minutes."
+          - "No documents. No credit check."
+          - "Install now: fastcash-loan.example/app"
+        action: "Install app"
+      check:
+        q: "This text arrives the week your exam fee is due. You have never applied for a loan anywhere. What do you do?"
+        options:
+          - text: "Install it. Pre-approved means they have already checked you"
+            why: "You never applied, so nobody checked anything. An approval that needs no documents is there to get the app onto your phone."
+          - text: "Install it, but only to read the terms"
+            why: "Installing is the step the text wants. Apps like this often ask for permissions the moment they open, before any terms appear."
+          - text: "Leave the link. If you want a loan, find a lender yourself and check it on RBI's lists"
+            why: "Starting from your own search, then finding the lender and its app on RBI's lists, puts the check in your hands instead of the sender's."
+        answer: 2
+    - screen:
+        kind: chat
+        from: "Loan assistant (in-app chat)"
+        lines:
+          - "Almost done."
+          - "Allow access to Contacts, Photos and Call history to see your offer."
+        action: "Allow all"
+      check:
+        q: "You installed an app from an ad. Before it shows any rate or lender name, its assistant says this. What do you do?"
+        options:
+          - text: "Deny, uninstall, and enter no details"
+            why: "Asking for these before showing a lender or a cost is the mark of an app outside RBI's rules. Nothing has been shared yet, so leaving now costs nothing."
+          - text: "Allow all. It needs them to check who you are"
+            why: "Identity is checked through KYC, with your ID and a selfie. Apps that lend for banks and NBFCs are barred from contacts, photos and call logs."
+          - text: "Allow only contacts, since that one seems harmless"
+            why: "Contacts are the thing an app like this wants most: a list of people to reach if you pay late."
+        answer: 0
+    - screen:
+        kind: request
+        from: "Easy Loan Approval (merchant)"
+        amount: 999
+        lines:
+          - "Your loan of ₹20,000 is approved."
+          - "Pay the file charge to release it."
+        action: "Approve and enter UPI PIN"
+      check:
+        q: "An app says your ₹20,000 loan is approved, then this payment request appears. What do you do?"
+        options:
+          - text: "Pay it. ₹999 is small next to ₹20,000"
+            why: "The size is not the tell. An approval that needs money from you before anything arrives is the pattern, whatever the charge is called."
+          - text: "Decline, and look the lender up on RBI's lists before anything else"
+            why: "A lawful lender sets out its charges on the Key Facts Statement before you sign, and the loan goes straight to your bank account. A request plus a PIN page only ever pays out."
+          - text: "Pay it, then ask for a receipt"
+            why: "A receipt from the same people proves nothing. The ₹999 has gone to whoever sent the request, and the loan may never come."
+        answer: 1
+    - screen:
+        kind: message
+        from: "Loan Desk"
+        amount: 3500
+        lines:
+          - "₹3,500 credited to your account."
+          - "Loan ₹5,000. Processing fee ₹1,500 deducted."
+          - "Repay ₹5,000 within 7 days."
+        action: "Repay now"
+      check:
+        q: "You tapped yes on an app that showed no Key Facts Statement, and this arrives. A friend says to borrow from a second app to repay on time. What do you do?"
+        options:
+          - text: "Borrow from a second app to repay on time"
+            why: "That is how one loan becomes two. If the second app works the same way, it takes its own fee first, and the total you owe grows."
+          - text: "Keep the texts and screenshots, check the lender on RBI's lists, and talk to someone at home"
+            why: "The texts are the record: a fee taken with no statement of cost. With the lender checked and someone on your side, you can report it and plan the next step calmly."
+          - text: "Delete the texts and the app, and hope it goes away"
+            why: "Deleting removes your own record, not the loan. The texts show a fee taken with no Key Facts Statement, which is what a report needs."
+        answer: 1
+    - screen:
+        kind: message
+        from: "Mango Lane Finance Ltd (NBFC)"
+        lines:
+          - "Loan offer: ₹8,000, repaid over 6 months."
+          - "APR 30% a year. Key Facts Statement attached."
+          - "Cooling-off period: 3 days."
+          - "Read the statement, then sign."
+        action: "Open statement"
+      check:
+        q: "You found this lender yourself, and the app shows this before asking you to sign. Your cousin says every loan app is a trap. What do you do?"
+        options:
+          - text: "Refuse it. Every loan app is a trap"
+            why: "Some are lawful: they name a registered lender, show the full cost first and give you time to back out. Treating them all alike means never learning the difference."
+          - text: "Sign now. The statement proves it is safe"
+            why: "A statement is a good sign, but anyone can type one. The check is the lender's name and the app on RBI's own lists."
+          - text: "Check the lender and the app on RBI's lists, read the statement, then decide"
+            why: "This screen shows a named NBFC, an APR and a Key Facts Statement before signing. Checking the names confirms it. Whether to borrow at all is still your choice."
+        answer: 2
+    - screen:
+        kind: chat
+        from: "Recovery Team"
+        lines:
+          - "Your payment is 2 days late."
+          - "Pay ₹6,500 today or we message everyone in your contacts."
+          - "Last warning."
+        action: "Pay now"
+      check:
+        q: "A friend shows you this. She borrowed ₹5,000 through an app three weeks ago, and she is frightened. What do you tell her?"
+        options:
+          - text: "Report it on 1930 or cybercrime.gov.in with screenshots, and tell someone at home"
+            why: "Threats against her contacts are for reporting, not paying in a panic. Screenshots, the app's name and every payment she made are what the report needs."
+          - text: "Pay whatever they ask today, so it stops"
+            why: "The demand is already above what she borrowed, with nothing showing how it was worked out. A demand backed by a threat is the tell of a lender outside the rules."
+          - text: "Block the number and tell nobody"
+            why: "Blocking one number does not stop the next, and silence is what the threat relies on. Telling someone and reporting it takes that away."
+        answer: 0
+  reflection: "Pick the screen that took you longest. Which detail settled it, and where on your own phone would that detail show up?"
+
+practice:
+  kind: loan
+  context: "Your friend is offered ₹8,000 by an app that names its NBFC, and both are on RBI's lists. The Key Facts Statement says 36% a year, repaid over 6 months. The rate is an example."
+  principal: 8000
+  rate: 36
+  months: 6
+
+quiz:
+  - q: "Two apps offer you ₹6,000. One says only 2% a month and low fees. The other shows a Key Facts Statement with an APR of 30% a year. Which one lets you see the full cost?"
+    options:
+      - text: "The 2% one, because 2 is smaller than 30"
+        why: "The slip is setting a monthly rate beside a yearly one. 2% a month is already 24% a year, before the fees it does not name."
+      - text: "The one with the APR"
+        why: "An APR is the yearly cost with interest and every charge folded in, so it is the one number you can compare. The other only calls its fees low."
+      - text: "Neither. Loan costs cannot be compared"
+        why: "They can when both show an APR. That is the whole job of the APR: one yearly figure that already includes the fees."
+    answer: 1
+  - q: "Yesterday you borrowed ₹6,000 through an app whose NBFC is on RBI's list. Today a scholarship pays your fee, so you no longer need the loan. What do you do?"
+    options:
+      - text: "Nothing. The contract is signed, so you are stuck with it"
+        why: "Digital loans from RBI-regulated lenders come with a cooling-off period of at least a day. Signing does not end your chance to back out."
+      - text: "Stop paying and let the app cancel it"
+        why: "Missed payments add late charges and a mark on your record. The way out is to repay inside the cooling-off period, not to go quiet."
+      - text: "Use the cooling-off period: repay the ₹6,000 and the cost for those days"
+        why: "Inside the cooling-off period you can exit with no penalty. You repay what you borrowed and the cost for the days you had it, and a small processing fee may be kept."
+    answer: 2
+  - q: "An app's page says it is RBI approved and shows a certificate with a logo. Its reviews give it 4.8 stars. What settles whether a regulated lender is behind it?"
+    options:
+      - text: "The certificate, since it has an official logo"
+        why: "A logo in a picture costs nothing to copy. What the app says about itself is the claim being checked, not the check."
+      - text: "Finding the app and its lender on RBI's own lists"
+        why: "The lists sit on RBI's website, not the app's. If neither name is there, the claim on the page has nothing to support it."
+      - text: "The 4.8 stars, since so many people use it"
+        why: "A rating shows how users felt, not whether a bank or NBFC stands behind the app. Plenty of people can use an app that is outside the rules."
+    answer: 1
+  - q: "Your lender is on RBI's list, but it charged a ₹400 fee that was never on your Key Facts Statement. You complained to the lender 35 days ago and heard nothing. What next?"
+    options:
+      - text: "Take it to RBI's complaint portal, cms.rbi.org.in"
+        why: "When a regulated lender gives no reply within 30 days, RBI's complaint system is the next step. Your statement shows the fee was never listed, and unlisted fees need your consent."
+      - text: "Call 1930"
+        why: "1930 is for cyber fraud, where money has been taken from you. This is a dispute with a lender RBI regulates, and that has its own route."
+      - text: "Stop repaying the loan until they fix it"
+        why: "That adds a new problem, late charges, without fixing the old one. The complaint settles the fee while the loan carries on."
+    answer: 0
+
+transfer:
+  - "Any ad or text offering money in minutes with no documents. Before installing anything, find the lender's name and look it up on RBI's lists."
+  - "Each time any app asks for permissions. Ask what contacts, photos or call history have to do with what the app is for."
+  - "Whenever you compare ways to borrow, from a phone on EMI to a loan for course fees. Ask for the APR and the Key Facts Statement."
+  - "When a friend is being threatened over a loan. You can tell them it is something to report, and where."
+
+glossary: [nbfc, kyc, key-facts-statement, apr, interest, cooling-off-period]
+tool: loan
+
+reportTo:
+  phone: "1930"
+  url: "https://cybercrime.gov.in"
+  label: "If a loan app threatens you or the people in your contacts, report it with screenshots, the app's name and every payment made."
+
+sources:
+  - title: "Reserve Bank of India (Digital Lending) Directions, 2025 (8 May 2025): phone access, cooling-off period, disbursal, complaints"
+    url: "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=12848&Mode=0"
+    publisher: "Reserve Bank of India"
+  - title: "RBI issues Digital Lending Directions, 2025, with a public list of digital lending apps (press release, 8 May 2025)"
+    url: "https://rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=60403"
+    publisher: "Reserve Bank of India"
+  - title: "Key Facts Statement for loans and advances: APR and undisclosed fees (circular, 15 April 2024)"
+    url: "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12663&Mode=0"
+    publisher: "Reserve Bank of India"
+  - title: "RBI cautions against unauthorised digital lending platforms and mobile apps (press release, 23 December 2020)"
+    url: "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=50846"
+    publisher: "Reserve Bank of India"
+  - title: "Steps for reporting financial cyber frauds: helpline 1930 and the reporting portal (accessed 18 September 2026)"
+    url: "https://cybercrime.gov.in/uploadmedia/instructions_citizenreportingcyberfrauds.pdf"
+    publisher: "National Cyber Crime Reporting Portal, Ministry of Home Affairs"
+---
+
+## Who is behind the app
+
+A loan app is only the front counter. The money comes from a lender: a bank, or an <Term id="nbfc">NBFC</Term>, a finance company registered with the Reserve Bank of India. **A lawful app names that lender before you agree to anything.**
+
+Trap apps name nobody, or borrow a real lender's name with no link to it. So check both names yourself. RBI keeps a list of digital lending apps on its website, and a list of registered NBFCs.
+
+One limit: banks and NBFCs fill in the app list themselves, and RBI does not check each entry. It is a first check, not a guarantee. If neither the app nor its lender is there, nothing shows an RBI-regulated lender behind it.
+
+## What a lawful app never asks for
+
+RBI's rules bar apps that lend for banks and NBFCs from reading your files and photos, your contacts or your call logs. They may use the camera, microphone or location once, for <Term id="kyc">KYC</Term>, and only with your consent.
+
+**So an app that wants your contacts before it shows a rate has told you what it is.** Apps outside the rules have used that kind of access to pressure borrowers. RBI has warned about their harsh ways of collecting.
+
+On a shared phone, those contacts and photos belong to the whole family. Saying no and removing the app costs you nothing at this point.
+
+## The full cost, on paper, first
+
+Before you sign, a lawful lender gives you a <Term id="key-facts-statement">Key Facts Statement</Term>. It sets out the amount, each repayment, every charge and the <Term id="apr">APR</Term>: the yearly cost with <Term id="interest">interest</Term> and all fees added in. **A fee that is not on the statement cannot be charged later unless you agree to it.**
+
+The loan lands in your own bank account, and you repay into the lender's account directly. Then comes a <Term id="cooling-off-period">cooling-off period</Term> of at least a day. You can hand the loan back with the cost for those days and no penalty, though a small processing fee may be kept.
+
+A trap app skips all of this. ₹5,000 is approved, ₹3,500 arrives, and ₹5,000 is due in seven days.
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="gap-title gap-desc">
+  <title id="gap-title">What a trap loan sends, and what it wants back</title>
+  <desc id="gap-desc">Two bars. The shorter one is ₹3,500, the money that arrives. The longer one is ₹5,000, the amount due seven days later.</desc>
+  <text class="chart-label" x="0" y="14">Arrives in your account: ₹3,500</text>
+  <rect class="chart-b" x="0" y="22" width="224" height="24" rx="6" />
+  <text class="chart-label" x="0" y="66">Due in seven days: ₹5,000</text>
+  <rect class="chart-a" x="0" y="74" width="320" height="24" rx="6" />
+</svg>
+
+| Trap loan | Amount |
+| --- | --- |
+| Approved | ₹5,000 |
+| Fee taken before it arrives | ₹1,500 |
+| Arrives in your account | ₹3,500 |
+| Due in seven days | ₹5,000 |
+
+## If an app is already threatening you
+
+Threats to message your contacts, calls to your family, demands that grow each day: RBI has warned about exactly these ways of collecting. **They are something to report, not a bill to settle in a panic.**
+
+Call 1930 or report at cybercrime.gov.in. Keep screenshots of the messages, the app's name and every payment you made. Report the lender itself on RBI's Sachet portal, sachet.rbi.org.in. Tell someone at home, and do not take a second app's loan to repay the first.
+
+A lender on RBI's list has a different route. Complain to the lender first. If it rejects the complaint, or says nothing within 30 days, take it to RBI's complaint portal, cms.rbi.org.in.

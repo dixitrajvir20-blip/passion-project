@@ -1,0 +1,5 @@
+{
+  "term": "Overpayment scam",
+  "define": "A trick where a buyer claims to have paid too much by mistake and asks for the extra back, often to a different number. Usually the extra never arrived, and the only proof is a screenshot.",
+  "example": "A buyer says they sent ₹2,500 instead of ₹250 and asks for ₹2,250 back. Your own app shows only ₹250, or nothing at all."
+}

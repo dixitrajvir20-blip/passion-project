@@ -1,0 +1,164 @@
+---
+title: "Where the money actually goes in a kirana store"
+summary: "Thin margins on atta, better ones on namkeen, and why stock and udhaar leave a busy shop short of cash."
+region: in
+track: how-business-works
+order: 2
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "LaunchPad editor"
+lastReviewed: 2026-09-18
+
+situation: "You are helping at your aunt's kirana store in the holidays. The shop is busy from 7 in the morning, yet she says money is always tight. You want to see where it goes."
+
+prediction:
+  q: "Your aunt buys a 5 kg bag of atta for ₹255 and sells it for ₹270. She buys 250 g of loose namkeen for ₹30 and sells it for ₹50. Which sale leaves more money in the shop?"
+  options:
+    - text: "The atta, because the bag costs more"
+      why: "A bigger price is not a bigger margin. The bag leaves ₹270 − ₹255 = ₹15, and the namkeen leaves ₹20."
+    - text: "The namkeen"
+      why: "₹50 − ₹30 leaves ₹20, against ₹15 on the atta. The small packet keeps more than the heavy bag, and a far bigger share of its price."
+    - text: "Both leave the same, because each is paid in full"
+      why: "Being paid is not the same as keeping it. Most of the ₹270 goes straight back to the distributor who sold the bag to the shop."
+  answer: 1
+
+takeaways:
+  - "On staples like atta, the shop keeps only a few rupees a sale. Everyone knows the price, and the MRP printed on the pack is the most it may charge."
+  - "Better margins sit on things people do not price-check, like loose namkeen. The mix of what sells is what pays the rent."
+  - "Money gets stuck on the shelves and in the udhaar book. Stock that passes its date loses its whole cost, not just its margin."
+
+worked:
+  kind: margin
+  context: "The 5 kg bag of atta: bought for ₹255, sold at its printed ₹270. Suppose the shop's ₹15,000 of monthly costs had to be paid by atta alone."
+  unitName: bags
+  fixed: 15000
+  variable: 255
+  price: 270
+
+explorable:
+  kind: margin
+  unitName: bags
+  fixed: 15000
+  variable: 255
+  prices: [255, 260, 265, 270]
+  prompts:
+    - "Tap ₹270, then ₹265, as if the shop matched a ₹5 discount. The price fell by less than 2%. How much did the number of bags go up?"
+    - "Tap ₹255, what the shop paid for the bag. Why can no number of bags pay the rent at this price?"
+
+practice:
+  kind: margin
+  context: "The loose namkeen: ₹50 for 250 g, which cost your aunt ₹30. Suppose the same ₹15,000 of monthly costs had to be paid by namkeen alone."
+  unitName: packets
+  fixed: 15000
+  variable: 30
+  price: 50
+
+quiz:
+  - q: "Your aunt wants to stop selling atta, because a bag keeps only ₹15. She would fill the shelf with namkeen, which keeps more per sale. What do you tell her?"
+    options:
+      - text: "Keep the atta, because it brings in the people who buy the rest"
+        why: "A thin-margin staple can still earn its shelf. It brings regulars in every week, and the better-margin items sell on the same trip."
+      - text: "Go ahead, since namkeen keeps more per sale"
+        why: "Per sale, yes. But atta is why many people walk in, and the namkeen, soap and cold drink often sell because they came for it."
+      - text: "Keep the atta but sell it at ₹285"
+        why: "₹285 is above the ₹270 printed on the bag. Charging more than the MRP is overcharging, and regulars know the price anyway."
+    answer: 0
+  - q: "A distributor offers a biscuit deal: buy 60 packets, get 10 free. The shop sells about 20 a month, and each packet is good for three months. What should your aunt check before saying yes?"
+    options:
+      - text: "Nothing, because 10 free packets is free money"
+        why: "Free packets earn only if they sell before their date. At 20 a month, 70 packets take three and a half months to sell, and they last three."
+      - text: "Whether they will sell in time, and whether the cash is needed elsewhere"
+        why: "A bulk deal pays when the stock sells before its date and the money paid today is not needed for other shelves. Here, about 10 packets would pass their date."
+      - text: "Whether the shop next door took the same deal"
+        why: "The shop next door may sell twice as many biscuits. What matters is how fast this shop sells them, and what it can spare today."
+    answer: 1
+  - q: "A regular asks to put ₹4,000 of groceries on udhaar until his salary on the 5th. The distributor's van comes on the 2nd and wants cash for new stock. What should your aunt check first?"
+    options:
+      - text: "The margin on what he is buying"
+        why: "The margin is the same whether he pays today or on the 5th. What changes is when the money arrives."
+      - text: "Whether he has paid on time before"
+        why: "That matters, but even a regular who always pays leaves the shop waiting until the 5th. The van comes first."
+      - text: "Whether there is cash for the van on the 2nd, with his ₹4,000 still out"
+        why: "This is cash flow. Money written in the udhaar book cannot pay the van. If the cash is not there, the shelves stay half empty until the 5th."
+    answer: 2
+  - q: "The morning delivery brings 10 fresh loaves of bread. Four from Monday are still on the shelf, and they can be sold until tomorrow. How do you stock the shelf?"
+    options:
+      - text: "New loaves in front, so the shelf looks fresh"
+        why: "Customers take from the front. Monday's four sit at the back until their date passes, and each one thrown away loses the ₹40 the shop paid."
+      - text: "Monday's loaves in front, new ones behind"
+        why: "Older stock sells first, so the money paid for it comes back before its date. The fresh loaves still have days left."
+      - text: "Throw Monday's four away now, to be safe"
+        why: "They can still be sold until tomorrow. Throwing them out today loses ₹160 that could have come back."
+    answer: 1
+
+transfer:
+  - "When you walk into any small shop. Notice what brings people in, and what they pick up on the way out."
+  - "When a supplier offers you a deal on quantity. Ask how fast it sells, and whether it lasts that long."
+  - "When someone says a busy shop must be rich. Ask where its money is sitting: on the shelves, in the udhaar book, or in the cash box."
+
+glossary: [margin, mrp, fixed-cost, gross-margin, stock, udhaar, cash-flow, working-capital]
+tool: break-even
+
+sources:
+  - title: "Business Studies Part II, Class 12, Chapter 9: Financial Management, factors affecting working capital (NCERT, reprint 2026-27)"
+    url: "https://ncert.nic.in/textbook/pdf/lebs201.pdf"
+    publisher: "National Council of Educational Research and Training"
+  - title: "Business Studies Part II, Class 12, Chapter 11: Consumer Protection, overcharging above MRP (NCERT, reprint 2026-27)"
+    url: "https://ncert.nic.in/textbook/pdf/lebs203.pdf"
+    publisher: "National Council of Educational Research and Training"
+  - title: "Food Safety and Standards (Labelling and Display) Regulations, 2020: meaning of a use-by date (compendium, 23 September 2021)"
+    url: "https://fssai.gov.in/upload/uploadfiles/files/Compendium_Labelling_Display_23_09_2021.pdf"
+    publisher: "Food Safety and Standards Authority of India"
+---
+
+## One bag of atta
+
+Start with what almost every customer buys. A 5 kg bag of atta has ₹270 printed on it. The shop paid the distributor ₹255 for it, so it keeps ₹15. That ₹15 is the <Term id="margin">margin</Term>.
+
+Why so little? Everyone knows what atta costs, and big stores and delivery apps often sell it at a discount. The shop also cannot charge more than the <Term id="mrp">MRP</Term>, the price printed on the pack. **Staples bring people in every day, but each sale leaves very little behind.**
+
+Then come the <Term id="fixed-cost">fixed costs</Term>: rent, electricity for the fridge, the phone. Call it ₹15,000 a month, before your aunt is paid anything for her long day.
+
+## Where the better margins are
+
+Now look at the namkeen. Your aunt buys it loose in big bags and weighs out 250 g at the counter for ₹50. Those 250 g cost her ₹30, so she keeps ₹20.
+
+A ₹50 packet keeps more than a ₹270 bag. It helps to see it as a share of the price, the <Term id="gross-margin">gross margin</Term>. On the atta, the shop keeps less than 6 paise of every rupee. On the namkeen, it keeps 40 paise.
+
+**The customer who comes in for atta often leaves with namkeen, soap and a cold drink too.** That mix is what pays the rent.
+
+<svg class="chart" viewBox="0 0 320 150" role="img" aria-labelledby="keep-title keep-desc">
+  <title id="keep-title">What the shop keeps from one bag of atta and one packet of namkeen</title>
+  <desc id="keep-desc">Two bars, each standing for the full price of one sale. On the ₹270 bag of atta, ₹255 went on buying it and ₹15 is kept, a thin sliver at the end. On the ₹50 packet of namkeen, ₹30 went on buying it and ₹20 is kept, two fifths of the bar.</desc>
+  <text class="chart-label" x="0" y="14">Atta ₹270: paid ₹255</text>
+  <text class="chart-label" x="320" y="14" text-anchor="end">Kept ₹15</text>
+  <rect class="chart-b" x="0" y="22" width="298" height="32" rx="6" />
+  <rect class="chart-a" x="302" y="22" width="18" height="32" rx="6" />
+  <text class="chart-label" x="0" y="84">Namkeen ₹50: paid ₹30</text>
+  <text class="chart-label" x="320" y="84" text-anchor="end">Kept ₹20</text>
+  <rect class="chart-b" x="0" y="92" width="188" height="32" rx="6" />
+  <rect class="chart-a" x="192" y="92" width="128" height="32" rx="6" />
+  <text class="chart-note" x="0" y="146">Each bar is the full price of one sale</text>
+</svg>
+
+| One sale | Price | Shop paid | Shop keeps |
+| --- | --- | --- | --- |
+| Atta, 5 kg bag | ₹270 | ₹255 | ₹15 |
+| Namkeen, 250 g | ₹50 | ₹30 | ₹20 |
+
+## Money sitting on the shelf
+
+Every packet on the shelf was paid for before anyone bought it. Until it sells, that money is stuck. This is the shop's <Term id="stock">stock</Term>.
+
+Some stock also has a date. Say a loaf of bread costs the shop ₹40 and sells for ₹45. Once it passes the use-by date on the label, it cannot be sold. **One loaf thrown away loses the ₹40 the shop paid: the ₹5 kept on each of eight loaves that did sell.**
+
+So a careful shopkeeper orders bread and milk in small amounts, often. Older packets go to the front of the shelf, so they sell first. A cheap bulk deal on something that sells slowly can end up in the bin.
+
+## The udhaar book and the cash box
+
+Many regulars buy on <Term id="udhaar">udhaar</Term>. They take groceries all month and settle when their salary arrives. Your aunt writes it in a notebook. Today that notebook holds ₹20,000: money earned, but not yet paid.
+
+The distributor's van comes every week and wants cash for new stock. So the shop's money sits in two places at once: on the shelves and in the notebook. **Your aunt can make a profit this month and still have no cash on the day the van comes.** That is a <Term id="cash-flow">cash flow</Term> problem.
+
+The cash a <Hi>kirana</Hi> needs to keep its shelves full while it waits to be paid is its <Term id="working-capital">working capital</Term>. More udhaar raises it. Credit from the distributor lowers it.
