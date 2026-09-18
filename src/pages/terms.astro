@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Terms of use — LaunchPad"
+  description="The house rules for using LaunchPad: free to use, education only, be decent, and what you can reuse."
+  path=""
+>
+  <section class="section">
+    <div class="container column prose">
+      <span class="eyebrow">Legal</span>
+      <h1>Terms of use</h1>
+      <p class="lede">
+        These are the house rules. They are written to be read, not skimmed past. If you are under
+        18, it is worth reading them with a parent or guardian.
+      </p>
+      <p class="updated">Last updated {site.legalUpdated}.</p>
+
+      <h2>What LaunchPad is</h2>
+      <p>
+        A free education site about money and business, run by {site.owner} as a non-commercial
+        project. Using it costs nothing, and nothing on it is for sale.
+      </p>
+
+      <h2>Education, not advice</h2>
+      <p>
+        Everything here is general education. It is not financial, investment, legal, tax or
+        accounting advice, and it does not know your situation. Before you act on anything
+        involving real money, debt or a binding agreement, check the official source for your
+        country and talk to someone qualified or an adult you trust. The
+        <a href={`${base}/disclaimer`}>Disclaimer</a> says more.
+      </p>
+
+      <h2>Using the site</h2>
+      <ul>
+        <li>You can read, share links to, print and use the lessons and calculators for yourself, your club or your class.</li>
+        <li>Do not use the site to send spam, break the law, or harm other people.</li>
+        <li>Do not try to break the site, overload it, or get around any protections.</li>
+        <li>Do not present LaunchPad content as coming from a financial adviser or as a recommendation to buy or sell anything.</li>
+      </ul>
+
+      <h2>Reusing our work</h2>
+      <p>
+        Unless a page says otherwise, the text and lessons are licensed under
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener noreferrer">Creative Commons BY-NC-SA 4.0</a>:
+        share and adapt them for non-commercial use, credit LaunchPad, and share adaptations under
+        the same licence. The site's code is open source under the MIT licence in the
+        <a href={site.repo} rel="noopener noreferrer">repository</a>. Third-party material
+        (statistics, quotations, linked documents) belongs to its owners and is cited.
+      </p>
+
+      <h2>Accounts, when they exist</h2>
+      <p>
+        There are no accounts today. If sign-in launches, it will be optional and covered by the
+        <a href={`${base}/privacy`}>Privacy</a> page. You would be responsible for keeping your
+        sign-in codes and sync codes private, and we could close an account that breaks these
+        rules. You could delete your account at any time.
+      </p>
+
+      <h2>No guarantees</h2>
+      <p>
+        We work hard to keep everything accurate and up to date, and we fix mistakes when they are
+        reported, but the site is provided as it is, without warranties. To the extent the law
+        allows, LaunchPad and its author are not liable for losses that come from relying on the
+        site. Nothing here limits rights you have as a consumer under the law where you live.
+      </p>
+
+      <h2>Changes and law</h2>
+      <p>
+        We may update these terms; the date above changes when we do, and the history is public in
+        the repository. The project is based in New York, United States, and these terms are
+        governed by its laws unless the law where you live says otherwise for consumers.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

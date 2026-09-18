@@ -1,0 +1,50 @@
+---
+/**
+ * Fills in what this device knows: which lessons are read, which have their checks done, and
+ * whether any checks are ready to review. A few hundred bytes of script, not an island: a tick
+ * and a sentence do not justify a UI runtime at load priority on the page people land on most.
+ *
+ * Nothing is server-rendered and then corrected (no "0" flashing to "3"), nothing is announced on
+ * load, and the wording is never "due" or "overdue": on a site for under-18s that is a
+ * loss-framed nudge, and on a shared phone it is also someone else's business.
+ */
+interface Props {
+  reviewHref: string;
+}
+const { reviewHref } = Astro.props;
+---
+
+<p class="review-line" data-review-line hidden>
+  <a href={reviewHref} data-review-link></a>
+</p>
+
+<script>
+  import { loadProgress, readyItems } from '../../lib/progress';
+
+  let storage: Storage | undefined;
+  try {
+    storage = window.localStorage;
+  } catch {
+    storage = undefined;
+  }
+  const progress = loadProgress(storage);
+
+  for (const row of document.querySelectorAll<HTMLElement>('[data-lesson-row]')) {
+    const id = row.dataset.lessonRow!;
+    if (progress.done.includes(id)) row.querySelector<HTMLElement>('[data-mark="read"]')!.hidden = false;
+    if (progress.quiz[id]) row.querySelector<HTMLElement>('[data-mark="checks"]')!.hidden = false;
+  }
+
+  const line = document.querySelector<HTMLElement>('[data-review-line]');
+  const link = document.querySelector<HTMLAnchorElement>('[data-review-link]');
+  const region = document.querySelector<HTMLElement>('[data-review-region]')?.dataset.reviewRegion ?? '';
+  const ready = readyItems(progress).filter((id) => id.startsWith(`${region}/`)).length;
+  if (line && link && ready > 0) {
+    link.textContent = `Ready to review: ${ready} ${ready === 1 ? 'check' : 'checks'}`;
+    line.hidden = false;
+  }
+</script>
+
+<style>
+  .review-line { margin: 0 0 var(--space-6); font-weight: 700; }
+</style>

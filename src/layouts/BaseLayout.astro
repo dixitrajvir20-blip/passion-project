@@ -1,0 +1,125 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import RegionTabs from '../components/RegionTabs.astro';
+import ConsentManager from '../islands/ConsentManager.tsx';
+import { site, consentCategories, CONSENT_VERSION } from '../lib/site';
+import { REGIONS } from '../lib/regions';
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  region?: string;
+  /** Sub-path the region tabs should preserve when switching edition. */
+  regionSub?: string;
+  /** Social image, relative to the site root. */
+  image?: string;
+  noindex?: boolean;
+  /** Shown beside search results: "Lesson", "Calculator". */
+  kind?: string;
+}
+
+const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false, kind } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+// Search: an edition's pages are found from that edition; shared pages are found from all of them.
+const editions = region ? REGIONS.filter((r) => r.code === region) : REGIONS;
+// Every page gets its own share image, drawn from its title at build time (scripts/og-images.mjs)
+// and stored under /og/<path-as-slug>.png. Pages that are not for sharing keep the generic one.
+const ogSlug = Astro.url.pathname.replace(base, '').replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
+const ogPath = image !== '/og-default.png' || noindex ? image : `/og/${ogSlug}.png`;
+const ogImage = new URL(`${base}${ogPath}`, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: new URL(`${base}/`, Astro.site).toString(),
+  description: site.description,
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  audience: { '@type': 'EducationalAudience', educationalRole: 'student', audienceType: 'ages 15-21' },
+  publisher: { '@type': 'Person', name: site.owner },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0b0f" />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={`${base}/icons/icon-192.png`} />
+    <link rel="manifest" href={`${base}/manifest.webmanifest`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" href={`${base}/fonts/atkinson-latin.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}/fonts/bricolage-latin.woff2`} as="font" type="font/woff2" crossorigin />
+
+    {/* Only build-time constants from src/lib/site.ts belong in jsonLd. "<" is escaped anyway so a
+        future per-page field can never close the script element. */}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header region={region} path={path} />
+    {region && <RegionTabs current={region} sub={regionSub} />}
+    {/* data-pagefind-body: only <main> is indexed, so the header, tabs and footer never match a search. */}
+    <main id="main" tabindex="-1" data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
+      {!noindex && editions.map((r) => <span data-pagefind-filter={`edition:${r.name}`}></span>)}
+      {!noindex && kind && <span data-pagefind-meta={`kind:${kind}`}></span>}
+      <slot />
+    </main>
+    <Footer region={region} />
+    <ConsentManager client:load categories={consentCategories} version={CONSENT_VERSION} />
+  </body>
+</html>
+
+<script>
+  // Mark JS as available so reveal animations can start hidden without hiding content
+  // from anyone whose JS never runs.
+  document.documentElement.classList.add('js');
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach((el) => el.classList.add('is-in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
+    );
+    items.forEach((el) => io.observe(el));
+    // Safety net: nothing stays hidden if the observer never fires (find-in-page, odd
+    // scroll containers, very fast readers). After this, only the entrance is animated.
+    window.setTimeout(() => items.forEach((el) => el.classList.add('is-in')), 1500);
+  }
+</script>

@@ -1,0 +1,196 @@
+---
+/**
+ * Search, with no server and no third party: Pagefind builds a static index at deploy time, and
+ * the search runs in the reader's browser. Nothing typed here is sent anywhere.
+ *
+ * The engine (a small script plus a WebAssembly module) loads when the box is first focused, so
+ * no other page pays for it. WebAssembly needs 'wasm-unsafe-eval' in the CSP; it is allowed on
+ * this page only, not site-wide, and it permits compiling WASM, not evaluating strings as code.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { REGIONS } from '../lib/regions';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// Per-page resources replace the directive's list rather than extend it, so 'self' is stated again:
+// without it this page's own scripts would be blocked.
+Astro.csp?.insertScriptResource("'self'");
+Astro.csp?.insertScriptResource("'wasm-unsafe-eval'");
+---
+
+<BaseLayout
+  title="Search — LaunchPad"
+  description="Search every lesson, calculator and glossary term on LaunchPad. The search runs in your browser; nothing you type is sent anywhere."
+  path="search"
+>
+  <section class="section">
+    <div class="container">
+      <div class="column" data-pagefind-ignore>
+        <h1>Search</h1>
+        <p class="lede">Lessons, calculators and terms. The search runs on your device, so nothing you type leaves it.</p>
+
+        <form class="search" role="search" data-search data-engine={`${base}/pagefind/pagefind.js`} data-base={`${base}/`}>
+          <p class="field">
+            <label for="q">Search for</label>
+            <input id="q" name="q" type="search" autocomplete="off" enterkeyhint="search" />
+          </p>
+          <p class="field">
+            <label for="edition">Edition</label>
+            <select id="edition" name="edition">
+              <option value="">All editions</option>
+              {REGIONS.map((r) => <option value={r.name} data-code={r.code}>{r.name}</option>)}
+            </select>
+          </p>
+        </form>
+
+        <p class="search-status" role="status" data-status></p>
+        <ol class="results" data-results></ol>
+
+        <noscript>
+          <p class="note">
+            Search needs JavaScript, because it runs on your device instead of on a server. Everything is also
+            reachable from the edition pages and the <a href={`${base}/glossary`}>glossary</a>.
+          </p>
+        </noscript>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  interface Hit {
+    url: string;
+    excerpt: string;
+    meta: { title?: string; kind?: string };
+    filters?: { edition?: string[] };
+  }
+  interface Engine {
+    options(o: { baseUrl: string }): Promise<void>;
+    init(): Promise<void>;
+    debouncedSearch(q: string, o: { filters?: Record<string, string> }, ms?: number): Promise<{ results: { data(): Promise<Hit> }[] } | null>;
+  }
+
+  const form = document.querySelector<HTMLFormElement>('[data-search]');
+  const input = document.querySelector<HTMLInputElement>('#q');
+  const edition = document.querySelector<HTMLSelectElement>('#edition');
+  const list = document.querySelector<HTMLElement>('[data-results]');
+  const status = document.querySelector<HTMLElement>('[data-status]');
+
+  if (form && input && edition && list && status) {
+    let engine: Engine | null = null;
+    const load = async () => {
+      if (engine) return engine;
+      const loaded: Engine = await import(/* @vite-ignore */ form.dataset.engine!);
+      await loaded.options({ baseUrl: form.dataset.base! });
+      await loaded.init();
+      engine = loaded;
+      return loaded;
+    };
+
+    // An excerpt is text with <mark> around the matches. Build nodes from it; never assign it as HTML.
+    const excerpt = (html: string) => {
+      const p = document.createElement('p');
+      p.className = 'r-excerpt';
+      const plain = (s: string) => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+      for (const part of html.split(/(<mark>[\s\S]*?<\/mark>)/)) {
+        const marked = part.match(/^<mark>([\s\S]*)<\/mark>$/);
+        if (marked) {
+          const mark = document.createElement('mark');
+          mark.textContent = plain(marked[1]);
+          p.append(mark);
+        } else if (part) {
+          // Appended as text, never as HTML. Stripped until stable anyway, so no tag can survive.
+          let text = part;
+          let before;
+          do {
+            before = text;
+            text = text.replace(/<[^<>]*>/g, '');
+          } while (text !== before);
+          p.append(plain(text.replace(/[<>]/g, '')));
+        }
+      }
+      return p;
+    };
+
+    const run = async () => {
+      const q = input.value.trim();
+      const url = new URL(window.location.href);
+      if (q) url.searchParams.set('q', q);
+      else url.searchParams.delete('q');
+      window.history.replaceState(null, '', url);
+
+      if (q.length < 2) {
+        list.replaceChildren();
+        status.textContent = '';
+        return;
+      }
+      let found;
+      try {
+        found = await (await load()).debouncedSearch(q, edition.value ? { filters: { edition: edition.value } } : {}, 200);
+      } catch {
+        status.textContent = 'Search could not load. Check your connection and try again.';
+        return;
+      }
+      if (found === null) return; // a newer keystroke replaced this search
+      const hits = await Promise.all(found.results.slice(0, 12).map((r) => r.data()));
+
+      list.replaceChildren(
+        ...hits.map((hit) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = hit.url;
+          a.className = 'r-title';
+          a.textContent = hit.meta.title ?? hit.url;
+          const meta = document.createElement('p');
+          meta.className = 'r-meta';
+          const where = hit.filters?.edition ?? [];
+          meta.textContent = [hit.meta.kind, where.length === 1 ? `${where[0]} edition` : ''].filter(Boolean).join(' · ');
+          li.append(a, excerpt(hit.excerpt));
+          if (meta.textContent) li.append(meta);
+          return li;
+        }),
+      );
+      const total = found.results.length;
+      status.textContent =
+        total === 0
+          ? `Nothing found for “${q}”. Try one word, or look in the glossary.`
+          : `${total} ${total === 1 ? 'result' : 'results'}${total > 12 ? ', showing the first 12' : ''}.`;
+    };
+
+    // Start in the reader's own edition if they have picked one.
+    try {
+      const saved = window.localStorage.getItem('lp:region');
+      const match = Array.from(edition.options).find((o) => o.dataset.code === saved);
+      if (match) edition.value = match.value;
+    } catch {
+      // No stored edition: search everything.
+    }
+
+    input.addEventListener('focus', () => void load().catch(() => {}), { once: true });
+    input.addEventListener('input', () => void run());
+    edition.addEventListener('change', () => void run());
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void run();
+    });
+
+    const initial = new URLSearchParams(window.location.search).get('q');
+    if (initial) {
+      input.value = initial.slice(0, 80);
+      void run();
+    }
+  }
+</script>
+
+<style>
+  .lede { margin-bottom: var(--space-6); }
+  .search { display: grid; gap: var(--space-4); margin-bottom: var(--space-5); }
+  @media (min-width: 640px) { .search { grid-template-columns: 2fr 1fr; align-items: end; } }
+  .search .field { margin-bottom: 0; }
+  .search-status { min-height: 1.6em; color: var(--muted); font-size: var(--text-sm); }
+  .results { list-style: none; margin: 0; padding: 0; }
+  .results :global(li) { margin: 0; padding: var(--space-4) 0; border-top: 1px solid var(--line); }
+  .results :global(.r-title) { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; letter-spacing: var(--tracking-heading); }
+  .results :global(.r-excerpt) { margin: var(--space-2) 0 0; font-size: var(--text-ui); color: var(--ink-2); }
+  .results :global(.r-meta) { margin: var(--space-2) 0 0; font-size: var(--text-sm); color: var(--muted); }
+  .results :global(mark) { background: color-mix(in srgb, var(--gold) 45%, var(--bg)); color: var(--ink); padding: 0 2px; border-radius: var(--radius-xs); }
+</style>

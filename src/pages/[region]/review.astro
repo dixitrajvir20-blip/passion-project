@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Review from '../../islands/Review.tsx';
+import { REGIONS, getRegion } from '../../lib/regions';
+import '../../styles/lesson.css';
+
+export function getStaticPaths() {
+  return REGIONS.map((r) => ({ params: { region: r.code } }));
+}
+
+const { region: code } = Astro.params;
+const region = getRegion(code!);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title={`Review — LaunchPad ${region.name}`}
+  description="Questions from lessons you have finished, brought back a day later and then at longer gaps. It is how the ideas stay."
+  region={region.code}
+  regionSub="review"
+  path="learn"
+  noindex
+>
+  <section class="section">
+    <div class="container">
+      <div class="column">
+        <p class="crumb"><a href={`${base}/${region.code}/learn`}>← All tracks</a></p>
+        <h1>Review</h1>
+        <p class="lede">
+          A few questions from lessons you have finished, brought back after a gap. Answering from
+          memory is what makes an idea stay; rereading mostly does not.
+        </p>
+
+        <Review client:load region={region.code} checksUrl={`${base}/${region.code}/checks.json`} base={base} localeCode={region.locale} />
+
+        <noscript>
+          <p class="note">
+            Your review schedule is kept on this device, so this page needs JavaScript. The quick
+            check at the end of every lesson works without it.
+          </p>
+        </noscript>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .crumb { font-size: var(--text-sm); margin-bottom: var(--space-4); }
+  .crumb a { text-decoration: none; }
+  .crumb a:hover { text-decoration: underline; }
+  .lede { margin-bottom: var(--space-7); }
+  :global(.review-from) { color: var(--muted); font-size: var(--text-sm); margin-bottom: var(--space-3); }
+  :global(.review-context) { background: var(--bg-2); border-radius: var(--radius-m); padding: var(--space-4); font-size: var(--text-ui); }
+  :global(.review-action) { margin-top: var(--space-4); }
+</style>

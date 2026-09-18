@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SignIn from '../../islands/SignIn.tsx';
+import { site } from '../../lib/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Sign in — LaunchPad"
+  description="Keep your LaunchPad progress on every device. Sign in with your email, no password, or move progress with a sync code."
+  path="account"
+  noindex={!site.accountsEnabled}
+>
+  <section class="section">
+    <div class="container">
+      <div class="column centered">
+        <h1>Sign in</h1>
+        <p class="lede">
+          Optional. Everything works without an account; signing in only keeps your progress in
+          step across devices.
+        </p>
+      </div>
+
+      <div class="signin-wrap">
+        <SignIn client:load homeHref={`${base}/`} live={site.accountsEnabled} />
+      </div>
+
+      <div class="column centered">
+        <p class="note">
+          We keep your email and your progress, nothing else. No ads, no profile, no sharing.
+          Read <a href={`${base}/privacy`}>how your data is handled</a>. Under 18 in some places?
+          A parent confirms first — the flow explains when.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { margin-bottom: var(--space-6); }
+  .signin-wrap { margin-bottom: var(--space-7); }
+  .note { max-width: 56ch; margin: 0 auto; }
+</style>

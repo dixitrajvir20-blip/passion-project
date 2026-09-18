@@ -1,0 +1,19 @@
+---
+/**
+ * A glossary term inside running prose. The base is a link to "Terms in this lesson" at the foot
+ * of the page: it keeps the sentence intact (a <details> cannot live inside a <p>; the browser
+ * would split the paragraph), and it works with no script. Where the Popover API exists, the
+ * lesson script swaps the link for a button that opens the definition in place.
+ */
+import { getEntry } from 'astro:content';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const entry = await getEntry('glossary', id);
+if (!entry) throw new Error(`<Term id="${id}"> is not in src/content/glossary.json`);
+---
+
+<a class="term" href={`#term-${id}`} data-term={id} lang={entry.data.lang}><slot>{entry.data.term.toLowerCase()}</slot></a>

@@ -1,0 +1,32 @@
+---
+import { render } from 'astro:content';
+import LessonLayout from '../../../../layouts/LessonLayout.astro';
+import Term from '../../../../components/lesson/Term.astro';
+import Hi from '../../../../components/lesson/Hi.astro';
+import { REGIONS } from '../../../../lib/regions';
+import { inTrack, lessonsFor, slugOf, type Lesson } from '../../../../lib/lessons';
+
+export async function getStaticPaths() {
+  const paths: { params: { region: string; track: string; slug: string }; props: { lesson: Lesson; next?: Lesson } }[] = [];
+  for (const region of REGIONS) {
+    const lessons = await lessonsFor(region.code);
+    for (const lesson of lessons) {
+      const siblings = inTrack(lessons, lesson.data.track);
+      paths.push({
+        params: { region: region.code, track: lesson.data.track, slug: slugOf(lesson) },
+        props: { lesson, next: siblings[siblings.indexOf(lesson) + 1] },
+      });
+    }
+  }
+  return paths;
+}
+
+const { lesson, next } = Astro.props;
+const { Content } = await render(lesson);
+---
+
+{/* MDX bodies are prose plus <Term> and <Hi> only. Interactive parts are mounted by the layout
+    from frontmatter, so every lesson has the same shape and the no-JS test covers all of them. */}
+<LessonLayout lesson={lesson} next={next}>
+  <Content components={{ Term, Hi }} />
+</LessonLayout>

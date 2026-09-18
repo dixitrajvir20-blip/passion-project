@@ -1,0 +1,177 @@
+[
+  {
+    "id": "break-even",
+    "term": "Break-even",
+    "define": "The point where what you earn covers what you spent, so you are neither losing nor making money.",
+    "example": "A stall with ₹2,000 of monthly costs keeping ₹7 per cup breaks even at 286 cups."
+  },
+  {
+    "id": "budget",
+    "term": "Budget",
+    "define": "A plan you make in advance for where your money will go, so that spending is a decision and not a surprise.",
+    "example": "Deciding at the start of the month that ₹600 of your ₹3,000 goes to savings is a budget."
+  },
+  {
+    "id": "capital",
+    "term": "Capital",
+    "define": "Money put into a business so it can operate or grow.",
+    "example": "Using $50 of savings to buy your first batch of materials is capital."
+  },
+  {
+    "id": "cash-flow",
+    "term": "Cash flow",
+    "define": "The timing of money actually arriving and leaving, which can differ from what you have earned on paper.",
+    "example": "A stall can be profitable for the month and still run out of cash on Tuesday if regulars pay on Friday."
+  },
+  {
+    "id": "collect-request",
+    "term": "Collect request",
+    "define": "A UPI message asking you to approve a payment. Approving it and entering your PIN sends your money to whoever asked. Since October 2025 UPI no longer carries requests between two people; requests from business accounts still run, so a scam request now arrives under a shop name.",
+    "example": "A 'refund' that arrives as a request to approve is money about to leave your account, not enter it."
+  },
+  {
+    "id": "compound-growth",
+    "term": "Compound growth",
+    "define": "Growth that builds on earlier growth, because returns are added to the amount that keeps earning.",
+    "example": "Interest earned in year one earns its own interest in year two."
+  },
+  {
+    "id": "contribution-margin",
+    "term": "Contribution margin",
+    "define": "What is left from one sale after the cost of making that one unit.",
+    "example": "Sell for ₹15, costs ₹8 to make, margin is ₹7 per cup."
+  },
+  {
+    "id": "digital-arrest",
+    "term": "Digital arrest",
+    "define": "A scam in which callers posing as police or officials keep someone on a video call and demand money to 'settle' an invented case. No real agency arrests or fines anyone over a video call.",
+    "example": "A caller in uniform who says you must stay on camera and transfer money to a 'safe account' is running this scam."
+  },
+  {
+    "id": "emergency-fund",
+    "term": "Emergency fund",
+    "define": "Money kept aside only for things you could not plan for, so one bad week does not become debt.",
+    "example": "Enough saved to replace a broken phone screen without borrowing."
+  },
+  {
+    "id": "fixed-cost",
+    "term": "Fixed cost",
+    "define": "A cost that stays the same no matter how much you sell.",
+    "example": "Stall rent is the same whether you sell 10 cups or 300."
+  },
+  {
+    "id": "gross-margin",
+    "term": "Gross margin",
+    "define": "The share of revenue left after the direct cost of what you sold.",
+    "example": "A ₹7 margin on a ₹15 price is a gross margin of about 47%."
+  },
+  {
+    "id": "inflation",
+    "term": "Inflation",
+    "define": "The general rise in prices over time, which means the same money buys less.",
+    "example": "If prices rise 6% a year, ₹100 buys about ₹94 worth of goods next year."
+  },
+  {
+    "id": "interest",
+    "term": "Interest",
+    "define": "The cost of borrowing money, or the payment you receive for lending it.",
+    "example": "A loan at 12% a year costs ₹12 per ₹100 borrowed, per year."
+  },
+  {
+    "id": "kyc",
+    "term": "KYC",
+    "define": "Know Your Customer: the identity check a bank must do before and while it holds your account. Do it through the bank's own app, a branch, or the number on your card, not through a link that arrives in a message.",
+    "example": "A text saying your account will be blocked today unless you update KYC through a link is not from your bank."
+  },
+  {
+    "id": "liquidity",
+    "term": "Liquidity",
+    "define": "How quickly something can be turned into cash without losing value.",
+    "example": "Money in a savings account is liquid; a half-finished product is not."
+  },
+  {
+    "id": "margin",
+    "term": "Margin",
+    "define": "The gap between what something costs you and what you sell it for.",
+    "example": "Buying at 40 and selling at 100 is a margin of 60."
+  },
+  {
+    "id": "money-mule",
+    "term": "Money mule",
+    "define": "Someone whose bank account is used to move stolen money, often after being offered easy pay to 'rent' the account.",
+    "example": "Being paid ₹2,000 to receive ₹50,000 and send it onward can bring police action against you, even if you did not know where the money came from."
+  },
+  {
+    "id": "needs-and-wants",
+    "term": "Needs and wants",
+    "define": "Needs are what you must pay for to get through the month; wants are what you choose to.",
+    "example": "Bus fare to college is a need; a second streaming subscription is a want."
+  },
+  {
+    "id": "otp",
+    "term": "OTP",
+    "define": "One-time password: a short code sent to your phone to confirm that an action is really yours. It works once and then expires.",
+    "example": "Anyone who asks you to read out an OTP is asking for permission to act as you."
+  },
+  {
+    "id": "principal",
+    "term": "Principal",
+    "define": "The original amount borrowed or invested, before interest.",
+    "example": "On a ₹1,00,000 loan, the principal is ₹1,00,000."
+  },
+  {
+    "id": "profit",
+    "term": "Profit",
+    "define": "What is left after every cost has been paid.",
+    "example": "Revenue of ₹10,000 with ₹8,000 of costs is ₹2,000 profit."
+  },
+  {
+    "id": "qr-code",
+    "term": "QR code",
+    "define": "A square pattern a phone camera can read. In UPI, scanning one fills in who you are about to pay. A shop shows its code to be paid; you scan a code only to pay, never to receive.",
+    "example": "Scanning a shop's printed code at the counter fills in the shop as the person you are paying."
+  },
+  {
+    "id": "revenue",
+    "term": "Revenue",
+    "define": "The total money coming in from sales, before any costs are taken out.",
+    "example": "Selling 400 cups at ₹15 is ₹6,000 of revenue."
+  },
+  {
+    "id": "udhaar",
+    "term": "Udhaar",
+    "lang": "hi-Latn",
+    "define": "Selling on credit to people you know, who pay later. Common between small shops and their regulars.",
+    "example": "A regular who takes chai all week and settles on Saturday is buying on udhaar."
+  },
+  {
+    "id": "unit-economics",
+    "term": "Unit economics",
+    "define": "Whether one single sale makes or loses money, once you account for its costs.",
+    "example": "If one cup costs more to make than it sells for, no amount of volume fixes it."
+  },
+  {
+    "id": "upi",
+    "term": "UPI",
+    "define": "Unified Payments Interface: India's system for sending money between bank accounts instantly from a phone.",
+    "example": "Scanning a shop's QR code and paying from your bank app is a UPI payment."
+  },
+  {
+    "id": "upi-pin",
+    "term": "UPI PIN",
+    "define": "The secret number that approves money leaving your account. It is only ever needed to pay, never to receive.",
+    "example": "If a screen asks for your PIN so that you can 'get' money, the money is about to leave."
+  },
+  {
+    "id": "variable-cost",
+    "term": "Variable cost",
+    "define": "A cost that rises as you sell more.",
+    "example": "Milk and tea leaves cost more when you make more cups."
+  },
+  {
+    "id": "working-capital",
+    "term": "Working capital",
+    "define": "The money a business needs on hand to run day to day.",
+    "example": "Cash to buy tomorrow's ingredients before today's sales are collected."
+  }
+]

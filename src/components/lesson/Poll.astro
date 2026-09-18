@@ -1,0 +1,58 @@
+---
+/**
+ * The one guess-then-reveal control. It opens a lesson (a guess before any teaching), runs the
+ * practice step, and is every quick check. Plain HTML: it works before the JavaScript arrives and
+ * with JavaScript off, which on slow 4G is most of the time someone spends on the page.
+ *
+ * Two parts on purpose. Radios record the pick; a separate <details> reveals. Revealing on
+ * :checked would spoil the answer for keyboard and screen-reader users, because arrow keys check
+ * each radio as they move through the group.
+ */
+interface Props {
+  /** Unique on the page; becomes the radio group name. */
+  id: string;
+  question: string;
+  options: { text: string; why: string }[];
+  answer: number;
+  /** When set, the lesson script scores the first reveal and schedules the check for review. */
+  checkId?: string;
+  revealLabel?: string;
+}
+
+const { id, question, options, answer, checkId, revealLabel = 'Show the answer' } = Astro.props;
+---
+
+<div class="poll" data-poll data-check-id={checkId} data-answer={answer}>
+  <fieldset>
+    <legend>{question}</legend>
+    <div class="opts">
+      {options.map((option, index) => (
+        <label class="opt">
+          <input type="radio" name={id} value={index} />
+          <span class="numbers">{option.text}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <details class="reveal">
+    <summary class="btn btn-secondary">{revealLabel}</summary>
+    <div class="reveal-body">
+      {/* Filled by the lesson script when a check is scored. Words, not colour: "Correct." / "Not quite." */}
+      <p class="poll-status" role="status"></p>
+      <p class="answer">
+        <strong class="numbers">{options[answer].text}</strong> {options[answer].why}
+      </p>
+      {/* With :has() only the line for the reader's own pick shows. Without it every line shows,
+          which reads as a short explanation of each option: answer shown, never answer lost. */}
+      <div class="fbs">
+        {options.map((option, index) => (
+          <p class="fb" data-right={index === answer ? '' : undefined}>
+            <span class="fb-pick numbers">“{option.text}”</span>{' '}
+            {index === answer ? 'That is the one.' : option.why}
+          </p>
+        ))}
+      </div>
+    </div>
+  </details>
+</div>

@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Disclaimer — LaunchPad"
+  description="LaunchPad is educational only. It does not provide financial, legal, or tax advice."
+  path=""
+>
+  <section class="section">
+    <div class="container column prose">
+      <span class="eyebrow">Legal</span>
+      <h1>Disclaimer</h1>
+      <p class="lede">
+        LaunchPad is for learning. It is not financial, legal, or tax advice.
+      </p>
+
+      <h2>What that means in practice</h2>
+      <ul>
+        <li>
+          Nothing here tells you what to buy, sell, or hold. No named funds, shares, or
+          cryptocurrencies are recommended.
+        </li>
+        <li>
+          No returns are promised. Where a lesson or calculator uses a rate, it is an
+          illustration you typed or an example — not a forecast.
+        </li>
+        <li>
+          The calculators show the result of the numbers you enter. They do not know your
+          situation, and a result is not a recommendation to go ahead.
+        </li>
+        <li>
+          Where a lesson shows market data it is at least 30 days old — the rule India's
+          securities regulator sets for educational material — and it is never a hint about what
+          happens next.
+        </li>
+      </ul>
+
+      <h2>Rules differ where you live</h2>
+      <p>
+        Tax, business registration, and what counts as legal work for someone under 18 vary
+        by country and sometimes by state. Lessons point to the official source for your
+        country rather than guessing on your behalf. Check there before acting.
+      </p>
+
+      <h2>When to ask a person</h2>
+      <p>
+        For a decision that involves real money, debt, or anything legally binding, talk to
+        a qualified professional, or an adult you trust, before committing. LaunchPad exists
+        so those conversations start from a better base, not to replace them.
+      </p>
+
+      <h2>Mistakes</h2>
+      <p>
+        Lessons are checked against their sources and carry a last-reviewed date, but errors
+        happen and things change. If you spot something wrong, say so and it gets fixed.
+        See <a href={`${base}/about`}>About</a> for how to get in touch.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  li { margin-bottom: var(--space-3); }
+</style>

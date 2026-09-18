@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// One source: src/content/glossary.json. Lessons, popovers and this page all read the same entries.
+const terms = (await getCollection('glossary')).sort((a, b) => a.data.term.localeCompare(b.data.term));
+---
+
+<BaseLayout
+  title="Glossary — LaunchPad"
+  description="Plain-language definitions of business and money terms, each with a worked example."
+  path="glossary"
+>
+  <section class="section">
+    <div class="container">
+      <div class="column">
+        <span class="eyebrow">Reference</span>
+        <h1>Glossary</h1>
+        <p class="lede">
+          Every term defined in plain language, with an example. If a lesson uses a word that is
+          not here, it should be.
+        </p>
+
+        {/* Rendered hidden: without JavaScript a filter box is a dead control, and the list is short enough to scan. */}
+        <p class="field filter" data-filter hidden>
+          <label for="term-filter">Find a term</label>
+          <input id="term-filter" type="search" autocomplete="off" />
+          <span class="hint" role="status" data-filter-count></span>
+        </p>
+      </div>
+
+      <dl class="terms column">
+        {terms.map((entry) => (
+          <div class="entry" id={entry.id} data-entry>
+            <dt lang={entry.data.lang}>{entry.data.term}</dt>
+            <dd>
+              <p>{entry.data.define}</p>
+              <p class="example">{entry.data.example}</p>
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <div class="column">
+        <p class="note">{terms.length} terms so far. More are added as lessons are written.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const wrap = document.querySelector<HTMLElement>('[data-filter]');
+  const input = document.querySelector<HTMLInputElement>('#term-filter');
+  const count = document.querySelector<HTMLElement>('[data-filter-count]');
+  const entries = Array.from(document.querySelectorAll<HTMLElement>('[data-entry]'));
+  if (wrap && input && count) {
+    wrap.hidden = false;
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      let shown = 0;
+      for (const entry of entries) {
+        const match = query === '' || entry.textContent!.toLowerCase().includes(query);
+        entry.hidden = !match;
+        if (match) shown++;
+      }
+      count.textContent = query === '' ? '' : shown === 0 ? 'No terms match. Try a shorter word.' : `${shown} of ${entries.length} terms`;
+    });
+  }
+</script>
+
+<style>
+  .lede { margin-bottom: var(--space-6); }
+  .filter { max-width: 420px; margin-bottom: var(--space-7); }
+  /* One reading column of hairline rows: a list of definitions, not a wall of cards. */
+  .terms { margin: 0; border-top: 1px solid var(--line); }
+  .entry { padding: var(--space-5) 0; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + var(--space-5)); }
+  .entry:target {
+    background: color-mix(in srgb, var(--gold) 20%, var(--bg));
+    padding-inline: var(--space-4);
+    margin-inline: calc(var(--space-4) * -1);
+    border-radius: var(--radius-s);
+  }
+  dt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-h3);
+    letter-spacing: var(--tracking-heading);
+    color: var(--ink);
+    margin-bottom: var(--space-2);
+  }
+  dd { margin: 0; }
+  dd p { margin-bottom: var(--space-2); font-size: var(--text-md); }
+  .example { color: var(--muted); font-size: var(--text-sm); margin-bottom: 0; }
+  .note { margin-top: var(--space-7); }
+</style>

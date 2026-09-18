@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LessonList from '../../../components/lesson/LessonList.astro';
+import ProgressMarks from '../../../components/lesson/ProgressMarks.astro';
+import { REGIONS, getRegion } from '../../../lib/regions';
+import { inTrack, lessonsFor } from '../../../lib/lessons';
+import '../../../styles/lesson.css';
+
+export function getStaticPaths() {
+  return REGIONS.map((r) => ({ params: { region: r.code } }));
+}
+
+const { region: code } = Astro.params;
+const region = getRegion(code!);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const prefix = `${base}/${region.code}`;
+const lessons = await lessonsFor(region.code);
+---
+
+<BaseLayout
+  title={`Learn — LaunchPad ${region.name}`}
+  description={`Three tracks on money, starting a business, and how business works — written for ${region.name}.`}
+  region={region.code}
+  regionSub="learn"
+  path="learn"
+>
+  <section class="section" data-review-region={region.code}>
+    <div class="container">
+      <div class="column">
+        <span class="eyebrow">{region.name} edition</span>
+        <h1>Learn</h1>
+        <p class="lede">
+          Three tracks, written for {region.name}. Start anywhere: each lesson stands on its own and
+          takes under ten minutes.
+        </p>
+        <ProgressMarks reviewHref={`${prefix}/review`} />
+      </div>
+
+      {region.tracks.map((track, index) => (
+        <section class="track column" aria-labelledby={`track-${track.slug}`}>
+          <p class="track-index numbers">Track {index + 1}</p>
+          <h2 id={`track-${track.slug}`}><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></h2>
+          <p>{track.summary}</p>
+          <LessonList lessons={inTrack(lessons, track.slug)} planned={track.planned} />
+        </section>
+      ))}
+
+      {lessons.length === 0 && (
+        <div class="column">
+          <p class="note">
+            The {region.name} lessons are being written. The
+            <a href={`${prefix}/tools/break-even`}>break-even calculator</a> already works with
+            {region.name} numbers, and the <a href={`${base}/in/learn`}>India edition</a> has the first lessons.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { margin-bottom: var(--space-6); }
+  .track { margin-top: var(--space-8); }
+  .track-index { font-size: var(--text-sm); color: var(--muted); margin-bottom: var(--space-2); }
+  .track h2 { margin-top: 0; }
+  .track h2 a { color: inherit; text-decoration: none; }
+  .track h2 a:hover { color: var(--accent-text); text-decoration: underline; }
+  .track > p { margin-bottom: var(--space-5); }
+  .note { margin-top: var(--space-8); }
+</style>

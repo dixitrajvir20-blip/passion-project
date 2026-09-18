@@ -1,0 +1,313 @@
+---
+/**
+ * One lesson, as one continuous editorial column. The order follows docs/LEARNING_DESIGN.md
+ * (guess, idea, worked example, try it, your turn, quick check, where you'll meet it), but none of
+ * those builder's words appear as headings, and nothing here is a card except the gold summary and
+ * the explorable. Everything up to the explorable works with JavaScript off.
+ */
+import { getEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import Poll from '../components/lesson/Poll.astro';
+import Worked from '../components/lesson/Worked.astro';
+import Practice from '../components/lesson/Practice.astro';
+import Drill from '../components/lesson/Drill.astro';
+import MarginExplorer from '../islands/MarginExplorer.tsx';
+import SplitExplorer from '../islands/SplitExplorer.tsx';
+import LessonScript from '../components/lesson/LessonScript.astro';
+import { getRegion } from '../lib/regions';
+import { site } from '../lib/site';
+import { lessonPath, type Lesson } from '../lib/lessons';
+import { marginChoices, marginSteps, splitChoices, splitSteps, type Choice, type Step } from '../lib/lesson-math';
+import '../styles/lesson.css';
+
+interface Props {
+  lesson: Lesson;
+  next?: Lesson;
+}
+
+const { lesson, next } = Astro.props;
+const d = lesson.data;
+const region = getRegion(d.region);
+const track = region.tracks.find((t) => t.slug === d.track)!;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const prefix = `${base}/${region.code}`;
+
+const terms = await Promise.all(
+  d.glossary.map(async (id) => {
+    const entry = await getEntry('glossary', id);
+    if (!entry) throw new Error(`${lesson.id}: glossary id "${id}" is not in src/content/glossary.json`);
+    return entry;
+  }),
+);
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const year = d.lastReviewed.getFullYear();
+// Search engines and reuse tools read the licence from here; people read it at the foot of the page.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: d.title,
+  description: d.summary,
+  url: pageUrl,
+  inLanguage: d.lang,
+  isAccessibleForFree: true,
+  learningResourceType: 'lesson',
+  educationalLevel: d.level,
+  timeRequired: `PT${d.readingMinutes}M`,
+  dateModified: d.lastReviewed.toISOString().slice(0, 10),
+  author: { '@type': 'Person', name: d.author.name },
+  publisher: { '@type': 'Organization', name: site.name },
+  copyrightHolder: { '@type': 'Person', name: site.owner },
+  copyrightYear: year,
+  license: site.contentLicence.url,
+  audience: { '@type': 'EducationalAudience', educationalRole: 'student', audienceType: 'ages 15-21' },
+};
+
+const reviewed = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d.lastReviewed);
+
+let workedSteps: Step[] = [];
+if (d.worked?.kind === 'margin') workedSteps = marginSteps(d.worked, d.worked.unitName);
+if (d.worked?.kind === 'split') workedSteps = splitSteps(d.worked);
+
+let practice: { given: Step[]; question: string; choices: Choice[] } | null = null;
+if (d.practice?.kind === 'margin') {
+  practice = {
+    given: marginSteps(d.practice, d.practice.unitName).slice(0, 1),
+    question: `How many ${d.practice.unitName} cover the month?`,
+    choices: marginChoices(d.practice),
+  };
+}
+if (d.practice?.kind === 'split') {
+  const target = d.practice.target;
+  practice = {
+    given: splitSteps(d.practice).filter((step) => step.label !== target),
+    question: `How much goes to ${target.toLowerCase()}?`,
+    choices: splitChoices(d.practice, target),
+  };
+}
+---
+
+<BaseLayout
+  title={`${d.title} — LaunchPad ${region.name}`}
+  description={d.summary}
+  region={region.code}
+  regionSub="learn"
+  path="learn"
+  kind="Lesson"
+>
+  <Fragment slot="head">
+    <link rel="license" href={site.contentLicence.url} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
+  </Fragment>
+
+  <article class="lesson" data-lesson-id={lesson.id} data-locale={region.locale}>
+    <header class="lesson-head">
+      <div class="container">
+        <div class="column">
+          <span class="eyebrow"><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></span>
+          <h1>{d.title}</h1>
+          <p class="lede">{d.summary}</p>
+          <p class="lesson-meta">
+            {d.readingMinutes} min read. Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
+          </p>
+          {/* Said before the lesson, not after: the teach-back effect comes from expecting to explain. */}
+          <p class="lesson-expect">At the end, try explaining this to one person. It shows you what stuck.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="lesson-main">
+      <div class="container">
+        <div class="column">
+          <p class="situation">{d.situation}</p>
+
+          <Poll
+            id="guess"
+            question={d.prediction.q}
+            options={d.prediction.options}
+            answer={d.prediction.answer}
+            revealLabel="See what happens"
+          />
+
+          <aside class="callout" aria-labelledby="in-30">
+            <h2 id="in-30">In 30 seconds</h2>
+            <ul>
+              {d.takeaways.map((line) => <li>{line}</li>)}
+            </ul>
+          </aside>
+
+          <div class="lesson-body">
+            <slot />
+          </div>
+
+          {d.worked && (
+            <section aria-labelledby="work-it">
+              <h2 id="work-it">Work it through</h2>
+              <Worked context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
+            </section>
+          )}
+
+          {d.explorable && (
+            <section aria-labelledby="try-it">
+              <h2 id="try-it">Try it</h2>
+              {d.explorable.kind === 'margin' && (
+                <MarginExplorer
+                  client:visible={{ rootMargin: '600px' }}
+                  fixed={d.explorable.fixed}
+                  variable={d.explorable.variable}
+                  prices={d.explorable.prices}
+                  unitName={d.explorable.unitName}
+                  prompts={d.explorable.prompts}
+                  localeCode={region.locale}
+                  toolHref={`${prefix}/tools/${d.tool ?? 'break-even'}`}
+                  initial={d.worked?.kind === 'margin' ? d.worked.price : undefined}
+                />
+              )}
+              {d.explorable.kind === 'split' && (
+                <SplitExplorer
+                  client:visible={{ rootMargin: '600px' }}
+                  incomes={d.explorable.incomes}
+                  lines={d.explorable.lines}
+                  prompts={d.explorable.prompts}
+                  localeCode={region.locale}
+                  toolHref={`${prefix}/tools/${d.tool ?? 'budget'}`}
+                />
+              )}
+              {d.explorable.kind === 'drill' && (
+                <Drill
+                  lessonId={lesson.id}
+                  intro={d.explorable.intro}
+                  scenarios={d.explorable.scenarios}
+                  reflection={d.explorable.reflection}
+                  localeCode={region.locale}
+                />
+              )}
+            </section>
+          )}
+
+          {practice && d.practice && (
+            <section aria-labelledby="your-turn">
+              <h2 id="your-turn">Your turn</h2>
+              <Practice
+                context={d.practice.context}
+                given={practice.given}
+                question={practice.question}
+                choices={practice.choices}
+                localeCode={region.locale}
+              />
+            </section>
+          )}
+
+          <section aria-labelledby="quick-check">
+            <h2 id="quick-check">Quick check</h2>
+            <p>
+              {d.quiz.length} questions, about 90 seconds. Pick, then look. Getting one wrong here is
+              the useful kind of wrong: that question comes back sooner.
+            </p>
+            {d.quiz.map((check, index) => (
+              <Poll
+                id={`q${index + 1}`}
+                question={check.q}
+                options={check.options}
+                answer={check.answer}
+                checkId={`${lesson.id}#q${index + 1}`}
+              />
+            ))}
+            <p class="return-line" data-return-line hidden></p>
+          </section>
+
+          <section aria-labelledby="meet-it">
+            <h2 id="meet-it">Where you will meet this</h2>
+            <ul>
+              {d.transfer.map((line) => <li>{line}</li>)}
+            </ul>
+            <p>
+              Now the part from the top: tell one person what this lesson was about, in three
+              sentences. Where you get stuck is the bit worth rereading.
+            </p>
+          </section>
+
+          {d.reportTo && (
+            <section aria-labelledby="if-it-happens">
+              <h2 id="if-it-happens">If it happens to you</h2>
+              <p class="report">
+                {d.reportTo.label}{' '}
+                {d.reportTo.phone && (
+                  <>
+                    Call <a href={`tel:${d.reportTo.phone}`}><strong class="numbers">{d.reportTo.phone}</strong></a> or report at{' '}
+                  </>
+                )}
+                <a href={d.reportTo.url} rel="noopener noreferrer">{new URL(d.reportTo.url).hostname}</a>.
+              </p>
+            </section>
+          )}
+
+          {terms.length > 0 && (
+            <section aria-labelledby="terms">
+              <h2 id="terms">Terms in this lesson</h2>
+              <dl class="lesson-terms">
+                {terms.map((entry) => (
+                  <div id={`term-${entry.id}`}>
+                    <dt lang={entry.data.lang}>{entry.data.term}</dt>
+                    <dd>
+                      {entry.data.define} <span class="example">{entry.data.example}</span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <p><a href={`${base}/glossary`}>The full glossary</a></p>
+            </section>
+          )}
+
+          {/* Sources and the licence are the same boilerplate on every lesson: keep them out of search. */}
+          <footer class="lesson-fine" data-pagefind-ignore>
+            <h2 id="sources">Sources</h2>
+            <ul>
+              {d.sources.map((source) => (
+                <li>
+                  <a href={source.url} rel="noopener noreferrer">{source.title}</a>, {source.publisher}
+                </li>
+              ))}
+            </ul>
+            <p>For learning only. Not financial, legal, or tax advice. <a href={`${base}/disclaimer`}>Why we say that</a>.</p>
+
+            <h2 id="reuse">Copyright and reuse</h2>
+            <p>
+              © {year} {site.owner} and LaunchPad contributors. You may copy, share and adapt this lesson
+              for non-commercial use, such as a class, a club or a handout, as long as you credit it,
+              link back, and share your version under the same licence:{' '}
+              <a href={site.contentLicence.url} rel="license noopener noreferrer">{site.contentLicence.fullName} ({site.contentLicence.name})</a>.
+            </p>
+            <p>
+              To credit it: “{d.title}”, {site.name}, <span class="cite-url">{pageUrl}</span>.
+            </p>
+            <p>
+              The {site.name} name and logo are not covered by that licence. Documents we link to
+              belong to their publishers, and are linked rather than copied for that reason.
+            </p>
+          </footer>
+
+          <div class="lesson-next">
+            {next && (
+              <a class="btn btn-link" href={`${base}/${lessonPath(next)}`}>Next: {next.data.title}</a>
+            )}
+            {!next && <a class="btn btn-link" href={`${prefix}/learn/${track.slug}`}>Back to {track.title}</a>}
+            {/* Rendered hidden: with no script it would be a dead control. Never gates anything. */}
+            <button type="button" class="btn btn-secondary btn-sm" data-mark-read hidden>Mark as read</button>
+            <span class="marked" data-marked role="status"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Definitions for the in-place popover. Hidden unless the Popover API opens one. */}
+    {terms.map((entry) => (
+      <div class="term-pop" id={`pop-${entry.id}`} popover data-pagefind-ignore>
+        <h3 lang={entry.data.lang}>{entry.data.term}</h3>
+        <p>{entry.data.define}</p>
+        <p class="example">{entry.data.example}</p>
+      </div>
+    ))}
+  </article>
+  <LessonScript />
+</BaseLayout>

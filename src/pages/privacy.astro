@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Privacy — LaunchPad"
+  description="What LaunchPad stores (almost nothing), what it never does, and your rights wherever you live."
+  path=""
+>
+  <section class="section">
+    <div class="container column prose">
+      <span class="eyebrow">Legal</span>
+      <h1>Privacy</h1>
+      <p class="lede">
+        Short version: LaunchPad has no accounts, sets no cookies, runs no trackers, and shows no
+        ads. Your browser keeps a few preferences so the site works. That is the whole story
+        today, and this page will change before anything else is added.
+      </p>
+      <p class="updated">Last updated {site.legalUpdated}. Applies to {site.url}.</p>
+
+      <h2>Who is responsible</h2>
+      <p>
+        LaunchPad is run by {site.owner}, a student in {site.ownerLocation}, as a non-commercial
+        education project. For anything about your data, email
+        <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>. The same address handles
+        complaints and questions from parents and teachers.
+      </p>
+
+      <h2>What we collect</h2>
+      <p>
+        Nothing that identifies you. There is no sign-up, no email capture, no contact form and no
+        server of our own: the site is a set of static files.
+      </p>
+      <p>
+        Your browser stores a few small preferences on your device so the site works. They never
+        reach us and clearing your browser data removes them. The full list is on the
+        <a href={`${base}/cookies`}>Cookies &amp; storage</a> page; the short version:
+      </p>
+      <ul>
+        <li>which edition you chose, so the front page can offer it again;</li>
+        <li>the currency you picked in a calculator;</li>
+        <li>lessons you have finished and quiz scores;</li>
+        <li>your answer to the privacy choices dialog, so we do not ask again.</li>
+      </ul>
+      <p>
+        The files are served by GitHub Pages. Like any web host, GitHub sees the technical
+        details of each request (your IP address, browser type, the page requested) to deliver the
+        page and keep the service secure. GitHub's own
+        <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener noreferrer">privacy statement</a>
+        covers that. We do not receive those logs.
+      </p>
+
+      <h2>What we never do</h2>
+      <ul>
+        <li>No cookies, no analytics that identify you, no advertising or social-media pixels.</li>
+        <li>No selling or sharing of personal data with anyone, for any purpose.</li>
+        <li>No profiling, behavioural monitoring or targeted content, and none aimed at anyone under 18.</li>
+        <li>No fonts or scripts from third-party servers, so loading a page tells no one you were here.</li>
+        <li>Nothing you type into a calculator leaves your browser.</li>
+      </ul>
+
+      <h2>If accounts are added</h2>
+      <p>
+        Signing in will always be optional; the whole site works without it. If and when it
+        launches, an account exists only to keep your progress in step across devices, and this
+        page will be updated first. The plan, so you can hold us to it:
+      </p>
+      <ul>
+        <li>
+          <strong>Collected:</strong> your email address, your progress, and the year you were born
+          (kept only as "old enough" or "needs a parent"). If a parent or guardian has to agree
+          first, their email address and their confirmation.
+        </li>
+        <li><strong>Why:</strong> to sign you in without a password and to sync your progress. Legal basis: your consent, which you can withdraw by deleting the account.</li>
+        <li><strong>Passkeys:</strong> we would store only the public half of a passkey; your fingerprint or face never leaves your device.</li>
+        <li><strong>Kept for:</strong> as long as you use the account, then deleted after 24 months of no sign-ins, or immediately when you ask.</li>
+        <li><strong>Where:</strong> with a hosting provider we name here before launch, in a region we name too.</li>
+        <li><strong>Never:</strong> public profiles, messaging between users, ads, or use of your data for anything else.</li>
+      </ul>
+
+      <h2>Age</h2>
+      <p>
+        LaunchPad is written for people aged 15 to 21. Because nothing personal is collected, you
+        can use it at any age without asking anyone. If accounts launch, the rules will follow
+        where you live: no accounts under 13 anywhere; a parent or guardian must agree first for
+        anyone under 18 in India (Digital Personal Data Protection Act), under the local age of
+        digital consent in the EU (13 to 16 depending on the country), and under 13 in the UK and
+        the United States. If we learn that someone under 13 has created an account, we delete it.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        Wherever you live, you can ask what we hold about you (today: nothing), ask for it to be
+        corrected or deleted, and complain. Email
+        <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>; we answer within 30 days.
+      </p>
+      <ul>
+        <li>
+          <strong>European Union and United Kingdom:</strong> the rights of access, rectification,
+          erasure, restriction, portability and objection under the GDPR and UK GDPR, the right to
+          withdraw consent at any time, and the right to complain to your national data protection
+          authority (in the UK, the ICO).
+        </li>
+        <li>
+          <strong>India:</strong> the rights to access, correction, erasure and grievance redressal
+          under the Digital Personal Data Protection Act 2023, and to nominate someone to exercise
+          them for you. Complaints can go to the Data Protection Board of India once the Act's
+          provisions are in force.
+        </li>
+        <li>
+          <strong>California and other US states:</strong> the rights to know, delete and correct.
+          We do not sell or share personal information and never have, so there is nothing to opt
+          out of; we honour the Global Privacy Control signal anyway.
+        </li>
+      </ul>
+
+      <h2>Statistics, if we ever count visits</h2>
+      <p>
+        Any future statistics would be cookieless and aggregate-only: counts of pages read and
+        calculators used, with no profile of individual visitors, no cross-site identifiers, and
+        an easy way to opt out. It would be described here and switched on only after that.
+      </p>
+
+      <h2>Links and embedded content</h2>
+      <p>
+        Lessons link to official sources. Those sites have their own privacy policies. Any video
+        from another site loads only after you tap it and only if you have allowed it in Privacy
+        choices; until then, nothing is requested from that site.
+      </p>
+
+      <h2>Security</h2>
+      <p>
+        The site is served over HTTPS only. Because no personal data is held, there is nothing to
+        breach today; if accounts launch, we will publish how the data is protected and how we
+        would notify you if something went wrong. Security researchers can find a contact in our
+        <a href={`${base}/.well-known/security.txt`}>security.txt</a>.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        When this page changes, the date at the top changes with it, and the full history is in
+        the public <a href={site.repo} rel="noopener noreferrer">source repository</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

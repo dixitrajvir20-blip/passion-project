@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="About — LaunchPad"
+  description="Why LaunchPad exists, who it is for, and how its content is written and reviewed."
+  path="about"
+>
+  <section class="section">
+    <div class="container column prose">
+      <span class="eyebrow">About</span>
+      <h1>Business is a life skill, not a specialism.</h1>
+      <p class="lede">
+        Financial and business knowledge is usually passed down, not taught. If your family does
+        not have it, school rarely fills the gap. LaunchPad is an attempt to fill it for free.
+      </p>
+
+      <h2>The gap</h2>
+      <p>
+        Most advice about starting a business or managing money quietly assumes a starting point:
+        savings you can risk, a parent who has done it before, an adviser to call, or a network
+        that opens doors. Plenty of people have none of those things, and the advice that does
+        reach them is usually attached to something for sale.
+      </p>
+      <p>
+        Across OECD countries, about 18% of 15-year-olds lack basic financial literacy, and access
+        to financial education at school explains a meaningful share of the difference in scores.
+        Meanwhile hundreds of millions of young people have a phone and a data connection but no
+        one to ask.
+      </p>
+
+      <h2>What LaunchPad does differently</h2>
+      <p>
+        Everything here is free, written in plain language, and assumes you are starting from
+        zero. Lessons use real numbers instead of theory, say plainly when something is difficult,
+        and never recommend a product the site benefits from.
+      </p>
+      <p>
+        Content is written per edition. Banking access, currency stability, and what counts as a
+        normal income vary enormously between countries, so the India, Europe and United States
+        editions each explain the same principle through the money system you actually live in.
+        The calculators let you switch currency.
+      </p>
+
+      <h2>Who it is for</h2>
+      <p>
+        Roughly ages 15 to 21 — old enough to earn, start something, or make a financial decision
+        that matters, and young enough that these habits have decades to compound.
+      </p>
+
+      <h2>How content is handled</h2>
+      <p>
+        Lessons cite their sources and carry a last-reviewed date. Anything about money is
+        education, never personalised advice: LaunchPad does not tell anyone what to buy, sell, or
+        hold. Market examples use data that is at least a month old. Contributors are credited by
+        first name and country only, and writers under 18 need a parent or teacher to sign off.
+      </p>
+
+      <h2>The project</h2>
+      <p>
+        LaunchPad is a college passion project by {site.owner}, extending the idea behind his
+        school club, Business Lab: that business is a life skill rather than a specialism. It is
+        built in the open — the <a href={site.repo} rel="noopener noreferrer">source code</a> is
+        public — and will stay free.
+      </p>
+
+      <h2>Corrections and contact</h2>
+      <p>
+        If you spot a mistake, want to suggest a lesson, or need to reach the project for any
+        reason, email <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>. Privacy and
+        data requests go to the same address; see <a href={`${base}/privacy`}>Privacy</a>.
+      </p>
+
+      <p class="btn-row">
+        <a class="btn" href={`${base}/#editions`}>Choose an edition</a>
+        <a class="btn btn-link" href={`${base}/privacy`}>How your data is handled</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

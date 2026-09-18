@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Page not found — LaunchPad"
+  description="That page does not exist. Try the lessons, the calculators, or the glossary."
+  path=""
+>
+  <section class="section">
+    <div class="container column">
+      <h1>That page does not exist</h1>
+      <p class="lede">
+        The link may be old, or the page may not be written yet. These work:
+      </p>
+      <ul>
+        <li><a href={`${base}/#editions`}>Choose an edition</a> — India, Europe or the United States</li>
+        <li><a href={`${base}/in/tools/break-even`}>Break-even calculator</a></li>
+        <li><a href={`${base}/glossary`}>Glossary</a></li>
+        <li><a href={`${base}/`}>Home</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  li { margin-bottom: var(--space-3); }
+</style>

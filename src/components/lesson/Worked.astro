@@ -1,0 +1,31 @@
+---
+/** A worked calculation. The steps come from lesson-math (so from finance.ts), never from prose. */
+import { money, number, localeByCode } from '../../lib/format';
+import type { Step } from '../../lib/lesson-math';
+
+interface Props {
+  context: string;
+  steps: Step[];
+  localeCode: string;
+}
+
+const { context, steps, localeCode } = Astro.props;
+const locale = localeByCode(localeCode);
+const show = (value: { money: number } | { count: number }) =>
+  'money' in value ? money(value.money, locale, Number.isInteger(value.money) ? 0 : 2) : number(value.count, locale);
+---
+
+<div class="worked">
+  <p>{context}</p>
+  <ol class="steps">
+    {steps.map((step) => (
+      <li>
+        <span class="step-label">{step.label}</span>
+        <span class="step-sum numbers">
+          {step.parts.map((part) => ('op' in part ? ` ${part.op} ` : show(part)))} = <strong>{show(step.result)}</strong>
+        </span>
+        {step.note && <span class="step-note">{step.note}</span>}
+      </li>
+    ))}
+  </ol>
+</div>
