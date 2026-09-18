@@ -1,5 +1,5 @@
 /*
-  LaunchPad design tokens — the single source of truth for colour, type, space and motion.
+  Business Lab design tokens — the single source of truth for colour, type, space and motion.
   Rules live in docs/DESIGN.md and docs/BRAND_GUIDE.md. Every value here has a contrast
   figure in the brand guide; change one and re-run scripts/contrast-check.mjs.
 */
@@ -15,16 +15,16 @@
 
   /* Surfaces */
   --bg: #ffffff;
-  --bg-2: #f5f6f8;
-  --bg-3: #eaecf0;
+  --bg-2: #f2f5fa;      /* blue-tinted paper for panels and the calculator bench */
+  --bg-3: #e6ebf3;
   --bg-inverse: #0b1240;
 
   /* Text */
   --ink: #0b0b0f;      /* 19.6:1 on --bg */
   --ink-2: #3c3f47;    /* 10.5:1 */
   --muted: #5f6472;    /* 5.9:1 */
-  --line: #e2e5ea;
-  --line-strong: #c9cdd4;
+  --line: #dfe4ec;
+  --line-strong: #c3cad6;
 
   /* Accent (blue) */
   --accent: #0c61c4;        /* fills: white text 5.96:1 */
@@ -37,6 +37,8 @@
   --gold: #f2c14e;
   --gold-text: #7a5a0e;     /* 6.4:1 on --bg, for eyebrows only */
   --on-gold: #0b0b0f;       /* 11.7:1 */
+  /* The highlighter: behind the one sentence of a lesson worth remembering. Ink on it 15.6:1. */
+  --highlight: #fbe3a6;
 
   /* Signals */
   --error: #c42b1c;         /* 5.7:1 */
@@ -83,11 +85,9 @@
   --radius-xs: 4px;
   --radius-s: 8px;
   --radius-m: 12px;
-  --radius-l: 20px;
+  --radius-l: 14px;
   --radius-pill: 999px;
 
-  /* The one signature shadow. Used on the hero device/preview only. */
-  --shadow-signature: 0 30px 60px -30px rgb(11 18 64 / 0.35);
 
   /* Motion */
   --dur-fast: 150ms;
@@ -113,8 +113,12 @@
   --print-muted: #444444;
   --print-line: #999999;
 
+  /* Ledger rules: the double line under a final total, the way a cash book closes a sum */
+  --rule-total: 3px double var(--ink);
+
   /* Layout */
-  --header-h: 52px;
+  --header-h: 56px;
+  --edition-h: 44px;
   --measure: 64ch;
   --column: 720px;
   --wide: 1120px;
@@ -143,12 +147,11 @@
     --gold: #f2c14e;          /* 11.7:1 on --bg: usable as text in dark */
     --gold-text: #f2c14e;
     --on-gold: #0b0b0f;
+    --highlight: #4a3c12;     /* light text on it 9.9:1 */
 
     --error: #ff7a6b;         /* 7.7:1 */
     --success: #5ccb8f;       /* 9.7:1 */
     --focus: #f2c14e;
-
-    --shadow-signature: 0 30px 60px -30px rgb(0 0 0 / 0.7);
 
     --series-1: #3987e5;
     --series-2: #d95926;

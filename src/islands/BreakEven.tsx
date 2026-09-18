@@ -50,6 +50,7 @@ export default function BreakEven({ defaults, unitName, fixedHint, variableHint,
           <h2>What it means</h2>
           <Result label="You keep this much per sale" value={exact(result.contributionMargin, locale)} />
           <Result
+            main
             label={`${capitalise(unitName)} to break even each month`}
             value={result.viable ? number(result.units!, locale) : 'Not reachable'}
           />

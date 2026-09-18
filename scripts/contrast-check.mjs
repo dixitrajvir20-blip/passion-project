@@ -53,6 +53,8 @@ const pairs = [
   ['on-accent', 'accent-hover', 4.5, 'primary button hover'],
   ['gold-text', 'bg', 4.5, 'eyebrow labels'],
   ['on-gold', 'gold', 4.5, 'text on a gold fill'],
+  ['ink', 'highlight', 4.5, 'highlighted key sentence'],
+  ['ink', 'bg-3', 4.5, 'text on a hovered panel'],
   ['error', 'bg', 4.5, 'error text'],
   ['error', 'bg-2', 4.5, 'error text on cards'],
   ['success', 'bg', 4.5, 'success text'],

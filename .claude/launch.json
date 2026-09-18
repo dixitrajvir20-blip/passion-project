@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "launchpad (astro dev)",
+      "name": "business-lab (astro dev)",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--", "--host", "--port", "4321"],
       "port": 4321,

@@ -9,6 +9,7 @@ const PAGES = [
   'glossary',
   'search',
   'about',
+  'write',
   'privacy',
   'cookies',
   'terms',

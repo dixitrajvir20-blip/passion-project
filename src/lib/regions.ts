@@ -53,6 +53,8 @@ export interface Region {
   tab: string;
   locale: string;
   currency: string;
+  /** The edition front's headline: what this edition is about, in its own terms. */
+  headline: string;
   /** One sentence naming the gap this edition exists to close. */
   problem: string;
   intro: string;
@@ -71,6 +73,7 @@ export const REGIONS: Region[] = [
     tab: 'India',
     locale: 'en-IN',
     currency: 'INR',
+    headline: 'Money, UPI and small business, in rupees.',
     problem:
       'Digital payments arrived faster than the knowledge needed to use them safely.',
     intro:
@@ -187,6 +190,7 @@ export const REGIONS: Region[] = [
     tab: 'Europe',
     locale: 'en-IE',
     currency: 'EUR',
+    headline: 'Money and small business, across 27 rulebooks.',
     problem:
       'Strong consumer protections, low financial confidence, and rules that change at every border.',
     intro:
@@ -306,6 +310,7 @@ export const REGIONS: Region[] = [
     tab: 'United States',
     locale: 'en-US',
     currency: 'USD',
+    headline: 'Money, credit and side hustles, in dollars.',
     problem:
       'Large, permanent debt decisions are made at 17, before anyone explains how debt works.',
     intro:
@@ -397,7 +402,7 @@ export const REGIONS: Region[] = [
       unitName: 'orders',
       fixedHint: 'What you pay every month whatever you sell: shop fees, software, storage.',
       variableHint: 'What one order costs you: blank product, printing, shipping.',
-      scenario: 'A custom-print side hustle, after platform fees.',
+      scenario: 'A custom-print shop, after platform fees.',
     },
     tools: {
       budget: {

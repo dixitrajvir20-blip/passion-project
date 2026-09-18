@@ -1,4 +1,4 @@
-# LaunchPad legal & privacy notes
+# Business Lab legal & privacy notes
 
 Version 1.0 · 17 September 2026. **Not legal advice.** This is a sourced working brief so the
 owner can build compliantly now and know exactly what to confirm with a lawyer before accounts
@@ -7,7 +7,7 @@ launch. Audience: India, EU and US (UK possible). Sources are named inline with 
 ## The design decision that removes most of the problem
 
 **Collect no personal data until there is a clear reason.** With no accounts, no cookies and no
-analytics, LaunchPad processes essentially no personal data, which means no consent banner is
+analytics, Business Lab processes essentially no personal data, which means no consent banner is
 required, no parental-consent machinery is needed, and the breach surface is near zero. Every
 feature that changes this (accounts, analytics, a newsletter, embeds) is gated and adds its own
 compliance step. Build privacy-first and stay there as long as possible.
@@ -80,7 +80,7 @@ The single most important editorial constraint. Enforced by the content-reviewer
 - **India (SEBI, 29 Jan 2025, updated 8 May 2026):** an "education-only" person must not (i)
   advise or recommend on specific securities without registration, or (ii) claim returns or
   performance. Market **price data must be lagged** — the rule was three months, updated in 2026
-  to **30 days** for education-only use. Practical rule for LaunchPad: never name a security with
+  to **30 days** for education-only use. Practical rule for Business Lab: never name a security with
   a price or target; use data ≥30 days old or fictional; no "returns" claims; no ties to
   unregistered tipsters. (We standardise on the stricter, simpler rule: ≥30 days, no named
   securities, no forecasts.) *Confirm the current wording before publishing any market example.*
@@ -109,7 +109,7 @@ is no sale; the privacy policy says so plainly.
 2. The analytics-without-consent position for Germany, the Netherlands and Austria specifically.
 3. Whether lesson-progress localStorage is "strictly necessary" vs "requested by the user" (we
    treat it as exempt; get this confirmed).
-4. DPDP: whether LaunchPad is a Data Fiduciary for Indian users, the adequacy of the Rule 10
+4. DPDP: whether Business Lab is a Data Fiduciary for Indian users, the adequacy of the Rule 10
    parental-consent flow, and the exact current SEBI price-data wording.
 5. UK Children's Code DPIA scope; newsletter consent under PECR.
 6. CCPA / state thresholds (confirm we are not a "business"/controller).

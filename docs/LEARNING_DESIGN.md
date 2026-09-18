@@ -1,4 +1,4 @@
-# LaunchPad learning design
+# Business Lab learning design
 
 Version 1.0 · 17 September 2026. How lessons are built so they actually change what a 15–21-year-old
 does with money, grounded in the evidence. Sources named inline. The content-reviewer subagent
@@ -11,7 +11,7 @@ found interventions explained ~0.1% of the variance in behaviour and faded withi
 later and better work is more hopeful: Kaiser, Lusardi, Menkhoff & Urban (2022, 76 RCTs, >160k
 people) found real effects on knowledge (+0.19 SD) and behaviour (+0.09 SD), no decay past six
 months, at ~$23/person. The difference is *how*: the things that work are **narrow, timely,
-tied to a real decision, and practised**, not lectured. So LaunchPad is built as small
+tied to a real decision, and practised**, not lectured. So Business Lab is built as small
 decision-shaped units with retrieval and a calculator, not chapters.
 
 ## Teaching formats, ranked by evidence

@@ -48,7 +48,7 @@ export default function LoanEmi({ defaults, localeCode }: Props) {
 
         <div class="results">
           <h2>What it means</h2>
-          <Result label="You pay each month" value={usable ? money(result.emi, locale) : '—'} />
+          <Result main label="You pay each month" value={usable ? money(result.emi, locale) : '—'} />
           <Result label="Interest over the whole loan" value={usable ? money(result.totalInterest, locale) : '—'} />
           <Result label="Total you pay back" value={usable ? money(result.totalPaid, locale) : '—'} />
 

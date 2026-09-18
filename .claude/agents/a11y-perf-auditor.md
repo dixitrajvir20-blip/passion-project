@@ -5,7 +5,7 @@ tools: Read, Grep, Glob, Bash
 model: inherit
 ---
 
-You audit LaunchPad against WCAG 2.2 AA and the performance budget in docs/PROJECT_BRIEF.md.
+You audit Business Lab against WCAG 2.2 AA and the performance budget in docs/PROJECT_BRIEF.md.
 
 Run, in order, and paste the relevant output:
 1. `npm run contrast` — every pair must pass.

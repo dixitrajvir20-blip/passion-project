@@ -1,4 +1,4 @@
-# LaunchPad security & threat model
+# Business Lab security & threat model
 
 Version 1.0 · 17 September 2026. Owner: Rajvir Dixit. This is the working security document for
 a static, no-backend educational site that plans to add optional accounts later. It is written
@@ -7,7 +7,7 @@ professional review before accounts launch.
 
 ## The shape of the risk
 
-Today LaunchPad is Astro static output on GitHub Pages, no server, no cookies, localStorage
+Today Business Lab is Astro static output on GitHub Pages, no server, no cookies, localStorage
 only. That removes most of the OWASP Top 10 (2025): with no accounts or backend, only
 **A02 Security Misconfiguration, A03 Software Supply Chain Failures and A05 Injection (XSS)**
 apply materially. A01 Access Control, A04 Crypto, A07 Auth, A09 Logging and A10 Exceptional

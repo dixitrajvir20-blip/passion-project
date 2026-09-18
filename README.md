@@ -1,4 +1,4 @@
-# LaunchPad
+# Business Lab
 
 A free, global learning hub that teaches money and business to people aged 15–21 — with a focus on
 those who don't have a financial adviser or family guidance to lean on. Lessons and interactive

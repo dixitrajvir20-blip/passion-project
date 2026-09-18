@@ -123,6 +123,7 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
             />
           ))}
           <Result
+            main
             label={result.leftover >= 0 ? 'Not given a job yet' : 'More than comes in'}
             value={money(Math.abs(result.leftover), locale)}
             loss={result.leftover < 0}

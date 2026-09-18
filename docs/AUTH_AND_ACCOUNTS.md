@@ -1,4 +1,4 @@
-# LaunchPad accounts & sign-in
+# Business Lab accounts & sign-in
 
 Version 1.0 · 17 September 2026. How the optional "sync your progress" feature is designed, why
 it stays optional, and what has to be true before it goes live. The UI exists today as a

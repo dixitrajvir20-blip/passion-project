@@ -1,7 +1,8 @@
 /*
   Lesson pages. One continuous editorial column, separated by whitespace and hairlines. Exactly
-  two filled boxes per lesson: the gold "In 30 seconds" callout and the explorable. Everything
-  else is type on the page, which is what keeps this from reading as a course platform.
+  two filled boxes per lesson: the gold "In 30 seconds" note and the explorable. Everything else
+  is type on the page, which is what keeps this from reading as a course platform. Sums are set
+  as a ledger (base.css) and the key sentence of a section wears the highlighter.
 */
 
 .lesson-head { padding: var(--space-8) 0 var(--space-5); }
@@ -19,6 +20,28 @@
 .lesson-body h2:first-child { margin-top: var(--space-7); }
 .lesson-body ul, .lesson-body ol { padding-left: var(--space-5); }
 .situation { font-size: var(--text-lg); color: var(--ink); }
+
+/* The key sentence of a section, marked the way a student marks a textbook. */
+.lesson-body p strong {
+  background: var(--highlight);
+  padding: 0 0.15em;
+  border-radius: var(--radius-xs);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@media (forced-colors: active) { .lesson-body p strong { background: Mark; color: MarkText; } }
+
+/* On a wide screen the "In 30 seconds" note steps into the empty margin beside the lesson, the
+   way a textbook prints its summary beside the text. It keeps its place in the reading order
+   (after the guess, so it never gives the answer away) and takes no width from the column. */
+@media (min-width: 1180px) {
+  .lesson-main .callout {
+    float: right;
+    clear: right;
+    width: calc(var(--wide) - var(--column) - var(--space-8) - 2 * var(--gutter));
+    margin: 0 calc((var(--wide) - var(--column) - 2 * var(--gutter)) * -1) var(--space-5) 0;
+  }
+}
 
 /* Glossary terms in prose: dotted underline, link first, popover where the platform has one. */
 .term {
@@ -116,13 +139,15 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
   .poll .fb-pick::before { content: 'Your pick: '; color: var(--muted); }
 }
 
-/* Worked calculation: typeset, not boxed. */
-.steps { list-style: none; padding: 0; margin: var(--space-4) 0; counter-reset: step; }
-.steps li { display: grid; gap: var(--space-1); padding: var(--space-4) 0; border-top: 1px solid var(--line); margin: 0; }
-/* No closing rule: the next section heading's own hairline closes the block. */
-.step-label { color: var(--muted); font-size: var(--text-sm); }
-.step-sum { font-family: var(--font-display); font-size: var(--text-h3); color: var(--ink-2); letter-spacing: var(--tracking-heading); }
-.step-sum strong { color: var(--ink); }
+/* Worked calculation: a ledger. Each step names what it finds, shows the working under the name,
+   and puts the result on the right; the final step is the total, closed with a double rule. */
+.steps { margin: var(--space-4) 0 var(--space-5); }
+.steps .ledger-row { border-top: 1px solid var(--line); }
+.steps .ledger-row.ledger-total { border-top-color: var(--ink); }
+.steps .ledger-label { display: grid; gap: var(--space-1); }
+.steps .ledger-label, .steps .ledger-total .ledger-label { font-weight: 400; }
+.step-label { color: var(--ink); font-weight: 700; }
+.step-sum { color: var(--ink-2); font-size: var(--text-ui); }
 .step-note { color: var(--muted); font-size: var(--text-sm); }
 
 /* Drill: mock screens */
@@ -151,7 +176,7 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
   margin-top: var(--space-2);
   padding: var(--space-2) var(--space-4);
   border: 1px solid var(--line-strong);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-s);
   color: var(--ink);
   font-weight: 700;
 }
@@ -176,17 +201,32 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
 .lesson-next { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); align-items: center; margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--line); }
 .marked { color: var(--success); font-size: var(--text-sm); font-weight: 700; }
 
-/* Track and learn pages: two quiet marks, never a bar or a percentage. */
-.lesson-list { list-style: none; padding: 0; margin: 0; counter-reset: lesson; }
-.lesson-list > li { margin: 0; border-top: 1px solid var(--line); }
-.lesson-list > li:last-child { border-bottom: 1px solid var(--line); }
-.lesson-row { display: grid; gap: var(--space-1); padding: var(--space-4) 0; color: inherit; text-decoration: none; }
+/* Track and learn pages: a numbered contents list with two quiet marks, never a bar or a
+   percentage. */
+.lesson-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+.lesson-list > li { margin: 0; border-bottom: 1px solid var(--line); }
+.lesson-row, .lesson-planned {
+  display: grid;
+  grid-template-columns: var(--space-6) minmax(0, 1fr);
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-4) 0;
+  color: inherit;
+  text-decoration: none;
+}
+.lesson-num { grid-row: 1 / span 3; font-family: var(--font-display); font-weight: 700; font-size: var(--text-h3); line-height: var(--leading-snug); color: var(--muted); }
+.lesson-title, .lesson-sub, .lesson-marks { grid-column: 2; }
 a.lesson-row:hover .lesson-title { color: var(--accent-text); text-decoration: underline; }
-.lesson-title { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; color: var(--ink); letter-spacing: var(--tracking-heading); }
+a.lesson-row:hover .lesson-num { color: var(--accent-text); }
+.lesson-title { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; color: var(--ink); letter-spacing: var(--tracking-heading); line-height: var(--leading-snug); }
 .lesson-sub { color: var(--ink-2); font-size: var(--text-ui); }
 .lesson-marks { color: var(--muted); font-size: var(--text-sm); }
 .lesson-marks [data-mark] { color: var(--success); font-weight: 700; }
-.lesson-planned { padding: var(--space-3) 0; color: var(--muted); font-size: var(--text-ui); }
+.lesson-planned { color: var(--muted); font-size: var(--text-ui); }
+.lesson-planned .lesson-num { font-size: var(--text-md); line-height: var(--leading-body); }
+/* Three tracks side by side on the edition front: title and time only. */
+.is-compact .lesson-row, .is-compact .lesson-planned { padding: var(--space-3) 0; }
+.is-compact .lesson-num { font-size: var(--text-md); line-height: var(--leading-body); }
+.is-compact .lesson-title { font-family: var(--font-body); font-size: var(--text-md); font-weight: 700; letter-spacing: 0; line-height: var(--leading-body); }
 
 @media print {
   /* A worksheet handed round a club must not carry one reader's progress. */

@@ -1,4 +1,4 @@
-# Project Brief: LaunchPad
+# Project Brief: Business Lab
 
 Version 2.0, 17 September 2026. Author: Rajvir Dixit (with research help from Claude).
 
@@ -11,7 +11,7 @@ editions (India/Europe/US), the brand is blue/gold/black, and the accounts and a
 work below is specified rather than hypothetical.
 
 ## 1. Vision
-LaunchPad is a free, clean, fast website where anyone aged 15-21, anywhere in the world, can learn how money and business work, then practice with interactive tools. It's a hub: short articles on ideas that affect this age group, plus calculators, quizzes, and builders you can use on a phone.
+Business Lab is a free, clean, fast website where anyone aged 15-21, anywhere in the world, can learn how money and business work, then practice with interactive tools. It's a hub: short articles on ideas that affect this age group, plus calculators, quizzes, and builders you can use on a phone.
 
 **Why it matters**
 - Across OECD countries, about 18% of 15-year-olds lack basic financial literacy (PISA 2022, 20 countries and economies). Access to financial education in school explains about 20% of the variation in scores.
@@ -231,7 +231,7 @@ public/         favicon, social images
 - Done when: `/hi/` pages are complete and human-reviewed; articles readable offline after one visit; simulator outcomes pass deterministic tests
 
 ## 15. Open decisions (Rajvir)
-- Keep the name LaunchPad? (check it isn't confusing with other "LaunchPad" programs) and pick a domain
+- Name: decided on 18 September 2026 as **Business Lab**, after the school club. Still to do: pick and buy a domain, and license the badge (see BRAND_GUIDE.md §4)
 - Who reviews content for accuracy (a teacher? a finance professional?)
 - Hosting choice and who owns the accounts (use an adult's account if a service requires 18+)
 - Which second language after Hindi

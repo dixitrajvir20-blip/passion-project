@@ -53,7 +53,7 @@ export default function SideHustle({ defaults, unitName, localeCode }: Props) {
           <Result label="Money in" value={money(result.revenue, locale)} />
           <Result label="Cost of what you sold" value={money(result.costs, locale)} />
           <Result label="Fees" value={money(result.fees, locale)} />
-          <Result label="Left for you" value={money(result.profit, locale)} loss={result.profit < 0} />
+          <Result main label="Left for you" value={money(result.profit, locale)} loss={result.profit < 0} />
           <Result
             label="Per hour of your time"
             value={result.profitPerHour === null ? '—' : exact(Math.round(result.profitPerHour * 100) / 100, locale)}

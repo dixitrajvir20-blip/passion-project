@@ -1,7 +1,7 @@
 {
-  "name": "LaunchPad",
-  "short_name": "LaunchPad",
-  "description": "Learn how money actually works. Free lessons and calculators for ages 15 to 21.",
+  "name": "Business Lab",
+  "short_name": "Business Lab",
+  "description": "Free lessons and calculators on money and business for ages 15 to 21.",
   "start_url": "/passion-project/",
   "scope": "/passion-project/",
   "display": "standalone",

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const guide = `${site.repo}/blob/main/docs/CONTENT_GUIDE.md`;
+---
+
+<BaseLayout
+  title={`Write for us — ${site.name}`}
+  description={`How students can suggest or write a lesson for ${site.name}: who can write, what we need, and how a lesson gets checked before it goes up.`}
+  path="write"
+>
+  <section class="section">
+    <div class="container column prose">
+      <span class="eyebrow">Contributors</span>
+      <h1>Write a lesson</h1>
+      <p class="lede">
+        The best person to explain a payslip, a market stall or a scam that goes round your town
+        is often someone who has just dealt with it. If that is you, you can write a lesson.
+      </p>
+
+      <h2>Who can write</h2>
+      <ul>
+        <li>Anyone aged 15 to 21, anywhere. You do not need to be an expert, only careful.</li>
+        <li>If you are under 18, a parent, guardian or teacher needs to say it is fine first. Put their OK in your email.</li>
+        <li>Teachers and club leaders can send a lesson written with a group.</li>
+      </ul>
+
+      <h2>What we need most</h2>
+      <ul>
+        <li>Lessons for the India, Europe and United States editions, built on a real situation someone your age meets.</li>
+        <li>Examples from places the site does not cover yet, such as Brazil, Nigeria, Kenya or the Philippines.</li>
+        <li>Corrections. If a lesson is wrong or out of date where you live, say so.</li>
+      </ul>
+
+      <h2>How a lesson is written</h2>
+      <p>
+        Every lesson follows the same shape: a situation, a guess, the idea, a worked example with
+        real numbers, something to try, and a short check at the end. The
+        <a href={guide} rel="noopener noreferrer">content guide</a> has the full shape and the rules.
+        Three matter most:
+      </p>
+      <ul>
+        <li><strong>Education, not advice.</strong> No telling anyone what to buy or sell, no named investments with prices, and no promised returns.</li>
+        <li><strong>Your own words.</strong> Read your sources, close them, then write. Copying and rewording is still copying.</li>
+        <li><strong>Sources for every fact.</strong> At least two, from official or original publishers where possible.</li>
+      </ul>
+
+      <h2>How to send it</h2>
+      <p>
+        Email <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> with the lesson in the
+        email or as a document, plus the edition it is for.
+      </p>
+      <ul>
+        <li>Do not include your address, phone number, school or a photo of yourself.</li>
+        <li>Do not include personal stories that could identify someone else, even without a name.</li>
+        <li>Say how you would like to be credited: first name and country is the default.</li>
+      </ul>
+
+      <h2>What happens next</h2>
+      <p>
+        An editor checks every fact against its source, the reading level and the rules above,
+        and may edit for length. You will hear back before anything is published. Published
+        lessons are shared under the site's licence, so teachers and clubs can reuse them with
+        credit; the <a href={`${base}/terms`}>terms</a> explain what that means for your work.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

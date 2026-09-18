@@ -15,7 +15,7 @@ readingMinutes: 5
 level: beginner                                # beginner | intermediate
 regions: [IN, US, GLOBAL]                      # examples used
 author: { name: "Rajvir", country: "US" }      # first name + country only
-reviewedBy: "LaunchPad editor"              # role, not a minor's full name
+reviewedBy: "Business Lab editor"              # role, not a minor's full name
 lastReviewed: 2026-09-17
 glossary: [unit-economics, gross-margin, fixed-cost]
 tool: break-even                               # tool linked in "Try it"
@@ -53,7 +53,7 @@ quiz:
 - Write per edition: use the currency, rails, institutions and example businesses from `REGIONAL_TEACHING.md` for the edition the lesson belongs to, not a generic average.
 
 ## Copyright and reuse (must follow)
-LaunchPad's lessons are licensed **CC BY-NC-SA 4.0** and the code is **MIT** (PROJECT_BRIEF §12). Every lesson page
+Business Lab's lessons are licensed **CC BY-NC-SA 4.0** and the code is **MIT** (PROJECT_BRIEF §12). Every lesson page
 carries the notice, a `rel="license"` link and the licence in its structured data; that is automatic. What writers control:
 
 - **Write it yourself.** Read the source, close it, then write. Never paste from a source and edit it into shape: a
@@ -68,7 +68,7 @@ carries the notice, a `rel="license"` link and the licence in its structured dat
 - **Your contribution.** You keep the copyright in what you write and license it to readers under CC BY-NC-SA 4.0 by
   submitting it. You are credited by first name and country. Writers under 18 need a parent's or teacher's OK first.
 - **Do not use AI-generated text or images that imitate a named source, author or brand.**
-- **Not covered by the licence:** the LaunchPad name and logo, and anything belonging to a third party that we link to.
+- **Not covered by the licence:** the Business Lab name and logo, and anything belonging to a third party that we link to.
 
 ## Starter article list (24)
 **Money Basics:** Your first paycheck or pocket money: where it should go · Needs vs wants and the 50/30/20 idea · Compound growth explained with small monthly amounts · Saving vs investing: what's the difference? · UPI, cards, and "buy now, pay later" · Credit scores: US scores vs CIBIL in India · Scams that target students · Inflation: why the same money buys less

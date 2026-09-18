@@ -30,9 +30,9 @@ const links = region
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href={region ? prefix : `${base}/`} aria-label="LaunchPad home">
-      <Logo size={26} />
-      <span class="wordmark">LaunchPad</span>
+    <a class="brand" href={region ? prefix : `${base}/`} aria-label={`${site.name} home`}>
+      <Logo size={32} />
+      <span class="wordmark">{site.name}</span>
     </a>
     <nav aria-label="Main">
       <ul>
@@ -56,20 +56,14 @@ const links = region
 </header>
 
 <style>
+  /* A solid bar, not a frosted one: backdrop blur is expensive to repaint on the budget Android
+     phones this site is built for, and a plain edge reads as paper rather than as an app. */
   .site-header {
     position: sticky;
     top: 0;
     z-index: 40;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
+    background: var(--bg);
     border-bottom: 1px solid var(--line);
-  }
-  @supports not (backdrop-filter: blur(1px)) {
-    .site-header { background: var(--bg); }
-  }
-  @media (prefers-reduced-transparency: reduce) {
-    .site-header { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
   }
 
   .header-inner {
@@ -91,12 +85,12 @@ const links = region
   }
   .wordmark {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 800;
     font-size: var(--text-wordmark);
     letter-spacing: -0.02em;
     color: var(--ink);
   }
-  /* On narrow screens the mark alone is the brand, so the whole nav fits on one 52px row. */
+  /* On narrow screens the badge alone is the brand, so the whole nav fits on one row. */
   @media (max-width: 639px) { .wordmark { display: none; } }
 
   nav ul {

@@ -1,11 +1,11 @@
 # Security policy
 
-LaunchPad is a static educational site with no accounts and no server-side data (see
+Business Lab is a static educational site with no accounts and no server-side data (see
 `docs/SECURITY.md` for the full threat model and risk register).
 
 ## Reporting a vulnerability
 
-- Email: hello@launchpad-project.example (replace with the live address before launch)
+- Email: hello@business-lab.example (replace with the live address before launch)
 - Or open a private report: https://github.com/dixitrajvir20-blip/passion-project/security/advisories/new
 - Machine-readable contact: `/.well-known/security.txt`
 

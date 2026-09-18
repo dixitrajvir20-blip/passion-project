@@ -185,11 +185,15 @@ export function ToolActions({ query, onReset }: { query: Record<string, string>;
   );
 }
 
-export function Result({ label, value, loss = false }: { label: string; value: ComponentChildren; loss?: boolean }) {
+/**
+ * One line of the results ledger: label left, figure right. `main` marks the answer the tool
+ * exists to give; it is set larger and closed with the double rule of a final total.
+ */
+export function Result({ label, value, loss = false, main = false }: { label: string; value: ComponentChildren; loss?: boolean; main?: boolean }) {
   return (
-    <div class="result-block">
-      <p class="result-label">{label}</p>
-      <p class={`result-value numbers ${loss ? 'is-loss' : ''}`}>{value}</p>
+    <div class={`result-block ledger-row ${main ? 'ledger-total' : ''}`}>
+      <p class="result-label ledger-label">{label}</p>
+      <p class={`result-value ledger-figure numbers ${loss ? 'is-loss' : ''}`}>{value}</p>
     </div>
   );
 }

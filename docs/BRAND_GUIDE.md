@@ -1,21 +1,36 @@
-# LaunchPad brand guide
+# Business Lab brand guide
 
-Version 1.0 · 17 September 2026 · owner: Rajvir Dixit
+Version 2.0 · 18 September 2026 · owner: Rajvir Dixit. v2 renames the site from LaunchPad to
+Business Lab and replaces the launch-page layout, which read as generated, with the ledger
+and edition-line system below.
 
 This is the one place the brand is defined. If a colour, font size, radius or spacing value
 is not in here (or its machine form in `src/styles/tokens.css`), it should not appear in the
-product. The rule that keeps LaunchPad from looking generated is that every choice traces back
+product. The rule that keeps Business Lab from looking generated is that every choice traces back
 to this document, and this document says why.
 
-## 1. What LaunchPad is
+## 1. What Business Lab is
 
 A free learning hub that teaches money and business to 15–21-year-olds who don't have an
 adviser or a family member to ask, with editions for the money system each reader actually
-lives in. The brand has to read as **trustworthy, calm and grown-up** — the opposite of the
-loud "finance bro" and "get rich" aesthetic these readers are surrounded by — while still
-feeling made for them, not for their parents.
+lives in. It is named after the school club it grew out of, whose idea is that business is a
+life skill. The brand has to read as **trustworthy, calm and grown-up**, the opposite of the
+loud "finance bro" and "get rich" look these readers are surrounded by, while still feeling
+made for them, not for their parents.
 
-One-line thesis: **a launch pad, not a billboard.** Quiet, precise, and pointed upward.
+One-line thesis: **work shown, nothing sold.** The site looks like a club's well-kept
+notebook: sums written out the way a cash book writes them, the key sentence highlighted, the
+edition named at the top of every page. Nothing on it looks like an advert, because nothing
+on it is one.
+
+Where each choice comes from, so it is never a default:
+
+- **The ledger** (§5) comes from money itself: shopkeepers, cash books and receipts put the
+  label on the left, the figure on the right and a double rule under the total.
+- **The edition line** (§5) comes from news sites, which switch between national editions in a
+  strip at the top of the page. The site is organised the same way.
+- **The highlighter** (§2) comes from how students actually mark a textbook.
+- **The badge** (§4) is the club's own logo.
 
 ## 2. Colour
 
@@ -45,7 +60,8 @@ surface it sits on (WCAG 2.2 AA: 4.5:1 for text, 3:1 for large text and non-text
 | `--accent-text` | `#0C61C4` | 6.0:1 | Links |
 | `--gold` | `#F2C14E` | black on it 11.7:1 | Fills and marks only |
 | `--gold-text` | `#7A5A0E` | 6.4:1 | The one place gold becomes text: eyebrow labels |
-| `--bg-2` | `#F5F6F8` | — | Cards, alternating sections |
+| `--bg-2` | `#F2F5FA` | — | Panels, the calculator bench, alternating sections (a faint blue, not grey) |
+| `--highlight` | `#FBE3A6` | ink on it 15.6:1 | The highlighter behind a lesson's key sentence (dark: `#4A3C12`, 9.9:1) |
 | `--error` | `#C42B1C` | 5.7:1 | Errors |
 | `--success` | `#1B7F4E` | 5.0:1 | Confirmations |
 
@@ -62,16 +78,17 @@ Dark is a designed set, not an inversion. Surfaces are near-black (`#0B0B0F` / `
 focus ring and eyebrows switch to gold. Full values live in `tokens.css` under the
 `prefers-color-scheme: dark` block.
 
-### Dark sections in light mode
+### Navy: the frame
 
-A navy section (`.section-dark`, `#0B1240`) re-maps the tokens for everything inside it: text
-goes light, links go pale blue (9.3:1), eyebrows go marigold (10.7:1). Use it once or twice per
-page as a rhythm change, never back to back.
+Navy (`.section-dark`, `#0B1240`) re-maps the tokens for everything inside it: text goes light,
+links go pale blue (9.3:1), marigold marks the current item (10.7:1). It is used in exactly two
+places, the edition line at the top of every page and the footer at the bottom, so every page is
+framed the same way. Content sections stay on paper.
 
 ### Don't
 
 - No purple, no violet-to-blue gradients, no gradient text. One accent, flat fills.
-- No glows or coloured drop shadows. There is exactly one shadow in the system (§6).
+- No glows and no drop shadows. Depth comes from surface colour and rules (§6).
 - No colour as the only signal: pair it with text, weight or an icon.
 - Never hard-code a hex in a component. Add or reuse a token.
 
@@ -82,7 +99,7 @@ both licensed under the SIL Open Font License.
 
 - **Bricolage Grotesque** — display. Headlines, big numbers, the wordmark. It has warmth and a
   slight irregularity that keeps headings from feeling like a default grotesque (Inter, Roboto,
-  Geist), which is the number-one "AI slop" tell. Weights 600–700.
+  Geist), which is the number-one "AI slop" tell. Weights 600–800.
 - **Atkinson Hyperlegible Next** — body and UI. Designed by the Braille Institute for low-vision
   readers: its letterforms are disambiguated (I, l, 1; O, 0), which is exactly right for a site
   whose readers include people on cheap screens in bright light. Weights 400–700.
@@ -113,40 +130,64 @@ and what NN/g found teens need — they dislike tiny text).
 
 ## 4. The logo
 
-An **L whose upright is a launch arrow** (marigold) and whose foot is the pad (blue), on a navy
-rounded tile. It reads as a rocket and a letter L at once, and it uses all three brand colours
-in their correct roles: navy anchor, gold spark, blue base.
+The Business Lab logo is the club's badge: a blue circular badge with a white B.
 
-- The pad is drawn in a lighter tint, `#5FA0F5`, not signal blue: `#0C61C4` on the navy tile is
-  only 3.0:1 and the foot of the L sinks into it. The tint is 6.7:1 on navy. It is a logo-only
-  colour and is not a token, because nothing else may use it.
-- Files: `public/brand/logo-mark.svg` (tile), `public/favicon.svg`, `logo-lockup.svg` and
-  `logo-lockup-dark.svg` (mark + wordmark), `public/icons/` (PWA + maskable).
-- Clear space: keep at least the height of the arrowhead clear on every side.
-- Minimum size: 20px for the mark, 24px in the header.
-- The wordmark is Bricolage Grotesque 700, tracking −0.02em, in ink (or `#F5F5F7` on dark).
-- Don't: recolour it, add a gradient or glow, stretch it, put it on a busy photo, or repeat it
-  around the page. Apple's rule applies — branding defers to content and the logo is not a
-  wallpaper.
+**Status: interim.** The version on the site today is a stand-in drawn for this repo: a
+`#0C61C4` disc, a thin white inner ring and a white B cut from Bricolage Grotesque 800 (white on
+the blue is 6.0:1). It exists so the rename could ship. The club's real badge will replace it
+once there is a **licensed, unwatermarked file** (SVG preferred, or a PNG at least 1024px). The
+image shared on 18 September 2026 carries a Design.com watermark, which marks it as a preview:
+it must not be published until the licence is bought and the clean file downloaded.
+
+To swap in the licensed badge:
+
+1. Put the file in `public/brand/` and replace the drawing in `src/components/Logo.astro`
+   (header and footer) and `scripts/brand-mark.mjs` (share images and icons).
+2. Run `node scripts/brand-icons.mjs` to rewrite the favicon, `logo-mark.svg` and the app icons.
+3. Check the badge at 32px in the header: fine detail such as rays or ribbon text disappears at
+   that size, so the header may need a simplified version of the mark.
+
+Rules for either version:
+
+- Files: `public/brand/logo-mark.svg`, `public/favicon.svg`, `public/icons/` (PWA + maskable).
+- Minimum size: 24px. Header 32px, footer 36px, share images 60px.
+- The wordmark is Bricolage Grotesque 800, tracking −0.02em, in ink (or `#F5F5F7` on navy).
+- The logo appears in the header and the footer only. Don't recolour it, add a gradient or glow,
+  stretch it, put it on a busy photo, or repeat it around the page. Branding defers to content.
 
 ## 5. Layout and shape
 
-- Grid: 1120px max content width, 720px reading column, 16px side gutter, 4px spacing scale.
-- Radius: 8 / 12 / 20px. Cards use 20px. Buttons and tabs are pills (999px). Inputs 12px.
-- Cards are **flat**: a `--bg-2` fill, no border, no shadow, 24–32px padding. One card style,
-  used everywhere; variants change content, not chrome.
-- Hairlines (1px `--line`) separate sections and rows instead of boxing everything.
-- Whitespace is the main tool. Sections breathe (64–96px vertical). Vary section rhythm — a tall
-  hero, a tight band of figures, a dark section — rather than stacking equal blocks.
+- Grid: 1120px max content width, 720px reading column, 24px side gutter, 4px spacing scale.
+- Radius: 4 / 8 / 12 / 14px. Buttons, keys and the callout use 8px; inputs 12px; panels 14px.
+  Nothing is a pill except on/off switches, which people expect to be round. Square corners
+  belong to paper, ledgers and receipts; pills belong to app stores.
+- **Contents first.** The front page and each edition front show real lessons, real numbers and
+  real calculator questions near the top. Nothing on a landing page describes the site in
+  place of showing it: no mock phones, no fake app cards, no "how it works" 1-2-3 strip.
+- **The ledger** is the signature (`.ledger` in `base.css`). Wherever a sum is done (worked
+  examples, calculator results, the edition front's example) it is set the way a cash book sets
+  it: label left, figure right, a dotted leader between, a single rule above a total, and a
+  **double rule under the final answer**. It is never decoration. If a number isn't the result
+  of a sum on the page, it doesn't get a ledger.
+- **The edition line** is a navy strip above the header on every page, naming India, Europe and
+  United States as plain text links; the current one is bold with a marigold underline.
+- **Index rows** (`.index-list`): lessons, tracks and calculators are ruled rows with the
+  question or title first. Lessons carry their number in the track, which is a real sequence.
+- Panels (`--bg-2`, no border, no shadow) are rare: the calculator bench, the edition's worked
+  example and the lesson explorable. Most things are type and rules on paper.
+- The "In 30 seconds" note is a gold-edged callout. On wide screens it steps into the margin
+  beside the lesson, the way a textbook prints its summary beside the text.
+- Whitespace is the main tool. Vary section rhythm (a tall intro, a tight band of figures, a
+  tinted calculator band) rather than stacking equal blocks.
 
 ## 6. Depth and motion
 
-- **One shadow** in the whole system: `--shadow-signature`, a soft navy-tinted drop used on the
-  hero preview device and nothing else. Depth otherwise comes from surface colour (white →
-  `#F5F6F8` → navy) and a frosted, blurred sticky header, the way Apple's product pages do it.
-- Motion is functional and brief (≤500ms, `--ease`): a short cross-page fade (View Transitions),
-  content that rises 14px as it enters, a bar that grows once. All of it is gated behind
-  `prefers-reduced-motion: no-preference` and never carries meaning on its own.
+- **No shadows.** Depth comes from surface colour (paper → blue-tinted panel → navy frame) and
+  from rules. The sticky header is a solid bar with a hairline; blur is expensive to repaint on
+  the budget Android phones this site is built for.
+- Motion is one thing: a short cross-page fade (View Transitions), off under reduced motion.
+  Content does not fade or rise in as you scroll. That effect made every page look half-loaded
+  in screenshots and is a hallmark of generated landing pages.
 
 ## 6b. Charts
 
@@ -191,10 +232,13 @@ A change ships only if it passes all of these (the design-reviewer subagent enfo
 1. No eyebrow *badge/pill* floating over a centred hero; the eyebrow is a small text label.
 2. No stat banner of three identical numbers with no source. Every figure carries its sentence and its link.
 3. No three-column grid of identical icon-in-rounded-square cards.
-4. No gradient (especially blue→purple), no glow, no glassmorphism as decoration.
+4. No gradient (especially blue→purple), no glow, no glassmorphism, no drop shadow.
 5. Not the default font. Not ALL CAPS labels. Not emoji as icons.
 6. Section sizes vary; the page is not five equal stacked bands.
-7. Copy is specific and numeric, not "powerful, seamless, effortless".
+7. Copy is specific and numeric, not "powerful, seamless, effortless", and not a slogan in two
+   parallel halves ("Short enough for X. Deep enough for Y.").
 8. One bold thing per screen; everything around it is quiet.
 9. Works in light and dark, at 360px and 1280px, at 200% zoom, with reduced motion.
-10. Every colour and size is a token.
+10. No mock devices or fake app screenshots standing in for content; show the real thing.
+11. No scroll-triggered fade-ins.
+12. Every colour and size is a token.

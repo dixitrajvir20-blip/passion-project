@@ -1,8 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SubNav from '../../components/SubNav.astro';
+import EditionSum from '../../components/EditionSum.astro';
+import LessonList from '../../components/lesson/LessonList.astro';
+import ProgressMarks from '../../components/lesson/ProgressMarks.astro';
 import { REGIONS, getRegion } from '../../lib/regions';
-import { inTrack, lessonsFor } from '../../lib/lessons';
+import { toolsFor } from '../../lib/tools';
+import { site } from '../../lib/site';
+import { inTrack, lessonPath, lessonsFor } from '../../lib/lessons';
+import '../../styles/lesson.css';
 
 export function getStaticPaths() {
   return REGIONS.map((r) => ({ params: { region: r.code } }));
@@ -13,135 +18,155 @@ const region = getRegion(code!);
 const lessons = await lessonsFor(region.code);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
+// The first lesson of the first track, the natural place to begin.
+const first = region.tracks.map((track) => inTrack(lessons, track.slug)[0]).find(Boolean);
+const hasDrill = lessons.some((lesson) => lesson.data.explorable?.kind === 'drill');
+const tools = toolsFor(region.code).filter((tool) => tool.slug !== 'spot-the-fake' || hasDrill);
 ---
 
 <BaseLayout
-  title={`LaunchPad ${region.name} — learn how money and business work`}
+  title={`${region.headline.replace(/\.$/, '')} — ${site.name} ${region.name}`}
   description={`Free lessons and calculators on money and business for ages 15 to 21 in ${region.name}. ${region.problem}`}
   region={region.code}
   regionSub=""
 >
-  <section class="section intro">
-    <div class="container">
-      <div class="column">
+  <section class="front">
+    <div class="container front-grid">
+      <div>
         <span class="eyebrow">{region.name} edition</span>
-        <h1>Learn how money actually works.</h1>
+        <h1>{region.headline}</h1>
         <p class="lede">{region.intro}</p>
         <div class="btn-row">
-          <a class="btn btn-lg" href={`${prefix}/learn`}>Start learning</a>
-          <a class="btn btn-secondary btn-lg" href={`${prefix}/tools/break-even`}>Try a calculator</a>
+          {first
+            ? <a class="btn btn-lg" href={`${base}/${lessonPath(first)}`}>Start with the first lesson</a>
+            : <a class="btn btn-lg" href={`${prefix}/learn`}>See the lessons</a>}
+          <a class="btn btn-secondary btn-lg" href={`${prefix}/tools`}>Open the calculators</a>
         </div>
+      </div>
+      <aside class="front-sum" aria-label="A worked example from this edition">
+        <EditionSum region={region} />
+      </aside>
+    </div>
+  </section>
+
+  <section id="lessons" class="section contents" aria-labelledby="lessons-h" data-review-region={region.code}>
+    <div class="container">
+      <div class="section-head">
+        <h2 id="lessons-h">Lessons</h2>
+        <p>Each one stands on its own and takes under ten minutes.</p>
+      </div>
+      <ProgressMarks reviewHref={`${prefix}/review`} />
+      <div class="tracks">
+        {region.tracks.map((track) => (
+          <section class="track" aria-labelledby={`track-${track.slug}`}>
+            <h3 id={`track-${track.slug}`}><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></h3>
+            <p class="track-summary">{track.summary}</p>
+            <LessonList lessons={inTrack(lessons, track.slug)} planned={track.planned} compact />
+          </section>
+        ))}
       </div>
     </div>
   </section>
 
-  <SubNav
-    items={[
-      { id: 'why', label: 'Why this edition' },
-      { id: 'covers', label: 'What it covers' },
-      { id: 'tracks', label: 'Tracks' },
-      { id: 'calculator', label: 'Calculator' },
-    ]}
-  />
-
-  <section id="why" class="section section-alt">
-    <div class="container">
-      <div class="column" data-reveal>
-        <h2>Why this edition exists</h2>
-        <p class="lede">{region.problem}</p>
+  <section id="calculators" class="section calculators" aria-labelledby="calc-h">
+    <div class="container split">
+      <div>
+        <h2 id="calc-h">Calculators</h2>
+        <p>Set up with {region.name} numbers. Change any of them to match your own.</p>
       </div>
-
-      <ul class="list-plain figures" data-reveal-group>
-        {region.stats.map((stat) => (
-          <li class="stat" data-reveal>
-            <p class="figure">{stat.figure}</p>
-            <p class="stat-label">{stat.label}</p>
-            <p class="stat-source">
-              <a href={stat.source.url} rel="noopener noreferrer">{stat.source.title}</a>
-            </p>
+      <ul class="index-list">
+        {tools.map((tool) => (
+          <li>
+            <a class="index-row" href={`${prefix}/tools/${tool.slug}`}>
+              <span class="index-title">{tool.answers}</span>
+              <span class="index-sub">{tool.title}</span>
+              <span class="index-go" aria-hidden="true">Open</span>
+            </a>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section id="covers" class="section">
+  <section id="why" class="section" aria-labelledby="why-h">
     <div class="container">
-      <div class="column" data-reveal>
-        <h2>What this edition covers</h2>
-        <p class="lede">The problems that actually show up here, rather than a general syllabus.</p>
+      <div class="section-head">
+        <h2 id="why-h">Why this edition exists</h2>
+        <p class="lede">{region.problem}</p>
       </div>
-      <ul class="list-plain covers" data-reveal-group>
+
+      <ul class="list-plain figures">
+        {region.stats.map((stat) => (
+          <li class="stat">
+            <p class="figure">{stat.figure}</p>
+            <div>
+              <p class="stat-label">{stat.label}</p>
+              <p class="stat-source">
+                Source: <a href={stat.source.url} rel="noopener noreferrer">{stat.source.title}</a>
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <h3 class="covers-head">What it covers</h3>
+      <ul class="list-plain covers">
         {region.problems.map((problem) => (
-          <li data-reveal>
-            <h3>{problem.title}</h3>
+          <li>
+            <h4>{problem.title}</h4>
             <p>{problem.body}</p>
           </li>
         ))}
       </ul>
-    </div>
-  </section>
 
-  <section id="tracks" class="section section-alt">
-    <div class="container">
-      <div class="column" data-reveal>
-        <h2>Three tracks</h2>
-        <p class="lede">Start anywhere. Each lesson stands on its own and takes under ten minutes.</p>
-      </div>
-      <div class="grid grid-3" data-reveal-group>
-        {region.tracks.map((track) => (
-          <a class="card card-arrow" href={`${prefix}/learn/${track.slug}`} data-reveal>
-            <h3>{track.title}</h3>
-            <p>{track.summary}</p>
-            <p class="card-meta">
-              {inTrack(lessons, track.slug).length > 0
-                ? `${inTrack(lessons, track.slug).length} ready, ${track.planned.length} being written`
-                : `${track.planned.length} lessons being written`}
-            </p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section id="calculator" class="section section-dark">
-    <div class="container">
-      <div class="column" data-reveal>
-        <span class="eyebrow">Calculator</span>
-        <h2>Start with break-even.</h2>
-        <p class="lede">
-          {region.breakEven.scenario} Put your own numbers in and see how many {region.breakEven.unitName} you
-          need to sell before you stop losing money.
-        </p>
-        <p><a class="btn btn-secondary btn-lg" href={`${prefix}/tools/break-even`}>Open the calculator</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-tight">
-    <div class="container">
-      <p class="note column">{region.note}</p>
+      <p class="note">{region.note}</p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .intro { padding-top: var(--space-8); }
-  @media (min-width: 900px) { .intro { padding-top: var(--space-9); } }
-  .intro .btn-row { margin-top: var(--space-6); }
-  .grid { margin-top: var(--space-6); }
+  .front { padding: var(--space-7) 0 var(--space-8); }
+  @media (min-width: 900px) { .front { padding: var(--space-9) 0; } }
+  .front-grid { display: grid; gap: var(--space-7); align-items: end; }
+  @media (min-width: 980px) { .front-grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-8); } }
+  .front h1 { max-width: 18ch; }
+  .front .btn-row { margin-top: var(--space-6); }
+  .front-sum { background: var(--bg-2); border-radius: var(--radius-l); padding: var(--space-5) var(--space-6) var(--space-6); }
 
-  .figures { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
-  @media (min-width: 900px) { .figures { grid-template-columns: repeat(3, 1fr); gap: var(--space-5); } }
-  .stat { background: var(--bg); border-radius: var(--radius-l); padding: var(--space-6); }
-  .stat-label { margin: 0 0 var(--space-3); font-size: var(--text-ui); }
+  .section-head { max-width: var(--column); margin-bottom: var(--space-5); }
+  .section-head h2 { margin-top: 0; }
+  .section-head p { margin-bottom: 0; }
 
-  .covers { display: grid; gap: var(--space-5); margin-top: var(--space-6); }
-  @media (min-width: 900px) { .covers { grid-template-columns: repeat(2, 1fr); gap: var(--space-6) var(--space-8); } }
-  .covers li { border-top: 1px solid var(--line); padding-top: var(--space-4); }
-  .covers h3 { margin-bottom: var(--space-2); }
-  .covers p { margin: 0; font-size: var(--text-ui); }
-  .stat-source { margin: 0; font-size: var(--text-xs); }
+  .contents { border-top: 2px solid var(--ink); }
+  .tracks { display: grid; gap: var(--space-7); margin-top: var(--space-6); }
+  @media (min-width: 980px) { .tracks { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); } }
+  .track h3 { margin: 0 0 var(--space-2); }
+  .track h3 a { color: var(--ink); text-decoration: none; }
+  .track h3 a:hover { color: var(--accent-text); text-decoration: underline; }
+  .track-summary { font-size: var(--text-ui); margin-bottom: var(--space-4); }
+  @media (min-width: 980px) { .track-summary { min-height: 2lh; } }
+
+  .calculators { background: var(--bg-2); }
+  .split { display: grid; gap: var(--space-5); }
+  @media (min-width: 900px) { .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: var(--space-8); } }
+  .split h2 { margin-top: 0; }
+  .calculators .index-list { border-top-color: var(--line-strong); }
+  .calculators .index-list > li { border-bottom-color: var(--line-strong); }
+
+  .figures { margin: var(--space-6) 0 var(--space-8); border-top: 1px solid var(--line); }
+  .stat { display: grid; gap: var(--space-2) var(--space-6); padding: var(--space-5) 0; border-bottom: 1px solid var(--line); margin: 0; }
+  @media (min-width: 720px) { .stat { grid-template-columns: calc(var(--space-10) + var(--space-8)) minmax(0, 1fr); align-items: baseline; } }
+  .stat .figure { margin: 0; }
+  .stat-label { margin: 0 0 var(--space-2); color: var(--ink); }
+  .stat-source { margin: 0; font-size: var(--text-xs); color: var(--muted); }
   .stat-source a { color: var(--muted); }
   .stat-source a:hover { color: var(--accent-text); }
+
+  .covers-head { margin-top: 0; }
+  .covers { display: grid; gap: var(--space-5); margin-top: var(--space-4); }
+  @media (min-width: 900px) { .covers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6) var(--space-8); } }
+  .covers li { border-top: 1px solid var(--line); padding-top: var(--space-4); margin: 0; }
+  .covers h4 { margin-bottom: var(--space-2); font-size: var(--text-md); }
+  .covers p { margin: 0; font-size: var(--text-ui); }
+  .note { margin-top: var(--space-8); }
 </style>

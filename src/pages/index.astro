@@ -1,171 +1,126 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import EditionSum from '../components/EditionSum.astro';
 import { REGIONS } from '../lib/regions';
+import { TOOLS } from '../lib/tools';
 import { site } from '../lib/site';
+import { lessonPath, lessonsFor } from '../lib/lessons';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const ncfe = REGIONS[0].stats[0].source;
+
+// "Start here": the first lesson of each track, so the front page shows what an edition
+// actually teaches instead of describing it. Tracks with nothing published yet show the
+// planned title as plain text.
+const editions = await Promise.all(
+  REGIONS.map(async (region) => {
+    const lessons = await lessonsFor(region.code);
+    const start = region.tracks.map((track) => {
+      const first = lessons.find((lesson) => lesson.data.track === track.slug);
+      return first
+        ? { title: first.data.title, href: `${base}/${lessonPath(first)}`, minutes: first.data.readingMinutes }
+        : { title: track.planned[0] ?? track.title, href: undefined, minutes: undefined };
+    });
+    return { region, start, count: lessons.length };
+  }),
+);
+const everywhere = TOOLS.filter((tool) => !tool.regions);
 ---
 
-<BaseLayout title={`LaunchPad — ${site.tagline}`} description={site.description}>
-  <section class="hero">
+<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description}>
+  <section class="intro">
     <div class="container">
-      <div class="column centered hero-copy">
-        <h1 class="display">Learn how money actually works.</h1>
-        <p class="lede">
-          Free lessons and calculators for ages 15 to 21. No ads, no sign-up, nothing to sell.
-        </p>
-        <div class="btn-row centered">
-          <a class="btn btn-lg" href="#editions">Choose your edition</a>
-          <a class="btn btn-link" href={`${base}/about`}>Read why this exists</a>
-        </div>
-      </div>
-
-      <figure class="hero-visual" aria-hidden="true">
-        <div class="device">
-          <div class="device-body">
-            <p class="device-label">Break-even · chai stall</p>
-            <p class="device-figure numbers">286 cups</p>
-            <p class="device-sub">to cover ₹2,000 of monthly costs at ₹7 kept per cup</p>
-            <div class="device-bars">
-              <div class="bar bar-cost"><i></i></div>
-              <div class="bar bar-rev"><i></i></div>
-            </div>
-            <div class="device-legend"><span>Costs</span><span>Sales</span></div>
-          </div>
-        </div>
-      </figure>
-    </div>
-  </section>
-
-  <section id="editions" class="section section-tight">
-    <div class="container">
-      <div class="column centered">
-        <h2>Pick where you are.</h2>
-        <p class="lede">
-          The ideas are the same everywhere. The examples, the currency and the rules are not, so
-          each edition is written for the money system you actually live in.
-        </p>
-      </div>
-
-      <ul class="list-plain editions" data-reveal-group>
-        {REGIONS.map((region) => (
-          <li data-reveal>
-            <a class="card card-arrow" href={`${base}/${region.code}`} data-astro-prefetch>
-              <h3>{region.name}</h3>
-              <p>{region.problem}</p>
-              <p class="card-meta">Open the {region.name} edition</p>
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <p class="note centered resume" id="resume" hidden>
-        <a id="resume-link" href={`${base}/`}>Continue where you left off</a>
+      <h1>Money and business, taught for where you live.</h1>
+      <p class="lede">
+        Free lessons and calculators for ages 15 to 21. Each edition has its own currency, payment
+        systems, rules and scams, because a lesson about money only helps if it is about your money.
+        No ads, no sign-up, nothing to sell.
       </p>
     </div>
   </section>
 
-  <section class="section section-dark">
+  <section id="editions" class="editions-section" aria-labelledby="editions-h">
     <div class="container">
-      <div class="column" data-reveal>
-        <span class="eyebrow">Why it exists</span>
-        <h2>Money knowledge is usually passed down, not taught.</h2>
-        <p class="lede">
-          If your family has it, you get it. If not, school rarely fills the gap, and the advice
-          that reaches you online is usually attached to something for sale.
+      <div class="editions-head">
+        <h2 id="editions-h">Choose your edition</h2>
+        <p class="resume" id="resume" hidden>
+          <a id="resume-link" href={`${base}/`}>Continue where you left off</a>
         </p>
       </div>
-      <ul class="list-plain reasons" data-reveal-group>
-        <li data-reveal>
-          <h3>Starts from zero</h3>
-          <p>No savings to risk, no adviser to call, no network. Every lesson assumes exactly that.</p>
-        </li>
-        <li data-reveal>
-          <h3>Real numbers, your currency</h3>
-          <p>A chai stall in rupees, an Etsy shop in dollars, a market stall in euros. Switch any time.</p>
-        </li>
-        <li data-reveal>
-          <h3>Nothing for sale</h3>
-          <p>No products recommended, no affiliate links, no tracking. Sources on every statistic.</p>
-        </li>
+
+      <ul class="list-plain editions">
+        {editions.map(({ region, start }) => (
+          <li class="edition">
+            <h3 class="edition-name"><a href={`${base}/${region.code}`} data-astro-prefetch>{region.name}</a></h3>
+            <p class="edition-problem">{region.problem}</p>
+
+            <EditionSum region={region} />
+
+            <h4 class="start-head">Start here</h4>
+            <ol class="start-list">
+              {start.map((item) => (
+                <li>
+                  {item.href ? (
+                    <a href={item.href}>{item.title}</a>
+                  ) : (
+                    <span class="muted">{item.title} (being written)</span>
+                  )}
+                  {item.minutes && <span class="start-min numbers"> {item.minutes} min</span>}
+                </li>
+              ))}
+            </ol>
+
+            <a class="btn" href={`${base}/${region.code}`}>Open the {region.name} edition</a>
+          </li>
+        ))}
       </ul>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <article class="feature" data-reveal>
-        <div>
-          <span class="eyebrow">Lessons</span>
-          <h2>Short enough for a phone. Deep enough to change a decision.</h2>
-          <p>
-            Each lesson takes under ten minutes, opens with a question you might actually face, and
-            ends with a quick check so it sticks. Read it on a slow connection; it still works.
-          </p>
-          <a class="btn btn-link" href="#editions" data-edition-path="learn">See the lesson tracks</a>
-        </div>
-        <div class="feature-visual">
-          <div class="mock lesson-mock">
-            <p class="mock-eyebrow">Money basics · 6 min</p>
-            <p class="mock-title">Spotting a UPI scam before you tap</p>
-            <p class="mock-q">A payment request for ₹1 arrives from a shop you have never used. Approving it would…</p>
-            <ul class="mock-options"><li>Bring ₹1 in</li><li class="is-right">Send your money out</li><li>Do nothing</li></ul>
-          </div>
-        </div>
-      </article>
-
-      <article class="feature flip" data-reveal>
-        <div>
-          <span class="eyebrow">Calculators</span>
-          <h2>Your numbers, worked out in front of you.</h2>
-          <p>
-            Break-even, budgets, savings growth, loan repayments and side-hustle profit. Every
-            result shows the maths underneath it, and nothing you type leaves your browser.
-          </p>
-          <a class="btn btn-link" href="#editions" data-edition-path="tools/break-even">Try the break-even calculator</a>
-        </div>
-        <div class="feature-visual">
-          <div class="mock results-mock numbers">
-            <div><span>Kept per sale</span><strong>₹7</strong></div>
-            <div><span>Cups to break even</span><strong>286</strong></div>
-            <div><span>Profit at 400 cups</span><strong>₹800</strong></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="feature" data-reveal>
-        <div>
-          <span class="eyebrow">Honest by design</span>
-          <h2>Education, never advice.</h2>
-          <p>
-            No stock tips, no promised returns, no named products. Statistics carry their source and
-            a date. Market examples use old data, on purpose, so nothing here reads as a signal.
-          </p>
-          <a class="btn btn-link" href={`${base}/disclaimer`}>Read the disclaimer</a>
-        </div>
-        <div class="feature-visual">
-          <div class="mock source-mock">
-            <p class="mock-figure numbers">27%</p>
-            <p>of Indian adults are financially literate</p>
-            <p class="mock-source"><a href={ncfe.url} rel="noopener noreferrer">Source: {ncfe.title}, 2019</a></p>
-          </div>
-        </div>
-      </article>
+  <section class="section tools-section" aria-labelledby="tools-h">
+    <div class="container split">
+      <div>
+        <h2 id="tools-h">Questions the calculators answer</h2>
+        <p>
+          Put your own numbers in. Every result shows the working underneath it, and nothing you
+          type leaves your phone.
+        </p>
+      </div>
+      <ul class="index-list">
+        {everywhere.map((tool) => (
+          <li>
+            <a class="index-row" href="#editions" data-edition-path={`tools/${tool.slug}`}>
+              <span class="index-title">{tool.answers}</span>
+              <span class="index-sub">{tool.title}</span>
+              <span class="index-go" aria-hidden="true">Open</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <section class="section section-alt">
-    <div class="container column centered" data-reveal>
-      <h2>Start with a calculator.</h2>
-      <p class="lede">Put your own numbers in and see what happens. It takes a minute.</p>
-      <div class="btn-row centered">
-        <a
-          class="btn btn-lg"
-          href="#editions"
-          data-edition-path="tools/break-even"
-          data-edition-label="Open the break-even calculator"
-        >Choose your edition</a>
+  <section class="section why" aria-labelledby="why-h">
+    <div class="container split">
+      <div>
+        <h2 id="why-h">Why this exists</h2>
+      </div>
+      <div class="why-body">
+        <p class="lede">
+          Most people learn money at home. If your family knows how it works, you pick it up. If
+          not, school rarely fills the gap, and most money advice online is attached to something
+          for sale.
+        </p>
+        <p>
+          {site.name} started as a school club built on one idea: business is a life skill. This
+          site takes that idea from one school to anyone with a phone.
+        </p>
+        <ul class="rules">
+          <li>No ads, no sign-up and no tracking.</li>
+          <li>No tips on what to buy or sell, and no promised returns.</li>
+          <li>Every figure carries its source and a date.</li>
+          <li>Built to load on a cheap phone over a slow connection.</li>
+        </ul>
+        <p><a href={`${base}/about`}>More about {site.name}</a></p>
       </div>
     </div>
   </section>
@@ -189,7 +144,6 @@ const ncfe = REGIONS[0].stats[0].source;
       // Links that default to the chooser go straight to the edition the reader already picked.
       for (const el of document.querySelectorAll<HTMLAnchorElement>('a[data-edition-path]')) {
         el.href = new URL(`${saved}/${el.dataset.editionPath}`, document.baseURI).pathname;
-        if (el.dataset.editionLabel) el.textContent = el.dataset.editionLabel;
       }
     }
   } catch {
@@ -198,61 +152,48 @@ const ncfe = REGIONS[0].stats[0].source;
 </script>
 
 <style>
-  .hero { padding: var(--space-8) 0 var(--space-7); overflow: hidden; }
-  @media (min-width: 900px) { .hero { padding: var(--space-10) 0 var(--space-8); } }
-  .hero-copy .lede { margin-bottom: var(--space-6); }
+  .intro { padding: var(--space-8) 0 var(--space-7); }
+  @media (min-width: 900px) { .intro { padding: var(--space-9) 0 var(--space-8); } }
+  .intro h1 { font-size: var(--text-h1); max-width: 16ch; margin-bottom: var(--space-5); }
+  @media (min-width: 640px) { .intro h1 { font-size: var(--text-display); } }
+  .intro .lede { max-width: 58ch; margin: 0; }
 
-  .hero-visual { margin: var(--space-8) auto 0; max-width: 520px; }
-  .device {
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-l);
-    box-shadow: var(--shadow-signature);
-    overflow: hidden;
+  .editions-section { padding-bottom: var(--space-8); }
+  .editions-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-5); border-top: 2px solid var(--ink); padding-top: var(--space-4); }
+  .editions-head h2 { margin: 0; font-size: var(--text-h3); }
+  .resume { margin: 0; font-weight: 700; }
+
+  .editions { display: grid; gap: 0; margin: var(--space-5) 0 0; }
+  .edition { display: flex; flex-direction: column; gap: var(--space-4); margin: 0; padding: var(--space-6) 0; border-bottom: 1px solid var(--line); }
+  /* Side by side, each edition's name, sentence, sum, list and button sit on shared rows, so the
+     three ledgers line up and can be read across like columns of one cash book. */
+  @media (min-width: 980px) {
+    .editions { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-7); }
+    .edition { border-bottom: 0; padding: var(--space-4) 0 0; }
+    @supports (grid-template-rows: subgrid) {
+      .editions { grid-template-rows: repeat(6, auto); }
+      .edition { display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: var(--space-4); align-content: start; }
+      .edition-problem { min-height: 0; }
+    }
   }
-  .device-body { padding: var(--space-5) var(--space-6) var(--space-6); text-align: left; }
-  .device-label { font-size: var(--text-sm); color: var(--muted); margin: 0 0 var(--space-2); }
-  .device-figure { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; letter-spacing: var(--tracking-display); line-height: 1; color: var(--ink); margin: 0 0 var(--space-2); }
-  .device-sub { font-size: var(--text-sm); color: var(--ink-2); margin: 0 0 var(--space-5); }
-  .device-bars { display: grid; gap: var(--space-2); }
-  .bar { height: 14px; border-radius: var(--radius-pill); background: var(--bg-2); overflow: hidden; }
-  .bar i { display: block; height: 100%; border-radius: var(--radius-pill); }
-  .bar-cost i { width: 62%; background: var(--ink-2); }
-  .bar-rev i { width: 88%; background: var(--series-1); }
-  @media (prefers-reduced-motion: no-preference) {
-    .js .bar i { transform-origin: left; animation: grow var(--dur-slow) var(--ease) both; }
-    .js .bar-rev i { animation-delay: 150ms; }
-    @keyframes grow { from { transform: scaleX(0); } }
-  }
-  .device-legend { display: flex; gap: var(--space-4); font-size: var(--text-xs); color: var(--muted); margin-top: var(--space-2); }
-  .device-legend span::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: var(--radius-xs); margin-right: var(--space-2); background: var(--ink-2); }
-  .device-legend span:last-child::before { background: var(--series-1); }
+  .edition-name { font-size: var(--text-h2); line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
+  .edition-name a { color: var(--ink); text-decoration: none; }
+  .edition-name a:hover { color: var(--accent-text); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+  .edition-problem { margin: 0; color: var(--ink-2); min-height: 3lh; }
+  @media (max-width: 979px) { .edition-problem { min-height: 0; } }
+  .start-head { margin: var(--space-2) 0 0; font-size: var(--text-sm); color: var(--ink); }
+  .start-list { margin: 0; padding-left: var(--space-5); font-size: var(--text-ui); }
+  .start-list li { margin-bottom: var(--space-2); }
+  .start-min { color: var(--muted); font-size: var(--text-sm); white-space: nowrap; }
+  .edition .btn { align-self: start; justify-self: start; }
 
-  .editions { display: grid; gap: var(--space-4); margin: var(--space-7) 0 var(--space-5); }
-  @media (min-width: 900px) { .editions { grid-template-columns: repeat(3, 1fr); } }
-  .editions h3 { font-size: var(--text-h2); margin-bottom: var(--space-3); }
-  .editions .card { min-height: 100%; padding-right: var(--space-8); }
-  .resume { max-width: 480px; }
+  .tools-section { background: var(--bg-2); }
+  .split { display: grid; gap: var(--space-5); }
+  @media (min-width: 900px) { .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: var(--space-8); } }
+  .split h2 { margin-top: 0; }
+  .tools-section .index-list { border-top-color: var(--line-strong); }
+  .tools-section .index-list > li { border-bottom-color: var(--line-strong); }
 
-  .reasons { display: grid; gap: var(--space-5); margin-top: var(--space-7); }
-  @media (min-width: 900px) { .reasons { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); } }
-  .reasons li { border-top: 1px solid var(--line); padding-top: var(--space-4); }
-  .reasons h3 { font-size: var(--text-h3); margin-bottom: var(--space-2); }
-  .reasons p { margin: 0; font-size: var(--text-ui); }
-
-  .mock { width: 100%; max-width: 360px; background: var(--bg); border-radius: var(--radius-m); padding: var(--space-5); border: 1px solid var(--line); }
-  .mock p { margin: 0 0 var(--space-2); }
-  .mock-eyebrow { font-size: var(--text-xs); color: var(--muted); }
-  .mock-title { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 700; color: var(--ink); letter-spacing: var(--tracking-heading); }
-  .mock-q { font-size: var(--text-sm); color: var(--ink-2); margin-top: var(--space-3); }
-  .mock-options { list-style: none; padding: 0; margin: var(--space-3) 0 0; display: grid; gap: var(--space-2); }
-  .mock-options li { margin: 0; font-size: var(--text-sm); border: 1px solid var(--line); border-radius: var(--radius-s); padding: var(--space-2) var(--space-3); }
-  .mock-options .is-right { border-color: var(--accent); color: var(--ink); font-weight: 700; }
-  .results-mock div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
-  .results-mock div:last-child { border-bottom: 0; }
-  .results-mock span { font-size: var(--text-sm); color: var(--muted); }
-  .results-mock strong { font-family: var(--font-display); font-size: var(--text-h3); letter-spacing: var(--tracking-heading); }
-  .mock-figure { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; line-height: 1; letter-spacing: var(--tracking-display); color: var(--ink); }
-  .source-mock p:nth-child(2) { font-size: var(--text-md); color: var(--ink-2); }
-  .mock-source { font-size: var(--text-xs); }
+  .why-body .lede { color: var(--ink); }
+  .rules { margin: var(--space-5) 0; padding-left: var(--space-5); }
 </style>

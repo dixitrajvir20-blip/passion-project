@@ -9,24 +9,20 @@
 .tool .field > label { font-size: var(--text-md); }
 .tool .btn-row { margin-top: var(--space-2); }
 
+/* The results are a ledger (base.css): label left, figure right, the tool's one answer closed
+   with a double rule. The panel is the bench the sum is worked on, so it is the page's one fill. */
 .tool .results {
   background: var(--bg-2);
   border-radius: var(--radius-l);
-  padding: var(--space-6);
+  padding: var(--space-5) var(--space-6) var(--space-6);
   position: sticky;
   top: calc(var(--header-h) + var(--space-4));
+  font-variant-numeric: tabular-nums;
 }
-.tool .result-block { padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
-.tool .result-block:last-of-type { border-bottom: 0; }
-.tool .result-label { margin: 0; color: var(--muted); font-size: var(--text-sm); }
-.tool .result-value {
-  margin: var(--space-1) 0 0;
-  font-family: var(--font-display);
-  font-size: var(--text-result);
-  font-weight: 700;
-  letter-spacing: var(--tracking-heading);
-  color: var(--ink);
-}
+.tool .result-block { border-bottom: 1px solid var(--line); }
+.tool .result-block p { margin: 0; }
+.tool .result-label { font-size: var(--text-ui); }
+.tool .result-block.ledger-total { border-bottom: 0; margin: var(--space-2) 0; }
 .tool .result-value.is-loss { color: var(--error); }
 .tool .plain { margin: var(--space-5) 0 0; font-size: var(--text-md); }
 .tool .copied { min-height: 24px; margin: var(--space-2) 0 0; color: var(--success); font-size: var(--text-sm); }

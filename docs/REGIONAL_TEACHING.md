@@ -1,4 +1,4 @@
-# LaunchPad regional teaching guide
+# Business Lab regional teaching guide
 
 Version 1.0 · 17 September 2026. How each edition is made local — the money situations that
 actually hit 15–21-year-olds there, the payment rails and institutions to use in examples, the

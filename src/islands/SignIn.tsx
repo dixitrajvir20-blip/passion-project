@@ -221,7 +221,7 @@ export default function SignIn({ homeHref, live }: Props) {
     e.preventDefault();
     const incoming = importCode(syncInput);
     if (!incoming) {
-      setSyncMsg("That code isn't a LaunchPad sync code. It starts with LP1.");
+      setSyncMsg("That code isn't a Business Lab sync code. It starts with LP1.");
       return;
     }
     if (!localProgress) return;

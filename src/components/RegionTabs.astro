@@ -1,19 +1,25 @@
 ---
+/**
+ * The edition line: a navy strip above the header, the way news sites switch between their UK,
+ * US and international editions. It sits on every page so the switch is always in the same place
+ * (WCAG 3.2.3); outside an edition nothing is current and each link opens that edition's front.
+ */
 import { REGIONS } from '../lib/regions';
 
 interface Props {
-  current: string;
+  current?: string;
   /** Sub-path within the edition, so switching keeps you on the same kind of page. */
   sub?: string;
 }
 
 const { current, sub = '' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const tail = sub ? `/${sub}` : '';
+const tail = current && sub ? `/${sub}` : '';
 ---
 
-<nav class="region-tabs" aria-label="Choose your edition">
-  <div class="container">
+<nav class="region-tabs section-dark" aria-label="Choose your edition">
+  <div class="container edition-inner">
+    <span class="edition-label" aria-hidden="true">Edition</span>
     <ul>
       {REGIONS.map((region) => (
         <li>
@@ -44,38 +50,31 @@ const tail = sub ? `/${sub}` : '';
 </script>
 
 <style>
-  .region-tabs {
-    background: var(--bg);
-    padding: var(--space-3) 0 0;
-  }
+  .region-tabs { min-height: var(--edition-h); }
+  .edition-inner { display: flex; align-items: center; gap: var(--space-4); }
+  .edition-label { color: var(--muted); font-size: var(--text-sm); }
+  @media (max-width: 379px) { .edition-label { display: none; } }
   ul {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
-    gap: var(--space-1);
+    gap: 0 var(--space-4);
     list-style: none;
     margin: 0;
-    padding: var(--space-1);
-    background: var(--bg-2);
-    border-radius: var(--radius-pill);
+    padding: 0;
   }
+  @media (min-width: 640px) { ul { gap: 0 var(--space-5); } }
   li { margin: 0; }
   a {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
-    padding: 0 var(--space-4);
-    border-radius: var(--radius-pill);
+    min-height: var(--edition-h);
     color: var(--ink-2);
     text-decoration: none;
     font-size: var(--text-sm);
-    font-weight: 600;
-    transition: background var(--dur-fast), color var(--dur-fast);
+    border-bottom: 3px solid transparent;
+    padding-top: 3px;
   }
-  a:hover { color: var(--ink); background: var(--bg-3); }
-  /* Weight and fill carry the state, not colour alone. */
-  a[aria-current] {
-    color: var(--ink);
-    background: var(--bg);
-    font-weight: 700;
-  }
+  a:hover { color: var(--ink); border-bottom-color: var(--line-strong); }
+  /* Weight and a gold underline carry the state, not colour alone. */
+  a[aria-current] { color: var(--ink); font-weight: 700; border-bottom-color: var(--gold); }
 </style>
