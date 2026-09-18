@@ -67,6 +67,7 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
 .lesson-body th, .lesson-body td { text-align: left; padding: var(--space-2) var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--line); }
 .lesson-body th { color: var(--ink); }
 .lesson-body td:last-child, .lesson-body th:last-child { text-align: right; padding-right: 0; }
+.lesson-body tbody tr:last-child td { border-bottom: 0; }
 
 /* The guess-then-reveal control. Hairline rows and one quiet button, the same everywhere. */
 .poll { margin: var(--space-5) 0 var(--space-6); }
@@ -77,7 +78,7 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
   margin-bottom: var(--space-3);
   font-size: var(--text-lg);
   font-weight: 700;
-  line-height: 1.4;
+  line-height: var(--leading-snug);
   color: var(--ink);
 }
 .opts { border-top: 1px solid var(--line); }
@@ -94,22 +95,9 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
 .opt input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
 
 .reveal { margin-top: var(--space-4); }
-.reveal > summary {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 var(--space-5);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  background: var(--bg-2);
-  color: var(--ink);
-  font-size: var(--text-ui);
-  font-weight: 700;
-  cursor: pointer;
-  list-style: none;
-}
+/* The reveal is a real .btn.btn-secondary (Poll.astro); only the native marker is removed here. */
+.reveal > summary { list-style: none; }
 .reveal > summary::-webkit-details-marker { display: none; }
-.reveal > summary:hover { background: var(--bg-3); }
 .reveal-body { margin-top: var(--space-4); }
 .reveal-body p { font-size: var(--text-ui); }
 .answer { color: var(--ink); }
@@ -131,7 +119,7 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
 /* Worked calculation: typeset, not boxed. */
 .steps { list-style: none; padding: 0; margin: var(--space-4) 0; counter-reset: step; }
 .steps li { display: grid; gap: var(--space-1); padding: var(--space-4) 0; border-top: 1px solid var(--line); margin: 0; }
-.steps li:last-child { border-bottom: 1px solid var(--line); }
+/* No closing rule: the next section heading's own hairline closes the block. */
 .step-label { color: var(--muted); font-size: var(--text-sm); }
 .step-sum { font-family: var(--font-display); font-size: var(--text-h3); color: var(--ink-2); letter-spacing: var(--tracking-heading); }
 .step-sum strong { color: var(--ink); }
@@ -148,14 +136,15 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
   max-width: 320px;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-l);
-  background: var(--bg-2);
+  /* A screen edge, not a card: outline only, so the lesson keeps its two filled boxes. */
+  background: transparent;
   overflow: hidden;
 }
-.ms-kind { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--line); color: var(--muted); font-size: var(--text-xs); }
+.ms-kind { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--line); color: var(--muted); font-size: var(--text-sm); }
 .ms-body { padding: var(--space-4); }
 .ms-body p { margin: 0 0 var(--space-2); font-size: var(--text-sm); }
 .ms-from { color: var(--ink); font-weight: 700; }
-.ms-amount { font-family: var(--font-display); font-size: var(--text-result); font-weight: 700; color: var(--ink); line-height: 1.1; }
+.ms-amount { font-family: var(--font-display); font-size: var(--text-result); font-weight: 700; color: var(--ink); line-height: var(--leading-tight); }
 .ms-qr { display: block; width: 112px; height: 112px; margin: var(--space-2) 0 var(--space-3); color: var(--ink); }
 .ms-action {
   display: inline-block;
@@ -166,14 +155,19 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
   color: var(--ink);
   font-weight: 700;
 }
-.ms-tag { margin: 0; padding: var(--space-2) var(--space-4); border-top: 1px solid var(--line); color: var(--muted); font-size: var(--text-xs); }
+.ms-tag { margin: 0; padding: var(--space-2) var(--space-4); border-top: 1px solid var(--line); color: var(--muted); font-size: var(--text-sm); }
 
 /* The foot of a lesson: type, not blocks. */
 .return-line { color: var(--ink); font-weight: 700; }
 .lesson-terms dt { font-weight: 700; color: var(--ink); margin-top: var(--space-4); }
 .lesson-terms dd { margin: 0; font-size: var(--text-ui); }
 .lesson-terms dd .example { color: var(--muted); font-size: var(--text-sm); }
-.lesson-terms :target { background: color-mix(in srgb, var(--gold) 20%, var(--bg)); }
+.lesson-terms :target {
+  background: color-mix(in srgb, var(--gold) 20%, var(--bg));
+  padding: var(--space-2) var(--space-3);
+  margin-inline: calc(var(--space-3) * -1);
+  border-radius: var(--radius-s);
+}
 .report { color: var(--ink); }
 .lesson-fine { color: var(--muted); font-size: var(--text-xs); }
 .lesson-fine ul { padding-left: var(--space-5); margin-bottom: var(--space-3); }

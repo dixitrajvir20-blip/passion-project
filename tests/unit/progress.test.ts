@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   BOX_DAYS,
+  dayString,
   emptyProgress,
   exportCode,
   importCode,
@@ -66,10 +67,10 @@ describe('progress', () => {
 
     it('a first right answer comes back tomorrow, then at widening gaps', () => {
       let p = schedule(emptyProgress(t0), 'in/a#q1', true, t0);
-      expect(p.review!['in/a#q1']).toEqual({ box: 1, due: days(1).toISOString() });
+      expect(p.review!['in/a#q1']).toEqual({ box: 1, due: dayString(days(1)) });
       p = schedule(p, 'in/a#q1', true, days(1));
       expect(p.review!['in/a#q1'].box).toBe(2);
-      expect(p.review!['in/a#q1'].due).toBe(days(1 + BOX_DAYS[2]).toISOString());
+      expect(p.review!['in/a#q1'].due).toBe(dayString(days(1 + BOX_DAYS[2])));
     });
 
     it('a miss goes back to tomorrow however far it had climbed', () => {
@@ -77,7 +78,7 @@ describe('progress', () => {
       for (let i = 0; i < 4; i++) p = schedule(p, 'x#q1', true, t0);
       expect(p.review!['x#q1'].box).toBe(4);
       p = schedule(p, 'x#q1', false, t0);
-      expect(p.review!['x#q1']).toEqual({ box: 1, due: days(1).toISOString() });
+      expect(p.review!['x#q1']).toEqual({ box: 1, due: dayString(days(1)) });
     });
 
     it('never climbs past the monthly box', () => {
@@ -99,8 +100,8 @@ describe('progress', () => {
     it('reports when the next check returns, optionally for one lesson', () => {
       let p = schedule(emptyProgress(t0), 'in/a#q1', true, t0);
       p = schedule(p, 'in/b#q1', true, days(2));
-      expect(nextReturn(p)?.toISOString()).toBe(days(1).toISOString());
-      expect(nextReturn(p, 'in/b#')?.toISOString()).toBe(days(3).toISOString());
+      expect(dayString(nextReturn(p)!)).toBe(dayString(days(1)));
+      expect(dayString(nextReturn(p, 'in/b#')!)).toBe(dayString(days(3)));
       expect(nextReturn(emptyProgress(t0))).toBeNull();
     });
 
@@ -128,8 +129,23 @@ describe('progress', () => {
 
     it('records a quiz result without touching the done list', () => {
       const p = recordQuiz(emptyProgress(t0), 'in/a', 2, 3, t0);
-      expect(p.quiz['in/a']).toEqual({ correct: 2, total: 3, at: t0.toISOString() });
+      expect(p.quiz['in/a']).toEqual({ correct: 2, total: 3, at: dayString(t0) });
       expect(p.done).toEqual([]);
     });
+  });
+
+  it('keeps calendar days, never the time of day someone studied', () => {
+    const late = new Date(2026, 8, 17, 23, 47);
+    const p = recordQuiz(schedule(emptyProgress(late), 'in/a#q1', true, late), 'in/a', 1, 1, late);
+    const text = JSON.stringify(p);
+    expect(text).not.toMatch(/T\d\d:\d\d/);
+    expect(p.review!['in/a#q1'].due).toBe('2026-09-18');
+    expect(p.quiz['in/a'].at).toBe('2026-09-17');
+  });
+
+  it('still reads review dates written as full timestamps by older versions', () => {
+    const old = { v: 1 as const, done: [], quiz: {}, updatedAt: '2026-09-01T10:00:00Z', review: { 'a#q1': { box: 1 as const, due: '2026-09-02T10:00:00.000Z' } } };
+    expect(readyItems(old, new Date(2026, 8, 3))).toEqual(['a#q1']);
+    expect(dayString(nextReturn(old)!)).toBe('2026-09-02');
   });
 });

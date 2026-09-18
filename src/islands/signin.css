@@ -59,7 +59,7 @@
   min-height: 96px;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  line-height: 1.4;
+  line-height: var(--leading-snug);
   overflow-wrap: anywhere;
   resize: vertical;
 }

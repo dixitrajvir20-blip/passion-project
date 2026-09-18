@@ -105,7 +105,10 @@ const lessons = defineCollection({
       /** Slug of the full calculator this lesson hands off to. */
       tool: z.string().optional(),
       /** Scam lessons end with the official reporting route for their edition. */
-      reportTo: z.object({ phone: z.string().optional(), url: z.string().url(), label: z.string() }).optional(),
+      // https only: this renders as a "report here" link on a scam lesson, the worst place for a lookalike.
+      reportTo: z
+        .object({ phone: z.string().regex(/^[0-9+][0-9 ]{2,19}$/).optional(), url: z.string().url().startsWith('https://'), label: z.string() })
+        .optional(),
       sources: z
         .array(z.object({ title: z.string(), url: z.string().url().startsWith('https://'), publisher: z.string() }))
         .min(2),

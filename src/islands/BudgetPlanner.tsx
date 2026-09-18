@@ -2,6 +2,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { budgetSplit, type BudgetCategory } from '../lib/finance';
 import { money, number } from '../lib/format';
 import { CurrencyField, HowItWorks, NumberField, Result, ToolActions, toNumber, useFields, useLocale } from './tool-kit';
+import { MAX_ROWS, decodeRows, encodeRows } from '../lib/budget-link';
 import './tools.css';
 
 interface Row {
@@ -21,25 +22,6 @@ const CATEGORIES: { id: BudgetCategory; label: string }[] = [
   { id: 'savings', label: 'Savings' },
 ];
 const GUIDE: Record<BudgetCategory, number> = { needs: 50, wants: 30, savings: 20 };
-const MAX_ROWS = 20;
-
-/** Rows travel in a shared link as "name~amount~category|…". A link is untrusted: validate all of it. */
-function encodeRows(rows: Row[]): string {
-  return rows.map((r) => [r.name.replace(/[~|]/g, ' '), r.amount, r.category].join('~')).join('|');
-}
-function decodeRows(text: string): Row[] | null {
-  const rows = text
-    .split('|')
-    .slice(0, MAX_ROWS)
-    .map((part) => part.split('~'))
-    .filter((p) => p.length === 3 && CATEGORIES.some((c) => c.id === p[2]))
-    .map(([name, amount, category]) => ({
-      name: name.slice(0, 40),
-      amount: String(toNumber(amount.slice(0, 16))),
-      category: category as BudgetCategory,
-    }));
-  return rows.length > 0 ? rows : null;
-}
 
 export default function BudgetPlanner({ defaults, localeCode }: Props) {
   const { fields, set, reset: resetIncome } = useFields('bp', { income: defaults.income });
@@ -51,6 +33,11 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
     const decoded = shared ? decodeRows(shared) : null;
     if (decoded) setRows(decoded);
   }, []);
+
+  // The currency symbol for this locale, so the amount column says what it is counted in.
+  const symbol = new Intl.NumberFormat(locale.code, { style: 'currency', currency: locale.currency })
+    .formatToParts(0)
+    .find((part) => part.type === 'currency')?.value ?? locale.currency;
 
   const income = toNumber(fields.income);
   const result = budgetSplit(
@@ -76,6 +63,13 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
 
           <fieldset class="budget-rows">
             <legend>Where it goes</legend>
+            {/* Visible column names from 640px; each input also keeps its own hidden label for phones and screen readers. */}
+            <div class="budget-head" aria-hidden="true">
+              <span>What it is for</span>
+              <span>Amount ({symbol})</span>
+              <span>Kind</span>
+              <span></span>
+            </div>
             {rows.map((row, index) => {
               const n = index + 1;
               return (
@@ -90,7 +84,7 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
                     placeholder="What is it for?"
                     onInput={(e) => change(index, { name: (e.target as HTMLInputElement).value })}
                   />
-                  <label class="visually-hidden" for={`bp-amount-${index}`}>Amount for {row.name || `line ${n}`}</label>
+                  <label class="visually-hidden" for={`bp-amount-${index}`}>Amount for {row.name || `line ${n}`}, in {symbol}</label>
                   <input
                     id={`bp-amount-${index}`}
                     type="number"
@@ -108,7 +102,7 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
                   >
                     {CATEGORIES.map((c) => <option value={c.id}>{c.label}</option>)}
                   </select>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={() => remove(index)}>
+                  <button type="button" class="remove-line" onClick={() => remove(index)}>
                     Remove<span class="visually-hidden"> {row.name || `line ${n}`}</span>
                   </button>
                 </div>

@@ -26,7 +26,7 @@
   {
     "id": "collect-request",
     "term": "Collect request",
-    "define": "A UPI message asking you to approve a payment. Approving it and entering your PIN sends your money to whoever asked. Since October 2025 only businesses can send one; requests between two people were switched off.",
+    "define": "A UPI message asking you to approve a payment. Approving it and entering your PIN sends your money to whoever asked. Since October 2025 UPI no longer carries requests between two people; requests from business accounts still run, so a scam request now arrives under a shop name.",
     "example": "A 'refund' that arrives as a request to approve is money about to leave your account, not enter it."
   },
   {
@@ -80,7 +80,7 @@
   {
     "id": "kyc",
     "term": "KYC",
-    "define": "Know Your Customer: the identity check a bank must do before and while it holds your account. It is done through the bank itself, never through a link in a message.",
+    "define": "Know Your Customer: the identity check a bank must do before and while it holds your account. Do it through the bank's own app, a branch, or the number on your card, not through a link that arrives in a message.",
     "example": "A text saying your account will be blocked today unless you update KYC through a link is not from your bank."
   },
   {
@@ -99,7 +99,7 @@
     "id": "money-mule",
     "term": "Money mule",
     "define": "Someone whose bank account is used to move stolen money, often after being offered easy pay to 'rent' the account.",
-    "example": "Being paid ₹2,000 to receive ₹50,000 and send it onward makes you part of the crime, even if you did not know."
+    "example": "Being paid ₹2,000 to receive ₹50,000 and send it onward can bring police action against you, even if you did not know where the money came from."
   },
   {
     "id": "needs-and-wants",
@@ -128,7 +128,7 @@
   {
     "id": "qr-code",
     "term": "QR code",
-    "define": "A square pattern a phone camera can read. In UPI, scanning one fills in who you are about to pay. It is only ever used to pay, never to receive.",
+    "define": "A square pattern a phone camera can read. In UPI, scanning one fills in who you are about to pay. A shop shows its code to be paid; you scan a code only to pay, never to receive.",
     "example": "Scanning a shop's printed code at the counter fills in the shop as the person you are paying."
   },
   {

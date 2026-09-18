@@ -12,6 +12,8 @@ interface Props {
   prompts: string[];
   /** The full calculator, which reads these numbers from the query string. */
   toolHref: string;
+  /** Opens on the worked example's price, so the reader meets the number they just saw. */
+  initial?: number;
 }
 
 /**
@@ -20,8 +22,8 @@ interface Props {
  * than a slider, because a slider is imprecise on a 360px touch screen and close to invisible at
  * 200% zoom. Server-rendered with the first price worked out, so it reads correctly with no JS.
  */
-export default function MarginExplorer({ fixed, variable, prices, unitName, localeCode, prompts, toolHref }: Props) {
-  const [price, setPrice] = useState(prices[Math.min(1, prices.length - 1)]);
+export default function MarginExplorer({ fixed, variable, prices, unitName, localeCode, prompts, toolHref, initial }: Props) {
+  const [price, setPrice] = useState(initial !== undefined && prices.includes(initial) ? initial : prices[0]);
   const locale = localeByCode(localeCode);
   const cash = (value: number) => money(value, locale, Number.isInteger(value) ? 0 : 2);
   const one = unitName.replace(/s$/, '');

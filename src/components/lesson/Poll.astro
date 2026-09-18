@@ -36,7 +36,7 @@ const { id, question, options, answer, checkId, revealLabel = 'Show the answer' 
   </fieldset>
 
   <details class="reveal">
-    <summary>{revealLabel}</summary>
+    <summary class="btn btn-secondary">{revealLabel}</summary>
     <div class="reveal-body">
       {/* Filled by the lesson script when a check is scored. Words, not colour: "Correct." / "Not quite." */}
       <p class="poll-status" role="status"></p>

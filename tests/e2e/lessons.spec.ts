@@ -31,8 +31,8 @@ test.describe('a lesson with JavaScript off', () => {
     await expect(page.locator('a.term').first()).toHaveAttribute('href', '#term-margin');
     await expect(page.locator('#term-margin')).toContainText('gap between');
 
-    // The explorable is server-rendered with its first price worked out.
-    await expect(page.locator('.explorer')).toContainText('1,000 cups');
+    // The explorable is server-rendered on the worked example's price, so it matches what was just read.
+    await expect(page.locator('.explorer')).toContainText('286 cups');
     // A control that would do nothing is not shown.
     await expect(page.locator('[data-mark-read]')).toBeHidden();
   });
@@ -255,4 +255,37 @@ test('the first-earnings lesson has a working split explorer and hands off to th
   await explorer.getByRole('button', { name: 'More for Savings' }).click();
   await expect(explorer).toContainText(/more than came in/);
   await expect(explorer).not.toContainText(/too much|should/i);
+});
+
+test('the first-earnings split opens in the budget planner with the same numbers', async ({ page }) => {
+  await page.goto('in/learn/money-basics/first-earnings');
+  const explorer = page.locator('.explorer');
+  await explorer.scrollIntoViewIfNeeded();
+  await waitForIslands(page);
+  await explorer.getByRole('button', { name: '₹8,000' }).click();
+  await explorer.getByRole('link', { name: /budget planner/ }).click();
+  await expect(page).toHaveURL(/in\/tools\/budget\/?\?/);
+  await waitForIslands(page);
+  await expect(page.getByLabel('What comes in each month')).toHaveValue('8000');
+  await expect(page.getByLabel('Name of line 2')).toHaveValue('Home');
+  // Needs 3,200 + Home 800 are both needs in the planner; Wants 2,400; Savings 1,600; nothing left over.
+  await expect(page.locator('.results')).toContainText('₹4,000');
+  await expect(page.locator('.results')).toContainText('Every part of what comes in has a job');
+});
+
+test('the review date on a lesson is the date in its frontmatter, whatever the build machine’s time zone', async ({ page }) => {
+  await page.goto(LESSON);
+  await expect(page.locator('.lesson-meta')).toContainText('Reviewed 17 September 2026');
+});
+
+test('progress keeps calendar days, never the time someone studied', async ({ page }) => {
+  await page.goto(LESSON);
+  const check = page.locator('.poll[data-check-id]').first();
+  await check.locator('input[type=radio]').first().check();
+  await check.locator('summary').click();
+  // The same handler that saves progress writes this line, so once it shows, the save has happened.
+  await expect(check.locator('.poll-status')).toHaveText(/Correct\.|Not quite\./);
+  const raw = await page.evaluate(() => window.localStorage.getItem('lp:progress'));
+  expect(raw).not.toBeNull();
+  expect(raw!).not.toMatch(/T\d\d:\d\d/);
 });

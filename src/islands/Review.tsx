@@ -19,6 +19,19 @@ interface Props {
 
 type Item = { id: string; check: Check; picked: number | null; shown: boolean };
 
+/** checks.json is ours, but a cached or truncated copy could be malformed. Skip anything that is. */
+function isCheck(value: unknown): value is Check {
+  if (!value || typeof value !== 'object') return false;
+  const c = value as Check;
+  return (
+    typeof c.q === 'string' && typeof c.lesson === 'string' && typeof c.lessonPath === 'string' &&
+    Array.isArray(c.options) && c.options.length >= 2 &&
+    c.options.every((o) => o && typeof o.text === 'string' && typeof o.why === 'string') &&
+    Number.isInteger(c.answer) && c.answer >= 0 && c.answer < c.options.length &&
+    (c.context === undefined || typeof c.context === 'string')
+  );
+}
+
 function storage(): Storage | undefined {
   try {
     return window.localStorage;
@@ -47,9 +60,14 @@ export default function Review({ region, checksUrl, base, localeCode }: Props) {
     }
     fetch(checksUrl)
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
-      .then((all: Record<string, Check>) => {
+      .then((all: unknown) => {
+        const checks = all && typeof all === 'object' ? (all as Record<string, unknown>) : {};
         // A check whose lesson was rewritten no longer exists; skip it rather than fail.
-        setItems(ready.filter((id) => all[id]).map((id) => ({ id, check: all[id], picked: null, shown: false })));
+        setItems(
+          ready
+            .filter((id) => Object.hasOwn(checks, id) && isCheck(checks[id]))
+            .map((id) => ({ id, check: checks[id] as Check, picked: null, shown: false })),
+        );
       })
       .catch(() => setFailed(true));
   }, []);

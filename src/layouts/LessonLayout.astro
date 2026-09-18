@@ -63,7 +63,7 @@ const jsonLd = {
   audience: { '@type': 'EducationalAudience', educationalRole: 'student', audienceType: 'ages 15-21' },
 };
 
-const reviewed = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(d.lastReviewed);
+const reviewed = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d.lastReviewed);
 
 let workedSteps: Step[] = [];
 if (d.worked?.kind === 'margin') workedSteps = marginSteps(d.worked, d.worked.unitName);
@@ -160,6 +160,7 @@ if (d.practice?.kind === 'split') {
                   prompts={d.explorable.prompts}
                   localeCode={region.locale}
                   toolHref={`${prefix}/tools/${d.tool ?? 'break-even'}`}
+                  initial={d.worked?.kind === 'margin' ? d.worked.price : undefined}
                 />
               )}
               {d.explorable.kind === 'split' && (
@@ -169,6 +170,7 @@ if (d.practice?.kind === 'split') {
                   lines={d.explorable.lines}
                   prompts={d.explorable.prompts}
                   localeCode={region.locale}
+                  toolHref={`${prefix}/tools/${d.tool ?? 'budget'}`}
                 />
               )}
               {d.explorable.kind === 'drill' && (

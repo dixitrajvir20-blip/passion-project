@@ -29,13 +29,13 @@ const terms = (await getCollection('glossary')).sort((a, b) => a.data.term.local
         </p>
       </div>
 
-      <dl class="terms">
+      <dl class="terms column">
         {terms.map((entry) => (
           <div class="entry" id={entry.id} data-entry>
             <dt lang={entry.data.lang}>{entry.data.term}</dt>
             <dd>
               <p>{entry.data.define}</p>
-              <p class="example muted">{entry.data.example}</p>
+              <p class="example">{entry.data.example}</p>
             </dd>
           </div>
         ))}
@@ -71,10 +71,15 @@ const terms = (await getCollection('glossary')).sort((a, b) => a.data.term.local
 <style>
   .lede { margin-bottom: var(--space-6); }
   .filter { max-width: 420px; margin-bottom: var(--space-7); }
-  .terms { margin: 0; display: grid; gap: var(--space-4); }
-  @media (min-width: 900px) { .terms { grid-template-columns: repeat(2, 1fr); gap: var(--space-5); } }
-  .entry { border-radius: var(--radius-l); background: var(--bg-2); padding: var(--space-6); }
-  .entry:target { background: color-mix(in srgb, var(--gold) 20%, var(--bg)); }
+  /* One reading column of hairline rows: a list of definitions, not a wall of cards. */
+  .terms { margin: 0; border-top: 1px solid var(--line); }
+  .entry { padding: var(--space-5) 0; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + var(--space-5)); }
+  .entry:target {
+    background: color-mix(in srgb, var(--gold) 20%, var(--bg));
+    padding-inline: var(--space-4);
+    margin-inline: calc(var(--space-4) * -1);
+    border-radius: var(--radius-s);
+  }
   dt {
     font-family: var(--font-display);
     font-weight: 700;
@@ -84,7 +89,7 @@ const terms = (await getCollection('glossary')).sort((a, b) => a.data.term.local
     margin-bottom: var(--space-2);
   }
   dd { margin: 0; }
-  dd p { margin-bottom: var(--space-2); font-size: var(--text-ui); }
-  .example { font-size: var(--text-sm); margin-bottom: 0; }
+  dd p { margin-bottom: var(--space-2); font-size: var(--text-md); }
+  .example { color: var(--muted); font-size: var(--text-sm); margin-bottom: 0; }
   .note { margin-top: var(--space-7); }
 </style>

@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks';
 import { localeByCode, money } from '../lib/format';
+import { encodeRows, type BudgetKind } from '../lib/budget-link';
 import './explorer.css';
 
 interface Line {
@@ -13,6 +14,8 @@ interface Props {
   lines: Line[];
   localeCode: string;
   prompts: string[];
+  /** The full budget planner; it opens with this split filled in. */
+  toolHref?: string;
 }
 
 const STEP = 5;
@@ -23,7 +26,7 @@ const STEP = 5;
  * only thing this ever says is what the numbers are. Any split here is a starting point, which
  * is why every line can be changed.
  */
-export default function SplitExplorer({ incomes, lines, localeCode, prompts }: Props) {
+export default function SplitExplorer({ incomes, lines, localeCode, prompts, toolHref }: Props) {
   const [income, setIncome] = useState(incomes[Math.min(1, incomes.length - 1)]);
   const [shares, setShares] = useState(lines.map((line) => line.percent));
   const locale = localeByCode(localeCode);
@@ -70,8 +73,28 @@ export default function SplitExplorer({ incomes, lines, localeCode, prompts }: P
       <ol class="explorer-prompts">
         {prompts.map((prompt) => <li>{prompt}</li>)}
       </ol>
+      {toolHref && (
+        <p class="explorer-actions">
+          <a class="btn btn-link" href={`${toolHref}?${handoff(income, lines, shares)}`}>Open the budget planner with this split</a>
+        </p>
+      )}
     </div>
   );
+}
+
+/** Money given at home counts as a need in the planner, which has three kinds, not four. */
+function kindOf(label: string): BudgetKind {
+  const l = label.toLowerCase();
+  return l.includes('saving') ? 'savings' : l.includes('want') ? 'wants' : 'needs';
+}
+
+function handoff(income: number, lines: Line[], shares: number[]): string {
+  const rows = lines.map((line, i) => ({
+    name: line.label,
+    amount: String(Math.round((income * shares[i]) / 100)),
+    category: kindOf(line.label),
+  }));
+  return new URLSearchParams({ income: String(income), rows: encodeRows(rows) }).toString();
 }
 
 function unit(currency: string): string {

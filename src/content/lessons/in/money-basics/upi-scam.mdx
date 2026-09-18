@@ -1,6 +1,6 @@
 ---
 title: "Spotting a UPI scam before you tap"
-summary: "Your UPI PIN only ever sends money. That one rule sorts an ordinary payment from most UPI scams."
+summary: "Your UPI PIN only ever sends money. That one rule sorts an ordinary payment from the common UPI scams."
 region: in
 track: money-basics
 order: 2
@@ -20,12 +20,12 @@ prediction:
     - text: "₹2,000 leaves my account"
       why: "A request asks you to pay. The PIN approves money going out, so ₹2,000 moves from you to him. The PIN has no other job."
     - text: "Nothing moves until he confirms on his side"
-      why: "There is no second step on his side. Your PIN is the final approval, and the money leaves the moment it is accepted."
+      why: "There is no second step on his side. Your PIN is the final approval, and the money leaves the moment your PIN goes through."
   answer: 1
 
 takeaways:
   - "Your UPI PIN does one job: it approves money leaving your account. Receiving money never needs a PIN, a scan, a new app or a call."
-  - "Most UPI scams are that one trick in a new costume: a request, a refund QR, a KYC link, a helper app, a frightening call, an easy job."
+  - "The common UPI scams are that one trick in a new costume: a request, a refund QR, a KYC link, a helper app, a frightening call, an easy job."
   - "If money has gone, call 1930 or report at cybercrime.gov.in straight away. A fast report gives the banks a chance to block it."
 
 explorable:
@@ -46,7 +46,7 @@ explorable:
           - text: "Approve it. The note says it is the advance"
             why: "The note is typed by the sender and can say anything. The tell is a request plus a PIN page. That pair only ever pays out."
           - text: "Approve it, since the amount is small"
-            why: "The size is part of the pattern. A small first request tests whether the PIN gets entered. The next one is larger."
+            why: "The size is not the tell. A request plus a PIN page only ever pays out, whether it says ₹200 or ₹20,000."
           - text: "Decline it and give him your UPI ID to pay into"
             why: "A request is a bill, and the PIN approves money leaving. A real buyer needs only your UPI ID or number. The money then arrives with nothing for you to approve."
         answer: 2
@@ -83,7 +83,7 @@ explorable:
           - text: "Check the name and amount, then enter your PIN"
             why: "You started this, you are the one paying, and the name matches the shop in front of you. That is the PIN doing its one job."
           - text: "Ask the shopkeeper to send a request instead"
-            why: "That adds a step and removes no risk. Scanning a code you chose, then reading the name, is already the careful route."
+            why: "That adds a step and removes no risk. Scanning a code you chose, then reading the name, is already the careful route. And only a business account can send a request now."
         answer: 1
     - screen:
         kind: message
@@ -133,7 +133,7 @@ explorable:
           - text: "Stay on the call and transfer the money so it can be verified"
             why: "The tells are a demand for money, an order to stay on camera and an order to tell no one. The official alert describes this exact set: uniforms and a studio built to look like a police station."
           - text: "Hang up, tell someone at home, and report the call on 1930"
-            why: "Hanging up ends it. The uniform and the office are a set, and the script only works while the call lasts. A report on 1930 or cybercrime.gov.in puts the number on record."
+            why: "Hanging up ends it. The uniform and the office are stage props, and the script only works while the call lasts. A report on 1930 or cybercrime.gov.in puts the number on record."
           - text: "Stay on the call, but ask to see his ID card first"
             why: "An ID card on a video call is as easy to fake as the uniform. Staying on the line is what the script needs. The cue was money demanded over a call."
         answer: 1
@@ -153,7 +153,7 @@ explorable:
           - text: "Agree, but use an old account you no longer need"
             why: "An old account is still in your name, with your ID behind it. The tell was pay for receiving and forwarding money, which no real job needs."
           - text: "Decline and block. Pay for moving money through your account is the pattern"
-            why: "This is how a money mule is recruited: easy pay for the use of an account. The official advice is never to sell or rent a bank account to anyone."
+            why: "This is how a money mule is recruited: easy pay for the use of an account. The official alert says the same thing: a bank account is not for hire."
         answer: 2
   reflection: "Pick the screen you were least sure about. Which cue did you miss at first, and where on your own phone would that cue show up?"
 
@@ -165,7 +165,7 @@ quiz:
       - text: "Wait a day to see if the bank reverses it"
         why: "A PIN-approved payment looks like any other payment to the bank. Nothing marks it out until someone reports it, and the money keeps moving meanwhile."
       - text: "Call 1930 now, with the transaction ID and date ready"
-        why: "A report through 1930 goes on to the banks, so the money can be blocked before it moves again. Then tell your own bank, and finish the complaint on cybercrime.gov.in within 24 hours."
+        why: "A report through 1930 goes on to the banks, so the money can be blocked before it moves again. Then tell your own bank, and finish the complaint on cybercrime.gov.in as the SMS explains."
     answer: 2
   - q: "You are booking a bus ticket on a travel site. At checkout you type your UPI ID. Seconds later a request for the exact fare arrives under the site's name. What do you do?"
     options:
@@ -227,7 +227,7 @@ sources:
   - title: "Alert against 'digital arrest' by cyber criminals impersonating police and other agencies (14 May 2024)"
     url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2020570"
     publisher: "Ministry of Home Affairs, via Press Information Bureau"
-  - title: "I4C alert on mule bank accounts: do not sell or rent your bank account (28 October 2024)"
+  - title: "I4C, MHA issues alert against illegal payment gateways created using mule bank accounts (28 October 2024)"
     url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2069000"
     publisher: "Ministry of Home Affairs, via Press Information Bureau"
   - title: "RBI Financial Literacy Week 2026: fraudulent KYC calls, messages and links, and money mules (8 February 2026)"
@@ -268,7 +268,7 @@ NPCI, which runs <Term id="upi">UPI</Term>, says the same: the PIN is only for m
 
 Every pattern here is a way to get that approval from you, or to watch you give it.
 
-The oldest is the <Term id="collect-request">collect request</Term>: a bill made to look like a payment. Since 1 October 2025, UPI no longer processes requests sent from one person to another. That covers person-to-person requests only, so one can still reach you under a business name. **Whatever the costume, ask one thing: am I trying to pay this person?**
+The oldest is the <Term id="collect-request">collect request</Term>: a bill made to look like a payment. Since October 2025 only business accounts can send one, so it now arrives under a shop name. **Whatever the costume, ask one thing: am I trying to pay this person?**
 
 The others swap the prop. A refund QR. A KYC link with a deadline. A helper app that shows your screen. A caller in uniform demanding a transfer. A job that pays you to pass money along, which makes you a <Term id="money-mule">money mule</Term>.
 
@@ -284,6 +284,6 @@ Type the PIN only on the app's own PIN page, with the screen turned away. At a b
 
 Speed is the part you control. **Call 1930 or report at cybercrime.gov.in as soon as you notice, before anything else.** The report goes on to the banks, so the money can be blocked before it moves again. That raises the chance of getting it back. It is not a promise.
 
-Keep these ready: the transaction ID, the date, the bank's name, your UPI ID and a screenshot. An acknowledgement number then arrives by SMS. Use it to finish the complaint on the portal within 24 hours.
+Keep ready: the transaction ID, date and time, amount, the ID it went to, and a screenshot. An SMS then brings a number for finishing the complaint online.
 
-Then tell your bank through its app or the number on your card, and change your PIN. These scripts are rehearsed, and they work on careful people too. Reporting one is ordinary.
+Then tell your bank the same day, through its app or the number on your card, and change your PIN. These scripts are rehearsed, and they work on careful people too. Reporting one is ordinary.

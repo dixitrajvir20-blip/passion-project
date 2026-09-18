@@ -158,8 +158,8 @@ export const REGIONS: Region[] = [
       price: '15',
       units: '400',
       unitName: 'cups',
-      fixedHint: 'What you pay every month whatever you sell: stall rent, licence, gas cylinder.',
-      variableHint: 'What one cup costs you: tea, milk, sugar, cup.',
+      fixedHint: 'What you pay every month whatever you sell: stall rent, licence, the cart loan instalment.',
+      variableHint: 'What one cup costs you: tea, milk, sugar, gas, cup.',
       scenario: 'A chai stall, worked out in rupees.',
     },
     tools: {

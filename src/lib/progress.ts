@@ -8,7 +8,7 @@ export type Box = 1 | 2 | 3 | 4 | 5;
 
 export interface ReviewItem {
   box: Box;
-  /** ISO date-time the check comes back. */
+  /** Calendar date (YYYY-MM-DD, local) the check comes back. */
   due: string;
 }
 
@@ -21,8 +21,9 @@ export interface Progress {
   /**
    * Spaced review, keyed per check ("in/money-basics/upi-scam#q2"), not per lesson: a reader
    * who misses one question should meet that question again, not the whole quiz. Optional so
-   * sync codes made before reviews existed still import. Only {box, due} is kept: no attempt
-   * log, no record of when someone studied.
+   * sync codes made before reviews existed still import. Only {box, due} is kept, and every date
+   * in this record is a calendar day, never a time: on a shared phone, the hour someone studied is
+   * nobody else's business. No attempt log.
    */
   review?: Record<string, ReviewItem>;
   updatedAt: string;
@@ -33,12 +34,29 @@ export const PROGRESS_KEY = 'lp:progress';
 /** Days until a check returns, by box. Simple Leitner does as well as fancier schedules. */
 export const BOX_DAYS: Record<Box, number> = { 1: 1, 2: 3, 3: 7, 4: 14, 5: 30 };
 
-const DAY_MS = 24 * 60 * 60 * 1000;
 const MAX_LESSONS = 5000;
 const MAX_ID_LENGTH = 200;
 
+/** A calendar day in the reader's own time zone, as YYYY-MM-DD. Sorts and compares as text. */
+export function dayString(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+/** Local midnight of a stored day. Older records may hold a full timestamp; only its day counts. */
+export function dayToDate(day: string): Date {
+  const [y, m, d] = day.slice(0, 10).split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function addDays(date: Date, days: number): Date {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
 export function emptyProgress(now: Date = new Date()): Progress {
-  return { v: 1, done: [], quiz: {}, updatedAt: now.toISOString() };
+  return { v: 1, done: [], quiz: {}, updatedAt: dayString(now) };
 }
 
 function isQuizResult(value: unknown): value is Progress['quiz'][string] {
@@ -84,7 +102,7 @@ export function isProgress(value: unknown): value is Progress {
 
 export function markDone(progress: Progress, id: string, now: Date = new Date()): Progress {
   if (progress.done.includes(id)) return progress;
-  return { ...progress, done: [...progress.done, id], updatedAt: now.toISOString() };
+  return { ...progress, done: [...progress.done, id], updatedAt: dayString(now) };
 }
 
 export function recordQuiz(
@@ -94,7 +112,7 @@ export function recordQuiz(
   total: number,
   now: Date = new Date(),
 ): Progress {
-  const at = now.toISOString();
+  const at = dayString(now);
   return { ...progress, quiz: { ...progress.quiz, [lessonId]: { correct, total, at } }, updatedAt: at };
 }
 
@@ -102,30 +120,31 @@ export function recordQuiz(
 export function schedule(progress: Progress, itemId: string, correct: boolean, now: Date = new Date()): Progress {
   const current = progress.review?.[itemId]?.box ?? 0;
   const box = (correct ? Math.min(5, current + 1) : 1) as Box;
-  const due = new Date(now.getTime() + BOX_DAYS[box] * DAY_MS).toISOString();
+  const due = dayString(addDays(now, BOX_DAYS[box]));
   return {
     ...progress,
     review: { ...(progress.review ?? {}), [itemId]: { box, due } },
-    updatedAt: now.toISOString(),
+    updatedAt: dayString(now),
   };
 }
 
 /** Checks ready now, longest-waiting first, capped so a review is a minute, not a backlog. */
 export function readyItems(progress: Progress, now: Date = new Date(), cap = 10): string[] {
-  const limit = now.getTime();
+  const today = dayString(now);
   return Object.entries(progress.review ?? {})
-    .filter(([, item]) => Date.parse(item.due) <= limit)
-    .sort((a, b) => Date.parse(a[1].due) - Date.parse(b[1].due))
+    .filter(([, item]) => item.due.slice(0, 10) <= today)
+    .sort((a, b) => (a[1].due < b[1].due ? -1 : a[1].due > b[1].due ? 1 : 0))
     .slice(0, cap)
     .map(([id]) => id);
 }
 
 /** The next moment anything comes back, or null when nothing is scheduled. */
 export function nextReturn(progress: Progress, prefix = ''): Date | null {
-  const times = Object.entries(progress.review ?? {})
+  const days = Object.entries(progress.review ?? {})
     .filter(([id]) => id.startsWith(prefix))
-    .map(([, item]) => Date.parse(item.due));
-  return times.length ? new Date(Math.min(...times)) : null;
+    .map(([, item]) => item.due.slice(0, 10))
+    .sort();
+  return days.length ? dayToDate(days[0]) : null;
 }
 
 /**

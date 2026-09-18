@@ -19,7 +19,7 @@ const tools = toolsFor(region.code).filter((tool) => tool.slug !== 'spot-the-fak
 ---
 
 <BaseLayout
-  title={`Calculators — LaunchPad ${region.name}`}
+  title={`Tools — LaunchPad ${region.name}`}
   description="Free calculators for break-even, budgeting, savings growth, side-hustle profit and loan repayments. Nothing you type leaves your browser."
   region={region.code}
   regionSub="tools"
@@ -29,10 +29,10 @@ const tools = toolsFor(region.code).filter((tool) => tool.slug !== 'spot-the-fak
     <div class="container">
       <div class="column">
         <span class="eyebrow">{region.name} edition</span>
-        <h1>Calculators</h1>
+        <h1>Tools</h1>
         <p class="lede">
-          Each one answers a single question using your own numbers. Nothing you type is sent
-          anywhere: the maths runs in your browser.
+          Calculators that answer one question from your own numbers{hasDrill ? ', and a practice drill' : ''}.
+          Nothing you type is sent anywhere: it all runs in your browser.
         </p>
       </div>
 

@@ -154,6 +154,14 @@ describe('lesson content', () => {
         expect(lesson.body).not.toMatch(/<script/i);
       });
 
+      it('keeps links in frontmatter, where they are rendered safely, and nothing executable in the body', () => {
+        // Body links would skip rel="noopener noreferrer"; sources and reportTo are rendered with it.
+        expect(lesson.body, 'markdown link in body').not.toMatch(/\]\(\s*(https?:|\/\/)/i);
+        expect(lesson.body, 'raw link-like element in body').not.toMatch(/<(a|link|meta|base|form|iframe|object|embed)\b/i);
+        expect(lesson.body, 'inline event handler').not.toMatch(/\son[a-z]+\s*=/i);
+        expect(lesson.body, 'script URL').not.toMatch(/javascript:|data:text\/html|vbscript:/i);
+      });
+
       it('gives every diagram a title and a description', () => {
         for (const svg of lesson.body.match(/<svg[\s\S]*?<\/svg>/g) ?? []) {
           expect(svg).toMatch(/role="img"/);

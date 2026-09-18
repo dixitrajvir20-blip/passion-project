@@ -57,7 +57,7 @@
 .growth-chart .axis { stroke: var(--chart-grid); stroke-width: 1; }
 .growth-chart .line-a { fill: none; stroke: var(--series-1); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .growth-chart .line-b { fill: none; stroke: var(--series-2); stroke-width: 2; }
-.growth-chart .chart-text { fill: var(--ink-2); font-family: var(--font-body); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
+.growth-chart .chart-text { paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; fill: var(--ink-2); font-family: var(--font-body); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
 .growth-chart .chart-text.strong { fill: var(--ink); font-weight: 700; }
 .growth figcaption { margin-top: var(--space-3); }
 .growth summary { font-weight: 400; color: var(--accent-text); }
@@ -68,7 +68,22 @@
 .budget-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto; gap: var(--space-2); align-items: center; padding: var(--space-3) 0; border-top: 1px solid var(--line); }
 .budget-row .budget-name { grid-column: 1 / -1; }
 .budget-rows > .btn { margin-top: var(--space-3); }
+.budget-head { display: none; }
+/* A text control, not another pill: the row's action should be quieter than Add, Reset and Copy. */
+.remove-line {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.remove-line:hover { text-decoration: underline; }
 @media (min-width: 640px) {
   .budget-row { grid-template-columns: 2fr 1fr 1fr auto; }
   .budget-row .budget-name { grid-column: auto; }
+  .budget-head { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: var(--space-2); padding-bottom: var(--space-2); color: var(--muted); font-size: var(--text-sm); }
+  .budget-head span:last-child { min-width: 64px; }
 }
