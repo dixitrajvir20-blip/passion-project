@@ -65,11 +65,12 @@ To run the browser tests without downloading Chromium, set `PW_CHROMIUM=/path/to
 
 ## Status
 
-**Phase 1** (see [`docs/BOSS_PLAYBOOK.md`](docs/BOSS_PLAYBOOK.md)): the Astro foundation, the
-blue/gold/black brand, three editions, the break-even calculator, the full legal/privacy layer, a
-strict security posture, and an account preview are all in place. The lesson content engine, the
-remaining four calculators, quiz and search, the Hindi edition, and the real account backend are
-next. Details in [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md).
+**Phases 1–3 done, Phase 4 in progress** (see [`docs/BOSS_PLAYBOOK.md`](docs/BOSS_PLAYBOOK.md)):
+the Astro foundation, the blue/gold/black brand, three editions, the legal/privacy layer, a strict
+security posture, the account preview, the HTML-first lesson engine with the first three India
+lessons and spaced review, all five calculators plus the India scam drill, and on-device search.
+Next: social images at build time, EU and US lessons, the Hindi edition, and the real account
+backend. Details in [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md).
 
 ## Licence
 
