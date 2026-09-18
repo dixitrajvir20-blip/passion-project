@@ -185,7 +185,7 @@ export const REGIONS: Region[] = [
     code: 'eu',
     name: 'Europe',
     tab: 'Europe',
-    locale: 'de-DE',
+    locale: 'en-IE',
     currency: 'EUR',
     problem:
       'Strong consumer protections, low financial confidence, and rules that change at every border.',

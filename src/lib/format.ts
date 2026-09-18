@@ -8,7 +8,7 @@ export const LOCALES: Locale[] = [
   { code: 'en-IN', currency: 'INR', label: 'India (₹)' },
   { code: 'en-US', currency: 'USD', label: 'United States ($)' },
   { code: 'en-GB', currency: 'GBP', label: 'United Kingdom (£)' },
-  { code: 'de-DE', currency: 'EUR', label: 'Europe (€)' },
+  { code: 'en-IE', currency: 'EUR', label: 'Europe (€)' },
   { code: 'pt-BR', currency: 'BRL', label: 'Brazil (R$)' },
   { code: 'en-NG', currency: 'NGN', label: 'Nigeria (₦)' },
 ];
