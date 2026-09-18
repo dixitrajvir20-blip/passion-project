@@ -12,6 +12,8 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 // Astro already depends on js-yaml for frontmatter; no new dependency.
 import yaml from 'js-yaml';
+import { glossarySchema, lessonSchema } from '../../src/content/schema';
+import { growthChoices, loanChoices, marginChoices, splitChoices } from '../../src/lib/lesson-math';
 
 /**
  * Markup out, words in, for counting. Only for measuring prose (nothing here is ever rendered),
@@ -28,8 +30,9 @@ function stripTags(text: string): string {
 }
 
 const ROOT = join(__dirname, '../../src/content/lessons');
-const GLOSSARY: { id: string }[] = JSON.parse(readFileSync(join(__dirname, '../../src/content/glossary.json'), 'utf8'));
-const GLOSSARY_IDS = new Set(GLOSSARY.map((entry) => entry.id));
+const GLOSSARY_DIR = join(__dirname, '../../src/content/glossary');
+const GLOSSARY_FILES = readdirSync(GLOSSARY_DIR).filter((name) => name.endsWith('.json'));
+const GLOSSARY_IDS = new Set(GLOSSARY_FILES.map((name) => name.replace(/\.json$/, '')));
 
 function walk(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
@@ -58,24 +61,38 @@ function collectStrings(value: unknown, skipKeys: Set<string>, key = ''): string
   return [];
 }
 
-const lessons: Loaded[] = walk(ROOT).map((path) => {
-  const raw = readFileSync(path, 'utf8');
-  const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  if (!match) throw new Error(`${path}: no frontmatter`);
-  const body = match[2];
-  const prose = stripTags(body.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/^\|.*\|$/gm, ' '))
-    .replace(/[*_`#]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-  const data = yaml.load(match[1]) as Record<string, any>;
-  return {
-    id: relative(ROOT, path).replace(/\.mdx$/, ''),
-    data,
-    body,
-    prose,
-    strings: collectStrings(data, new Set(['url', 'sources', 'glossary', 'tool', 'kind', 'track', 'region'])),
-  };
-});
+interface Broken {
+  id: string;
+  error: string;
+}
+
+// Each file is loaded on its own, so one half-written lesson fails its own test instead of
+// stopping the whole suite for everyone else.
+const lessons: Loaded[] = [];
+const broken: Broken[] = [];
+for (const path of walk(ROOT)) {
+  const id = relative(ROOT, path).replace(/\.mdx$/, '');
+  try {
+    const raw = readFileSync(path, 'utf8');
+    const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if (!match) throw new Error('no frontmatter block (--- at the top and after the frontmatter)');
+    const body = match[2];
+    const prose = stripTags(body.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/^\|.*\|$/gm, ' '))
+      .replace(/[*_`#]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const data = yaml.load(match[1]) as Record<string, any>;
+    lessons.push({
+      id,
+      data,
+      body,
+      prose,
+      strings: collectStrings(data, new Set(['url', 'sources', 'glossary', 'tool', 'kind', 'track', 'region'])),
+    });
+  } catch (error) {
+    broken.push({ id, error: (error as Error).message });
+  }
+}
 
 const sentences = (text: string) =>
   text
@@ -103,8 +120,36 @@ describe('lesson content', () => {
     expect(lessons.length).toBeGreaterThan(0);
   });
 
+  for (const file of broken) {
+    it(`${file.id} can be read`, () => {
+      expect.fail(`${file.id}: ${file.error}`);
+    });
+  }
+
+  it('every glossary entry is valid', () => {
+    for (const name of GLOSSARY_FILES) {
+      const parsed = glossarySchema.safeParse(JSON.parse(readFileSync(join(GLOSSARY_DIR, name), 'utf8')));
+      expect(parsed.success, `${name}: ${parsed.success ? '' : parsed.error.issues.map((i) => `${i.path.join('.')} ${i.message}`).join('; ')}`).toBe(true);
+    }
+  });
+
   for (const lesson of lessons) {
     describe(lesson.id, () => {
+      it('matches the lesson schema (the same one the build uses)', () => {
+        const parsed = lessonSchema.safeParse(lesson.data);
+        const why = parsed.success ? '' : parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('\n');
+        expect(parsed.success, why).toBe(true);
+      });
+
+      it('has practice numbers that make a real question', () => {
+        const p = lesson.data.practice;
+        if (!p) return;
+        if (p.kind === 'margin') expect(() => marginChoices(p)).not.toThrow();
+        if (p.kind === 'split') expect(() => splitChoices(p, p.target)).not.toThrow();
+        if (p.kind === 'loan') expect(() => loanChoices(p)).not.toThrow();
+        if (p.kind === 'growth') expect(() => growthChoices(p)).not.toThrow();
+      });
+
       it('lives in the folder its frontmatter names', () => {
         const [region, track] = lesson.id.split('/');
         expect(lesson.data.region).toBe(region);

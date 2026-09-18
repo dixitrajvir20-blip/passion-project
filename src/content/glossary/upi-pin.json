@@ -1,0 +1,5 @@
+{
+  "term": "UPI PIN",
+  "define": "The secret number that approves money leaving your account. It is only ever needed to pay, never to receive.",
+  "example": "If a screen asks for your PIN so that you can 'get' money, the money is about to leave."
+}

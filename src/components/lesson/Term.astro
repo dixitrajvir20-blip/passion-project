@@ -13,7 +13,7 @@ interface Props {
 
 const { id } = Astro.props;
 const entry = await getEntry('glossary', id);
-if (!entry) throw new Error(`<Term id="${id}"> is not in src/content/glossary.json`);
+if (!entry) throw new Error(`<Term id="${id}"> is not in src/content/glossary/`);
 ---
 
 <a class="term" href={`#term-${id}`} data-term={id} lang={entry.data.lang}><slot>{entry.data.term.toLowerCase()}</slot></a>

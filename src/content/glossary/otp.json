@@ -1,0 +1,5 @@
+{
+  "term": "OTP",
+  "define": "One-time password: a short code sent to your phone to confirm that an action is really yours. It works once and then expires.",
+  "example": "Anyone who asks you to read out an OTP is asking for permission to act as you."
+}

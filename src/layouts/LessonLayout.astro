@@ -13,11 +13,24 @@ import Practice from '../components/lesson/Practice.astro';
 import Drill from '../components/lesson/Drill.astro';
 import MarginExplorer from '../islands/MarginExplorer.tsx';
 import SplitExplorer from '../islands/SplitExplorer.tsx';
+import LoanExplorer from '../islands/LoanExplorer.tsx';
+import GrowthExplorer from '../islands/GrowthExplorer.tsx';
 import LessonScript from '../components/lesson/LessonScript.astro';
 import { getRegion } from '../lib/regions';
 import { site } from '../lib/site';
 import { lessonPath, type Lesson } from '../lib/lessons';
-import { marginChoices, marginSteps, splitChoices, splitSteps, type Choice, type Step } from '../lib/lesson-math';
+import {
+  growthChoices,
+  growthSteps,
+  loanChoices,
+  loanSteps,
+  marginChoices,
+  marginSteps,
+  splitChoices,
+  splitSteps,
+  type Choice,
+  type Step,
+} from '../lib/lesson-math';
 import '../styles/lesson.css';
 
 interface Props {
@@ -35,7 +48,7 @@ const prefix = `${base}/${region.code}`;
 const terms = await Promise.all(
   d.glossary.map(async (id) => {
     const entry = await getEntry('glossary', id);
-    if (!entry) throw new Error(`${lesson.id}: glossary id "${id}" is not in src/content/glossary.json`);
+    if (!entry) throw new Error(`${lesson.id}: glossary id "${id}" is not in src/content/glossary/`);
     return entry;
   }),
 );
@@ -68,6 +81,8 @@ const reviewed = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long
 let workedSteps: Step[] = [];
 if (d.worked?.kind === 'margin') workedSteps = marginSteps(d.worked, d.worked.unitName);
 if (d.worked?.kind === 'split') workedSteps = splitSteps(d.worked);
+if (d.worked?.kind === 'loan') workedSteps = loanSteps(d.worked);
+if (d.worked?.kind === 'growth') workedSteps = growthSteps(d.worked);
 
 let practice: { given: Step[]; question: string; choices: Choice[] } | null = null;
 if (d.practice?.kind === 'margin') {
@@ -76,6 +91,12 @@ if (d.practice?.kind === 'margin') {
     question: `How many ${d.practice.unitName} cover the month?`,
     choices: marginChoices(d.practice),
   };
+}
+if (d.practice?.kind === 'loan') {
+  practice = { given: loanSteps(d.practice).slice(0, 1), question: 'What does this loan cost in total?', choices: loanChoices(d.practice) };
+}
+if (d.practice?.kind === 'growth') {
+  practice = { given: growthSteps(d.practice).slice(0, 2), question: 'How much of that is growth?', choices: growthChoices(d.practice) };
 }
 if (d.practice?.kind === 'split') {
   const target = d.practice.target;
@@ -171,6 +192,28 @@ if (d.practice?.kind === 'split') {
                   prompts={d.explorable.prompts}
                   localeCode={region.locale}
                   toolHref={`${prefix}/tools/${d.tool ?? 'budget'}`}
+                />
+              )}
+              {d.explorable.kind === 'loan' && (
+                <LoanExplorer
+                  client:visible={{ rootMargin: '600px' }}
+                  principal={d.explorable.principal}
+                  rate={d.explorable.rate}
+                  terms={d.explorable.terms}
+                  prompts={d.explorable.prompts}
+                  localeCode={region.locale}
+                  toolHref={`${prefix}/tools/${d.tool ?? 'loan'}`}
+                />
+              )}
+              {d.explorable.kind === 'growth' && (
+                <GrowthExplorer
+                  client:visible={{ rootMargin: '600px' }}
+                  amounts={d.explorable.amounts}
+                  rate={d.explorable.rate}
+                  horizons={d.explorable.horizons}
+                  prompts={d.explorable.prompts}
+                  localeCode={region.locale}
+                  toolHref={`${prefix}/tools/${d.tool ?? 'savings'}`}
                 />
               )}
               {d.explorable.kind === 'drill' && (

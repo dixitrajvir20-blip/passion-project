@@ -3,7 +3,7 @@
  * calculators use. A lesson passes numbers; it never types out arithmetic. One slip in a worked
  * example teaches the wrong procedure, and no amount of source-checking would catch it.
  */
-import { breakEven } from './finance';
+import { breakEven, compoundGrowth, emi } from './finance';
 
 export interface MarginNumbers {
   /** What you pay each month whatever you sell. */
@@ -17,6 +17,20 @@ export interface SplitNumbers {
   income: number;
   /** Percentages; they do not have to sum to 100 (the rest is "left over"). */
   shares: { label: string; percent: number }[];
+}
+
+export interface LoanNumbers {
+  principal: number;
+  /** Yearly rate, percent. */
+  rate: number;
+  months: number;
+}
+
+export interface GrowthNumbers {
+  monthly: number;
+  /** Yearly rate, percent: an example, never a promise. */
+  rate: number;
+  years: number;
 }
 
 export interface Step {
@@ -126,6 +140,84 @@ export function splitChoices(n: SplitNumbers, targetLabel: string): Choice[] {
     },
   ];
 
+  return dedupe(candidates).sort((a, b) => num(a) - num(b));
+}
+
+const round2 = (n: number) => Math.round(n * 100) / 100;
+
+/**
+ * A loan as three lines: the monthly payment, what that adds up to, and the difference, which is
+ * what borrowing costs. The payment is rounded to the paisa or cent first, as a lender would, and
+ * the later lines are worked from the rounded figure so the arithmetic on screen checks out.
+ */
+export function loanSteps(n: LoanNumbers): Step[] {
+  const monthly = round2(emi(n.principal, n.rate, n.months).emi);
+  const total = round2(monthly * n.months);
+  return [
+    {
+      label: 'Each month you pay',
+      parts: [{ money: n.principal }, { op: `at ${n.rate}% a year, over` }, { count: n.months }, { op: 'months' }],
+      result: { money: monthly },
+    },
+    { label: 'What that adds up to', parts: [{ money: monthly }, { op: '×' }, { count: n.months }], result: { money: total } },
+    {
+      label: 'What borrowing costs',
+      parts: [{ money: total }, { op: '−' }, { money: n.principal }],
+      result: { money: round2(total - n.principal) },
+    },
+  ];
+}
+
+/** "What does borrowing cost in total?", hidden among the slips people make with interest. */
+export function loanChoices(n: LoanNumbers): Choice[] {
+  if (n.rate <= 0) throw new Error('Practice numbers need a rate above 0, or borrowing costs nothing and there is no question to ask.');
+  const [, total, cost] = loanSteps(n).map((step) => ('money' in step.result ? step.result.money : 0));
+  const yearly = round2((n.principal * n.rate) / 100);
+  const flat = round2(((n.principal * n.rate) / 100) * (n.months / 12));
+  const candidates: Choice[] = [
+    { value: { money: cost }, correct: true, why: 'Everything you pay back, minus what you borrowed. That gap is the whole cost of the loan.' },
+    { value: { money: total }, correct: false, why: 'That is everything you pay back, including the money you borrowed. The cost is only the part above what you borrowed.' },
+    {
+      value: { money: flat },
+      correct: false,
+      why: 'That charges the rate on the full amount for the whole time. Each payment shrinks what you owe, so later months cost less interest.',
+    },
+    { value: { money: yearly }, correct: false, why: 'That is one year of interest on the full amount. The loan runs for its whole term, not one year.' },
+  ];
+  return dedupe(candidates).sort((a, b) => num(a) - num(b));
+}
+
+/** Saving every month: what you put in, what it becomes at the example rate, and the difference. */
+export function growthSteps(n: GrowthNumbers): Step[] {
+  const result = compoundGrowth(0, n.monthly, n.rate, n.years);
+  const putIn = Math.round(result.totalContributed);
+  const grows = Math.round(result.finalValue);
+  return [
+    { label: 'What you put in', parts: [{ money: n.monthly }, { op: '×' }, { count: n.years * 12 }, { op: 'months' }], result: { money: putIn } },
+    {
+      label: `What it grows to at ${n.rate}% a year`,
+      parts: [{ money: putIn }, { op: `growing for` }, { count: n.years }, { op: n.years === 1 ? 'year' : 'years' }],
+      result: { money: grows },
+    },
+    { label: 'Growth on top', parts: [{ money: grows }, { op: '−' }, { money: putIn }], result: { money: grows - putIn } },
+  ];
+}
+
+/** "How much of that is growth?", beside the usual confusions of total, deposits and flat interest. */
+export function growthChoices(n: GrowthNumbers): Choice[] {
+  if (n.rate <= 0 || n.monthly <= 0) throw new Error('Practice numbers need a monthly amount and a rate above 0, or there is no growth to ask about.');
+  const [put, grows, growth] = growthSteps(n).map((step) => ('money' in step.result ? step.result.money : 0));
+  const flat = Math.round(put * (n.rate / 100) * n.years);
+  const candidates: Choice[] = [
+    { value: { money: growth }, correct: true, why: 'The final amount minus everything you put in yourself. What is left is what the growth added.' },
+    { value: { money: grows }, correct: false, why: 'That is the whole amount at the end. Most of it is money you put in yourself.' },
+    { value: { money: put }, correct: false, why: 'That is what you put in. Growth is only the part on top of it.' },
+    {
+      value: { money: flat },
+      correct: false,
+      why: 'That applies the rate to every deposit for every year. A deposit made last month has only grown for a month.',
+    },
+  ];
   return dedupe(candidates).sort((a, b) => num(a) - num(b));
 }
 
