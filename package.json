@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/og-images.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "npm run test:unit && npm run test:e2e",
@@ -17,7 +17,8 @@
     "screenshots": "node scripts/screenshots.mjs screenshots",
     "contrast": "node scripts/contrast-check.mjs",
     "ship-check": "npm run build && npm run budget && npm run contrast && npm run test:unit && npm run test:e2e",
-    "budget": "node scripts/js-budget.mjs"
+    "budget": "node scripts/js-budget.mjs",
+    "og": "node scripts/og-images.mjs"
   },
   "repository": {
     "type": "git",
@@ -41,7 +42,6 @@
     "@playwright/test": "^1.63.0",
     "@resvg/resvg-js": "^2.6.2",
     "astro-pagefind": "^2.0.1",
-    "satori": "^0.32.0",
     "vitest": "^5.0.1"
   },
   "private": true,

@@ -28,7 +28,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // Search: an edition's pages are found from that edition; shared pages are found from all of them.
 const editions = region ? REGIONS.filter((r) => r.code === region) : REGIONS;
-const ogImage = new URL(`${base}${image}`, Astro.site);
+// Every page gets its own share image, drawn from its title at build time (scripts/og-images.mjs)
+// and stored under /og/<path-as-slug>.png. Pages that are not for sharing keep the generic one.
+const ogSlug = Astro.url.pathname.replace(base, '').replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
+const ogPath = image !== '/og-default.png' || noindex ? image : `/og/${ogSlug}.png`;
+const ogImage = new URL(`${base}${ogPath}`, Astro.site);
 
 const jsonLd = {
   '@context': 'https://schema.org',
