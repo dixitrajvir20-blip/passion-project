@@ -93,6 +93,7 @@ if (d.practice?.kind === 'split') {
   region={region.code}
   regionSub="learn"
   path="learn"
+  kind="Lesson"
 >
   <Fragment slot="head">
     <link rel="license" href={site.contentLicence.url} />
@@ -256,7 +257,8 @@ if (d.practice?.kind === 'split') {
             </section>
           )}
 
-          <footer class="lesson-fine">
+          {/* Sources and the licence are the same boilerplate on every lesson: keep them out of search. */}
+          <footer class="lesson-fine" data-pagefind-ignore>
             <h2 id="sources">Sources</h2>
             <ul>
               {d.sources.map((source) => (
@@ -298,7 +300,7 @@ if (d.practice?.kind === 'split') {
 
     {/* Definitions for the in-place popover. Hidden unless the Popover API opens one. */}
     {terms.map((entry) => (
-      <div class="term-pop" id={`pop-${entry.id}`} popover>
+      <div class="term-pop" id={`pop-${entry.id}`} popover data-pagefind-ignore>
         <h3 lang={entry.data.lang}>{entry.data.term}</h3>
         <p>{entry.data.define}</p>
         <p class="example">{entry.data.example}</p>

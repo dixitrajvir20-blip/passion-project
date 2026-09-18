@@ -77,6 +77,16 @@ X-Frame-Options: DENY   # legacy backup for frame-ancestors
 Astro's build already emits the CSP meta (`astro.config.mjs` → `security.csp`) with SHA-256
 hashes of every inline script and style. Test the deployed set with MDN HTTP Observatory.
 
+## Search and the CSP
+
+Search is Pagefind: a static index built at deploy time and queried in the browser, so no search
+term ever leaves the device and no third party is involved. Pagefind runs a small WebAssembly
+module, which a strict CSP blocks unless `script-src` carries `'wasm-unsafe-eval'`. That allowance
+is added on `/search` only (see `src/pages/search.astro`), not site-wide, and it permits compiling
+WebAssembly, not evaluating strings as code (`'unsafe-eval'` stays absent everywhere). A browser
+test asserts it appears on the search page and on no lesson page. Result excerpts are rendered as
+DOM nodes rather than assigned as HTML.
+
 ## GitHub Actions & repo hardening checklist
 
 - [x] Workflow `permissions: contents: read`; deploy job adds only `pages: write`, `id-token: write`.

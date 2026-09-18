@@ -2,13 +2,16 @@ import { defineConfig } from 'astro/config';
 import preact from '@astrojs/preact';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import pagefind from 'astro-pagefind';
 
 // GitHub Pages serves this as a project site, so every link must respect `base`.
 export default defineConfig({
   site: 'https://dixitrajvir20-blip.github.io',
   base: '/passion-project',
   output: 'static',
-  integrations: [preact(), mdx(), sitemap({ filter: (page) => !page.includes('/account') })],
+  // pagefind() runs after the build and writes a static search index to dist/pagefind: no server,
+  // no third party, and nothing about a search ever leaves the browser.
+  integrations: [preact(), mdx(), sitemap({ filter: (page) => !page.includes('/account') && !page.includes('/review') }), pagefind()],
   // Prefetch on hover/tap for links that opt in with data-astro-prefetch.
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   // Content Security Policy as a <meta> tag with SHA-256 hashes of every inline script and

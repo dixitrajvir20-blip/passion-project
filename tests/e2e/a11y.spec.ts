@@ -7,6 +7,7 @@ const REGIONS = ['in', 'eu', 'us'];
 const PAGES = [
   '',
   'glossary',
+  'search',
   'about',
   'privacy',
   'cookies',

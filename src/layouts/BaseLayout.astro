@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import RegionTabs from '../components/RegionTabs.astro';
 import ConsentManager from '../islands/ConsentManager.tsx';
 import { site, consentCategories, CONSENT_VERSION } from '../lib/site';
+import { REGIONS } from '../lib/regions';
 import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -18,11 +19,15 @@ interface Props {
   /** Social image, relative to the site root. */
   image?: string;
   noindex?: boolean;
+  /** Shown beside search results: "Lesson", "Calculator". */
+  kind?: string;
 }
 
-const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false } = Astro.props;
+const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false, kind } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// Search: an edition's pages are found from that edition; shared pages are found from all of them.
+const editions = region ? REGIONS.filter((r) => r.code === region) : REGIONS;
 const ogImage = new URL(`${base}${image}`, Astro.site);
 
 const jsonLd = {
@@ -76,7 +81,10 @@ const jsonLd = {
     <a class="skip-link" href="#main">Skip to content</a>
     <Header region={region} path={path} />
     {region && <RegionTabs current={region} sub={regionSub} />}
-    <main id="main" tabindex="-1">
+    {/* data-pagefind-body: only <main> is indexed, so the header, tabs and footer never match a search. */}
+    <main id="main" tabindex="-1" data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
+      {!noindex && editions.map((r) => <span data-pagefind-filter={`edition:${r.name}`}></span>)}
+      {!noindex && kind && <span data-pagefind-meta={`kind:${kind}`}></span>}
       <slot />
     </main>
     <Footer region={region} />

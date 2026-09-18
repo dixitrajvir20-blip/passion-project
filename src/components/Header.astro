@@ -17,11 +17,14 @@ const links = region
       { label: 'Learn', to: `${prefix}/learn`, key: 'learn' },
       { label: 'Tools', to: `${prefix}/tools`, key: 'tools' },
       { label: 'Glossary', to: `${base}/glossary`, key: 'glossary' },
-      { label: 'About', to: `${base}/about`, key: 'about' },
+      // Five items do not fit a 360px row; About is also in the footer, so it yields on phones.
+      { label: 'About', to: `${base}/about`, key: 'about', wide: true },
+      { label: 'Search', to: `${base}/search`, key: 'search' },
     ]
   : [
       { label: 'Glossary', to: `${base}/glossary`, key: 'glossary' },
       { label: 'About', to: `${base}/about`, key: 'about' },
+      { label: 'Search', to: `${base}/search`, key: 'search' },
     ];
 ---
 
@@ -34,7 +37,7 @@ const links = region
     <nav aria-label="Main">
       <ul>
         {links.map((l) => (
-          <li>
+          <li class={'wide' in l && l.wide ? 'nav-wide' : undefined}>
             <a href={l.to} aria-current={path === l.key ? 'page' : undefined} data-astro-prefetch>
               {l.label}
             </a>
@@ -106,6 +109,7 @@ const links = region
   }
   @media (min-width: 640px) { nav ul { gap: var(--space-5); } }
   nav li { margin: 0; }
+  @media (max-width: 479px) { .nav-wide { display: none; } }
 
   nav a:not(.btn) {
     display: inline-flex;

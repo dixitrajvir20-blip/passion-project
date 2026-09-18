@@ -54,6 +54,7 @@ const scenario: Record<string, string> = {
   region={region.code}
   regionSub={tool.regions ? 'tools' : `tools/${tool.slug}`}
   path="tools"
+  kind={tool.regions ? 'Practice' : 'Calculator'}
 >
   <section class="section">
     <div class="container">
