@@ -98,7 +98,14 @@ Astro.csp?.insertScriptResource("'wasm-unsafe-eval'");
           mark.textContent = plain(marked[1]);
           p.append(mark);
         } else if (part) {
-          p.append(plain(part.replace(/<[^>]*>/g, '')));
+          // Appended as text, never as HTML. Stripped until stable anyway, so no tag can survive.
+          let text = part;
+          let before;
+          do {
+            before = text;
+            text = text.replace(/<[^<>]*>/g, '');
+          } while (text !== before);
+          p.append(plain(text.replace(/[<>]/g, '')));
         }
       }
       return p;

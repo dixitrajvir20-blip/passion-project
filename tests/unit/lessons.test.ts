@@ -13,6 +13,20 @@ import { join, relative } from 'node:path';
 // Astro already depends on js-yaml for frontmatter; no new dependency.
 import yaml from 'js-yaml';
 
+/**
+ * Markup out, words in, for counting. Only for measuring prose (nothing here is ever rendered),
+ * but written so no tag can survive: strip until nothing changes, then drop stray brackets.
+ */
+function stripTags(text: string): string {
+  let out = text;
+  let previous;
+  do {
+    previous = out;
+    out = out.replace(/<[^<>]*>/g, '');
+  } while (out !== previous);
+  return out.replace(/[<>]/g, ' ');
+}
+
 const ROOT = join(__dirname, '../../src/content/lessons');
 const GLOSSARY: { id: string }[] = JSON.parse(readFileSync(join(__dirname, '../../src/content/glossary.json'), 'utf8'));
 const GLOSSARY_IDS = new Set(GLOSSARY.map((entry) => entry.id));
@@ -49,11 +63,8 @@ const lessons: Loaded[] = walk(ROOT).map((path) => {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!match) throw new Error(`${path}: no frontmatter`);
   const body = match[2];
-  const prose = body
-    .replace(/<svg[\s\S]*?<\/svg>/g, ' ')
-    .replace(/^\|.*\|$/gm, ' ')
-    .replace(/<[^>]+>/g, '')
-    .replace(/[*_`#>]/g, '')
+  const prose = stripTags(body.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/^\|.*\|$/gm, ' '))
+    .replace(/[*_`#]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
   const data = yaml.load(match[1]) as Record<string, any>;
@@ -113,11 +124,8 @@ describe('lesson content', () => {
         for (const section of sections) {
           const [heading, ...rest] = section.split('\n');
           // Drop table rows line by line BEFORE joining: once joined, `^…$` no longer matches a row.
-          const text = rest
-            .filter((line) => !/^\s*\|.*\|\s*$/.test(line))
-            .join(' ')
-            .replace(/<svg[\s\S]*?<\/svg>/g, ' ')
-            .replace(/<[^>]+>/g, '');
+          const joined = rest.filter((line) => !/^\s*\|.*\|\s*$/.test(line)).join(' ');
+          const text = stripTags(joined.replace(/<svg[\s\S]*?<\/svg>/g, ' '));
           expect(words(text), `"${heading}" is ${words(text)} words`).toBeLessThanOrEqual(120);
         }
       });

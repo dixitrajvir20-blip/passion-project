@@ -44,7 +44,9 @@ const slugFor = (file) => {
 };
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const unescapeHtml = (s) => s.replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+// One pass over the string: chained replaces would decode "&amp;lt;" twice, into "<".
+const ENTITIES = { '&amp;': '&', '&#39;': "'", '&quot;': '"', '&lt;': '<', '&gt;': '>' };
+const unescapeHtml = (s) => s.replace(/&(?:amp|#39|quot|lt|gt);/g, (entity) => ENTITIES[entity]);
 
 function describe(file, html) {
   const rel = '/' + file.slice(DIST.length + 1).replace(/index\.html$/, '');

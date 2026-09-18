@@ -18,7 +18,9 @@ export default defineConfig({
     { name: 'desktop', use: { ...devices['Desktop Chrome'], launchOptions } },
   ],
   webServer: {
-    command: 'npx astro build && npx astro preview --port 4321 --ignore-lock',
+    // npm run build, not astro build: share images are drawn in a step after astro build. A server
+    // built without it passes locally (a full build is already being served) and 404s in CI.
+    command: 'npm run build && npx astro preview --port 4321 --ignore-lock',
     url: BASE,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
