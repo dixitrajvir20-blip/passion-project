@@ -11,6 +11,19 @@ test('the banner asks about learning time, and a no is a no', async ({ page }) =
   expect(record.choices.stats).toBe(false);
 });
 
+test('Global Privacy Control counts as no: no banner, nothing recorded', async ({ page, context }) => {
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, 'globalPrivacyControl', { get: () => true });
+  });
+  await page.goto('');
+  await page.locator('[data-consent][data-hydrated]').waitFor({ state: 'attached' });
+  await expect(page.locator('.consent-banner')).toHaveCount(0);
+  await page.waitForTimeout(6000);
+  expect(await page.evaluate(() => localStorage.getItem('lp:activity'))).toBeNull();
+  const record = await page.evaluate(() => JSON.parse(localStorage.getItem('lp:consent') ?? 'null'));
+  expect(record?.source).toBe('gpc');
+});
+
 test.skip('no banner appears while nothing optional is in use', async ({ page }) => {
   await page.goto('');
   await expect(page.locator('.consent-banner')).toHaveCount(0);

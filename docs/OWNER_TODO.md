@@ -19,6 +19,14 @@ The `protect-files.sh` hook stops Claude editing these, by design.
 <li>if you agree in Privacy choices, the minutes you spend on the site each day, for your dashboard;</li>
 ```
 
+Also in `src/pages/cookies.astro` (about line 57), the sentence "Two optional categories exist…
+Neither is switched on today" is now wrong. Replace with: "Three optional categories exist. One,
+learning time on this device, is live and asks first; the other two are not in use."
+
+And in `src/pages/privacy.astro` under "What we collect", one line about the Write for us page:
+"If you email us a lesson or a question, we keep the email for as long as it takes to answer or
+publish, then delete it. Do not include personal details you do not want us to hold."
+
 ## 2. A real contact address
 
 `src/lib/site.ts` still has `hello@business-lab.example`. It appears on Privacy, Terms,

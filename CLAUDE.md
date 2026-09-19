@@ -51,7 +51,7 @@ of his school club, Business Lab).
 - **Search** at `/search`: Pagefind index built at deploy, engine loaded on focus, edition filter.
   `'wasm-unsafe-eval'` is allowed on that page only.
 - **Legal pages** live: `/privacy`, `/cookies`, `/terms`, `/accessibility`, `/disclaimer`, plus a
-  **consent manager** (no banner today because nothing optional is on), `security.txt`, `SECURITY.md`.
+  **consent manager** (the banner asks about learning time on the first visit), `security.txt`, `SECURITY.md`.
 - **Accounts are a preview only** at `/account` (the login screen exists and is linked from the
   dashboard), wired to a stub provider that stores nothing. Gated behind `PUBLIC_ACCOUNTS_ENABLED`
   (default off); the build fails if it is on without `PUBLIC_AUTH_ORIGIN`. Going live is Phase 6.

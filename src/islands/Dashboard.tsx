@@ -145,7 +145,7 @@ export default function Dashboard({ lessons, base }: Props) {
           </li>
           <li class="stat-card">
             <span class="stat-name">Learning time this week</span>
-            <strong class="stat-value numbers">{loaded ? (tracking || weekSeconds ? formatDuration(weekSeconds) : 'Off') : '–'}</strong>
+            <strong class="stat-value numbers">{loaded ? (tracking ? formatDuration(weekSeconds) : 'Off') : '–'}</strong>
             <span class="stat-note">{tracking ? `${formatDuration(allSeconds)} in the last 90 days` : 'Not recorded. Switch it on in Privacy choices.'}</span>
           </li>
         </ul>

@@ -118,12 +118,16 @@ const jsonLd = {
   } catch {
     storage = undefined;
   }
-  window.setInterval(() => {
-    if (!storage || document.visibilityState !== 'visible') return;
+  const check = (add: boolean) => {
+    if (!storage) return;
     if (isAllowed(readConsent(storage), 'stats', consentCategories)) {
-      saveActivity(storage, addSeconds(loadActivity(storage), TICK));
+      if (add) saveActivity(storage, addSeconds(loadActivity(storage), TICK));
     } else if (storage.getItem(ACTIVITY_KEY) !== null) {
       clearActivity(storage);
     }
-  }, TICK * 1000);
+  };
+  window.setInterval(() => document.visibilityState === 'visible' && check(true), TICK * 1000);
+  // A no takes effect the moment it is given, not on the next tick.
+  document.addEventListener('lp:consent-changed', () => check(false));
+  check(false);
 </script>
