@@ -80,6 +80,7 @@ Business Lab is a free, clean, fast website where anyone aged 15-21, anywhere in
 /tools/[tool]          Tool page
 /glossary              Glossary (A-Z, searchable)
 /search                Search results (Pagefind)
+/dashboard             Progress, checks, review queue and learning time, from this device
 /about                 Mission, team, impact numbers
 /write                 Write for us (student contributors)
 /privacy               Privacy notice (plain language)

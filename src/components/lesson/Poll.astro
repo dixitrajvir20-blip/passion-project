@@ -17,12 +17,15 @@ interface Props {
   /** When set, the lesson script scores the first reveal and schedules the check for review. */
   checkId?: string;
   revealLabel?: string;
+  /** A small label above the question ("Before you read", "Question 1 of 3"). */
+  label?: string;
 }
 
-const { id, question, options, answer, checkId, revealLabel = 'Show the answer' } = Astro.props;
+const { id, question, options, answer, checkId, revealLabel = 'Show the answer', label } = Astro.props;
 ---
 
 <div class="poll" data-poll data-check-id={checkId} data-answer={answer}>
+  {label && <p class="poll-label">{label}</p>}
   <fieldset>
     <legend>{question}</legend>
     <div class="opts">
@@ -36,7 +39,7 @@ const { id, question, options, answer, checkId, revealLabel = 'Show the answer' 
   </fieldset>
 
   <details class="reveal">
-    <summary class="btn btn-secondary">{revealLabel}</summary>
+    <summary class="btn">{revealLabel}</summary>
     <div class="reveal-body">
       {/* Filled by the lesson script when a check is scored. Words, not colour: "Correct." / "Not quite." */}
       <p class="poll-status" role="status"></p>

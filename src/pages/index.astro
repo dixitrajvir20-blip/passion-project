@@ -1,129 +1,145 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EditionSum from '../components/EditionSum.astro';
-import { REGIONS } from '../lib/regions';
+import HandNote from '../components/HandNote.astro';
+import Blobs from '../components/Blobs.astro';
+import Doodle from '../components/Doodle.astro';
+import Logo from '../components/Logo.astro';
+import { REGIONS, getRegion } from '../lib/regions';
 import { TOOLS } from '../lib/tools';
 import { site } from '../lib/site';
 import { lessonPath, lessonsFor } from '../lib/lessons';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const panels = ['panel-field', 'panel-gold', 'panel-pale'];
 
-// "Start here": the first lesson of each track, so the front page shows what an edition
-// actually teaches instead of describing it. Tracks with nothing published yet show the
-// planned title as plain text.
-const editions = await Promise.all(
-  REGIONS.map(async (region) => {
-    const lessons = await lessonsFor(region.code);
-    const start = region.tracks.map((track) => {
-      const first = lessons.find((lesson) => lesson.data.track === track.slug);
-      return first
-        ? { title: first.data.title, href: `${base}/${lessonPath(first)}`, minutes: first.data.readingMinutes }
-        : { title: track.planned[0] ?? track.title, href: undefined, minutes: undefined };
-    });
-    return { region, start, count: lessons.length };
-  }),
-);
+// "Start with these": the first money-basics and how-business-works lesson of each edition.
+const starters = (
+  await Promise.all(
+    REGIONS.map(async (region) => {
+      const lessons = await lessonsFor(region.code);
+      return ['money-basics', 'how-business-works']
+        .map((track) => lessons.find((lesson) => lesson.data.track === track))
+        .filter((lesson) => lesson !== undefined)
+        .map((lesson) => ({ region, lesson }));
+    }),
+  )
+).flat();
+const doodles = ['coin', 'phone', 'tag', 'calculator', 'plane', 'coin'] as const;
 const everywhere = TOOLS.filter((tool) => !tool.regions);
+const reasons = ['Free, always', 'No ads', 'No sign-up', 'Real numbers', 'Sources on every figure', 'Built for cheap phones'];
+const india = getRegion('in');
 ---
 
-<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description}>
-  <section class="intro">
-    <div class="container">
-      <h1>Money and business, taught for where you live.</h1>
-      <p class="lede">
-        Free lessons and calculators for ages 15 to 21. Each edition has its own currency, payment
-        systems, rules and scams, because a lesson about money only helps if it is about your money.
-        No ads, no sign-up, nothing to sell.
-      </p>
+<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description} bare>
+  <section class="hero on-field">
+    <Blobs />
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <HandNote text="free, forever" class="hero-note" />
+        <h1 class="mega">Money and business, taught for where you live.</h1>
+        <p class="lede">
+          Free lessons and calculators for ages 15 to 21. Each edition has its own currency, payment
+          apps, rules and scams, because a lesson about money only helps if it is about your money.
+        </p>
+        <div class="btn-row">
+          <a class="cta" href="#editions"><span class="cta-label">Choose your edition</span><span class="cta-arrow" aria-hidden="true">↓</span></a>
+          <p class="resume" id="resume" hidden><a class="btn btn-secondary" id="resume-link" href={`${base}/`}>Continue where you left off</a></p>
+        </div>
+      </div>
+      <div class="flashcards" aria-label="A worked example from a lesson">
+        <div class="flashcard flashcard-back" aria-hidden="true"></div>
+        <div class="flashcard flashcard-mid" aria-hidden="true"></div>
+        <div class="flashcard flashcard-front">
+          <HandNote text="a worked example" tilt="none" class="flashcard-note" />
+          <EditionSum region={india} />
+        </div>
+        <p class="sticky-rule" aria-hidden="true">Price − cost = kept</p>
+      </div>
     </div>
   </section>
 
-  <section id="editions" class="editions-section" aria-labelledby="editions-h">
+  <section id="editions" class="section editions-section" aria-labelledby="editions-h">
     <div class="container">
-      <div class="editions-head">
-        <h2 id="editions-h">Choose your edition</h2>
-        <p class="resume" id="resume" hidden>
-          <a id="resume-link" href={`${base}/`}>Continue where you left off</a>
-        </p>
-      </div>
-
+      <h2 id="editions-h" class="section-title">Choose your edition</h2>
       <ul class="list-plain editions">
-        {editions.map(({ region, start }) => (
-          <li class="edition">
-            <h3 class="edition-name"><a href={`${base}/${region.code}`} data-astro-prefetch>{region.name}</a></h3>
+        {REGIONS.map((region, index) => (
+          <li class:list={['panel', 'edition', panels[index]]}>
+            <span class="pill pill-white currency">{region.currency}</span>
+            <h3 class="edition-name">{region.name}</h3>
             <p class="edition-problem">{region.problem}</p>
-
-            <EditionSum region={region} />
-
-            <h4 class="start-head">Start here</h4>
-            <ol class="start-list">
-              {start.map((item) => (
-                <li>
-                  {item.href ? (
-                    <a href={item.href}>{item.title}</a>
-                  ) : (
-                    <span class="muted">{item.title} (being written)</span>
-                  )}
-                  {item.minutes && <span class="start-min numbers"> {item.minutes} min</span>}
-                </li>
-              ))}
-            </ol>
-
-            <a class="btn" href={`${base}/${region.code}`}>Open the {region.name} edition</a>
+            <div class="edition-sum"><EditionSum region={region} /></div>
+            <ul class="pills" aria-label={`${region.name} topics`}>
+              {region.tags.map((tag) => <li><span class="pill">{tag}</span></li>)}
+            </ul>
+            <a class="btn-link edition-link" href={`${base}/${region.code}`} data-astro-prefetch>Open the {region.name} edition</a>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="section tools-section" aria-labelledby="tools-h">
-    <div class="container split">
-      <div>
-        <h2 id="tools-h">Questions the calculators answer</h2>
-        <p>
-          Put your own numbers in. Every result shows the working underneath it, and nothing you
-          type leaves your phone.
-        </p>
+  <section class="section steps-section" aria-labelledby="steps-h">
+    <div class="container">
+      <h2 id="steps-h" class="section-title">How a lesson works</h2>
+      <ol class="list-plain steps-cards">
+        <li class="step-card step-1"><span class="step-num">Step 1</span><h3>Answer first</h3><p>Every lesson opens with a question. A guess, right or wrong, makes the answer stick.</p></li>
+        <li class="step-card step-2"><span class="step-num">Step 2</span><h3>See the idea</h3><p>One idea, one worked calculation, real numbers in your currency.</p></li>
+        <li class="step-card step-3"><span class="step-num">Step 3</span><h3>Try your own numbers</h3><p>Change them and watch the answer move.</p></li>
+        <li class="step-card step-4"><span class="step-num">Step 4</span><h3>Check your understanding</h3><p>Three questions, which come back for review a few days later.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="calculators" class="section" aria-labelledby="calc-h">
+    <div class="container">
+      <div class="panel panel-gold taxonomy">
+        <h2 id="calc-h" class="taxonomy-title">Calculators that answer</h2>
+        <ul class="list-plain taxonomy-list">
+          {everywhere.map((tool) => (
+            <li><a href="#editions" data-edition-path={`tools/${tool.slug}`}>{tool.short}</a></li>
+          ))}
+        </ul>
+        <p class="taxonomy-foot">Nothing you type leaves your phone.</p>
       </div>
-      <ul class="index-list">
-        {everywhere.map((tool) => (
-          <li>
-            <a class="index-row" href="#editions" data-edition-path={`tools/${tool.slug}`}>
-              <span class="index-title">{tool.answers}</span>
-              <span class="index-sub">{tool.title}</span>
-              <span class="index-go" aria-hidden="true">Open</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   </section>
 
   <section class="section why" aria-labelledby="why-h">
-    <div class="container split">
-      <div>
-        <h2 id="why-h">Why this exists</h2>
-      </div>
-      <div class="why-body">
-        <p class="lede">
-          Most people learn money at home. If your family knows how it works, you pick it up. If
-          not, school rarely fills the gap, and most money advice online is attached to something
-          for sale.
-        </p>
-        <p>
-          {site.name} started as a school club built on one idea: business is a life skill. This
-          site takes that idea from one school to anyone with a phone.
-        </p>
-        <ul class="rules">
-          <li>No ads, no sign-up and no tracking.</li>
-          <li>No tips on what to buy or sell, and no promised returns.</li>
-          <li>Every figure carries its source and a date.</li>
-          <li>Built to load on a cheap phone over a slow connection.</li>
+    <div class="container">
+      <h2 id="why-h" class="section-title">Why {site.name}?</h2>
+      <div class="why-cloud">
+        <div class="why-badge" aria-hidden="true"><Logo size={140} /></div>
+        <ul class="list-plain why-pills">
+          {reasons.map((reason) => <li class="why-pill">{reason}</li>)}
         </ul>
-        <p><a href={`${base}/about`}>More about {site.name}</a></p>
       </div>
+      <p class="why-note">
+        {site.name} started as a school club built on one idea: business is a life skill. Most people
+        learn money at home, if at all; this is for everyone else. <a href={`${base}/about`}>More about {site.name}</a>.
+      </p>
     </div>
   </section>
+
+  {starters.length > 0 && (
+    <section class="sheet starters" aria-labelledby="start-h">
+      <div class="container">
+        <div class="starters-head">
+          <h2 id="start-h" class="section-title">Start with these</h2>
+        </div>
+        <ul class="grid-table cols-3">
+          {starters.map(({ region, lesson }, index) => (
+            <li class="starter">
+              <span class:list={['sticker', { 'sticker-left': index % 2 === 1 }]}>{region.name} · {lesson.data.readingMinutes} min</span>
+              {index < doodles.length && index % 3 === 0 && <Doodle name={doodles[index]} class="starter-doodle" />}
+              <h3><a href={`${base}/${lessonPath(lesson)}`}>{lesson.data.title}</a></h3>
+              <p>{lesson.data.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 </BaseLayout>
 
 <script>
@@ -138,7 +154,7 @@ const everywhere = TOOLS.filter((tool) => !tool.regions);
       const link = document.getElementById('resume-link');
       if (wrap && link instanceof HTMLAnchorElement) {
         link.href = new URL(saved, document.baseURI).pathname;
-        link.textContent = `Continue with the ${names[saved]} edition`;
+        link.textContent = `Continue with ${names[saved]}`;
         wrap.hidden = false;
       }
       // Links that default to the chooser go straight to the edition the reader already picked.
@@ -152,48 +168,106 @@ const everywhere = TOOLS.filter((tool) => !tool.regions);
 </script>
 
 <style>
-  .intro { padding: var(--space-8) 0 var(--space-7); }
-  @media (min-width: 900px) { .intro { padding: var(--space-9) 0 var(--space-8); } }
-  .intro h1 { font-size: var(--text-h1); max-width: 16ch; margin-bottom: var(--space-5); }
-  @media (min-width: 640px) { .intro h1 { font-size: var(--text-display); } }
-  .intro .lede { max-width: 58ch; margin: 0; }
+  /* Hero: a baby-blue field with blobs, a giant flush-left headline, and a stack of flashcards. */
+  .hero { position: relative; overflow: hidden; padding: var(--space-7) 0 var(--space-8); }
+  @media (min-width: 900px) { .hero { padding: var(--space-8) 0 var(--space-9); } }
+  .hero-grid { position: relative; z-index: 1; display: grid; gap: var(--space-8); align-items: center; }
+  @media (min-width: 980px) { .hero-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+  .hero-copy :global(.hero-note) { margin-bottom: var(--space-4); }
+  .hero h1 { margin-bottom: var(--space-5); max-width: 15ch; }
+  .hero .lede { color: var(--ink-2); margin-bottom: var(--space-6); }
+  .resume { margin: 0; }
 
-  .editions-section { padding-bottom: var(--space-8); }
-  .editions-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-5); border-top: 2px solid var(--ink); padding-top: var(--space-4); }
-  .editions-head h2 { margin: 0; font-size: var(--text-h3); }
-  .resume { margin: 0; font-weight: 700; }
-
-  .editions { display: grid; gap: 0; margin: var(--space-5) 0 0; }
-  .edition { display: flex; flex-direction: column; gap: var(--space-4); margin: 0; padding: var(--space-6) 0; border-bottom: 1px solid var(--line); }
-  /* Side by side, each edition's name, sentence, sum, list and button sit on shared rows, so the
-     three ledgers line up and can be read across like columns of one cash book. */
-  @media (min-width: 980px) {
-    .editions { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-7); }
-    .edition { border-bottom: 0; padding: var(--space-4) 0 0; }
-    @supports (grid-template-rows: subgrid) {
-      .editions { grid-template-rows: repeat(6, auto); }
-      .edition { display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: var(--space-4); align-content: start; }
-      .edition-problem { min-height: 0; }
-    }
+  .flashcards { position: relative; min-height: 360px; max-width: 460px; width: 100%; justify-self: center; }
+  .flashcard { position: absolute; inset: 0 var(--space-5) var(--space-6) var(--space-5); background: var(--paper); border: 2px solid var(--line-strong); border-radius: var(--radius-l); }
+  .flashcard-back { transform: rotate(7deg) translate(var(--space-4), var(--space-2)); background: var(--gold-pale); }
+  .flashcard-mid { transform: rotate(-4deg); }
+  .flashcard-front { position: relative; inset: auto; margin: 0 var(--space-5) var(--space-6); padding: var(--space-5) var(--space-5) var(--space-6); transform: rotate(1.5deg); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
+  .flashcard-front :global(.flashcard-note) { margin-bottom: var(--space-2); }
+  .sticky-rule {
+    position: absolute; left: 0; bottom: 0; margin: 0; padding: var(--space-3) var(--space-4);
+    background: var(--gold); color: var(--on-gold); border: 2px solid var(--line-strong); border-radius: var(--radius-s);
+    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3); transform: rotate(-6deg);
   }
-  .edition-name { font-size: var(--text-h2); line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
-  .edition-name a { color: var(--ink); text-decoration: none; }
-  .edition-name a:hover { color: var(--accent-text); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
-  .edition-problem { margin: 0; color: var(--ink-2); min-height: 3lh; }
-  @media (max-width: 979px) { .edition-problem { min-height: 0; } }
-  .start-head { margin: var(--space-2) 0 0; font-size: var(--text-sm); color: var(--ink); }
-  .start-list { margin: 0; padding-left: var(--space-5); font-size: var(--text-ui); }
-  .start-list li { margin-bottom: var(--space-2); }
-  .start-min { color: var(--muted); font-size: var(--text-sm); white-space: nowrap; }
-  .edition .btn { align-self: start; justify-self: start; }
 
-  .tools-section { background: var(--bg-2); }
-  .split { display: grid; gap: var(--space-5); }
-  @media (min-width: 900px) { .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: var(--space-8); } }
-  .split h2 { margin-top: 0; }
-  .tools-section .index-list { border-top-color: var(--line-strong); }
-  .tools-section .index-list > li { border-bottom-color: var(--line-strong); }
+  .section-title { font-size: var(--text-h1); margin: 0 0 var(--space-6); text-align: center; }
 
-  .why-body .lede { color: var(--ink); }
-  .rules { margin: var(--space-5) 0; padding-left: var(--space-5); }
+  /* Editions: three big rounded panels, each its own colour, on white. */
+  .editions-section { background: var(--bg); }
+  .editions { display: grid; gap: var(--space-4); }
+  @media (min-width: 980px) { .editions { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .edition { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6) var(--space-5); margin: 0; }
+  @media (min-width: 980px) { .edition { padding: var(--space-6); } }
+  .currency { align-self: flex-end; margin-bottom: calc(var(--space-6) * -1); }
+  .edition-name { font-size: var(--text-h1); line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
+  .edition-problem { margin: 0; color: var(--ink-2); }
+  /* A receipt: white paper and navy ink in both themes. */
+  .edition-sum { background: var(--paper); color: var(--brand-navy); border-radius: var(--radius-m); padding: var(--space-4); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
+  .edition-link { align-self: flex-start; margin-top: auto; padding-left: 0; }
+
+  /* How a lesson works: four tilted cards. */
+  .steps-section { background: var(--field-pale); }
+  .steps-cards { display: grid; gap: var(--space-5); }
+  @media (min-width: 720px) { .steps-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .steps-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); } }
+  .step-card { margin: 0; padding: var(--space-5); border-radius: var(--radius-l); border: 2px solid var(--line-strong); min-height: calc(var(--space-10) + var(--space-8)); color: var(--ink-2); }
+  .step-card h3 { font-size: var(--text-h2); line-height: var(--leading-tight); margin: var(--space-3) 0 var(--space-3); }
+  .step-card p { margin: 0; font-size: var(--text-ui); }
+  .step-num { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); color: var(--gold-text); }
+  .step-1 { background: var(--field); transform: rotate(-2.5deg); }
+  .step-2 { background: var(--gold); transform: rotate(2deg); --ink: var(--on-gold); --ink-2: var(--on-gold); --gold-text: var(--on-gold); border-color: var(--on-gold); }
+  .step-3 { background: var(--bg); transform: rotate(-1deg); }
+  .step-4 { background: var(--field-deep); transform: rotate(3deg); }
+  .step-1, .step-4 { --bg: var(--field); --ink: var(--paper); --ink-2: var(--paper); --gold-text: var(--gold); }
+
+  /* The gold taxonomy panel: stacked giant questions, each a link. */
+  .taxonomy { text-align: center; }
+  .taxonomy-title { margin: 0 0 var(--space-5); font-size: var(--text-h3); color: var(--on-gold); }
+  .taxonomy-list { display: grid; gap: var(--space-2); }
+  .taxonomy-list li { margin: 0; }
+  .taxonomy-list a {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h1); line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-display); color: var(--on-gold); text-decoration: none; text-wrap: balance;
+  }
+  .taxonomy-list a:hover { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; }
+  .taxonomy-foot { margin: var(--space-6) auto 0; font-weight: 700; }
+
+  /* Why: pills scattered around the badge on wide screens, a tilted wrap on phones. */
+  .why { background: var(--field-deep); }
+  .why .section-title { color: var(--paper); }
+  .why-cloud { position: relative; display: grid; justify-items: center; gap: var(--space-5); }
+  .why-badge { display: grid; place-items: center; }
+  .why-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); max-width: var(--column); }
+  .why-pill {
+    margin: 0; padding: var(--space-3) var(--space-5); border-radius: var(--radius-pill); border: 2px solid var(--brand-navy);
+    background: var(--gold-pale); color: var(--brand-navy); font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3);
+  }
+  .why-pill:nth-child(odd) { background: var(--bg); transform: rotate(-4deg); }
+  .why-pill:nth-child(even) { transform: rotate(3deg); }
+  .why-pill:nth-child(3n) { background: var(--gold); }
+  @media (min-width: 1024px) {
+    .why-cloud { min-height: calc(var(--space-10) * 3); }
+    .why-badge { position: absolute; inset: 0; margin: auto; width: max-content; height: max-content; }
+    .why-pills { position: absolute; inset: 0; display: block; max-width: none; }
+    .why-pill { position: absolute; }
+    .why-pill:nth-child(1) { left: 8%; top: 6%; }
+    .why-pill:nth-child(2) { right: 12%; top: 2%; }
+    .why-pill:nth-child(3) { left: 14%; top: 42%; }
+    .why-pill:nth-child(4) { right: 6%; top: 36%; }
+    .why-pill:nth-child(5) { left: 6%; bottom: 8%; }
+    .why-pill:nth-child(6) { right: 8%; bottom: 2%; }
+  }
+  .why-note { max-width: 60ch; margin: var(--space-7) auto 0; text-align: center; color: var(--paper); }
+  .why-note a { color: var(--gold); font-weight: 700; }
+
+  /* Start with these: the Ivy Kids sheet with an outlined grid and tilted stickers. */
+  .starters { margin-top: var(--space-6); }
+  .starters-head { text-align: center; }
+  .starter { padding-top: var(--space-8); }
+  .starter h3 { font-size: var(--text-h3); margin: 0 0 var(--space-2); }
+  .starter h3 a { color: var(--ink); text-decoration: none; }
+  .starter h3 a:hover { text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 3px; }
+  .starter p { margin: 0; font-size: var(--text-ui); color: var(--ink-2); }
+  .starter :global(.sticker) { position: absolute; top: var(--space-4); right: var(--space-4); }
+  .starter :global(.starter-doodle) { position: absolute; top: calc(var(--space-5) * -1); left: var(--space-4); background: var(--bg); }
 </style>

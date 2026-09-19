@@ -116,8 +116,10 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
 
         <div class="results">
           <h2>What it means</h2>
+          <Result label="Comes in" value={money(income, locale)} />
           {CATEGORIES.map((c) => (
             <Result
+              minus
               label={`${c.label}: ${number(Math.round(result.shares[c.id]), locale)}% of what comes in`}
               value={money(result.totals[c.id], locale)}
             />

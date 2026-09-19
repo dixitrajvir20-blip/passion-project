@@ -20,6 +20,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           Optional. Everything works without an account; signing in only keeps your progress in
           step across devices.
         </p>
+        {!site.accountsEnabled && (
+          <p class="note">
+            Accounts are not switched on yet, so this screen is a preview: nothing you enter is
+            stored or sent. To move progress to another device today, use a sync code (below).
+            Your progress and learning time are on the <a href={`${base}/dashboard`}>dashboard</a>.
+          </p>
+        )}
       </div>
 
       <div class="signin-wrap">

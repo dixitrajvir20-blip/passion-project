@@ -59,9 +59,9 @@ export default function CompoundGrowth({ defaults, localeCode }: Props) {
 
         <div class="results">
           <h2>What it means</h2>
-          <Result main label={`After ${number(years, locale)} ${years === 1 ? 'year' : 'years'}`} value={money(result.finalValue, locale)} />
           <Result label="You put in" value={money(result.totalContributed, locale)} />
           <Result label="Growth on top" value={money(result.growth, locale)} />
+          <Result main label={`After ${number(years, locale)} ${years === 1 ? 'year' : 'years'}`} value={money(result.finalValue, locale)} />
 
           <p class="plain">
             {years === 0

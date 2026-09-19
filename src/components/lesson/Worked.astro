@@ -28,10 +28,10 @@ const show = (value: { money: number } | { count: number }) =>
       <li class:list={['ledger-row', { 'ledger-total': total && index === steps.length - 1 }]}>
         <span class="ledger-label">
           <span class="step-label">{step.label}</span>
-          <span class="step-sum numbers">{step.parts.map((part) => ('op' in part ? ` ${part.op} ` : show(part)))}</span>
-          {step.note && <span class="step-note">{step.note}</span>}
+          <span class="step-sum numbers">{step.parts.map((part) => ('op' in part ? ` ${part.op} ` : show(part)))}<span class="visually-hidden"> =</span></span>
         </span>
         <strong class="ledger-figure numbers">{show(step.result)}</strong>
+        {step.note && <span class="step-note">{step.note}</span>}
       </li>
     ))}
   </ol>

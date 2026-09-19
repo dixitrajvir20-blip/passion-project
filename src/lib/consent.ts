@@ -5,7 +5,7 @@
  * the choice is versioned and can be changed later, and Global Privacy Control is honoured.
  */
 
-export type ConsentCategory = 'analytics' | 'embeds';
+export type ConsentCategory = 'analytics' | 'embeds' | 'stats';
 
 export interface ConsentRecord {
   v: number;

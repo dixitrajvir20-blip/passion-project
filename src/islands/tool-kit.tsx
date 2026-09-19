@@ -189,11 +189,21 @@ export function ToolActions({ query, onReset }: { query: Record<string, string>;
  * One line of the results ledger: label left, figure right. `main` marks the answer the tool
  * exists to give; it is set larger and closed with the double rule of a final total.
  */
-export function Result({ label, value, loss = false, main = false }: { label: string; value: ComponentChildren; loss?: boolean; main?: boolean }) {
+export function Result({ label, value, loss = false, main = false, minus = false }: { label: string; value: ComponentChildren; loss?: boolean; main?: boolean; minus?: boolean }) {
   return (
     <div class={`result-block ledger-row ${main ? 'ledger-total' : ''}`}>
       <p class="result-label ledger-label">{label}</p>
-      <p class={`result-value ledger-figure numbers ${loss ? 'is-loss' : ''}`}>{value}</p>
+      <p class={`result-value ledger-figure numbers ${loss ? 'is-loss' : ''}`}>{minus ? '−' : ''}{value}</p>
+    </div>
+  );
+}
+
+/** The tool's one answer when it is not the sum of the ledger above it (a count, a monthly payment, a rate). */
+export function Figure({ label, value, loss = false }: { label: string; value: ComponentChildren; loss?: boolean }) {
+  return (
+    <div class="result-figure">
+      <p class={`result-figure-value numbers ${loss ? 'is-loss' : ''}`}>{value}</p>
+      <p class="result-figure-label">{label}</p>
     </div>
   );
 }

@@ -55,6 +55,13 @@ if (site.accountsEnabled && !import.meta.env.PUBLIC_AUTH_ORIGIN) {
 
 export const consentCategories = [
   {
+    id: 'stats' as const,
+    label: 'Learning time on this device',
+    description:
+      'Counts the minutes you spend on the site, day by day, so your dashboard can show them. Kept in this browser only; nothing is sent to us.',
+    active: true,
+  },
+  {
     id: 'analytics' as const,
     label: 'Usage statistics',
     description:

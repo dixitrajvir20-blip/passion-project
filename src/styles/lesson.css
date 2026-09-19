@@ -5,14 +5,21 @@
   as a ledger (base.css) and the key sentence of a section wears the highlighter.
 */
 
-.lesson-head { padding: var(--space-8) 0 var(--space-5); }
-@media (min-width: 900px) { .lesson-head { padding-top: var(--space-9); } }
-.lesson-head .eyebrow a { color: inherit; text-decoration: none; }
-.lesson-head .eyebrow a:hover { text-decoration: underline; }
+/* The title band sits on the dark-blue field; the lesson itself is a white sheet below it. */
+.lesson-head { padding: var(--space-6) 0 var(--space-8); }
+@media (min-width: 900px) { .lesson-head { padding: var(--space-7) 0 var(--space-9); } }
+.lesson-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin: 0 0 var(--space-5); }
+.lesson-crumbs .pill { text-decoration: none; }
+.lesson-crumbs .pill:hover { text-decoration: underline; }
+.lesson-crumbs .sticker { transform: none; }
+.lesson-head h1 { font-size: var(--text-display); }
+.lesson-head .lede { color: var(--ink-2); }
 .lesson-meta { color: var(--muted); font-size: var(--text-sm); margin: var(--space-4) 0 0; }
 .lesson-expect { color: var(--muted); font-size: var(--text-sm); margin: var(--space-2) 0 0; }
 
 .lesson-main { padding-bottom: var(--space-8); }
+.lesson-main.sheet { padding-top: var(--space-7); }
+@media (min-width: 900px) { .lesson-main.sheet { padding-top: var(--space-8); } }
 .lesson-main h2 { font-size: var(--text-h3); margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--line); }
 /* The hairline belongs to section headings, not to the heading inside the summary box or the fine print. */
 .lesson-main .callout h2 { margin-top: 0; padding-top: 0; border-top: 0; font-size: var(--text-md); }
@@ -92,8 +99,10 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
 .lesson-body td:last-child, .lesson-body th:last-child { text-align: right; padding-right: 0; }
 .lesson-body tbody tr:last-child td { border-bottom: 0; }
 
-/* The guess-then-reveal control. Hairline rows and one quiet button, the same everywhere. */
-.poll { margin: var(--space-5) 0 var(--space-6); }
+/* The question card: a pale panel with the options as outlined rows and one navy button. */
+.poll { position: relative; margin: var(--space-5) 0 var(--space-6); padding: var(--space-5); background: var(--field-pale); border-radius: var(--radius-l); }
+@media (min-width: 640px) { .poll { padding: var(--space-6); } }
+.poll-label { margin: 0 0 var(--space-2); font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; color: var(--gold-text); }
 .poll fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 /* Body face, not display: a question can run to three sentences, and that much display type shouts. */
 .poll legend {
@@ -104,17 +113,20 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
   line-height: var(--leading-snug);
   color: var(--ink);
 }
-.opts { border-top: 1px solid var(--line); }
+.opts { display: grid; gap: var(--space-2); }
 .opt {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  min-height: 44px;
-  padding: var(--space-2) 0;
-  border-bottom: 1px solid var(--line);
+  min-height: 48px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-s);
   color: var(--ink-2);
   cursor: pointer;
 }
+.opt:hover { border-color: var(--line-strong); }
 .opt input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
 
 .reveal { margin-top: var(--space-4); }
@@ -130,7 +142,7 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
 /* Only inside @supports, and only hiding: a browser without :has() shows every line (a short
    explanation of each option) rather than losing the answer. */
 @supports selector(:has(*)) {
-  .opt:has(input:checked) { color: var(--ink); font-weight: 700; }
+  .opt:has(input:checked) { color: var(--ink); font-weight: 700; border-color: var(--line-strong); }
   .poll .fb { display: none; }
   .poll:has(.opt:nth-child(1) input:checked) .fb:nth-child(1),
   .poll:has(.opt:nth-child(2) input:checked) .fb:nth-child(2),
@@ -139,16 +151,18 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
   .poll .fb-pick::before { content: 'Your pick: '; color: var(--muted); }
 }
 
-/* Worked calculation: a ledger. Each step names what it finds, shows the working under the name,
-   and puts the result on the right; the final step is the total, closed with a double rule. */
-.steps { margin: var(--space-4) 0 var(--space-5); }
+/* Worked calculation: a ledger on a receipt. Each step names what it finds, shows the working
+   under the name, and puts the result on the right; the final step is the total, closed with a
+   double rule. */
+.worked > p { margin-bottom: var(--space-3); }
+.steps { margin: 0 0 var(--space-5); padding: var(--space-2) var(--space-5); border: 1.5px solid var(--line-strong); border-radius: var(--radius-m); background: var(--bg); }
 .steps .ledger-row { border-top: 1px solid var(--line); }
+.steps .ledger-row:first-child { border-top: 0; }
 .steps .ledger-row.ledger-total { border-top-color: var(--ink); }
-.steps .ledger-label { display: grid; gap: var(--space-1); }
-.steps .ledger-label, .steps .ledger-total .ledger-label { font-weight: 400; }
+.steps .ledger-label, .steps .ledger-total .ledger-label { display: grid; gap: var(--space-1); font-weight: 400; }
 .step-label { color: var(--ink); font-weight: 700; }
 .step-sum { color: var(--ink-2); font-size: var(--text-ui); }
-.step-note { color: var(--muted); font-size: var(--text-sm); }
+.step-note { order: 4; flex-basis: 100%; color: var(--muted); font-size: var(--text-sm); }
 
 /* Drill: mock screens */
 .drill-list { list-style: none; padding: 0; margin: var(--space-5) 0 0; }

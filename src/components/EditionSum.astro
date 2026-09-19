@@ -23,13 +23,13 @@ const one = s.unitName.replace(/s$/, '');
 <figure class="sum">
   <figcaption class="sum-title">{s.scenario}</figcaption>
   <ol class="ledger">
-    <li class="ledger-row"><span class="ledger-label">Price of one {one}</span><span class="ledger-figure">{money(price, locale)}</span></li>
-    <li class="ledger-row"><span class="ledger-label">What one {one} costs</span><span class="ledger-figure">−{money(variable, locale)}</span></li>
-    <li class="ledger-row ledger-total"><span class="ledger-label">Kept from each {one}</span><span class="ledger-figure">{money(result.contributionMargin, locale)}</span></li>
+    <li class="ledger-row"><span class="ledger-label">Charged per {one}</span><span class="ledger-figure">{money(price, locale)}</span></li>
+    <li class="ledger-row"><span class="ledger-label">Spent on each {one}</span><span class="ledger-figure">−{money(variable, locale)}</span></li>
+    <li class="ledger-row ledger-total"><span class="ledger-label">Kept per {one}</span><span class="ledger-figure">{money(result.contributionMargin, locale)}</span></li>
   </ol>
   {result.viable && (
     <p class="sum-result">
-      With {money(fixed, locale)} of costs every month, it has to sell{' '}
+      With {money(fixed, locale)} of fixed costs every month, it needs{' '}
       <strong>{number(result.units!, locale)} {s.unitName}</strong> before it makes any profit.
     </p>
   )}

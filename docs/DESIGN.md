@@ -1,6 +1,6 @@
 # Business Lab design system
 
-Version 3.0 · 18 September 2026. Supersedes v2 (the LaunchPad launch-page look). Read `docs/BRAND_GUIDE.md` first —
+Version 4.0 · 19 September 2026. Supersedes v3 (the light ledger look) and v2 (LaunchPad). Read `docs/BRAND_GUIDE.md` first —
 this file is how the brand is built in code. The machine source of truth is
 `src/styles/tokens.css`; this document explains the rules behind it and how to extend them.
 
@@ -12,8 +12,8 @@ Every screen has to do two things at once, and the tension between them is the w
 - **Be unmistakable** — you could crop out the logo and still know it's Business Lab.
 
 Resolve it the way Apple does: structure and controls are quiet and conventional; identity lives
-in the ledger (every sum set like a cash book), the navy edition line and footer that frame each
-page, the highlighter, and the badge.
+in the dark-blue field and white sheets, the ledger (every sum set like a cash book), the gold
+panel, the highlighter, and the badge.
 
 ## 1. Tokens
 
@@ -32,8 +32,12 @@ Palette, roles and every contrast figure are in the brand guide §2. In code:
 
 - Links and button fills: `--accent` / `--accent-text`. Focus ring: `--focus`.
 - Gold is a fill or a mark, never small text on light. Eyebrows use `--gold-text`.
-- Panels and tinted bands: `--bg-2` (a faint blue). Navy: `.section-dark` re-maps tokens; it is
-  used for the edition line and the footer only.
+- The page is `--field` (dark blue). Anything placed directly on it carries `.on-field`, which
+  re-maps ink to white, links and focus to gold, and the primary button to gold (`tokens.css`);
+  `.panel-field` and `.panel-deep` carry the same remap. `.section-dark` (navy) is the footer.
+  Because `color` inherits as a computed value, `base.css` also sets `color` on those classes.
+- Sheets and cards are `--bg` (white); soft panels `--field-pale`; the calculator bench `--bg-2`.
+  Receipts, flashcards and the edition menu use `--paper`, white in both modes.
 - The highlighter: `--highlight` behind ink, for a lesson's key sentence (`.lesson-body p strong`).
 - `color-mix()` is allowed for tints (e.g. the callout is `color-mix(in srgb, var(--gold) 20%,
   var(--bg))`), with a solid fallback where a mix would fail contrast.
@@ -48,30 +52,36 @@ banned-font list there is enforced in review.
 ## 4. Components (all in `src/components`, `src/islands`, `base.css`)
 
 - **Ledger** `.ledger` / `.ledger-row` / `.ledger-label` / `.ledger-figure` / `.ledger-total` — the
-  signature. Label left, figure right, dotted leader, a rule above a total and `--rule-total` (a
-  double rule) under the final answer. Used by `Worked.astro`, `EditionSum.astro` and every
-  calculator's `Result` (`main` marks the tool's one answer).
-- **EditionSum** — an edition's break-even example as a ledger, computed from `finance.ts` with
-  the edition's calculator defaults. On the front page (one per edition) and each edition front.
-- **Edition line** `RegionTabs.astro` — navy strip above the header on every page; text links,
-  current one bold with a marigold underline (`aria-current`). Remembers the choice in `lp:region`.
-- **Header** — solid, sticky, badge + wordmark (badge only under 640px). No blur.
+  signature. Rows wrap on narrow screens so a long figure drops to its own line (WCAG 1.4.10).
+  Used by `Worked.astro` (on a receipt), `EditionSum.astro` and every calculator's `Result`
+  (`minus` prints a deduction, `main` closes the total); `Figure` is the headline answer above it.
+- **EditionSum** — an edition's break-even example as a ledger, computed from `finance.ts`.
+- **Edition menu** `RegionTabs.astro` — a `<details>` dropdown in the header with `Flag.astro`
+  (drawn SVG flags, the one place besides the logo where raw hex is allowed). Escape and outside
+  clicks close it; the choice is remembered in `lp:region`.
+- **Header** — on the field: badge + wordmark, a white pill group (Learn, Calculators, Glossary,
+  Dashboard, About, Search), the edition menu. Sticky from 900px.
 - **Footer** — navy, badge + wordmark, editions, site, legal.
-- **Button** `.btn` — 8px radius, 44px min height. `.btn` (blue fill), `.btn-secondary` (paper
-  with a rule), `.btn-link` (text + ›). One primary per view. `.btn-lg` for page-level actions.
-- **Index rows** `.index-list` / `.index-row` — ruled rows, title first, an "Open" in the margin.
-  Calculators are listed by the question they answer. `LessonList` is the numbered variant
-  (`compact` for the three-track contents on an edition front).
-- **Card** `.card` — flat `--bg-2`, 14px radius. Rare; prefer index rows.
-- **Callout** `.callout` — gold tint with a gold left edge, for "In 30 seconds". Floats into the
-  margin at ≥1180px (`lesson.css`).
-- **Figure** `.figure` — a large display number for an editorial statistic; always beside its
-  sentence and source link, never in a bare banner.
-- **Eyebrow** `.eyebrow` — small dark-gold label above a heading. A text label, not a pill.
-- **ConsentManager** island — banner + `<dialog>` privacy-choices panel (see `docs/LEGAL_AND_PRIVACY.md`).
-- **SignIn** island — the account flow (see `docs/AUTH_AND_ACCOUNTS.md`).
-- **Tool shell** — `.tool` in `src/islands/tools.css`: two columns, inputs left, a sticky results
-  ledger right on a `--bg-2` bench, a "how this works" `<details>` with the formula.
+- **Button** `.btn` (navy on sheets, gold on the field), `.btn-secondary` (white pill with a
+  navy outline, everywhere), `.btn-link`, and `.cta` (label block + separate arrow box).
+- **Panels and sheets** `.panel` + `-field | -deep | -pale | -white | -gold`; `.sheet` and
+  `.page-sheet` (a white sheet with rounded top corners).
+- **Pills and stickers** `.pill`, `.pill-white`, `.pill-outline`, `.sticker`.
+- **Grid table** `.grid-table` — outlined cards sharing borders (tracks on the edition front, the
+  starter lessons on the front page).
+- **HandNote** — a short aside drawn from Kalam at build time (`src/lib/hand.ts`); the text stays
+  in the page for screen readers. Front page and edition receipts only.
+- **Blobs**, **Doodle** — decoration behind heroes and at card edges; hidden from assistive tech.
+- **Poll** `Poll.astro` — the question card: a small label, options as outlined rows, one navy
+  reveal button. Works without JavaScript.
+- **Callout** `.callout` — the "Key points" sticky note.
+- **Dashboard** island (`src/islands/Dashboard.tsx`, `/dashboard`) — reads `lp:progress`,
+  `lp:activity` and `lp:region`; sidebar + cards; SVG bars and ring coloured by class; a table for
+  the chart. `Privacy choices` opens the consent dialog through the `lp:open-consent` event.
+- **ConsentManager** island — banner + `<dialog>`; the `stats` category (learning time) is the
+  first optional category to be active, so the banner now appears on a first visit.
+- **SignIn** island — the account flow, a preview until Phase 6 (see `docs/AUTH_AND_ACCOUNTS.md`).
+- **Tool shell** — `.tool`: inputs left, a sticky results bench right with a `Figure` and a ledger.
 
 ## 5. The advanced visual layer (progressive enhancement)
 
@@ -85,8 +95,8 @@ a clean static page. Support notes are current as of September 2026.
   the CSP simple. Reduced motion disables it.
 - **No reveal-on-scroll and no frosted bars** (removed in v3). Fade-ins left pages looking
   half-loaded and are a generated-page tell; blur is costly on budget phones.
-- **Subgrid** aligns the three edition columns on the front page so their ledgers read across;
-  behind `@supports (grid-template-rows: subgrid)`, with a plain stacked fallback.
+- **Learning time** is a five-second tick in `BaseLayout.astro` that adds to `lp:activity` only
+  while the page is visible and only after a yes to the `stats` category; a later no clears it.
 - **Scroll-state, container queries, anchor positioning, Popover API, customizable `<select>`**:
   approved for use *only* behind `@supports`, because Firefox and/or Safari support is still
   partial in 2026. Prefer a plain sticky + IntersectionObserver pattern until a

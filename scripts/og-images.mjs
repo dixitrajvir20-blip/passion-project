@@ -27,7 +27,7 @@ const token = (name, block = tokens) => {
   return m[1];
 };
 const dark = tokens.slice(tokens.indexOf('@media (prefers-color-scheme: dark)'));
-const colour = { navy: token('brand-navy'), gold: token('brand-gold'), ink: token('ink', dark), muted: token('muted', dark) };
+const colour = { navy: token('field'), gold: token('brand-gold'), ink: '#FFFFFF', muted: '#C2D4F0' };
 const NAME = 'Business Lab';
 const REGION = { in: 'India edition', eu: 'Europe edition', us: 'United States edition' };
 

@@ -20,9 +20,15 @@ compliance step. Build privacy-first and stay there as long as possible.
   edition, the currency, the reader's own progress, and the consent choice itself are all exempt.
 - The UK's Data (Use and Access) Act 2025 (in force 5 Feb 2026) added explicit PECR exemptions
   for **preference** and **statistical** storage, with clear information and an easy opt-out.
-- **Result: no banner is required for the current site.** We still publish a full
+- **Result: no banner is required for the site's necessary storage.** We still publish a full
   `/cookies` page listing every key, and a "Privacy choices" dialog, because transparency is the
   actual obligation.
+- **Learning time (19 Sep 2026).** The dashboard can show minutes spent on the site per day. That
+  is not strictly necessary for anything the reader asked for, so it is an optional category
+  (`stats`, key `lp:activity`) and a banner asks on the first visit: "Reject all" is as easy as
+  "Accept all", nothing is recorded before a choice, a later no removes what was kept, and Global
+  Privacy Control counts as no. It stays in the browser; nothing is sent. `/cookies` must list the
+  key (owner's edit; the page is protected).
 - If analytics or embeds are ever switched on, a banner appears with "Reject all" as easy as
   "Accept all" (EDPB cookie-banner taskforce, Jan 2023; CNIL fines on Google/Facebook Jan 2022),
   nothing runs before a choice, and Global Privacy Control is honoured as "reject". The consent

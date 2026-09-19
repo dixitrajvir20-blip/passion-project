@@ -23,7 +23,8 @@ export async function getStaticPaths() {
   for (const region of REGIONS) {
     const lessons = await lessonsFor(region.code);
     for (const tool of toolsFor(region.code)) {
-      const drill = tool.slug === 'spot-the-fake' ? lessons.find((l) => l.data.explorable?.kind === 'drill') : undefined;
+      // The payment-scam drill is the one with a report route; other lessons have drills of their own.
+      const drill = tool.slug === 'spot-the-fake' ? lessons.find((l) => l.data.explorable?.kind === 'drill' && l.data.reportTo) : undefined;
       if (tool.slug === 'spot-the-fake' && !drill) continue; // nothing to practise until its lesson exists
       const related = drill ? [drill] : lessons.filter((l) => l.data.tool === tool.slug);
       paths.push({ params: { region: region.code, tool: tool.slug }, props: { tool, drill, related } });

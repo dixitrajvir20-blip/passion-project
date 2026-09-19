@@ -1,5 +1,5 @@
 /*
-  Business Lab design tokens — the single source of truth for colour, type, space and motion.
+  Business Lab design tokens (v4: dark blue, white and gold) — the single source of truth for colour, type, space and motion.
   Rules live in docs/DESIGN.md and docs/BRAND_GUIDE.md. Every value here has a contrast
   figure in the brand guide; change one and re-run scripts/contrast-check.mjs.
 */
@@ -12,37 +12,45 @@
   --brand-blue: #0c61c4;
   --brand-navy: #0b1240;
   --brand-gold: #f2c14e;
+  --paper: #ffffff;          /* receipts and flashcards stay white in both themes, with navy ink */
+
+  /* v4 palette: dark blue, white and gold. The page is a dark-blue field with white text; reading
+     happens on white sheets laid over it, in navy ink; gold is the sticker, the highlight and the one
+     loud panel. Anything that sits directly on the field carries the .on-field remap below. */
+  --field: #0b4aa2;          /* the page field: white on it 8.3:1, gold on it 5.0:1 */
+  --field-deep: #073478;     /* blobs, the second tone */
+  --field-pale: #e8f0fb;     /* soft panels on white sheets */
 
   /* Surfaces */
-  --bg: #ffffff;
-  --bg-2: #f2f5fa;      /* blue-tinted paper for panels and the calculator bench */
-  --bg-3: #e6ebf3;
+  --bg: #ffffff;             /* reading sheets and cards */
+  --bg-2: #eef3fb;
+  --bg-3: #dbe6f7;
   --bg-inverse: #0b1240;
 
-  /* Text */
-  --ink: #0b0b0f;      /* 19.6:1 on --bg */
-  --ink-2: #3c3f47;    /* 10.5:1 */
-  --muted: #5f6472;    /* 5.9:1 */
-  --line: #dfe4ec;
-  --line-strong: #c3cad6;
+  /* Text: navy ink on every light colour */
+  --ink: #0b1240;
+  --ink-2: #262f57;
+  --muted: #434d73;
+  --line: #c6d8ec;
+  --line-strong: #0b1240;    /* the outline of cards, sheets and pills */
 
-  /* Accent (blue) */
-  --accent: #0c61c4;        /* fills: white text 5.96:1 */
-  --accent-hover: #0a4fa3;
-  --accent-text: #0c61c4;   /* links on --bg: 5.96:1 */
-  --accent-soft: #e9f1fc;
+  /* Actions */
+  --accent: #0b1240;         /* primary buttons: navy fill, white label */
+  --accent-hover: #1a2a6c;
+  --accent-text: #0c61c4;    /* links on white */
+  --accent-soft: #e6f3fe;
   --on-accent: #ffffff;
 
-  /* Gold: a fill or a mark, never small text on white */
+  /* Gold: fills, stickers and marks; navy text on it */
   --gold: #f2c14e;
-  --gold-text: #7a5a0e;     /* 6.4:1 on --bg, for eyebrows only */
-  --on-gold: #0b0b0f;       /* 11.7:1 */
-  /* The highlighter: behind the one sentence of a lesson worth remembering. Ink on it 15.6:1. */
+  --gold-pale: #fbe3a6;
+  --gold-text: #7a5a0e;      /* the one place gold is text on white */
+  --on-gold: #0b1240;
   --highlight: #fbe3a6;
 
   /* Signals */
-  --error: #c42b1c;         /* 5.7:1 */
-  --success: #1b7f4e;       /* 5.0:1 */
+  --error: #b3261e;
+  --success: #17683f;
   --focus: #0c61c4;
 
   /* Type */
@@ -59,14 +67,18 @@
   --text-h2: clamp(28px, 1.45rem + 1.2vw, 40px);
   --text-h1: clamp(36px, 1.9rem + 2.4vw, 60px);
   --text-display: clamp(40px, 2rem + 4vw, 76px);
+  --text-mega: clamp(46px, 1.4rem + 6.6vw, 124px);   /* Aardvark-size hero and panel words */
+  --text-hand: clamp(20px, 1.05rem + 0.5vw, 26px);   /* hand-lettered notes (drawn from Kalam at build time) */
+  --text-sticker: 15px;
   --text-figure: clamp(34px, 1.6rem + 2vw, 52px);
   --text-result: clamp(28px, 1.5rem + 1vw, 34px);  /* calculator results, one-time codes */
   --text-wordmark: 20px;
 
   --leading-tight: 1.05;
+  --leading-mega: 0.9;
   --leading-snug: 1.2;
   --leading-body: 1.55;
-  --tracking-display: -0.025em;
+  --tracking-display: -0.035em;
   --tracking-heading: -0.015em;
 
   /* Space (4px grid) */
@@ -85,7 +97,8 @@
   --radius-xs: 4px;
   --radius-s: 8px;
   --radius-m: 12px;
-  --radius-l: 14px;
+  --radius-l: 20px;
+  --radius-xl: 32px;       /* the big section panels and sheets */
   --radius-pill: 999px;
 
 
@@ -127,30 +140,35 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0b0b0f;
-    --bg-2: #16171c;
-    --bg-3: #1f2027;
-    --bg-inverse: #0b1240;
+    --field: #071a4a;
+    --field-deep: #040f2e;
+    --field-pale: #121d57;
 
-    --ink: #f5f5f7;      /* 18.0:1 */
-    --ink-2: #c9cbd3;    /* 12.1:1 */
-    --muted: #9a9eab;    /* 7.4:1 */
-    --line: #2a2c34;
-    --line-strong: #3a3d47;
+    --bg: #101a4f;
+    --bg-2: #16225e;
+    --bg-3: #1d2b70;
+    --bg-inverse: #06092a;
 
-    --accent: #0c61c4;        /* same fill in both modes; white text 5.96:1 */
-    --accent-hover: #1a72d9;
-    --accent-text: #8fbeff;   /* 10.3:1 on --bg */
-    --accent-soft: #10213d;
-    --on-accent: #ffffff;
+    --ink: #f4f7ff;
+    --ink-2: #d6def5;
+    --muted: #aebbe0;
+    --line: #2c3a80;
+    --line-strong: #bfe0fb;
 
-    --gold: #f2c14e;          /* 11.7:1 on --bg: usable as text in dark */
+    --accent: #bfe0fb;         /* baby-blue buttons with navy labels in the dark */
+    --accent-hover: #e6f3fe;
+    --accent-text: #bfe0fb;
+    --accent-soft: #16225e;
+    --on-accent: #0b1240;
+
+    --gold: #f2c14e;
+    --gold-pale: #fbe3a6;
     --gold-text: #f2c14e;
-    --on-gold: #0b0b0f;
-    --highlight: #4a3c12;     /* light text on it 9.9:1 */
+    --on-gold: #0b1240;
+    --highlight: #5c4a14;
 
-    --error: #ff7a6b;         /* 7.7:1 */
-    --success: #5ccb8f;       /* 9.7:1 */
+    --error: #ff9b8f;
+    --success: #7fdca8;
     --focus: #f2c14e;
 
     --series-1: #3987e5;
@@ -169,16 +187,14 @@
    the cascade, so its light values would win in dark mode and drop --muted to ~1.7:1. */
 @media (prefers-contrast: more) {
   :root {
-    --muted: #3c3f47;        /* 10.5:1 on --bg */
-    --line: #9a9eab;
-    --line-strong: #5f6472;
+    --muted: #262f57;
+    --line: #6a7aa8;
   }
 }
 @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
   :root {
-    --muted: #c9cbd3;        /* 12.1:1 on dark --bg */
-    --line: #5f6472;
-    --line-strong: #9a9eab;
+    --muted: #d6def5;
+    --line: #8fa3e0;
   }
 }
 
@@ -186,16 +202,39 @@
    not in base.css, so every colour in the system is in one auditable file. */
 .section-dark {
   --bg: #0b1240;
-  --bg-2: #141b4d;
-  --bg-3: #1c245a;
-  --ink: #f5f5f7;
-  --ink-2: #d5d8e6;
-  --muted: #aab0c9;
-  --line: #2b3470;
-  --line-strong: #3d4788;
-  --accent-text: #8fbeff;
-  --accent-hover: #ffffff;
+  --bg-2: #16225e;
+  --bg-3: #1d2b70;
+  --ink: #f4f7ff;
+  --ink-2: #d6def5;
+  --muted: #aebbe0;
+  --line: #2c3a80;
+  --line-strong: #bfe0fb;
+  --accent: #bfe0fb;
+  --accent-hover: #e6f3fe;
+  --accent-text: #bfe0fb;
+  --on-accent: #0b1240;
   --gold-text: #f2c14e;
   --focus: #f2c14e;
-  --accent-soft: #1c245a;
+  --accent-soft: #16225e;
+}
+
+/* Anything placed directly on the dark-blue field: the header, heroes, the lesson title band, dark
+   panels. Text goes white, links and the primary action go gold, rules go pale. Same in both modes. */
+.on-field, .panel-field, .panel-deep {
+  --bg: #0b4aa2;
+  --bg-2: #073478;
+  --bg-3: #1f5fbf;
+  --ink: #ffffff;
+  --ink-2: #e4edfb;
+  --muted: #c2d4f0;
+  --line: #3a6fc4;
+  --line-strong: #ffffff;
+  --accent: #f2c14e;
+  --accent-hover: #fbe3a6;
+  --accent-text: #f2c14e;
+  --on-accent: #0b1240;
+  --accent-soft: #073478;
+  --gold-text: #f2c14e;
+  --focus: #f2c14e;
+  --highlight: #f2c14e;
 }

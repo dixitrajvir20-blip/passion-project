@@ -55,6 +55,10 @@ export interface Region {
   currency: string;
   /** The edition front's headline: what this edition is about, in its own terms. */
   headline: string;
+  /** Three topics shown as tag pills on the front page's edition card. */
+  tags: string[];
+  /** The official route to report a scam, shown on the edition front. */
+  report: { stamp: string; text: string; link?: { label: string; url: string } };
   /** One sentence naming the gap this edition exists to close. */
   problem: string;
   intro: string;
@@ -73,7 +77,13 @@ export const REGIONS: Region[] = [
     tab: 'India',
     locale: 'en-IN',
     currency: 'INR',
-    headline: 'Money, UPI and small business, in rupees.',
+    headline: 'Keep what you earn when every payment is one tap.',
+    tags: ['UPI', 'Scams', 'First job'],
+    report: {
+      stamp: '1930',
+      text: 'Lost money to a scam? Call 1930, the national cybercrime helpline, or report it online, as fast as you can. The sooner it is reported, the better the chance of stopping the money.',
+      link: { label: 'cybercrime.gov.in', url: 'https://cybercrime.gov.in' },
+    },
     problem:
       'Digital payments arrived faster than the knowledge needed to use them safely.',
     intro:
@@ -81,25 +91,17 @@ export const REGIONS: Region[] = [
     stats: [
       {
         figure: '27%',
-        label: 'of Indian adults are financially literate, against about 52% in advanced economies',
+        label: 'of Indian adults were financially literate in NCFE’s 2019 national survey',
         source: {
-          title: 'NCFE Financial Literacy and Inclusion Survey',
+          title: 'NCFE Financial Literacy and Inclusion Survey (2019)',
           url: 'https://ncfe.org.in/wp-content/uploads/2023/12/NISM_Final-Report-All-India.pdf',
         },
       },
       {
-        figure: '68.3%',
-        label: 'of digital fraud victims are graduates or postgraduates — education is not the protection people assume',
-        source: {
-          title: 'Exploratio Journal, analysis of UPI scams',
-          url: 'https://exploratiojournal.com/exploring-how-indias-digital-payment-revolution-created-a-new-class-of-fraud-victims-an-analysis-of-upi-scams/',
-        },
-      },
-      {
         figure: '₹805 crore',
-        label: 'lost to UPI fraud across 10.64 lakh incidents between April and November 2025',
+        label: 'of UPI fraud reported across 10.64 lakh incidents, April to November 2025',
         source: {
-          title: 'Government figures reported to Parliament',
+          title: 'The420.in, reporting a Lok Sabha answer (15 Dec 2025)',
           url: 'https://the420.in/india-upi-fraud-data-fy26-parliament-digital-payments/',
         },
       },
@@ -156,14 +158,14 @@ export const REGIONS: Region[] = [
       },
     ],
     breakEven: {
-      fixed: '2000',
-      variable: '8',
-      price: '15',
-      units: '400',
-      unitName: 'cups',
-      fixedHint: 'What you pay every month whatever you sell: stall rent, licence, the cart loan instalment.',
-      variableHint: 'What one cup costs you: tea, milk, sugar, gas, cup.',
-      scenario: 'A chai stall, worked out in rupees.',
+      fixed: '12000',
+      variable: '400',
+      price: '2000',
+      units: '12',
+      unitName: 'students',
+      fixedHint: 'What you pay every month whatever happens: the room, electricity, the whiteboard loan instalment.',
+      variableHint: 'What one student costs you each month: printed notes, test papers, a share of the internet.',
+      scenario: 'A weekend coaching class for board exams, worked out in rupees.',
     },
     tools: {
       budget: {
@@ -182,7 +184,7 @@ export const REGIONS: Region[] = [
       sideHustle: { units: '40', price: '250', cost: '110', fee: '5', hours: '30', unitName: 'orders', scenario: 'Reselling phone cases on Instagram and WhatsApp.' },
       loan: { principal: '50000', rate: '12', months: '24', scenario: 'A ₹50,000 loan for a second-hand scooter.' },
     },
-    note: 'Indian market examples use prices at least 30 days old and never name a security with a target, following SEBI’s education-only rules (January 2025, updated May 2026). Nothing here is investment advice.',
+    note: 'Following SEBI’s education-only rules (January 2025, updated May 2026): no advice on any named security, no price targets, no claims about returns, and any market price shown is at least 30 days old. Nothing here is investment advice.',
   },
   {
     code: 'eu',
@@ -190,7 +192,12 @@ export const REGIONS: Region[] = [
     tab: 'Europe',
     locale: 'en-IE',
     currency: 'EUR',
-    headline: 'Money and small business, across 27 rulebooks.',
+    headline: 'Your first payslip, your first stall, and the rules at every border.',
+    tags: ['Payslips', 'Buy now, pay later', 'Selling abroad'],
+    report: {
+      stamp: 'Act fast',
+      text: 'Lost money to a scam? Call your bank straight away to try to stop the payment, then report it to the police in your country. The reporting route is national, so it differs from country to country.',
+    },
     problem:
       'Strong consumer protections, low financial confidence, and rules that change at every border.',
     intro:
@@ -198,26 +205,26 @@ export const REGIONS: Region[] = [
     stats: [
       {
         figure: '18%',
-        label: 'of EU citizens score high on financial literacy; young people score among the lowest',
+        label: 'of EU adults had high financial literacy in 2023; younger adults tend to score lower than others',
         source: {
-          title: 'Flash Eurobarometer 525',
-          url: 'https://europa.eu/eurobarometer/surveys/detail/2953',
+          title: 'European Commission, Financial Literacy Strategy for the EU, COM(2025) 681 (30 Sep 2025)',
+          url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52025DC0681',
         },
       },
       {
         figure: '49%',
-        label: 'of Europeans could not cover three months of expenses from savings',
+        label: 'of EU adults aged 18 to 65 lack savings to cover three months of living costs',
         source: {
-          title: 'European Commission, Financial Literacy Strategy',
-          url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:52025DC0681',
+          title: 'European Commission, Financial Literacy Strategy for the EU, COM(2025) 681 (30 Sep 2025)',
+          url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52025DC0681',
         },
       },
       {
         figure: '27',
-        label: 'member states, each with its own tax and registration rules, in one single market',
+        label: 'countries in the EU, each setting its own business tax and registration rules',
         source: {
-          title: 'European Commission, Financial Literacy Strategy',
-          url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:52025DC0681',
+          title: 'European Union, Key facts and figures (europa.eu, 2026)',
+          url: 'https://european-union.europa.eu/principles-countries-history/facts-and-figures-european-union_en',
         },
       },
     ],
@@ -236,7 +243,7 @@ export const REGIONS: Region[] = [
       },
       {
         title: 'The euro is not everyone’s money',
-        body: 'Poland, Sweden, Czechia, Hungary, Denmark and Romania are outside the eurozone, so you can switch the currency on every calculator here.',
+        body: 'Poland, Sweden, Czechia, Hungary, Denmark and Romania are outside the eurozone. The calculators here work in euros; the ideas work in any currency.',
       },
     ],
     tracks: [
@@ -310,11 +317,17 @@ export const REGIONS: Region[] = [
     tab: 'United States',
     locale: 'en-US',
     currency: 'USD',
-    headline: 'Money, credit and side hustles, in dollars.',
+    headline: 'Credit, loans and side hustles, before they cost you.',
+    tags: ['Credit scores', 'Student loans', 'Side hustles'],
+    report: {
+      stamp: 'FTC',
+      text: 'Lost money to a scam? Contact your bank or payment app straight away, then report it to the Federal Trade Commission.',
+      link: { label: 'reportfraud.ftc.gov', url: 'https://reportfraud.ftc.gov' },
+    },
     problem:
-      'Large, permanent debt decisions are made at 17, before anyone explains how debt works.',
+      'Big debt decisions, like student loans and credit cards, arrive at 17 or 18, often before anyone explains how debt works.',
     intro:
-      'In the US the biggest financial decisions arrive early — student loans, credit, a first job with untaxed income. This edition is about seeing what those decisions cost before you make them, and understanding the number that quietly decides a lot of your life.',
+      'In the US some of the biggest money decisions arrive early: student loans, a first credit card, side-hustle income that nobody taxes for you. This edition is about seeing what those decisions cost before you make them, and understanding the number that quietly decides a lot of your life.',
     stats: [
       {
         figure: '38%',
@@ -326,25 +339,25 @@ export const REGIONS: Region[] = [
       },
       {
         figure: '3×',
-        label: 'more likely to be financially fragile if your financial literacy is very low',
+        label: 'more likely to be financially fragile, for US adults with very low versus very high financial literacy (2025)',
         source: {
-          title: 'TIAA Institute-GFLEC, P-Fin Index 2025',
-          url: 'https://gflec.org/wp-content/uploads/2025/05/TIAA-Institute-and-GFLEC_Financial-literacy-and-retirement-fluency-in-America_P-Fin-2025.pdf',
+          title: 'TIAA Institute-GFLEC Personal Finance Index 2025, press release (29 May 2025)',
+          url: 'https://www.prnewswire.com/news-releases/national-financial-literacy-remains-stagnant-at-49-as-generational-gaps-widen-tiaa-institute-gflec-study-finds-811010090.html',
         },
       },
       {
-        figure: '61%',
-        label: 'of buy-now-pay-later users have subprime or deep subprime credit scores',
+        figure: '63%',
+        label: 'of buy now, pay later borrowers at six big lenders had more than one loan running at once in 2022',
         source: {
-          title: 'CFPB, Consumer Use of Buy Now, Pay Later',
-          url: 'https://files.consumerfinance.gov/f/documents/cfpb_BNPL_Report_2025_01.pdf',
+          title: 'CFPB, Consumer Use of Buy Now, Pay Later and Other Unsecured Debt (13 Jan 2025)',
+          url: 'https://www.consumerfinance.gov/archive/newsroom/cfpb-research-reveals-heavy-buy-now-pay-later-use-among-borrowers-with-high-credit-balances-and-multiple-pay-in-four-loans/',
         },
       },
     ],
     problems: [
       {
         title: 'Student loans signed at 17',
-        body: 'The largest debt most Americans ever take on, agreed before most people have had a full-time job, and rarely explained as a monthly payment lasting a decade.',
+        body: 'Often agreed before a first full-time job, and rarely explained as what it really is: a monthly payment that can last ten years or more.',
       },
       {
         title: 'The credit score nobody teaches',
@@ -352,7 +365,7 @@ export const REGIONS: Region[] = [
       },
       {
         title: 'Buy now, pay later, stacked',
-        body: 'Most users hold several at once. Regular users carry noticeably more credit-card debt than similar people who do not use it at all.',
+        body: 'Pay-in-four plans are loans, and they stack: most borrowers at the big lenders had more than one running at the same time in 2022.',
       },
       {
         title: 'Self-employment tax arrives late',
@@ -402,7 +415,7 @@ export const REGIONS: Region[] = [
       unitName: 'orders',
       fixedHint: 'What you pay every month whatever you sell: shop fees, software, storage.',
       variableHint: 'What one order costs you: blank product, printing, shipping.',
-      scenario: 'A custom-print shop, after platform fees.',
+      scenario: 'A custom-print shop, worked out in dollars.',
     },
     tools: {
       budget: {

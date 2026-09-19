@@ -1,0 +1,17 @@
+---
+/**
+ * The soft, two-tone organic shapes behind a hero, in the manner of Aardvark Book Club's blob
+ * fields (in our baby blues and white). Pure decoration: hidden from assistive tech, coloured by
+ * token classes, and absolutely positioned inside a `position: relative; overflow: hidden` parent.
+ */
+interface Props {
+  variant?: 'hero' | 'band';
+}
+const { variant = 'hero' } = Astro.props;
+---
+
+<svg class:list={['blobs', `blobs-${variant}`]} viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <path class="blob-deep" d="M-40 520C40 430 150 470 230 420C330 356 300 250 400 220C520 184 600 300 700 330C820 366 880 300 980 318C1090 338 1180 430 1240 520L1240 760L-40 760Z" />
+  <path class="blob-white" d="M760 120C840 40 980 30 1060 90C1150 158 1150 280 1080 350C1010 420 890 430 820 380C740 324 690 200 760 120Z" />
+  <path class="blob-pale" d="M-60 120C20 60 120 70 170 130C220 190 190 270 120 300C50 330 -40 300 -80 240C-110 196 -100 150 -60 120Z" />
+</svg>

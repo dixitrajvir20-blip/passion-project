@@ -17,8 +17,9 @@ every page.
 
 **The gap:** payment rails arrived faster than the knowledge to use them safely. UPI hit ~24.5bn
 transactions/month in Aug 2026 (NPCI); ~27% of adults are financially literate (NCFE survey).
-Fraud is the headline risk: NCRP recorded ₹22,846 crore lost in 2024 (Lok Sabha, Dec 2025), and
-68% of digital-fraud victims are graduates — education is not the protection people assume.
+Fraud is the headline risk: NCRP recorded ₹22,846 crore lost in 2024 (Lok Sabha, Dec 2025; confirm
+on sansad.in before quoting). (A "68% of fraud victims are graduates" figure circulates; it comes from
+a 183-person survey in one district and must not be presented as a national fact.)
 
 **Money situations:** first job (CTC vs in-hand: EPF, professional tax, TDS); UPI scams; unregulated
 loan apps; fake part-time-job offers; derivatives gambling (under-30s were 43% of F&O traders in

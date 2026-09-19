@@ -9,8 +9,9 @@
 .tool .field > label { font-size: var(--text-md); }
 .tool .btn-row { margin-top: var(--space-2); }
 
-/* The results are a ledger (base.css): label left, figure right, the tool's one answer closed
-   with a double rule. The panel is the bench the sum is worked on, so it is the page's one fill. */
+/* The results panel: a headline figure where the answer is a count or a payment, then a ledger
+   (base.css) whose rows add up to the double-ruled total. The panel is the bench the sum is
+   worked on, so it is the page's one tinted fill. */
 .tool .results {
   background: var(--bg-2);
   border-radius: var(--radius-l);
@@ -19,6 +20,11 @@
   top: calc(var(--header-h) + var(--space-4));
   font-variant-numeric: tabular-nums;
 }
+.tool .result-figure { padding: var(--space-2) 0 var(--space-4); border-bottom: 1px solid var(--line); margin-bottom: var(--space-2); }
+.tool .result-figure p { margin: 0; }
+.tool .result-figure-value { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 800; letter-spacing: var(--tracking-display); line-height: 1; color: var(--ink); }
+.tool .result-figure-value.is-loss { color: var(--error); }
+.tool .result-figure-label { margin-top: var(--space-2); color: var(--ink-2); font-size: var(--text-ui); }
 .tool .result-block { border-bottom: 1px solid var(--line); }
 .tool .result-block p { margin: 0; }
 .tool .result-label { font-size: var(--text-ui); }

@@ -1,8 +1,11 @@
 # Business Lab brand guide
 
-Version 2.0 · 18 September 2026 · owner: Rajvir Dixit. v2 renames the site from LaunchPad to
-Business Lab and replaces the launch-page layout, which read as generated, with the ledger
-and edition-line system below.
+Version 3.0 · 19 September 2026 · owner: Rajvir Dixit. v3 sets the dark-blue, white and gold
+palette, the rounded-panel layout drawn from Aardvark Book Club and Ivy Kids (their layouts, not
+their colours), the edition dropdown with flags, and the dashboard. v2 (18 Sept) did the rename
+from LaunchPad and the ledger. The tone is serious and professional: lessons are built from
+research into what young people in each region actually struggle with, never from toy
+businesses.
 
 This is the one place the brand is defined. If a colour, font size, radius or spacing value
 is not in here (or its machine form in `src/styles/tokens.css`), it should not appear in the
@@ -18,18 +21,19 @@ life skill. The brand has to read as **trustworthy, calm and grown-up**, the opp
 loud "finance bro" and "get rich" look these readers are surrounded by, while still feeling
 made for them, not for their parents.
 
-One-line thesis: **work shown, nothing sold.** The site looks like a club's well-kept
-notebook: sums written out the way a cash book writes them, the key sentence highlighted, the
-edition named at the top of every page. Nothing on it looks like an advert, because nothing
-on it is one.
+One-line thesis: **work shown, nothing sold.** Dark-blue pages, white sheets to read on, gold
+for the one thing that matters on a screen. Every sum is written out the way a cash book writes
+it. Nothing looks like an advert, because nothing is one.
 
 Where each choice comes from, so it is never a default:
 
-- **The ledger** (§5) comes from money itself: shopkeepers, cash books and receipts put the
-  label on the left, the figure on the right and a double rule under the total.
-- **The edition line** (§5) comes from news sites, which switch between national editions in a
-  strip at the top of the page. The site is organised the same way.
-- **The highlighter** (§2) comes from how students actually mark a textbook.
+- **The ledger** (§5) comes from money itself: cash books and receipts put the label on the
+  left, the figure on the right and a double rule under the total.
+- **The dark-blue field and white sheets** come from the badge (blue, white B) and from paper:
+  reading happens on white.
+- **The rounded panels, pill navigation and stacked display words** are layout devices from
+  Aardvark Book Club; the **outlined card grid with corner stickers** and the **white sheet with
+  rounded top corners** are from Ivy Kids. Their colours are not used.
 - **The badge** (§4) is the club's own logo.
 
 ## 2. Colour
@@ -43,51 +47,49 @@ surface it sits on (WCAG 2.2 AA: 4.5:1 for text, 3:1 for large text and non-text
 
 | Token | Hex | Role |
 |---|---|---|
-| Ink black | `#0B0B0F` | Primary text, the "black" of blue/gold/black |
-| Deep navy | `#0B1240` | Brand anchor: logo tile, dark sections, deepest surface |
-| Signal blue | `#0C61C4` | Actions, links, the working brand colour |
-| Marigold | `#F2C14E` | One accent: the spark on the logo, a highlight, a callout tint |
-| Paper white | `#FFFFFF` | Base surface |
+| Field blue | `#0B4AA2` | The page itself, heroes, the title band of a lesson, dark panels |
+| Deep blue | `#073478` | Blob shapes and the second tone on the field |
+| Navy ink | `#0B1240` | All text on white and gold; the footer; outlines |
+| Marigold | `#F2C14E` | The one accent: links and the primary action on the field, stickers, the loud panel |
+| Paper white | `#FFFFFF` | Sheets, cards, receipts |
 
-### Light mode (surface → tokens)
+### On a white sheet (light mode)
 
 | Token | Hex | On white | Use |
 |---|---|---:|---|
-| `--ink` | `#0B0B0F` | 19.6:1 | Headings, primary text |
-| `--ink-2` | `#3C3F47` | 10.5:1 | Body text |
-| `--muted` | `#5F6472` | 5.9:1 | Secondary text, captions |
-| `--accent` (blue) | `#0C61C4` | white on it 6.0:1 | Button fills, focus ring |
+| `--ink` | `#0B1240` | 16.0:1 | Headings |
+| `--ink-2` | `#262F57` | 12.6:1 | Body text |
+| `--muted` | `#434D73` | 8.0:1 | Secondary text, captions |
+| `--accent` | `#0B1240` | white on it 16.0:1 | Primary buttons on sheets |
 | `--accent-text` | `#0C61C4` | 6.0:1 | Links |
-| `--gold` | `#F2C14E` | black on it 11.7:1 | Fills and marks only |
-| `--gold-text` | `#7A5A0E` | 6.4:1 | The one place gold becomes text: eyebrow labels |
-| `--bg-2` | `#F2F5FA` | — | Panels, the calculator bench, alternating sections (a faint blue, not grey) |
-| `--highlight` | `#FBE3A6` | ink on it 15.6:1 | The highlighter behind a lesson's key sentence (dark: `#4A3C12`, 9.9:1) |
-| `--error` | `#C42B1C` | 5.7:1 | Errors |
-| `--success` | `#1B7F4E` | 5.0:1 | Confirmations |
+| `--gold` | `#F2C14E` | navy on it 10.7:1 | Fills, stickers, the taxonomy panel |
+| `--gold-pale` | `#FBE3A6` | navy on it 13.6:1 | Tag pills, sticky notes, the highlighter |
+| `--gold-text` | `#7A5A0E` | 6.4:1 | The one place gold is text on white: small labels |
+| `--field-pale` | `#E8F0FB` | — | Soft panels and question cards on a sheet |
+| `--bg-2` | `#EEF3FB` | — | The calculator bench |
+| `--error` | `#B3261E` | 6.4:1 | Errors |
+| `--success` | `#17683F` | 6.5:1 | Confirmations |
 
-**The gold rule, because it is the easy mistake.** Gold on white is 1.7:1 — it fails for text.
-So gold is never small text on a light surface. It is: the logo spark, a fill behind black text
-(11.7:1), a hairline or underline, the tint of a callout, or text on navy/black (10.7:1). The
-eyebrow "label" you see above headings uses `--gold-text` (a dark ochre), not marigold.
+### On the field (`.on-field`, dark panels)
+
+White text on field blue is 8.3:1, `--ink-2` `#E4EDFB` 7.1:1, `--muted` `#C2D4F0` 5.6:1. Links and
+the focus ring go marigold (5.0:1). The primary action on the field is a gold block with navy
+text (10.7:1) and a white arrow box. Anything that sits directly on the field carries the
+`.on-field` class (the header, heroes, the lesson title band); `.panel-field` and `.panel-deep`
+carry the same remap. `npm run contrast` checks every pair in both contexts.
+
+**The gold rule.** Gold on white is 1.7:1, so gold is never small text on a light surface. It is a
+fill behind navy text, a sticker, a link on the field, or the highlighter.
 
 ### Dark mode
 
-Dark is a designed set, not an inversion. Surfaces are near-black (`#0B0B0F` / `#16171C` /
-`#1F2027`); text softens to `#F5F5F7`. Blue links brighten to `#8FBEFF` (10.3:1); the blue
-*fill* stays `#0C61C4` with white text (6.0:1). Marigold now passes as text (11.7:1), so the
-focus ring and eyebrows switch to gold. Full values live in `tokens.css` under the
-`prefers-color-scheme: dark` block.
-
-### Navy: the frame
-
-Navy (`.section-dark`, `#0B1240`) re-maps the tokens for everything inside it: text goes light,
-links go pale blue (9.3:1), marigold marks the current item (10.7:1). It is used in exactly two
-places, the edition line at the top of every page and the footer at the bottom, so every page is
-framed the same way. Content sections stay on paper.
+The field deepens to `#071A4A`, sheets become `#101A4F` with light ink, gold stays. Receipts,
+flashcards and the edition menu stay white paper with navy ink in both modes (`--paper`), because
+a receipt is white. Full values in `tokens.css`.
 
 ### Don't
 
-- No purple, no violet-to-blue gradients, no gradient text. One accent, flat fills.
+- No baby blue, pastel or purple; no gradients, no gradient text. One accent, flat fills.
 - No glows and no drop shadows. Depth comes from surface colour and rules (§6).
 - No colour as the only signal: pair it with text, weight or an icon.
 - Never hard-code a hex in a component. Add or reuse a token.
@@ -158,36 +160,37 @@ Rules for either version:
 ## 5. Layout and shape
 
 - Grid: 1120px max content width, 720px reading column, 24px side gutter, 4px spacing scale.
-- Radius: 4 / 8 / 12 / 14px. Buttons, keys and the callout use 8px; inputs 12px; panels 14px.
-  Nothing is a pill except on/off switches, which people expect to be round. Square corners
-  belong to paper, ledgers and receipts; pills belong to app stores.
-- **Contents first.** The front page and each edition front show real lessons, real numbers and
-  real calculator questions near the top. Nothing on a landing page describes the site in
-  place of showing it: no mock phones, no fake app cards, no "how it works" 1-2-3 strip.
-- **The ledger** is the signature (`.ledger` in `base.css`). Wherever a sum is done (worked
-  examples, calculator results, the edition front's example) it is set the way a cash book sets
-  it: label left, figure right, a dotted leader between, a single rule above a total, and a
-  **double rule under the final answer**. It is never decoration. If a number isn't the result
-  of a sum on the page, it doesn't get a ledger.
-- **The edition line** is a navy strip above the header on every page, naming India, Europe and
-  United States as plain text links; the current one is bold with a marigold underline.
-- **Index rows** (`.index-list`): lessons, tracks and calculators are ruled rows with the
-  question or title first. Lessons carry their number in the track, which is a real sequence.
-- Panels (`--bg-2`, no border, no shadow) are rare: the calculator bench, the edition's worked
-  example and the lesson explorable. Most things are type and rules on paper.
-- The "In 30 seconds" note is a gold-edged callout. On wide screens it steps into the margin
-  beside the lesson, the way a textbook prints its summary beside the text.
-- Whitespace is the main tool. Vary section rhythm (a tall intro, a tight band of figures, a
-  tinted calculator band) rather than stacking equal blocks.
+- Radius: 4 / 8 / 12 / 20 / 32px. Buttons and question rows 8px; inputs 12px; cards 20px; the
+  big section panels and reading sheets 32px. Pills only for navigation and tags.
+- **The field and the sheet.** The page is the dark-blue field. Reading happens on a white sheet
+  with rounded top corners laid over it (Ivy Kids). Ordinary pages are one sheet; the home and
+  edition fronts alternate rounded panels of one colour each (field blue, gold, pale blue,
+  white), joined by gaps (Aardvark).
+- **Contents first.** The front page shows each edition's real worked sum (its receipt) and
+  real lessons. An edition front is a contents page: three tracks of numbered lessons in an
+  outlined grid, the calculators as a stack of giant questions on a gold panel, sourced figures.
+- **The ledger** is the signature (`.ledger` in `base.css`): label left, figure right, dotted
+  leader, single rule above a total, **double rule under the final answer**. Worked examples sit
+  on a receipt card; calculator results are a ledger whose rows add up, with a headline figure
+  above it when the answer is a count or a payment. Never decoration.
+- **The edition menu** is a dropdown in the header: the current edition's flag and name; open it
+  for the three editions with flags. Same place on every page.
+- **Stickers and hand-lettering** are front-page devices only, and restrained: a minutes sticker on
+  a card, the "a worked example" note on a receipt. Inside a lesson every label is set type.
+- Lesson questions are cards on a pale panel with outlined option rows and one navy button. The
+  key sentence of a section wears the pale-gold highlighter. "Key points" is a sticky note that
+  steps into the margin on wide screens.
+- **The dashboard** (`/dashboard`) is a sidebar of pills and a grid of outlined cards: four
+  figures, a weekly bar chart with a table, the next lesson, progress by track, a timer. Every
+  number on it comes from this device.
+- Whitespace is the main tool. Vary the rhythm: a tall hero, a tight band of figures, a gold panel.
 
 ## 6. Depth and motion
 
-- **No shadows.** Depth comes from surface colour (paper → blue-tinted panel → navy frame) and
-  from rules. The sticky header is a solid bar with a hairline; blur is expensive to repaint on
-  the budget Android phones this site is built for.
-- Motion is one thing: a short cross-page fade (View Transitions), off under reduced motion.
-  Content does not fade or rise in as you scroll. That effect made every page look half-loaded
-  in screenshots and is a hallmark of generated landing pages.
+- **No shadows and no blur.** Depth comes from surface colour (field → sheet → panel) and from
+  outlines. Blobs behind a hero are flat shapes in two tones.
+- Motion is one thing: a short cross-page fade (View Transitions), off under reduced motion, and a
+  slight lift on a button. No scroll fade-ins.
 
 ## 6b. Charts
 

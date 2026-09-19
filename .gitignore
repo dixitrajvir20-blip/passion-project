@@ -14,3 +14,6 @@ _launchpad_src_snapshot.tgz
 # Leftovers from the Cowork kit hand-off; delete when done, never commit.
 _to_delete/
 Business_Lab_Hub_*
+
+# Superdesign working state (design drafts live on its canvas)
+.superdesign/

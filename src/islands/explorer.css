@@ -28,7 +28,7 @@
 }
 .preset:hover { color: var(--ink); background: var(--bg-2); }
 /* Fill and weight carry the state, not colour alone. */
-.preset[aria-pressed='true'] { background: var(--bg); color: var(--ink); font-weight: 700; }
+.preset[aria-pressed='true'] { background: var(--accent); color: var(--on-accent); font-weight: 700; }
 
 .explorer-figure { margin: 0; font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; line-height: 1; letter-spacing: var(--tracking-display); color: var(--ink); font-variant-numeric: tabular-nums; }
 .explorer-figure.is-loss { color: var(--error); }

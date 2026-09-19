@@ -1,7 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import RegionTabs from '../components/RegionTabs.astro';
+import Logo from '../components/Logo.astro';
 import ConsentManager from '../islands/ConsentManager.tsx';
 import { site, consentCategories, CONSENT_VERSION } from '../lib/site';
 import { REGIONS } from '../lib/regions';
@@ -21,9 +21,12 @@ interface Props {
   noindex?: boolean;
   /** Shown beside search results: "Lesson", "Calculator". */
   kind?: string;
+  /** Pages that draw their own coloured hero and sheets (home, edition fronts, lessons,
+      calculators). Every other page sits on one white reading sheet over the blue field. */
+  bare?: boolean;
 }
 
-const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false, kind } = Astro.props;
+const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false, kind, bare = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // Search: an edition's pages are found from that edition; shared pages are found from all of them.
@@ -58,7 +61,7 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <meta name="color-scheme" content="light dark" />
     {/* The browser bar continues the navy edition line at the top of every page. */}
-    <meta name="theme-color" content="#0b1240" />
+    <meta name="theme-color" content="#0b4aa2" />
     <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={`${base}/icons/icon-192.png`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
@@ -83,15 +86,15 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <RegionTabs current={region} sub={regionSub} />
-    <Header region={region} path={path} />
+    <Header region={region} regionSub={regionSub} path={path} />
     {/* data-pagefind-body: only <main> is indexed, so the header, tabs and footer never match a search. */}
-    <main id="main" tabindex="-1" data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
+    <main id="main" tabindex="-1" class:list={[{ 'page-sheet': !bare }]} data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
       {!noindex && editions.map((r) => <span data-pagefind-filter={`edition:${r.name}`}></span>)}
       {!noindex && kind && <span data-pagefind-meta={`kind:${kind}`}></span>}
       <slot />
     </main>
     <Footer region={region} />
+    <a class="float-badge" href="#top" aria-label="Back to the top"><Logo size={44} /></a>
     <ConsentManager client:load categories={consentCategories} version={CONSENT_VERSION} />
   </body>
 </html>
@@ -99,4 +102,28 @@ const jsonLd = {
 <script>
   // Lets styles tell a page with scripts from one without; nothing is hidden on the strength of it.
   document.documentElement.classList.add('js');
+</script>
+
+<script>
+  import { isAllowed, readConsent } from '../lib/consent';
+  import { consentCategories } from '../lib/site';
+  import { ACTIVITY_KEY, addSeconds, clearActivity, loadActivity, saveActivity } from '../lib/activity';
+
+  // Learning time for the dashboard: seconds per calendar day, on this device, only after a yes in
+  // Privacy choices. A later no removes what was kept. Counts only while a page is visible.
+  const TICK = 5;
+  let storage: Storage | undefined;
+  try {
+    storage = window.localStorage;
+  } catch {
+    storage = undefined;
+  }
+  window.setInterval(() => {
+    if (!storage || document.visibilityState !== 'visible') return;
+    if (isAllowed(readConsent(storage), 'stats', consentCategories)) {
+      saveActivity(storage, addSeconds(loadActivity(storage), TICK));
+    } else if (storage.getItem(ACTIVITY_KEY) !== null) {
+      clearActivity(storage);
+    }
+  }, TICK * 1000);
 </script>

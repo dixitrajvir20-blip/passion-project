@@ -115,6 +115,7 @@ if (d.practice?.kind === 'split') {
   regionSub="learn"
   path="learn"
   kind="Lesson"
+  bare
 >
   <Fragment slot="head">
     <link rel="license" href={site.contentLicence.url} />
@@ -122,22 +123,25 @@ if (d.practice?.kind === 'split') {
   </Fragment>
 
   <article class="lesson" data-lesson-id={lesson.id} data-locale={region.locale}>
-    <header class="lesson-head">
+    <header class="lesson-head on-field">
       <div class="container">
         <div class="column">
-          <span class="eyebrow"><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></span>
+          <p class="lesson-crumbs">
+            <a class="pill pill-white" href={`${prefix}/learn/${track.slug}`}>{region.name} · {track.title} · Lesson {d.order}</a>
+            <span class="sticker">{d.readingMinutes} min</span>
+          </p>
           <h1>{d.title}</h1>
           <p class="lede">{d.summary}</p>
           <p class="lesson-meta">
-            {d.readingMinutes} min read. Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
+            Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
           </p>
           {/* Said before the lesson, not after: the teach-back effect comes from expecting to explain. */}
-          <p class="lesson-expect">At the end, try explaining this to one person. It shows you what stuck.</p>
+          <p class="lesson-expect">Read with a view to explaining it to someone else afterwards. It changes what you notice.</p>
         </div>
       </div>
     </header>
 
-    <div class="lesson-main">
+    <div class="lesson-main sheet">
       <div class="container">
         <div class="column">
           <p class="situation">{d.situation}</p>
@@ -147,11 +151,12 @@ if (d.practice?.kind === 'split') {
             question={d.prediction.q}
             options={d.prediction.options}
             answer={d.prediction.answer}
-            revealLabel="See what happens"
+            revealLabel="Show the answer"
+            label="Before you read"
           />
 
           <aside class="callout" aria-labelledby="in-30">
-            <h2 id="in-30">In 30 seconds</h2>
+            <h2 id="in-30">Key points</h2>
             <ul>
               {d.takeaways.map((line) => <li>{line}</li>)}
             </ul>
@@ -163,14 +168,14 @@ if (d.practice?.kind === 'split') {
 
           {d.worked && (
             <section aria-labelledby="work-it">
-              <h2 id="work-it">Work it through</h2>
+              <h2 id="work-it">The calculation</h2>
               <Worked context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
             </section>
           )}
 
           {d.explorable && (
             <section aria-labelledby="try-it">
-              <h2 id="try-it">Try it</h2>
+              <h2 id="try-it">Try your own numbers</h2>
               {d.explorable.kind === 'margin' && (
                 <MarginExplorer
                   client:visible={{ rootMargin: '600px' }}
@@ -230,7 +235,7 @@ if (d.practice?.kind === 'split') {
 
           {practice && d.practice && (
             <section aria-labelledby="your-turn">
-              <h2 id="your-turn">Your turn</h2>
+              <h2 id="your-turn">Practice</h2>
               <Practice
                 context={d.practice.context}
                 given={practice.given}
@@ -242,10 +247,10 @@ if (d.practice?.kind === 'split') {
           )}
 
           <section aria-labelledby="quick-check">
-            <h2 id="quick-check">Quick check</h2>
+            <h2 id="quick-check">Check your understanding</h2>
             <p>
-              {d.quiz.length} questions, about 90 seconds. Pick, then look. Getting one wrong here is
-              the useful kind of wrong: that question comes back sooner.
+              {d.quiz.length} questions, about two minutes. Answer first, then reveal. A question you get
+              wrong comes back for review sooner than one you get right.
             </p>
             {d.quiz.map((check, index) => (
               <Poll
@@ -254,19 +259,20 @@ if (d.practice?.kind === 'split') {
                 options={check.options}
                 answer={check.answer}
                 checkId={`${lesson.id}#q${index + 1}`}
+                label={`Question ${index + 1} of ${d.quiz.length}`}
               />
             ))}
             <p class="return-line" data-return-line hidden></p>
           </section>
 
           <section aria-labelledby="meet-it">
-            <h2 id="meet-it">Where you will meet this</h2>
+            <h2 id="meet-it">Where this applies</h2>
             <ul>
               {d.transfer.map((line) => <li>{line}</li>)}
             </ul>
             <p>
-              Now the part from the top: tell one person what this lesson was about, in three
-              sentences. Where you get stuck is the bit worth rereading.
+              To check it has stuck, explain the main idea to someone else in three sentences. Where you
+              hesitate is the part worth rereading.
             </p>
           </section>
 
