@@ -1,0 +1,165 @@
+---
+title: "Student loans as a monthly payment"
+summary: "A student loan is a bill that lasts years. Read it as a monthly payment, a length and a total."
+region: us
+track: money-basics
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-18
+
+situation: "Your college aid offer arrives. Below the grants sits a federal loan, and by graduation you expect to owe about $10,000. The offer shows the total. It does not show what you will pay each month, or for how long."
+
+prediction:
+  q: "You borrow $10,000 at a fixed 6.52% a year and repay it over 10 years, starting at once. Leave out any interest while you study. About how much do you pay back in all?"
+  options:
+    - text: "About $10,650"
+      why: "That adds 6.52% once. The rate is charged every year the loan is open, on whatever you still owe."
+    - text: "About $13,600"
+      why: "Each payment covers that month's interest and pays off a little of the loan. Over 120 payments, about $3,600 goes on interest."
+    - text: "About $16,500"
+      why: "That charges 6.52% on the full $10,000 for all ten years. But every payment shrinks what you owe, so each year's interest is smaller."
+  answer: 1
+
+takeaways:
+  - "Read a student loan as a monthly payment and a number of months, not just the total on the aid offer."
+  - "Federal loans have one fixed rate for everyone that year, and options when money is tight. A private loan's rate depends on your credit, and it may change."
+  - "Interest on unsubsidized and private loans builds while you study. A longer term lowers each payment and raises the total."
+
+worked:
+  kind: loan
+  context: "The $10,000 from the top of the page at 6.52% a year, the fixed federal rate for undergraduate loans first paid out from July 1, 2026 to June 30, 2027. It is repaid over 120 months. This leaves out interest from your years in school, which the section above covers."
+  principal: 10000
+  rate: 6.52
+  months: 120
+
+explorable:
+  kind: loan
+  principal: 10000
+  rate: 6.52
+  terms: [60, 120, 180, 240]
+  prompts:
+    - "Tap 120, then 240. The payment drops. Does the total you pay back drop with it, or grow?"
+    - "Say your first job leaves about $150 a month for this loan. Find the shortest term that fits, then look at what borrowing costs at that length."
+
+practice:
+  kind: loan
+  context: "A private lender offers your cousin $8,000 over 120 months at a fixed 11% a year. The rate is an example: private rates depend on the borrower's credit."
+  principal: 8000
+  rate: 11
+  months: 120
+
+quiz:
+  - q: "You still need $3,000 for this year. Your aid offer lists a federal loan at a fixed rate. A private lender offers a lower rate today, but it is variable and needs a parent to co-sign. What do you look at first?"
+    options:
+      - text: "The private loan, because its rate is lower today"
+        why: "A variable rate is only today's rate. It can reset later and the payment moves with it, while the federal rate stays fixed for the life of the loan."
+      - text: "The federal loan first, and a private one only for any gap"
+        why: "A federal loan keeps one fixed rate and has options if money gets tight later. The CFPB says to use federal loans before any private one."
+      - text: "Whichever one approves you faster"
+        why: "Speed says nothing about the cost over ten years. Two loans for the same amount can differ by thousands of dollars in total."
+    answer: 1
+  - q: "In your first year you took a $5,000 unsubsidized loan at 6.52%. Nothing is due until after you graduate, and your weekend job leaves a little spare each month. What would stop the balance growing before then?"
+    options:
+      - text: "Nothing needs to happen, since no payment is due yet"
+        why: "The bill waits, but the interest does not. On an unsubsidized loan it builds from the day the money is paid out."
+      - text: "Paying the interest as it builds, about $27 a month"
+        why: "At 6.52%, $5,000 builds about $27 of interest a month. Paying that keeps the balance at $5,000, so there is no unpaid interest to add to it later."
+      - text: "Choosing a longer repayment plan now"
+        why: "A repayment plan sets the payments after you leave school. It does nothing about interest building while you study, and a longer one adds interest overall."
+    answer: 1
+  - q: "You finish school owing $10,000 at 6.52%. Repaying over 10 years is about $114 a month, and over 20 years about $75. Your first-job budget can carry about $80. What is the trade?"
+    options:
+      - text: "There is none, because the amount borrowed is the same"
+        why: "The amount borrowed is the same, but interest runs for twice as many months. Over 20 years the total grows by about $4,300."
+      - text: "About $39 less each month, and about $4,300 more in all"
+        why: "That is the trade. A payment that fits the month is worth something real, and the cost of that fit is paid in extra interest."
+      - text: "A longer term is always a mistake"
+        why: "A payment you cannot keep up with leads to missed bills. The longer term costs more, and it is a trade to make knowing the number, not a mistake."
+    answer: 1
+  - q: "Your older cousin asks your dad to co-sign her private student loan. She says it is only a formality, because she will make every payment. What does your dad take on?"
+    options:
+      - text: "Nothing, unless he signs a second form later"
+        why: "Signing is the step that counts. A co-signer agrees to repay the loan, and the lender can turn to him if payments stop."
+      - text: "The whole loan, if she cannot pay"
+        why: "A co-signer is just as responsible for the debt as the borrower. If she stops paying, the lender can ask him for all of it."
+      - text: "Only the interest, while she pays the rest"
+        why: "There is no half share. A co-signer is responsible for the same debt as the borrower, all of it."
+    answer: 1
+
+transfer:
+  - "When a college aid offer arrives. Find the loans among the grants, and turn each total into a monthly payment and a number of months."
+  - "Any time a price is shown as a small monthly amount, from a phone to a car. Ask how many months, and what the total comes to."
+  - "When someone asks you or a parent to co-sign a loan. It means owing the whole debt if they cannot pay."
+
+glossary: [principal, interest, loan-term, fafsa, cosigner, variable-rate, grace-period, subsidized-loan, unsubsidized-loan, capitalization]
+tool: loan
+
+sources:
+  - title: "Interest rates for federal Direct Loans first disbursed between July 1, 2026 and June 30, 2027 (GENERAL-26-33, June 4, 2026)"
+    url: "https://fsapartners.ed.gov/knowledge-center/library/electronic-announcements/2026-06-04/interest-rates-federal-direct-loans-first-disbursed-between-july-1-2026-and-june-30-2027"
+    publisher: "Federal Student Aid, US Department of Education"
+  - title: "Fact sheet on the new Repayment Assistance Plan and Tiered Standard plan for loans from July 1, 2026 (June 9, 2026)"
+    url: "https://www.ed.gov/about/news/press-release/fact-sheet-trump-administration-simplifying-student-loan-repayment"
+    publisher: "US Department of Education"
+  - title: "What student loan option is best for me: federal or private? (last reviewed May 14, 2024)"
+    url: "https://www.consumerfinance.gov/ask-cfpb/should-i-choose-federal-student-loans-or-private-student-loans-en-567/"
+    publisher: "Consumer Financial Protection Bureau"
+  - title: "What are private student loans? (last reviewed May 14, 2024)"
+    url: "https://www.consumerfinance.gov/ask-cfpb/what-are-private-student-loans-en-2136/"
+    publisher: "Consumer Financial Protection Bureau"
+  - title: "How does interest accrue while I am in school? (last reviewed May 14, 2024)"
+    url: "https://www.consumerfinance.gov/ask-cfpb/how-does-interest-accrue-while-i-am-in-school-en-593/"
+    publisher: "Consumer Financial Protection Bureau"
+  - title: "Student loan key terms: co-signer, FAFSA, subsidized and unsubsidized loans (December 28, 2022)"
+    url: "https://www.consumerfinance.gov/consumer-tools/student-loans/answers/key-terms/"
+    publisher: "Consumer Financial Protection Bureau"
+---
+
+## A bill with a length
+
+An aid offer lists loans next to grants and scholarships, and they can look alike. They are not. A grant is yours to keep. **A loan comes back as a bill, every month, for years.**
+
+So read any loan as three numbers. The <Term id="principal">principal</Term> is what you borrow. The <Term id="interest">interest</Term> rate is what borrowing costs each year, on whatever you still owe. The <Term id="loan-term">loan term</Term> is how many months you take to repay.
+
+The rate and the term set the monthly payment, and that payment is the part you live with. At 6.52% over ten years, a $10,000 loan is about $114 a month, 120 times.
+
+## Federal and private, in plain terms
+
+**Federal** student loans come from the US Department of Education. You apply through the <Term id="fafsa">FAFSA</Term>, the free federal aid form. Each year one rate is set for new undergraduate loans, the same for everyone. For loans first paid out from July 1, 2026 to June 30, 2027, it is 6.52%, fixed for the life of the loan.
+
+**Private** student loans come from banks and other lenders. The rate depends on your credit history, and a <Term id="cosigner">co-signer</Term> with a stronger record can bring it down. It may be a <Term id="variable-rate">variable rate</Term>, so the payment can change. They also lack most federal options for tight months.
+
+The federal Consumer Financial Protection Bureau says to use federal loans before private ones.
+
+## Interest does not wait for graduation
+
+Federal loan payments start after you leave school and a <Term id="grace-period">grace period</Term>, usually six months. Interest may start much sooner.
+
+On a <Term id="subsidized-loan">subsidized loan</Term>, the government pays the interest while you are in school. On an <Term id="unsubsidized-loan">unsubsidized loan</Term>, and on private loans, it builds from the day the money is paid out. **No bill is due, but the amount you owe is growing.**
+
+At 6.52%, a $5,000 loan builds about $326 of interest a year. Over four years of study that is about $1,304, and it keeps building through the grace period. Unpaid interest can be added to the principal at points the loan's rules set. That is <Term id="capitalization">capitalization</Term>, and after it you pay interest on the interest.
+
+## Stretching the months
+
+A longer term makes each payment smaller. It also keeps the balance around for longer, so more interest builds. **A smaller payment usually means a bigger total.**
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="term-title term-desc">
+  <title id="term-title">The same $10,000 at 6.52%, repaid over 10 years and over 20 years</title>
+  <desc id="term-desc">Two bars. Over 10 years, about $114 a month adds up to about $13,600. Over 20 years, about $75 a month adds up to about $17,900.</desc>
+  <text class="chart-label" x="0" y="14">10 years: about $13,600 in all</text>
+  <rect class="chart-b" x="0" y="22" width="243" height="24" rx="6" />
+  <text class="chart-label" x="0" y="66">20 years: about $17,900 in all</text>
+  <rect class="chart-a" x="0" y="74" width="320" height="24" rx="6" />
+</svg>
+
+| $10,000 at 6.52% | Each month | In all |
+| --- | --- | --- |
+| 10 years (120 months) | about $114 | about $13,600 |
+| 20 years (240 months) | about $75 | about $17,900 |
+
+New federal borrowers from July 1, 2026 get two plans. One sets fixed payments over 10, 15, 20 or 25 years, depending on how much was borrowed. The other sets the payment as a share of your income, from 1% to 10% depending on what you earn. A private loan's length is whatever its contract says.
+
+Neither short nor long is right for everyone. The question is which payment fits your month, and what that fit costs in total.

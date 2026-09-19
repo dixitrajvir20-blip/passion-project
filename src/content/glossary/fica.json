@@ -1,0 +1,5 @@
+{
+  "term": "FICA",
+  "define": "The Social Security and Medicare taxes taken from US pay, named after the law behind them, the Federal Insurance Contributions Act. In 2026 they are 6.2% and 1.45%, and the employer pays the same again.",
+  "example": "On a $500 paycheck, FICA takes $31 for Social Security and $7.25 for Medicare, even when no income tax comes out."
+}

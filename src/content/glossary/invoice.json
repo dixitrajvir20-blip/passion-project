@@ -1,0 +1,5 @@
+{
+  "term": "Invoice",
+  "define": "A dated document a seller sends to ask for payment. It shows who sold what to whom, and for how much. Tax rules in each country can add what must be on it.",
+  "example": "A student who designs a poster for a café sends an invoice for €40, with her name, the date, the work done and the price."
+}

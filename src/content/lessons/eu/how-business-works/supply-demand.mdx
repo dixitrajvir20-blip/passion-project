@@ -1,0 +1,271 @@
+---
+title: "Supply and demand in the prices around you"
+summary: "Why festival tickets jump, ice cream in a heatwave barely moves, and a drought made olive oil dearer."
+region: eu
+track: how-business-works
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-18
+
+situation: "Tickets for the festival near you sold out in 20 minutes, and resale listings now ask twice the price. The same week, the lake kiosk had queues all afternoon, but a cone cost what it did in May. You want to know why one price jumped and the other did not."
+
+prediction:
+  q: "A festival's 15,000 tickets at €90 sell out in 20 minutes. A lakeside kiosk sells three times as many cones on hot days. When demand jumps like this, which price is more likely to jump too?"
+  options:
+    - text: "The ice cream, because more people want it"
+      why: "More people do want it. But the kiosk can get more tubs overnight, so most of the extra demand shows up as more cones sold, not a higher price."
+    - text: "The festival tickets, because no more can be made"
+      why: "The field holds 15,000 and no more. When extra demand cannot be met with extra supply, it pushes on the price: dearer tiers, or resale above €90."
+    - text: "Neither, because prices are set by costs"
+      why: "Costs matter, but neither seller's costs changed here. What changed is how many people want each thing against how many there are."
+  answer: 1
+
+takeaways:
+  - "A price moves when supply or demand moves. So the first question about any price change is: which side moved?"
+  - "When sellers can easily make more, a rise in demand shows up mostly as more sold. When they cannot, like places at a festival, it shows up in the price."
+  - "A price set below what buyers will pay for a fixed amount sells out fast. The queue, the draw and the resale listing all come from that gap."
+
+explorable:
+  kind: drill
+  intro: "Six messages from one year. For each, decide which side moved, supply or demand, and whether sellers can make more. Then predict the move and look."
+  scenarios:
+    - screen:
+        kind: chat
+        from: "Family group: Tante Greet"
+        lines:
+          - "No proper rain here since May. The potatoes in the fields are tiny."
+          - "Your uncle says the harvest will be well down this year."
+      check:
+        q: "Your family runs a small frites stand in Belgium and buys potatoes every week. It is August. What do you plan for?"
+        options:
+          - text: "Dearer potatoes for months, until a better harvest"
+            why: "A smaller crop means fewer potatoes for the same stands and kitchens, until the next harvest. Eurostat linked the 2023 jump in farm prices for potatoes to drought too."
+          - text: "No change, because the stand's own costs are the same"
+            why: "Rent and oil did not move, but the potato price is set by how many potatoes there are. The slip is looking at your own costs instead of the harvest."
+          - text: "Cheaper potatoes, because farmers will rush to sell"
+            why: "A rush to sell adds no potatoes. Once the small crop is sold, there is less to go round than last year."
+        answer: 0
+    - screen:
+        kind: chat
+        from: "Marta, fruit stall"
+        lines:
+          - "Every farm is picking strawberries at once this week."
+          - "By noon the market was still full of punnets."
+      check:
+        q: "You buy fruit at a Saturday market. It is the peak of a big strawberry season. What do you expect at the stalls this Saturday?"
+        options:
+          - text: "Higher prices, because every farm is so busy"
+            why: "Busy farms mean more strawberries, not fewer. The slip is reading lots of activity as a shortage."
+          - text: "Lower prices, as sellers try to clear their crates"
+            why: "More punnets than buyers want is a surplus. Strawberries spoil in days, so a seller would rather cut the price than carry them home."
+          - text: "The same price as last month"
+            why: "Last month's price was set by last month's supply. When far more arrives for the same buyers, the price does not stay put."
+        answer: 1
+    - screen:
+        kind: message
+        from: "Weather alert"
+        lines:
+          - "Heatwave warning: 34°C from Monday to Friday."
+          - "Stay in the shade and drink water."
+      check:
+        q: "You work at an ice-cream kiosk by a lake in Slovenia. The supplier delivers every morning and has full freezers. What do you expect next week?"
+        options:
+          - text: "The price doubles, because everyone will want ice cream"
+            why: "Everyone will want more, but this kiosk and the one next to it can both restock overnight. A doubled price would send buyers along the path."
+          - text: "Far more cones sold, at about the usual price"
+            why: "Ice cream is made ahead and kept frozen, so supply grows to meet the heat. The extra demand shows up mostly as more cones sold."
+          - text: "No change at all, because the price is on the board"
+            why: "The price may well stay put, but that does not mean nothing moves. How many cones are sold is the part that jumps."
+        answer: 1
+    - screen:
+        kind: message
+        from: "Summer festival tickets"
+        lines:
+          - "Tier 1 tickets are sold out."
+          - "Tier 2 is now on sale, while it lasts."
+      check:
+        q: "The line-up came out yesterday. The field holds 15,000 people and no more tickets can be added. Your friends want to wait until payday next week. What do you expect?"
+        options:
+          - text: "Tier 2 at the Tier 1 price, since the festival costs the same to run"
+            why: "The festival's costs did not change, but the tiers follow demand, not cost. The slip is thinking a price only tracks what something costs to make."
+          - text: "A dearer tier by payday, or none left at all"
+            why: "Supply is fixed at 15,000 and the line-up lifted demand. Tiers step the price up as each one sells out, so waiting usually means paying more."
+          - text: "Cheaper tickets later, to fill the last places"
+            why: "That can happen when a festival is selling slowly. Here Tier 1 went the day after the line-up, which points the other way."
+        answer: 1
+    - screen:
+        kind: message
+        from: "Trainer drop alert"
+        lines:
+          - "Limited run: 800 pairs at €130."
+          - "The draw closes Friday. Over 40,000 entries so far."
+      check:
+        q: "You entered the draw because you want a pair to wear. What do you plan for?"
+        options:
+          - text: "A good chance of a pair, since the price is fixed at €130"
+            why: "The price is fixed, but so is the number of pairs. 800 pairs for over 40,000 entries is at best a 1 in 50 chance."
+          - text: "A small chance in the draw, and resale asking well above €130"
+            why: "Far more people want a pair at €130 than there are pairs. That is a shortage: the draw shares out the pairs, and the gap shows up in resale prices."
+          - text: "A lower price, since so many entries means so many sales"
+            why: "Entries are people wanting, not people buying. Only 800 pairs exist, so there can be at most 800 sales at €130."
+        answer: 1
+    - screen:
+        kind: chat
+        from: "Jonas"
+        lines:
+          - "Saturday's headliner just cancelled."
+          - "Resale listings for Saturday are everywhere now."
+      check:
+        q: "You were hoping to buy a Saturday ticket from a fan who cannot go. What do you expect resale prices to do this week?"
+        options:
+          - text: "Rise, since more tickets are listed"
+            why: "More listings is more supply, and a missing headliner is less demand. Both push the price the same way: down."
+          - text: "Fall, as fewer people want Saturday and more are selling"
+            why: "Demand fell and resale supply rose at the same time. When both sides move like this, they point to a lower price."
+          - text: "Stay at the price printed on the ticket"
+            why: "The printed price was set before the news. Resale prices follow today's buyers and sellers, within any cap your country sets."
+        answer: 1
+  reflection: "Pick a price you saw jump or fall this year. Which side moved, and could the sellers have made more?"
+
+quiz:
+  - q: "Olive oil costs half as much again as last year, in every shop you check. A friend says the shops are just being greedy. Which question do you check first?"
+    options:
+      - text: "What happened to the olive harvest?"
+        why: "A rise in every shop at once points further up the chain. In January 2024, olive oil cost more in every EU country after drought-hit harvests."
+      - text: "How much profit does the shop near you make?"
+        why: "One shop's profit cannot lift prices in every shop at once. When they all move together, the cause usually sits with the supply."
+      - text: "Are people cooking with more oil than before?"
+        why: "Cooking habits change slowly. A jump of half in a year is far more often a supply story: a harvest, the weather or a blocked route."
+    answer: 0
+  - q: "You sell tickets for your school's summer party. The hall holds 300. Last year €10 tickets sold out in an hour, and 150 more people still wanted one. Costs are the same this year. What does last year tell you?"
+    options:
+      - text: "At €10, more people want a ticket than there are places"
+        why: "A sell-out with people left over is a shortage at that price. A somewhat higher price would likely still fill the hall. Keeping €10 and running a draw is also a fair choice."
+      - text: "The price was too high"
+        why: "A price that is too high leaves places empty. Here every place went, and 150 people missed out."
+      - text: "The party will cost more to run"
+        why: "Costs are the same. A sell-out tells you about demand against 300 places, not about what the party costs."
+    answer: 0
+  - q: "You run an ice-cream cart at a lake in Slovenia. A week of 33°C is forecast and your supplier has plenty. Another cart stands 50 metres away. What do you do?"
+    options:
+      - text: "Order more tubs for the hot week and keep your price"
+        why: "Your supplier can deliver more, and so can the other cart's. The extra demand shows up as more cones sold, so having enough stock is what counts."
+      - text: "Double your price, since everyone will want ice cream"
+        why: "The other cart can restock too. At double the price, buyers walk 50 metres, and your stock sits unsold."
+      - text: "Keep your usual order, since the price will not change"
+        why: "The price may hold, but sales will not. With your usual order you run out by lunch on the hottest days."
+    answer: 0
+  - q: "You sell focaccia at a weekend market in Italy. You raised your price when olive oil got dear. Now a big harvest is in, the oil costs you much less, and the stall opposite has cut its price. What do you do?"
+    options:
+      - text: "Keep your price, to make up for the dear months"
+        why: "Buyers compare today's stalls, not your costs last year. The slip is letting a cost that is already gone set today's price."
+      - text: "Check your new costs and the prices around you, and lower yours"
+        why: "Supply is back, so costs and prices are falling. Moving with the market keeps your regulars coming, and focaccia sold today does not go stale."
+      - text: "Raise it, since sales have slowed"
+        why: "A higher price with a cheaper stall in view sends more buyers across the aisle. Slow sales get slower."
+    answer: 1
+
+transfer:
+  - "When a price jumps at the shop. Ask which side moved: less arriving, or more people buying."
+  - "When tickets for something you want go on sale. Expect the cheapest tier to go first, and set your limit before the queue opens."
+  - "When a resale price looks huge. It tells you how many people want the thing, not what it cost to make."
+  - "When you sell at a fest or a market. Decide early whether you can make more if it sells well."
+
+glossary: [supply, demand, shortage, surplus]
+
+sources:
+  - title: "Acute slowdown in agricultural output price rises: olive oil up 48%, largely from drought-affected volumes (Eurostat, 26 September 2023)"
+    url: "https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20230926-1"
+    publisher: "Eurostat, European Commission"
+  - title: "Price of olive oil up 50% in one year, by EU country (Eurostat, 27 February 2024)"
+    url: "https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20240227-1"
+    publisher: "Eurostat, European Commission"
+  - title: "Main annual crop statistics: the 2024 rebound in olives for oil (Eurostat Statistics Explained, data extracted 27 October 2025)"
+    url: "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Main_annual_crop_statistics"
+    publisher: "Eurostat, European Commission"
+  - title: "Agricultural prices increased in first quarter of 2025: olive oil down 43.5% (Eurostat, 12 June 2025)"
+    url: "https://ec.europa.eu/eurostat/web/products-eurostat-news/-/ddn-20250612-2"
+    publisher: "Eurostat, European Commission"
+  - title: "Summer peak: 31% of tourism nights in August and July (Eurostat, 7 July 2026)"
+    url: "https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20260707-1"
+    publisher: "Eurostat, European Commission"
+  - title: "Directive (EU) 2019/2161 on better enforcement of EU consumer rules: Annex I point 23a and recital 50 on ticket resale (27 November 2019)"
+    url: "https://eur-lex.europa.eu/eli/dir/2019/2161/oj/eng"
+    publisher: "European Parliament and Council of the EU, via EUR-Lex"
+---
+
+## Two sides of every price
+
+Every price has two sides pushing on it. <Term id="supply">Supply</Term> is how much sellers have to sell. <Term id="demand">Demand</Term> is how much buyers want at each price.
+
+When buyers want more than there is at today's price, that is a <Term id="shortage">shortage</Term>, and the price tends to climb. When there is more than buyers want, that is a <Term id="surplus">surplus</Term>, and the price tends to fall.
+
+**So when a price moves, ask first: which side moved?** Then ask a second question, which this lesson keeps coming back to. When demand rises, can sellers make more, or is what they have all there is?
+
+## When the olive harvest failed
+
+In 2022 and 2023, drought cut several European harvests. Spain, the EU's biggest olive grower, had two poor olive harvests in a row. Eurostat put a 48% jump in farm prices for olive oil by mid-2023 down mostly to drought-hit crops.
+
+Shoppers felt it next. In January 2024, olive oil in EU shops cost 50% more than a year earlier. It rose in every EU country, from 13% in Romania to 69% in Portugal.
+
+**Kitchens did not suddenly want half as much oil again. The same kitchens were chasing less oil.**
+
+<svg class="chart" viewBox="0 0 320 156" role="img" aria-labelledby="oil-title oil-desc">
+  <title id="oil-title">Rise in the shop price of olive oil, January 2023 to January 2024</title>
+  <desc id="oil-desc">Five bars. Portugal rose 69%, Greece 67% and Spain 63%. The EU average rose 50%. Romania had the smallest rise, 13%.</desc>
+  <text class="chart-label" x="0" y="20">Portugal</text>
+  <rect class="chart-a" x="90" y="8" width="179" height="16" rx="4" />
+  <text class="chart-label" x="275" y="20">+69%</text>
+  <text class="chart-label" x="0" y="46">Greece</text>
+  <rect class="chart-a" x="90" y="34" width="174" height="16" rx="4" />
+  <text class="chart-label" x="270" y="46">+67%</text>
+  <text class="chart-label" x="0" y="72">Spain</text>
+  <rect class="chart-a" x="90" y="60" width="164" height="16" rx="4" />
+  <text class="chart-label" x="260" y="72">+63%</text>
+  <text class="chart-label" x="0" y="98">EU average</text>
+  <rect class="chart-b" x="90" y="86" width="130" height="16" rx="4" />
+  <text class="chart-label" x="226" y="98">+50%</text>
+  <text class="chart-label" x="0" y="124">Romania</text>
+  <rect class="chart-a" x="90" y="112" width="34" height="16" rx="4" />
+  <text class="chart-label" x="130" y="124">+13%</text>
+  <text class="chart-note" x="0" y="150">Shop price, January 2024 against January 2023</text>
+</svg>
+
+| Where | Rise in a year, to January 2024 |
+| --- | --- |
+| Portugal | 69% |
+| Greece | 67% |
+| Spain | 63% |
+| EU average | 50% |
+| Romania | 13% |
+
+## When the harvest came back
+
+The 2024 harvest was much bigger. The EU picked 12.7 million tonnes of olives for oil, up from 9.2 million in 2023. Spain's crop grew by about two thirds.
+
+Early in 2025, the price farmers got for olive oil was 43.5% lower than a year before. **A price pushed up by short supply usually comes down when the supply returns.** Both swings started on the supply side, in the olive groves.
+
+## Summer: when demand moves
+
+In summer, many more people want the same things at the same time. In 2025, 31.1% of all nights in EU tourist accommodation fell in July and August. In Croatia it was 54.5%.
+
+Picture two sellers by the same beach. The ice-cream kiosk can get more tubs overnight, because ice cream is made ahead and kept frozen. So in a hot week it mostly sells more, at about the usual price. The guesthouse next door cannot add rooms in August.
+
+**When supply can grow, extra demand shows up as more sold. When it cannot, it shows up in the price.**
+
+## Tickets and drops: supply that cannot grow
+
+A festival field holds a set number of people. When a strong line-up is announced, far more fans may want tickets than exist. Some festivals sell in tiers: when the cheapest tier sells out, the next one costs more. That is the price following demand, one step at a time.
+
+A limited trainer drop works the other way. The brand makes a set number of pairs and fixes the price. If far more people want a pair at that price than there are pairs, it sells out in minutes. **The queue, the draw and the resale listing at twice the price all come from that shortage.**
+
+## Resale rules differ by country
+
+A resale price follows how many people want the thing against how many exist. It says nothing about what the thing cost to make.
+
+What a seller may charge on resale is a national question. EU law lets each country add its own rules, such as a cap on ticket resale prices. So the answer depends on where you live, and your country's consumer authority has the details.
+
+One rule covers the whole EU. Under a 2019 EU law, a trader may not resell event tickets bought with software that gets around the limit per buyer.

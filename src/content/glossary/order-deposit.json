@@ -1,0 +1,5 @@
+{
+  "term": "Deposit (on an order)",
+  "define": "Part of the price paid in advance to hold an order or a booking. It is taken off what is owed later, and it goes back if the seller cannot deliver.",
+  "example": "Paying $10 now to book a $30 lawn mow for Saturday, with $20 due after the job, is a deposit."
+}

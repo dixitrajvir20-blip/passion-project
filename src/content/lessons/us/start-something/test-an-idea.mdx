@@ -1,0 +1,250 @@
+---
+title: "Test an idea in a weekend"
+summary: "Praise is free, so it proves little. Ask about the past, take a small deposit, and do one job before fifty."
+region: us
+track: start-something
+order: 1
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-18
+
+situation: "Summer starts in four weeks. You want to mow lawns around your neighborhood at $30 a lawn, and a used mower costs $180. Everyone at dinner says it is a great idea. You want to know if neighbors will actually book before you buy anything."
+
+prediction:
+  q: "You knock on 30 doors on your street with a flyer. Which result tells you most about whether you will have paid work this summer?"
+  options:
+    - text: "14 people say it is a great idea"
+      why: "Saying so is free, and it ends the chat on a friendly note. Fourteen warm replies show that neighbors like you, not that they will pay $30."
+    - text: "9 people write their name and number on your list"
+      why: "A name takes a little effort, so it says more than praise. But it is still free, and plenty of people on a list never book."
+    - text: "3 people book a Saturday and pay a $10 deposit"
+      why: "Three is few, but each of them gave up money before seeing you mow. A deposit is the one reply nobody gives just to be polite."
+  answer: 2
+
+takeaways:
+  - "Praise is free, so it proves little. Weigh each reply by what it cost the person: nothing, a little effort, or real money."
+  - "Three tests fit in a weekend: ask what people paid last time, pre-sell for a small deposit, and do one job before you promise fifty."
+  - "A deposit is the customer's money until you deliver. Keep a record, give a date you can keep, and pay it back if you cannot."
+
+explorable:
+  kind: drill
+  intro: "Five moments from three weekend tests: a lawn-mowing round, a sneaker flip and a small online sticker shop. For each one, decide what it tells you and what you would do next, then look."
+  scenarios:
+    - screen:
+        kind: chat
+        from: "Mr. Alvarez (next door)"
+        lines:
+          - "Lawn mowing? Great idea. The whole street needs someone."
+          - "Go buy that mower. You will be busy all summer."
+      check:
+        q: "You told your neighbor about the lawn plan, and he texts back this. The used mower costs $180. Is this enough to buy it?"
+        options:
+          - text: "Yes. If he is this keen, the rest of the street will be too"
+            why: "His text cost him nothing, and a neighbor who knows you is a kind audience. The slip is counting a warm word as a booking."
+          - text: "Not yet. Ask him, and neighbors who do not know you, to book a Saturday with a $10 deposit"
+            why: "A small deposit turns a kind reply into a decision. Neighbors with no reason to be polite tell you more about the rest of the street."
+          - text: "No. One reply is not enough to go on"
+            why: "The count is not what is wrong here. A whole street of texts like this would still cost nobody a cent, so it would still point neither way."
+        answer: 1
+    - screen:
+        kind: chat
+        from: "Notes to self"
+        lines:
+          - "Pair I want to flip: $120 to buy"
+          - "Listed for sale right now: $220 to $260"
+          - "Actually sold last month: 5 pairs, $150 to $170"
+      check:
+        q: "You plan to buy three pairs of one sneaker to resell. Before spending, you looked up what that pair really sold for, not only what sellers are asking. What does this tell you?"
+        options:
+          - text: "Plenty of profit, since they list for up to $260"
+            why: "An asking price is a hope. The five pairs that sold went for $150 to $170, and that is what buyers paid."
+          - text: "Buyers exist, but the gap is thin. Flip one pair first and count the fees and shipping"
+            why: "Sold prices are the past, and the past is a fact. After the resale site's cut and postage, $120 to about $160 leaves little room, so one pair tests it cheaply."
+          - text: "Nothing, since sneaker prices change every week"
+            why: "They do change, which is why last month's sales beat this week's asking prices. The slip is throwing out the one fact the search found."
+        answer: 1
+    - screen:
+        kind: chat
+        from: "Notes to self"
+        lines:
+          - "Lawn 1 done: Aunt Rosa's yard, borrowed mower"
+          - "Took 1 hr 40 min, not the 45 min I guessed"
+          - "Gas and trimmer line: $4. Edging took longest."
+      check:
+        q: "Before taking any deposits, you mowed one yard to see what the job really takes. These are your notes. What do you do next?"
+        options:
+          - text: "Take bookings at $30 now and sort out the timing later"
+            why: "The one lawn just showed that 45 minutes was a guess. Bookings taken now fix a price and a schedule the test has not checked."
+          - text: "Price by yard size, work out how many lawns fit in a Saturday, then take bookings"
+            why: "That is what doing one job is for. It found the real time while it was cheap to find, before any neighbor was promised a slot."
+          - text: "Give up, since it took so long"
+            why: "A first job is meant to turn up surprises. The slip is reading a problem you can plan around as a verdict on the whole idea."
+        answer: 1
+    - screen:
+        kind: message
+        from: "Payment received"
+        amount: 10
+        lines:
+          - "From: J. Carter"
+          - "Note: deposit, first Saturday mow, 9am"
+      check:
+        q: "You took bookings for the first two Saturdays: $30 a lawn, $10 of it up front. By Sunday night 6 neighbors have paid, like this one, out of 40 houses asked. What does it tell you?"
+        options:
+          - text: "Six real customers, enough to plan the first two Saturdays around"
+            why: "Each deposit is a neighbor who decided before seeing you work. Six is a schedule you can plan, and a reason to keep asking."
+          - text: "Not much. Wait to see who calls in July"
+            why: "Waiting means buying the mower blind or losing the start of summer. The deposits are the evidence that lets you decide now."
+          - text: "Enough to promise the whole street all summer"
+            why: "The slip is stretching a small test into a big promise. Six deposits show six customers. The other 34 houses are still a guess."
+        answer: 0
+    - screen:
+        kind: message
+        from: "Your shop: new pre-order"
+        amount: 12
+        lines:
+          - "Paid in full: 1 sticker pack"
+          - "Ships by June 30"
+      check:
+        q: "You sell sticker packs you design through a small online shop. Eleven people pre-ordered and paid, like this one. Then the printer says the stickers will not be ready until mid-July. What do you do?"
+        options:
+          - text: "Tell all eleven now, give the new ship date, and offer a full refund to anyone who wants out"
+            why: "This is what the federal rule on online orders asks for: news of the delay, a new date, and the choice to wait or cancel for a quick refund."
+          - text: "Say nothing and ship when the stickers arrive"
+            why: "The buyers were promised June 30. Silence turns a delay into a broken promise, and the rule expects them to hear about it before the date passes."
+          - text: "Keep the orders and add a free sticker for the wait"
+            why: "A free extra is fine next to the news, not instead of it. Each buyer still gets to choose between waiting and their money back."
+        answer: 0
+  reflection: "Pick an idea you or a friend keeps talking about. Which reply would cost someone something real, and who could you ask for it this weekend?"
+
+quiz:
+  - q: "You want to run weekend car washes in your driveway at $15 a car. At a school game you get two minutes each with eight parents. What do you spend the two minutes on?"
+    options:
+      - text: "Describe the idea and ask if they would pay $15"
+        why: "Asked face to face, most people say yes to a future purchase. It costs them nothing, so it tells you little."
+      - text: "Ask when they last had the car washed, where, and what it cost"
+        why: "A past purchase is a fact. If most use a $10 automatic wash at the gas station, you learn the habit and the price you are up against."
+      - text: "Ask them to rate the idea from 1 to 10"
+        why: "A score measures goodwill, not a decision to pay. A parent who gives a 9 can still drive past your driveway."
+    answer: 1
+  - q: "Lawn deposits close with 2 paid out of 40 houses asked. The mower seller wants an answer by Friday. What do you do?"
+    options:
+      - text: "Buy it. People will call once they see you mowing"
+        why: "They might, but the test just said most people asked did not book. The slip is trusting a test only when it says yes."
+      - text: "Pass on the mower. Do the 2 booked lawns with a borrowed one, change one thing and test again"
+        why: "A weak result cost a weekend, not $180. Changing one thing at a time, such as the price or the streets you try, shows what moves the result."
+      - text: "Pass on the mower, and keep the 2 deposits for later in the summer"
+        why: "A deposit is the customer's money until the lawn is mowed. Either the job gets done on the booked day or the $10 goes back."
+    answer: 1
+  - q: "By August your lawn round has brought in $1,300, and you spent $250 on gas and a trimmer. A friend says students never owe anything on cash jobs. What do you do?"
+    options:
+      - text: "Nothing. You are under 18, so it does not count"
+        why: "Age is not the test. The IRS says anyone, minors included, with $400 or more of net earnings from working for themselves must file a return."
+      - text: "Keep your records, and check the IRS guidance for young people who work for themselves"
+        why: "Mowing for neighbors is self-employment. About $1,050 left after costs is well past $400, the line where the IRS expects a return, so the records matter."
+      - text: "Count only the cash, since app payments are reported anyway"
+        why: "How you were paid does not change what you earned. Cash and app payments are both income, so both go in the records."
+    answer: 1
+  - q: "You and a friend want to sell lemonade and cookies at a youth baseball tournament. A cousin in another state says kids' stands never need a permit. What do you do first?"
+    options:
+      - text: "Go ahead, since it is only one day"
+        why: "One day can still come with conditions from the organizer or the health department. The slip is assuming a short event has no rules."
+      - text: "Follow your cousin, since she has run a stand before"
+        why: "Food rules are set by each state, and often by the county or city too. Her answer fits where she lives, not where you are selling."
+      - text: "Ask the organizer what food stands need, and check with your city or county health department"
+        why: "The organizer knows the conditions for this event. The health department can say what a stand like yours needs where you live."
+    answer: 2
+
+transfer:
+  - "Before you spend on a mower, stock or a table fee. Ask first what the cheapest test would be."
+  - "When someone says great idea. Thank them, then ask if they would book or pay a small deposit for the first one."
+  - "If your school runs a business class or a student store. Put a pre-sale test in before the first order."
+  - "When you pre-order something yourself. The ship date is part of the deal, and so is your choice to cancel if it slips."
+
+glossary: [order-deposit, market-research, prototype, fixed-cost, self-employed]
+
+sources:
+  - title: "Market research and competitive analysis: direct research through surveys and interviews (SBA, accessed 18 September 2026)"
+    url: "https://www.sba.gov/business-guide/plan-your-business/market-research-competitive-analysis"
+    publisher: "U.S. Small Business Administration"
+  - title: "Business guide to the Mail, Internet, or Telephone Order Merchandise Rule: ship dates and delays (September 2011, edited January 2025)"
+    url: "https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule"
+    publisher: "Federal Trade Commission"
+  - title: "When the lemonade stand makes bank: young entrepreneurs and taxes (IRS Tax Tip, 8 June 2022)"
+    url: "https://www.irs.gov/newsroom/when-the-lemonade-stand-makes-bank-young-entrepreneurs-and-taxes"
+    publisher: "Internal Revenue Service"
+  - title: "FDA Food Code: the model that state, local and tribal food rules are built from (content current as of 17 September 2026)"
+    url: "https://www.fda.gov/food/retail-food-protection/fda-food-code"
+    publisher: "U.S. Food and Drug Administration"
+---
+
+## What each reply cost
+
+Tell people about a plan and most will say it sounds great. They mean it. But praise is free, and few people like being the one who says no.
+
+**Being liked and being paid are different things, and only one of them buys a mower.**
+
+So weigh each reply by what it cost the person who gave it. A promise to book one day costs nothing. A name and number on your list takes a little effort. A <Term id="order-deposit">deposit</Term> to hold a Saturday costs real money. That is the reply to trust.
+
+Here are the 30 doors from the top of the page, sorted by what each reply cost.
+
+<svg class="chart" viewBox="0 0 320 168" role="img" aria-labelledby="reply-title reply-desc">
+  <title id="reply-title">30 doors knocked, and how many gave each kind of reply</title>
+  <desc id="reply-desc">Four bars that get shorter. All 30 houses were asked. 14 said it was a great idea, which cost nothing. 9 left a name and number, which took a little effort. 3 paid a $10 deposit, the only reply that cost money.</desc>
+  <text class="chart-label" x="0" y="12">Asked: 30</text>
+  <rect class="chart-b" x="0" y="18" width="320" height="12" rx="4" />
+  <text class="chart-label" x="0" y="48">Said great idea: 14</text>
+  <rect class="chart-b" x="0" y="54" width="149" height="12" rx="4" />
+  <text class="chart-label" x="0" y="84">Left a name and number: 9</text>
+  <rect class="chart-b" x="0" y="90" width="96" height="12" rx="4" />
+  <text class="chart-label" x="0" y="120">Paid a $10 deposit: 3</text>
+  <rect class="chart-a" x="0" y="126" width="32" height="12" rx="4" />
+  <text class="chart-note" x="0" y="162">The more a reply costs, the fewer people give it</text>
+</svg>
+
+| Reply | What it cost them | Houses |
+| --- | --- | --- |
+| Said great idea | Nothing | 14 |
+| Left a name and number | A little effort | 9 |
+| Paid a $10 deposit | Real money | 3 |
+
+## Three tests for one weekend
+
+**Ask about the past, not the future.** Do not ask whether someone would hire you. Ask who mowed their lawn last summer, how often, and what they paid. A past choice is a fact; a promise is a guess. This is <Term id="market-research">market research</Term> at the size of one street. The Small Business Administration lists interviews and short surveys among the ways to do it.
+
+**Pre-sell.** Show a flyer, a photo or a sample, and take bookings with a small deposit.
+
+**Do one before you do fifty.** One lawn, one pair of sneakers, one sheet of stickers. A first version like this is a <Term id="prototype">prototype</Term>. It shows the real cost, time and faults while they are cheap to fix.
+
+## Taking a deposit
+
+A deposit is part of the price, paid now, for a job or a product you hand over later. Keep it small, so that saying yes is easy but not free. For a $30 mow, $10 is enough to tell a customer from a kind neighbor.
+
+Take it in a way that leaves a record: a payment app, or cash with a written receipt. Then note who paid, for what, and which day the job is booked.
+
+**A deposit is still the customer's money until you deliver.** If you cannot do the job, say so early and pay it back.
+
+## Selling online: the ship date
+
+Take orders and payment online, and a Federal Trade Commission rule covers the date you promise. It applies to most goods ordered online, by mail or by phone.
+
+**Give a ship date you can keep.** If you state no date at all, you need good reason to believe you can ship within 30 days.
+
+**If you will be late, tell buyers before the date.** Give them a new date and a choice: agree to wait, or cancel and get their money back quickly.
+
+Pre-orders make this easy to miss, because the thing does not exist yet. Plan for the slow case, not the fast one.
+
+## Reading the result
+
+The used mower costs $180. That is a <Term id="fixed-cost">fixed cost</Term>: the same whether you mow two lawns or forty. The test lets you decide before you pay it.
+
+A weak result is still an answer. Two deposits from forty houses cost you a weekend, not $180. Change one thing, such as the price, the flyer or the streets you try, and test again. Or drop it and keep your money.
+
+A strong result has limits too. Six deposits mean six customers, not the whole street. Plan the first Saturdays from what the test showed, and borrow a mower until the bookings can pay for one.
+
+## Rules to check first
+
+Mowing lawns, flipping sneakers or selling stickers makes you <Term id="self-employed">self-employed</Term>. The IRS counts that money as taxable income, whatever your age. Once your net earnings from working for yourself reach $400 in a year, you must file a tax return, minors included. So note every payment and every cost, starting with the first deposit. Take tax questions to the IRS, not to a friend.
+
+Food has its own rules, even at a one-day stand. The FDA writes a model code, and states, counties and cities build their own rules from it. So what a stand needs varies by state and city. Ask the organizer, or your city or county health department, before you take a single deposit.

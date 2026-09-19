@@ -1,0 +1,178 @@
+---
+title: "Break-even with platform fees included"
+summary: "Marketplace and card fees come out of what you keep on every sale. Count them as a cost of each sale."
+region: eu
+track: start-something
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-18
+
+situation: "You make earrings in Bologna and sell them on an online marketplace for €15 a pair. After your first sale, less than you expected reaches your account. Before you plan next month, you want to know where the rest went."
+
+prediction:
+  q: "A pair sells for €15 and costs €5 to make and pack. Your monthly costs are €120, so you planned on 12 pairs. Then you read the fee page: €1.50 to the marketplace and €0.50 for the card payment, on every sale. How many pairs a month cover the €120 now?"
+  options:
+    - text: "Still 12, because the fees are only €2"
+      why: "The fees are small beside the €15 price, but they come out of what you keep. Each pair now leaves €8, not €10, so 12 pairs bring in €96, short of €120."
+    - text: "14, since the fees are about 13% of the price"
+      why: "The fees are 13% of the price, but they come out of the €10 you would keep, and there they are a fifth. So the count rises by a quarter, not by 13%."
+    - text: "15"
+      why: "Each pair keeps €15 − €5 − €2 = €8, and €120 ÷ €8 is 15. The fees took a fifth of what you keep, so you need a quarter more pairs."
+  answer: 2
+
+takeaways:
+  - "A fee charged on every sale is a variable cost. Add it to the cost of one sale before you work out what you keep."
+  - "Fees look small beside the price and big beside what you keep. Here €2 is about 13% of the price, but a fifth of the margin."
+  - "A percentage fee grows with your price, and a flat fee per order weighs most on cheap items. In the EU, paying by everyday card cannot cost the buyer extra."
+
+worked:
+  kind: margin
+  context: "The earrings from the top of the page: €15 a pair and €5 for materials and packing. The €2 of fees on every sale (€1.50 to the marketplace, €0.50 for the card payment) is counted in the cost of each pair, so one pair costs €7. The month costs €120."
+  unitName: pairs
+  fixed: 120
+  variable: 7
+  price: 15
+
+explorable:
+  kind: margin
+  unitName: pairs
+  fixed: 120
+  variable: 7
+  prices: [7, 10, 12, 15, 18]
+  prompts:
+    - "Start at €15, then tap €12. The price fell by a fifth, and the fees stayed at €2. Did the pairs you need rise by a fifth, or by more?"
+    - "Tap €7. That is what one pair costs once the fees are in. What does the answer become, and why?"
+
+practice:
+  kind: margin
+  context: "A friend in Riga pours candles and sells them online for €20 each. Wax, wick, jar and packing cost €6. Her marketplace takes 10% of the price, and the payment service €1 an order. Each order is one candle. Her share of a shared studio is €75 a month."
+  unitName: candles
+  fixed: 75
+  variable: 9
+  price: 20
+
+quiz:
+  - q: "A friend sells prints on a marketplace that takes 10% of each sale. She raises a print from €15 to €20, and nothing else changes. She says each print now keeps €5 more. What do you tell her?"
+    options:
+      - text: "She is right, because her costs did not change"
+        why: "The fee is one of her costs, and it did change. At 10%, it rose from €1.50 to €2, so €0.50 of the rise went to the platform."
+      - text: "Each print keeps €4.50 more, because the fee grows with the price"
+        why: "10% of the new €20 price is €2, up from €1.50. Of the €5 rise, €4.50 reaches her."
+      - text: "Each print keeps nothing more, because the fee takes the rise"
+        why: "The fee takes 10% of the rise, not all of it. That is €0.50 of the €5."
+    answer: 1
+  - q: "You also sell stickers at €3 each. The payment service charges €0.50 an order, and most buyers order just one sticker. Which change keeps more from each sale?"
+    options:
+      - text: "Also offer a pack of five for €15, so the €0.50 is paid once for five"
+        why: "A flat fee is paid per order, not per item. On one €3 sticker it takes a sixth of the price. On a €15 pack it takes a thirtieth."
+      - text: "No change, since €0.50 is too small to matter"
+        why: "On a €3 sticker, €0.50 is a sixth of the price, and an even bigger share of what is left after making it."
+      - text: "Add €0.50 to each order as a card fee"
+        why: "In the EU, a seller cannot charge extra for paying with an everyday debit or credit card. The fee has to sit inside the price."
+    answer: 0
+  - q: "A buyer in Spain wants a €15 pair and pays with her ordinary debit card. Your payment service charges you €0.50 for each card payment. What do you do?"
+    options:
+      - text: "Add €0.50 to her total as a card fee"
+        why: "Charging extra for paying with an everyday debit or credit card is not allowed in the EU. The price has to cover the fee."
+      - text: "Charge the listed €15, with the €0.50 already counted in your costs"
+        why: "The fee is a cost of the sale, like the box and the envelope. Counting it in the cost of each pair keeps it out of the buyer's total."
+      - text: "Add the fee only for buyers outside Italy"
+        why: "The rule is the same for a buyer in your own country and one elsewhere in the EU, so a buyer in Spain is covered too."
+    answer: 1
+  - q: "The marketplace offers an upgrade: €25 a month on top of your current plan, and its fee per sale falls from €1.50 to €0.50. You sell about 15 pairs a month. How do you decide?"
+    options:
+      - text: "Take it, because the fee per pair falls by two-thirds"
+        why: "The fee falls by €1 a pair. At 15 pairs that saves €15, against €25 a month, so at these sales the upgrade costs €10 more."
+      - text: "Skip it, because a monthly charge is always worse"
+        why: "Not always. At 30 pairs a month the upgrade saves €30 against €25. The test is your real sales, not the type of charge."
+      - text: "Weigh €1 saved per pair against €25 a month, at the sales you really make"
+        why: "The upgrade swaps part of a cost per sale for a monthly cost. It pays only above 25 pairs a month. At 15, it costs €10 more."
+    answer: 2
+
+transfer:
+  - "Before you list anything on a marketplace. Find the fee page and add every charge per sale to the cost of one item."
+  - "When a platform says its fees are changing. Put the new fee into your sum and work out break-even again before it starts."
+  - "When you compare two places to sell. Compare what reaches you from one sale, not the headline fee."
+  - "When you pay by card yourself. In the EU, a seller cannot charge you extra for using an everyday debit or credit card."
+
+glossary: [platform-fee, margin, variable-cost, fixed-cost, break-even, surcharge]
+tool: break-even
+
+sources:
+  - title: "Payments, transfers and cheques: surcharges for card payments (Your Europe, last checked 28 April 2026)"
+    url: "https://europa.eu/youreurope/citizens/consumers/financial-products-and-services/payments-transfers-cheques/index_en.htm"
+    publisher: "European Commission, Your Europe"
+  - title: "E-commerce, distance and off-premises selling: total price and payment fees (Your Europe, last checked 12 July 2026)"
+    url: "https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm"
+    publisher: "European Commission, Your Europe"
+---
+
+## Where €15 goes
+
+You make earrings in Bologna and sell them on an online marketplace for €15 a pair. Beads, hooks, a small box and a padded envelope cost €5. The buyer pays the post on top.
+
+On paper you keep €10. But two more hands reach into every sale. In this example the marketplace charges €1.50 for each sale. The payment service that takes the buyer's card charges €0.50 an order. Each of these is a <Term id="platform-fee">platform fee</Term>.
+
+So each pair leaves you €8, not €10. That €8 is your real <Term id="margin">margin</Term>. The fees are a <Term id="variable-cost">variable cost</Term>: sell one more pair, and you pay them one more time.
+
+**Put every fee charged per sale into the cost of one sale.**
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="fee-title fee-desc">
+  <title id="fee-title">Where €15 from one pair of earrings goes</title>
+  <desc id="fee-desc">A single bar in three parts. Making and packing the pair is €5, fees to the marketplace and the card payment are €2, and €8 is kept.</desc>
+  <rect class="chart-b" x="0" y="26" width="104" height="36" rx="6" />
+  <rect class="chart-a" x="108" y="26" width="40" height="36" rx="6" />
+  <rect class="chart-b" x="152" y="26" width="168" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Making €5</text>
+  <text class="chart-label" x="320" y="16" text-anchor="end">Kept €8</text>
+  <text class="chart-label" x="108" y="80">Fees €2</text>
+  <text class="chart-note" x="0" y="100">One pair sold at €15</text>
+</svg>
+
+| Where €15 goes | Amount |
+| --- | --- |
+| Materials and packing | €5 |
+| Marketplace fee | €1.50 |
+| Card payment fee | €0.50 |
+| Kept | €8 |
+
+## Small beside the price, big beside what you keep
+
+Two euros sounds small next to a €15 price. It is about 13% of it. But the fees come out of the €10 you would have kept, and there they are a fifth.
+
+Your monthly costs are €120: €100 for a bench at a shared makers' space, and €20 for the shop's monthly plan. These are <Term id="fixed-cost">fixed costs</Term>. The plan is a platform fee too, but it is charged monthly. **Fees per sale go into the cost of one sale. Fees per month go into fixed costs.**
+
+Without the fees, 12 pairs would cover the €120. With them, it takes 15. A small fee can move your <Term id="break-even">break-even</Term> point by a quarter.
+
+## Percentage fees grow with the price
+
+Some marketplaces take a percentage of each sale, instead of a flat amount or as well as one. Say a platform takes 10%. On a €15 pair that is €1.50. Raise the price to €20 and the fee becomes €2.
+
+So a price rise of €5 brings you €4.50, not €5. **With a percentage fee, part of every price rise goes to the platform.**
+
+Check the fee page for what the percentage is taken from. It may be the item price alone, or the item plus the post the buyer pays. The same 10% costs you more when it is taken from both.
+
+## Flat fees weigh most on small orders
+
+A flat fee per order works the other way. It stays the same whatever the order is worth. Fifty cents is a thirtieth of a €15 order, but a sixth of a €3 sticker.
+
+So cheap items sold one at a time lose the most to flat fees. A pack of five stickers pays the fee once instead of five times. That is one reason sellers put small things in packs, or set a minimum order.
+
+If you sell in złoty or koruna, every step is the same.
+
+## Why the fee goes inside the price
+
+You might want to add the card fee to the buyer's total. That extra is a <Term id="surcharge">surcharge</Term>. In the EU, a seller cannot add one when a buyer pays with an everyday debit or credit card, at home or in any other EU country. A few card types, such as company cards, fall outside this rule.
+
+Where a charge for paying a certain way is allowed, it can only cover what that payment really costs you. Some countries allow none at all, so check your own country's rules first.
+
+Whatever you charge, the buyer must see the full total, extras included, before placing the order. **The simplest plan is a price that already carries your fees.**
+
+## Check what reaches you
+
+After your first few sales, open the statement that shows what reached your account. Each payout should be your price minus the fees you counted. If less arrived, a fee is missing from your sum.
+
+Platforms also change their fees from time to time. When a notice arrives, put the new fee into the cost of one sale. Then work out break-even again, before the new fee starts.

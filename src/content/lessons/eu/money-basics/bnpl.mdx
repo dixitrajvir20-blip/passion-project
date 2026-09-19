@@ -7,7 +7,7 @@ order: 3
 readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
-reviewedBy: "LaunchPad editor"
+reviewedBy: "Business Lab editor"
 lastReviewed: 2026-09-18
 
 situation: "You are buying trainers online for €120. At checkout, a button offers four payments of €30: the first today, then one every two weeks, with no interest. Paying €30 feels a lot easier than paying €120."
@@ -48,8 +48,8 @@ explorable:
         amount: 90
         lines:
           - "Rain jacket, €90"
-          - "Pay in 3: €30 a month, 0% interest"
-        action: "Pay in 3"
+          - "Split into 3: €30 a month, 0% interest"
+        action: "Split into 3"
       check:
         q: "After needs, €280 is left this month. Two plans from last month already take €100 of it. The jacket plan would add €30. What do you check first?"
         options:
@@ -66,18 +66,18 @@ explorable:
         amount: 60
         lines:
           - "Two course books, €60"
-          - "Pay in 3: €20 today, then €20 a month"
+          - "Split into 3: €20 today, then €20 a month"
           - "0% interest if every payment is on time"
-        action: "Pay in 3"
+        action: "Split into 3"
       check:
         q: "Term starts on Monday and you need both books. You have no other plans. Each €20 fits your month, and the two later dates fall just after payday. What do you do?"
         options:
           - text: "Refuse. Pay-later plans always go wrong"
-            why: "A plan is a small loan, and a loan can be the right tool. One plan, sized to your month, with dates you have checked, is what using one well looks like."
+            why: "The slip is treating every plan as the same. A plan is a small loan, and one plan that fits your month, with dates you have checked, can work."
           - text: "Use it, and add a hoodie while the payments are small"
             why: "The books fit the month. The slip is letting small payments set the size of the basket, instead of the month setting it."
           - text: "Use it, and put the two later dates in your calendar"
-            why: "You know the total, each payment fits, and the dates land after payday. A reminder is what keeps a 0% plan at 0%."
+            why: "You know the total, each payment fits, and the dates land after payday. A reminder helps every payment land on time, which is what keeps a 0% plan at 0%."
         answer: 2
     - screen:
         kind: message
@@ -89,9 +89,9 @@ explorable:
         q: "This arrives on Tuesday. There is €12 in your account, and your pay lands on Friday. What do you do?"
         options:
           - text: "Contact the lender today, before the date, and ask what can change"
-            why: "Before the date is when there are options. The lender may not agree, but asking costs nothing, and it is easier before a fee is added than after."
+            why: "Before the date, there may still be options. The lender may not agree, but asking costs nothing, and it is easier before a fee is added than after."
           - text: "Leave it, and let the payment try again after Friday"
-            why: "A failed payment can bring a late fee, and some terms add more for each try. The slip is treating a due date as movable when nobody has agreed to move it."
+            why: "A failed payment can bring a late fee, and the plan's terms set how much. The slip is treating a due date as movable when nobody has agreed to move it."
           - text: "Cover it with an overdraft on your bank account"
             why: "That pays one loan with another, and an overdraft can carry its own charges. The debt does not shrink. It moves."
         answer: 0
@@ -107,9 +107,9 @@ explorable:
           - text: "Say yes. She will pay you back"
             why: "The plan is in your name, so the lender only sees you. If one transfer from Mia is late, the late fee and the missed payment are yours."
           - text: "Say yes, if she sends the first €20 today"
-            why: "One payment up front still leaves €60 owed in your name. The tell is someone else's purchase sitting on your plan."
+            why: "One payment up front still leaves €60 owed in your name. The slip is putting someone else's purchase on a plan that only you are responsible for."
           - text: "Say no to the plan, and tell her it would be your debt"
-            why: "A debt in your name stays yours, whoever uses the headphones. A decline can also mean a lender judged the payments would not fit her month."
+            why: "A debt in your name stays yours, whoever uses the headphones. A decline can also mean a lender judged the payments might not fit her month."
         answer: 2
     - screen:
         kind: message
@@ -145,18 +145,18 @@ quiz:
   - q: "It is December 2026. Before approving a €150 pay-later plan, the checkout asks about your income and what you already owe. What is going on?"
     options:
       - text: "The shop wants data it does not need, so close the page"
-        why: "From 20 November 2026, EU rules require a lender to check you can repay before lending, and pay-later plans are included. These questions are that check."
+        why: "From 20 November 2026, EU rules require a lender to check you can repay before lending, and pay-later plans are included. The slip is reading that check as snooping."
       - text: "It means this plan charges interest"
         why: "The check is about whether you can repay, not about the price. A plan at 0% interest gets it too."
       - text: "It is the lender checking you can repay, as the new rules require"
-        why: "The revised directive requires this check before the loans it covers. Accurate answers are what make it useful to you as well."
+        why: "The revised directive requires this check before the loans it covers. Income and debts belong in it. Your health and your social media do not."
     answer: 2
   - q: "Your cousin in Lisbon says she has no debt: just two pay-later plans and a laptop paid monthly at the shop, all at 0%. You are helping her write a budget. How do you list those payments?"
     options:
       - text: "As debts, each with the amount left and the date it ends"
         why: "Each one is money owed for something she already has. What is left and when it ends shows how much of each month is already spoken for."
       - text: "As spending, like a subscription"
-        why: "A subscription stops when you cancel it. These payments are for things already handed over, so they are owed whatever happens."
+        why: "A subscription stops when you cancel it. These payments are for things she already has, so cancelling does not make them stop."
       - text: "Leave them out, since none of them charges interest"
         why: "No interest changes the price of a debt, not whether it exists. Leaving them out makes the month look freer than it is."
     answer: 0
@@ -185,14 +185,14 @@ transfer:
   - "When a payment date and your payday do not line up. Deal with it before the date, not after."
   - "When someone asks to use your plan or your account. A debt in your name stays yours, whoever uses what it paid for."
 
-glossary: [buy-now-pay-later, interest, creditworthiness-check, budget, late-fee, cash-flow]
+glossary: [buy-now-pay-later, interest, creditworthiness-check, budget, late-fee, cash-flow, overdraft]
 tool: budget
 
 sources:
-  - title: "Directive (EU) 2023/2225 on credit agreements for consumers (18 October 2023), recitals 15-16 and Article 18"
+  - title: "Directive (EU) 2023/2225 on credit agreements for consumers (18 October 2023): recitals 15-17, 55, 73 and 81, Articles 2 and 18"
     url: "https://eur-lex.europa.eu/eli/dir/2023/2225/oj/eng"
     publisher: "Official Journal of the European Union, via EUR-Lex"
-  - title: "Summary: consumer credit agreements (2023), applies from 20 November 2026 (last updated 4 January 2024)"
+  - title: "Summary: consumer credit agreements (2023), with the 20 November 2026 start date and the debt advice duty (last updated 4 January 2024)"
     url: "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=LEGISSUM:4707402"
     publisher: "EUR-Lex, Publications Office of the European Union"
   - title: "Consumer credit: the revised directive covers buy now, pay later and loans under €200 (accessed 18 September 2026)"
@@ -213,11 +213,11 @@ The price stays the same. Splitting it changes when you pay, not how much. What 
 
 ## New EU rules from 20 November 2026
 
-Until now, the EU's consumer credit rules left out loans under €200 and loans with no interest or charges. Many pay-later plans fell through that gap. The revised Consumer Credit Directive closes it, and its rules apply from 20 November 2026.
+Until now, the EU's consumer credit rules left out loans under €200 and loans with no interest or charges. Many pay-later plans fell through that gap. The revised Consumer Credit Directive brings most of them inside the rules from 20 November 2026.
 
-**For you, the main change is a check before the loan.** A lender must look at your income, your spending and what you already owe. That is a <Term id="creditworthiness-check">creditworthiness check</Term>, and from that date pay-later plans get one too.
+**One change you will notice is a check before the loan.** A lender must look at your income, your spending and what you already owe. That is a <Term id="creditworthiness-check">creditworthiness check</Term>, and from that date pay-later plans get one too.
 
-Each country writes the directive into its own law. So details, such as limits on charges, can differ between Ireland, Austria and Portugal. For the rule where you live, ask your national consumer authority.
+Each EU country writes the directive into its own law, so details such as limits on charges can differ. For the rule where you live, ask your country's consumer authority.
 
 ## Three small plans, one big bite
 
@@ -250,8 +250,8 @@ So before adding a plan, add up what the running plans take this month. That tot
 
 ## When a payment will not go through
 
-A 0% plan costs nothing only while every payment lands on time. If your pay arrives after a due date, the payment can fail. A <Term id="late-fee">late fee</Term> can then be added, and the plan's terms say how much. That gap between money arriving and money due is <Term id="cash-flow">cash flow</Term>.
+A 0% plan costs nothing only while every payment lands on time. If your pay arrives after a due date, the payment can fail and a <Term id="late-fee">late fee</Term> is added; the plan's terms say how much. The timing of money in and out is your <Term id="cash-flow">cash flow</Term>, and here it sets the cost.
 
-**Act before the date, not after.** Contact the lender, move money if you can, and ask what can change. Borrowing to cover a payment only moves the debt.
+**Act before the date, not after.** Contact the lender, move money if you can, and ask what can change. Borrowing to cover a payment, say with an <Term id="overdraft">overdraft</Term>, only moves the debt.
 
-If several plans are slipping at once, you are not the first. The revised directive also requires every EU country to make debt advice available. Your national consumer authority can point you to it.
+If several plans are slipping at once, you are not the first. The revised directive requires every EU country to offer independent debt advice at little cost. Ask your consumer authority where to find it.

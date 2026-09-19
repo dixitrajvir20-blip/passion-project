@@ -7,7 +7,7 @@ order: 3
 readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
-reviewedBy: "LaunchPad editor"
+reviewedBy: "Business Lab editor"
 lastReviewed: 2026-09-18
 
 situation: "It has rained hard for a week. The tomatoes you bought for ₹30 a kilo last month are ₹80 today, and the seller just says the rain did it. That evening the same stall sells spinach at half price before it shuts. You want to know who decides these prices."
@@ -20,17 +20,17 @@ prediction:
     - text: "It rises, and stays higher until a new crop arrives"
       why: "Fewer tomatoes reach the market while as many buyers want them. The gap lasts until a fresh harvest refills supply, which takes weeks."
     - text: "It rises for a day, then falls back"
-      why: "A damaged crop cannot regrow in a day. The rise lasts until the next harvest is picked and trucked in, which in 2023 took weeks."
+      why: "A damaged crop cannot regrow in a day. The rise lasts until the next harvest is picked and trucked in, which usually takes weeks."
   answer: 1
 
 takeaways:
   - "A market price moves when supply or demand moves. Fewer goods for the same buyers pushes it up. More goods for the same buyers pulls it down."
-  - "Rain and bad weather usually cut supply, and the rise lasts until the next harvest. A festival usually lifts demand for days, then fades."
-  - "Goods that spoil get cheaper as time runs out. At closing time a lower price beats throwing the stock away tomorrow."
+  - "Bad weather can cut supply, and the rise often lasts until the next harvest. A festival lifts demand for a few days, then it fades."
+  - "Goods that spoil often get cheaper as time runs out. At closing time a lower price beats throwing the stock away tomorrow."
 
 explorable:
   kind: drill
-  intro: "Five situations from a year at the market. For each one, decide which side moved, supply or demand, and what that does to the price. Then look."
+  intro: "Five situations from a year at the market. For each one, decide what changed (supply, demand or the time left to sell) and what that does to the price. Then look."
   scenarios:
     - screen:
         kind: chat
@@ -42,9 +42,9 @@ explorable:
         q: "Your family runs a small snack stall and buys onions every week. In September your uncle sends this from an onion-growing district. What do you plan for?"
         options:
           - text: "Higher onion prices for weeks, until a later harvest arrives"
-            why: "Rotted crop means fewer onions for every market, while buyers want as many as before. That gap lasts until the next crop is picked."
+            why: "A rotted crop means fewer onions for every market, while buyers want as many as before. That gap lasts until the next crop is picked."
           - text: "No change, because the rain is in another state"
-            why: "Onions travel from a few growing areas to the whole country. The slip is thinking a far-away field cannot touch your market's price."
+            why: "Onions are trucked from the districts that grow them to markets across the country. The slip is thinking a far-away field cannot touch your market's price."
           - text: "Lower prices, because farmers will rush to sell what is left"
             why: "A rush to sell can bring a short dip, but it adds no onions. Once the damaged crop is sold, there is less to go round."
         answer: 0
@@ -53,16 +53,16 @@ explorable:
         from: "Suresh bhaiya"
         lines:
           - "Huge tomato harvest this year. Every farm is picking at once."
-          - "The mandi is full of crates and the traders are not in a hurry."
+          - "The mandi is full of crates and the traders are in no hurry to buy."
       check:
         q: "It is February, the peak tomato season. You buy vegetables for home every Sunday. What do you expect at your market this week?"
         options:
           - text: "Higher prices, since every farm is busy"
             why: "Busy farms mean more tomatoes, not fewer. The slip is reading lots of activity as a shortage."
           - text: "Lower prices, because more tomatoes are chasing the same buyers"
-            why: "When supply jumps and buyers want about the same amount, sellers cut prices to clear their crates. A harvest glut is the reverse of a rain shortage."
+            why: "When supply jumps and buyers want about the same amount, sellers cut prices to clear their crates. Too much at harvest is the reverse of a shortage after rain."
           - text: "No change, because vegetable prices are fixed"
-            why: "Loose vegetables have no printed price. What a seller charges moves with what he paid at the mandi that morning."
+            why: "Loose vegetables have no printed price. What a seller charges moves with what they paid at the mandi that morning."
         answer: 1
     - screen:
         kind: chat
@@ -87,14 +87,14 @@ explorable:
           - "Tomatoes cost three times what they did last month."
           - "Making the dal with lauki and tamarind until it settles."
       check:
-        q: "After heavy rain, tomato prices have tripled. Many families near you switch to other vegetables, like your sister did. What do you expect for the price of those other vegetables?"
+        q: "After heavy rain, tomato prices have tripled, but other vegetables had a normal harvest. Many families near you switch to them, like your sister did. What do you expect for their price?"
         options:
           - text: "It falls, because people are spending their money on tomatoes"
             why: "Many families are not buying more tomatoes. They are buying fewer and swapping, which sends new buyers to the other vegetables."
           - text: "It stays the same, because their harvest was normal"
             why: "Their supply is normal, but their demand is not. A price moves when either side moves."
           - text: "It rises a little too, because more buyers want them"
-            why: "Nothing happened to their crop, but demand for them went up. The tomato jump of July 2023 spread to other vegetables in the same way."
+            why: "Nothing happened to their crop, but more buyers now want them. More demand for the same supply can lift their price a little."
         answer: 2
     - screen:
         kind: chat
@@ -106,46 +106,46 @@ explorable:
         q: "You reach the vegetable stall at 8:45 pm. The seller has plenty of both left. Which price are you most likely to see cut?"
         options:
           - text: "The onions, because he has the most of them"
-            why: "Onions keep for weeks, so he can sell them tomorrow at the usual price. How much is left matters less than how long it lasts."
+            why: "Onions keep for weeks, so they can be sold tomorrow at the usual price. How much is left matters less than how long it lasts."
           - text: "The spinach, because it will wilt by morning"
-            why: "Spinach bought at dawn is worth little tomorrow. With his time to sell running out, a lower price tonight beats nothing."
+            why: "Spinach wilts overnight and will hardly sell tomorrow. With the time to sell running out, a lower price tonight beats next to nothing."
           - text: "Neither, because prices are set in the morning"
             why: "The morning price assumed a whole day to sell. By 8:45 pm the time left has changed, and so has the price for anything that spoils."
         answer: 1
   reflection: "Think of a price at your own market that jumped or fell lately. Which side moved: what arrived at the market, or who wanted to buy?"
 
 quiz:
-  - q: "You sell cut-fruit cups from a cart at ₹30 each. At 8 pm you have 12 left, and they will not be fit to sell tomorrow. The fruit in each cup cost you ₹12. A customer offers ₹10 for one. What do you do?"
+  - q: "You sell cut-fruit cups from a cart for ₹30 each. It is 8:50 pm and you pack up at 9. You have 12 cups left, and they will not be fit to sell tomorrow. The fruit in each cup cost you ₹12. A customer offers ₹10 a cup for all 12. What do you do?"
     options:
       - text: "Refuse, because ₹10 is below what the fruit cost"
-        why: "The ₹12 is already spent, whatever you do now. The slip is letting a cost you cannot get back set tonight's price."
-      - text: "Sell it for ₹10"
-        why: "The only choice left is ₹10 tonight or nothing tomorrow. ₹10 is more than nothing, so the cup earns what it still can."
+        why: "The ₹144 for the fruit is already spent, whatever you do now. The slip is letting a cost you cannot get back set tonight's price."
+      - text: "Sell all 12 for ₹10 each"
+        why: "Selling brings in ₹120 tonight. Keeping them brings in nothing, because they spoil. The fruit money is spent either way, so ₹120 is the better end to the night."
       - text: "Keep them and sell at ₹30 tomorrow"
         why: "Cut fruit spoils overnight, so tomorrow there is nothing to sell. Holding out for the usual price ends at ₹0."
     answer: 1
   - q: "Onion prices at every market in your city have doubled in a month. A friend says shopkeepers are just being greedy. Which question do you check first?"
     options:
       - text: "Did something happen to the crop, or to getting it to market?"
-        why: "A rise at every market at once points to supply. In 2019, late rains damaged the onion crop and the average price nearly tripled in four months."
+        why: "A rise at every market at once points to supply. In 2019, late rains damaged the onion crop and the all-India average price nearly tripled from July to November."
       - text: "How much profit does the shop near you make?"
-        why: "One shop's profit cannot double prices across a whole city. When every market moves together, the cause is usually upstream."
+        why: "One shop's profit cannot double prices across a whole city. When every market moves together, the cause is usually further back, on the farm or on the way to market."
       - text: "Are people eating more onions than before?"
-        why: "Cooking habits change slowly. A doubling in a month is far more often a supply story: weather, a late crop, or a blocked road."
+        why: "Cooking habits change slowly. A doubling in a month usually points to supply: weather, a late crop, or trouble moving it to market."
     answer: 0
-  - q: "Your family's eatery uses 5 kg of onions and 5 kg of tomatoes a week. After crop damage both are getting dearer. Your father wants to buy a month's stock of both today. What do you suggest?"
+  - q: "Your family's eatery uses 5 kg of onions and 5 kg of tomatoes a week. After crop damage both are getting costlier. Your father wants to buy a month's stock of both today. What do you suggest?"
     options:
       - text: "A month of both, to beat the rise"
         why: "Tomatoes spoil in days, so most of a month's stock would be thrown away. The saving on the price is lost in the bin."
       - text: "Some extra onions, which keep, and tomatoes week by week"
         why: "Onions stored in a dry place keep for weeks, so buying ahead can work. Tomatoes are perishable, so they are bought as needed."
       - text: "Nothing extra, because prices always fall back next week"
-        why: "After crop damage, prices stay up until the next harvest, which is weeks away, not days."
+        why: "After crop damage, prices usually stay up until the next harvest, which is weeks away, not days."
     answer: 1
   - q: "You sell tomatoes from a cart. After a month of high prices, the new crop is arriving and the mandi price drops every day. The cart across the road already charges less. What do you do with your price?"
     options:
       - text: "Keep it, because you paid more at the mandi last week"
-        why: "Buyers compare today's carts, not what you paid last week. Your tomatoes ripen while they walk across the road."
+        why: "Buyers compare today's carts, not what you paid last week. While they walk across the road, your tomatoes keep ripening."
       - text: "Lower it towards what the market is charging today"
         why: "Supply is back, so the market price is falling. Moving with it keeps buyers coming, and tomatoes sold today do not go soft."
       - text: "Raise it, to make up for slow sales"
@@ -155,7 +155,7 @@ quiz:
 transfer:
   - "When a price jumps at your market. Ask which side moved: less arriving, or more people buying."
   - "When you sell anything that spoils, like cut fruit, flowers or snacks at a fest. Decide early how you will price what is left near closing."
-  - "When the news says food prices pushed up inflation. Look for the supply story behind it: a crop, the weather or a road."
+  - "When the news says food prices pushed up inflation. Look for what moved behind it: often a crop, the weather or trouble getting food to market."
 
 glossary: [supply, demand, mandi, inflation, substitute, perishable]
 
@@ -183,13 +183,15 @@ At a vegetable market, nobody sets the price alone. Two things push on it. <Term
 
 When supply falls and buyers want the same amount, they compete for fewer kilos and the price climbs. When too much arrives, sellers compete for the same buyers and the price drops. **A price moves when one side moves, so the first question is always: which side?**
 
-Most vegetables start at a <Term id="mandi">mandi</Term>, the wholesale market where farmers and traders sell to shop and cart owners before dawn.
+Many vegetables pass through a <Term id="mandi">mandi</Term> first. It is a wholesale market where farmers and traders sell in bulk to shopkeepers and cart owners, often early in the morning.
 
 ## When rain cuts the supply
 
-In September and October 2019, late and long rains damaged India's monsoon-season onion crop. The government's own monthly figures show what came next. The average retail price across India was about ₹21 a kilo in July. By November it was about ₹61, nearly three times as much.
+In 2019, rain came late and kept falling through September and October. It damaged India's onion crop from the monsoon season. The government's own monthly figures show what came next. The average retail price across India was about ₹21 a kilo in July. By November it was about ₹61, nearly three times as much.
 
-Nobody started eating three times as many onions. **The same buyers were chasing far fewer onions.** The reverse happens at harvest time. When a whole crop comes in at once, the glut can pull the price down hard.
+Nobody started eating three times as many onions. **The same buyers were chasing fewer onions.**
+
+The reverse can happen at harvest time. When a big crop arrives all at once, there can be a glut: more than buyers want at the usual price. Then the price falls.
 
 <svg class="chart" viewBox="0 0 320 156" role="img" aria-labelledby="onion-title onion-desc">
   <title id="onion-title">Average retail price of onions in India, July to November 2019</title>
@@ -222,24 +224,26 @@ Nobody started eating three times as many onions. **The same buyers were chasing
 
 ## The tomato summer of 2023
 
-Tomatoes follow a calendar. The biggest harvest comes from December to February. July, August, October and November are lean months, when less is picked. In July 2023 the monsoon made a lean month worse: moving crates got harder, and more tomatoes spoilt on the way.
+Most tomatoes are picked from December to February. July, August, October and November are lean months, when less is picked. July is also the monsoon, when moving crates is harder and more tomatoes spoil on the way.
 
-The jump was big enough to lift India's <Term id="inflation">inflation</Term> figure for July, the Reserve Bank's bulletin noted. A government notice that July expected new crop in August, and prices did fall. The government's discounted tomato sale started at ₹90 a kilo on 14 July. It was cut in steps to ₹40 by 20 August, as market prices declined.
+In July 2023 tomato prices jumped, and the Reserve Bank's bulletin said the shock spread to other vegetables. Vegetables helped lift India's <Term id="inflation">inflation</Term> to 7.4% in July, from 4.9% in June.
 
-**A price pushed up by a short supply usually comes down when the next crop arrives.**
+A government notice on 12 July expected new crop soon. The government's discounted sale began at ₹90 a kilo on 14 July. It was cut in steps to ₹40 on 20 August, as market prices fell.
+
+**A price pushed up by short supply usually comes down when the next crop arrives.**
 
 ## When demand moves instead
 
-Sometimes the crop is fine and the buyers change. Picture the week before Diwali. Flower growers pick about the usual amount, but far more homes want marigolds on the same few days. The price rises, then falls back once the festival passes.
+Sometimes the crop is fine and the buyers change. Picture the week before Diwali. Flower growers pick about the usual amount, but far more homes want marigolds on the same few days. The price is likely to rise, then fall back once the festival passes.
 
-A swap works the same way. The Reserve Bank's bulletin noted that the July 2023 tomato jump spread to other vegetables. When one vegetable gets very dear, many kitchens use a <Term id="substitute">substitute</Term>, and that extra demand can lift its price too.
+A swap can work the same way. When one vegetable gets very costly, many kitchens switch to a <Term id="substitute">substitute</Term>. That extra demand can lift the substitute's price too.
 
-**A festival or a swap lifts demand for days or weeks. A damaged crop cuts supply until the next harvest.**
+**A festival or a swap moves demand, usually for days or weeks. A damaged crop cuts supply, often until the next harvest.**
 
 ## Closing time at the stall
 
-At 9 pm, a vegetable seller cuts the price of spinach and coriander, but not onions. Nothing about the spinach changed since noon except the time left to sell it.
+Picture a vegetable seller at 9 pm. She cuts the price of spinach and coriander, but not onions. Since noon, the main thing that changed is the time left to sell them.
 
-Leafy greens are <Term id="perishable">perishable</Term>. By morning they wilt, and few people will pay the full price for them. The seller paid for them at the mandi at dawn, so that money is spent whatever happens next. **At closing time the choice is a lower price tonight or nothing tomorrow, and a lower price is more than nothing.**
+Leafy greens are <Term id="perishable">perishable</Term>. By morning they wilt, and few people will buy them. The seller paid for them at the mandi that morning, so that money is spent whatever happens next. **At closing time the choice is a lower price tonight or next to nothing tomorrow, and the lower price wins.**
 
 Onions and potatoes keep for weeks. There is no rush to sell them tonight, so their price holds.

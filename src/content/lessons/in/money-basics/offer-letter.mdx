@@ -7,7 +7,7 @@ order: 3
 readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
-reviewedBy: "LaunchPad editor"
+reviewedBy: "Business Lab editor"
 lastReviewed: 2026-09-18
 
 situation: "Your first offer letter arrives by email: a CTC of ₹3,60,000 a year. You divide by 12, get ₹30,000, and start looking at rooms that cost ₹9,000 a month. Then a senior at college tells you not to count on ₹30,000."
@@ -25,7 +25,7 @@ prediction:
 
 takeaways:
   - "CTC is everything the company spends on you in a year. In-hand pay is what reaches your account, and it is smaller."
-  - "EPF is often the biggest cut on a first salary: 12% of basic pay from you and 12% from the employer. It is saved in your name, not lost."
+  - "EPF is often the biggest cut on a first salary: 12% of basic pay from you and 12% from the employer. It is kept for you, not lost."
   - "Professional tax depends on your state, and TDS is only taken when your yearly income is taxable. Variable pay, bonuses and gratuity do not arrive monthly."
 
 worked:
@@ -42,7 +42,7 @@ explorable:
   scenarios:
     - screen:
         kind: chat
-        from: "Anita (HR, Greenline Stores)"
+        from: "Anita (HR, a retail chain)"
         amount: 360000
         lines:
           - "Congratulations on your selection."
@@ -61,7 +61,7 @@ explorable:
         answer: 1
     - screen:
         kind: chat
-        from: "Rahul (HR, Bluebay Services)"
+        from: "Rahul (HR, a support centre)"
         amount: 420000
         lines:
           - "Your CTC is ₹4,20,000 a year."
@@ -79,7 +79,7 @@ explorable:
         answer: 2
     - screen:
         kind: chat
-        from: "Anita (HR, Greenline Stores)"
+        from: "Anita (HR, a retail chain)"
         amount: 25000
         lines:
           - "Joining bonus, paid with your first salary."
@@ -96,20 +96,20 @@ explorable:
         answer: 1
     - screen:
         kind: chat
-        from: "Rahul (HR, Bluebay Services)"
+        from: "Meera (HR, a hotel group)"
         lines:
           - "Your CTC of ₹3,80,000 includes:"
           - "Gratuity: ₹8,658 a year"
           - "Group health insurance: ₹6,000 a year"
       check:
-        q: "You want to know how much these two lines add to each month's pay. What do you conclude?"
+        q: "You are working out the monthly pay in this offer. How do you treat these two lines?"
         options:
-          - text: "Both add cash, spread over the 12 months"
-            why: "Neither is paid monthly. Insurance is paid to an insurer for your cover, and gratuity is paid when you leave, after years of service."
-          - text: "Only the gratuity adds cash each month"
-            why: "Gratuity is a lump sum paid when you leave. A permanent job needs five years of service first, or one year on a fixed-term contract."
-          - text: "Neither adds cash to any month"
-            why: "Both are real, but neither is monthly pay. The insurance buys cover, and gratuity waits until you leave. Leave both out when you work out monthly pay."
+          - text: "Add both, spread over the 12 months"
+            why: "Neither is paid out monthly. The insurance money goes to an insurer for your cover, and gratuity is paid when you leave, after years of service."
+          - text: "Add only the gratuity, spread over the 12 months"
+            why: "Gratuity is one payment made when you leave. A permanent job needs five years of service first, or one year on a fixed-term contract."
+          - text: "Leave both out of the monthly pay"
+            why: "Both are real, but neither is monthly pay. The insurance buys cover, and gratuity waits until you leave."
         answer: 2
   reflection: "Think of an offer you or a friend has seen. Which line would you have counted as monthly pay, and which word shows that it is not?"
 
@@ -136,17 +136,17 @@ quiz:
     options:
       - text: "Ask HR to start taking tax now, to be safe"
         why: "TDS is based on the tax you are expected to owe for the year. If none is due, taking some only means waiting for a refund later."
-      - text: "Check where income tax starts this year on incometax.gov.in, and compare it with your yearly pay"
-        why: "TDS is taken only when your income for the year is expected to be taxed. Below the level where tax starts, ₹0 is the right figure."
+      - text: "Check this year's tax rules on incometax.gov.in against your yearly pay"
+        why: "Your employer takes TDS only when your pay for the year is expected to be taxed. If no tax is due at your pay, ₹0 is the right figure."
       - text: "Put money aside every month for the bill he describes"
         why: "Setting money aside rests on his guess. The official page tells you whether any tax is due at all, and then you know."
     answer: 1
   - q: "You explain the gap to your mother: ₹3,600 a month goes into EPF. She worries the money is gone for good. What do you tell her?"
     options:
       - text: "It is a cost of having a job, like a fee"
-        why: "Both shares are kept in your name. You cannot spend them this month, but they are not a fee."
-      - text: "It is saved in my name, and the scheme allows withdrawals for some needs"
-        why: "EPF is savings held for you, and interest is added each year. Its rules allow withdrawals for needs such as a house, illness, education or marriage."
+        why: "Both shares are kept for you. You cannot spend them this month, but they are not a fee."
+      - text: "It is kept for me, and the fund allows withdrawals for some needs"
+        why: "The money is held for you, and interest is added to your provident fund each year. Its rules allow withdrawals for needs such as a house, illness, education or marriage."
       - text: "It comes back with next month's salary"
         why: "EPF is for the long term. The money stays in the fund and is not paid back with salary."
     answer: 1
@@ -154,24 +154,27 @@ quiz:
 transfer:
   - "When HR calls with an offer. Ask for the salary breakup and the monthly in-hand figure, in writing, before you sign."
   - "When you compare two offers. Compare fixed in-hand pay, not CTC, because CTC can hide variable pay and one-off bonuses."
-  - "When your first payslip arrives. Match each line to the breakup: basic pay, both EPF shares, professional tax and TDS."
+  - "When your first payslip arrives. Match each line to the breakup: basic pay, your EPF share, professional tax and TDS."
   - "When you plan rent, a phone instalment or savings. Start from in-hand pay, and split it the way the lesson on first earnings does."
 
 glossary: [ctc, in-hand-pay, epf, basic-pay, professional-tax, tds, variable-pay, gratuity, budget]
 tool: budget
 
 sources:
-  - title: "Employees' Provident Fund Scheme: 12% of wages from employee and employer, withdrawals and interest (24 July 2023)"
+  - title: "Employees' Provident Fund Scheme: who must join, 12% of wages from employee and employer, withdrawals and interest (24 July 2023)"
     url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1942083"
     publisher: "Ministry of Labour and Employment, via Press Information Bureau"
-  - title: "Cabinet approves raising the EPFO wage ceiling from ₹15,000 to ₹25,000 a month (16 September 2026)"
+  - title: "Cabinet approves raising the EPFO wage ceiling for compulsory cover from ₹15,000 to ₹25,000 a month, with steps to put it into effect to follow (16 September 2026)"
     url: "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-enhancement-of-epfo-wage-ceiling-from-rs-15000-to-rs-25000-per-month/"
     publisher: "Prime Minister's Office, Government of India"
   - title: "Four labour codes made effective: appointment letters for all workers, gratuity after one year for fixed-term staff (21 November 2025)"
     url: "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2192463&reg=48&lang=2"
     publisher: "Ministry of Labour and Employment, via Press Information Bureau"
-  - title: "Salaried individuals for AY 2026-27: Form 12BB, Form 16 and TDS on salary (accessed 18 September 2026)"
+  - title: "Salaried individuals for AY 2026-27: tax slabs, the rebate, and the TDS certificate employers give (accessed 18 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1"
+    publisher: "Income Tax Department, Government of India"
+  - title: "Income-tax Act, 2025, section 392: tax on salary taken at an average rate, from the estimated pay for the tax year (accessed 18 September 2026)"
+    url: "https://www.incometaxindia.gov.in/w/section-392-6"
     publisher: "Income Tax Department, Government of India"
   - title: "Profession tax schedule: rates for salary and wage earners (amendment bill, undated; accessed 18 September 2026)"
     url: "https://ptax.karnataka.gov.in/documents/pt%20amendment%20bill.pdf"
@@ -184,25 +187,25 @@ sources:
 
 What lands in your account each month is your <Term id="in-hand-pay">in-hand pay</Term>. **CTC ÷ 12 is what you cost each month, not what you get.**
 
-Since the labour codes took effect on 21 November 2025, every worker is due a written appointment letter. Ask for the salary breakup with it. That table lists each part of the CTC, and it is where the gap is explained.
+Since India's labour codes, its new set of labour laws, took effect on 21 November 2025, every worker is due a written appointment letter. Ask for the salary breakup with it. That table lists each part of the CTC, and it is where the gap is explained.
 
 ## Two EPF shares, both on basic pay
 
-On a first salary, the biggest cut is often the <Term id="epf">EPF</Term>, the Employees' Provident Fund. You put in 12% of your <Term id="basic-pay">basic pay</Term> each month, and your employer puts in 12% too.
+On a first salary, the biggest cut is often <Term id="epf">EPF</Term>, the Employees' Provident Fund. You put in 12% of your <Term id="basic-pay">basic pay</Term> each month, and your employer puts in 12% too.
 
-**Both shares are worked out on basic pay, not on the CTC.** In this offer basic is ₹15,000, half the monthly CTC, so each share is ₹1,800.
+**Both shares are worked out on basic pay, not on the CTC.** Here basic is ₹15,000, half the monthly CTC, so each share is ₹1,800.
 
-The employer's share sits inside your CTC but goes straight to the fund. Yours is cut from your salary. Neither is lost: both are kept for you, for later.
+The employer's share sits inside your CTC and goes straight to the fund. Yours is cut from your salary. Both are kept for you.
 
-If your basic pay is at or under a limit the government sets, EPF is compulsory. On 16 September 2026 the Cabinet approved raising that limit from ₹15,000 to ₹25,000 a month.
+In workplaces the scheme covers, EPF is compulsory when basic pay is at or under a government limit. The Cabinet approved raising it from ₹15,000 to ₹25,000 a month on 16 September 2026, to apply once the rules change.
 
 ## Professional tax and TDS
 
 <Term id="professional-tax">Professional tax</Term> is a tax on jobs set by each state. Your employer takes it from your salary, and the amount depends on your state and your pay. Karnataka's schedule, for example, charges nothing on a monthly salary under ₹25,000. This offer uses ₹200 as an example.
 
-<Term id="tds">TDS</Term>, tax deducted at source, is income tax your employer takes month by month, based on what you are expected to owe for the year. **If no income tax is due for the year, no TDS is taken.** At this pay none is due. The level where tax starts can change each year, so check it on incometax.gov.in.
+<Term id="tds">TDS</Term>, tax deducted at source, is income tax your employer takes month by month, based on what you are expected to owe for the year. **If no income tax is due for the year, no TDS is taken.** At this pay none is due. The rules can change each year, so check them on incometax.gov.in.
 
-If tax was taken, your employer gives you Form 16 after the year ends.
+If tax was taken, your employer gives you a certificate of it after the tax year ends.
 
 ## From ₹30,000 to ₹26,200
 
@@ -222,7 +225,7 @@ Put the lines together and every rupee of the gap has a name. **In this offer, �
 | --- | --- |
 | CTC ÷ 12 | ₹30,000 |
 | Employer's EPF share, 12% of basic | −₹1,800 |
-| Gross salary | ₹28,200 |
+| Gross salary (before your own cuts) | ₹28,200 |
 | Your EPF share, 12% of basic | −₹1,800 |
 | Professional tax (example; set by your state) | −₹200 |
 | TDS at this pay | ₹0 |
@@ -234,6 +237,6 @@ Many letters add lines that make the CTC bigger without adding to any month.
 
 <Term id="variable-pay">Variable pay</Term> depends on targets, and often comes once a year. A joining bonus comes once, and may have to be repaid if you leave early. Health insurance is cover, paid to an insurer, not cash to you.
 
-<Term id="gratuity">Gratuity</Term> is paid when you leave. In a permanent job you need five years of service first. On a fixed-term contract, the labour codes cut that to one year.
+<Term id="gratuity">Gratuity</Term> is paid when you leave. In a permanent job you need five years of service first. On a fixed-term contract, a job with a set end date, the labour codes cut that to one year.
 
 **Plan your month on fixed in-hand pay.** Your <Term id="budget">budget</Term> starts there. Anything else is a possible extra, and it gets its own plan when it lands.

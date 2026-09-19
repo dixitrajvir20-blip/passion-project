@@ -1,0 +1,5 @@
+{
+  "term": "Hourly rate",
+  "define": "A price for each hour of work. The customer pays for the time the job takes, not for the finished job.",
+  "example": "A tutor who charges $25 an hour bills $50 for a two-hour session."
+}

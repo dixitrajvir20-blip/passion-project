@@ -1,0 +1,187 @@
+---
+title: "Reading a simple income statement, line by line"
+summary: "Sales, costs and two kinds of profit, read from one month at a festival crêpe stand."
+region: eu
+track: how-business-works
+order: 1
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-18
+
+situation: "You and a friend ran a crêpe stand at your town's summer festival, every weekend in August. €2,000 came in from sales, and your friend wants to split it down the middle."
+
+prediction:
+  q: "The stand took €2,000 in August. Batter, fillings and paper plates cost €800. The pitch fee and griddle hire cost €450. Your friend says you each made €1,000. How much is there to split?"
+  options:
+    - text: "€2,000, so €1,000 each"
+      why: "That is the money that came in from sales. Every bill for batter, plates and the pitch is paid from it before any of it is profit."
+    - text: "€1,200, so €600 each"
+      why: "That is what is left after the batter and plates: the gross profit. The pitch fee and griddle hire still have to come out of it."
+    - text: "€750, so €375 each"
+      why: "€2,000 − €800 − €450 leaves €750. That is net profit, what is left after every cost, and it is the number to split."
+  answer: 2
+
+takeaways:
+  - "The top line is revenue, often called turnover: all the money that came in from sales. It is where the counting starts, not what you made."
+  - "Gross profit is revenue minus the cost of what you sold. Net profit is what is left after every other cost too."
+  - "Profit is not the same as cash, and VAT you charge is not yours. Tax on profit is set by each country, so ask your national tax authority."
+
+worked:
+  kind: margin
+  context: "The stand from the top of the page: €5 a crêpe, €2 in batter, filling and a plate for each one, and €450 for August in pitch fee and griddle hire."
+  unitName: crêpes
+  fixed: 450
+  variable: 2
+  price: 5
+
+explorable:
+  kind: margin
+  unitName: crêpes
+  fixed: 450
+  variable: 2
+  prices: [2, 3, 4, 5, 6]
+  prompts:
+    - "Tap €4, one euro less than now. Compare the crêpes needed with the answer at €5. Did a fifth off the price cost a fifth more crêpes, or more?"
+    - "Tap €2, the cost of making one crêpe. What does the answer become, and what does that say about gross profit?"
+
+practice:
+  kind: margin
+  context: "A friend runs a lemonade stand at a festival in Slovenia, every weekend in July. A cup sells for €3 and costs €1 in lemons, sugar, ice and the cup. The pitch and a hired cool box cost €275 for the month."
+  unitName: cups
+  fixed: 275
+  variable: 1
+  price: 3
+
+quiz:
+  - q: "A friend's stand shows revenue of €1,500, gross profit of €900 and net profit of −€100 for July. She plans to cut her price to sell more. Where do you suggest she looks first?"
+    options:
+      - text: "Her price, because it must be too high"
+        why: "Gross profit of €900 on €1,500 of sales means each sale keeps more than half its price. The price is doing its job, and a cut keeps less per sale."
+      - text: "Her fixed costs, against how much she sells"
+        why: "Gross profit is healthy, so the loss starts below it: €1,000 of other costs against €900 of gross profit. A cheaper pitch or more sales closes the €100 gap."
+      - text: "Her ingredients, because they cost too much"
+        why: "Ingredients sit above gross profit, in cost of sales. They took €600 of the €1,500 and still left €900. The loss starts lower down."
+    answer: 1
+  - q: "Two stands at the same festival. Stand A took €3,000 and made €300 of net profit. Stand B took €1,800 and made €500. A friend says A did better because it sold more. How do you read that?"
+    options:
+      - text: "A did better, because more sales means a bigger business"
+        why: "More sales is a bigger top line, not a bigger bottom line. What each stand kept after every cost is the fair comparison."
+      - text: "B did better, because it kept more after every cost"
+        why: "Net profit is what is left to keep or share. B kept €500 against A's €300, even though it took €1,200 less."
+      - text: "They did equally well, since both made a profit"
+        why: "Both are above zero, but not by the same amount. B kept €200 more for the month."
+    answer: 1
+  - q: "Your stand charges VAT. At a winter market in December, €2,420 came in, and €420 of that is VAT at your country's rate. What do you put on the top line of your income statement?"
+    options:
+      - text: "€2,420, everything that came in"
+        why: "The €420 was collected for the tax authority, not earned by the stand. EU accounting rules and Eurostat both leave VAT out of turnover."
+      - text: "€2,000, the sales without the VAT"
+        why: "Revenue is the part of each price the stand keeps. The VAT passes through to the tax authority, so it stays off the top line."
+      - text: "€2,420 now, and take off the VAT at the end of the year"
+        why: "Leaving it in makes every line below look €420 better than it is. The VAT was never the stand's money, so it comes off before the first line."
+    answer: 1
+  - q: "In September your statement shows €750 of net profit, and every bill is paid. The shared account holds only €450. A café still owes you €300 for crêpes delivered on 30 September. Your friend thinks €300 is missing. What do you check first?"
+    options:
+      - text: "Whether someone took cash from the box"
+        why: "Worth ruling out, but there is a simpler answer first. The café's €300 counts in September's revenue, and it has not been paid yet."
+      - text: "When each sale was paid for, against when it was made"
+        why: "The statement counts a sale when it is made. The account counts it when the money arrives. The €300 is earned but not received, which explains the gap."
+      - text: "Whether the net profit was added up wrong"
+        why: "The sums can be right and the account still short. Net profit says what was earned in September, not what has already arrived."
+    answer: 1
+  - q: "You could add hot chocolate in October. It would bring €600 more revenue, but its milk, cocoa and cups cost €550. The pitch fee stays the same. Is it worth adding?"
+    options:
+      - text: "Yes, because €600 more revenue is a big jump"
+        why: "The top line grows by €600, but €550 goes straight back out in cost of sales. Only €50 reaches gross profit."
+      - text: "Only if €50 more profit is worth the extra work and space"
+        why: "Revenue minus its own costs leaves €50 of gross profit. With no new fixed costs, all €50 reaches net profit. Whether that is enough is your call."
+      - text: "No, because anything that keeps less than half its price loses money"
+        why: "Keeping a small share is not a loss. €50 kept is still €50 more net profit, as long as no new fixed costs come with it."
+    answer: 1
+
+transfer:
+  - "When someone says a business is doing well because it is busy. Ask what is left at the bottom line, not the top."
+  - "When you run a stall, a school kiosk or an online shop, even for a month. Write the three lines at the end of it."
+  - "When you split money with a partner. Split net profit after every bill, and check the cash has really arrived."
+  - "When a tax question comes up. Rules on profit and VAT are national, so ask your own tax authority, not a friend abroad."
+
+glossary: [income-statement, revenue, variable-cost, cost-of-sales, gross-profit, fixed-cost, net-profit, cash-flow, vat]
+tool: break-even
+
+sources:
+  - title: "Directive 2013/34/EU on annual financial statements: net turnover and the profit and loss account (EUR-Lex, 26 June 2013)"
+    url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32013L0034"
+    publisher: "European Parliament and Council of the European Union, via EUR-Lex"
+  - title: "Glossary: Turnover in business statistics, VAT excluded (Eurostat Statistics Explained, accessed 18 September 2026)"
+    url: "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary%3ATurnover_-_SBS"
+    publisher: "Eurostat, European Commission"
+  - title: "VAT rules and rates (Your Europe, last checked 13 July 2026)"
+    url: "https://europa.eu/youreurope/business/taxation/vat/vat-rules-rates/index_en.htm"
+    publisher: "European Commission, Your Europe"
+  - title: "Company tax in the EU: rules set nationally (Your Europe, last checked 29 April 2026)"
+    url: "https://europa.eu/youreurope/business/taxation/business-tax/company-tax-eu/index_en.htm"
+    publisher: "European Commission, Your Europe"
+---
+
+## Three lines tell the story
+
+An <Term id="income-statement">income statement</Term> covers one stretch of time, such as a month. It answers three questions in order. What came in? What went out? What was left? EU rules for company accounts call it the profit and loss account, and many people just say P&L.
+
+The top line is <Term id="revenue">revenue</Term>: all the money that came in from sales. In Europe it is often called turnover. At your stand in August, that was 400 crêpes at €5 each, or €2,000.
+
+**Revenue is not what you made. It is where the counting starts.**
+
+## Gross profit: what the crêpes left behind
+
+Each crêpe needs batter, a filling and a paper plate, €2 in all. These are <Term id="variable-cost">variable costs</Term>, because every crêpe sold needs them again. Added up for the month, they are the <Term id="cost-of-sales">cost of sales</Term>: €800 for 400 crêpes.
+
+Revenue minus cost of sales is <Term id="gross-profit">gross profit</Term>, here €1,200. It tests the product itself. **Does each sale leave money behind before the month's other bills?** At €5 a crêpe and €2 to make, each one keeps €3, so the answer is yes.
+
+## Net profit: after every bill
+
+The festival charged €300 for the pitch, and the griddle and gazebo cost €150 to hire. These are <Term id="fixed-cost">fixed costs</Term>: the same whether you sell 40 crêpes or 400.
+
+Take them from gross profit and you reach <Term id="net-profit">net profit</Term>, the bottom line. Here it is €750, before any tax on profit. **That is the number you and your friend can split, not the €2,000.**
+
+Here is August as one statement, from the top line to the bottom line.
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="pl-title pl-desc">
+  <title id="pl-title">Where €2,000 of August sales went</title>
+  <desc id="pl-desc">A single bar in three parts. Cost of sales is €800, the pitch fee and hire are €450, and net profit is €750.</desc>
+  <rect class="chart-b" x="0" y="26" width="125" height="36" rx="6" />
+  <rect class="chart-b" x="129" y="26" width="70" height="36" rx="6" />
+  <rect class="chart-a" x="203" y="26" width="117" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Cost of sales €800</text>
+  <text class="chart-label" x="320" y="16" text-anchor="end">Net profit €750</text>
+  <text class="chart-label" x="129" y="80">Pitch and hire €450</text>
+  <text class="chart-note" x="0" y="100">400 crêpes sold at €5 in August</text>
+</svg>
+
+| August at the stand | Amount |
+| --- | --- |
+| Revenue: 400 crêpes at €5 | €2,000 |
+| Cost of sales: €2 a crêpe | −€800 |
+| Gross profit | €1,200 |
+| Pitch fee | −€300 |
+| Griddle and gazebo hire | −€150 |
+| Net profit | €750 |
+
+## Why two kinds of profit
+
+The two profit lines answer different questions. Gross profit asks whether the product works: does each crêpe earn more than it costs to make? Net profit asks whether the whole month worked, pitch and hire included.
+
+So they point to different fixes. Low gross profit points at the price, or at what each crêpe costs to make. Healthy gross profit with thin net profit points lower down, at fixed costs that are too high for the sales.
+
+Selling more helps with the second. Every extra crêpe adds €3 to gross profit. Once enough of them cover the €450, net profit starts to grow.
+
+**Read the lines from the top, and the statement tells you where to look.**
+
+## What the statement leaves out
+
+A statement usually counts a sale when it is made, not when the money arrives. Say a school orders 40 crêpes for an open day and pays next month. That €200 counts in this month's revenue but is not in the account yet. That gap is <Term id="cash-flow">cash flow</Term>.
+
+If the stand charges <Term id="vat">VAT</Term>, that part of each price is collected for the tax authority. EU accounting rules and Eurostat both leave it out of turnover.
+
+**Tax on business profit is set by each country, not the EU.** Ask your national tax authority what applies to a small stand. If you sell in złoty, forint or krona, every line works the same.

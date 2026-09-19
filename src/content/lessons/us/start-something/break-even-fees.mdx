@@ -1,0 +1,186 @@
+---
+title: "Break-even after platform fees"
+summary: "A marketplace takes a fee from every order. Count it in the cost of each item, and break-even moves."
+region: us
+track: start-something
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-18
+
+situation: "You draw illustrations and sell them as $20 prints on an online craft marketplace. Your first payout is smaller than your sales. Before you order more paper and mailers, you want to know how many prints a month really cover your costs."
+
+prediction:
+  q: "A print sells for $20 and costs $5 in paper, ink, a sleeve and a mailer. Your monthly costs are $180, so you planned on 12 prints. Then the payout shows $2 to the marketplace and $1 for the card payment on every order. How many prints cover the $180 now?"
+  options:
+    - text: "Still 12, because the fees come out of the buyer's payment"
+      why: "The buyer pays $20 either way. The $3 is taken before the money reaches you, so each print leaves $12, and 12 prints bring in $144."
+    - text: "14, because the fees are 15% of the price"
+      why: "The fees are 15% of the $20 price. But they come out of the $15 you would keep, and there they are a fifth. So the count rises by a quarter, not by 15%."
+    - text: "15"
+      why: "Each print keeps $20 − $5 − $3 = $12, and $180 ÷ $12 = 15. The fees cost you three extra prints a month."
+  answer: 2
+
+takeaways:
+  - "A fee taken on every order is a cost of that order. Add it to what one item costs you before you work out what you keep."
+  - "Fees look small next to the price and large next to what you keep. Here $3 is 15% of the price but a fifth of the $15 you would otherwise keep."
+  - "A percentage fee rises with your price, and a flat fee per order hits cheap items hardest. Fees charged by the month go in fixed costs."
+
+worked:
+  kind: margin
+  context: "The shop from the top of the page. A print sells for $20. Paper, ink, a sleeve and a mailer cost $5, and every order pays $3 in fees: $2 to the marketplace and $1 to the payment processor. So one print costs $8 to sell. The month costs $180."
+  unitName: prints
+  fixed: 180
+  variable: 8
+  price: 20
+
+explorable:
+  kind: margin
+  unitName: prints
+  fixed: 180
+  variable: 8
+  prices: [8, 12, 16, 20, 25]
+  prompts:
+    - "Start at $20, then tap $16. Four dollars off the price takes a third of what you keep. How many more prints does the month now need?"
+    - "Tap $8, what one print costs once the fees are in. Why does the answer become never, when paper and ink cost only $5?"
+
+practice:
+  kind: margin
+  context: "A friend in Ohio paints tote bags and sells them online for $30. The blank bag, paint and mailer cost $10. Her marketplace takes 10% of the price, and the payment processor $1 an order. Her monthly costs are $120: a $20 shop plan and $100 for a table at a shared studio."
+  unitName: tote bags
+  fixed: 120
+  variable: 14
+  price: 30
+
+quiz:
+  - q: "Many buyers on your marketplace filter for free shipping. Mailing one print costs $5, which buyers pay on top today. You are thinking of offering free shipping. What do you do first?"
+    options:
+      - text: "Offer it and keep the price at $20, since buyers like it"
+        why: "The $5 of shipping becomes yours to pay on every order. Each print would keep $7, not $12, and the month would need 26 prints instead of 15."
+      - text: "Add the $5 to the cost of each print, then choose the price"
+        why: "Free shipping moves the $5 from the buyer's total into your cost of each order. Once it is in the sum, you can see that a $25 price keeps $12, as before."
+      - text: "Skip it, because free shipping always loses money"
+        why: "Not always. If a price that includes the shipping still sells, what you keep per print can stay the same. The test is the sum, not the label."
+    answer: 1
+  - q: "A second marketplace has no flat fee but takes 15% of each sale. The card payment would still cost $1 an order. Your prints are $20 and cost $5 to make. Should you move your shop?"
+    options:
+      - text: "Yes, because no flat fee means lower fees"
+        why: "On a $20 print, 15% is $3, a dollar more than the $2 flat fee. Each print would keep $11 instead of $12."
+      - text: "Work out what one $20 sale leaves on each, then compare"
+        why: "The first leaves $12 and the second $11, so here the move costs you. On a $10 item it flips, because 15% of $10 is $1.50, less than $2."
+      - text: "No, because a percentage fee always costs more than a flat one"
+        why: "It depends on the price. A percentage fee is small on cheap items and large on pricey ones. Below about $13, 15% is less than $2."
+    answer: 1
+  - q: "You want to sell stickers too. Each costs 50 cents to make. Every order pays the marketplace $2 and the card payment $1, and buyers pay for shipping. Which way of selling leaves the most per order?"
+    options:
+      - text: "Single stickers at $3"
+        why: "The $3 of fees takes the whole price, and the sticker itself costs 50 cents. Every order is a 50-cent loss."
+      - text: "Single stickers at $4"
+        why: "That leaves 50 cents an order. It covers its costs, but three-quarters of what the buyer pays goes on fees."
+      - text: "A pack of six for $12"
+        why: "The $3 of fees is paid once for six stickers. Six cost $3 to make, so each order leaves $6."
+    answer: 2
+  - q: "Last summer, over three months, your shop sold 120 prints for $2,400. Your records show $1,500 of materials, fees and monthly costs. No tax form came from the marketplace, and a friend says that means there is nothing to report. What do you do?"
+    options:
+      - text: "Nothing, since no form means the income does not count"
+        why: "The federal line for that form is high: more than $20,000 across more than 200 payments. The IRS says income from selling counts whether or not a form arrives."
+      - text: "Check the IRS rules for self-employment, using $900 as what you made"
+        why: "Earnings from self-employment are what came in minus business costs, and fees are one of those costs. At $900 you are past the $400 line where self-employment tax usually starts, at any age."
+      - text: "Report $2,400, since that is what buyers paid"
+        why: "$2,400 is what came in before any costs. The IRS works out self-employment earnings after business costs, which is why a record of every fee matters."
+    answer: 1
+
+transfer:
+  - "Before you list anything for sale online. Find the fee page, and add every charge per order to the cost of one item."
+  - "When a platform emails you that its fees are changing. Put the new fee in your sum and find break-even again before the date."
+  - "When you compare places to sell, from a second marketplace to a craft fair table. Compare what one sale leaves you, not the headline fee."
+  - "In January, when you look back at a year of selling. Your record of fees and costs shows what you really made, for the IRS and for you."
+
+glossary: [platform-fee, margin, variable-cost, fixed-cost, break-even, self-employment-tax, form-1099-k, bookkeeping]
+tool: break-even
+
+sources:
+  - title: "Calculate your startup costs: break-even point (accessed 18 September 2026)"
+    url: "https://www.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs"
+    publisher: "US Small Business Administration"
+  - title: "Topic no. 554, Self-employment tax (updated 26 May 2026)"
+    url: "https://www.irs.gov/taxtopics/tc554"
+    publisher: "Internal Revenue Service"
+  - title: "Self-employment tax (Social Security and Medicare taxes) (updated 27 June 2026)"
+    url: "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes"
+    publisher: "Internal Revenue Service"
+  - title: "Understanding your Form 1099-K (updated 28 June 2026)"
+    url: "https://www.irs.gov/businesses/understanding-your-form-1099-k"
+    publisher: "Internal Revenue Service"
+---
+
+## What one print leaves behind
+
+You draw illustrations, print them at a makerspace, and sell them on an online craft marketplace for $20 each. Paper, ink, a clear sleeve and a stiff mailer cost $5. Buyers pay for shipping on top.
+
+That looks like $15 kept. But the payout is smaller. In this example the marketplace takes a flat $2 on every order. The payment processor that handles the buyer's card takes $1. Each is a <Term id="platform-fee">platform fee</Term>.
+
+So one print leaves you $12. That is your real <Term id="margin">margin</Term>. The fees are a <Term id="variable-cost">variable cost</Term>: every new order pays them again.
+
+**Count every fee charged per order as part of what one sale costs you.**
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="print-title print-desc">
+  <title id="print-title">Where $20 from one print goes</title>
+  <desc id="print-desc">A single bar in three parts. Paper, ink, sleeve and mailer are $5, fees to the marketplace and the card payment are $3, and $12 is kept.</desc>
+  <rect class="chart-b" x="0" y="26" width="78" height="36" rx="6" />
+  <rect class="chart-a" x="82" y="26" width="46" height="36" rx="6" />
+  <rect class="chart-b" x="132" y="26" width="188" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Making $5</text>
+  <text class="chart-label" x="320" y="16" text-anchor="end">Kept $12</text>
+  <text class="chart-label" x="82" y="80">Fees $3</text>
+  <text class="chart-note" x="0" y="100">One print sold at $20</text>
+</svg>
+
+| Where $20 goes | Amount |
+| --- | --- |
+| Paper, ink, sleeve and mailer | $5 |
+| Marketplace fee | $2 |
+| Card payment fee | $1 |
+| Kept | $12 |
+
+## Small next to $20, big next to $15
+
+Three dollars is 15% of the $20 price. Set it against the $15 you thought you kept, and it is a fifth. The second comparison is the one that counts, because the fees come out of your margin.
+
+Your month costs $180. That is $150 for a makerspace membership with a large printer, and $30 for a monthly plan on the marketplace. These are your <Term id="fixed-cost">fixed costs</Term>. The plan is a fee too, but it is charged by the month.
+
+**Fees per order go in the cost of one sale. Fees per month go in fixed costs.**
+
+Without the fees, 12 prints would cover the $180. With them, it takes 15. That 15th print is your <Term id="break-even">break-even</Term> point.
+
+## When the fee is a percentage
+
+Many marketplaces take a share of the price instead of a flat amount, or as well as one. Say a platform takes 10%. On a $20 print that is $2. Raise the price to $25 and the fee becomes $2.50.
+
+So the $5 rise reaches you as $4.50. **With a percentage fee, the platform shares in every price rise.**
+
+Read the fee page for what the percentage is taken from. Some platforms take it from the item price alone. Others also take it from the shipping the buyer pays, so the same 10% costs you more. Payment processors often charge a small percentage plus a few cents per order.
+
+## Flat fees and small orders
+
+A flat fee works the other way. It stays the same whatever the order is worth. In this shop, $3 of fees is a twentieth of a $60 order, and all of a $3 one.
+
+So cheap things sold one at a time lose the most to flat fees. That is why small sellers bundle them into packs, set a minimum order, or sell them as add-ons to a bigger order.
+
+The same test works for any fee you meet. Ask whether it is charged per order, per item, per month, or as a share of the price. Then put it in the right place in your sum.
+
+## What the tax rules count
+
+Selling your own prints for profit usually counts as working for yourself. The IRS works out your earnings from self-employment by taking your business costs off what came in. Platform fees are among those costs.
+
+Once those earnings reach $400 in a year, <Term id="self-employment-tax">self-employment tax</Term> usually applies, whatever your age. The federal line for a <Term id="form-1099-k">Form 1099-K</Term> is far higher, so many small shops never get one. **The income counts whether or not a form arrives.**
+
+So note every sale and every fee as you go. That habit is <Term id="bookkeeping">bookkeeping</Term>, and a spreadsheet is enough. State income tax rules vary by state. For the federal rules, check with the IRS.
+
+## Read the payout, not the sale
+
+The sale page shows what the buyer paid. The payout report shows what reached you after each fee. After your first few orders, set one against the other. If the payout is lower than your price minus your costs, a fee is missing from your sum.
+
+Fees also change. When a platform announces new ones, put them into the cost of one sale. Then work out break-even again, before the new fees start.

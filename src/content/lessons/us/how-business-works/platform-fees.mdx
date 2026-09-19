@@ -1,0 +1,178 @@
+---
+title: "What a platform’s fees really cost you"
+summary: "A 10% fee is taken from the price, not from your profit, so it takes a far bigger share of what you keep."
+region: us
+track: how-business-works
+order: 2
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-18
+
+situation: "You print your own designs on shirts and sell them on an online marketplace for $20. Each one costs you $12 to make and mail, so you planned on keeping $8. The fee page says the marketplace takes 10%, and your first payout is smaller than you planned."
+
+prediction:
+  q: "Your shirts sell for $20 and cost $12 to make and mail. The marketplace takes 10% of each sale. How much of the $8 you planned to keep does the fee take?"
+  options:
+    - text: "A tenth, since the fee is 10%"
+      why: "The 10% is taken from the $20 price, which makes it $2. But the $2 comes out of your $8, and there it is a quarter."
+    - text: "A quarter"
+      why: "The fee is 10% of $20, which is $2. It leaves your $8, not the price as a whole, and $2 is a quarter of $8. You keep $6."
+    - text: "None, because the buyer pays it"
+      why: "The fee comes out of the $20 the buyer pays, before it reaches you. The buyer pays $20 either way, so the $2 leaves your share."
+  answer: 1
+
+takeaways:
+  - "A percentage fee is worked out on the sale price, not on what you keep. So it always takes a bigger share of your margin than the rate on the fee page."
+  - "The thinner the margin, the bigger the bite. The same 10% takes an eighth from a maker who keeps $16 and all of it from a reseller who keeps $10."
+  - "Turn every fee into dollars at your own price and count it in the cost of each sale. Then ask whether what the platform brings covers what it takes."
+
+worked:
+  kind: margin
+  context: "The shirts from the top of the page: $20 each, and $12 for the blank, the ink and the mailer. The marketplace's 10% of $20 is $2, so one sold shirt costs you $14. Your heat press and design app come to $120 a month."
+  unitName: shirts
+  fixed: 120
+  variable: 14
+  price: 20
+
+explorable:
+  kind: margin
+  unitName: shirts
+  fixed: 120
+  variable: 12
+  prices: [14, 16, 20, 25, 30]
+  prompts:
+    - "This counter is the same shirts sold to friends for cash, so no platform takes a cut. Tap $30. On the marketplace, 10% would take $3 of what you keep here. What share is that, next to a quarter at $20?"
+    - "Tap $14, a sale price. You keep $2 here. On the marketplace, $1.40 of it would go in the fee. How many shirts would the month take then?"
+
+practice:
+  kind: margin
+  context: "Your friend resells sneakers. He buys a pair for $70 and sells it for $100 on a resale site that takes 12% of the price, which is $12. A box and tape cost $3, and the buyer pays shipping. His monthly costs are $90: paying back a label printer, and a seller plan on the site."
+  unitName: pairs
+  fixed: 90
+  variable: 85
+  price: 100
+
+quiz:
+  - q: "You plan a weekend sale: 25% off your $20 shirts. A friend says it pays for itself if it brings in 25% more orders. How do you check?"
+    options:
+      - text: "Trust the rule: a quarter off needs a quarter more orders"
+        why: "Almost all of the $5 discount comes off what you keep. At $15 each shirt keeps $1.50, not $6, so a quarter more orders is nowhere near enough."
+      - text: "Work out what one shirt keeps at $15, then how many orders match today's total"
+        why: "At $15 the fee is $1.50, so each shirt keeps $1.50. You would need four times as many orders to keep what you keep now."
+      - text: "It cannot lose, because the fee shrinks with the price"
+        why: "The fee falls by 50 cents, but the price falls by $5. The other $4.50 comes out of what you keep."
+    answer: 1
+  - q: "Two marketplaces want your $20 shirts. One takes 10% of each sale. The other takes 5% plus $1 an order. Which leaves more of each sale with you?"
+    options:
+      - text: "Both take $2 from a $20 shirt; compare them at the prices you really charge"
+        why: "At $20, 10% is $2, and 5% plus $1 is also $2. Above $20 the 5% site takes less, and below $20 it takes more, because its $1 never shrinks."
+      - text: "The 5% one, because its rate is half"
+        why: "The $1 an order is a fee too. At $20 it doubles the 5%, so the two sites take the same."
+      - text: "The 10% one, because one fee is simpler than two"
+        why: "Simpler is not smaller. What counts is the dollars each site takes from a sale, and at $20 they match."
+    answer: 0
+  - q: "The marketplace emails that its cut rises from 10% to 12% next month. Your shirts still sell for $20 and cost $12 to make and mail. What do you do before the change?"
+    options:
+      - text: "Nothing, since two points is too small to notice"
+        why: "Two points of $20 is 40 cents a shirt. That is about a fifteenth of your $6, and it adds two shirts to the month."
+      - text: "Move your shop at once, since the fees will keep rising"
+        why: "One rise is not a pattern. Work out what 12% costs first; then you can compare it with other places to sell."
+      - text: "Count 12% in the cost of one shirt and work out the month again"
+        why: "At 12% the fee is $2.40, so each shirt keeps $5.60. The month then takes 22 shirts instead of 20."
+    answer: 2
+  - q: "A friend buys phone cases for $4 each and sells them for $6 on a marketplace. It takes 15% of the price plus 50 cents an order, and most orders are for one case. He says each case makes him $2. How do you read that?"
+    options:
+      - text: "He is right, since $6 minus $4 is $2"
+        why: "That is the gap before fees. 15% of $6 is 90 cents, plus 50 cents for the order, so $1.40 of the $2 goes to the marketplace."
+      - text: "Each case leaves him 60 cents, because the fees take most of the gap"
+        why: "The fees are under a quarter of the price, but 70% of the $2 gap. What reaches him is 60 cents a case."
+      - text: "A bigger fee would matter, but 15% is small"
+        why: "A fee is only small or large next to what is kept. Next to a $2 gap, $1.40 is large."
+    answer: 1
+
+transfer:
+  - "Before you list anything on a marketplace or a resale app. Turn every fee on the fee page into dollars at your own price."
+  - "When you compare places to sell, online or in person. Compare what one sale leaves you, and how many buyers each place brings."
+  - "When you plan a sale price or a discount. The fee still takes its share of the new price, and the rest of the cut comes out of what you keep."
+  - "When your margin is thin, as it often is in reselling. A percentage fee can take most of what is left, so do the sum before you buy stock."
+
+glossary: [platform-fee, margin, variable-cost, fixed-cost, break-even, form-1099-k]
+tool: side-hustle
+
+sources:
+  - title: "Calculate your startup costs: fixed costs, variable costs and break-even (page undated, accessed 18 September 2026)"
+    url: "https://www.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs"
+    publisher: "U.S. Small Business Administration"
+  - title: "What to do with Form 1099-K: the gross amount is not adjusted for fees, refunds or shipping (last reviewed 27 July 2026)"
+    url: "https://www.irs.gov/businesses/what-to-do-with-form-1099-k"
+    publisher: "Internal Revenue Service"
+  - title: "Understanding your Form 1099-K: who gets one (last reviewed 28 June 2026)"
+    url: "https://www.irs.gov/businesses/understanding-your-form-1099-k"
+    publisher: "Internal Revenue Service"
+---
+
+## Where $20 goes
+
+You print your own designs on shirts and sell them on an online marketplace for $20 each. A blank shirt, the ink and a padded mailer cost $12. The buyer pays for shipping on top.
+
+On paper you keep $8. But the marketplace takes 10% of every sale, before the money reaches you. That cut is a <Term id="platform-fee">platform fee</Term>, and on a $20 shirt it is $2.
+
+So each shirt leaves you $6, not $8. That $6 is your real <Term id="margin">margin</Term>. The fee is a <Term id="variable-cost">variable cost</Term>: every shirt you sell pays it again. If a platform charges more than one fee per sale, add them all.
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="shirt-title shirt-desc">
+  <title id="shirt-title">Where $20 from one shirt goes</title>
+  <desc id="shirt-desc">A single bar in three parts. The blank shirt, ink and mailer cost $12, the marketplace fee is $2, and $6 is kept.</desc>
+  <rect class="chart-b" x="0" y="26" width="187" height="36" rx="6" />
+  <rect class="chart-a" x="191" y="26" width="31" height="36" rx="6" />
+  <rect class="chart-b" x="226" y="26" width="94" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Making $12</text>
+  <text class="chart-label" x="320" y="16" text-anchor="end">Kept $6</text>
+  <text class="chart-label" x="191" y="80">Fee $2</text>
+  <text class="chart-note" x="0" y="100">One shirt sold at $20</text>
+</svg>
+
+| Where $20 goes | Amount |
+| --- | --- |
+| Blank shirt, ink and mailer | $12 |
+| Marketplace fee, 10% of the price | $2 |
+| Kept | $6 |
+
+## Ten percent of what?
+
+It is easy to read 10% as a tenth of your profit. It is not. **A percentage fee is worked out on the sale price, not on what you keep.**
+
+Ten percent of $20 is $2. That $2 comes out of your $8, and there it is a quarter. So the rate on the fee page is always smaller than the share it takes from you.
+
+Your month has costs too. You pay back $100 a month for a heat press, and $20 for a design app. Those <Term id="fixed-cost">fixed costs</Term> come to $120 whatever you sell.
+
+Without the fee, 15 shirts would cover the month. With it, you need 20. That 20th shirt is your <Term id="break-even">break-even</Term> point.
+
+## Same fee, different bite
+
+A 10% fee does not hit every seller the same way. What matters is the gap between price and cost.
+
+Say a friend pours candles. They sell for $20 and cost $4 to make, so she keeps $16 before the fee. The $2 fee takes an eighth of it.
+
+Now say a cousin resells used game consoles. He buys one for $90 and sells it for $100. His gap is $10, and 10% of $100 is also $10. **The fee takes all of it.**
+
+That is why a percentage fee weighs most on resellers, and on anyone selling on a thin margin. Set a platform's fee against your margin, not against your price.
+
+## A month on the marketplace
+
+Now look at a whole month. Say you sell 30 shirts and spend 20 hours designing, printing and packing.
+
+Sales come to $600. Blanks, ink and mailers take $360, and the fee takes $60. After the $120 of monthly costs, $60 is left for you. That is $3 for each hour you worked.
+
+**At this size, the marketplace keeps as much from your shirts as you do.** Without the fee, you would keep $120, or $6 an hour.
+
+Sell 60 shirts, and the picture changes. The fee grows to $120, but the monthly costs stay at $120. You keep $240.
+
+## What the fee pays for
+
+A fee is not a penalty. It is the price of what the platform brings: buyers who would never find you, card payments handled for you, and a checkout people trust.
+
+Selling in person has no cut, but it has its own costs. A table at a school fair may cost a flat amount, and fewer buyers walk past. So the useful question is not whether a fee is high. **It is whether the sales a platform brings cover what it takes.**
+
+Keep a record of each month's fees too. If a <Term id="form-1099-k">Form 1099-K</Term> ever arrives, the IRS says its amount is before fees. Fees can be taken off it, and your record shows them.
