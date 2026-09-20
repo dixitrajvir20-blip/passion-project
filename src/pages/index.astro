@@ -4,7 +4,6 @@ import EditionSum from '../components/EditionSum.astro';
 import HandNote from '../components/HandNote.astro';
 import Blobs from '../components/Blobs.astro';
 import Doodle from '../components/Doodle.astro';
-import Logo from '../components/Logo.astro';
 import { REGIONS, getRegion } from '../lib/regions';
 import { TOOLS } from '../lib/tools';
 import { site } from '../lib/site';
@@ -27,7 +26,7 @@ const starters = (
 ).flat();
 const doodles = ['coin', 'phone', 'tag', 'calculator', 'plane', 'coin'] as const;
 const everywhere = TOOLS.filter((tool) => !tool.regions);
-const reasons = ['Free, always', 'No ads', 'No sign-up', 'Real numbers', 'Sources on every figure', 'Built for cheap phones'];
+const reasons = ['Free, with nothing to sell', 'No ads and no tracking', 'No sign-up needed', 'Real numbers in your currency', 'A source and a date on every figure', 'Built to load on a cheap phone'];
 const india = getRegion('in');
 ---
 
@@ -83,10 +82,10 @@ const india = getRegion('in');
     <div class="container">
       <h2 id="steps-h" class="section-title">How a lesson works</h2>
       <ol class="list-plain steps-cards">
-        <li class="step-card step-1"><span class="step-num">Step 1</span><h3>Answer first</h3><p>Every lesson opens with a question. A guess, right or wrong, makes the answer stick.</p></li>
+        <li class="step-card step-1 on-field"><span class="step-num">Step 1</span><h3>Answer first</h3><p>Every lesson opens with a question. A guess, right or wrong, makes the answer stick.</p></li>
         <li class="step-card step-2"><span class="step-num">Step 2</span><h3>See the idea</h3><p>One idea, one worked calculation, real numbers in your currency.</p></li>
         <li class="step-card step-3"><span class="step-num">Step 3</span><h3>Try your own numbers</h3><p>Change them and watch the answer move.</p></li>
-        <li class="step-card step-4"><span class="step-num">Step 4</span><h3>Check your understanding</h3><p>Three questions, which come back for review a few days later.</p></li>
+        <li class="step-card step-4 on-field"><span class="step-num">Step 4</span><h3>Check your understanding</h3><p>Three questions, which come back for review a few days later.</p></li>
       </ol>
     </div>
   </section>
@@ -107,17 +106,17 @@ const india = getRegion('in');
 
   <section class="section why" aria-labelledby="why-h">
     <div class="container">
-      <h2 id="why-h" class="section-title">Why {site.name}?</h2>
-      <div class="why-cloud">
-        <div class="why-badge" aria-hidden="true"><Logo size={140} /></div>
-        <ul class="list-plain why-pills">
-          {reasons.map((reason) => <li class="why-pill">{reason}</li>)}
+      <div class="panel panel-pale why-panel">
+        <h2 id="why-h">Why {site.name}</h2>
+        <p class="why-lede">
+          Most people learn money at home, if at all. {site.name} grew out of a school club built on
+          one idea, that business is a life skill, and this site is for everyone who has no one to ask.
+        </p>
+        <ul class="why-list">
+          {reasons.map((reason) => <li>{reason}</li>)}
         </ul>
+        <p class="why-more"><a href={`${base}/about`}>More about {site.name}</a></p>
       </div>
-      <p class="why-note">
-        {site.name} started as a school club built on one idea: business is a life skill. Most people
-        learn money at home, if at all; this is for everyone else. <a href={`${base}/about`}>More about {site.name}</a>.
-      </p>
     </div>
   </section>
 
@@ -168,7 +167,7 @@ const india = getRegion('in');
 </script>
 
 <style>
-  /* Hero: a baby-blue field with blobs, a giant flush-left headline, and a stack of flashcards. */
+  /* Hero: a dark-blue field with blobs, a giant flush-left headline, and a stack of flashcards. */
   .hero { position: relative; overflow: hidden; padding: var(--space-7) 0 var(--space-8); }
   @media (min-width: 900px) { .hero { padding: var(--space-8) 0 var(--space-9); } }
   .hero-grid { position: relative; z-index: 1; display: grid; gap: var(--space-8); align-items: center; }
@@ -182,12 +181,12 @@ const india = getRegion('in');
   .flashcard { position: absolute; inset: 0 var(--space-5) var(--space-6) var(--space-5); background: var(--paper); border: 2px solid var(--line-strong); border-radius: var(--radius-l); }
   .flashcard-back { transform: rotate(7deg) translate(var(--space-4), var(--space-2)); background: var(--gold-pale); }
   .flashcard-mid { transform: rotate(-4deg); }
-  .flashcard-front { position: relative; inset: auto; margin: 0 var(--space-5) var(--space-6); padding: var(--space-5) var(--space-5) var(--space-6); transform: rotate(1.5deg); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
+  .flashcard-front { position: relative; inset: auto; margin: 0 var(--space-5) var(--space-6); padding: var(--space-5) var(--space-5) var(--space-6); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
   .flashcard-front :global(.flashcard-note) { margin-bottom: var(--space-2); }
   .sticky-rule {
     position: absolute; left: 0; bottom: 0; margin: 0; padding: var(--space-3) var(--space-4);
     background: var(--gold); color: var(--on-gold); border: 2px solid var(--line-strong); border-radius: var(--radius-s);
-    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3); transform: rotate(-6deg);
+    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3);
   }
 
   .section-title { font-size: var(--text-h1); margin: 0 0 var(--space-6); text-align: center; }
@@ -211,14 +210,13 @@ const india = getRegion('in');
   @media (min-width: 720px) { .steps-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1100px) { .steps-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); } }
   .step-card { margin: 0; padding: var(--space-5); border-radius: var(--radius-l); border: 2px solid var(--line-strong); min-height: calc(var(--space-10) + var(--space-8)); color: var(--ink-2); }
-  .step-card h3 { font-size: var(--text-h2); line-height: var(--leading-tight); margin: var(--space-3) 0 var(--space-3); }
+  .step-card h3 { font-size: var(--text-h3); line-height: var(--leading-tight); margin: var(--space-3) 0 var(--space-3); }
   .step-card p { margin: 0; font-size: var(--text-ui); }
   .step-num { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); color: var(--gold-text); }
-  .step-1 { background: var(--field); transform: rotate(-2.5deg); }
-  .step-2 { background: var(--gold); transform: rotate(2deg); --ink: var(--on-gold); --ink-2: var(--on-gold); --gold-text: var(--on-gold); border-color: var(--on-gold); }
-  .step-3 { background: var(--bg); transform: rotate(-1deg); }
-  .step-4 { background: var(--field-deep); transform: rotate(3deg); }
-  .step-1, .step-4 { --bg: var(--field); --ink: var(--paper); --ink-2: var(--paper); --gold-text: var(--gold); }
+  .step-1 { background: var(--field); }
+  .step-2 { background: var(--gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --gold-text: var(--on-gold); --focus: var(--on-gold); border-color: var(--on-gold); }
+  .step-3 { background: var(--bg); }
+  .step-4 { background: var(--field-deep); }
 
   /* The gold taxonomy panel: stacked giant questions, each a link. */
   .taxonomy { text-align: center; }
@@ -233,32 +231,12 @@ const india = getRegion('in');
   .taxonomy-foot { margin: var(--space-6) auto 0; font-weight: 700; }
 
   /* Why: pills scattered around the badge on wide screens, a tilted wrap on phones. */
-  .why { background: var(--field-deep); }
-  .why .section-title { color: var(--paper); }
-  .why-cloud { position: relative; display: grid; justify-items: center; gap: var(--space-5); }
-  .why-badge { display: grid; place-items: center; }
-  .why-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); max-width: var(--column); }
-  .why-pill {
-    margin: 0; padding: var(--space-3) var(--space-5); border-radius: var(--radius-pill); border: 2px solid var(--brand-navy);
-    background: var(--gold-pale); color: var(--brand-navy); font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3);
-  }
-  .why-pill:nth-child(odd) { background: var(--bg); transform: rotate(-4deg); }
-  .why-pill:nth-child(even) { transform: rotate(3deg); }
-  .why-pill:nth-child(3n) { background: var(--gold); }
-  @media (min-width: 1024px) {
-    .why-cloud { min-height: calc(var(--space-10) * 3); }
-    .why-badge { position: absolute; inset: 0; margin: auto; width: max-content; height: max-content; }
-    .why-pills { position: absolute; inset: 0; display: block; max-width: none; }
-    .why-pill { position: absolute; }
-    .why-pill:nth-child(1) { left: 8%; top: 6%; }
-    .why-pill:nth-child(2) { right: 12%; top: 2%; }
-    .why-pill:nth-child(3) { left: 14%; top: 42%; }
-    .why-pill:nth-child(4) { right: 6%; top: 36%; }
-    .why-pill:nth-child(5) { left: 6%; bottom: 8%; }
-    .why-pill:nth-child(6) { right: 8%; bottom: 2%; }
-  }
-  .why-note { max-width: 60ch; margin: var(--space-7) auto 0; text-align: center; color: var(--paper); }
-  .why-note a { color: var(--gold); font-weight: 700; }
+  .why-panel h2 { margin-top: 0; font-size: var(--text-h1); }
+  .why-lede { font-size: var(--text-lg); max-width: 60ch; }
+  .why-list { columns: 2; column-gap: var(--space-7); margin: var(--space-5) 0; padding-left: var(--space-5); }
+  .why-list li { break-inside: avoid; }
+  @media (max-width: 639px) { .why-list { columns: 1; } }
+  .why-more { margin: 0; font-weight: 700; }
 
   /* Start with these: the Ivy Kids sheet with an outlined grid and tilted stickers. */
   .starters { margin-top: var(--space-6); }

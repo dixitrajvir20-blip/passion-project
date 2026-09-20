@@ -25,11 +25,13 @@ export interface CatalogueLesson {
 interface Props {
   lessons: CatalogueLesson[];
   base: string;
+  /** True once accounts are live; until then the sign-in link is a preview. */
+  accounts?: boolean;
 }
 
 const DAY_LETTERS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-export default function Dashboard({ lessons, base }: Props) {
+export default function Dashboard({ lessons, base, accounts = false }: Props) {
   const [progress, setProgress] = useState<Progress | null>(null);
   const [activity, setActivity] = useState<Activity | null>(null);
   const [tracking, setTracking] = useState(false);
@@ -113,7 +115,7 @@ export default function Dashboard({ lessons, base }: Props) {
             <li><a href={`${base}/${region}/tools`}>Calculators</a></li>
             <li><a href={`${base}/${region}/review`}>Review</a></li>
             <li><button type="button" onClick={openChoices}>Privacy choices</button></li>
-            <li><a href={`${base}/account`}>Sign in</a></li>
+            <li><a href={`${base}/account`}>{accounts ? 'Sign in' : 'Sign in (preview)'}</a></li>
           </ul>
         </nav>
       </aside>
@@ -187,7 +189,7 @@ export default function Dashboard({ lessons, base }: Props) {
                 <span class="pill">{next.regionName} · {next.trackTitle}</span>
                 <h3>{next.title}</h3>
                 <p>{next.minutes} min</p>
-                <a class="btn" href={`${base}/${next.path}`}>Open the lesson</a>
+                <a class="btn btn-link" href={`${base}/${next.path}`}>Open the lesson</a>
               </div>
             ) : (
               <p class="dash-empty">Every lesson is done. New ones are on the way.</p>
@@ -199,7 +201,7 @@ export default function Dashboard({ lessons, base }: Props) {
             <div class="ring-wrap">
               <svg class="ring" viewBox="0 0 100 100" role="img" aria-label={`${Math.round(share * 100)} percent of the ${regionName} lessons done`}>
                 <circle class="track" cx="50" cy="50" r="44" />
-                <circle class="done" cx="50" cy="50" r="44" stroke-dasharray={`${(circumference * share).toFixed(1)} ${circumference.toFixed(1)}`} />
+                <circle class={`done ${share === 0 ? 'is-empty' : ''}`} cx="50" cy="50" r="44" stroke-dasharray={`${(circumference * share).toFixed(1)} ${circumference.toFixed(1)}`} />
                 <text class="ring-value" x="50" y="50">{Math.round(share * 100)}%</text>
               </svg>
               <ul class="track-rows">

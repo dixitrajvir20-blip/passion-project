@@ -1,6 +1,6 @@
 import { breakEven, profitAtUnits } from '../lib/finance';
 import { money, number } from '../lib/format';
-import { CurrencyField, HowItWorks, Figure, NumberField, Result, ToolActions, exact, toNumber, useFields, useLocale } from './tool-kit';
+import { CurrencyField, HowItWorks, Fact, Figure, NumberField, Result, ToolActions, exact, toNumber, useFields, useLocale } from './tool-kit';
 import './tools.css';
 
 interface Props {
@@ -55,8 +55,8 @@ export default function BreakEven({ defaults, unitName, fixedHint, variableHint,
           <Result label="Price of one" value={exact(price, locale)} />
           <Result minus label="Cost of one" value={exact(variable, locale)} />
           <Result main label="You keep per sale" value={exact(result.contributionMargin, locale)} loss={!result.viable} />
-          <Result label="Sales needed to break even" value={result.viable ? money(result.revenue!, locale) : '—'} />
-          <Result label={`Profit at ${number(units, locale)} ${unitName}`} value={money(profit, locale)} loss={profit < 0} />
+          <Fact label="Sales needed to break even" value={result.viable ? money(result.revenue!, locale) : '—'} />
+          <Fact label={`Profit at ${number(units, locale)} ${unitName}`} value={money(profit, locale)} loss={profit < 0} />
 
           <p class="plain">
             {result.viable

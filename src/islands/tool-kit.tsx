@@ -198,6 +198,16 @@ export function Result({ label, value, loss = false, main = false, minus = false
   );
 }
 
+/** A figure that follows from the sum but is not part of it, set as a plain row below the ledger. */
+export function Fact({ label, value, loss = false }: { label: string; value: ComponentChildren; loss?: boolean }) {
+  return (
+    <div class="result-fact">
+      <p class="result-fact-label">{label}</p>
+      <p class={`result-fact-value numbers ${loss ? 'is-loss' : ''}`}>{value}</p>
+    </div>
+  );
+}
+
 /** The tool's one answer when it is not the sum of the ledger above it (a count, a monthly payment, a rate). */
 export function Figure({ label, value, loss = false }: { label: string; value: ComponentChildren; loss?: boolean }) {
   return (

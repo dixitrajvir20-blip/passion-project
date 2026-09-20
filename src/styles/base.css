@@ -214,7 +214,7 @@ a.card:hover { background: var(--field-pale); }
 /* Dark panels carry the field's light text. The remap itself lives in tokens.css. */
 .panel-pale { background: var(--field-pale); }
 .panel-white { background: var(--bg); }
-.panel-gold { background: var(--gold); color: var(--on-gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --muted: var(--on-gold); --accent-text: var(--on-gold); --line: var(--on-gold); }
+.panel-gold { background: var(--gold); color: var(--on-gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --muted: var(--on-gold); --accent-text: var(--on-gold); --line: var(--on-gold); --focus: var(--on-gold); }
 
 /* The white reading sheet laid over the field, rounded at the top (Ivy Kids). */
 .sheet { background: var(--bg); border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: var(--space-7) 0 var(--space-8); }
@@ -226,8 +226,8 @@ a.card:hover { background: var(--field-pale); }
 .pill-outline { background: transparent; border: 1.5px solid var(--line-strong); color: var(--ink); }
 .pills { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
 .pills li { margin: 0; }
-.sticker { display: inline-block; padding: var(--space-1) var(--space-3); background: var(--gold-pale); color: var(--on-gold); font-family: var(--font-display); font-size: var(--text-sticker); font-weight: 700; border-radius: var(--radius-xs); transform: rotate(3deg); }
-.sticker-left { transform: rotate(-3deg); }
+.sticker { display: inline-block; padding: var(--space-1) var(--space-3); background: var(--gold-pale); color: var(--on-gold); font-family: var(--font-display); font-size: var(--text-sticker); font-weight: 700; border-radius: var(--radius-xs); }
+.sticker-left { transform: none; }
 .sticker-gold { background: var(--gold); }
 
 /* Outlined cards that share their borders like a table (Ivy Kids' programme grid). */
@@ -235,7 +235,7 @@ a.card:hover { background: var(--field-pale); }
 .grid-table > * { position: relative; margin: 0; padding: var(--space-6) var(--space-5); border-right: 1.5px solid var(--line-strong); border-bottom: 1.5px solid var(--line-strong); }
 @media (min-width: 720px) { .grid-table { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) { .grid-table.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.grid-table .sticker { position: absolute; top: var(--space-4); right: var(--space-4); }
+.grid-table > * > .sticker { position: absolute; top: var(--space-4); right: var(--space-4); }
 
 /* Hand-lettered notes (HandNote.astro): drawn outlines, sized by the text token, ink coloured. */
 .hand { display: inline-block; color: var(--ink); line-height: 1; }
@@ -262,21 +262,9 @@ a.card:hover { background: var(--field-pale); }
   border-radius: var(--radius-xs);
   padding: var(--space-6) var(--space-6) var(--space-5);
   margin: var(--space-7) 0 var(--space-6);
-  transform: rotate(-1.2deg);
   --ink: var(--on-gold);
   --ink-2: var(--on-gold);
-}
-.callout::before {
-  content: '';
-  position: absolute;
-  top: calc(var(--space-3) * -1);
-  left: 50%;
-  width: var(--space-9);
-  height: var(--space-5);
-  translate: -50% 0;
-  rotate: 2deg;
-  background: var(--field-deep);
-  opacity: 0.85;
+  --focus: var(--on-gold);
 }
 .callout h2, .callout h3 { margin-top: 0; font-size: var(--text-md); font-family: var(--font-body); }
 .callout ul { margin-bottom: 0; padding-left: var(--space-5); }
@@ -411,7 +399,8 @@ input[aria-invalid='true'] { border-color: var(--error); }
 }
 .ledger-total { border-top: 1px solid var(--ink); margin-top: var(--space-2); padding-top: var(--space-4); }
 .ledger-total .ledger-label { color: var(--ink); font-weight: 700; }
-.ledger-total .ledger-figure { font-size: var(--text-result); border-bottom: var(--rule-total); padding-bottom: 1px; }
+/* The double rule of a closed sum, drawn in the ink of wherever the ledger sits. */
+.ledger-total .ledger-figure { font-size: var(--text-result); border-bottom: 3px double var(--ink); padding-bottom: 1px; }
 .ledger .is-loss { color: var(--error); }
 
 /* The highlighter: one sentence per lesson worth remembering, marked the way a student marks a
@@ -444,17 +433,6 @@ input[aria-invalid='true'] { border-color: var(--error); }
 .index-row .index-go::after { content: ' ↗'; }
 a.index-row:hover .index-title { color: var(--accent-text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 
-/* The badge that floats in the corner (Aardvark), as a way back to the top. Wide screens only, so
-   it never sits over text on a phone. */
-.float-badge { display: none; }
-@media (min-width: 1200px) {
-  .float-badge {
-    display: grid; place-items: center; position: fixed; right: var(--space-5); bottom: var(--space-5); z-index: 30;
-    width: var(--space-8); height: var(--space-8); border-radius: 50%; background: var(--gold); border: 2px solid var(--brand-navy);
-    text-decoration: none;
-  }
-  .float-badge:hover { background: var(--gold-pale); }
-}
 
 /* Ordinary pages: one white sheet with rounded top corners over the blue field (Ivy Kids). */
 .page-sheet { background: var(--bg); border-radius: var(--radius-xl) var(--radius-xl) 0 0; margin-top: var(--space-4); min-height: 60vh; }

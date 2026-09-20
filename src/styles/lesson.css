@@ -12,7 +12,7 @@
 .lesson-crumbs .pill { text-decoration: none; }
 .lesson-crumbs .pill:hover { text-decoration: underline; }
 .lesson-crumbs .sticker { transform: none; }
-.lesson-head h1 { font-size: var(--text-display); }
+.lesson-head h1 { font-size: var(--text-h1); }
 .lesson-head .lede { color: var(--ink-2); }
 .lesson-meta { color: var(--muted); font-size: var(--text-sm); margin: var(--space-4) 0 0; }
 .lesson-expect { color: var(--muted); font-size: var(--text-sm); margin: var(--space-2) 0 0; }

@@ -126,9 +126,6 @@
   --print-muted: #444444;
   --print-line: #999999;
 
-  /* Ledger rules: the double line under a final total, the way a cash book closes a sum */
-  --rule-total: 3px double var(--ink);
-
   /* Layout */
   --header-h: 56px;
   --edition-h: 44px;
@@ -153,11 +150,11 @@
     --ink-2: #d6def5;
     --muted: #aebbe0;
     --line: #2c3a80;
-    --line-strong: #bfe0fb;
+    --line-strong: #f4f7ff;
 
-    --accent: #bfe0fb;         /* baby-blue buttons with navy labels in the dark */
-    --accent-hover: #e6f3fe;
-    --accent-text: #bfe0fb;
+    --accent: #f2c14e;         /* gold buttons with navy labels in the dark */
+    --accent-hover: #fbe3a6;
+    --accent-text: #f2c14e;
     --accent-soft: #16225e;
     --on-accent: #0b1240;
 
@@ -208,10 +205,10 @@
   --ink-2: #d6def5;
   --muted: #aebbe0;
   --line: #2c3a80;
-  --line-strong: #bfe0fb;
-  --accent: #bfe0fb;
-  --accent-hover: #e6f3fe;
-  --accent-text: #bfe0fb;
+  --line-strong: #f4f7ff;
+  --accent: #f2c14e;
+  --accent-hover: #fbe3a6;
+  --accent-text: #f2c14e;
   --on-accent: #0b1240;
   --gold-text: #f2c14e;
   --focus: #f2c14e;
@@ -236,5 +233,5 @@
   --accent-soft: #073478;
   --gold-text: #f2c14e;
   --focus: #f2c14e;
-  --highlight: #f2c14e;
+  --highlight: #073478;      /* white text stays legible if a highlight ever lands on the field */
 }

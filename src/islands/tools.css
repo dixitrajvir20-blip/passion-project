@@ -29,6 +29,10 @@
 .tool .result-block p { margin: 0; }
 .tool .result-label { font-size: var(--text-ui); }
 .tool .result-block.ledger-total { border-bottom: 0; margin: var(--space-2) 0; }
+.tool .result-fact { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; color: var(--ink-2); font-size: var(--text-ui); }
+.tool .result-fact p { margin: 0; }
+.tool .result-fact-value { font-weight: 700; color: var(--ink); white-space: nowrap; }
+.tool .result-fact-value.is-loss { color: var(--error); }
 .tool .result-value.is-loss { color: var(--error); }
 .tool .plain { margin: var(--space-5) 0 0; font-size: var(--text-md); }
 .tool .copied { min-height: 24px; margin: var(--space-2) 0 0; color: var(--success); font-size: var(--text-sm); }

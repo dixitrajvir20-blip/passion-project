@@ -148,13 +148,13 @@ const trackDoodles = ['coin', 'tag', 'calculator'] as const;
   .receipt-wrap { position: relative; max-width: 420px; width: 100%; justify-self: center; padding-bottom: var(--space-7); }
   .receipt {
     background: var(--paper); color: var(--brand-navy); border: 2px solid var(--brand-navy); border-radius: var(--radius-l);
-    padding: var(--space-5); transform: rotate(2deg); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy);
+    padding: var(--space-5); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy);
   }
   .receipt :global(.receipt-note) { margin-bottom: var(--space-2); }
   .sticky-rule {
     position: absolute; left: calc(var(--space-5) * -1); bottom: 0; margin: 0; padding: var(--space-3) var(--space-4);
     background: var(--gold); color: var(--on-gold); border: 2px solid var(--brand-navy); border-radius: var(--radius-s);
-    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3); transform: rotate(-6deg);
+    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3);
   }
   @media (max-width: 559px) { .sticky-rule { left: 0; } }
 
@@ -188,7 +188,7 @@ const trackDoodles = ['coin', 'tag', 'calculator'] as const;
   .figures { display: grid; gap: var(--space-4); margin: var(--space-7) 0 var(--space-8); }
   @media (min-width: 900px) { .figures { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); } }
   .stat { margin: 0; padding: var(--space-6); background: var(--bg); border-radius: var(--radius-l); }
-  .stat-gold { background: var(--gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --muted: var(--on-gold); color: var(--on-gold); }
+  .stat-gold { background: var(--gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --muted: var(--on-gold); --focus: var(--on-gold); color: var(--on-gold); }
   .stat .figure { margin: 0 0 var(--space-3); }
   .stat-label { margin: 0 0 var(--space-4); color: var(--ink); }
   .stat-source { margin: 0; font-size: var(--text-xs); color: var(--muted); }

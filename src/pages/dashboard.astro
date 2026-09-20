@@ -38,7 +38,7 @@ for (const region of REGIONS) {
 >
   <section class="section">
     <div class="container">
-      <Dashboard client:load lessons={lessons} base={base} />
+      <Dashboard client:load lessons={lessons} base={base} accounts={site.accountsEnabled} />
       <noscript>
         <p class="note">
           The dashboard reads the progress kept in this browser, so it needs JavaScript. Every lesson

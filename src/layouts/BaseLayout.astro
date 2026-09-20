@@ -1,7 +1,6 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Logo from '../components/Logo.astro';
 import ConsentManager from '../islands/ConsentManager.tsx';
 import { site, consentCategories, CONSENT_VERSION } from '../lib/site';
 import { REGIONS } from '../lib/regions';
@@ -61,7 +60,8 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <meta name="color-scheme" content="light dark" />
     {/* The browser bar continues the navy edition line at the top of every page. */}
-    <meta name="theme-color" content="#0b4aa2" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0b4aa2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#071a4a" />
     <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={`${base}/icons/icon-192.png`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
@@ -94,7 +94,6 @@ const jsonLd = {
       <slot />
     </main>
     <Footer region={region} />
-    <a class="float-badge" href="#top" aria-label="Back to the top"><Logo size={44} /></a>
     <ConsentManager client:load categories={consentCategories} version={CONSENT_VERSION} />
   </body>
 </html>
