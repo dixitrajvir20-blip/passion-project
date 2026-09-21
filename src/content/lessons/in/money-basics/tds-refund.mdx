@@ -8,9 +8,9 @@ readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-20
+lastReviewed: 2026-09-21
 
-situation: "An internship paid ₹1,50,000 over the year, and ₹15,000 was withheld as tax before the money reached you. Your income for the year is far below the level at which any tax is due."
+situation: "An internship paid ₹1,50,000 over the year, and ₹15,000 was withheld as tax before the money reached you. Your income for the year is far below the level at which income tax starts."
 
 prediction:
   q: "₹15,000 was withheld from ₹1,50,000 of fees, and no tax is due for the year. What happens to the ₹15,000?"
@@ -25,12 +25,12 @@ prediction:
 
 takeaways:
   - "TDS is tax paid in advance in your name. It is not the final bill, and the return for the year settles the difference."
-  - "Under the new regime for 2025-26, a rebate of up to ₹60,000 makes the tax nil where taxable income does not exceed ₹12,00,000."
+  - "Under the new tax regime for 2025-26 the slabs charge nothing on the first ₹4,00,000. A rebate of up to ₹60,000 then clears the tax where taxable income stays at or below ₹12,00,000."
   - "Form 26AS and the Annual Information Statement show what was withheld against your PAN. A refund arrives only after a return is filed and verified."
 
 worked:
   kind: split
-  context: "The internship from the top of the page: ₹1,50,000 of fees for the year, with a tenth of it held back as tax before you were paid. The refund is the first line minus the second."
+  context: "The internship from the top of the page: ₹1,50,000 of fees for the year, and this contract held back a tenth of it as tax before you were paid. Income of this size sits below where tax starts, so the second line is nil and the refund is the whole of the first."
   income: 150000
   shares:
     - { label: "Tax withheld before you were paid", percent: 10 }
@@ -38,7 +38,7 @@ worked:
 
 explorable:
   kind: drill
-  intro: "Four messages of the kind that arrive after a first year of paid work. None of them is a trick. The skill is telling apart the message that reports a deduction and the step that settles it."
+  intro: "Four screens from the months after a first year of paid work. None of them is a trick. The skill is telling the difference between a message that reports a deduction and the step that settles it."
   scenarios:
     - screen:
         kind: message
@@ -65,12 +65,12 @@ explorable:
           - "Just ask them to give the ₹15,000 back."
           - "You earned too little to pay tax, so they cut it by mistake."
       check:
-        q: "Your total income for the year is ₹1,50,000, well inside the rebate limit. What do you do with this advice?"
+        q: "Your total income for the year is ₹1,50,000, below where income tax starts. What do you do with this advice?"
         options:
           - text: "Ask the firm to pay the ₹15,000 back to you"
-            why: "The firm applied the deduction rules and has already deposited the money. It cannot take it back out."
+            why: "The firm applied the deduction rules for the payment and has already deposited the money. It cannot take it back out."
           - text: "Leave the firm out of it and claim the amount on that year's return"
-            why: "Deduction happens on a payment, and the rebate applies to the whole year. Only the return puts the two together."
+            why: "Deduction happens on a payment, and tax is worked out on the whole year. Only the return puts the two together."
           - text: "Treat the ₹15,000 as lost, since the rules were followed"
             why: "The rules being followed is why it is claimable at all. The deposit is credited against your PAN."
         answer: 1
@@ -94,15 +94,15 @@ explorable:
         kind: message
         from: "A calendar reminder you set"
         lines:
-          - "September now."
-          - "The return for last year was due on 31 July."
+          - "It is September."
+          - "The filing date for last year's return has passed."
       check:
         q: "You never filed, and ₹15,000 is still sitting as a credit against your PAN. What do you do?"
         options:
           - text: "Wait for next year's return and claim it there"
             why: "Each year's credit belongs to that year's return. A later return does not carry it forward for you."
           - text: "File a belated return for that year, inside the window the law allows"
-            why: "A belated return is still a return. For assessment year 2026-27 it may be filed on or before 31 December 2026, and a late-filing fee can apply."
+            why: "A belated return is still a return. For assessment year 2026-27 it may be filed on or before 31 December 2026, and a delayed-filing fee can apply."
           - text: "Assume the refund comes on its own, since the credit is on record"
             why: "Nothing is worked out until a return is filed. A credit alone does not tell the department what was owed."
         answer: 1
@@ -127,14 +127,14 @@ quiz:
       - text: "A separate return is needed for each payer"
         why: "One return covers the year and every payer in it. The credits are listed inside that single return."
     answer: 1
-  - q: "A relative says tax is nil only up to ₹4,00,000, so your ₹0 must be wrong. How do you explain the figure?"
+  - q: "A year later the same work pays ₹6,00,000 for the year. A relative says tax starts above ₹4,00,000, so this time some must be due. What does the rebate do here?"
     options:
-      - text: "The ₹4,00,000 slab is where tax starts, and a rebate takes the tax to nil further up"
-        why: "Both sit in the same table. The slabs work out the tax, and the rebate then reduces it where taxable income does not exceed ₹12,00,000."
-      - text: "The relative is right, so some tax must be due after all"
-        why: "The slab is only the first step. The department's own page lists a rebate of up to ₹60,000 on top of it."
-      - text: "Slabs do not apply to fees from an internship"
-        why: "The same slabs apply to the year's total income, wherever it came from. The kind of income changes which return form fits, not the slabs."
+      - text: "Tax is worked out on the ₹2,00,000 above ₹4,00,000, and the rebate then takes it to nil"
+        why: "At 5% that band comes to ₹10,000 of tax, and the rebate covers up to ₹60,000 while taxable income stays at or below ₹12,00,000."
+      - text: "The relative is right, so tax is due on the year after all"
+        why: "The slabs are only the first step. A rebate comes off the tax after the slabs have worked it out."
+      - text: "The whole ₹6,00,000 is charged at 5%, and the rebate covers part of that"
+        why: "Each band's rate applies only to the income inside that band. Nothing is charged on the first ₹4,00,000."
     answer: 0
   - q: "The return is showing as submitted, but you never finished the last step. Two months later no refund has arrived. What is the likely reason?"
     options:
@@ -150,7 +150,7 @@ quiz:
       - text: "Whether the payer deposited the tax at all"
         why: "That credit was already accepted when the return was processed. A failure at this stage is about where the money was sent."
       - text: "The bank account on the portal: whether it is pre-validated and matches your PAN"
-        why: "A refund is paid only into a pre-validated account. A name mismatch, a wrong IFSC or a closed account is a common reason one fails."
+        why: "A refund is paid only into a pre-validated account. A name that does not match the PAN, a wrong branch code and a closed account are all listed reasons one fails."
       - text: "Whether to file the whole return again"
         why: "Filing again does not fix a payment that could not be delivered. The bank details are what the department is working from."
     answer: 1
@@ -158,13 +158,13 @@ quiz:
 transfer:
   - "Each time a payment arrives smaller than the invoice. The gap is often tax withheld, and it stays yours until the year is settled."
   - "At the end of a financial year, when Form 26AS and the statement can be checked against your own record of what was paid."
-  - "Before the filing date, when a return is the step that turns a credit on record into money in your account."
+  - "Before the filing date, when only a return turns a credit on record into money in your account."
   - "When a friend says tax was cut from a stipend or a freelance payment and nothing can be done about it."
 
-glossary: [tds, pan, tax-return, assessment-year, tax-rebate, form-26as, annual-information-statement]
+glossary: [tds, pan, tax-return, assessment-year, new-tax-regime, tax-slab, tax-rebate, form-26as, annual-information-statement]
 
 sources:
-  - title: "Salaried individuals for AY 2026-27: new-regime slabs from ₹4,00,000, and a rebate of up to ₹60,000 where taxable income does not exceed ₹12,00,000 (accessed 21 September 2026)"
+  - title: "Salaried individuals for AY 2026-27: the new regime is the default, its slabs charge nil to ₹4,00,000 and 5% to ₹8,00,000, and a rebate of up to ₹60,000 applies where taxable income stays at or below ₹12,00,000 (accessed 21 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1"
     publisher: "Income Tax Department, Government of India"
   - title: "TDS compliance: tax deducted on income for FY 2025-26 appears in the Annual Information Statement for AY 2026-27, and the deductee claims that credit in the return for AY 2026-27 (accessed 21 September 2026)"
@@ -173,10 +173,10 @@ sources:
   - title: "Annual Information Statement: Part B carries TDS and TCS information and takes taxpayer feedback, while Form 26AS on TRACES shows TDS and TCS data only (accessed 21 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/ais-annual-information-statement"
     publisher: "Income Tax Department, Government of India"
-  - title: "Refund status: processing starts only after the return is e-verified, the bank account must be pre-validated, and a refund usually takes four to five weeks (accessed 21 September 2026)"
+  - title: "Refund status: processing starts only after the return is e-verified, the bank account must be pre-validated, a refund usually takes four to five weeks, and a name mismatch, an invalid branch code or a closed account are listed reasons one fails (accessed 21 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/refund_status_user_manual"
     publisher: "Income Tax Department, Government of India"
-  - title: "Income tax returns: the due date for AY 2026-27, and a belated return on or before 31 December 2026 with a delayed-filing fee (accessed 21 September 2026)"
+  - title: "Income tax returns: the filing date for AY 2026-27, a belated return on or before 31 December 2026, and the delayed-filing fee of ₹1,000 where total income does not exceed ₹5,00,000 (accessed 21 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/income-tax-returns"
     publisher: "Income Tax Department, Government of India"
 ---
@@ -213,11 +213,11 @@ Tax deducted on income for the 2025-26 financial year shows in the statement for
 
 Tax is worked out on the year's total income, not on any one payment.
 
-Under the new regime for the 2025-26 financial year, the department's table starts tax above ₹4,00,000. A <Term id="tax-rebate">tax rebate</Term> of up to ₹60,000 then applies where taxable income does not exceed ₹12,00,000.
+Under the <Term id="new-tax-regime">new tax regime</Term> for the 2025-26 financial year, the department's <Term id="tax-slab">tax slabs</Term> charge nothing on the first ₹4,00,000. The next band, up to ₹8,00,000, is charged at 5%. A <Term id="tax-rebate">tax rebate</Term> of up to ₹60,000 then comes off the tax itself, where taxable income stays at or below ₹12,00,000.
 
-**At ₹1,50,000 of income for the year, the rebate leaves nothing to pay.** The amount already deposited has no bill to be set against.
+**At ₹1,50,000 for the year, the income sits below where tax starts, so nothing is due before the rebate is even reached.**
 
-The rules change from year to year, and other income counts towards the same total. Check the current table on incometax.gov.in before working out your own figure.
+The rules change from year to year, and other income counts towards the same total. Check the current table on incometax.gov.in before using your own numbers.
 
 ## Where to see what was withheld
 
@@ -229,13 +229,13 @@ Two statements show tax withheld in your name, and both sit inside your account 
 
 ## What a return does, and when
 
-A return is the step that turns a credit on record into money in your account.
+A return is what turns a credit on record into money in your account.
 
 You report the year's income, set the tax already deducted against the bill, and ask for the difference. **A refund is worked out only after the return has been verified, so the last step counts as much as the first.**
 
-The account it is paid into has to be pre-validated on the portal and match your PAN. Departmental guidance puts a refund at roughly four to five weeks after processing.
+The account it is paid into has to be pre-validated on the portal and match your PAN. The department's guidance puts a refund at about four to five weeks.
 
-For assessment year 2026-27 the due date was 31 July 2026. A belated return for that year may still be filed on or before 31 December 2026, and a delayed-filing fee can apply.
+The filing date for assessment year 2026-27 fell in the middle of 2026. A belated return for that year may still be filed on or before 31 December 2026, and a delayed-filing fee can apply.
 
 ## When nothing is claimed
 
@@ -243,4 +243,4 @@ Money withheld and never claimed stays with the government. Nothing arrives to p
 
 **The habit that prevents it is small: keep every invoice and payment note for the year in one folder, and check the two statements once the year closes.**
 
-A first year of paid work often has one payer and one credit to check. The same ten minutes covers four payers later, which is when forgetting one starts to cost more.
+A first year of paid work often has one payer and one credit to check. The same check covers four payers later, which is when forgetting one starts to cost more.

@@ -17,20 +17,20 @@ prediction:
   options:
     - text: "$1,055, one whole month of must-pay costs"
       why: "A fair second target. It takes long enough to reach that nothing is set aside for a smaller bill in the meantime."
-    - text: "$400, the figure the Federal Reserve asks about"
-      why: "The Federal Reserve asks adults whether they could cover a $400 emergency expense with cash or its equivalent. In the survey it ran in October 2025, 63% said they could."
+    - text: "$400, the figure the Federal Reserve's survey uses"
+      why: "The Federal Reserve's survey measures how many adults would cover a $400 emergency expense using cash or its equivalent. In the survey run in October 2025, that was 63%."
     - text: "Whatever is left at the end of each month"
       why: "That is decided by every spend before it. Some months it is nothing, and the target never gets a date."
   answer: 1
 
 takeaways:
-  - "The Federal Reserve asks adults whether they could cover a $400 emergency expense with cash or its equivalent. In its October 2025 survey, 63% said they could."
+  - "The Federal Reserve's survey measures how many adults would cover a $400 emergency expense using cash or its equivalent. In October 2025 that was 63%."
   - "A cushion is sized from must-pay costs, not from what is left over. Here they are $1,055 a month: rent share, phone, getting to work and food."
   - "An overdraft fee is what having no cushion costs. For ATM withdrawals and one-time debit card purchases, a bank cannot charge one unless you opted in."
 
 worked:
   kind: growth
-  context: "The $50 a paycheck above, taken out to a full year: about $100 a month, since most months bring two paydays. The rate is set to 0% here, so the working shows what the deposits do on their own. Any interest an account pays comes on top of this."
+  context: "Most months bring two paydays, so $50 a paycheck is about $100 a month. The working takes that out to a full year. The rate is set to 0%, so it shows what the deposits do on their own. Any interest an account pays comes on top."
   monthly: 100
   rate: 0
   years: 1
@@ -41,7 +41,7 @@ explorable:
   rate: 1
   horizons: [1, 2, 3]
   prompts:
-    - "Tap $50 and 1 year. At $50 a month the cushion reaches $400 in the eighth month, and a year of it is still under one month of must-pay costs. Now tap $100: the $400 mark comes in the fourth month."
+    - "Tap $100 and 1 year. At $100 a month, which is about $50 from each of two paychecks, the $400 mark comes in the fourth month. Tap $50 and the same $400 takes eight months."
     - "Tap $100 and 1 year, then read the line under the figure. You put in $1,200, and an example 1% adds about $6. The deposits do the work here, not the rate."
 
 practice:
@@ -52,14 +52,14 @@ practice:
   years: 2
 
 quiz:
-  - q: "The repair is $180, your account holds $60, and payday is six days away. Your card would go through, and the bank charges $35 for each item it covers. What do you do?"
+  - q: "The repair is $180, your account holds $60, and payday is six days away. You opted in to debit card coverage, so the card would go through, and this bank charges $35 for each item it covers. What do you do?"
     options:
       - text: "Pay by card now and settle the balance on payday"
         why: "The repair still costs $180, and the fee is added on top. Any other payment due in those six days can carry its own fee."
       - text: "Book the repair for payday and pay for it then"
         why: "The repair costs the same $180 six days later, and no fee is attached to it."
       - text: "Let it go through and ask the bank to refund the fee afterwards"
-        why: "The fee is charged first. Asking does not undo it, and the answer is not yours to decide."
+        why: "The fee is charged first. Whether a bank reverses one is its own decision, so it is not something to plan around."
     answer: 1
   - q: "Your balance is $3 and your card is declined at the register. You never signed anything about overdrafts. A friend says the bank should have covered it and charged you a fee. How do you read it?"
     options:
@@ -99,7 +99,7 @@ glossary: [emergency-fund, needs-and-wants, overdraft, available-balance, overdr
 tool: savings
 
 sources:
-  - title: "Economic Well-Being of U.S. Households in 2025: 63 percent would cover a $400 emergency expense with cash or its equivalent (13 May 2026)"
+  - title: "Economic Well-Being of U.S. Households in 2025: 63 percent would cover a $400 emergency expense using cash or its equivalent (13 May 2026)"
     url: "https://www.federalreserve.gov/newsevents/pressreleases/other20260513a.htm"
     publisher: "Board of Governors of the Federal Reserve System"
   - title: "Survey of Household Economics and Decisionmaking: the chart and data table for adults who would cover a $400 emergency expense using cash or its equivalent (last updated 13 May 2026)"
@@ -120,7 +120,7 @@ sources:
 
 Your phone screen cracks six days before payday. The repair is $180. Your account holds $60.
 
-Nothing here is unusual. Each year the Federal Reserve asks adults across the country whether they could cover a $400 emergency expense with cash or its equivalent. In the survey it ran in October 2025, 63% said they could. The rest would need another way to cover it.
+Nothing here is unusual. Each year the Federal Reserve surveys adults across the country. One thing it measures is how many would cover a $400 emergency expense using cash or its equivalent. In the survey run in October 2025, that was 63%. The rest would need something other than cash.
 
 An <Term id="emergency-fund">emergency fund</Term>, or a cushion, is money set aside for exactly this kind of bill. **It is money for a bill you did not choose, kept apart from saving for something you want.**
 
@@ -142,35 +142,35 @@ Everything else is a want, and wants can shrink in a bad month. Sorting <Term id
 
 ## The first $400, then the first month
 
-A $400 target is not a rule. It is the figure the Federal Reserve uses when it asks whether adults could meet an emergency expense, and it is small enough to reach.
+A $400 target is not a rule. It is the figure the Federal Reserve's survey uses for an emergency expense, and it is small enough to reach.
 
 At $50 from each paycheck, the eighth paycheck brings the cushion to $400. Paid every two weeks, that is about four months.
 
 <svg class="chart" viewBox="0 0 320 158" role="img" aria-labelledby="cushion-title cushion-desc">
-  <title id="cushion-title">Months to reach $400 at three monthly amounts</title>
-  <desc id="cushion-desc">Three bars. $50 a month takes 8 months. $100 a month takes 4 months. $200 a month takes 2 months.</desc>
+  <title id="cushion-title">Paychecks needed to reach $400 at three amounts</title>
+  <desc id="cushion-desc">Three bars. $50 a paycheck takes 8 paychecks. $100 a paycheck takes 4. $200 a paycheck takes 2.</desc>
   <rect class="chart-a" x="0" y="22" width="320" height="22" rx="6" />
   <rect class="chart-a" x="0" y="66" width="160" height="22" rx="6" />
   <rect class="chart-a" x="0" y="110" width="80" height="22" rx="6" />
-  <text class="chart-label" x="0" y="16">$50 a month: 8 months</text>
-  <text class="chart-label" x="0" y="60">$100 a month: 4 months</text>
-  <text class="chart-label" x="0" y="104">$200 a month: 2 months</text>
-  <text class="chart-note" x="0" y="152">Months to $400, with no interest counted</text>
+  <text class="chart-label" x="0" y="16">$50 a paycheck: 8 paychecks</text>
+  <text class="chart-label" x="0" y="60">$100 a paycheck: 4 paychecks</text>
+  <text class="chart-label" x="0" y="104">$200 a paycheck: 2 paychecks</text>
+  <text class="chart-note" x="0" y="152">Paychecks to $400, with no interest counted</text>
 </svg>
 
-| Each month | Months to $400 |
+| Each paycheck | Paychecks to $400 |
 | --- | --- |
 | $50 | 8 |
 | $100 | 4 |
 | $200 | 2 |
 
-Then keep going. The working below runs the same habit out to a full year at 0%, so nothing but the deposits is doing the work. A year of it covers a whole month of must-pay costs.
+Then keep going. The working below takes the same habit out to a full year at 0%, so nothing but the deposits is doing the work. A year of it covers a whole month of must-pay costs.
 
 ## What an overdraft costs instead
 
-With no cushion, the $180 has to come from somewhere. Often that is the account itself. An <Term id="overdraft">overdraft</Term> happens when a payment is larger than your <Term id="available-balance">available balance</Term> and the bank pays it anyway. For that the bank charges an <Term id="overdraft-fee">overdraft fee</Term>.
+With no cushion, the $180 has to come from somewhere. One place is the account itself. An <Term id="overdraft">overdraft</Term> happens when a payment is larger than your <Term id="available-balance">available balance</Term> and the bank pays it anyway. For that the bank may charge an <Term id="overdraft-fee">overdraft fee</Term>.
 
-Fee amounts differ from bank to bank, and so do the limits on how many can be charged. Take $35 an item as an example figure. Two small payments covered in the same week add $70 in fees. **The shortfall still has to be repaid, and the $70 is charged on top of it.**
+Each bank sets its own fee, so the only figure that applies to you is the one in your account terms. Take $35 an item as an example. Two small payments covered in the same week add $70 in fees. **The shortfall still has to be repaid, and the $70 is charged on top of it.**
 
 ## The opt-in rule on debit cards
 
@@ -180,10 +180,10 @@ Checks and recurring electronic payments sit outside that rule. A bank may charg
 
 **Whether you want that coverage is your decision, and you can change it.** Your bank can tell you what is set on the account now. Without an opt-in, a card is declined instead of covered.
 
-## Paying yourself on payday
+## Moving the money on payday
 
-A target on its own has no date. Divide it by what you can move each payday, and a date appears.
+A target means little until it has a date. Divide it by what you can move each payday, and the date appears.
 
-What is left at the end of a month is decided by every spend before it, and some months that is nothing. Moving a fixed amount on payday puts the cushion first instead of last. Some people set a standing transfer for the day after pay lands. Others move it by hand and mark it off.
+What is left at the end of a month is decided by every spend before it, and some months that is nothing. Moving a fixed amount on payday puts the cushion first instead of last. Some people set an automatic transfer for the day after pay lands. Others move it by hand and mark it off.
 
 Plan from <Term id="net-pay">net pay</Term>, the figure that reaches the account, not from the hourly rate. **Spending the cushion on an unplanned bill is the cushion doing its job.** Then the same amount starts again, from the next payday.

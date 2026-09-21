@@ -1,14 +1,14 @@
 ---
 title: "UPI fraud: the one rule and the three-day clock"
-summary: "The UPI PIN only sends money. Reporting inside three working days limits what the loss costs you."
+summary: "The UPI PIN only sends money. How fast you report decides how much of a loss you carry."
 region: in
 track: protect-your-money
 order: 1
-readingMinutes: 7
+readingMinutes: 6
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-20
+lastReviewed: 2026-09-21
 
 situation: "A payment request for ₹1 arrives under a shop name you have never bought from. The note calls it a refund. Approving it would send ₹1 out of your account, not bring it in."
 
@@ -18,19 +18,19 @@ prediction:
     - text: "₹1 arrives in your account"
       why: "Money arriving needs nothing from you. The sender needs only your UPI ID, and no screen on your side asks for a PIN."
     - text: "₹1 leaves your account, and the sender learns the request works"
-      why: "A request is a bill. The PIN approves money going out, and a ₹1 test that goes through is usually followed by a larger one."
+      why: "A request asks you to pay. The PIN approves money going out, and a ₹1 test that goes through is usually followed by a larger one."
     - text: "Nothing moves until the shop confirms on its side"
       why: "There is no second step. Your PIN is the final approval, and the money moves the moment it goes through."
   answer: 1
 
 takeaways:
   - "The UPI PIN approves money leaving your account. Nothing arriving needs a PIN, a scan, a new app or a call."
-  - "Report on 1930 or cybercrime.gov.in before anything else. More than ₹11,158 crore was saved that way in over 32.80 lakh complaints up to 30 June 2026."
-  - "Tell your bank within three working days. RBI's rules limit what falls on you, and the day you report is the day the loss stops."
+  - "Report on 1930 or cybercrime.gov.in before anything else. More than ₹11,158 crore was saved through that reporting system in over 32.80 lakh complaints, counted to 30 June 2026."
+  - "Tell your bank as well, within three working days of its alert. For a payment you did not make yourself, RBI's rules then leave nothing on you."
 
 explorable:
   kind: drill
-  intro: "Seven screens, about five seconds each: pay, refuse, or report. One is an ordinary payment, so refusing everything is not the answer. Every name and link here is made up."
+  intro: "Six screens, five seconds each: pay, refuse, or report. One is an ordinary payment, so refusing everything is not the skill. Every name and link here is made up."
   scenarios:
     - screen:
         kind: request
@@ -44,9 +44,9 @@ explorable:
         q: "You have never bought anything from this shop. What do you do?"
         options:
           - text: "Approve it, because ₹1 is too small to matter"
-            why: "The amount is not the test. A request plus a PIN page only ever pays out, and a ₹1 that goes through tells the sender your number is live."
+            why: "The amount is not the test. A request plus a PIN page only ever pays out, and a ₹1 that goes through tells the sender the number is live."
           - text: "Decline it, and report the sender if more arrive"
-            why: "A request is a bill, so declining costs nothing. A refund you are owed comes back the way you paid, with nothing to approve."
+            why: "Declining costs nothing, because a request only ever asks you to pay. A refund you are owed is handled by the seller you paid, and needs no approval from you."
           - text: "Approve it and watch the balance"
             why: "Watching starts after the money has gone. The PIN page is the last step, not a preview."
         answer: 1
@@ -61,9 +61,9 @@ explorable:
         q: "You returned a pair of shoes and are waiting for ₹1,250. This arrives on chat from a number you do not know. What do you do?"
         options:
           - text: "Scan it, since a refund is money coming in"
-            why: "Scanning only ever starts a payment from your side. Your own code is the one you share in order to be paid."
+            why: "NPCI's guidance runs the other way: a code is scanned to pay, and your own code is the one you share in order to be paid."
           - text: "Leave the code, and check the refund on the order page you bought from"
-            why: "A refund goes back the way the payment came. The seller's order page shows its status, with no code and no PIN."
+            why: "The order page of the seller you paid shows where the refund has got to. Nothing about it needs a code or a PIN."
           - text: "Scan it, but stop before the PIN page"
             why: "The scan has already set up a payment to a stranger. The cue came earlier: money promised in return for a scan."
         answer: 1
@@ -80,7 +80,7 @@ explorable:
           - text: "Install it, since he already knows about the failed payment"
             why: "He knows because your call told him. An app that shares your screen lets a stranger watch the PIN being typed and read every code."
           - text: "Install nothing, and raise the failed payment inside the payment app"
-            why: "Failed payments are raised from the app's own help section. A number found through a search may belong to nobody official."
+            why: "NPCI's safety points say to reach a provider through its own channel. The app's help section is that channel; a number found through a search may belong to nobody official."
           - text: "Install it, then remove it after the call"
             why: "The harm happens while the screen is shared. Removing the app later does not undo what was seen."
         answer: 1
@@ -113,15 +113,15 @@ explorable:
         q: "An SMS with a six-digit code arrives while the caller waits on the line. What do you do?"
         options:
           - text: "Read out the code, since it stops a payment you did not make"
-            why: "The SMS itself names what the code approves. Read aloud, it approves that action for the caller instead of you."
+            why: "A one-time code approves one action. Read aloud, it approves that action for the caller instead of you."
           - text: "Hang up, read the SMS, then call the number on your card"
-            why: "The message says whether anything is pending. A number you already have settles it, and the caller's urgency does not."
+            why: "The number printed on your own card settles whether anything is pending. The caller's urgency does not."
           - text: "Read out only the first three digits"
-            why: "Half a code is still the start of one. No bank asks for any part of it."
+            why: "Half a code is still the start of one. NPCI's safety points are short on this: an OTP is shared with nobody."
         answer: 1
     - screen:
         kind: call
-        from: "Video call: Officer Verma"
+        from: "Video call: caller in uniform"
         lines:
           - "A parcel in your name has been seized."
           - "Stay on this call and tell no one."
@@ -131,29 +131,11 @@ explorable:
         q: "A man in uniform, in what looks like an office, says this on a video call. What do you do?"
         options:
           - text: "Stay on the call and transfer the money so it can be checked"
-            why: "No agency arrests anyone or takes money on a video call. A demand for a transfer is the tell, whatever the uniform says."
+            why: "India's cybercrime centre says Indian law has no such thing as a digital arrest, and that no real officer arrests anyone over a video call. The demand for a transfer is the tell."
           - text: "Hang up, tell someone at home, and report the call on 1930"
             why: "The script works only while the call lasts. Hanging up ends it, and the report puts the number on record."
           - text: "Stay on, but ask to see an identity card first"
             why: "A card held up to a camera is as easy to fake as the uniform. Staying on the line is what the script needs from you."
-        answer: 1
-    - screen:
-        kind: chat
-        from: "Group admin: Meridian Trade Circle"
-        amount: 15000
-        lines:
-          - "Your account on our app shows ₹42,000 in profit."
-          - "Deposit ₹15,000 as a withdrawal charge to release it."
-        action: "Deposit ₹15,000"
-      check:
-        q: "You joined this group from an advertisement and have put in ₹5,000 so far. What do you do?"
-        options:
-          - text: "Deposit the ₹15,000, since the profit is far larger"
-            why: "The ₹42,000 is a figure on a screen, not money in a bank. A charge demanded before a withdrawal is the pattern."
-          - text: "Send nothing, and report what has already gone"
-            why: "SEBI's investor material names unsolicited offers, pressure to decide quickly and promises of high returns as the signals, and says to check that a firm is regulated."
-          - text: "Deposit half and see whether the withdrawal arrives"
-            why: "Half is still money sent, and it is usually followed by one more charge before anything can be taken out."
         answer: 1
   reflection: "Take the screen you were slowest on. Which cue did you miss, and where on your own phone would that cue appear?"
 
@@ -163,14 +145,14 @@ quiz:
       - text: "Message the person and ask for it back"
         why: "That spends the minutes that matter on the one person who will not help, and it often brings a second request."
       - text: "Call 1930 now, with the transaction ID, date and amount ready"
-        why: "The complaint reaches the bank holding the money, so it can be blocked before it moves again."
+        why: "A police officer checks the complaint and asks the bank holding the money to block it, which is why those details are asked for first."
       - text: "Wait a day to see whether the bank reverses it"
         why: "Nothing marks the payment out until someone reports it, and the money keeps moving meanwhile."
     answer: 1
   - q: "You are booking a bus ticket. You type your UPI ID at checkout, and a request for the exact fare arrives under the site's name. What do you do?"
     options:
       - text: "Decline it, because every request is a scam"
-        why: "A request is a bill. This is one you asked for, from the business you are paying, for the amount you expected."
+        why: "A request asks you to pay, and this is one you asked for: from the business you are paying, for the amount you expected."
       - text: "Check the name and the amount, then approve with your PIN"
         why: "You started it and you mean to pay. The rule is not never approve; it is never approve in order to receive."
       - text: "Approve it without reading, since you started it"
@@ -181,7 +163,7 @@ quiz:
       - text: "Wait for Monday and tell the branch in person"
         why: "Monday may still sit inside the three working days, but the money moves in hours. Waiting leaves the receiving account open."
       - text: "Call 1930 now, and raise it in the bank's app the same day"
-        why: "The helpline runs outside branch hours, and the app records your complaint with a time on it. Neither waits for Monday."
+        why: "Reporting does not wait for a branch to open. The helpline takes the complaint, and the app records yours with a time on it."
       - text: "Message the account that received it"
         why: "That warns whoever holds the money before the bank does, and nothing about it starts a freeze."
     answer: 1
@@ -198,7 +180,7 @@ quiz:
 transfer:
   - "Every time a PIN page opens. Read the name and the amount, and ask whether you are trying to pay this person."
   - "When you sell something online. A buyer needs your UPI ID or your number, and nothing else from you."
-  - "In the first hour after money leaves wrongly. The helpline and the portal come before every other call."
+  - "In the first hour after money leaves your account wrongly. The helpline and the portal come before every other call."
   - "When someone at home describes a call that wants money or a code. You can name the tell for them."
 
 glossary: [upi, upi-pin, collect-request, qr-code, otp, digital-arrest, customer-liability]
@@ -206,7 +188,7 @@ glossary: [upi, upi-pin, collect-request, qr-code, otp, digital-arrest, customer
 reportTo:
   phone: "1930"
   url: "https://cybercrime.gov.in"
-  label: "Report it the same hour. The complaint reaches the bank that holds the money, and the portal step has to be finished within 24 hours."
+  label: "Report it the same hour. A police officer checks the complaint and asks the bank holding the money to block it, and the portal step has to be finished within 24 hours."
 
 sources:
   - title: "Lok Sabha Unstarred Question 251: more than ₹11,158 crore saved in over 32.80 lakh complaints through the cyber fraud reporting system, to 30 June 2026 (21 July 2026)"
@@ -215,27 +197,27 @@ sources:
   - title: "Customer protection, limiting liability in unauthorised electronic banking transactions: zero liability when a third-party breach is reported within three working days, capped from the fourth to the seventh (6 July 2017)"
     url: "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11040"
     publisher: "Reserve Bank of India"
-  - title: "BHIM UPI guidelines: the UPI PIN is required for all payment transactions and is never shared; a QR code is shared to be paid and scanned to pay (updated 4 June 2026)"
+  - title: "BHIM UPI brand guidelines: the UPI PIN is needed for all payment transactions and is shared with no one, only sending money requires it, and a QR code is shared to be paid and scanned to pay (accessed 21 September 2026)"
     url: "https://www.npci.org.in/uploads/BHIM_UPI_Guidelines_2026_012a0b1bce.pdf"
     publisher: "National Payments Corporation of India"
-  - title: "Steps for reporting financial cyber frauds: what to give the 1930 helpline, and completing the complaint on the portal within 24 hours (accessed 21 September 2026)"
+  - title: "Citizen Financial Cyber Frauds Reporting and Management System, steps for reporting: the details the 1930 helpline asks for, completing the complaint on the portal within 24 hours, and the police officer's report to the bank for blocking (accessed 21 September 2026)"
     url: "https://cybercrime.gov.in/uploadmedia/instructions_citizenreportingcyberfrauds.pdf"
     publisher: "National Cyber Crime Reporting Portal, Ministry of Home Affairs"
-  - title: "Curbing cyber frauds in Digital India: the 1930 helpline, prompt reporting and freezing of fraudulent transactions where possible (7 October 2025)"
+  - title: "Curbing cyber frauds in Digital India: helpline 1930 provides immediate assistance by facilitating prompt reporting and, where possible, freezing of fraudulent transactions (7 October 2025)"
     url: "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/oct/doc2025107659501.pdf"
     publisher: "Press Information Bureau, Government of India"
-  - title: "Staying away from investment frauds: unsolicited offers, pressure to decide quickly, promises of high returns, and checking that a firm is regulated (accessed 21 September 2026)"
-    url: "https://investor.sebi.gov.in/beware-of-investment.html"
-    publisher: "Securities and Exchange Board of India"
+  - title: "Advisory TAU/ADV/003 on digital arrest: there is no concept of digital arrest under any Indian laws, and real law enforcement will not arrest you digitally (6 March 2025)"
+    url: "https://cybercrime.gov.in/pdf/Advisories/ADVISORYTAU-ADV-003DigitalArrest06.03.2025.pdf"
+    publisher: "Indian Cyber Crime Coordination Centre, Ministry of Home Affairs"
 ---
 
 ## The PIN only sends money
 
 Your <Term id="upi-pin">UPI PIN</Term> does one thing: it approves money leaving your account. **If a screen asks for your PIN so that money can reach you, the money is about to go the other way.**
 
-Receiving needs nothing from you. Whoever is paying needs your UPI ID or your number, and that is all.
+Receiving needs nothing from you. Whoever is paying needs your UPI ID or your phone number, and that is all.
 
-NPCI, which runs <Term id="upi">UPI</Term>, sets out the same rule. The PIN is required for every payment and is shared with no one. A <Term id="qr-code">QR code</Term> works the same way round: you share yours to be paid, and you scan someone else's to pay.
+NPCI, which runs <Term id="upi">UPI</Term>, publishes the same rule: the PIN is needed for every payment, only sending money requires it, and it is shared with nobody. A <Term id="qr-code">QR code</Term> works the same way round. You share your own code to be paid, and you scan someone else's to pay.
 
 <svg class="chart" viewBox="0 0 320 140" role="img" aria-labelledby="pin-title pin-desc">
   <title id="pin-title">Which way the money moves, and what it needs from you</title>
@@ -255,31 +237,23 @@ NPCI, which runs <Term id="upi">UPI</Term>, sets out the same rule. The PIN is r
 | Coming in | Nothing |
 | Going out | Your UPI PIN |
 
-## One approval, many costumes
+## Every version wants the same approval
 
 Most UPI fraud is one move: getting that approval out of you, or watching you give it.
 
-The plainest version is the <Term id="collect-request">collect request</Term>, a bill dressed as a payment. The note beside it is typed by the sender, so it can say refund, advance or test.
+The plainest version is a <Term id="collect-request">collect request</Term>. It asks you to pay, and the note beside it is typed by the sender, so it can say refund, advance or test.
 
-The rest swap the prop. A QR code sent with a promise attached. A helper app that shows a stranger your screen. A caller who wants a code. A uniform on a video call. An app where the profit is only a display.
+The others change only the surface. A QR code sent with a promise attached. A helper app that shows a stranger your screen. A caller who wants a code. A uniform on a video call.
 
 **Ask one question at every PIN page: am I trying to pay this person?**
 
-## A call that wants money or a code
+## A call that wants a code
 
-An <Term id="otp">OTP</Term> is a permission slip. Read it out and you have approved, for someone else, whatever the message describes. Banks do not ask for it, and the message says so in its own text.
+An <Term id="otp">OTP</Term> is a one-time code that confirms a single action. Read it out and you have approved that action for the caller. NPCI's safety points are short: never share an OTP, and enter your UPI PIN only on a UPI PIN page.
 
-A <Term id="digital-arrest">digital arrest</Term> call is the same demand under more pressure. It opens with a case you have never heard of. Then come the orders: stay on camera, tell no one, move the balance. No agency arrests anyone or collects money on a video call.
+A <Term id="digital-arrest">digital arrest</Term> call is the same demand under more pressure: stay on camera, tell no one, move your money. India's cybercrime centre says Indian law has no such thing as a digital arrest, and that real officers do not arrest anyone over a video call.
 
-**Hanging up costs nothing and ends both calls.** Then say it out loud to someone at home.
-
-## Money that exists only on a screen
-
-The newer version arrives through a group chat. An app shows a balance, then a profit, then a charge to be paid before any withdrawal. The figures are drawn on a screen; only your deposits were ever real.
-
-SEBI's investor material names the signals. An offer arrives that you did not ask for, with pressure to decide quickly. A high return is promised, and nobody sets out where the money goes. The same page says to check that the firm, and the people promoting a scheme, are regulated.
-
-That check takes a minute on the regulator's own site. Pressure to decide quickly is what removes the minute.
+**Hanging up costs nothing.** Then say what happened to someone at home.
 
 ## The first hour
 
@@ -291,8 +265,8 @@ More than ₹11,158 crore was saved through that system in over 32.80 lakh compl
 
 ## The three working days
 
-RBI's rules on <Term id="customer-liability">customer liability</Term> depend on how fast you report. Where a breach was neither your fault nor the bank's, telling the bank within three working days leaves nothing on you. From the fourth working day to the seventh, the amount is capped, and for an ordinary savings account that cap is ₹10,000.
+RBI's rules on <Term id="customer-liability">customer liability</Term> cover payments you did not make yourself, and they turn on how fast you report. Where the fault lay neither with you nor with your bank, telling the bank within three working days of its alert leaves nothing on you. From the fourth working day to the seventh the amount is capped, and for an ordinary savings account that cap is ₹10,000.
 
-If you approved the payment yourself after being tricked, the rules read differently. The loss up to the moment you report is yours, and what happens after it is the bank's.
+Where you shared a PIN, a card detail or a code, the rules read differently. The loss up to the moment you report is yours, and what follows the report is the bank's.
 
-**So the day you report is the day the loss stops.** Report on the day you notice, working day or not.
+**Report on the day you notice, working day or not.**

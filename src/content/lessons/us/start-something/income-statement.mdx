@@ -1,6 +1,6 @@
 ---
 title: "Reading a coffee shop's monthly income statement"
-summary: "A record $30,000 of sales left $2,000. Read the lines between the top line and the bottom line."
+summary: "A record $30,000 of sales left $2,000. The lines in between are where it went."
 region: us
 track: start-something
 order: 3
@@ -8,7 +8,7 @@ readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-20
+lastReviewed: 2026-09-21
 
 situation: "You work weekend shifts at a coffee shop near your college. September was its best month for sales: $30,000. The owner prints the month's income statement and says the shop kept less of it than in March, when sales were lower."
 
@@ -16,7 +16,7 @@ prediction:
   q: "September's sales were $30,000. Beans, milk and cups cost $10,500, and rent, wages, utilities, card fees and insurance came to $17,500. What did the month leave?"
   options:
     - text: "$19,500, what is left once the beans, milk and cups are paid for"
-      why: "That is gross profit. Rent and wages are still owed, and with the smaller bills they take $17,500 more."
+      why: "That is gross profit. The running costs have not come off yet, and rent, wages and the rest add up to $17,500."
     - text: "$12,500, sales minus the rent, wages and other running costs"
       why: "That leaves out the $10,500 of beans, milk and cups. Every cost on the statement comes off, not only the running costs."
     - text: "$2,000, once both sets of costs are off"
@@ -30,7 +30,7 @@ takeaways:
 
 worked:
   kind: split
-  context: "September at the shop: $30,000 of sales. Each cost is written here as a share of that, so any month can be set beside any other. The ledger rounds to the dollar."
+  context: "September at the shop: $30,000 of sales, with every line under it written as a share of that, so any month can be set beside any other. Insurance is a flat bill and net profit is whatever the other lines leave, so neither lands on a round share. The ledger rounds to the dollar."
   income: 30000
   shares:
     - { label: "Cost of goods sold: beans, milk, cups", percent: 35 }
@@ -38,7 +38,8 @@ worked:
     - { label: "Wages", percent: 30 }
     - { label: "Utilities", percent: 4 }
     - { label: "Card fees", percent: 3 }
-    - { label: "Insurance", percent: 1.3333 }
+    - { label: "Insurance, the same in any month", percent: 1.3333 }
+    - { label: "Net profit, what is left", percent: 6.6667 }
 
 explorable:
   kind: margin
@@ -47,12 +48,12 @@ explorable:
   variable: 1.75
   prices: [4, 4.5, 5, 5.5, 6]
   prompts:
-    - "Tap $5, September's average price. The answer is the cups that only cover the month's running costs; every cup after those adds to the bottom line."
-    - "Tap $4.50 and compare the answer with the 6,000 cups September actually sold. The running costs have not moved, so the month has to find the difference."
+    - "Tap $5, September's average price. The answer is the cups needed to cover the $17,500 of running costs; every cup after those adds to net profit."
+    - "Now tap $4.50 and set the answer beside the 6,000 cups September sold. The running costs have not moved, so a lower price needs more cups to reach them."
 
 practice:
   kind: split
-  context: "A second cafe on the same street, for the same month: $24,000 of sales. Three of its lines are written as shares of that. The last step is yours."
+  context: "A second cafe on the same street, the same month: $24,000 of sales. Its lines are written as shares of that in the same way. The rent line is yours to work out."
   income: 24000
   shares:
     - { label: "Cost of goods sold", percent: 35 }
@@ -66,20 +67,20 @@ quiz:
       - text: "A $30,000 month covers $1,500 many times over"
         why: "The $30,000 is the top line. Beans, rent, wages and the smaller bills have already claimed all but $2,000 of it."
       - text: "Set the $1,500 against the $2,000 the month left, not against the $30,000 it took"
-        why: "The bottom line is what the month actually kept, and $1,500 is most of it. That is the comparison the decision rests on."
+        why: "The bottom line is what the month kept, and $1,500 is three quarters of it. That is the comparison the decision rests on."
       - text: "Wait for a month with higher sales"
         why: "Higher sales can leave less when the costs under them rise faster. September's own statement is the example."
     answer: 1
   - q: "March had $27,000 of sales and $2,550 of net profit. September had $30,000 of sales and $2,000. The owner asks what changed. Where do you look first?"
     options:
       - text: "At how many cups were sold"
-        why: "More cups is what lifted sales to $30,000. The fall happened in the lines under the top line, not at the till."
+        why: "Sales rose, so the till is not where the $550 went. The fall is in the lines under the top line."
       - text: "At each line as a share of sales, March beside September"
-        why: "Cost of goods took 32 cents in the dollar in March and 35 in September. Rent, wages, utilities and card fees rose as well."
+        why: "Cost of goods took 32 cents in the dollar in March and 35 in September. The other lines cost more in dollars but took the same share of sales, or less."
       - text: "At the bank balance at the end of each month"
         why: "A balance mixes in money not yet paid in and money taken out for other things. Line by line is what compares two months."
     answer: 1
-  - q: "January is always quiet, and the owner expects about $24,000 of sales. She assumes every cost falls with them. Which costs actually fall?"
+  - q: "January is always quiet, and the owner expects about $24,000 of sales. She assumes every cost falls with sales. Which ones do?"
     options:
       - text: "All of them, because a quieter month uses less of everything"
         why: "Beans and milk fall with the cups sold. Rent, insurance and shifts already on the schedule are owed whatever January does."
@@ -102,7 +103,7 @@ transfer:
   - "When a business reports record sales. Sales are the top line, and the bottom line can move the other way."
   - "At the end of any month you run something of your own. Write it down in the same order: sales, cost of goods sold, running costs."
   - "When a supplier raises a price. It shows up in one line, cost of goods sold, and in the gross profit under it."
-  - "At tax time if you work for yourself. The IRS form for a one-owner business runs from sales down to net profit."
+  - "At tax time if you work for yourself. The IRS form for a sole proprietor runs from gross receipts down to net profit."
 
 glossary: [income-statement, revenue, cost-of-goods-sold, gross-profit, operating-expenses, net-profit, variable-cost, fixed-cost, accrual-method, cash-flow, bookkeeping, schedule-c]
 tool: break-even
@@ -111,7 +112,7 @@ sources:
   - title: "Beginners' guide to financial statements: the top line, cost of sales, gross profit, operating expenses and the bottom line (published 4 February 2007; accessed 21 September 2026)"
     url: "https://www.sec.gov/reportspubs/investor-publications/investorpubsbegfinstmtguide"
     publisher: "US Securities and Exchange Commission"
-  - title: "Instructions for Schedule C (Form 1040), tax year 2025: gross receipts, cost of goods sold, gross profit, expenses, net profit, and amounts paid to yourself"
+  - title: "Instructions for Schedule C (Form 1040), tax year 2025: the form a sole proprietor files, running from gross receipts through cost of goods sold and gross profit to net profit"
     url: "https://www.irs.gov/instructions/i1040sc"
     publisher: "Internal Revenue Service"
   - title: "Publication 334, Tax Guide for Small Business (2025): the cash method reports income when you receive it, an accrual method when you earn it"
@@ -127,15 +128,15 @@ sources:
 
 ## Sales are the top line
 
-An <Term id="income-statement">income statement</Term> covers one stretch of time, usually a month. It asks three things in order: what came in, what it cost, and what was left. You may also see it called a profit and loss statement, or P&L.
+An <Term id="income-statement">income statement</Term> covers one stretch of time: a month, a quarter or a year. It asks three things in order: what came in, what it cost, and what was left. You may also see it called a profit and loss statement, or P&L.
 
-The first line is <Term id="revenue">revenue</Term>, often labeled sales. In September the shop sold about 6,000 drinks at an average of $5, so revenue was $30,000.
+The first line is <Term id="revenue">revenue</Term>. Many statements label it sales. In September the shop sold about 6,000 drinks at an average of $5, so revenue was $30,000.
 
 **That is where the counting starts, not what the shop kept.** The Securities and Exchange Commission calls it the top line, and every line under it takes something away.
 
 ## Gross profit: what a cup leaves
 
-Every cup uses beans, milk, a cup and a lid: about $1.75. Across September those came to $10,500, and added up they are the <Term id="cost-of-goods-sold">cost of goods sold</Term>, sometimes shortened to COGS.
+Every drink uses beans, milk, a cup and a lid: about $1.75. Across September those came to $10,500, and added up they are the <Term id="cost-of-goods-sold">cost of goods sold</Term>, sometimes shortened to COGS.
 
 Take it from revenue and you reach <Term id="gross-profit">gross profit</Term>, $19,500 for the month. That line tests the product on its own. **Once a cup has paid for its own beans and milk, is anything left?**
 
@@ -147,7 +148,7 @@ Below gross profit come the costs of running the shop at all: rent, wages, utili
 
 Take those off gross profit and you reach <Term id="net-profit">net profit</Term>, the bottom line. **A record $30,000 of sales left $2,000.**
 
-Written as shares of sales, the shape is easier to carry in your head. Beans and milk took 35 cents of every dollar, wages 30 and rent 20.
+Written as shares of sales, the shape is easier to carry in your head. Beans, milk and cups took 35 cents of every dollar, wages 30 and rent 20.
 
 <svg class="chart" viewBox="0 0 320 168" role="img" aria-labelledby="pl-title pl-desc">
   <title id="pl-title">Where $30,000 of September sales went</title>
@@ -181,15 +182,17 @@ Split the costs a second way. Beans, milk and cups are a <Term id="variable-cost
 
 Rent and insurance are a <Term id="fixed-cost">fixed cost</Term>. They are the same in a quiet January as in a busy September. Most of the wage bill is close to fixed too, because shifts are scheduled before anyone knows how the week will go.
 
-**That is why a slow month costs more than it looks.** The bills arrive whatever the till does.
+**That is why a quiet month can end in a loss.** Rent, insurance and booked shifts are owed whatever the till takes.
 
 ## A record month can leave less
 
 March sold $27,000 and left $2,550. September sold $3,000 more and left $550 less. Nothing went wrong at the till.
 
-Read the lines as shares of sales and the movement shows up. Cost of goods went from 32 cents in the dollar to 35, as bean and milk prices rose. Rent, wages, utilities and card fees each rose too.
+Read each line as a share of sales and the movement shows up. Cost of goods went from 32 cents in the dollar to 35, because bean and milk prices rose. Rent, wages and card fees each cost more in dollars, but they held the same share of sales.
 
 **Gross profit rose by $1,140, and operating expenses rose by $1,690.** The gap between those two is the $550.
+
+At March's 32 cents in the dollar, September's beans and milk would have cost $9,600 instead of $10,500. The month would have kept about $2,900.
 
 | Line | March | September |
 | --- | --- | --- |
@@ -203,13 +206,13 @@ Read the lines as shares of sales and the movement shows up. Cost of goods went 
 | Insurance | −$400 | −$400 |
 | Net profit | $2,550 | $2,000 |
 
-## When the money actually arrives
+## When the money arrives
 
-The shop's statement counts a sale on the day the coffee is served, not the day it is paid. That is the <Term id="accrual-method">accrual method</Term>, and the other choice, the cash method, counts a sale when the money arrives.
+The shop's statement counts a sale on the day the coffee is served, not the day it is paid. That is the <Term id="accrual-method">accrual method</Term>. Under the cash method, the sale would count when the money arrives instead.
 
 So an office order served on 30 September and paid in October sits in September's revenue and not yet in the bank. The gap between profit on paper and money to hand is <Term id="cash-flow">cash flow</Term>.
 
-**The statement says what a month earned. The account says what has arrived.** Check both before spending a bottom line.
+**A month's profit and the money in the account are two different numbers.** Check both before spending what the statement shows.
 
 ## Read it every month
 
@@ -217,4 +220,4 @@ One statement is a snapshot. Twelve of them show which line is moving, and that 
 
 That takes <Term id="bookkeeping">bookkeeping</Term>: every sale and every cost written down as it happens, with the receipts behind them. The IRS says good records help you "monitor the progress of your business" and prepare financial statements.
 
-A US business with one owner files <Term id="schedule-c">Schedule C</Term>, which reads the same way, from gross receipts down to net profit. Take tax questions to the IRS.
+Someone who runs a US business on their own, as a sole proprietor, files <Term id="schedule-c">Schedule C</Term>. It reads the same way, from gross receipts, the tax form's name for sales, down to net profit. Take tax questions to the IRS.

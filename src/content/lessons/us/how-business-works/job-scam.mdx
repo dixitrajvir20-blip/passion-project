@@ -8,7 +8,7 @@ readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-20
+lastReviewed: 2026-09-21
 
 situation: "A recruiter messages you about a remote data-entry job at $22 an hour. There is no call and no interview. The first task is to buy your own equipment with a check they will mail you, and send the rest of it back to their vendor."
 
@@ -16,17 +16,17 @@ prediction:
   q: "You deposit their check on Monday. On Tuesday morning the money is showing in your account. What does that tell you about the check?"
   options:
     - text: "It cleared, so the money is yours to send on"
-      why: "Banks have to make deposited funds available quickly. Available is a rule about timing, not a verdict on the check."
+      why: "Releasing the funds is a deadline your bank has to meet. It is not a ruling on whether the check is good."
     - text: "Nothing yet. A fake check can be found out weeks later, and the bank takes the whole amount back"
-      why: "The bank fronts the money and checks afterwards. Anything you send on in the meantime is your own money, not theirs."
+      why: "Your bank fronts the money and finds out about the check later. Anything you pass on in between comes out of your own account."
     - text: "The bank verified it before releasing the money"
-      why: "Verification happens later, through the bank the check was drawn on. That is the gap the whole script is built around."
+      why: "The check is tested later, through the bank it was drawn on. That gap is what the script is built around."
   answer: 1
 
 takeaways:
   - "A real employer pays you. It never needs a deposit from you, a check banked on its behalf, or money forwarded on."
-  - "A deposited check can be found fake weeks later. The bank takes back the full amount, and the debt is yours."
-  - "Your Social Security number goes on a W-4 and a Form I-9 after you are hired, not into a chat before an offer."
+  - "A deposited check can be found fake weeks later. Your bank then wants the full amount back from you."
+  - "Your Social Security number is for an employer's hiring paperwork once you start work, not for a chat before an offer."
 
 explorable:
   kind: drill
@@ -34,19 +34,19 @@ explorable:
   scenarios:
     - screen:
         kind: chat
-        from: "TaskBoost support"
+        from: "Support, taskpay.example"
         amount: 50
         lines:
           - "You have completed 12 tasks. Balance shown: $184."
           - "Deposit $50 to open the next set and withdraw."
-          - "Your earlier tasks paid $8, already sent."
+          - "Your first two tasks paid $12, already sent."
       check:
-        q: "You answered a text about paid online tasks. Two small payments arrived, $8 in all. Now this appears. What do you do?"
+        q: "You answered a text about paid online tasks. Two small payments arrived, $12 in all. Now this appears. What do you do?"
         options:
           - text: "Deposit the $50. There is $184 waiting"
-            why: "The $184 is a figure the app draws on screen. The small early payments are what buy trust before a deposit is asked for."
+            why: "The $184 is a number the app draws on screen. The small payments that did arrive are what buy trust before a deposit is asked for."
           - text: "Stop, take nothing out, and report it"
-            why: "Paying in order to be paid is the tell. The FTC calls this a task scam, and the deposit is usually asked for in crypto."
+            why: "Being asked to pay before being paid is the point to stop. The FTC calls this a task scam, and the deposit is usually asked for in crypto."
           - text: "Deposit a smaller amount first, as a test"
             why: "Any deposit goes to the same place. A test payment also marks you as someone who pays, and the next demand is larger."
         answer: 1
@@ -63,11 +63,11 @@ explorable:
         q: "You deposit the check on Monday and the money shows on Tuesday. The vendor wants the transfer today. What do you do?"
         options:
           - text: "Send it. The money showed, so the check cleared"
-            why: "Showing the money is the bank meeting its deadline to release funds. A fake check can surface weeks later."
+            why: "The money showing is the bank meeting its deadline to release funds. A forged check can surface weeks later."
           - text: "Send only part of it, to be safe"
-            why: "Every dollar sent is your own. When the check bounces the bank reclaims all $2,850, whatever you passed on."
+            why: "Every dollar sent is your own money. If the check is fake the bank reclaims all $2,850, whatever was passed on."
           - text: "Send nothing. Ask the bank when the check has truly settled"
-            why: "Available is not cleared. An employer that mails a check to bank and forward is the oldest shape this takes."
+            why: "Available is not settled. An employer that mails a check to bank and forward has no honest reason to."
         answer: 2
     - screen:
         kind: chat
@@ -81,11 +81,11 @@ explorable:
         q: "The whole interview has been by text. No call, no video, no address for the company. This is the last message. What do you do?"
         options:
           - text: "Send both. Payroll needs them anyway"
-            why: "Payroll collects them after you are hired, on a W-4 and a Form I-9, from an employer you can name and find."
+            why: "Payroll collects those details once you start work, from an employer you can name and find."
           - text: "Send the Social Security number but hold back the bank details"
-            why: "The number is the more damaging of the two. It can open accounts in your name, and that takes years to clear."
+            why: "Splitting the request does not make it genuine. Nothing in this hiring has given a reason to hand over either one."
           - text: "Send nothing, and look for the employer's own hiring page"
-            why: "An offer comes first, then forms. A text-only interview with an early demand for that number is the tell."
+            why: "An offer comes first, then the forms. A text-only interview with an early demand for that number is the warning sign."
         answer: 2
     - screen:
         kind: message
@@ -93,7 +93,7 @@ explorable:
         lines:
           - "Part-time stock assistant, $16 an hour."
           - "Apply with the online form. Interview in store."
-          - "Paperwork after an offer: W-4 and Form I-9."
+          - "Paperwork once you start: W-4 and Form I-9."
         action: "Open the application form"
       check:
         q: "You searched for the store yourself and found this on the employer's own website. What do you do?"
@@ -101,13 +101,13 @@ explorable:
           - text: "Refuse it. Any job advert found online is a risk"
             why: "Refusing everything is not the skill. This one asks for no money and no private details before an offer."
           - text: "Apply, and give your details after an offer"
-            why: "You found the employer, the pay is named, the interview is in person and the forms come after an offer."
+            why: "You found the employer, the pay is named, the interview is in person and the forms come once the job starts."
           - text: "Apply, and send your Social Security number now to speed it up"
             why: "Nothing here asked for it. Sending it early hands it to whoever reads the form, and buys you nothing."
         answer: 1
     - screen:
         kind: chat
-        from: "Parcel Ops, quality control"
+        from: "Recruiter, parcelroute.example"
         lines:
           - "Receive packages at home, remove the receipts, repost them."
           - "$25 a parcel, paid at the end of the month."
@@ -117,11 +117,11 @@ explorable:
         q: "The work sounds simple and the pay is clear. Nobody has asked you for money. What do you do?"
         options:
           - text: "Take it. No money is leaving your account"
-            why: "The goods are usually bought with stolen cards. Your name on the labels puts the trail at your address."
+            why: "The FTC says the goods are often electronics bought with stolen cards. Your name on the labels puts the trail at your address."
           - text: "Take it for a month and see whether the pay arrives"
-            why: "The first month is when the parcels move, and the pay rarely comes. The FTC is plain that this is not real work."
+            why: "The FTC describes that wait as part of the script: the parcels move for a month and the first paycheck never comes."
           - text: "Decline it and report the advert"
-            why: "Stripping receipts and reposting parcels under your own name has no honest purpose. That instruction is the tell."
+            why: "Stripping receipts and reposting parcels under your own name has no honest purpose. The FTC calls reshipping part of a scam, not a job."
         answer: 2
     - screen:
         kind: message
@@ -136,46 +136,46 @@ explorable:
         q: "You started a summer job two weeks ago. This arrives from a number you have not seen before. What do you do?"
         options:
           - text: "Buy them. It is $400 and you are repaid on Friday"
-            why: "Codes sent by text are spent within minutes and cannot be recalled. A new number and a reason not to call are both parts of the script."
+            why: "The numbers on the back let whoever has them spend the card. A new number and a reason not to call are both parts of the script."
           - text: "Check with your manager in person, or on the number you already have, then report it"
-            why: "The FTC says no real business asks to be paid in gift cards. Checking by a route you already had settles it in a minute."
+            why: "The FTC says no real business or government agency asks to be paid with a gift card. Checking by a route you already had settles it in a minute."
           - text: "Reply and ask whether the message is genuine"
             why: "The reply reaches whoever sent it, and the answer will be yes. Checking only works through a contact you already had."
         answer: 1
   reflection: "Pick the screen you were least sure about. Which cue did you miss at first, and where would that same cue show up in a message on your own phone?"
 
 quiz:
-  - q: "You deposited a check from a hiring team and wired $2,000 to their equipment vendor. Four days later the bank says the check was fake. What do you do?"
+  - q: "You deposited a check from a hiring team and sent $2,000 to their equipment vendor. Four days later the bank says the check was fake. What do you do?"
     options:
       - text: "Wait for the employer to make it right"
         why: "The person who mailed the check has the $2,000 and stops replying. Waiting only adds to what the bank reclaims."
       - text: "Tell the bank today, then report it at reportfraud.ftc.gov"
-        why: "The bank needs to know the account was used in a scam, and the report starts a record. The money owed is still yours."
+        why: "The FTC's advice on both fake checks and forwarded money is to tell the bank straight away, then file the report."
       - text: "Close the account so the bank cannot take the money"
-        why: "The debt follows you, not the account. Closing it also removes the record that shows what happened."
+        why: "Closing an account does not cancel what is owed, and it removes the record of what happened."
     answer: 1
   - q: "A recruiter you have never spoken to asks for your Social Security number before any offer, and says it is for a background check. What do you do?"
     options:
       - text: "Send it. Background checks are a normal part of hiring"
-        why: "A real background check needs your written permission and names the employer. A number typed into a chat cannot be taken back."
+        why: "An employer running one has to ask in writing and say who it is. A number typed into a chat cannot be taken back."
       - text: "Ask for the offer in writing first, and give the number on the hiring forms"
-        why: "An offer names the employer, the pay and the start date. The number then goes on a W-4 and a Form I-9."
+        why: "An offer names the employer, the pay and the start date. The number then goes on the paperwork once the job starts."
       - text: "Send the last four digits only"
-        why: "Those four digits are what many services use to confirm who you are. Handing them over is a step towards the rest."
+        why: "Splitting the number does not make the request genuine. Nothing in this hiring has given a reason to send any of it."
     answer: 1
   - q: "A friend shows you an app where he has earned $340 rating products. He cannot take it out until he deposits $200. What do you tell him?"
     options:
       - text: "Lend him the $200, since the $340 covers it"
         why: "The $340 is a number the app displays. A deposit releases nothing, and the next screen asks for more."
       - text: "That the $340 is not money, and the app is worth reporting"
-        why: "Paying in order to be paid is the pattern. The small payments that did arrive are what make the rest look real."
+        why: "Being asked to pay before being paid is the pattern. The small payments that did arrive are what make the rest look real."
       - text: "To keep doing tasks until the balance covers the deposit"
-        why: "More tasks raise a figure on a screen, not money in an account. Time is the second thing this takes."
+        why: "More tasks raise a figure on a screen, not money in an account. The hours go as well as the deposit."
     answer: 1
   - q: "You are sure a job advert is a scam, but you have lost nothing and you never replied. Is anything worth doing?"
     options:
       - text: "No, since no money was lost"
-        why: "Reports with no loss are counted too, and they are how a scam gets tracked while it is still running."
+        why: "The FTC asks people to report scams they see, not only the ones that cost money."
       - text: "Report it at reportfraud.ftc.gov and flag the posting to the site you saw it on"
         why: "The report takes a few minutes. The job board can then take the posting down before the next person answers it."
       - text: "Reply and warn them that you know"
@@ -188,44 +188,50 @@ transfer:
   - "When a form or a chat asks for your Social Security number before there is an offer in writing."
   - "When a friend shows you earnings in an app that will not pay out."
 
-glossary: [fake-check, available-balance, w-4, identity-theft, reshipping, money-mule, task-scam]
+glossary: [fake-check, available-balance, w-2, w-4, form-i-9, identity-theft, reshipping, task-scam]
 
 reportTo:
   url: "https://reportfraud.ftc.gov"
-  label: "Report a job scam at reportfraud.ftc.gov, whether or not money was lost. If a check was deposited, tell your bank the same day."
+  label: "Report a job scam at reportfraud.ftc.gov, even if you lost nothing. If you deposited a check or sent money, tell your bank straight away."
 
 sources:
-  - title: "Job scams: scammers ask you to pay, or send a check and ask for money back, and reshipping goods is not a real job (updated March 2023)"
+  - title: "Job scams: honest employers never ask you to pay, no real employer sends a check to deposit and send money back, and reshipping goods is never a real job (updated March 2023)"
     url: "https://consumer.ftc.gov/articles/job-scams"
     publisher: "Federal Trade Commission"
-  - title: "Who experiences scams? A story for all ages: adults aged 18 to 59 reported job-scam losses at more than five times the rate of those 60 and over (8 December 2022)"
+  - title: "Who experiences scams? A story for all ages: adults aged 18 to 59 reported losing money on job scams at more than five times the rate of older adults, from reports filed in 2021 (8 December 2022)"
     url: "https://www.ftc.gov/news-events/data-visualizations/data-spotlight/2022/12/who-experiences-scams-story-all-ages"
     publisher: "Federal Trade Commission"
-  - title: "How to spot, avoid, and report fake check scams: seeing the funds does not mean the check is good, and you repay the bank (updated June 2025)"
+  - title: "How to spot, avoid, and report fake check scams: banks must make deposited funds available quickly, fake checks can take weeks to be discovered, and you repay the bank (updated June 2025)"
     url: "https://consumer.ftc.gov/articles/how-spot-avoid-and-report-fake-check-scams"
     publisher: "Federal Trade Commission"
-  - title: "How to spot and avoid task scams: small payments of $5 to $20 build trust, then a deposit of your own money is demanded (14 August 2025)"
+  - title: "How to spot and avoid task scams: small payments of $5 to $20 build trust, the earnings shown are fake, and a deposit of your own money is demanded, usually in crypto (14 August 2025)"
     url: "https://consumer.ftc.gov/consumer-alerts/2025/08/how-spot-avoid-task-scams"
     publisher: "Federal Trade Commission"
-  - title: "That job offer text is probably a scam: unsolicited texts, fake checks and task work, and never pay to get a job (30 April 2026)"
+  - title: "That job offer text is probably a scam: unexpected text, WhatsApp and Telegram job messages, and never pay to get paid or get a job (30 April 2026)"
     url: "https://consumer.ftc.gov/consumer-alerts/2026/04/job-offer-text-probably-scam"
     publisher: "Federal Trade Commission"
-  - title: "Avoiding and reporting gift card scams: no real business or government agency asks to be paid with a gift card (updated July 2023)"
+  - title: "Avoiding and reporting gift card scams: no real business or government agency asks to be paid with a gift card, and the numbers on the back release the money (updated July 2023)"
     url: "https://consumer.ftc.gov/articles/avoiding-and-reporting-gift-card-scams"
     publisher: "Federal Trade Commission"
-  - title: "Hiring employees: employers collect a Social Security number for Form W-2, a signed Form W-4 when work starts, and a Form I-9 for every hire (updated 18 February 2026)"
+  - title: "Avoiding a money mule scam: moving stolen money for someone else can mean legal trouble even if you did not know, so stop, tell your bank, then tell the FTC (3 December 2021)"
+    url: "https://consumer.ftc.gov/consumer-alerts/2021/12/avoiding-money-mule-scam"
+    publisher: "Federal Trade Commission"
+  - title: "What to know about identity theft: someone using your details without permission can open accounts, get medical care or get a job in your name (updated September 2024)"
+    url: "https://consumer.ftc.gov/articles/what-know-about-identity-theft"
+    publisher: "Federal Trade Commission"
+  - title: "Hiring employees: employers must get each employee's name and Social Security number for Form W-2, ask for a signed Form W-4 when work starts, and complete Form I-9 for every hire (updated 18 February 2026)"
     url: "https://www.irs.gov/businesses/small-businesses-self-employed/hiring-employees"
     publisher: "Internal Revenue Service"
-  - title: "Report fraud to the FTC (accessed 21 September 2026)"
-    url: "https://reportfraud.ftc.gov/"
-    publisher: "Federal Trade Commission"
+  - title: "Background checks: what employers need to know — an employer must get written permission before obtaining a background report (February 2014)"
+    url: "https://www.ftc.gov/business-guidance/resources/background-checks-what-employers-need-know"
+    publisher: "Federal Trade Commission and Equal Employment Opportunity Commission"
 ---
 
 ## The message you did not ask for
 
 A job scam starts where a real job rarely does: an unexpected text, or a message on WhatsApp or Telegram. The pay is high, the interview is short or missing, and the work stays vague.
 
-Adults aged 18 to 59 reported losing money to job scams at more than five times the rate of people 60 and over. That comes from an FTC analysis of reports filed in 2021.
+Adults aged 18 to 59 reported losing money on job scams at more than five times the rate of people 60 and over. That comes from an FTC analysis of reports filed in 2021.
 
 **A real employer pays you. It never needs a deposit from you, a check banked on its behalf, or money forwarded on.** Every screen below is a way around that one line.
 
@@ -251,42 +257,42 @@ Adults aged 18 to 59 reported losing money to job scams at more than five times 
 
 ## The check that has not cleared
 
-A bank has to make deposited funds available within days. Available is a rule about timing. It is not a verdict on the check.
+Your bank has to release deposited funds quickly. That deadline is about timing. It says nothing about whether the check is good.
 
-A <Term id="fake-check">fake check</Term> can take weeks to be found out. When it is, the bank takes back the whole amount. Anything you already sent on was your own money, so you are left owing the rest.
+Weeks can pass before a <Term id="fake-check">fake check</Term> is found to be forged. When it is, the bank wants the whole amount back from you. Anything you already sent on was your own money, so you are left owing the rest.
 
 **A rising <Term id="available-balance">available balance</Term> tells you nothing about the check.** Ask your bank when the check has truly settled, and send nothing until it has. An employer that mails you a check to bank and pass on has no honest reason to.
 
 ## A Social Security number is a hiring step
 
-Payroll does need it. It needs it after you are hired, on a <Term id="w-4">W-4</Term> and a Form I-9, from an employer with a name and an address you can check.
+Payroll does need it, once you work there. An employer has to put your name and number on a <Term id="w-2">W-2</Term>, asks for a signed <Term id="w-4">W-4</Term> when you start, and completes a <Term id="form-i-9">Form I-9</Term> for every hire.
 
-A chat asking for it before any offer is not payroll. It is the start of <Term id="identity-theft">identity theft</Term>: accounts and credit taken out in your name, which can take years to clear.
+A chat asking for it before any offer is not payroll. It is a way into <Term id="identity-theft">identity theft</Term>. The FTC describes that as someone using your details without permission to open accounts, get medical care, or get a job in your name.
 
 **Ask for the offer in writing first.** An offer names the employer, the job, the pay and the start date. The forms come after it. If a recruiter will not put that in writing, there is nothing to fill in yet.
 
 ## Reshipping and forwarded money
 
-A <Term id="reshipping">reshipping</Term> job asks you to take in parcels at home, strip the receipts and post them on under your own name. The goods are usually bought with stolen cards, and the trail ends at your address. The FTC is plain that this is not real work.
+A <Term id="reshipping">reshipping</Term> job asks you to take in parcels at home, strip the receipts and post them on under your own name. The FTC says the goods are often electronics bought with stolen cards, and that this is never a real job.
 
-Forwarding money is the same trick with a bank account instead. Anyone who moves stolen money through an account in their own name is a <Term id="money-mule">money mule</Term>, and that name is the one a bank can find.
+Forwarding money is the same shape with a bank account instead. Someone who moves stolen money for a scammer is what law enforcement calls a money mule. The FTC warns that this can mean legal trouble, even for someone who did not know.
 
-**No job needs your account as a staging post.** Pay at a real job moves one way.
+**No job needs your bank account to pass money on.** Pay at a real job moves one way, towards you.
 
 ## Task apps and gift cards
 
-A <Term id="task-scam">task scam</Term> shows earnings that climb as you click, then asks for a deposit of your own money before anything can be taken out. Small payments of $5 to $20 arrive early, and that is what makes the rest look real. The deposit releases nothing.
+A <Term id="task-scam">task scam</Term> shows earnings that climb as you click, then asks for a deposit of your own money before anything can be taken out. A few dollars do arrive early. The FTC puts them at $5 to $20, and that makes the rest look real. The deposit releases nothing.
 
-Gift cards are the other common demand, often in a text from a manager with a new number. "No real business or government agency will ever tell you to buy a gift card to pay them," the FTC says.
+Gift cards are the other common demand, often in a text from a manager's new number. "No real business or government agency will ever tell you to buy a gift card to pay them," the FTC says.
 
-**Codes texted to someone are spent in minutes.** Check any such request on a number you already have.
+**The numbers on the back are the money.** Whoever has them can spend the card, and the money is rarely recovered. Check any such request on a number you already have.
 
 ## If money has already gone
 
-Speed helps, and so does the record.
+Two things matter here: moving quickly, and keeping a record.
 
-Tell your bank the same day if a check was deposited or a transfer sent. Then report it at reportfraud.ftc.gov, whether or not you lost anything. A report with no loss still counts, and it is how a live scam gets tracked.
+Tell your bank the same day if you deposited a check or sent a transfer. Then report it at reportfraud.ftc.gov. The FTC asks people to report scams they see, not only the ones that cost money.
 
-Keep what you have: the messages, the account or number you sent to, the amounts and the dates. Screenshots are enough.
+Keep the messages, the amounts, the dates and any account or number you sent money to. Screenshots will do.
 
-**Being caught by one of these says nothing about you.** The scripts are written, tested and run at scale, and they work on careful people too.
+**Being caught by one of these says nothing about you.** These scripts are written once and run at volume, and careful people are caught by them too.
