@@ -1,0 +1,28 @@
+---
+/**
+ * The lesson's teaching video: a poster drawn in tokens, a click-to-load player behind the
+ * "Videos from other sites" consent, and a caption naming the video, the channel and its length so
+ * the reader knows whose voice it is. The video is chosen per lesson (see the curation notes in
+ * docs/CONTENT_GUIDE.md) and must teach the lesson's own idea.
+ */
+import VideoPlayer from '../../islands/VideoPlayer';
+
+interface Props {
+  youtubeId: string;
+  title: string;
+  channel: string;
+  minutes: number;
+  startSeconds?: number;
+  note?: string;
+}
+
+const { youtubeId, title, channel, minutes, startSeconds, note } = Astro.props;
+---
+
+<figure class="video">
+  <VideoPlayer client:visible youtubeId={youtubeId} title={title} minutes={minutes} startSeconds={startSeconds} />
+  <figcaption class="video-caption">
+    <span class="video-title">{title}</span>
+    <span class="video-meta">{channel} · <span class="numbers">{minutes} min</span>{note && ` · ${note}`}</span>
+  </figcaption>
+</figure>

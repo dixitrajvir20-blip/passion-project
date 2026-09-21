@@ -1,0 +1,46 @@
+---
+/**
+ * The calculation, taught one line at a time. The reader presses "Next line" and each line
+ * arrives with a one-sentence caption: what it is, who gets it. The last line is the answer,
+ * closed with the ledger's double rule. The lines come from lesson-math, never from prose, so
+ * the arithmetic on screen is the arithmetic in finance.ts.
+ *
+ * "Show every line" (script) opens the chain for readers who want the whole ledger; printing
+ * opens it too. With JavaScript off the chain still works line by line.
+ */
+import ShowMeStep from './ShowMeStep.astro';
+import type { Step } from '../../lib/lesson-math';
+
+interface Props {
+  context: string;
+  steps: Step[];
+  localeCode: string;
+}
+
+const { context, steps, localeCode } = Astro.props;
+---
+
+<div class="showme" data-showme>
+  <p class="showme-context">{context}</p>
+  <p class="showme-controls">
+    <span class="showme-hint">Press <strong>Next line</strong> to see each step.</span>
+    <button type="button" class="btn-link showme-all" data-showme-all hidden>Show every line</button>
+  </p>
+  <ol class="ledger showme-lines">
+    <ShowMeStep steps={steps} index={0} total={steps.length} localeCode={localeCode} />
+  </ol>
+</div>
+
+<script>
+  const openAll = (root: Element) => root.querySelectorAll<HTMLDetailsElement>('details.showme-more').forEach((d) => (d.open = true));
+  for (const root of document.querySelectorAll<HTMLElement>('[data-showme]')) {
+    const all = root.querySelector<HTMLButtonElement>('[data-showme-all]');
+    if (!all) continue;
+    all.hidden = false;
+    all.addEventListener('click', () => {
+      openAll(root);
+      all.hidden = true;
+    });
+  }
+  window.addEventListener('beforeprint', () => document.querySelectorAll<HTMLElement>('[data-showme]').forEach(openAll));
+</script>

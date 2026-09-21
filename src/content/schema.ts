@@ -44,11 +44,28 @@ const growthNumbers = {
   years: z.number().int().positive().max(50),
 };
 
+/** One line of a payslip, payout or award: what comes off, and the sentence a walkthrough reads under it. */
+const deductionLine = z.object({
+  label: z.string().min(2),
+  amount: z.number().nonnegative(),
+  /** For the stepped "show me" walkthrough. At most twenty words; the unit tests hold v2 lessons to it. */
+  caption: z.string().max(160).optional(),
+  /** Names the running figure after this line, e.g. "Gross salary". */
+  subtotalLabel: z.string().optional(),
+});
+const deductionNumbers = {
+  start: z.number().positive(),
+  startLabel: z.string().min(2),
+  lines: z.array(deductionLine).min(1).max(8),
+  endLabel: z.string().min(2),
+};
+
 const worked = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('margin'), context: z.string(), unitName: z.string(), ...marginNumbers }),
   z.object({ kind: z.literal('split'), context: z.string(), income: z.number().positive(), shares: z.array(share).min(2) }),
   z.object({ kind: z.literal('loan'), context: z.string(), ...loanNumbers }),
   z.object({ kind: z.literal('growth'), context: z.string(), ...growthNumbers }),
+  z.object({ kind: z.literal('deduction'), context: z.string(), ...deductionNumbers }),
 ]);
 
 const practice = z.discriminatedUnion('kind', [
@@ -62,6 +79,7 @@ const practice = z.discriminatedUnion('kind', [
   }),
   z.object({ kind: z.literal('loan'), context: z.string(), ...loanNumbers }),
   z.object({ kind: z.literal('growth'), context: z.string(), ...growthNumbers }),
+  z.object({ kind: z.literal('deduction'), context: z.string(), ...deductionNumbers }),
 ]);
 
 const explorable = z.discriminatedUnion('kind', [
@@ -96,6 +114,26 @@ const explorable = z.discriminatedUnion('kind', [
     rate: z.number().min(0).max(30),
     /** Tap-to-try horizons, in years. */
     horizons: z.array(z.number().int().positive().max(50)).min(2).max(5),
+    prompts: z.array(z.string()).min(1).max(2),
+  }),
+  z.object({
+    kind: z.literal('deduction'),
+    /** Tap-to-try starting figures, e.g. three CTCs. */
+    starts: z.array(z.number().positive()).min(2).max(5),
+    startLabel: z.string().min(2),
+    lines: z
+      .array(
+        z.object({
+          label: z.string().min(2),
+          /** Either a fixed amount or a percent of the starting figure. */
+          amount: z.number().nonnegative().optional(),
+          percentOfStart: z.number().min(0).max(100).optional(),
+          subtotalLabel: z.string().optional(),
+        }),
+      )
+      .min(1)
+      .max(8),
+    endLabel: z.string().min(2),
     prompts: z.array(z.string()).min(1).max(2),
   }),
   z.object({
@@ -135,6 +173,41 @@ export const lessonSchema = z
       quiz: z.array(check).min(3).max(5),
       /** Where the reader will meet this outside the lesson. */
       transfer: z.array(z.string()).min(2).max(4),
+
+      /**
+       * Lesson template. v1 is the 2026-09-20 shape. v2 (2026-09-22) opens with the moment and a
+       * video, then "show me" (the calculation one line at a time), your turn, change one thing,
+       * three actions, a details fold, three checks. New content rules apply to v2 only until all
+       * 36 lessons carry it.
+       */
+      template: z.enum(['v1', 'v2']).default('v1'),
+      /** "After this you can…": three lines, each matching one end-of-lesson check. */
+      objectives: z.array(z.string().min(10).max(110)).length(3).optional(),
+      /** One short video that teaches the idea, shown in a click-to-load player behind the embeds consent. */
+      video: z
+        .object({
+          youtubeId: z.string().regex(/^[A-Za-z0-9_-]{11}$/, 'An 11-character YouTube id'),
+          title: z.string().min(4).max(110),
+          channel: z.string().min(2).max(60),
+          minutes: z.number().positive().max(30),
+          language: z.string().default('en'),
+          /** Start here when only part of the video teaches the idea. */
+          startSeconds: z.number().int().nonnegative().optional(),
+          /** One sentence of context, e.g. "Made for the US; the idea is the same." */
+          note: z.string().max(160).optional(),
+        })
+        .optional(),
+      /** The real artefact, drawn in tokens (never a screenshot, never a real brand), with one "find this line" question. */
+      document: z
+        .object({
+          kind: z.enum(['payslip', 'statement', 'offer', 'loan-sheet', 'payout', 'app-screen']),
+          title: z.string().min(2).max(60),
+          lines: z.array(z.object({ label: z.string().min(1), value: z.string().min(1), hint: z.string().max(140).optional() })).min(2).max(12),
+          find: check,
+        })
+        .optional(),
+      /** Law, dates, thresholds and statistics that change nothing the reader does: folded away. No check may depend on them. */
+      details: z.array(z.string().min(10)).max(10).optional(),
 
       glossary: z.array(z.string()).default([]),
       /** Slug of the full calculator this lesson hands off to. */
