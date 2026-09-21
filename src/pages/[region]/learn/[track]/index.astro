@@ -3,7 +3,8 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import LessonList from '../../../../components/lesson/LessonList.astro';
 import ProgressMarks from '../../../../components/lesson/ProgressMarks.astro';
 import { REGIONS, getRegion, type TrackSlug } from '../../../../lib/regions';
-import { inTrack, lessonsFor } from '../../../../lib/lessons';
+import Doodle from '../../../../components/Doodle.astro';
+import { inTrack, lessonsFor, lessonPath } from '../../../../lib/lessons';
 import '../../../../styles/lesson.css';
 
 export function getStaticPaths() {
@@ -16,6 +17,11 @@ const track = region.tracks.find((t) => t.slug === slug)!;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
 const lessons = inTrack(await lessonsFor(region.code), track.slug as TrackSlug);
+const index = region.tracks.indexOf(track);
+const doodles = ['coin', 'tag', 'calculator'] as const;
+const minutes = lessons.reduce((sum, lesson) => sum + lesson.data.readingMinutes, 0);
+const checks = lessons.reduce((sum, lesson) => sum + lesson.data.quiz.length, 0);
+const first = lessons[0];
 ---
 
 <BaseLayout
@@ -27,11 +33,25 @@ const lessons = inTrack(await lessonsFor(region.code), track.slug as TrackSlug);
 >
   <section class="section" data-review-region={region.code}>
     <div class="container">
+      <p class="crumb"><a href={`${prefix}/learn`}>← All tracks</a></p>
+      <header class="course-head">
+        <div>
+          <p class="eyebrow course-kind numbers">
+            Track {index + 1}{lessons.length > 0 && ` · ${lessons.length} lessons · ${checks} checks · ${minutes} min`}
+          </p>
+          <h1>{track.title}</h1>
+          <p class="lede">{track.summary}</p>
+          {first && (
+            <p class="btn-row">
+              <a class="cta" href={`${base}/${lessonPath(first)}`}><span class="cta-label">Start with lesson 1</span><span class="cta-arrow" aria-hidden="true">→</span></a>
+            </p>
+          )}
+          <ProgressMarks reviewHref={`${prefix}/review`} />
+        </div>
+        <div class="course-thumb course-thumb-lg" aria-hidden="true"><Doodle name={doodles[index % doodles.length]} /></div>
+      </header>
       <div class="column">
-        <p class="crumb"><a href={`${prefix}/learn`}>← All tracks</a></p>
-        <h1>{track.title}</h1>
-        <p class="lede">{track.summary}</p>
-        <ProgressMarks reviewHref={`${prefix}/review`} />
+        <h2 class="course-list-title">Lessons</h2>
         <LessonList lessons={lessons} planned={track.planned} />
         <p class="practice">
           Rather do than read? <a href={`${prefix}/tools`}>Open the calculators</a> and put your own numbers in.
@@ -45,6 +65,6 @@ const lessons = inTrack(await lessonsFor(region.code), track.slug as TrackSlug);
   .crumb { font-size: var(--text-sm); margin-bottom: var(--space-4); }
   .crumb a { text-decoration: none; }
   .crumb a:hover { text-decoration: underline; }
-  .lede { margin-bottom: var(--space-6); }
+  .lede { margin-bottom: var(--space-5); }
   .practice { margin-top: var(--space-7); }
 </style>

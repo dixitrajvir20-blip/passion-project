@@ -1,0 +1,44 @@
+---
+/**
+ * A track as a course card, after the course cards on Claude Academy (layout only, our colours):
+ * a drawn thumbnail, a small type label, the title, one line of description, then a metadata line
+ * built from the real lessons (count, checks, minutes) and one quiet action. The lesson titles
+ * sit inside the card too (contents first, BRAND_GUIDE §5); the track page is the "course page".
+ */
+import Doodle from '../Doodle.astro';
+import LessonList from './LessonList.astro';
+import { lessonPath, type Lesson } from '../../lib/lessons';
+import type { Track } from '../../lib/regions';
+
+interface Props {
+  track: Track;
+  index: number;
+  lessons: Lesson[];
+  prefix: string;
+  doodle: 'coin' | 'cup' | 'calculator' | 'plane' | 'tag' | 'phone';
+}
+
+const { track, index, lessons, prefix, doodle } = Astro.props;
+const minutes = lessons.reduce((sum, lesson) => sum + lesson.data.readingMinutes, 0);
+const checks = lessons.reduce((sum, lesson) => sum + lesson.data.quiz.length, 0);
+const first = lessons[0];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<article class="card card-outline course-card" aria-labelledby={`track-${track.slug}`}>
+  <div class="course-thumb" aria-hidden="true"><Doodle name={doodle} /></div>
+  <p class="eyebrow course-kind numbers">Track {index + 1}</p>
+  <h2 id={`track-${track.slug}`} class="course-title"><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></h2>
+  <p class="course-desc">{track.summary}</p>
+  <LessonList lessons={lessons} planned={track.planned} compact />
+  <p class="course-meta numbers">
+    {lessons.length > 0
+      ? `${lessons.length} lessons · ${checks} checks · ${minutes} min`
+      : 'Being written'}
+  </p>
+  {first && (
+    <p class="course-go">
+      <a class="btn btn-secondary btn-sm" href={`${base}/${lessonPath(first)}`} aria-describedby={`track-${track.slug}`}>Start with lesson 1</a>
+    </p>
+  )}
+</article>

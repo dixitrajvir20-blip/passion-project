@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import { waitForIslands } from './helpers';
 
 const LESSON = 'in/learn/start-something/break-even-coaching-centre';
@@ -318,8 +319,13 @@ test('the payslip split opens in the budget planner with the same numbers', asyn
 });
 
 test('the review date on a lesson is the date in its frontmatter, whatever the build machine’s time zone', async ({ page }) => {
+  // Read the date off the file, so an editor pass that bumps it cannot fail this for the wrong reason.
+  const source = readFileSync(`src/content/lessons/${LESSON_ID}.mdx`, 'utf8');
+  const iso = /^lastReviewed:\s*(\d{4}-\d{2}-\d{2})/m.exec(source)![1];
+  const [y, m, d] = iso.split('-').map(Number);
+  const shown = new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
   await page.goto(LESSON);
-  await expect(page.locator('.lesson-meta')).toContainText('Reviewed 20 September 2026');
+  await expect(page.locator('.lesson-meta')).toContainText(`Reviewed ${shown}`);
 });
 
 test('progress keeps calendar days, never the time someone studied', async ({ page }) => {

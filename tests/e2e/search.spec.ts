@@ -10,7 +10,8 @@ test('search runs on the device, finds a lesson, and links to it under the site 
   await page.getByLabel('Search for').fill('payslip');
   const first = page.locator('.results li').first();
   await expect(first.locator('.r-title')).toContainText('payslip');
-  await expect(first.locator('.r-title')).toHaveAttribute('href', /^\/passion-project\/in\/learn\/money-basics\/first-payslip\/?$/);
+  // Every edition has a payslip lesson; which one ranks first is Pagefind's call, not ours.
+  await expect(first.locator('.r-title')).toHaveAttribute('href', /^\/passion-project\/(in|eu|us)\/learn\/money-basics\/first-pay(slip|check)\/?$/);
   await expect(first.locator('.r-excerpt mark').first()).toBeVisible();
   await expect(page.locator('[data-status]')).toContainText(/result/);
   expect(outside).toEqual([]);

@@ -1,0 +1,5 @@
+{
+  "term": "Tax slab",
+  "define": "A band of income with its own tax rate. The rate applies only to the part of your income that falls inside that band, not to the whole amount.",
+  "example": "With tax starting above ₹4,00,000, an income of ₹6,00,000 is charged only on the ₹2,00,000 above that line."
+}

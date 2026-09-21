@@ -47,6 +47,7 @@ const pairs = [
   ['ink', 'field-pale', 4.5, 'text on pale panels'],
   ['ink-2', 'field-pale', 4.5, 'body text on pale panels'],
   ['muted', 'field-pale', 4.5, 'secondary text on pale panels'],
+  ['gold-text', 'field-pale', 4.5, 'eyebrow on pale panels (track cards, track header)'],
   ['ink', 'bg-2', 4.5, 'headings on panels'],
   ['ink-2', 'bg-2', 4.5, 'text on panels'],
   ['muted', 'bg-2', 4.5, 'secondary text on panels'],
