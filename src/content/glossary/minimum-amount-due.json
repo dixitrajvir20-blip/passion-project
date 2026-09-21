@@ -1,0 +1,5 @@
+{
+  "term": "Minimum amount due",
+  "define": "The smallest payment a card lets you make by the due date and still count as paid on time. Whatever is left of the balance stays owed and keeps collecting interest.",
+  "example": "On ₹20,000 owed with a minimum amount due of ₹1,000, paying ₹1,000 is on time, and ₹19,000 carries over."
+}

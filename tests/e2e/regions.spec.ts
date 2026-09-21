@@ -23,15 +23,15 @@ test('the region tabs switch edition and keep you on the same kind of page', asy
 test('each edition opens its calculator on its own currency and scenario', async ({ page }) => {
   await page.goto('in/tools/break-even');
   await expect(page.locator('.results')).toContainText('₹');
-  await expect(page.getByLabel('Fixed costs per month')).toHaveValue('12000');
+  await expect(page.getByLabel('Fixed costs per month')).toHaveValue('18000');
 
   await page.goto('us/tools/break-even');
   await expect(page.locator('.results')).toContainText('$');
-  await expect(page.getByLabel('Fixed costs per month')).toHaveValue('90');
+  await expect(page.getByLabel('Fixed costs per month')).toHaveValue('900');
 
   await page.goto('eu/tools/break-even');
   await expect(page.locator('.results')).toContainText('€');
-  await expect(page.getByLabel('Fixed costs per month')).toHaveValue('150');
+  await expect(page.getByLabel('Fixed costs per month')).toHaveValue('320');
 });
 
 test('each edition names problems specific to it', async ({ page }) => {

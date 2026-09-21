@@ -1,0 +1,169 @@
+---
+title: "Interest on interest, and what inflation takes back"
+summary: "Why €100 at 2% for five years is €110.41, not €110, and what a 2% rise in prices takes back."
+region: eu
+track: money-basics
+order: 4
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-21
+
+situation: "A colleague at your Saturday job says that €100 left at 2% for five years earns €10, because 2% of €100 is €2 a year. You have about that much sitting in an account at a rate like that, and you are not sure the sum is right."
+
+prediction:
+  q: "€100 sits in an account paying 2% a year, and the interest stays in the account. What is the balance after five years?"
+  options:
+    - text: "€110, because 2% of €100 is €2 a year"
+      why: "That takes 2% of the first €100 every year. From year two the interest is worked out on a balance that already includes year one's €2."
+    - text: "€110.41, because each year's interest earns interest too"
+      why: "The balance is multiplied by 1.02 five times over. The extra 41 cents is interest paid on earlier interest."
+    - text: "€102, because the rate is paid once at the end"
+      why: "A yearly rate applies for each year the money stays. Over five years it is applied five times, not once."
+  answer: 1
+
+takeaways:
+  - "Interest is worked out on the balance, and the balance already includes earlier interest. That is why €100 at 2% for five years reaches €110.41 rather than €110."
+  - "A rate in a worked example is an assumption that lets the sum be shown. It is not an offer, and it is not a forecast."
+  - "The HICP measures inflation across the EU, and the ECB aims at 2% over the medium term. A balance growing 2% while prices rise 2% buys no more than before."
+
+worked:
+  kind: growth
+  context: "A steadier version of the same idea: €25 a month for ten years, at an assumed 2% a year. The 2% is here so the arithmetic can be shown, not because any account offers it. Interest is added monthly, and a deposit starts earning from the month after it arrives."
+  monthly: 25
+  rate: 2
+  years: 10
+
+explorable:
+  kind: growth
+  amounts: [10, 25, 50]
+  rate: 2
+  horizons: [5, 10, 20]
+  prompts:
+    - "Hold the amount at €25 and tap five, ten, then twenty years. What you put in is four times as much at twenty years as at five. The growth on top is about eighteen times as much, because the later years earn on a much bigger balance."
+    - "Now hold the years at ten and tap €10, €25, then €50. Doubling the monthly amount doubles the growth exactly, because every euro is treated the same way."
+
+practice:
+  kind: growth
+  context: "The same sum with a different monthly amount: €40 a month for ten years, again at an assumed 2% a year. The first two lines are worked out for you. The last one is the question."
+  monthly: 40
+  rate: 2
+  years: 10
+
+quiz:
+  - q: "A savings page shows a rate of 2% a year and a table of what €50 a month becomes over fifteen years. You are deciding how much weight that table deserves. What do you check first?"
+    options:
+      - text: "Nothing, since the table comes from the bank and the arithmetic will be right"
+        why: "The arithmetic can be correct and the table still be an illustration. A fifteen-year table rests on a rate assumed to hold for fifteen years."
+      - text: "Whether the rate can change, and what the table assumes about prices"
+        why: "Both move the answer. A rate that changes alters every later year, and a figure fifteen years out buys less then than the same figure buys now."
+      - text: "Whether another page advertises a higher rate"
+        why: "A higher rate makes a table look better without making it more certain. The question here is what this table assumes, not which number is biggest."
+    answer: 1
+  - q: "A friend is checking his own maths. He has €500 in an account at 3% a year, left alone for four years, and has written €560 as the answer. What do you tell him?"
+    options:
+      - text: "€560 is right: 3% of €500 is €15, four times over"
+        why: "That takes 3% of the first €500 every year. After year one the balance is larger, so each year's interest is larger too."
+      - text: "It comes to about €562.75, because each year's interest earns interest"
+        why: "Multiply €500 by 1.03 four times. The €2.75 above his figure is the interest paid on earlier interest."
+      - text: "It cannot be worked out without knowing which bank it is"
+        why: "The bank sets the rate and how often interest is added. Once those two are given, the sum follows from them."
+    answer: 1
+  - q: "Your account paid 1.5% over the past year. Over the same year the HICP for your country rose 2.4%. Your brother says the savings grew, so there is nothing to think about. How do you read the year?"
+    options:
+      - text: "He is right, because the balance is larger than it was"
+        why: "The balance is larger in euros. Prices rose faster than 1.5%, so that balance buys a little less than it did a year ago."
+      - text: "More euros, but about 0.9% less buying power than a year ago"
+        why: "1.5% against prices up 2.4% leaves the gap below zero. The balance grew in name and shrank in what it buys."
+      - text: "Nothing changed, because 1.5% and 2.4% are both small"
+        why: "Small gaps still point one way. Here the rate sits below the rise in prices, so buying power fell over the year."
+    answer: 1
+  - q: "You move from Dublin to Lyon for a year of study, and you want to know how fast prices are rising where you now live. Which figure do you use?"
+    options:
+      - text: "The euro-area figure, since both countries use the euro"
+        why: "That figure covers the euro area as a whole. In December 2025 it was 2.0%, while Ireland was at 2.7% and France at 0.7%."
+      - text: "France's own HICP figure, then a look at your own costs"
+        why: "Eurostat publishes a monthly figure for every member state, France included. Your rent, transport and food can still move faster or slower than it."
+      - text: "Ireland's figure, since that is where the money was earned"
+        why: "Prices are paid where you live, not where the money came from. The figure that matters is the one for the country you are spending in."
+    answer: 1
+
+transfer:
+  - "When a savings page shows a rate and a projection. Check whether the rate can change, and what the projection assumes about prices."
+  - "When you read a rate next to the inflation news. Subtract the rise in prices from the rate, and read the sign of what is left."
+  - "When a pay rise or a rent increase arrives. A 2% rise against prices up 2% leaves what you can buy roughly where it was."
+  - "When you move to another EU country. Use the figure Eurostat publishes for that country, not the euro-area average."
+
+glossary: [interest, principal, compound-growth, inflation, hicp, central-bank, nominal-value, real-value]
+tool: savings
+
+sources:
+  - title: "Two per cent inflation target: 2% over the medium term, measured with the HICP, with misses below and above treated alike (from the July 2021 strategy review; checked 21 September 2026)"
+    url: "https://www.ecb.europa.eu/mopo/strategy/pricestab/html/index.en.html"
+    publisher: "European Central Bank"
+  - title: "HICP monthly data, annual rate of change, December 2025: euro area 2.0%, Ireland 2.7%, France 0.7% (dataset prc_hicp_manr, last updated 6 February 2026; checked 21 September 2026)"
+    url: "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_manr?format=JSON&lang=en&coicop=CP00&time=2025-12&geo=EA&geo=IE&geo=FR"
+    publisher: "Eurostat"
+  - title: "Consumer prices and inflation: the HICP is compiled the same way in every member state and published monthly, and average inflation in 2025 ran from 0.8% in Cyprus to 6.8% in Romania (Statistics Explained, data extracted March 2026; checked 21 September 2026)"
+    url: "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Consumer_prices_-_inflation"
+    publisher: "Eurostat"
+---
+
+## Two per cent, five times over
+
+<Term id="interest">Interest</Term> on savings is worked out on the balance in the account. In the first year that balance is the €100 you put in, the <Term id="principal">principal</Term>, so the interest is €2.
+
+In the second year the balance is €102, and 2% of €102 is €2.04. The extra four cents is interest on the first year's interest. That is <Term id="compound-growth">compound growth</Term>.
+
+**Five years at 2% is €100 multiplied by 1.02 five times, not €2 added five times.** The gap is small at this size, and it widens with every year the money stays.
+
+| After | 2% on the balance each year | 2% on the first €100 only |
+| --- | --- | --- |
+| Year 1 | €102.00 | €102 |
+| Year 2 | €104.04 | €104 |
+| Year 3 | €106.12 | €106 |
+| Year 4 | €108.24 | €108 |
+| Year 5 | €110.41 | €110 |
+
+## The rate in a sum is an assumption
+
+A worked example needs a rate to multiply by. The 2% used here is chosen so that the arithmetic can be shown. It is not an offer from anyone, and it is not a forecast.
+
+What an account pays is set out in that account's own terms, including whether the rate is fixed for a period or can change. Read those terms before trusting a table of future amounts.
+
+**Use a rate to see how a sum behaves, not to predict what an account will pay you.** Where your savings sit is your decision, and this lesson does not make it for you.
+
+## What the HICP measures
+
+Prices for the things households buy tend to rise over time. That is <Term id="inflation">inflation</Term>. Across the EU it is measured with the <Term id="hicp">HICP</Term>, a harmonised index that Eurostat publishes each month for every member state.
+
+The European Central Bank is the <Term id="central-bank">central bank</Term> for the countries that use the euro. Since its 2021 strategy review it has aimed at 2% inflation over the medium term. It treats a miss below that as no more welcome than a miss above.
+
+Each country has its own figure. In December 2025 the euro-area rate was 2.0%, Ireland was at 2.7% and France at 0.7%. Averaged over 2025, rates ran from 0.8% in Cyprus to 6.8% in Romania.
+
+## The same 2% on the other side
+
+The calculation above ends at about €3,318, from €3,000 of deposits over ten years. Now suppose prices rise 2% a year across those same ten years.
+
+You would spend that €3,318 at tenth-year prices. Measured in today's prices, it buys about €2,722 worth. The deposits are future money too, paid across those same ten years. In today's prices the 120 payments come to about €2,719.
+
+**Two per cent of growth against two per cent of inflation leaves buying power where it started.** The statement grew. What the money buys did not.
+
+<svg class="chart" viewBox="0 0 320 124" role="img" aria-labelledby="real-title real-desc">
+  <title id="real-title">A €3,318 balance, in euros and in what it buys</title>
+  <desc id="real-desc">Two bars. The first is the balance after ten years, €3,318. The second is what that balance buys in today's prices if prices rise 2% a year, about €2,722.</desc>
+  <text class="chart-label" x="0" y="14">Balance after ten years: €3,318</text>
+  <rect class="chart-a" x="0" y="22" width="300" height="26" rx="6" />
+  <text class="chart-label" x="0" y="76">In today's prices: €2,722</text>
+  <rect class="chart-b" x="0" y="84" width="246" height="26" rx="6" />
+  <text class="chart-note" x="0" y="122">€25 a month for ten years, growth and prices both at 2%</text>
+</svg>
+
+## Nominal and real, side by side
+
+A balance is a <Term id="nominal-value">nominal value</Term>: euros counted, with no question asked about what they buy. Its <Term id="real-value">real value</Term> is what it buys.
+
+A rough test fits on one line. Take the rate, subtract how fast prices are rising, and read the sign of what is left. Above zero, the savings buy more than before. Below zero, they buy less.
+
+The same test works on a pay rise or a rent increase. **A balance that grows more slowly than prices buys less than it did.**

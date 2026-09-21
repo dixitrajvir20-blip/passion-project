@@ -1,0 +1,5 @@
+{
+  "term": "Annual Information Statement (AIS)",
+  "define": "A yearly statement in your account on the income tax portal. It shows the tax deducted in your name alongside other transactions reported about you, and it takes your feedback where an entry looks wrong.",
+  "example": "If the statement shows ₹12,000 deducted and your invoices show ₹15,000, the entry can be flagged there."
+}

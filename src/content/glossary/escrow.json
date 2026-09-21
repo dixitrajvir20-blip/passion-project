@@ -1,0 +1,5 @@
+{
+  "term": "Escrow",
+  "define": "Money held by a third party while two sides finish a deal, and released to the seller once the agreed work is delivered and accepted.",
+  "example": "A client funds an $80 logo job before it starts. The platform holds the $80 and releases it when the client accepts the file."
+}

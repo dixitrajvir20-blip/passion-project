@@ -1,0 +1,5 @@
+{
+  "term": "Expected value",
+  "define": "The average result of something repeated many times, worked out by weighting each possible outcome by how often it happens. A large gain that arrives rarely can still average out to a loss.",
+  "example": "If 88 people in 100 lose and 12 gain, the average is worked out from both groups, not from the 12."
+}

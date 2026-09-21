@@ -26,8 +26,8 @@ loan apps; fake part-time-job offers; derivatives gambling (under-30s were 43% o
 FY26, 89% of them losing — SEBI, Aug 2026); shared/borrowed phones (18% of Indians go online via
 someone else's device — IAMAI-Kantar 2025).
 
-**Rails & products for examples:** UPI, RuPay; PPF (7.1%, Jul–Sep 2026), RD, NSC, SSY; kirana
-*udhaar*, chit funds, gold as family savings.
+**Rails & products for examples:** UPI, RuPay; EPF, PPF (7.1%, Jul–Sep 2026), RD, NSC, SSY; shop
+credit (*udhaar*), chit funds, gold as family savings.
 
 **Scams to teach:** phishing/fake-KYC links, counterfeit QR, screen-share apps, SIM swap, "digital
 arrest" video calls, money-mule recruitment. Always end with "call 1930 / cybercrime.gov.in within
@@ -41,9 +41,10 @@ We use ≥30-day-old or fictional data and never name a security with a target.
 YouTube/WhatsApp as channels; family co-decisions; low-end Android; Hindi edition is the priority
 v2 localisation.
 
-**Formats:** (1) UPI "spot the fake" scam simulator; (2) offer-letter decoder (CTC → in-hand);
-(3) chai/tiffin-stall P&L; (4) "tips group" trap — find the unregistered adviser; (5) PPF/RD/FD/SIP
-goal ladder. Businesses: chai stall, tiffin service, kirana store, WhatsApp/Instagram reselling.
+**Formats:** (1) UPI "spot the fake" fraud drill; (2) payslip decoder (CTC → in-hand); (3) a
+coaching centre's break-even and month's accounts; (4) "tips group" trap — find the unregistered
+adviser; (5) a one-month buffer at an example rate. Businesses: coaching centre, freelance web
+work, a registered micro enterprise (Udyam).
 
 ## Europe (live)
 
@@ -100,7 +101,7 @@ reportfraud.ftc.gov, investor.gov, BrokerCheck, IRS gig-economy center.
 
 **Formats:** (1) first-paycheck decoder (W-4, FICA, 401k match); (2) BNPL basket simulator; (3)
 student-loan monthly-payment translator; (4) credit-score sandbox; (5) side-hustle tax set-aside.
-Businesses: lemonade stand → food truck, sneaker resale, lawn-care LLC, Etsy print shop.
+Businesses: custom apparel printing, freelance photography, a neighbourhood coffee shop's accounts.
 
 ---
 

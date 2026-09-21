@@ -40,7 +40,7 @@ implements the template in LEARNING_DESIGN (hook + prediction poll → concept �
 explorable → faded practice → retrieval check → summary → "explain it to a friend"); a Quiz
 island; a Term popover (use the Popover API behind @supports with a plain details fallback);
 the Leitner review queue in src/lib/progress.ts; and the FIRST THREE India lessons, written per
-REGIONAL_TEACHING (chai stall unit economics, spotting a UPI scam, your first earnings) with
+REGIONAL_TEACHING (a coaching centre's break-even, spotting a UPI fraud, your first payslip) with
 sources the content-reviewer can open.
 Gates: lesson page ≤50KB JS; quiz keyboard-accessible; content-reviewer verified every source;
 a11y-perf-auditor passes; design-reviewer says Ship. Before you build, critique your own plan:

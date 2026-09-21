@@ -1,0 +1,285 @@
+---
+title: "Who pays the person giving you investment tips"
+summary: "Paid promotion, registration and a promised return: three checks before you act on a tip from a feed."
+region: us
+track: how-business-works
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-20
+
+situation: "A creator you follow posts a screenshot of the week's gains and a link to a trading app that pays for every sign-up. The caption says 20% a month. The comments are full of people asking how to start."
+
+prediction:
+  q: "The caption says the app pays 20% a month, and the months compound. What would $1,000 be after a year?"
+  options:
+    - text: "About $1,200, because 20% a month is close to 20% a year"
+      why: "Twelve months of 20% do not add up to 20%. Each month is worked out on the total the month before left."
+    - text: "About $3,400, the $1,000 plus 20% of it twelve times"
+      why: "That adds the same $200 twelve times. Compounding takes 20% of a total that has already grown, so the months multiply."
+    - text: "About $8,900, because each month builds on the one before"
+      why: "Twelve months of 20% multiply to about nine times the start. The figure is not a market result, it is a description of the claim."
+  answer: 2
+
+takeaways:
+  - "People aged 18 to 59 report losing money to an investment scam over four times as often as people 60 and over (FTC, December 2022)."
+  - "Payment is not only cash. Free product, perks and a cut of each sign-up all count, and the FTC expects the relationship disclosed in the post."
+  - "Anyone paid to advise you about securities has to be registered, and BrokerCheck shows it for free. No registration makes a promised monthly figure real."
+
+worked:
+  kind: growth
+  context: "Not the app in the post. This is what ordinary compound growth looks like on a small amount, using 7% a year as an illustration rather than a figure anyone has promised or owes you. Fifty dollars a month, for five years."
+  monthly: 50
+  rate: 7
+  years: 5
+
+explorable:
+  kind: drill
+  intro: "Four things that turn up in a feed or a message. One of them is an ordinary advert that follows the rules, so refusing everything is not the answer. Decide what you would do, then look."
+  scenarios:
+    - screen:
+        kind: message
+        from: "A creator you follow"
+        lines:
+          - "Day 214. Account up 20% again this month."
+          - "Open yours in three minutes: startnow.example"
+          - "No experience needed."
+        action: "Open the link"
+      check:
+        q: "The post shows a screenshot of gains and a link. Nothing on it says advertisement. What do you do first?"
+        options:
+          - text: "Open the link and read the app's own page"
+            why: "The app's page is written by the app. Reading it checks neither the claim nor who is paid when you sign up."
+          - text: "Search the creator's name on a regulator's register before anything else"
+            why: "Registration is public and free to check. It also tells you whether this person may be paid for advice at all."
+          - text: "Ask in the comments whether it is real"
+            why: "Comments under a promoted post are the least independent place to ask. Some of them are placed there by the promoter."
+        answer: 1
+    - screen:
+        kind: chat
+        from: "A direct message"
+        lines:
+          - "I trade accounts for a small private group."
+          - "Send $500, I trade it, we split the profit."
+          - "Two slots left this week."
+        action: "Send $500"
+      check:
+        q: "This arrives after you comment on a money video. You have $500 saved. What do you do?"
+        options:
+          - text: "Send a smaller amount first to test them"
+            why: "An early payout on a small amount is part of the pattern. The test costs money and proves nothing about the larger sum."
+          - text: "Check the name on a register, and read the deadline as a tell"
+            why: "Handling money for a share of the profit needs registration. FINRA lists a closing window among the pressure tactics."
+          - text: "Ask them to send proof that they are registered"
+            why: "A screenshot is easy to make. FINRA warns that some people claim to be registered, or borrow a real professional's name."
+        answer: 1
+    - screen:
+        kind: message
+        from: "A creator you follow, labelled Ad"
+        lines:
+          - "Ad. The app in this video paid for it."
+          - "I use it to sort spending each week."
+          - "The free version does everything I show."
+        action: "Watch"
+      check:
+        q: "You have been looking for a way to track spending. This post is labelled as an advert. What do you do?"
+        options:
+          - text: "Skip it, because a post labelled Ad is dishonest"
+            why: "The label is the rule working. An unlabelled paid post is the problem, not a labelled one."
+          - text: "Read it as an advert, and compare the app against others yourself"
+            why: "You know who paid, and nothing here promises a return. That leaves an ordinary advertising claim to check on its own."
+          - text: "Treat it as an independent review, since she uses it herself"
+            why: "She was paid to make it. Using something and being paid to mention it are two different claims."
+        answer: 1
+    - screen:
+        kind: request
+        from: "A sports betting app"
+        amount: 25
+        lines:
+          - "Deposit $25, get $25 in bonus picks."
+          - "Build your portfolio. Trade tonight's game."
+          - "Cash out any time."
+        action: "Deposit $25"
+      check:
+        q: "A group chat passes this around before a game. The app calls each pick a trade. What do you do?"
+        options:
+          - text: "Read it as betting, whatever words the app uses"
+            why: "A wager pays only if one event goes one way, and the stake is gone if it does not. The trading words are marketing."
+          - text: "Treat it as investing, since there is a portfolio screen"
+            why: "A label on a screen does not change what was bought. Nothing here is an asset that still exists after the game ends."
+          - text: "Deposit, because the bonus covers the risk"
+            why: "A bonus comes with conditions and is not money back. The tell is a deposit offer dressed in trading words."
+        answer: 0
+  reflection: "Think of the last money post that stopped your scroll. Who was paid when someone tapped, and how would you find out?"
+
+practice:
+  kind: growth
+  context: "The same illustration, with different numbers: 75 dollars a month for four years, still at the example rate of 7% a year."
+  monthly: 75
+  rate: 7
+  years: 4
+
+quiz:
+  - q: "A friend sends you a video promoting a trading app. It ends with the words not financial advice, there is a paid link in the description, and no advertisement label. She asks whether that line makes it fine. What do you tell her?"
+    options:
+      - text: "That the line covers the payment, so the post follows the rules"
+        why: "The line is about advice. Disclosure turns on whether a payment or other relationship exists, and whether the post says so."
+      - text: "That it says nothing about who paid, and the advert label is missing"
+        why: "A cut of every sign-up is a material connection. The FTC expects it disclosed where people will see and understand it."
+      - text: "That it makes no difference either way"
+        why: "It does make a difference. A missing disclosure is a reason to check the person before you weigh the claim."
+    answer: 1
+  - q: "A post says 8% a month, every month. Your friend multiplies by twelve, calls it 96% a year, and says that is high but possible. What do you say?"
+    options:
+      - text: "That 96% a year is about right, since 8 times 12 is 96"
+        why: "Adding the months ignores that each one is worked out on a total that already grew. Compounding multiplies instead."
+      - text: "That compounded monthly it is over 150% a year, which is the warning"
+        why: "Twelve months of 8% multiply to about two and a half times the start. A figure that size describes the poster, not a market."
+      - text: "That it depends on which app is being used"
+        why: "The arithmetic does not depend on the app. Any monthly figure compounds the same way before you look at anything else."
+    answer: 1
+  - q: "Someone offers to manage your $500 for a share of the profit and sends a screenshot of a registration page with a number on it. What do you do?"
+    options:
+      - text: "Accept the screenshot, since it shows a registration number"
+        why: "A screenshot can be edited, and FINRA warns that some people borrow a real professional's registration and name."
+      - text: "Search the name yourself on BrokerCheck before any money moves"
+        why: "BrokerCheck is free and says whether a person or firm is registered, and shows complaints and disciplinary events."
+      - text: "Send a small amount first and check the registration later"
+        why: "An early payout is part of the pattern. The register costs nothing and takes a minute, which is why it comes first."
+    answer: 1
+  - q: "You sent $300 to a trading group. Your account there shows $960, and a message says a 15% release fee is due before you can withdraw. What do you do?"
+    options:
+      - text: "Pay the fee, since the balance is far larger than the fee"
+        why: "The balance is a number the group controls. A release fee is a second payment on the same setup, not a step towards a withdrawal."
+      - text: "Stop paying and report it at reportfraud.ftc.gov"
+        why: "Reports are how the FTC sees patterns and brings cases. In 2025 people reported $1.1 billion lost to investment scams that began on social media."
+      - text: "Wait, because the group has paid other people before"
+        why: "Payouts shown to others are part of the setup. A fee to release your own balance is where it usually stops."
+    answer: 1
+
+transfer:
+  - "When a post shows account gains beside a link to open an account."
+  - "Before money moves to anyone offering to trade on your behalf, whatever the arrangement is called."
+  - "When a betting app borrows trading words. The legal age to bet varies by state."
+  - "When a friend forwards a tip, and the first question is who is paid if you act on it."
+
+glossary: [material-connection, referral-link, investment-adviser, brokercheck, compound-growth]
+tool: savings
+
+reportTo:
+  label: "Lost money to an investment pitch from a feed, or nearly did? Report it to the FTC."
+  url: "https://reportfraud.ftc.gov/"
+
+sources:
+  - title: "Who experiences scams? A story for all ages: younger adults reported losing money to investment scams at over four times the rate of older adults (8 December 2022)"
+    url: "https://www.ftc.gov/news-events/data-visualizations/data-spotlight/2022/12/who-experiences-scams-story-all-ages"
+    publisher: "Federal Trade Commission"
+  - title: "Disclosures 101 for social media influencers: a material connection is a financial, employment, personal or family relationship with a brand, and it has to be hard to miss (November 2019)"
+    url: "https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers"
+    publisher: "Federal Trade Commission"
+  - title: "SEC: payments for bullish articles on stocks must be disclosed to investors, with actions against 27 people and firms (10 April 2017)"
+    url: "https://www.sec.gov/newsroom/press-releases/2017-79"
+    publisher: "US Securities and Exchange Commission"
+  - title: "About BrokerCheck: a free tool to research investment professionals, brokerage firms and investment adviser firms, with registrations, licences and disclosures (accessed 21 September 2026)"
+    url: "https://www.finra.org/investors/investing/working-with-investment-professional/about-brokercheck"
+    publisher: "Financial Industry Regulatory Authority"
+  - title: "Check registration: sellers and investments, including the warning that some bad actors falsely claim to be registered (accessed 21 September 2026)"
+    url: "https://www.finra.org/investors/protect-your-money/check-registration"
+    publisher: "Financial Industry Regulatory Authority"
+  - title: "Avoid fraud: persuasion tactics, including phantom riches and the scarcity pitch that a window is closing (accessed 21 September 2026)"
+    url: "https://www.finra.org/investors/protect-your-money/avoid-fraud"
+    publisher: "Financial Industry Regulatory Authority"
+  - title: "New FTC data show people lost $2.1 billion in 2025 to scams that started on social media, $1.1 billion of it to investment scams (27 April 2026)"
+    url: "https://www.ftc.gov/news-events/news/press-releases/2026/04/new-ftc-data-show-people-have-lost-billions-social-media-scams"
+    publisher: "Federal Trade Commission"
+  - title: "NCAA releases sports wagering survey data: 58% of 3,527 people aged 18 to 22 had taken part in at least one sports betting activity (24 May 2023)"
+    url: "https://www.ncaa.org/media-center-ncaa-releases-sports-wagering-survey-data/"
+    publisher: "National Collegiate Athletic Association"
+---
+
+## The post and the link
+
+The account posts a screenshot of the week's gains, then a link to a trading app. The caption says 20% a month. Under it, hundreds of comments ask how to start.
+
+Two questions sort a post like this. Who is paid when you tap? And is that person allowed to be paid for this?
+
+**Neither question is about whether the tip is right.** You cannot check that from a feed. Both of these you can check in a few minutes.
+
+The FTC's own fraud reports show why it is worth the few minutes. People aged 18 to 59 report losing money to an investment scam over four times as often as people 60 and over.
+
+## Payment is not only money
+
+The FTC calls it a <Term id="material-connection">material connection</Term>: any financial, employment, personal or family relationship with the brand being mentioned. Where one exists, the post has to say so, in words people will see and understand.
+
+Free product counts. So do perks, a free account and a discount.
+
+A <Term id="referral-link">referral link</Term> counts too. The creator is paid for each account opened through it. That is payment, even though nothing changes hands on screen.
+
+**A line saying "not financial advice" does not cover any of this.** It is about advice, not about who paid.
+
+## Paid to publicize a stock
+
+Securities law has its own version of the rule, and it is older. In 2017 the SEC charged 27 people and firms behind stock-promotion schemes, where paid articles read as independent analysis.
+
+"If a company pays someone to publish or publicize articles about its stock, it must be disclosed," the SEC said when it announced the cases.
+
+**Independent and paid are the two things a reader cannot tell apart without the label.** That is what the label is for.
+
+## Who is allowed to be paid for advice
+
+Someone paid to advise other people about securities has to be registered. That means an <Term id="investment-adviser">investment adviser</Term> with the SEC or a state, or a broker through FINRA.
+
+<Term id="brokercheck">BrokerCheck</Term> is FINRA's free register. It shows whether a person or firm is registered, which licences they hold, and any complaints or disciplinary events on the record. Advisers registered with the SEC rather than FINRA come up from the same search.
+
+FINRA also warns that some people falsely claim to be registered, sometimes using a real professional's name. **So search the register yourself rather than reading a screenshot.**
+
+## Twenty percent a month, twelve times
+
+Take the caption at its word for a moment. Twenty percent a month is nowhere near 20% a year, because each month is worked out on the total the month before left.
+
+<svg class="chart" viewBox="0 0 320 140" role="img" aria-labelledby="comp-title comp-desc">
+  <title id="comp-title">What 20% a month would do to $1,000</title>
+  <desc id="comp-desc">Four bars for the same $1,000, growing at the posted rate of 20% a month: $1,200 after one month, $1,728 after three, $2,986 after six and $8,916 after twelve. The table below carries the same figures.</desc>
+  <rect class="chart-a" x="76" y="20" width="24" height="16" rx="4" />
+  <rect class="chart-a" x="76" y="46" width="35" height="16" rx="4" />
+  <rect class="chart-a" x="76" y="72" width="60" height="16" rx="4" />
+  <rect class="chart-b" x="76" y="98" width="180" height="16" rx="4" />
+  <text class="chart-label" x="0" y="32">1 month</text>
+  <text class="chart-label" x="0" y="58">3 months</text>
+  <text class="chart-label" x="0" y="84">6 months</text>
+  <text class="chart-label" x="0" y="110">12 months</text>
+  <text class="chart-label" x="104" y="32">$1,200</text>
+  <text class="chart-label" x="115" y="58">$1,728</text>
+  <text class="chart-label" x="140" y="84">$2,986</text>
+  <text class="chart-label" x="260" y="110">$8,916</text>
+  <text class="chart-note" x="0" y="134">$1,000, at the 20% a month the post claims</text>
+</svg>
+
+| After | $1,000 becomes |
+| --- | --- |
+| 1 month | $1,200 |
+| 3 months | $1,728 |
+| 6 months | $2,986 |
+| 12 months | $8,916 |
+
+That is <Term id="compound-growth">compound growth</Term> run at a rate no market delivers: about 792% in a year. **A figure that cannot be true is information about the person posting it.**
+
+FINRA puts words like guaranteed and risk-free under phantom riches, a persuasion tactic, because no investment can offer them.
+
+## When a betting app uses trading words
+
+Some betting apps borrow the vocabulary. Picks are called trades, a balance is called a portfolio, and a deposit bonus stands in where growth would be.
+
+The words are not the difference. A wager pays out only if one named event goes one way, and the stake is gone if it does not. Nothing is left afterwards that can grow. The legal age to bet varies by state.
+
+This is not a rare corner of the feed. In an NCAA survey of 3,527 people aged 18 to 22, published in May 2023, 58% had taken part in at least one sports betting activity.
+
+## If money has already gone
+
+Report it. Reports are how the FTC sees a pattern across thousands of people and brings cases against the operators.
+
+Its 2025 data shows the size of this. People reported losing $2.1 billion to scams that started on social media, and $1.1 billion of that to investment scams.
+
+**An account that shows a balance, then asks for a fee to release it, is charging you twice.** The balance is a number the group controls.

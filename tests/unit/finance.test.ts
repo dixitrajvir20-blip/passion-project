@@ -11,7 +11,7 @@ import {
 import { money, number, parseAmount, localeByCode, DEFAULT_LOCALE } from '../../src/lib/format';
 
 describe('breakEven', () => {
-  it('computes margin and units for a chai stall', () => {
+  it('computes margin and units for a small business', () => {
     const result = breakEven(2000, 8, 15);
     expect(result.contributionMargin).toBe(7);
     expect(result.units).toBe(286); // ceil(2000 / 7)

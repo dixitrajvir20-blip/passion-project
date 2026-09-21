@@ -1,0 +1,5 @@
+{
+  "term": "Housing cost overburden",
+  "define": "Eurostat's marker for housing being too expensive: a household is counted as overburdened when its total housing costs come to more than 40% of its disposable income.",
+  "example": "Rent and bills of €600 a month on disposable income of €1,125 is 53%, so that household is counted as overburdened."
+}

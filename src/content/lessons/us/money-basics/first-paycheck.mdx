@@ -1,6 +1,6 @@
 ---
-title: "Your first paycheck: reading the deductions"
-summary: "Gross pay, net pay and each line between them, so the smaller deposit makes sense before you plan with it."
+title: "Your first paycheck: what each deduction is"
+summary: "Social Security, Medicare, federal withholding and state tax: the four lines between $1,600 and $1,317.60."
 region: us
 track: money-basics
 order: 1
@@ -8,194 +8,205 @@ readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-18
+lastReviewed: 2026-09-21
 
-situation: "You worked 40 hours in your first two weeks at a grocery store, at $12.50 an hour. You expected $500. Payday brings $451.75, and a pay stub full of short labels you have never seen."
+situation: "Two weeks at a job paying $20 an hour, 80 hours in all. Your pay stub says gross pay $1,600. The deposit is $1,317.60, and four short lines in between account for the rest."
 
 prediction:
-  q: "Suppose your whole year's pay will be too low to owe any federal income tax. Which lines can still come out of this $500?"
+  q: "The stub says $1,600 gross and $1,317.60 deposited. What accounts for the $282.40 in between?"
   options:
-    - text: "None: if you owe no income tax, all $500 arrives"
-      why: "Income tax is only one kind of deduction. Social Security and Medicare are separate taxes, and they come out whether or not you owe income tax."
-    - text: "Social Security and Medicare, and any state tax"
-      why: "Those two take 7.65% together, which is $38.25 of $500, whatever you owe in income tax. State tax follows your state's own rules."
-    - text: "All of them, but every dollar comes back next spring"
-      why: "Extra income tax that was withheld can come back when you file a return. Social Security and Medicare are not part of that refund."
+    - text: "Federal income tax alone, and all of it comes back next spring"
+      why: "Federal income tax is one of four lines here, and it comes back only where more was withheld than you owed. Social Security and Medicare are separate taxes."
+    - text: "Four separate lines: Social Security, Medicare, federal income tax and state tax"
+      why: "Two of them are fixed percentages of pay. The other two depend on your W-4 and on your state, so two states can leave different net pay."
+    - text: "A payroll fee the employer keeps for running the payroll"
+      why: "Nothing on this stub is kept by the employer. Each line is a tax taken out and sent on for you."
   answer: 1
 
 takeaways:
-  - "Gross pay is your hours times your rate. Net pay is what lands in your account. The pay stub lists every line in between, and you plan with net."
-  - "Social Security (6.2%) and Medicare (1.45%) come out of almost every paycheck, even when you owe no income tax. Your employer pays the same again."
-  - "Federal income tax withheld is an estimate, set by your W-4 and the IRS tables. If too much comes out, filing a tax return is how you get it back."
+  - "Social Security takes 6.2% of pay and Medicare 1.45%. Those two rates are fixed, and your employer pays the same amounts again."
+  - "Federal income tax withheld is an estimate set by your W-4. A tax return after the year ends settles what you really owed."
+  - "State income tax follows your state's rules, and not every state has one. Net pay is the number you plan the month with."
 
 worked:
   kind: split
-  context: "The paycheck from the top of the page: $500 gross for two weeks. At this pay the federal income tax line is $0. The state line is an example, because yours depends on your state. Lines are rounded to the dollar here; the stub shows Medicare as $7.25."
-  income: 500
+  context: "The stub from the top of the page: $1,600 of gross pay for two weeks. The Social Security and Medicare rates are set in law. The last two lines are examples from this one stub, written as the share of gross pay they come to, because yours depend on your W-4 and your state. The ledger rounds to the dollar, so $99.20 and $23.20 appear here as $99 and $23."
+  income: 1600
   shares:
     - { label: "Social Security", percent: 6.2 }
     - { label: "Medicare", percent: 1.45 }
-    - { label: "Federal income tax, at this pay", percent: 0 }
-    - { label: "State income tax (example)", percent: 2 }
+    - { label: "Federal income tax withheld (example)", percent: 6.875 }
+    - { label: "State income tax (example)", percent: 3.125 }
 
 explorable:
   kind: split
-  incomes: [450, 900, 1000, 1200]
+  incomes: [1318, 2635, 3953]
   lines:
-    - { label: "Needs", percent: 50, hint: "Phone, bus or gas, school costs, food" }
+    - { label: "Needs", percent: 50, hint: "Rent or transport, phone, food, school costs" }
     - { label: "Wants", percent: 30, hint: "Eating out, clothes, games, gifts" }
-    - { label: "Savings", percent: 20, hint: "Set aside on payday, before any spending" }
+    - { label: "Savings", percent: 20, hint: "Moved on payday, before any spending; debt payments belong here too" }
   prompts:
-    - "Tap $1,000, two paychecks of gross pay, and note what Needs gets. Then tap $900, about what those two paychecks leave. Your phone bill did not shrink with it."
-    - "Tap $450, a month with one paycheck. If Needs no longer covers your phone and bus fare, move 5% at a time from Wants until it does."
+    - "Tap $2,635, the month two of these paychecks deposit. Treat 50/30/20 as a common rule of thumb rather than a target: the Consumer Financial Protection Bureau says to set your own shares if these do not fit. Planned on gross pay, the same month would have started from $3,200."
+    - "Tap $1,318, a month with one paycheck in it. If Needs no longer covers your phone and transport, move 5% at a time from Wants until it does."
 
 practice:
   kind: split
-  context: "Your cousin's first full-time job pays $2,000 every two weeks. His stub shows the lines below. The federal and state rates are examples; his real ones depend on his W-4 and his state."
-  income: 2000
+  context: "A second stub, from a different job: $1,200 of gross pay for two weeks. The federal and state percentages are examples again, because they depend on the W-4 and the state."
+  income: 1200
   shares:
-    - { label: "Federal income tax (example)", percent: 8 }
-    - { label: "Medicare", percent: 1.45 }
+    - { label: "Federal income tax withheld", percent: 5 }
     - { label: "Social Security", percent: 6.2 }
-    - { label: "State income tax (example)", percent: 4 }
+    - { label: "Medicare", percent: 1.45 }
+    - { label: "State income tax", percent: 3 }
   target: "Social Security"
 
 quiz:
-  - q: "At a new job, your offer said $13 an hour. Two days after payday you notice the stub shows 30 hours at $12.50. What do you do?"
+  - q: "Your offer said $20 an hour. Two days after payday you notice the stub shows 80 hours at $19.50. What do you do?"
     options:
-      - text: "Leave it: payroll systems do not make mistakes"
-        why: "A payroll system only uses what someone typed in. A wrong rate is used again on every paycheck until someone flags it."
+      - text: "Leave it, because payroll systems do not make mistakes"
+        why: "A payroll system uses the rate someone typed in. A wrong rate is used again every payday until someone flags it."
       - text: "Tell your manager or payroll now, with the offer in writing"
-        why: "Fifty cents short on 30 hours is $15 of gross pay this time, and again on every paycheck after. The offer message or letter is your record."
-      - text: "Wait a few paychecks to see if it fixes itself"
-        why: "The same rate is used each time payroll runs, so the gap keeps growing. An older error is also harder to trace."
+        why: "Fifty cents short on 80 hours is $40 of gross pay this time, and again on every stub after. The offer letter is your record."
+      - text: "Wait a few paychecks to see whether it corrects itself"
+        why: "The same rate runs each payday, so the gap grows. An older error is also harder to trace back."
     answer: 1
-  - q: "Your summer job pays $1,000 every two weeks. A coworker says to write exempt on your W-4 so the full $1,000 arrives. You owed no federal income tax last year and expect to owe none this year. What do you do?"
+  - q: "A coworker says to write exempt on your W-4 so the full $1,600 arrives. You owed no federal income tax last year and expect to owe none this year. What do you do?"
     options:
-      - text: "Claim exempt and plan on the full $1,000"
-        why: "Exempt covers federal income tax only. Social Security and Medicare still take 7.65%, which is $76.50 of each $1,000."
-      - text: "If you use exempt, still plan for Social Security and Medicare"
-        why: "Exempt stops federal income tax withholding for this calendar year only. The other two still come out, and any state tax follows your state's rules."
+      - text: "Claim exempt and plan on the full $1,600"
+        why: "Exempt covers federal income tax only. Social Security and Medicare still take 7.65% of gross pay between them."
+      - text: "If you use exempt, still plan for Social Security, Medicare and any state tax"
+        why: "Exempt stops federal income tax withholding for that calendar year. A new W-4 is due by February 15 to keep it."
       - text: "Skip it, because students cannot claim exempt"
-        why: "The test is not about being a student. It is about owing no federal income tax last year and expecting to owe none this year."
+        why: "Being a student is not the test. The test is owing no federal income tax last year and expecting none this year."
     answer: 1
-  - q: "Last summer you had five paychecks of $1,000. Each stub showed about $38 of federal income tax, about $190 in all. You expect to owe no federal income tax for the year. Early in the new year, a W-2 arrives. What do you do?"
+  - q: "Your summer stubs each show about $110 of federal income tax, roughly $550 over five paychecks. You expect to owe no federal income tax for the year. What do you do when the W-2 arrives at the start of February?"
     options:
-      - text: "Nothing, since you earned too little to have to file"
-        why: "You may not be required to file. But withheld tax comes back through a tax return, so skipping it leaves about $190 with the IRS."
+      - text: "Nothing, since you earned too little to be required to file"
+        why: "You may not be required to file. Withheld tax comes back through a return, so skipping it leaves about $550 with the IRS."
       - text: "File a federal tax return to claim the withheld tax back"
-        why: "Withholding was worked out as if you earned $1,000 every two weeks all year. The return uses what you really earned, and the extra comes back."
-      - text: "Ask your employer to pay back the $190"
-        why: "Your employer already sent that money to the IRS. It comes back through your tax return, not through payroll."
+        why: "Withholding was worked out as though $1,600 arrived every two weeks all year. The return works from what you earned."
+      - text: "Ask your employer to hand back the $550"
+        why: "That money has already gone to the IRS. It comes back through your tax return, not through payroll."
     answer: 1
-  - q: "Your sixth stub of the year shows Social Security with Current $31.00 and YTD $186.00. A friend says $186 came out this time. How do you read it?"
+  - q: "Your sixth stub of the year shows Social Security as Current $99.20 and YTD $595.20. A friend says $595.20 came out this time. How do you read it?"
     options:
-      - text: "$186 came out of this paycheck"
-        why: "YTD means year to date. That column adds up every paycheck since the year began, so it grows each payday."
-      - text: "$31 came out this time, and $186 so far this year"
-        why: "Six paychecks of $31 make $186. The YTD column is also a quick way to see your totals before the W-2 arrives."
-      - text: "$186 is what you will get back at tax time"
-        why: "Social Security is not part of an income tax refund. Only income tax withheld beyond what you owe can come back."
+      - text: "$595.20 came out of this paycheck"
+        why: "YTD means year to date. That column adds up every paycheck since January, so it grows each payday."
+      - text: "$99.20 came out this time, and $595.20 so far this year"
+        why: "Six paychecks of $99.20 make $595.20. The YTD column is how you check your totals before the W-2 arrives."
+      - text: "$595.20 is what comes back at tax time"
+        why: "That column is Social Security, a separate tax from income tax. A refund covers income tax withheld above what you owed."
     answer: 1
 
 transfer:
-  - "Every payday. Read the stub in the first week, while you still remember your hours."
-  - "On the first day of any job, when a W-4 is put in front of you. Read the rules for exempt before you use it."
-  - "Early each year, when a W-2 arrives. If income tax was withheld, a tax return is how any extra comes back."
-  - "When you compare job offers. An hourly rate is gross pay, and the same rate can leave different net pay in two states."
+  - "Every payday, in the first week, while you still remember the hours you worked."
+  - "On the first day of a job, when a W-4 is put in front of you."
+  - "Early each year, when a W-2 arrives and a tax return settles what you owed."
+  - "When you compare two job offers, because the same hourly rate can leave different net pay in two states."
 
-glossary: [gross-pay, net-pay, pay-stub, fica, w-4, withholding, tax-return, needs-and-wants]
+glossary: [gross-pay, net-pay, deduction, pay-stub, fica, w-4, withholding, w-2, tax-return, needs-and-wants]
 tool: budget
 
 sources:
-  - title: "Topic no. 751, Social Security and Medicare withholding rates (updated 20 January 2026)"
+  - title: "Topic no. 751, Social Security and Medicare withholding rates: 6.2% and 1.45% from the employee, the same again from the employer, and a Social Security wage base of $184,500 for 2026 (updated 20 January 2026)"
     url: "https://www.irs.gov/taxtopics/tc751"
     publisher: "Internal Revenue Service"
-  - title: "Understanding employment taxes (updated 1 May 2026)"
+  - title: "Understanding employment taxes: employers withhold income tax using Form W-4 and Publication 15-T, and pay the employer share of Social Security and Medicare (updated 1 May 2026)"
     url: "https://www.irs.gov/businesses/small-businesses-self-employed/understanding-employment-taxes"
     publisher: "Internal Revenue Service"
-  - title: "Topic no. 753, Form W-4, Employee's Withholding Certificate (updated 30 March 2026)"
+  - title: "About Form W-4, Employee's Withholding Certificate: the form an employer uses to withhold the right federal income tax from your pay (updated 10 September 2026)"
+    url: "https://www.irs.gov/forms-pubs/about-form-w-4"
+    publisher: "Internal Revenue Service"
+  - title: "Publication 15-T, Federal Income Tax Withholding Methods: Worksheet 1A multiplies one pay period's wages by the number of pay periods in the year, then divides the year's tax back over them (2026 edition, dated 3 December 2025)"
+    url: "https://www.irs.gov/pub/irs-pdf/p15t.pdf"
+    publisher: "Internal Revenue Service"
+  - title: "Topic no. 753, Form W-4: exemption from withholding, valid for one calendar year, renewed by February 15 (updated 20 September 2026)"
     url: "https://www.irs.gov/taxtopics/tc753"
     publisher: "Internal Revenue Service"
-  - title: "Publication 15-T (2026), Federal Income Tax Withholding Methods"
-    url: "https://www.irs.gov/publications/p15t"
+  - title: "Topic no. 752, Filing Forms W-2 and W-3: employers must furnish employees their Form W-2 copies by 2 February 2026 for the 2025 year (updated 19 February 2026)"
+    url: "https://www.irs.gov/taxtopics/tc752"
     publisher: "Internal Revenue Service"
-  - title: "Publication 505 (2026), Tax Withholding and Estimated Tax: exemption from withholding"
-    url: "https://www.irs.gov/publications/p505"
-    publisher: "Internal Revenue Service"
-  - title: "Check if you need to file a tax return (updated 30 April 2026)"
+  - title: "Check if you need to file a tax return: you may want to file even if you earned less, to get back tax your employer withheld from your pay (updated 30 April 2026)"
     url: "https://www.irs.gov/individuals/check-if-you-need-to-file-a-tax-return"
     publisher: "Internal Revenue Service"
-  - title: "State income taxes (updated 11 December 2025)"
+  - title: "State taxes: what you pay depends on your income and on the rate of the state or locality where you live, with a directory of state tax agencies (updated 11 December 2025)"
     url: "https://www.usa.gov/state-taxes"
     publisher: "USA.gov, General Services Administration"
-  - title: "Social Security (checked 18 September 2026)"
+  - title: "Income tax: the department page stating that Washington has no individual income tax at present (accessed 21 September 2026)"
+    url: "https://dor.wa.gov/taxes-rates/income-tax"
+    publisher: "Washington State Department of Revenue"
+  - title: "Social Security: what the programme pays out, covering retirement, disability and survivors (accessed 21 September 2026)"
     url: "https://www.usa.gov/social-security"
     publisher: "USA.gov, General Services Administration"
-  - title: "Get started with Medicare (checked 18 September 2026)"
+  - title: "Get started with Medicare: health insurance from 65, or earlier with a disability, end-stage renal disease or ALS (accessed 21 September 2026)"
     url: "https://www.medicare.gov/basics/get-started-with-medicare"
     publisher: "Centers for Medicare & Medicaid Services"
+  - title: "My spending rule to live by: a common rule of thumb puts 50% of take-home pay to needs, 20% to savings and debt payments and no more than 30% to wants, and says to set your own rule if that one does not fit (worksheet, March 2016)"
+    url: "https://files.consumerfinance.gov/f/201603_cfpb_rules-to-live-by_my-spending-rule-to-live-by.pdf"
+    publisher: "Consumer Financial Protection Bureau"
 ---
 
-## From $500 to $451.75
+## From $1,600 to $1,317.60
 
-Forty hours at $12.50 is $500. That is your <Term id="gross-pay">gross pay</Term>: what the job pays before anything comes off. What reaches your account is <Term id="net-pay">net pay</Term>, here $451.75.
+Eighty hours at $20 is $1,600. That is your <Term id="gross-pay">gross pay</Term>: what the job pays before anything comes off. What reaches your account is <Term id="net-pay">net pay</Term>, here $1,317.60.
 
-The $48.25 in between is not a mistake, and it is not lost. It is tax, taken out by your employer and sent on for you. Every line is on your <Term id="pay-stub">pay stub</Term>.
+The $282.40 in between is not a fee and it is not lost. Each line is a <Term id="deduction">deduction</Term>: an amount your employer takes out and sends on for you. All four are named on your <Term id="pay-stub">pay stub</Term>.
 
-**Plan the month with net pay, because it is the only part you can spend.** Your hourly rate still matters. It is the number in job ads, and the one a raise is measured against.
+**Plan the month on net pay, because it is the only part you can spend.** The hourly rate still matters. It is the figure in job ads, and what a raise is measured against.
 
 <svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="stub-title stub-desc">
-  <title id="stub-title">Where a $500 paycheck goes</title>
-  <desc id="stub-desc">A single bar in two parts. $451.75 is net pay, which reaches your account. $48.25 is taken out for Social Security, Medicare and state income tax.</desc>
-  <rect class="chart-a" x="0" y="26" width="286" height="36" rx="6" />
-  <rect class="chart-b" x="290" y="26" width="30" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Net pay $451.75</text>
-  <text class="chart-label" x="320" y="80" text-anchor="end">Taken out $48.25</text>
-  <text class="chart-note" x="0" y="100">$500 gross pay, for two weeks</text>
+  <title id="stub-title">Where a $1,600 paycheck goes</title>
+  <desc id="stub-desc">A single bar in two parts. $1,317.60 is net pay, which reaches your account. $282.40 is taken out for Social Security, Medicare, federal income tax and state income tax.</desc>
+  <rect class="chart-a" x="0" y="26" width="262" height="36" rx="6" />
+  <rect class="chart-b" x="266" y="26" width="54" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Net pay $1,317.60</text>
+  <text class="chart-label" x="320" y="80" text-anchor="end">Taken out $282.40</text>
+  <text class="chart-note" x="0" y="100">$1,600 gross pay, for two weeks</text>
 </svg>
 
 | Line on the stub | Amount |
 | --- | --- |
-| Gross pay | $500.00 |
-| Social Security, 6.2% | −$31.00 |
-| Medicare, 1.45% | −$7.25 |
-| Federal income tax | $0.00 |
-| State income tax (example) | −$10.00 |
-| Net pay | $451.75 |
+| Gross pay | $1,600.00 |
+| Social Security, 6.2% | −$99.20 |
+| Medicare, 1.45% | −$23.20 |
+| Federal income tax withheld | −$110.00 |
+| State income tax | −$50.00 |
+| Net pay | $1,317.60 |
 
-## Two lines on almost every paycheck
+Those last two amounts are examples from one stub: yours depend on your W-4 and your state.
 
-In 2026, Social Security takes 6.2% of your pay and Medicare takes 1.45%. Some stubs group the pair as <Term id="fica">FICA</Term>. Your employer pays the same amounts again, on top of your pay.
+## Social Security and Medicare are fixed rates
 
-Social Security pays an income when people retire, or when a disability stops them working. Medicare is health insurance, mostly for people 65 and older.
+In 2026 Social Security takes 6.2% of your pay and Medicare takes 1.45%. Stubs often group the pair as <Term id="fica">FICA</Term>. Your employer pays the same amounts again, on top of your pay. That 6.2% applies to the first $184,500 you earn in a year, well above a first job.
 
-**These two come out even when you owe no income tax at all.** On this paycheck they take $31 and $7.25. They are not part of any income tax refund later.
+Social Security pays retirement income, and disability income before that. Medicare is health insurance from age 65, or earlier with a disability or certain serious illnesses.
+
+**These two come out even when you owe no income tax at all.** On this stub they take $99.20 and $23.20. They are separate taxes from income tax, not an advance on it.
 
 ## Federal income tax is an estimate
 
-When you start a job, you fill in a <Term id="w-4">W-4</Term>. Your employer uses it, with the IRS tables, to decide how much federal income tax to take from each paycheck. That is <Term id="withholding">withholding</Term>.
+When you start a job you fill in a <Term id="w-4">W-4</Term>. Your employer uses it, with tables from the IRS, the federal tax agency, to set the federal income tax taken from each paycheck. That is <Term id="withholding">withholding</Term>.
 
-The tables treat each paycheck as if you were paid it all year. For a single filer with only the basics on the W-4, the 2026 tables take nothing until pay passes about $620 every two weeks. That is why this stub shows $0.
+The tables work a year at a time. They multiply one paycheck by the number of paydays in a year, then tax that figure. A summer of $1,600 paychecks is read as a whole year of them, so more can come out than you end up owing.
 
-**So withholding is a guess, not your final bill.** Work one summer at $1,000 a paycheck, and more can come out than you end up owing.
+**Withholding is an estimate, not your final bill.** Your employer sends a <Term id="w-2">W-2</Term> after the year ends. A <Term id="tax-return">tax return</Term> works out what you really owed and brings back anything extra.
 
-## Getting it back, and the exempt box
+## The exempt box on the W-4
 
-After the year ends, your employer sends you a W-2, showing your pay and the tax withheld. You can then file a <Term id="tax-return">tax return</Term>, which works out what you really owed. **If too much was withheld, filing is how the extra comes back.** That is true even when you are not required to file.
+The W-4 also has an exempt option. It fits only if you owed no federal income tax last year and expect to owe none this year. It lasts one calendar year, so a new W-4 is due by February 15 to keep it.
 
-The W-4 also has an exempt option. It fits only if you owed no federal income tax last year and expect to owe none this year. It lasts one calendar year, so a new W-4 goes in by February 15 to keep it.
+**Exempt stops federal income tax withholding, and nothing else.** Social Security and Medicare still come out, and so does any state tax.
 
-Exempt stops federal income tax withholding. Social Security and Medicare still come out.
+## State income tax depends on where you live
 
-## State tax, and lines you do not know
+State income tax follows your state's rules, not federal ones. What comes out depends on your pay and on the rate where you live. Some places add a local tax on top.
 
-State income tax follows your state's rules, not federal ones. How much comes out depends on your pay and the rate where you live. Some cities and counties add their own. So a friend's stub from another state tells you little about yours. Your state's tax agency explains its lines.
+Not every state has one. Washington is among those without: its revenue department reports no individual income tax there at the moment. A friend's stub from another state therefore tells you little about yours, and your state's tax agency sets out the rules.
 
-Some stubs carry other lines too, such as health insurance or a retirement plan through work. **If a line makes no sense, ask payroll what it is.** It is an ordinary question, and they hear it often.
+A stub can carry other lines too, for things you signed up for at work. **If a line makes no sense, ask payroll what it is.**
 
-## Read it in the first week
+## Read the stub in the first week
 
-Three checks, while the two weeks are still fresh. First, the hours and the rate, against your own notes and your offer. Second, each line from gross down to net. Third, the YTD (year to date) column, which adds up every paycheck since the year began.
+Three checks, while the two weeks are still fresh. First, the hours and the rate, against your own notes and your offer. Second, each line from gross down to net. Third, the YTD column, short for year to date, which adds up every paycheck since January.
 
-Then give the net pay its jobs before the first spend. <Term id="needs-and-wants">Needs and wants</Term> come first to mind, but savings works best when it moves on payday. Two paychecks like this one leave about $900 for the month, not $1,000.
+Then plan the net pay before the first spend. Sort it into <Term id="needs-and-wants">needs and wants</Term>, and set the savings share on payday rather than from what is left over. Two paychecks like this one make a month of about $2,635, not $3,200.

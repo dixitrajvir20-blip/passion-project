@@ -36,7 +36,7 @@ decision-shaped units with retrieval and a calculator, not chapters.
 6. **Short simulations with reflection.** Games beat non-games g≈0.33, *much* more with multiple
    sessions and a reflection step (Clark 2016). Caution: a budgeting sim can backfire and increase
    blame-the-poor attitudes (SPENT study, Roussos & Dovidio 2016) — so our sims never moralise
-   about "bad choices". → the region simulators (chai stall, payslip decoder, scam spotter).
+   about "bad choices". → the region drills (payslip decoder, transfer and fraud screens, job-offer classifier).
 7. **Elaborative interrogation** ("why?" after a reveal), d≈0.56. A one-line prompt on wrong answers.
 8. **Dual coding** (a diagram beside the words), imagery d≈0.56.
 9. **Interleaving** for *discriminating* similar ideas (APR vs APY, Roth vs traditional), g≈0.42

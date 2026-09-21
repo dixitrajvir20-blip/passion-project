@@ -1,0 +1,5 @@
+{
+  "term": "Index option",
+  "define": "A contract traded on a recognised exchange whose value depends on where a share index stands on a set expiry date. If the index does not move the way the contract needs before then, the money paid for it is gone.",
+  "example": "A contract bought on Monday for a Thursday expiry is worth nothing on Friday, whatever the index does the week after."
+}

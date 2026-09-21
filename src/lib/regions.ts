@@ -9,7 +9,7 @@ export interface Stat {
   source: Source;
 }
 
-export type TrackSlug = 'money-basics' | 'start-something' | 'how-business-works';
+export type TrackSlug = 'money-basics' | 'start-something' | 'how-business-works' | 'credit-and-fraud' | 'protect-your-money';
 
 export interface Track {
   slug: TrackSlug;
@@ -77,7 +77,7 @@ export const REGIONS: Region[] = [
     tab: 'India',
     locale: 'en-IN',
     currency: 'INR',
-    headline: 'Keep what you earn when every payment is one tap.',
+    headline: 'Your first salary: the payslip, the tax, the fund and the buffer.',
     tags: ['UPI', 'Scams', 'First job'],
     report: {
       stamp: '1930',
@@ -85,7 +85,7 @@ export const REGIONS: Region[] = [
       link: { label: 'cybercrime.gov.in', url: 'https://cybercrime.gov.in' },
     },
     problem:
-      'Digital payments arrived faster than the knowledge needed to use them safely.',
+      'Most first earners in India meet a payslip, a loan app and a trading screen before anyone has shown them the arithmetic behind any of them, and the official figures record what that costs.',
     intro:
       'India built payment rails almost everyone can reach, and the knowledge to use them safely has not caught up. This edition is about keeping what you earn, spotting the patterns fraud uses, and working out whether a small business actually makes money.',
     stats: [
@@ -127,28 +127,28 @@ export const REGIONS: Region[] = [
     tracks: [
       {
         slug: 'money-basics',
-        title: 'Money basics',
-        summary: 'What to do with money once you have some, and how to keep it.',
+        title: 'Your first salary',
+        summary: 'Reading the payslip, getting withheld tax back, moving the provident fund, and building a buffer.',
+        planned: [],
+      },
+      {
+        slug: 'protect-your-money',
+        title: 'Protect your money',
+        summary: 'The four ways young Indians lose money, ranked by the official figures, and the one action the rules reward in each case.',
         planned: [],
       },
       {
         slug: 'start-something',
-        title: 'Start something',
-        summary: 'Turning an idea into something real, starting with almost nothing.',
-        planned: [],
-      },
-      {
-        slug: 'how-business-works',
-        title: 'How business works',
-        summary: 'The machinery underneath the shops and stalls you already know.',
+        title: 'Start a service business',
+        summary: 'Pricing, break-even, cash and the first regulated loan, worked on a coaching centre and a freelance service.',
         planned: [],
       },
     ],
     breakEven: {
-      fixed: '12000',
-      variable: '400',
-      price: '2000',
-      units: '12',
+      fixed: '18000',
+      variable: '300',
+      price: '1500',
+      units: '25',
       unitName: 'students',
       fixedHint: 'What you pay every month whatever happens: the room, electricity, the whiteboard loan instalment.',
       variableHint: 'What one student costs you each month: printed notes, test papers, a share of the internet.',
@@ -179,14 +179,14 @@ export const REGIONS: Region[] = [
     tab: 'Europe',
     locale: 'en-IE',
     currency: 'EUR',
-    headline: 'Your first payslip, your first stall, and the rules at every border.',
+    headline: 'Read the payslip, check the payee, count the instalments.',
     tags: ['Payslips', 'Buy now, pay later', 'Selling abroad'],
     report: {
       stamp: 'Act fast',
       text: 'Lost money to a scam? Call your bank straight away to try to stop the payment, then report it to the police in your country. The reporting route is national, so it differs from country to country.',
     },
     problem:
-      'Strong consumer protections, low financial confidence, and rules that change at every border.',
+      'Half of EU adults could not cover three months of living costs, and payers themselves bore about 85% of the €2.2 billion lost to transfer fraud in 2024; the checks that prevent both are rarely taught before the first payslip arrives.',
     intro:
       'Europe has some of the strongest consumer protections anywhere and some of the lowest financial confidence. This edition is about building a buffer, seeing debt for what it is when it arrives dressed as convenience, and working across borders without guessing.',
     stats: [
@@ -236,32 +236,32 @@ export const REGIONS: Region[] = [
     tracks: [
       {
         slug: 'money-basics',
-        title: 'Money basics',
-        summary: 'Building a cushion and keeping debt visible.',
+        title: 'Your first pay and what it has to cover',
+        summary: 'Read the payslip, size the buffer, cost the move, and see what interest and inflation do over time.',
+        planned: [],
+      },
+      {
+        slug: 'credit-and-fraud',
+        title: 'Credit, payments and fraud',
+        summary: 'Instalment plans, transfers, job offers and money advice: where the evidence says young Europeans lose money.',
         planned: [],
       },
       {
         slug: 'start-something',
-        title: 'Start something',
-        summary: 'Selling into a single market made of 27 rulebooks.',
-        planned: [],
-      },
-      {
-        slug: 'how-business-works',
-        title: 'How business works',
-        summary: 'Where profit comes from, and which rights you already have.',
+        title: 'Run it like a business',
+        summary: 'Read the numbers, price with fees and borders included, and declare what you earn.',
         planned: [],
       },
     ],
     breakEven: {
-      fixed: '150',
-      variable: '6',
-      price: '18',
-      units: '120',
-      unitName: 'orders',
-      fixedHint: 'What you pay every month whatever you sell: shop subscription, tools, storage.',
-      variableHint: 'What one order costs you: materials, packaging, postage.',
-      scenario: 'A small online shop selling across the EU.',
+      fixed: '320',
+      variable: '22',
+      price: '55',
+      units: '16',
+      unitName: 'repairs',
+      fixedHint: 'What you pay every month whatever happens: the workshop bay, insurance, the tool loan.',
+      variableHint: 'What one repair costs you in parts and consumables.',
+      scenario: 'A weekend bicycle-repair service in a rented workshop bay, worked out in euros.',
     },
     tools: {
       budget: {
@@ -289,7 +289,7 @@ export const REGIONS: Region[] = [
     tab: 'United States',
     locale: 'en-US',
     currency: 'USD',
-    headline: 'Credit, loans and side hustles, before they cost you.',
+    headline: 'Student loans, credit and taxes arrive before anyone explains them.',
     tags: ['Credit scores', 'Student loans', 'Side hustles'],
     report: {
       stamp: 'FTC',
@@ -297,7 +297,7 @@ export const REGIONS: Region[] = [
       link: { label: 'reportfraud.ftc.gov', url: 'https://reportfraud.ftc.gov' },
     },
     problem:
-      'Big debt decisions, like student loans and credit cards, arrive at 17 or 18, often before anyone explains how debt works.',
+      'A 17-year-old can sign a federal loan, open a credit card and earn untaxed side income before anyone shows them the monthly payment, the interest or the tax bill, and in 2026 Gen Z adults answered 38% of the P-Fin Index questions correctly.',
     intro:
       'In the US some of the biggest money decisions arrive early: student loans, a first credit card, side-hustle income that nobody taxes for you. This edition is about seeing what those decisions cost before you make them, and understanding the number that quietly decides a lot of your life.',
     stats: [
@@ -348,31 +348,31 @@ export const REGIONS: Region[] = [
       {
         slug: 'money-basics',
         title: 'Money basics',
-        summary: 'The decisions that shape the next ten years.',
+        summary: 'The first year of earning: the paycheck, the cushion, the credit file and the loan, each as a number you can check.',
         planned: [],
       },
       {
         slug: 'start-something',
-        title: 'Start something',
-        summary: 'Earning on your own terms without a surprise tax bill.',
+        title: 'Working for yourself',
+        summary: 'Price a job, find break-even, read a month’s income statement and set tax aside.',
         planned: [],
       },
       {
         slug: 'how-business-works',
-        title: 'How business works',
-        summary: 'Where profit comes from and who takes a cut.',
+        title: 'Who gets paid, and by whom',
+        summary: 'The business model behind four things sold to you: a platform, a pay-in-four plan, a promoted tip and a job that is really a scam.',
         planned: [],
       },
     ],
     breakEven: {
-      fixed: '90',
-      variable: '9',
-      price: '25',
-      units: '100',
-      unitName: 'orders',
-      fixedHint: 'What you pay every month whatever you sell: shop fees, software, storage.',
-      variableHint: 'What one order costs you: blank product, printing, shipping.',
-      scenario: 'A custom-print shop, worked out in dollars.',
+      fixed: '900',
+      variable: '7.5',
+      price: '18',
+      units: '120',
+      unitName: 'shirts',
+      fixedHint: 'What you pay every month whatever you sell: the heat press loan, software, storage.',
+      variableHint: 'What one shirt costs you: the blank, the ink, the packaging.',
+      scenario: 'A custom apparel business printing shirts for school clubs and local teams, worked out in dollars.',
     },
     tools: {
       budget: {

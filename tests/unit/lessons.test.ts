@@ -234,7 +234,8 @@ describe('lesson content', () => {
       });
 
       it('ends a scam lesson with the official reporting route', () => {
-        const isScam = /scam|fraud/i.test(`${lesson.id} ${lesson.data.title}`);
+        const slug = lesson.id.split('/').pop() ?? '';
+        const isScam = /scam|fraud|mule/i.test(`${slug} ${lesson.data.title}`);
         if (!isScam) return;
         expect(lesson.data.reportTo, 'scam lessons need reportTo').toBeTruthy();
         if (lesson.data.region === 'in') {

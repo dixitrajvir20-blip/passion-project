@@ -32,8 +32,10 @@ export default function SplitExplorer({ incomes, lines, localeCode, prompts, too
   const locale = localeByCode(localeCode);
   const cash = (value: number) => money(Math.round(value), locale);
 
-  const total = shares.reduce((sum, share) => sum + share, 0);
-  const left = Math.round((income * (100 - total)) / 100);
+  // Round each line first, then take what is left from the rounded rows. Deriving the leftover
+  // from the unrounded percentages instead lets the rows and the leftover disagree by a rupee.
+  const amounts = shares.map((share) => Math.round((income * share) / 100));
+  const left = income - amounts.reduce((sum, amount) => sum + amount, 0);
 
   const nudge = (index: number, by: number) =>
     setShares(shares.map((share, i) => (i === index ? Math.max(0, Math.min(100, share + by)) : share)));
@@ -53,7 +55,7 @@ export default function SplitExplorer({ incomes, lines, localeCode, prompts, too
         {lines.map((line, index) => (
           <li class="split-row">
             <span class="split-name">{line.label}</span>
-            <span class="split-amount">{cash((income * shares[index]) / 100)}</span>
+            <span class="split-amount">{cash(amounts[index])}</span>
             {line.hint && <span class="split-hint">{line.hint}</span>}
             <span class="split-step">
               <button type="button" aria-label={`Less for ${line.label}`} onClick={() => nudge(index, -STEP)}>−</button>
@@ -91,7 +93,7 @@ function kindOf(label: string): BudgetKind {
 function handoff(income: number, lines: Line[], shares: number[]): string {
   const rows = lines.map((line, i) => ({
     name: line.label,
-    amount: String(Math.round((income * shares[i]) / 100)),
+    amount: String(Math.round((income * shares[i]) / 100)), // same rounding as the rows above
     category: kindOf(line.label),
   }));
   return new URLSearchParams({ income: String(income), rows: encodeRows(rows) }).toString();

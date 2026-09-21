@@ -1,0 +1,172 @@
+---
+title: "Break-even: how many students a coaching centre needs"
+summary: "Fifteen students cover a room, a bill and an instalment. The sixteenth is the first to add profit."
+region: in
+track: start-something
+order: 2
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-20
+
+situation: "Two graduates rent a room and start a coaching centre for Class 11 and 12 maths and physics. The rent is due whether ten students come or thirty."
+
+prediction:
+  q: "The room, the electricity and the projector instalment come to ₹18,000 a month. Each student pays ₹1,500 and uses ₹300 of printed material and tests. How many students does a month need before any of it is profit?"
+  options:
+    - text: "12, which is the ₹18,000 divided by the ₹1,500 fee"
+      why: "That treats the whole fee as the centre's. ₹300 of every fee is spent on that student's own notes and test papers."
+    - text: "15, because ₹1,200 of each fee is left to put against the ₹18,000"
+      why: "Fifteen fees of ₹1,200 cover the ₹18,000 exactly. The sixteenth student is the first whose fee is not owed to the room."
+    - text: "60, which is the ₹18,000 divided by the ₹300 of material"
+      why: "That divides by what a student uses up. Fixed costs are met from what is left after that cost, not by the cost itself."
+  answer: 1
+
+takeaways:
+  - "Contribution is the fee minus what that one student uses up, not the whole fee."
+  - "Break-even is the month's fixed costs divided by the contribution, rounded up to a whole student."
+  - "Past break-even each student adds the whole contribution, and a lower fee pushes the count up."
+
+worked:
+  kind: margin
+  context: "The centre from the top of the page: ₹1,500 a month from each student, ₹300 a month of printed notes and test papers for that student, and ₹18,000 of costs that arrive whatever the number."
+  unitName: students
+  fixed: 18000
+  variable: 300
+  price: 1500
+
+explorable:
+  kind: margin
+  unitName: students
+  fixed: 18000
+  variable: 300
+  prices: [1200, 1300, 1500, 1800, 2000]
+  prompts:
+    - "Start at ₹1,500, the centre's fee, then tap ₹1,200. The fee is a fifth lower. Read how many students the month now needs."
+    - "Tap ₹1,800, then ₹2,000. Each needs fewer students. What would you want to know about families near the centre before setting either fee?"
+
+practice:
+  kind: margin
+  context: "A friend teaches spoken English in another town. She charges ₹1,200 a month for each student and spends ₹400 a month on that student's workbook and practice tests. Her room, internet and electricity come to ₹14,000 a month."
+  unitName: students
+  fixed: 14000
+  variable: 400
+  price: 1200
+
+quiz:
+  - q: "A centre two streets away charges ₹1,200 a month. Your partner wants to match it to fill the empty seats. Your fee is ₹1,500 and each student uses ₹300 of material. What does matching do to the month?"
+    options:
+      - text: "Nothing, because the rent is the same either way"
+        why: "The rent does not move, but each student now brings ₹300 less towards it. The count that covers the room moves instead."
+      - text: "It raises break-even to 20 students, five more than now"
+        why: "At ₹1,200 a fee leaves ₹900, and ₹18,000 needs twenty of those. The room also has to seat twenty."
+      - text: "It lowers break-even, because more students will enrol"
+        why: "More enrolments are expected, not counted. The sum runs the other way: a smaller contribution needs more students, not fewer."
+    answer: 1
+  - q: "It is the middle of the term, twenty students are enrolled, and the month's ₹18,000 is covered. A student asks to join at ₹1,000 a month instead of ₹1,500. What does that fee do to this month?"
+    options:
+      - text: "It loses money, because ₹1,000 is under the centre's fee"
+        why: "₹1,500 is the usual fee, not what a student costs. One more student adds ₹300 of material and nothing else."
+      - text: "It adds ₹700 to the month, because the ₹18,000 is already paid"
+        why: "The fee covers the ₹300 of material and leaves ₹700. Whether to charge some students less than others is a separate decision."
+      - text: "It pushes the centre back under break-even"
+        why: "A fee above the material it uses cannot move the count backwards. The month ends further past break-even than before."
+    answer: 1
+  - q: "From next month the landlord raises the rent by ₹3,000, so fixed costs become ₹21,000. The fee stays ₹1,500 and the material stays ₹300. What does the centre need?"
+    options:
+      - text: "Three more students, or ₹3,000 a month from somewhere else"
+        why: "₹21,000 divided by ₹1,200 is 17.5, so eighteen students, three above the fifteen the old rent needed."
+      - text: "₹3,000 more from each student"
+        why: "The rise is ₹3,000 for the whole room, not for each student. Spread across fifteen students it is ₹200 each."
+      - text: "Nothing, until the room is full"
+        why: "The higher rent is due next month. A month that ends at fifteen students now stops short of its fixed costs."
+    answer: 0
+  - q: "Neither founder has drawn any pay, so no wage sits inside the ₹18,000. An uncle says the centre is doing fine because fifteen students clear its costs. What is missing from the sum?"
+    options:
+      - text: "Nothing, because the two of you own the centre"
+        why: "The room is counted whether or not the teaching is. Unpaid work makes break-even look lower than the count that would keep the centre open."
+      - text: "What the two of you need each month, added to the fixed costs"
+        why: "Put a wage inside the ₹18,000 and the count rises. That higher count, not fifteen, is what the term has to reach."
+      - text: "Nothing, because pay comes out of the profit after fifteen students"
+        why: "A month that stops at fifteen has no profit, so that plan pays nothing. Pay you depend on belongs in the costs."
+    answer: 1
+
+transfer:
+  - "Before signing a rent agreement for any service, from tuition to a repair desk. Work out the count the rent needs, then ask whether the room holds it."
+  - "When anyone proposes a lower price to fill empty places. The cut is certain from day one; the extra customers are not."
+  - "When a monthly cost changes: rent, an instalment, a salary, a licence. Each one moves the count you have to reach."
+  - "In Class 11 entrepreneurship on the CBSE syllabus, where break-even for a single product or service is Unit 6."
+
+glossary: [variable-cost, contribution-margin, fixed-cost, break-even, profit, udyam-registration]
+tool: break-even
+
+sources:
+  - title: "Entrepreneurship (subject code 066), Class XI syllabus for 2026-27, Unit 6 Business Finance and Arithmetic: types of cost, and break-even analysis for a single product or service"
+    url: "https://cbseacademic.nic.in/web_material/CurriculumMain27/SecPart2/Enterprenuership_SecP2_2026-27.pdf"
+    publisher: "Central Board of Secondary Education"
+  - title: "Udyam Registration portal: registration is free, no costs or fees are payable, and one registration may cover manufacturing or service activities (accessed 21 September 2026)"
+    url: "https://www.udyamregistration.gov.in/"
+    publisher: "Ministry of Micro, Small and Medium Enterprises, Government of India"
+---
+
+## What one student's fee leaves behind
+
+Two graduates rent a room near a bus stop and teach maths and physics to Class 11 and 12 students. Each student pays ₹1,500 a month.
+
+Not all of that stays with the centre. Every student gets printed notes, a weekly test paper and a folder. That is about ₹300 a month, spent on that one student. It is a <Term id="variable-cost">variable cost</Term>: twenty students need twenty sets of paper.
+
+What is left from one fee is the <Term id="contribution-margin">contribution</Term>: ₹1,200 towards everything else.
+
+**Contribution is the fee minus what that one student uses up, not the whole fee.**
+
+## The room is paid before anyone is taught
+
+Some costs arrive whether ten students come or thirty. Rent is ₹12,000 a month. Electricity runs to about ₹1,500. The projector was bought on an instalment of ₹4,500 a month. Together those are ₹18,000 of <Term id="fixed-cost">fixed costs</Term>.
+
+Each ₹1,200 of contribution goes to that ₹18,000 first. The fifteenth fee finishes paying it. That student is <Term id="break-even">break-even</Term>: no loss left, and nothing yet to keep.
+
+**Every month starts again at zero.** A full March does not pay April's rent.
+
+## After the fifteenth student
+
+Past break-even nothing comes out of a fee except that student's ₹300 of material. **Each student after the fifteenth adds ₹1,200 to <Term id="profit">profit</Term>.**
+
+So a month of twenty students is not twenty lots of ₹1,200. Fifteen of them paid for the room. The five after them are the ₹6,000 of profit.
+
+Under the line the same sum runs backwards. A month that ends at twelve students is three short, so it closes ₹3,600 down.
+
+<svg class="chart" viewBox="0 0 320 136" role="img" aria-labelledby="months-title months-desc">
+  <title id="months-title">Two months at the same centre</title>
+  <desc id="months-desc">Two bars of contribution against the ₹18,000 the room costs each month. Twelve students fall ₹3,600 short of it. Twenty students cover it and leave ₹6,000 of profit.</desc>
+  <text class="chart-label" x="0" y="12">Twelve students</text>
+  <rect class="chart-b" x="0" y="20" width="192" height="28" rx="6" />
+  <text class="chart-note" x="200" y="39">₹3,600 short</text>
+  <text class="chart-label" x="0" y="72">Twenty students</text>
+  <rect class="chart-b" x="0" y="80" width="236" height="28" rx="6" />
+  <rect class="chart-a" x="240" y="80" width="80" height="28" rx="6" />
+  <text class="chart-note" x="0" y="126">First fifteen pay the ₹18,000</text>
+  <text class="chart-note" x="320" y="126" text-anchor="end">Profit ₹6,000</text>
+</svg>
+
+| Students in the month | The month ends |
+| --- | --- |
+| 12 | ₹3,600 short |
+| 15 | Level, nothing kept |
+| 20 | ₹6,000 profit |
+
+## A lower fee needs more students than it looks
+
+Empty seats make a fee cut tempting. Drop the fee to ₹1,200 and the contribution drops to ₹900, while the room still costs ₹18,000. The month now needs twenty students, not fifteen.
+
+A fifth off the fee asks for a third more students, and the room has to seat them all.
+
+The cut also reaches every student already enrolled, from the month it starts. The extra students are only expected. **Test a lower fee against the count it creates, not against the centre two streets away.**
+
+## What the count leaves out
+
+Three things, and the first is the largest. Neither founder draws a wage, so no pay sits inside the ₹18,000. Put what each of you needs into the fixed costs, and the count rises well above fifteen.
+
+Second, the room has a seat limit. A break-even the room cannot hold is not a plan.
+
+Third, a one-off cost is not a monthly cost. The whiteboard was bought once. <Term id="udyam-registration">Udyam registration</Term>, which records the centre as a service enterprise, is free of charge on the ministry's portal. Neither changes the monthly count.

@@ -1,0 +1,5 @@
+{
+  "term": "IBAN",
+  "define": "International Bank Account Number: the long code, starting with a two-letter country code, that identifies one bank account for transfers. A transfer goes to the IBAN typed, whatever name is typed beside it.",
+  "example": "An IBAN that starts with DE points to an account at a bank in Germany; one that starts with FR points to a bank in France."
+}

@@ -1,0 +1,184 @@
+---
+title: "Changing jobs: what happens to your EPF"
+summary: "One number, one record: what a transfer moves, and what an early withdrawal adds to your income."
+region: in
+track: money-basics
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-20
+
+situation: "Eleven months into your first job you accept a second one. On your last day the old employer's HR asks a single question: do you want to withdraw your EPF, or transfer it?"
+
+prediction:
+  q: "HR wants an answer about your EPF before you leave. What happens to the old account itself when you change jobs?"
+  options:
+    - text: "It closes, so the balance has to be taken out"
+      why: "Nothing closes on its own. The account stops receiving contributions and waits under the same UAN until the balance is moved or claimed."
+    - text: "It stays in your name, and you choose whether to move the balance across"
+      why: "A transfer claim credits the old balance into the new job's account. A withdrawal pays it out instead, and under five years of service that payment is counted in your income."
+    - text: "The balance is locked until you retire, so there is nothing to decide"
+      why: "HR asks because both are possible. What differs is the tax treatment, and whether the months you have served keep counting."
+  answer: 1
+
+takeaways:
+  - "Your UAN stays the same across jobs. A transfer claim credits the old balance into the account at the new one."
+  - "The employer's 12% is split. In July 2025 the labour ministry put the pension scheme's share at 8.33% of wages; the rest stays in the provident fund."
+  - "Five years of continuous service keeps a withdrawal out of your income. Service at an earlier job counts once the balance has been transferred."
+
+worked:
+  kind: split
+  context: "One month behind that balance, at the first job: basic pay of ₹12,000. Both shares are worked out on basic pay, not on the whole salary, and the pension line is the part of the employer's share that funds the pension scheme."
+  income: 12000
+  shares:
+    - { label: "Your provident fund share", percent: 12 }
+    - { label: "The pension scheme", percent: 8.33 }
+    - { label: "The employer's provident fund share", percent: 3.67 }
+
+explorable:
+  kind: growth
+  amounts: [940, 1880, 3760]
+  rate: 8.25
+  horizons: [1, 5, 20]
+  prompts:
+    - "Tap ₹1,880 and 5 years. That is the provident fund part of the month above, your 12% and the employer's 3.67%, grown at the rate the board recommended for 2025-26."
+    - "Tap ₹3,760, what the same shares put in at twice that basic pay. Every line doubles, because the rate has not changed."
+
+practice:
+  kind: split
+  context: "A friend's first payslip at another company: basic pay of ₹15,000, with the same three lines worked out on it."
+  income: 15000
+  shares:
+    - { label: "Your provident fund share", percent: 12 }
+    - { label: "The pension scheme", percent: 8.33 }
+    - { label: "The employer's provident fund share", percent: 3.67 }
+  target: "The employer's provident fund share"
+
+quiz:
+  - q: "HR asks on your last day whether to withdraw or transfer, and wants an answer today. You have served eleven months. What do you do?"
+    options:
+      - text: "Ask for the withdrawal, since the money is yours either way"
+        why: "It is yours either way. Under five years of service the amount is counted in your income for the year, and 10% is deducted where the payment is ₹50,000 or more."
+      - text: "Work out what each one does to the tax and to your service, then answer"
+        why: "Those are the two things that differ. The eleven months keep counting only if the balance is transferred."
+      - text: "Pick the transfer, because a transfer is always the safe answer"
+        why: "It may well fit, but that skips the question. What decides it is the effect on your income this year and on the five-year count."
+    answer: 1
+  - q: "The new employer's form asks for your UAN. A colleague says a new company means a new number. What do you do?"
+    options:
+      - text: "Give the UAN you already have"
+        why: "The number is yours, not the employer's. The new account sits under it, which is what makes a transfer claim possible."
+      - text: "Ask for a fresh UAN for the new job"
+        why: "A second number splits your record in two. Both accounts then have to be brought under one before either is settled."
+      - text: "Leave the field blank and let payroll work it out"
+        why: "Payroll cannot look up a number you have not given. A blank field is how a second UAN gets created."
+    answer: 0
+  - q: "You left at eleven months and ask for a withdrawal of ₹62,000. What should you expect on that payment?"
+    options:
+      - text: "All ₹62,000, because your own contributions are inside it"
+        why: "Your contributions are inside it, but the test is length of service, not whose money it was. Under five years the balance is counted in your income."
+      - text: "10% deducted at source, and the amount counted in this year's income"
+        why: "Section 392 sets that deduction at 10% once the payment is ₹50,000 or more, and the balance is not excluded below five years of service."
+      - text: "Nothing deducted, because tax on a provident fund arrives at retirement"
+        why: "Tax arrives when a balance is paid out early. After five years or more of continuous service, the same payment is left out of income."
+    answer: 1
+  - q: "Four years into the second job you need the money. The eleven months came across when you joined. How much continuous service do you have?"
+    options:
+      - text: "Four years, since the count restarted with the new employer"
+        why: "It restarts only where the old balance did not move. A transferred balance brings its service with it."
+      - text: "Four years and eleven months, because the transferred service is added"
+        why: "Paragraph 8 adds the period served with a previous employer when that balance came from their recognised fund. One more month reaches five years."
+      - text: "Eleven months, since that is where the balance was built"
+        why: "The two periods add up rather than replace one another. The service at the later job counts as well."
+    answer: 1
+
+transfer:
+  - "On your last day at a job, when HR asks what should happen to the provident fund."
+  - "On the first day of the next one, when a form asks for your UAN."
+  - "When a year's interest is credited, and the passbook shows which accounts it landed in."
+  - "When two jobs together are close to five years and a withdrawal is on the table."
+
+glossary: [epf, uan, transfer-claim, basic-pay, employees-pension-scheme, continuous-service, tds]
+tool: savings
+
+sources:
+  - title: "EPFO simplifies the transfer claim process through a revamped Form 13; approval of the employer removed in most cases, and the balance credited at the destination office (25 April 2025)"
+    url: "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2124244"
+    publisher: "Ministry of Labour and Employment, via Press Information Bureau"
+  - title: "Employees' Pension Scheme, 1995: the pension fund is built from the employer's contribution at 8.33 per cent of wages, with 1.16 per cent from the Central Government (24 July 2025)"
+    url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2147929"
+    publisher: "Ministry of Labour and Employment, via Press Information Bureau"
+  - title: "239th meeting of the Central Board of Trustees: 8.25% recommended on EPF accumulations for 2025-26, to be notified by the government, and new EPF, EPS and EDLI schemes approved (2 March 2026)"
+    url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2234502"
+    publisher: "Ministry of Labour and Employment, via Press Information Bureau"
+  - title: "Income-tax Act, 2025, Schedule XI, paragraph 8: an accumulated balance is excluded from total income after five years of continuous service, or where it is transferred to the new employer's recognised fund; transferred service is added (accessed 21 September 2026)"
+    url: "https://www.incometaxindia.gov.in/w/schedule-xi-2"
+    publisher: "Income Tax Department, Government of India"
+  - title: "Income-tax Act, 2025, section 392(7): 10% deducted at source on an accumulated balance of ₹50,000 or more where paragraph 8 does not apply (last updated 16 September 2026)"
+    url: "https://www.incometaxindia.gov.in/w/section-392-6"
+    publisher: "Income Tax Department, Government of India"
+  - title: "Taxability of retirement benefits: withdrawal from a recognised provident fund after five years is exempt; before five years it is taxed as though the fund had never been recognised (last updated 16 September 2026)"
+    url: "https://www.incometaxindia.gov.in/w/taxability-of-retirement-benefits"
+    publisher: "Income Tax Department, Government of India"
+  - title: "The Employees' Provident Fund Scheme: 12% of wages from the employee and 12% from the employer, with interest credited each year (24 July 2023)"
+    url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1942083"
+    publisher: "Ministry of Labour and Employment, via Press Information Bureau"
+---
+
+## One number, one record
+
+<Term id="epf">EPF</Term> follows the person, not the employer. The number that identifies you, your <Term id="uan">UAN</Term>, is issued once and stays yours at every job after it.
+
+Changing jobs does not close the old account. It stops receiving contributions, and the balance sits there until you move it or claim it.
+
+**Moving it is a <Term id="transfer-claim">transfer claim</Term>, which credits the old balance into the account at the new job.** EPFO said in April 2025 that it had taken the employer's approval out of most of these claims. The balance is credited at the receiving office once the old office approves.
+
+## What went in each month
+
+Two shares go in every month, and both are worked out on your <Term id="basic-pay">basic pay</Term> rather than on the whole salary. You put in 12%. Your employer puts in 12% as well.
+
+The employer's half is then split. Part of it funds the <Term id="employees-pension-scheme">Employees' Pension Scheme</Term>, which pays a pension later instead of a balance you can draw on. **In a written reply in July 2025, the labour ministry put that pension share at 8.33% of wages.**
+
+The rest, 3.67%, lands in the provident fund beside your own 12%.
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="epf-title epf-desc">
+  <title id="epf-title">Where each month's 24% of basic pay goes</title>
+  <desc id="epf-desc">A single bar in two parts. 15.67% of basic pay goes into the provident fund, from your 12% and the employer's 3.67%. 8.33% of wages funds the pension scheme.</desc>
+  <rect class="chart-a" x="0" y="26" width="206" height="36" rx="6" />
+  <rect class="chart-b" x="210" y="26" width="110" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Provident fund 15.67%</text>
+  <text class="chart-label" x="320" y="80" text-anchor="end">Pension scheme 8.33%</text>
+  <text class="chart-note" x="0" y="100">Of basic pay each month: your 12%, and the employer's 12%</text>
+</svg>
+
+## Interest is declared a year at a time
+
+The rate is not fixed in advance. EPFO's Central Board of Trustees recommends one each year, and the government notifies it before it is credited to accounts.
+
+For 2025-26 the board recommended 8.25% at its meeting on 2 March 2026. **A rate set one year at a time is a record of that year, not a promise about the next.**
+
+The calculator below grows a monthly amount at that rate, to show the shape of it. Your own passbook shows what was credited to you.
+
+## A withdrawal before five years
+
+Schedule XI of the Income-tax Act, 2025 leaves the balance out of your income once you have five years or more of <Term id="continuous-service">continuous service</Term>. Ill health, the closure of the employer's business and other causes beyond your control are treated the same way.
+
+Below five years, without one of those reasons, the balance is counted in your income for the year instead. **Section 392 then has 10% deducted at source where the payment is ₹50,000 or more.** That deduction is <Term id="tds">TDS</Term>, and your return settles the rest.
+
+## A transfer, and the clock
+
+A transfer does two things at once. The amount moved into the new employer's recognised fund stays out of your income, and the months already served keep counting.
+
+The second part is paragraph 8 of the same schedule: service with a previous employer is added in, once the balance has come across from their fund.
+
+**So the two answers HR offers are different transactions, not two routes to the same place.** Which one suits your year is yours to weigh, and the tax rule above is what separates them.
+
+## Read your own record
+
+The member portal shows the passbook under your UAN: what went in, what interest was credited, and which accounts are still sitting apart.
+
+EPFO also said in April 2025 that a transfer certificate can be downloaded there. It carries the balance with interest, the service history used for the pension, and the employment details behind both.
+
+**When two jobs sit under one UAN and the balance has moved, one page holds the record.** Where a second UAN exists, that is the thing to raise with EPFO first.

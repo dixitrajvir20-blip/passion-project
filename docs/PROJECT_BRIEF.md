@@ -54,7 +54,7 @@ Business Lab is a free, clean, fast website where anyone aged 15-21, anywhere in
 - Hindi (hi) translation of all v1 content and UI (human-reviewed)
 - 24+ articles; contributor program (student writers)
 - One-Page Business Plan Builder (local only, print or save as PDF)
-- "Run a Chai Stall" scenario simulator
+- "Run a small service business" scenario simulator
 - Offline reading (PWA: cache read articles)
 - Teacher/club kit pages (printable lesson plans for Business Lab-style clubs)
 
@@ -129,7 +129,7 @@ All math lives in `src/lib/*.ts` as pure functions with unit tests. All money us
 
 **v2: One-Page Business Plan Builder.** Guided fields (problem, customer, solution, price, costs, channels, first 3 steps), saved locally, print stylesheet for "Save as PDF."
 
-**v2: "Run a Chai Stall" simulator.** 4 weekly rounds. Choose price, cups to prepare, and one promotion. See sales, waste, and profit. Teaches demand, cost, and trade-offs. Deterministic seeded randomness so outcomes can be tested.
+**v2: "Run a small service business" simulator.** 4 monthly rounds. Choose the price, the capacity to staff, and one promotion. See bookings, idle capacity, and profit. Teaches demand, cost, and trade-offs. Deterministic seeded randomness so outcomes can be tested.
 
 ## 8. Tech architecture
 **Where the project is now (Phase 1):** an Astro static build with Preact islands, deployed to
@@ -228,7 +228,7 @@ public/         favicon, social images
 - Done when: all unit tests pass (including edge cases like rate 0 and price ≤ variable cost); axe reports zero serious/critical issues on every page type; Lighthouse mobile meets the budget; every article has a quiz, sources, and a "Try it" tool link; site works with JS disabled for reading articles
 
 **Phase 2, Months 2-4**
-- Hindi, PWA offline reading, business plan builder, chai stall simulator, contributor program, teacher kit
+- Hindi, PWA offline reading, business plan builder, business simulator, contributor program, teacher kit
 - Done when: `/hi/` pages are complete and human-reviewed; articles readable offline after one visit; simulator outcomes pass deterministic tests
 
 ## 15. Open decisions (Rajvir)

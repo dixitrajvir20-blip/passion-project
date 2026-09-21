@@ -1,0 +1,5 @@
+{
+  "term": "Interchange fee",
+  "define": "The part of a card payment charge that a seller's payment service passes on to the bank that issued the customer's card.",
+  "example": "On a €55 payment by a consumer debit card, the EU cap on interchange is 0.2%, which is €0.11."
+}

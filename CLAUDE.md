@@ -19,27 +19,29 @@ of his school club, Business Lab).
 - @docs/BOSS_PLAYBOOK.md — how this gets built, sprint by sprint, with the gates
 - docs/KICKOFF_PROMPTS.md is Rajvir's paste-in prompts; the *_Build_Brief.pdf files are these docs as PDFs
 
-## Current state (19 Sept 2026) — Phases 1–4 done; content rebuild and design v4 in progress
+## Current state (20 Sept 2026) — Phases 1–4 done; design v4 and the research curriculum in place
 - **Astro 7 static build** with **Preact islands**, deployed to **GitHub Pages** under
   `/passion-project` (`astro.config.mjs` sets `base`; every internal link goes through it).
 - Three editions — **India `/in`, Europe `/eu`, United States `/us`** — rendered from one
-  `src/lib/regions.ts` data file, switched by a tab on every page. The front page asks the reader
-  to choose rather than guessing from their IP.
+  `src/lib/regions.ts` data file, switched by a dropdown with flags in the header. The front
+  page asks the reader to choose rather than guessing from their IP.
 - **Name and brand.** Renamed from LaunchPad to **Business Lab** (Rajvir's school club) on 18 Sept.
   Design v4 (`docs/BRAND_GUIDE.md` v3, `docs/DESIGN.md` v4): a dark-blue field with white sheets and
   gold, rounded panels, the ledger as the signature, an edition dropdown with flags, no shadows or
   fade-ins. Display Bricolage Grotesque + body Atkinson Hyperlegible Next, self-hosted; Kalam is
   used only at build time to draw a few hand-lettered notes. The logo is an interim drawn badge
   until the licensed file arrives (see BRAND_GUIDE §4).
-- **Tone.** Rajvir wants lessons that are serious, professional and research-based. No street-stall
-  framing (the chai-stall exemplar is being replaced). Section labels are "Key points", "The
-  calculation", "Check your understanding".
+- **Tone.** Rajvir wants lessons that are serious, professional and research-based. No
+  street-stall or toy-business framing; every lesson answers a documented struggle in its region.
+  Section labels are "Key points", "The calculation", "Check your understanding".
 - **Lesson engine** (`src/content.config.ts`, `src/layouts/LessonLayout.astro`, `src/components/lesson/`):
   HTML-first. Polls, practice steps and quick checks are forms + CSS reveals that work with JS off;
   worked examples come from `src/lib/lesson-math.ts` (tested maths, never prose); glossary terms are
   jump links upgraded to popovers; spaced review per question in `lp:progress` with `/<edition>/review`.
-  37 lessons exist across the three editions (`src/content/lessons/`), written 18–19 Sept; a
-  research-based curriculum is replacing the ones that read as unserious.
+  **36 lessons, 12 per edition**, rewritten on 20 Sept from the research curriculum in
+  `docs/CONTENT_GUIDE.md` and `docs/research/regional-core.md`. Tracks differ by edition: India
+  money-basics / protect-your-money / start-something; Europe money-basics / credit-and-fraud /
+  start-something; the US money-basics / start-something / how-business-works.
   Every lesson carries a CC BY-NC-SA 4.0 notice, `rel="license"` and LearningResource JSON-LD.
 - **Five calculators** in every edition (break-even, budget, savings growth, side-hustle, loan) on one
   kit (`src/islands/tool-kit.tsx`), plus India's **"UPI: spot the fake"** drill, from

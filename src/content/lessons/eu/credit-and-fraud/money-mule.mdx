@@ -1,0 +1,271 @@
+---
+title: "The job offer that is really money laundering"
+summary: "A 'payment agent' role moves stolen money through your account. How to spot one, and what it makes you liable for."
+region: eu
+track: credit-and-fraud
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-21
+
+situation: "A message offers €200 a week to receive payments into your account and forward them, minus your commission. It calls itself a finance internship: remote, no interview, start this week."
+
+prediction:
+  q: "The work is only receiving transfers and passing them on. If that money turns out to be stolen, where does it leave you?"
+  options:
+    - text: "Clear, because the money was in the account for a day"
+      why: "A short stay does not put it outside the offence. The EU directive covers acquiring, possessing or using property known to come from crime, as well as transferring it."
+    - text: "Facing a money laundering charge, although you stole nothing"
+      why: "Transferring property you know came from crime is itself the offence in EU law. Member states must set a maximum term of at least four years, and the account is in your name."
+    - text: "Liable only for the commission you kept"
+      why: "The offence is written around the property that was moved, not the share kept. The commission is one more thing to explain, not a limit."
+  answer: 1
+
+takeaways:
+  - "A money mule receives money that is not theirs and forwards it. What the scheme needs is an account in someone's real name."
+  - "In its ninth coordinated action against money muling, Europol and its partners identified 10,759 mules and 474 recruiters, and arrested 1,013 people."
+  - "A real employer pays you from its own name, for your own work. If a job asks you to receive other people's money, moving money is the job."
+
+explorable:
+  kind: drill
+  intro: "Five offers of work, the kind that arrive by email or on a job board. Two are ordinary jobs, so refusing everything is not the answer. Decide what you would do, then look."
+  scenarios:
+    - screen:
+        kind: message
+        from: "Harbourline Logistics (careers)"
+        lines:
+          - "Part-time warehouse assistant, 12 hours a week."
+          - "€12.50 an hour, paid monthly to your account."
+          - "Interview on site Tuesday. Bring ID for the contract."
+        action: "Reply to book the interview"
+      check:
+        q: "You applied for this on a job board last week, and the warehouse is twenty minutes from home. What do you do?"
+        options:
+          - text: "Refuse. Any offer that mentions your bank account is a risk"
+            why: "Every employer needs an account to pay wages into. The warning sign is an offer that wants other people's money to pass through it, and this one does not."
+          - text: "Book the interview, and read the contract before you sign"
+            why: "Money moves one way here: from the employer to you, for hours you worked. An interview, a site and a written contract are what a real job looks like."
+          - text: "Ask to be paid in cash, to keep your account out of it"
+            why: "Cash leaves no payslip and no record of the payment. A transfer from the employer's own account leaves both."
+        answer: 1
+    - screen:
+        kind: message
+        from: "Orvenna Finance Group (recruitment)"
+        amount: 200
+        lines:
+          - "Finance internship, fully remote, no interview."
+          - "Clients transfer to your account. You forward within 24 hours."
+          - "You keep 5%, about €200 a week."
+        action: "Send your IBAN to start"
+      check:
+        q: "You have been applying for internships for a month with no reply. This one answers within an hour. What do you do?"
+        options:
+          - text: "Take it. Passing money along is not the same as stealing it"
+            why: "Money forwarded this way has usually just been taken from someone. In EU law, transferring property you know came from crime is itself the offence."
+          - text: "Ask for a written contract first, then decide"
+            why: "A contract can be typed in a minute and changes nothing about where the money comes from. The warning sign is already here: pay for the use of your account."
+          - text: "Stop, keep the email, and report it to the police in your country"
+            why: "Pay for receiving and forwarding money is the recruitment pattern the campaign describes. Reporting it costs nothing and leaves a record that you refused."
+        answer: 2
+    - screen:
+        kind: message
+        from: "Tutorfeld Learning (payments)"
+        amount: 96
+        lines:
+          - "Six tutoring sessions completed in September."
+          - "€96 paid to you on 5 October, from our company account."
+          - "Your payout statement is on your tutor page."
+      check:
+        q: "You teach maths through this platform and have been paid this way since June. What do you do?"
+        options:
+          - text: "Nothing is wrong here: the platform pays you for your own work"
+            why: "The money comes from the platform's own account, for sessions you taught, and it stops with you. Nothing arrives to be sent on."
+          - text: "Worry, because the money comes from a company you never met"
+            why: "Paying from its own account is what a platform or employer is supposed to do. The warning sign is money that arrives in order to be passed on."
+          - text: "Ask them to route the payment through a classmate's account"
+            why: "That would put someone else's account between the platform and you, for no reason. An extra account in the middle is the shape of muling, not a fix."
+        answer: 0
+    - screen:
+        kind: chat
+        from: "Dario (friend of a friend)"
+        amount: 200
+        lines:
+          - "My account is frozen for a week, nothing serious."
+          - "Let me use yours for a few transfers and keep €200."
+          - "You do nothing. Just hand over the card and the PIN."
+        action: "Share card and PIN"
+      check:
+        q: "He is a friend of a friend, he wants it for a week, and he frames it as a favour. What do you do?"
+        options:
+          - text: "Lend it for the week. It is your account, and it is a favour"
+            why: "An account cannot be lent. Every transfer through it is still made in your name, and the €200 is the price of that name."
+          - text: "Refuse, and hand over neither the card nor the PIN"
+            why: "Whoever holds the card controls the account you answer for. Handing them over means explaining transfers you never saw, to your bank and then to the police."
+          - text: "Agree, but only for money from people he knows"
+            why: "You could not check that, and it would not help. A frozen account is a reason to stay further away, not a reason to lend your own."
+        answer: 1
+    - screen:
+        kind: message
+        from: "Vellhaus Retail (onboarding)"
+        lines:
+          - "Welcome to your unpaid trial week."
+          - "Confirm your card number and CVV to set up payroll."
+          - "Form at vellhaus-onboarding.example/verify"
+        action: "Open the form"
+      check:
+        q: "You did apply here and had a short call yesterday, so the message is expected. What do you do?"
+        options:
+          - text: "Fill it in. Payroll needs your details before the first payment"
+            why: "Payroll needs the account number wages go into, not a card number and security code. Those are used to take money from a card."
+          - text: "Fill it in with a card that has almost nothing on it"
+            why: "Card details are used to take money, and a low balance does not stop the attempt. The security code is the warning sign."
+          - text: "Stop, and check with the company on a number you find yourself"
+            why: "An onboarding form has no use for a card security code. Checking through a route you found yourself settles whether the company sent it at all."
+        answer: 2
+  reflection: "Pick the offer you were least sure about. Which line in it would you ask about first, and who would you ask?"
+
+quiz:
+  - q: "Three weeks ago you started a remote payments role. €1,800 has arrived and been forwarded, and your commission is in the account. Today a transfer was reversed. What do you do first?"
+    options:
+      - text: "Finish the month as agreed, then stop quietly"
+        why: "A reversal means the payment is being disputed by someone. Every further transfer adds to what has to be explained."
+      - text: "Stop every transfer, tell your bank today, then report it"
+        why: "That is the order the European Banking Federation's campaign gives: stop transferring, tell your bank and the service you used, then tell law enforcement."
+      - text: "Move the commission out and close the account"
+        why: "The EU directive treats concealing or disguising the movement of criminal property as an offence in its own right. The transfers stay traceable anyway."
+    answer: 1
+  - q: "A classmate says the worst that happens to a money mule is that the bank shuts the account. What do you tell him?"
+    options:
+      - text: "He is right, and closing the account ends the matter"
+        why: "Closing an account is the bank's step, not the law's. The European Banking Federation's campaign also lists prison, a fine and community service among the outcomes."
+      - text: "The closure is one part: laundering is a criminal offence across the EU"
+        why: "EU law requires a maximum term of at least four years for laundering. The campaign also warns a mule may never again open a bank account or get a mortgage."
+      - text: "Only the recruiter is charged, because he set the scheme up"
+        why: "Recruiters are pursued as well: the ninth coordinated action identified 474 of them. The account the money passed through still carries your name."
+    answer: 1
+  - q: "Two offers arrive the same week. One pays €11 an hour from the company's own account. The other pays 5% of everything you forward. Which question separates them?"
+    options:
+      - text: "Which one pays more over a month"
+        why: "A percentage can look larger than an hourly rate. What it pays for is the use of your account, which is the part that carries the risk."
+      - text: "Whose money passes through your account"
+        why: "In a real job only your own wages arrive, and they stop with you. If other people's money lands in your account to be sent on, moving money is the job."
+      - text: "Which one replies to email faster"
+        why: "Europol describes recruiters advertising on social media and in messaging apps. How fast someone answers says nothing about whether the work is legal."
+    answer: 1
+  - q: "Someone you met online asks to send €900 to your account for you to withdraw, because his own bank is having problems. He offers you €100 for the trouble. What do you do?"
+    options:
+      - text: "Help once. It is a single transfer, and you keep €100"
+        why: "One transfer is enough to put your account in the trail. Payment for the use of an account is the recruitment pattern, whoever is asking."
+      - text: "Refuse, and do not give out your account details"
+        why: "A bank with problems does not need a stranger's account. The €100 is pay for moving money you cannot explain, which is what a mule is paid for."
+      - text: "Agree, but ask him to send a photo of his ID first"
+        why: "An ID photo can be copied, and it would not change where the money came from. The money needing your account at all is the warning sign."
+    answer: 1
+
+transfer:
+  - "Any time a job involves receiving money and sending it on, whatever the title: payment agent, local representative, finance assistant."
+  - "When an advert offers high pay for little work, describes no duties, and keeps everything online."
+  - "When a friend, a partner or someone you met online asks to use your account for one transfer."
+  - "When you open an account. Your name on it means every transfer through it is yours to explain."
+
+glossary: [money-mule, money-laundering, phishing, iban, card-security-code]
+
+reportTo:
+  url: "https://www.europol.europa.eu/report-a-crime/report-cybercrime-online"
+  label: "Stop the transfers, tell your bank the same day, then report it to the police in your country. Europol links to each country's reporting route."
+
+sources:
+  - title: "Money muling: more than 90% of money mule transactions identified through the European Money Mule Actions are linked to cybercrime, and the crimes the money comes from (accessed 21 September 2026)"
+    url: "https://www.europol.europa.eu/operations-services-and-innovation/public-awareness-and-prevention-guides/money-muling"
+    publisher: "Europol"
+  - title: "Don't be a mule: who is targeted (18-34 year olds more than 55+, students, newcomers, the unemployed), the signs of a mule advert, and what a mule can face (accessed 21 September 2026)"
+    url: "https://www.ebf.eu/dontbeamule/"
+    publisher: "European Banking Federation"
+  - title: "European Money Mule Action 9: 10,759 money mules and 474 recruiters identified, 1,013 arrests, 2,822 banks taking part (actions in June, October and November 2023)"
+    url: "https://www.ebf.eu/ebf-media-centre/paper-trail-ends-in-jail-time-for-1-013-money-mules-2-822-banks-and-financial-institutions-join-forces-with-law-enforcement-agencies-in-global-effort-against-money-laundering/"
+    publisher: "European Banking Federation, joint release with Europol and Eurojust"
+  - title: "European Money Mule Action 6: criminals turn to social media to recruit, through fake job offers, pop-up ads and messaging apps; 4,031 mules and 227 recruiters identified (2 December 2020)"
+    url: "https://www.ebf.eu/ebf-media-centre/422-arrested-and-4-031-money-mules-identified-in-global-crackdown-on-money-laundering/"
+    publisher: "European Banking Federation, joint release with Europol and Eurojust"
+  - title: "Directive (EU) 2018/1673 on combating money laundering by criminal law: Article 3 (converting, transferring, acquiring, possessing or using criminal property, and the optional suspected-or-ought-to-have-known extension) and Article 5 (a maximum term of imprisonment of at least four years) (23 October 2018)"
+    url: "https://eur-lex.europa.eu/eli/dir/2018/1673/oj"
+    publisher: "Official Journal of the European Union, via EUR-Lex"
+---
+
+## What the offer is paying for
+
+The advert calls it a finance internship. The work is receiving transfers and sending them on, and the pay is a share of what passes through.
+
+That share is not pay for work. It is the price of your bank account standing between a victim and the person who took the money. Someone who lets an account be used that way is a <Term id="money-mule">money mule</Term>.
+
+**The money arriving has usually just been taken from someone.** Europol reports that more than 90% of the mule transactions found through its European Money Mule Actions are linked to cybercrime. Its examples include <Term id="phishing">phishing</Term>, online shopping fraud, fake emails from a company's supplier, and romance scams.
+
+<svg class="chart" viewBox="0 0 320 132" role="img" aria-labelledby="mule-title mule-desc">
+  <title id="mule-title">The three steps a mule scheme needs</title>
+  <desc id="mule-desc">Step one: money is taken from a victim. Step two: it lands in a bank account held in your name. Step three: it is sent on to another account. Only the middle step has a name and an address attached to it.</desc>
+  <rect class="chart-a" x="0" y="8" width="16" height="16" rx="3" />
+  <text class="chart-label" x="26" y="21">Taken from a victim</text>
+  <rect class="chart-a" x="6" y="28" width="4" height="18" />
+  <rect class="chart-b" x="0" y="50" width="16" height="16" rx="3" />
+  <text class="chart-label" x="26" y="63">Into your account</text>
+  <text class="chart-note" x="26" y="79">The step with your name on it</text>
+  <rect class="chart-a" x="6" y="70" width="4" height="18" />
+  <rect class="chart-a" x="0" y="92" width="16" height="16" rx="3" />
+  <text class="chart-label" x="26" y="105">Sent on to another account</text>
+  <text class="chart-note" x="0" y="126">Only the middle step has a name and an address</text>
+</svg>
+
+## Who gets asked
+
+Recruiters aim at people who are looking for work. The European Banking Federation's campaign says men are targeted more often than women, and people aged 18 to 34 more often than people over 55. Students, newcomers to a country and people who are unemployed are named as more at risk.
+
+**The adverts arrive where those people already are.** After its sixth coordinated action, in 2020, Europol described criminals turning to social media to recruit. The methods named were fake job offers, pop-up ads and messaging apps. That action identified 4,031 mules and 227 recruiters.
+
+## The shape of the advert
+
+The federation's campaign lists the warning signs to look for in a job advert.
+
+| What the advert says | What it means |
+| --- | --- |
+| Local or national representative, or agent | A title for moving money, with no trade behind it |
+| The duties are never described | There is no work to describe, only transfers |
+| No education or experience is asked for | Nobody is being chosen for a skill |
+| Everything happens online | Nobody has to meet you, and nobody can be traced |
+| High pay for little effort | The pay is for the account, not for the hours |
+| The job uses your bank account to move money | This is the line the whole scheme needs |
+
+Any one of these can turn up in a clumsy but real advert. **The last row is different: a real employer has no reason to move other people's money through your account.**
+
+The campaign also warns about websites that copy a real company's, at a very similar web address. It warns about awkward writing sent from a free web email address.
+
+## What a real employer does
+
+A real employer pays you from its own name, for hours or work you did. The money stops with you. All it needs is an <Term id="iban">IBAN</Term> to pay your wages into.
+
+Check the company before you accept. Look for duties described in writing, and a website and email address at the company's own domain. An interview and a written contract are normal to ask for.
+
+**Wages are paid into an account, using the account number.** A card number and its <Term id="card-security-code">security code</Term> are used to take money from a card, so payroll has no reason to ask for them.
+
+## What the law calls it
+
+Moving money you know came from crime is <Term id="money-laundering">money laundering</Term>. The EU directive on the offence covers converting or transferring such property. It also covers acquiring, possessing or using it, knowing at the time you received it where it came from.
+
+Member states must make that punishable by a maximum term of at least four years. They may go further, and cover a person who suspected, or ought to have known, that the money came from crime.
+
+**So saying you did not know is not the protection it sounds like.** The federation's campaign warns that these consequences can follow even when someone acted unwittingly.
+
+## What happens if you are caught
+
+The European Banking Federation's campaign says a money mule who is caught can face "a prison sentence, fine or community service". It adds the prospect of never again being able to open a bank account or get a mortgage.
+
+**In its ninth coordinated action against money muling, Europol and its partners identified 10,759 mules and 474 recruiters.** In that action 1,013 people were arrested, and 2,822 banks and financial institutions took part. The account is the step in the chain that carries a name.
+
+## If money has already moved through your account
+
+Stop the transfers now. Every further one adds to what has to be explained.
+
+Then follow the steps the federation's campaign gives: tell your bank, tell the service you used, and tell the police in your country. Keep the advert, the messages, and the account details on both sides.
+
+**Do not move the money on again to tidy it up.** The directive lists concealing or disguising the movement of criminal property as an offence in its own right.

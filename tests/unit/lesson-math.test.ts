@@ -2,11 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { growthChoices, growthSteps, loanChoices, loanSteps, marginChoices, marginSteps, splitChoices, splitSteps } from '../../src/lib/lesson-math';
 import { compoundGrowth, emi } from '../../src/lib/finance';
 
-const chai = { fixed: 2000, variable: 8, price: 15 };
+const example = { fixed: 2000, variable: 8, price: 15 };
 
 describe('marginSteps', () => {
-  it('works the chai stall through to 286 cups and says why it rounded', () => {
-    const [keep, cover] = marginSteps(chai, 'cups');
+  it('works a margin example through to 286 cups and says why it rounded', () => {
+    const [keep, cover] = marginSteps(example, 'cups');
     expect(keep.result).toEqual({ money: 7 });
     expect(cover.result).toEqual({ count: 286 });
     expect(cover.note).toContain('285.7');
@@ -32,7 +32,7 @@ describe('marginChoices', () => {
   });
 
   it('offers the slips people actually make, each with its own explanation', () => {
-    const choices = marginChoices(chai);
+    const choices = marginChoices(example);
     const values = choices.map((c) => ('count' in c.value ? c.value.count : 0));
     expect(values).toContain(286); // right
     expect(values).toContain(134); // ÷ price
@@ -42,7 +42,7 @@ describe('marginChoices', () => {
   });
 
   it('lists options in ascending order so position gives nothing away', () => {
-    const values = marginChoices(chai).map((c) => ('count' in c.value ? c.value.count : 0));
+    const values = marginChoices(example).map((c) => ('count' in c.value ? c.value.count : 0));
     expect(values).toEqual([...values].sort((a, b) => a - b));
   });
 

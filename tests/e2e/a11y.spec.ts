@@ -32,7 +32,7 @@ const PAGES = [
   'accessibility',
   'disclaimer',
   'account',
-  ...REGIONS.flatMap((r) => [r, `${r}/learn`, `${r}/learn/money-basics`, `${r}/learn/start-something`, `${r}/learn/how-business-works`, `${r}/review`, `${r}/tools`]),
+  ...REGIONS.flatMap((r) => [r, `${r}/learn`, ...folders(join(LESSON_ROOT, r)).map((track) => `${r}/learn/${track}`), `${r}/review`, `${r}/tools`]),
   ...['break-even', 'budget', 'savings', 'side-hustle', 'loan'].map((tool) => `in/tools/${tool}`),
   'eu/tools/break-even',
   'us/tools/loan',

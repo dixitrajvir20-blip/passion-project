@@ -112,7 +112,7 @@ export const lessonSchema = z
       title: z.string().refine((t) => t.trim().split(/\s+/).length <= 12, 'Keep titles to about 6-10 words'),
       summary: z.string().max(120),
       region: z.enum(['in', 'eu', 'us']),
-      track: z.enum(['money-basics', 'start-something', 'how-business-works']),
+      track: z.enum(['money-basics', 'start-something', 'how-business-works', 'credit-and-fraud', 'protect-your-money']),
       order: z.number().int().positive(),
       lang: z.string().default('en'),
       translationOf: z.string().nullable().default(null),
