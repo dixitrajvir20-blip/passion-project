@@ -12,6 +12,11 @@ export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: true,
   reporter: process.env.CI ? 'github' : 'list',
+  // Locally the project sits in an iCloud-synced folder, and the sync can hide a freshly built
+  // page for a moment right after `npm run build` (a random lesson answers with the 404 page,
+  // then exists). One retry absorbs that; the report still names it as flaky. CI has no iCloud
+  // and stays strict.
+  retries: process.env.CI ? 0 : 1,
   use: { baseURL: BASE, trace: 'on-first-retry', launchOptions },
   projects: [
     { name: 'mobile', use: { ...devices['Pixel 5'], launchOptions } },

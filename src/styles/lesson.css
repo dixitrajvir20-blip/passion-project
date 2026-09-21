@@ -247,3 +247,35 @@ a.lesson-row:hover .lesson-num { color: var(--accent-text); }
   .poll-status, .return-line, .lesson-next, .marked, .lesson-marks, .term-pop, .explorer-actions { display: none !important; }
   .reveal[open] > .reveal-body { display: none; }
 }
+
+/* Track cards and the track header, after Claude Academy's course cards and course page
+   (their layout, our colours): a drawn thumbnail, a small type label, the title, one line of
+   description, the lesson titles, a metadata line from the real lessons, one action. */
+.course-grid { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
+/* Three across only where three cards get a readable measure; 720–979px (and a laptop at 200%
+   zoom) would squeeze each to ~220px, so it stays one column until then. */
+@media (min-width: 980px) { .course-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.course-card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); }
+.course-thumb { display: grid; place-items: center; aspect-ratio: 16 / 9; border-radius: var(--radius-m); border: 1.5px solid var(--line); background: var(--field-pale); margin: 0 0 var(--space-2); }
+.course-thumb .doodle { position: static; width: 36%; height: auto; transform: none; }
+.course-kind { margin: 0; }
+.course-title { margin: 0; font-size: var(--text-h3); }
+.course-title a { color: inherit; text-decoration: none; }
+.course-title a:hover { color: var(--accent-text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.course-desc { margin: 0; color: var(--ink-2); }
+.course-card .lesson-list { margin: var(--space-2) 0; flex: 1; }
+.course-meta { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+.course-go { margin: var(--space-2) 0 0; }
+/* The panel keeps a hairline so it still reads as a panel where the pale tint is close to the sheet (dark mode). */
+.course-head { display: grid; gap: var(--space-5); padding: var(--space-6) var(--space-5); border-radius: var(--radius-l); border: 1.5px solid var(--line); background: var(--field-pale); }
+.course-head h1 { margin: var(--space-2) 0 var(--space-3); }
+.course-head .lede { margin-bottom: var(--space-5); }
+.course-head .btn-row { margin-bottom: var(--space-4); }
+.course-head .review-line[data-review-line] { margin-bottom: 0; }
+/* A receipt-white thumbnail: white in both modes, so its ink is pinned to navy like every other --paper surface. */
+.course-head .course-thumb { display: none; aspect-ratio: 4 / 3; background: var(--paper); --ink: var(--brand-navy); margin: 0; }
+@media (min-width: 900px) {
+  .course-head { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: center; padding: var(--space-7); }
+  .course-head .course-thumb { display: grid; }
+}
+.course-list-title { margin: var(--space-7) 0 var(--space-4); }

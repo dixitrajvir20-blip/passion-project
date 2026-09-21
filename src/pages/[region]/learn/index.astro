@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import LessonList from '../../../components/lesson/LessonList.astro';
+import TrackCard from '../../../components/lesson/TrackCard.astro';
 import ProgressMarks from '../../../components/lesson/ProgressMarks.astro';
 import { REGIONS, getRegion } from '../../../lib/regions';
 import { inTrack, lessonsFor } from '../../../lib/lessons';
@@ -15,6 +15,7 @@ const region = getRegion(code!);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
 const lessons = await lessonsFor(region.code);
+const doodles = ['coin', 'tag', 'calculator'] as const;
 ---
 
 <BaseLayout
@@ -36,14 +37,11 @@ const lessons = await lessonsFor(region.code);
         <ProgressMarks reviewHref={`${prefix}/review`} />
       </div>
 
-      {region.tracks.map((track, index) => (
-        <section class="track column" aria-labelledby={`track-${track.slug}`}>
-          <p class="track-index numbers">Track {index + 1}</p>
-          <h2 id={`track-${track.slug}`}><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></h2>
-          <p>{track.summary}</p>
-          <LessonList lessons={inTrack(lessons, track.slug)} planned={track.planned} />
-        </section>
-      ))}
+      <div class="course-grid">
+        {region.tracks.map((track, index) => (
+          <TrackCard track={track} index={index} lessons={inTrack(lessons, track.slug)} prefix={prefix} doodle={doodles[index % doodles.length]} />
+        ))}
+      </div>
 
       {lessons.length === 0 && (
         <div class="column">
@@ -60,11 +58,5 @@ const lessons = await lessonsFor(region.code);
 
 <style>
   .lede { margin-bottom: var(--space-6); }
-  .track { margin-top: var(--space-8); }
-  .track-index { font-size: var(--text-sm); color: var(--muted); margin-bottom: var(--space-2); }
-  .track h2 { margin-top: 0; }
-  .track h2 a { color: inherit; text-decoration: none; }
-  .track h2 a:hover { color: var(--accent-text); text-decoration: underline; }
-  .track > p { margin-bottom: var(--space-5); }
   .note { margin-top: var(--space-8); }
 </style>
