@@ -1,0 +1,5 @@
+{
+  "term": "Unauthorised payment",
+  "define": "A payment made from your account that you never approved, for example with stolen card details. Under EU rules your bank refunds it, and at most €50 of the loss can fall on you, unless you acted fraudulently or with gross negligence.",
+  "example": "A €90 card payment at a shop you never used is unauthorised: you report it, and the bank refunds it."
+}

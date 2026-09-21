@@ -1,4 +1,4 @@
-# LaunchPad
+# Business Lab
 
 Free, global learning hub teaching money and business to ages 15–21, especially those without an
 adviser or family guidance (for example, students in India with internet but no advisor). Lessons +
@@ -19,45 +19,61 @@ of his school club, Business Lab).
 - @docs/BOSS_PLAYBOOK.md — how this gets built, sprint by sprint, with the gates
 - docs/KICKOFF_PROMPTS.md is Rajvir's paste-in prompts; the *_Build_Brief.pdf files are these docs as PDFs
 
-## Current state (Sept 2026) — Phases 1–3 done, Phase 4 in progress
+## Current state (20 Sept 2026) — Phases 1–4 done; design v4 and the research curriculum in place
 - **Astro 7 static build** with **Preact islands**, deployed to **GitHub Pages** under
   `/passion-project` (`astro.config.mjs` sets `base`; every internal link goes through it).
 - Three editions — **India `/in`, Europe `/eu`, United States `/us`** — rendered from one
-  `src/lib/regions.ts` data file, switched by a tab on every page. The front page asks the reader
-  to choose rather than guessing from their IP.
-- **Blue/gold/black brand** applied: tokens in `src/styles/tokens.css`, display font Bricolage
-  Grotesque + body Atkinson Hyperlegible Next (both self-hosted, no CDN). Original launch-pad logo.
+  `src/lib/regions.ts` data file, switched by a dropdown with flags in the header. The front
+  page asks the reader to choose rather than guessing from their IP.
+- **Name and brand.** Renamed from LaunchPad to **Business Lab** (Rajvir's school club) on 18 Sept.
+  Design v4 (`docs/BRAND_GUIDE.md` v3, `docs/DESIGN.md` v4): a dark-blue field with white sheets and
+  gold, rounded panels, the ledger as the signature, an edition dropdown with flags, no shadows or
+  fade-ins. Display Bricolage Grotesque + body Atkinson Hyperlegible Next, self-hosted; Kalam is
+  used only at build time to draw a few hand-lettered notes. The logo is an interim drawn badge
+  until the licensed file arrives (see BRAND_GUIDE §4).
+- **Tone.** Rajvir wants lessons that are serious, professional and research-based. No
+  street-stall or toy-business framing; every lesson answers a documented struggle in its region.
+  Section labels are "Key points", "The calculation", "Check your understanding".
 - **Lesson engine** (`src/content.config.ts`, `src/layouts/LessonLayout.astro`, `src/components/lesson/`):
   HTML-first. Polls, practice steps and quick checks are forms + CSS reveals that work with JS off;
   worked examples come from `src/lib/lesson-math.ts` (tested maths, never prose); glossary terms are
   jump links upgraded to popovers; spaced review per question in `lp:progress` with `/<edition>/review`.
-  Three India lessons live (`src/content/lessons/in/`); EU and US tracks list planned titles only.
+  **36 lessons, 12 per edition**, rewritten on 20 Sept from the research curriculum in
+  `docs/CONTENT_GUIDE.md` and `docs/research/regional-core.md`. Tracks differ by edition: India
+  money-basics / protect-your-money / start-something; Europe money-basics / credit-and-fraud /
+  start-something; the US money-basics / start-something / how-business-works.
   Every lesson carries a CC BY-NC-SA 4.0 notice, `rel="license"` and LearningResource JSON-LD.
 - **Five calculators** in every edition (break-even, budget, savings growth, side-hustle, loan) on one
   kit (`src/islands/tool-kit.tsx`), plus India's **"UPI: spot the fake"** drill, from
   `src/pages/[region]/tools/[tool].astro` and `src/lib/tools.ts`. Per-edition defaults in `regions.ts`.
+- **Dashboard** at `/dashboard` (`src/islands/Dashboard.tsx`): lessons done, checks, review queue,
+  learning time by day, next lesson, progress by track. All from this device. Learning time
+  (`lp:activity`, `src/lib/activity.ts`) is recorded only after a yes to the `stats` consent
+  category; the consent banner now appears on a first visit for that reason.
 - **Search** at `/search`: Pagefind index built at deploy, engine loaded on focus, edition filter.
   `'wasm-unsafe-eval'` is allowed on that page only.
 - **Legal pages** live: `/privacy`, `/cookies`, `/terms`, `/accessibility`, `/disclaimer`, plus a
-  **consent manager** (no banner today because nothing optional is on), `security.txt`, `SECURITY.md`.
-- **Accounts are a preview only** at `/account`, wired to a stub provider that stores nothing. Gated
-  behind `PUBLIC_ACCOUNTS_ENABLED` (default off); the build fails if it is on without `PUBLIC_AUTH_ORIGIN`.
+  **consent manager** (the banner asks about learning time on the first visit), `security.txt`, `SECURITY.md`.
+- **Accounts are a preview only** at `/account` (the login screen exists and is linked from the
+  dashboard), wired to a stub provider that stores nothing. Gated behind `PUBLIC_ACCOUNTS_ENABLED`
+  (default off); the build fails if it is on without `PUBLIC_AUTH_ORIGIN`. Going live is Phase 6.
 - **Security**: strict CSP (meta, per-inline hashes), pinned GitHub Actions, Dependabot with
   cooldown, `.npmrc ignore-scripts`, least-privilege workflows, CodeQL.
 - **Gates**: `npm run ship-check` = build + `scripts/js-budget.mjs` + contrast + unit + e2e/axe.
   Content rules are tests (`tests/unit/lessons.test.ts`): sentence/section length, banned words,
   market-signal language, undefined terms, quote length, no embedded media.
-- **Not built yet**: build-time OG images (satori + resvg installed; need a TTF/OTF of Bricolage),
-  EU and US lessons, quiz-style review of drills across editions, Hindi/i18n, root LICENSE files,
-  the real account backend. See docs/BOSS_PLAYBOOK.md.
+- **Share images** are drawn at build time (`scripts/og-images.mjs`, resvg); `scripts/brand-icons.mjs`
+  writes the favicon and app icons from `scripts/brand-mark.mjs`.
+- **Not built yet**: Hindi/i18n, root LICENSE files, the real account backend, the `lp:activity`
+  row on `/cookies` and the learning-time sentence on `/privacy` (protected pages, Rajvir's edit).
+  See docs/BOSS_PLAYBOOK.md.
 
 ## Stack
 - Astro static output, Preact islands (`client:load`/`client:visible`), plain CSS custom
   properties. No Tailwind, no UI kits. Calculator maths as pure functions with Vitest; pages get
   Playwright + `@axe-core/playwright`.
 - Fonts self-hosted and subset. Money via `Intl.NumberFormat` on the chosen locale (en-IN shows
-  1,00,000). Cross-document View Transitions + IntersectionObserver reveals, both behind
-  `prefers-reduced-motion` and `@supports`.
+  1,00,000). Cross-document View Transitions behind `prefers-reduced-motion`; no scroll reveals.
 - Analytics: cookieless only, and off until documented on `/privacy`. Never GA, Meta pixel, or any
   third-party tracker or font.
 

@@ -1,4 +1,4 @@
-# LaunchPad security & threat model
+# Business Lab security & threat model
 
 Version 1.0 · 17 September 2026. Owner: Rajvir Dixit. This is the working security document for
 a static, no-backend educational site that plans to add optional accounts later. It is written
@@ -7,7 +7,7 @@ professional review before accounts launch.
 
 ## The shape of the risk
 
-Today LaunchPad is Astro static output on GitHub Pages, no server, no cookies, localStorage
+Today Business Lab is Astro static output on GitHub Pages, no server, no cookies, localStorage
 only. That removes most of the OWASP Top 10 (2025): with no accounts or backend, only
 **A02 Security Misconfiguration, A03 Software Supply Chain Failures and A05 Injection (XSS)**
 apply materially. A01 Access Control, A04 Crypto, A07 Auth, A09 Logging and A10 Exceptional
@@ -39,7 +39,7 @@ Likelihood × Impact, and the phase each mitigation belongs to: **Now** / **Acco
 | 6 | XSS via `set:html`, `dangerouslySetInnerHTML`, or outsider-authored MDX | M | H | No `set:html` on untrusted input; content PRs are code-reviewed; strict CSP with per-inline hashes blocks injected inline script | Now | Done |
 | 7 | Clickjacking once a session exists | L→M | M | `frame-ancestors 'none'` — needs a header host; ship at accounts launch | Accounts | Planned |
 | 8 | No HSTS on the custom domain → first-visit downgrade | L | M | "Enforce HTTPS" on Pages now; HSTS header at the header-capable host | Accounts | Planned |
-| 9 | localStorage misused for anything sensitive | M | M | Nothing personal in localStorage; documented keys only (`/cookies`); treat stored values as untrusted input on read | Now | Done |
+| 9 | localStorage misused for anything sensitive | M | M | Nothing personal in localStorage; documented keys only (`/cookies`); treat stored values as untrusted input on read. `lp:activity` (seconds per calendar day, consent-gated, no timestamps) is validated by shape like the rest | Now | Done |
 | 10 | Open redirect / reverse tabnabbing | M | M | No redirect from URL/localStorage values; every external link `rel="noopener noreferrer"` | Now | Done |
 | 11 | Prototype pollution / DOM clobbering via query or storage | L | M | JSON parses are validated by shape (`isProgress`, `readConsent`); no merge of untrusted keys into objects | Now | Done |
 | 12 | Third-party embed tracks minors / is tampered | M | M | No third-party scripts or fonts; YouTube only as click-to-load `youtube-nocookie`, behind consent; SRI + `crossorigin` on any future CDN asset | Now/Later | Design in place |

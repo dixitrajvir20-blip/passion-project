@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('every shareable page points at a share image of its own that actually exists', async ({ page, request }) => {
-  for (const path of ['', 'in', 'in/learn/how-business-works/chai-stall', 'eu/tools/loan', 'glossary', 'search']) {
+  for (const path of ['', 'in', 'in/learn/start-something/profit-vs-cash', 'eu/tools/loan', 'glossary', 'search']) {
     await page.goto(path);
     const image = await page.locator('meta[property="og:image"]').getAttribute('content');
     expect(image, path).toMatch(/\/passion-project\/og\/[a-z0-9-]+\.png$/);

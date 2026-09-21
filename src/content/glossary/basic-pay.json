@@ -1,0 +1,5 @@
+{
+  "term": "Basic pay",
+  "define": "The fixed core of a salary, before allowances. EPF is worked out as a percentage of basic pay, not of the whole CTC.",
+  "example": "In an offer of ₹30,000 a month CTC, basic pay might be ₹15,000."
+}

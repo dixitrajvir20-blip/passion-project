@@ -1,0 +1,5 @@
+{
+  "term": "UPI ID",
+  "define": "The address people use to send money to your bank account by UPI, often written like yourname@bank. Sharing it lets people pay you without seeing your account number.",
+  "example": "A buyer types your UPI ID into their own UPI app and pays. Nothing on your side needs approving."
+}

@@ -9,7 +9,7 @@ export interface Stat {
   source: Source;
 }
 
-export type TrackSlug = 'money-basics' | 'start-something' | 'how-business-works';
+export type TrackSlug = 'money-basics' | 'start-something' | 'how-business-works' | 'credit-and-fraud' | 'protect-your-money';
 
 export interface Track {
   slug: TrackSlug;
@@ -53,6 +53,12 @@ export interface Region {
   tab: string;
   locale: string;
   currency: string;
+  /** The edition front's headline: what this edition is about, in its own terms. */
+  headline: string;
+  /** Three topics shown as tag pills on the front page's edition card. */
+  tags: string[];
+  /** The official route to report a scam, shown on the edition front. */
+  report: { stamp: string; text: string; link?: { label: string; url: string } };
   /** One sentence naming the gap this edition exists to close. */
   problem: string;
   intro: string;
@@ -71,32 +77,31 @@ export const REGIONS: Region[] = [
     tab: 'India',
     locale: 'en-IN',
     currency: 'INR',
+    headline: 'Your first salary: the payslip, the tax, the fund and the buffer.',
+    tags: ['UPI', 'Scams', 'First job'],
+    report: {
+      stamp: '1930',
+      text: 'Lost money to a scam? Call 1930, the national cybercrime helpline, or report it online, as fast as you can. The sooner it is reported, the better the chance of stopping the money.',
+      link: { label: 'cybercrime.gov.in', url: 'https://cybercrime.gov.in' },
+    },
     problem:
-      'Digital payments arrived faster than the knowledge needed to use them safely.',
+      'Most first earners in India meet a payslip, a loan app and a trading screen before anyone has shown them the arithmetic behind any of them, and the official figures record what that costs.',
     intro:
       'India built payment rails almost everyone can reach, and the knowledge to use them safely has not caught up. This edition is about keeping what you earn, spotting the patterns fraud uses, and working out whether a small business actually makes money.',
     stats: [
       {
         figure: '27%',
-        label: 'of Indian adults are financially literate, against about 52% in advanced economies',
+        label: 'of Indian adults were financially literate in NCFE’s 2019 national survey',
         source: {
-          title: 'NCFE Financial Literacy and Inclusion Survey',
+          title: 'NCFE Financial Literacy and Inclusion Survey (2019)',
           url: 'https://ncfe.org.in/wp-content/uploads/2023/12/NISM_Final-Report-All-India.pdf',
         },
       },
       {
-        figure: '68.3%',
-        label: 'of digital fraud victims are graduates or postgraduates — education is not the protection people assume',
-        source: {
-          title: 'Exploratio Journal, analysis of UPI scams',
-          url: 'https://exploratiojournal.com/exploring-how-indias-digital-payment-revolution-created-a-new-class-of-fraud-victims-an-analysis-of-upi-scams/',
-        },
-      },
-      {
         figure: '₹805 crore',
-        label: 'lost to UPI fraud across 10.64 lakh incidents between April and November 2025',
+        label: 'of UPI fraud reported across 10.64 lakh incidents, April to November 2025',
         source: {
-          title: 'Government figures reported to Parliament',
+          title: 'The420.in, reporting a Lok Sabha answer (15 Dec 2025)',
           url: 'https://the420.in/india-upi-fraud-data-fy26-parliament-digital-payments/',
         },
       },
@@ -122,45 +127,32 @@ export const REGIONS: Region[] = [
     tracks: [
       {
         slug: 'money-basics',
-        title: 'Money basics',
-        summary: 'What to do with money once you have some, and how to keep it.',
-        planned: [
-          'Your first offer letter: CTC vs in-hand',
-          'Loan apps: how to tell a real one from a trap',
-          'Compound growth on ₹500 a month',
-        ],
+        title: 'Your first salary',
+        summary: 'Reading the payslip, getting withheld tax back, moving the provident fund, and building a buffer.',
+        planned: [],
+      },
+      {
+        slug: 'protect-your-money',
+        title: 'Protect your money',
+        summary: 'The four ways young Indians lose money, ranked by the official figures, and the one action the rules reward in each case.',
+        planned: [],
       },
       {
         slug: 'start-something',
-        title: 'Start something',
-        summary: 'Turning an idea into something real, starting with almost nothing.',
-        planned: [
-          'Test an idea in a weekend without spending',
-          'Pricing when everyone around you is cheaper',
-          'Break-even: how many cups before you profit?',
-          'Selling on WhatsApp and Instagram',
-        ],
-      },
-      {
-        slug: 'how-business-works',
-        title: 'How business works',
-        summary: 'The machinery underneath the shops and stalls you already know.',
-        planned: [
-          'Where the money actually goes in a kirana store',
-          'Supply and demand at your local market',
-          'Government schemes you may already qualify for',
-        ],
+        title: 'Start a service business',
+        summary: 'Pricing, break-even, cash and the first regulated loan, worked on a coaching centre and a freelance service.',
+        planned: [],
       },
     ],
     breakEven: {
-      fixed: '2000',
-      variable: '8',
-      price: '15',
-      units: '400',
-      unitName: 'cups',
-      fixedHint: 'What you pay every month whatever you sell: stall rent, licence, the cart loan instalment.',
-      variableHint: 'What one cup costs you: tea, milk, sugar, gas, cup.',
-      scenario: 'A chai stall, worked out in rupees.',
+      fixed: '18000',
+      variable: '300',
+      price: '1500',
+      units: '25',
+      unitName: 'students',
+      fixedHint: 'What you pay every month whatever happens: the room, electricity, the whiteboard loan instalment.',
+      variableHint: 'What one student costs you each month: printed notes, test papers, a share of the internet.',
+      scenario: 'A weekend coaching class for board exams, worked out in rupees.',
     },
     tools: {
       budget: {
@@ -179,41 +171,47 @@ export const REGIONS: Region[] = [
       sideHustle: { units: '40', price: '250', cost: '110', fee: '5', hours: '30', unitName: 'orders', scenario: 'Reselling phone cases on Instagram and WhatsApp.' },
       loan: { principal: '50000', rate: '12', months: '24', scenario: 'A ₹50,000 loan for a second-hand scooter.' },
     },
-    note: 'Indian market examples use prices at least 30 days old and never name a security with a target, following SEBI’s education-only rules (January 2025, updated May 2026). Nothing here is investment advice.',
+    note: 'Following SEBI’s education-only rules (January 2025, updated May 2026): no advice on any named security, no price targets, no claims about returns, and any market price shown is at least 30 days old. Nothing here is investment advice.',
   },
   {
     code: 'eu',
     name: 'Europe',
     tab: 'Europe',
-    locale: 'de-DE',
+    locale: 'en-IE',
     currency: 'EUR',
+    headline: 'Read the payslip, check the payee, count the instalments.',
+    tags: ['Payslips', 'Buy now, pay later', 'Selling abroad'],
+    report: {
+      stamp: 'Act fast',
+      text: 'Lost money to a scam? Call your bank straight away to try to stop the payment, then report it to the police in your country. The reporting route is national, so it differs from country to country.',
+    },
     problem:
-      'Strong consumer protections, low financial confidence, and rules that change at every border.',
+      'Half of EU adults could not cover three months of living costs, and payers themselves bore about 85% of the €2.2 billion lost to transfer fraud in 2024; the checks that prevent both are rarely taught before the first payslip arrives.',
     intro:
       'Europe has some of the strongest consumer protections anywhere and some of the lowest financial confidence. This edition is about building a buffer, seeing debt for what it is when it arrives dressed as convenience, and working across borders without guessing.',
     stats: [
       {
         figure: '18%',
-        label: 'of EU citizens score high on financial literacy; young people score among the lowest',
+        label: 'of EU adults had high financial literacy in 2023; younger adults tend to score lower than others',
         source: {
-          title: 'Flash Eurobarometer 525',
-          url: 'https://europa.eu/eurobarometer/surveys/detail/2953',
+          title: 'European Commission, Financial Literacy Strategy for the EU, COM(2025) 681 (30 Sep 2025)',
+          url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52025DC0681',
         },
       },
       {
         figure: '49%',
-        label: 'of Europeans could not cover three months of expenses from savings',
+        label: 'of EU adults aged 18 to 65 lack savings to cover three months of living costs',
         source: {
-          title: 'European Commission, Financial Literacy Strategy',
-          url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:52025DC0681',
+          title: 'European Commission, Financial Literacy Strategy for the EU, COM(2025) 681 (30 Sep 2025)',
+          url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52025DC0681',
         },
       },
       {
         figure: '27',
-        label: 'member states, each with its own tax and registration rules, in one single market',
+        label: 'countries in the EU, each setting its own business tax and registration rules',
         source: {
-          title: 'European Commission, Financial Literacy Strategy',
-          url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:52025DC0681',
+          title: 'European Union, Key facts and figures (europa.eu, 2026)',
+          url: 'https://european-union.europa.eu/principles-countries-history/facts-and-figures-european-union_en',
         },
       },
     ],
@@ -232,53 +230,38 @@ export const REGIONS: Region[] = [
       },
       {
         title: 'The euro is not everyone’s money',
-        body: 'Poland, Sweden, Czechia, Hungary, Denmark and Romania are outside the eurozone, so you can switch the currency on every calculator here.',
+        body: 'Poland, Sweden, Czechia, Hungary, Denmark and Romania are outside the eurozone. The calculators here work in euros; the ideas work in any currency.',
       },
     ],
     tracks: [
       {
         slug: 'money-basics',
-        title: 'Money basics',
-        summary: 'Building a cushion and keeping debt visible.',
-        planned: [
-          'Your first pay: what to do in the first week',
-          'Building three months of cover, slowly',
-          'Buy now, pay later: seeing the debt',
-          'What inflation did to your savings',
-        ],
+        title: 'Your first pay and what it has to cover',
+        summary: 'Read the payslip, size the buffer, cost the move, and see what interest and inflation do over time.',
+        planned: [],
+      },
+      {
+        slug: 'credit-and-fraud',
+        title: 'Credit, payments and fraud',
+        summary: 'Instalment plans, transfers, job offers and money advice: where the evidence says young Europeans lose money.',
+        planned: [],
       },
       {
         slug: 'start-something',
-        title: 'Start something',
-        summary: 'Selling into a single market made of 27 rulebooks.',
-        planned: [
-          'Test an idea without spending',
-          'Pricing for customers in another country',
-          'Break-even with platform fees included',
-          'Registering as a small trader: what to ask',
-        ],
-      },
-      {
-        slug: 'how-business-works',
-        title: 'How business works',
-        summary: 'Where profit comes from, and which rights you already have.',
-        planned: [
-          'Reading a simple income statement',
-          'Consumer rights you can actually use',
-          'Supply and demand around you',
-          'How startups raise money in Europe',
-        ],
+        title: 'Run it like a business',
+        summary: 'Read the numbers, price with fees and borders included, and declare what you earn.',
+        planned: [],
       },
     ],
     breakEven: {
-      fixed: '150',
-      variable: '6',
-      price: '18',
-      units: '120',
-      unitName: 'orders',
-      fixedHint: 'What you pay every month whatever you sell: shop subscription, tools, storage.',
-      variableHint: 'What one order costs you: materials, packaging, postage.',
-      scenario: 'A small online shop selling across the EU.',
+      fixed: '320',
+      variable: '22',
+      price: '55',
+      units: '16',
+      unitName: 'repairs',
+      fixedHint: 'What you pay every month whatever happens: the workshop bay, insurance, the tool loan.',
+      variableHint: 'What one repair costs you in parts and consumables.',
+      scenario: 'A weekend bicycle-repair service in a rented workshop bay, worked out in euros.',
     },
     tools: {
       budget: {
@@ -306,10 +289,17 @@ export const REGIONS: Region[] = [
     tab: 'United States',
     locale: 'en-US',
     currency: 'USD',
+    headline: 'Student loans, credit and taxes arrive before anyone explains them.',
+    tags: ['Credit scores', 'Student loans', 'Side hustles'],
+    report: {
+      stamp: 'FTC',
+      text: 'Lost money to a scam? Contact your bank or payment app straight away, then report it to the Federal Trade Commission.',
+      link: { label: 'reportfraud.ftc.gov', url: 'https://reportfraud.ftc.gov' },
+    },
     problem:
-      'Large, permanent debt decisions are made at 17, before anyone explains how debt works.',
+      'A 17-year-old can sign a federal loan, open a credit card and earn untaxed side income before anyone shows them the monthly payment, the interest or the tax bill, and in 2026 Gen Z adults answered 38% of the P-Fin Index questions correctly.',
     intro:
-      'In the US the biggest financial decisions arrive early — student loans, credit, a first job with untaxed income. This edition is about seeing what those decisions cost before you make them, and understanding the number that quietly decides a lot of your life.',
+      'In the US some of the biggest money decisions arrive early: student loans, a first credit card, side-hustle income that nobody taxes for you. This edition is about seeing what those decisions cost before you make them, and understanding the number that quietly decides a lot of your life.',
     stats: [
       {
         figure: '38%',
@@ -321,25 +311,25 @@ export const REGIONS: Region[] = [
       },
       {
         figure: '3×',
-        label: 'more likely to be financially fragile if your financial literacy is very low',
+        label: 'more likely to be financially fragile, for US adults with very low versus very high financial literacy (2025)',
         source: {
-          title: 'TIAA Institute-GFLEC, P-Fin Index 2025',
-          url: 'https://gflec.org/wp-content/uploads/2025/05/TIAA-Institute-and-GFLEC_Financial-literacy-and-retirement-fluency-in-America_P-Fin-2025.pdf',
+          title: 'TIAA Institute-GFLEC Personal Finance Index 2025, press release (29 May 2025)',
+          url: 'https://www.prnewswire.com/news-releases/national-financial-literacy-remains-stagnant-at-49-as-generational-gaps-widen-tiaa-institute-gflec-study-finds-811010090.html',
         },
       },
       {
-        figure: '61%',
-        label: 'of buy-now-pay-later users have subprime or deep subprime credit scores',
+        figure: '63%',
+        label: 'of buy now, pay later borrowers at six big lenders had more than one loan running at once in 2022',
         source: {
-          title: 'CFPB, Consumer Use of Buy Now, Pay Later',
-          url: 'https://files.consumerfinance.gov/f/documents/cfpb_BNPL_Report_2025_01.pdf',
+          title: 'CFPB, Consumer Use of Buy Now, Pay Later and Other Unsecured Debt (13 Jan 2025)',
+          url: 'https://www.consumerfinance.gov/archive/newsroom/cfpb-research-reveals-heavy-buy-now-pay-later-use-among-borrowers-with-high-credit-balances-and-multiple-pay-in-four-loans/',
         },
       },
     ],
     problems: [
       {
         title: 'Student loans signed at 17',
-        body: 'The largest debt most Americans ever take on, agreed before most people have had a full-time job, and rarely explained as a monthly payment lasting a decade.',
+        body: 'Often agreed before a first full-time job, and rarely explained as what it really is: a monthly payment that can last ten years or more.',
       },
       {
         title: 'The credit score nobody teaches',
@@ -347,7 +337,7 @@ export const REGIONS: Region[] = [
       },
       {
         title: 'Buy now, pay later, stacked',
-        body: 'Most users hold several at once. Regular users carry noticeably more credit-card debt than similar people who do not use it at all.',
+        body: 'Pay-in-four plans are loans, and they stack: most borrowers at the big lenders had more than one running at the same time in 2022.',
       },
       {
         title: 'Self-employment tax arrives late',
@@ -358,46 +348,31 @@ export const REGIONS: Region[] = [
       {
         slug: 'money-basics',
         title: 'Money basics',
-        summary: 'The decisions that shape the next ten years.',
-        planned: [
-          'Your first paycheck: reading the deductions',
-          'How a credit score actually moves',
-          'Student loans as a monthly payment',
-          'Buy now, pay later: the real cost',
-        ],
+        summary: 'The first year of earning: the paycheck, the cushion, the credit file and the loan, each as a number you can check.',
+        planned: [],
       },
       {
         slug: 'start-something',
-        title: 'Start something',
-        summary: 'Earning on your own terms without a surprise tax bill.',
-        planned: [
-          'Test an idea in a weekend',
-          'Pricing your work, not your time',
-          'Break-even after platform fees',
-          'Setting money aside for self-employment tax',
-        ],
+        title: 'Working for yourself',
+        summary: 'Price a job, find break-even, read a month’s income statement and set tax aside.',
+        planned: [],
       },
       {
         slug: 'how-business-works',
-        title: 'How business works',
-        summary: 'Where profit comes from and who takes a cut.',
-        planned: [
-          'Reading a simple income statement',
-          'What a platform’s fees really cost you',
-          'Supply and demand around you',
-          'How startups raise money',
-        ],
+        title: 'Who gets paid, and by whom',
+        summary: 'The business model behind four things sold to you: a platform, a pay-in-four plan, a promoted tip and a job that is really a scam.',
+        planned: [],
       },
     ],
     breakEven: {
-      fixed: '90',
-      variable: '9',
-      price: '25',
-      units: '100',
-      unitName: 'orders',
-      fixedHint: 'What you pay every month whatever you sell: shop fees, software, storage.',
-      variableHint: 'What one order costs you: blank product, printing, shipping.',
-      scenario: 'A custom-print side hustle, after platform fees.',
+      fixed: '900',
+      variable: '7.5',
+      price: '18',
+      units: '120',
+      unitName: 'shirts',
+      fixedHint: 'What you pay every month whatever you sell: the heat press loan, software, storage.',
+      variableHint: 'What one shirt costs you: the blank, the ink, the packaging.',
+      scenario: 'A custom apparel business printing shirts for school clubs and local teams, worked out in dollars.',
     },
     tools: {
       budget: {

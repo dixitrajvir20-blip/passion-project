@@ -6,10 +6,11 @@ test('break-even updates live as the numbers change', async ({ page }) => {
   await waitForIslands(page);
 
   const results = page.locator('.results');
-  await expect(results).toContainText('286');
+  await expect(results).toContainText('₹1,200'); // 1500 − 300 kept per student
+  await expect(results.locator('.result-figure-value')).toHaveText('15'); // 18000 / 1200
 
-  await page.getByLabel('Fixed costs per month').fill('7000');
-  await expect(results).toContainText('1,000'); // 7000 / 7
+  await page.getByLabel('Fixed costs per month').fill('24000');
+  await expect(results.locator('.result-figure-value')).toHaveText('20'); // 24000 / 1200
 });
 
 test('a price below cost explains the problem instead of showing a number', async ({ page }) => {
@@ -39,7 +40,7 @@ test('reset returns the tool to its starting numbers', async ({ page }) => {
   await page.getByLabel('Price you charge').fill('99');
   await page.getByRole('button', { name: 'Reset' }).click();
 
-  await expect(page.getByLabel('Price you charge')).toHaveValue('15');
+  await expect(page.getByLabel('Price you charge')).toHaveValue('1500');
 });
 
 test('currency choice changes the formatting', async ({ page }) => {

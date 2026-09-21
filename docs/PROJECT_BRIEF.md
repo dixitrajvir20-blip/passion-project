@@ -1,4 +1,4 @@
-# Project Brief: LaunchPad
+# Project Brief: Business Lab
 
 Version 2.0, 17 September 2026. Author: Rajvir Dixit (with research help from Claude).
 
@@ -11,7 +11,7 @@ editions (India/Europe/US), the brand is blue/gold/black, and the accounts and a
 work below is specified rather than hypothetical.
 
 ## 1. Vision
-LaunchPad is a free, clean, fast website where anyone aged 15-21, anywhere in the world, can learn how money and business work, then practice with interactive tools. It's a hub: short articles on ideas that affect this age group, plus calculators, quizzes, and builders you can use on a phone.
+Business Lab is a free, clean, fast website where anyone aged 15-21, anywhere in the world, can learn how money and business work, then practice with interactive tools. It's a hub: short articles on ideas that affect this age group, plus calculators, quizzes, and builders you can use on a phone.
 
 **Why it matters**
 - Across OECD countries, about 18% of 15-year-olds lack basic financial literacy (PISA 2022, 20 countries and economies). Access to financial education in school explains about 20% of the variation in scores.
@@ -54,7 +54,7 @@ LaunchPad is a free, clean, fast website where anyone aged 15-21, anywhere in th
 - Hindi (hi) translation of all v1 content and UI (human-reviewed)
 - 24+ articles; contributor program (student writers)
 - One-Page Business Plan Builder (local only, print or save as PDF)
-- "Run a Chai Stall" scenario simulator
+- "Run a small service business" scenario simulator
 - Offline reading (PWA: cache read articles)
 - Teacher/club kit pages (printable lesson plans for Business Lab-style clubs)
 
@@ -80,6 +80,7 @@ LaunchPad is a free, clean, fast website where anyone aged 15-21, anywhere in th
 /tools/[tool]          Tool page
 /glossary              Glossary (A-Z, searchable)
 /search                Search results (Pagefind)
+/dashboard             Progress, checks, review queue and learning time, from this device
 /about                 Mission, team, impact numbers
 /write                 Write for us (student contributors)
 /privacy               Privacy notice (plain language)
@@ -128,7 +129,7 @@ All math lives in `src/lib/*.ts` as pure functions with unit tests. All money us
 
 **v2: One-Page Business Plan Builder.** Guided fields (problem, customer, solution, price, costs, channels, first 3 steps), saved locally, print stylesheet for "Save as PDF."
 
-**v2: "Run a Chai Stall" simulator.** 4 weekly rounds. Choose price, cups to prepare, and one promotion. See sales, waste, and profit. Teaches demand, cost, and trade-offs. Deterministic seeded randomness so outcomes can be tested.
+**v2: "Run a small service business" simulator.** 4 monthly rounds. Choose the price, the capacity to staff, and one promotion. See bookings, idle capacity, and profit. Teaches demand, cost, and trade-offs. Deterministic seeded randomness so outcomes can be tested.
 
 ## 8. Tech architecture
 **Where the project is now (Phase 1):** an Astro static build with Preact islands, deployed to
@@ -227,11 +228,11 @@ public/         favicon, social images
 - Done when: all unit tests pass (including edge cases like rate 0 and price ≤ variable cost); axe reports zero serious/critical issues on every page type; Lighthouse mobile meets the budget; every article has a quiz, sources, and a "Try it" tool link; site works with JS disabled for reading articles
 
 **Phase 2, Months 2-4**
-- Hindi, PWA offline reading, business plan builder, chai stall simulator, contributor program, teacher kit
+- Hindi, PWA offline reading, business plan builder, business simulator, contributor program, teacher kit
 - Done when: `/hi/` pages are complete and human-reviewed; articles readable offline after one visit; simulator outcomes pass deterministic tests
 
 ## 15. Open decisions (Rajvir)
-- Keep the name LaunchPad? (check it isn't confusing with other "LaunchPad" programs) and pick a domain
+- Name: decided on 18 September 2026 as **Business Lab**, after the school club. Still to do: pick and buy a domain, and license the badge (see BRAND_GUIDE.md §4)
 - Who reviews content for accuracy (a teacher? a finance professional?)
 - Hosting choice and who owns the accounts (use an adult's account if a service requires 18+)
 - Which second language after Hindi

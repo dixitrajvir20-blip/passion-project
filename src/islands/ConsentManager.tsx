@@ -115,10 +115,11 @@ export default function ConsentManager({ categories, version }: Props) {
     <div data-consent data-hydrated={hydrated ? 'true' : undefined}>
       {banner && (
         <section class="consent-banner" role="region" aria-label="Privacy choices">
-          <h2>Can we count your visit?</h2>
+          <h2>Your progress stays on this device</h2>
           <p>
-            LaunchPad sets no cookies and builds no profile. Optional: anonymous usage counts and
-            videos from other sites. Nothing optional runs until you choose.
+            Business Lab sets no cookies and builds no profile. Your lesson progress is kept in this
+            browser so you can pick up where you left off. May it also record your learning time,
+            on this device only, for your dashboard? Nothing optional runs until you choose.
           </p>
           <div class="btn-row">
             <button type="button" class="btn btn-secondary btn-sm" onClick={() => commit(allChoices(categories, false))}>
@@ -138,7 +139,7 @@ export default function ConsentManager({ categories, version }: Props) {
         <form method="dialog" class="consent-dialog-inner" onSubmit={(e) => e.preventDefault()}>
           <h2 id="consent-title">Privacy choices</h2>
           <p>
-            LaunchPad uses no cookies. Your browser keeps a few preferences so the site works;
+            Business Lab uses no cookies. Your browser keeps a few preferences so the site works;
             those stay on your device and never reach us.
           </p>
 

@@ -2,12 +2,12 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// One source: src/content/glossary.json. Lessons, popovers and this page all read the same entries.
+// One source: src/content/glossary/. Lessons, popovers and this page all read the same entries.
 const terms = (await getCollection('glossary')).sort((a, b) => a.data.term.localeCompare(b.data.term));
 ---
 
 <BaseLayout
-  title="Glossary — LaunchPad"
+  title="Glossary — Business Lab"
   description="Plain-language definitions of business and money terms, each with a worked example."
   path="glossary"
 >

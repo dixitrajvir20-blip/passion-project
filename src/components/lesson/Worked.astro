@@ -1,5 +1,10 @@
 ---
-/** A worked calculation. The steps come from lesson-math (so from finance.ts), never from prose. */
+/**
+ * A worked calculation, set as a ledger: each step names what it finds, shows the working, and
+ * puts the result on the right. The steps come from lesson-math (so from finance.ts), never from
+ * prose. The last step is the answer and is closed with a double rule, unless the reader is
+ * about to do that step themselves (Practice passes total={false}).
+ */
 import { money, number, localeByCode } from '../../lib/format';
 import type { Step } from '../../lib/lesson-math';
 
@@ -7,9 +12,10 @@ interface Props {
   context: string;
   steps: Step[];
   localeCode: string;
+  total?: boolean;
 }
 
-const { context, steps, localeCode } = Astro.props;
+const { context, steps, localeCode, total = true } = Astro.props;
 const locale = localeByCode(localeCode);
 const show = (value: { money: number } | { count: number }) =>
   'money' in value ? money(value.money, locale, Number.isInteger(value.money) ? 0 : 2) : number(value.count, locale);
@@ -17,13 +23,14 @@ const show = (value: { money: number } | { count: number }) =>
 
 <div class="worked">
   <p>{context}</p>
-  <ol class="steps">
-    {steps.map((step) => (
-      <li>
-        <span class="step-label">{step.label}</span>
-        <span class="step-sum numbers">
-          {step.parts.map((part) => ('op' in part ? ` ${part.op} ` : show(part)))} = <strong>{show(step.result)}</strong>
+  <ol class="steps ledger">
+    {steps.map((step, index) => (
+      <li class:list={['ledger-row', { 'ledger-total': total && index === steps.length - 1 }]}>
+        <span class="ledger-label">
+          <span class="step-label">{step.label}</span>
+          <span class="step-sum numbers">{step.parts.map((part) => ('op' in part ? ` ${part.op} ` : show(part)))}<span class="visually-hidden"> =</span></span>
         </span>
+        <strong class="ledger-figure numbers">{show(step.result)}</strong>
         {step.note && <span class="step-note">{step.note}</span>}
       </li>
     ))}

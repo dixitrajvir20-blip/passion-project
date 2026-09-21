@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { marginChoices, marginSteps, splitChoices, splitSteps } from '../../src/lib/lesson-math';
+import { growthChoices, growthSteps, loanChoices, loanSteps, marginChoices, marginSteps, splitChoices, splitSteps } from '../../src/lib/lesson-math';
+import { compoundGrowth, emi } from '../../src/lib/finance';
 
-const chai = { fixed: 2000, variable: 8, price: 15 };
+const example = { fixed: 2000, variable: 8, price: 15 };
 
 describe('marginSteps', () => {
-  it('works the chai stall through to 286 cups and says why it rounded', () => {
-    const [keep, cover] = marginSteps(chai, 'cups');
+  it('works a margin example through to 286 cups and says why it rounded', () => {
+    const [keep, cover] = marginSteps(example, 'cups');
     expect(keep.result).toEqual({ money: 7 });
     expect(cover.result).toEqual({ count: 286 });
     expect(cover.note).toContain('285.7');
@@ -31,7 +32,7 @@ describe('marginChoices', () => {
   });
 
   it('offers the slips people actually make, each with its own explanation', () => {
-    const choices = marginChoices(chai);
+    const choices = marginChoices(example);
     const values = choices.map((c) => ('count' in c.value ? c.value.count : 0));
     expect(values).toContain(286); // right
     expect(values).toContain(134); // ÷ price
@@ -41,7 +42,7 @@ describe('marginChoices', () => {
   });
 
   it('lists options in ascending order so position gives nothing away', () => {
-    const values = marginChoices(chai).map((c) => ('count' in c.value ? c.value.count : 0));
+    const values = marginChoices(example).map((c) => ('count' in c.value ? c.value.count : 0));
     expect(values).toEqual([...values].sort((a, b) => a - b));
   });
 
@@ -87,5 +88,54 @@ describe('split', () => {
 
   it('fails loudly on a share that does not exist', () => {
     expect(() => splitChoices(pocket, 'Rent')).toThrow();
+  });
+});
+
+const scooter = { principal: 50000, rate: 12, months: 24 };
+
+describe('loan', () => {
+  it('works the payment, the total and the cost, consistently with the calculator', () => {
+    const [monthly, total, cost] = loanSteps(scooter).map((s) => ('money' in s.result ? s.result.money : 0));
+    expect(monthly).toBe(2353.67); // emi() rounded to the paisa
+    expect(monthly).toBeCloseTo(emi(50000, 12, 24).emi, 2);
+    expect(total).toBe(Math.round(2353.67 * 24 * 100) / 100);
+    expect(cost).toBeCloseTo(total - 50000, 2);
+  });
+
+  it('offers real interest slips and exactly one right answer', () => {
+    const choices = loanChoices(scooter);
+    expect(choices.filter((c) => c.correct)).toHaveLength(1);
+    const values = choices.map((c) => ('money' in c.value ? c.value.money : 0));
+    expect(values).toContain(6000); // one year of interest on the full amount
+    expect(values).toContain(12000); // flat rate on the full amount for two years
+    expect(values).toEqual([...values].sort((a, b) => a - b));
+    expect(new Set(values).size).toBe(values.length);
+  });
+
+  it('works a zero-rate loan, but refuses it as a practice question with no answer to find', () => {
+    const [, , cost] = loanSteps({ principal: 1200, rate: 0, months: 12 });
+    expect('money' in cost.result && cost.result.money).toBe(0);
+    expect(() => loanChoices({ principal: 1200, rate: 0, months: 12 })).toThrow();
+    expect(() => growthChoices({ monthly: 100, rate: 0, years: 5 })).toThrow();
+  });
+});
+
+const habit = { monthly: 500, rate: 6, years: 10 };
+
+describe('growth', () => {
+  it('separates what was put in from the growth, matching the calculator', () => {
+    const [put, grows, growth] = growthSteps(habit).map((s) => ('money' in s.result ? s.result.money : 0));
+    expect(put).toBe(60000);
+    expect(grows).toBe(Math.round(compoundGrowth(0, 500, 6, 10).finalValue));
+    expect(growth).toBe(grows - put);
+  });
+
+  it('hides the growth among the total, the deposits and flat interest', () => {
+    const choices = growthChoices(habit);
+    expect(choices.filter((c) => c.correct)).toHaveLength(1);
+    const values = choices.map((c) => ('money' in c.value ? c.value.money : 0));
+    expect(values).toContain(60000); // what was put in
+    expect(values).toContain(36000); // 6% of 60,000 for 10 years, the flat-interest slip
+    expect(values).toEqual([...values].sort((a, b) => a - b));
   });
 });

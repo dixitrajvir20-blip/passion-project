@@ -1,0 +1,5 @@
+{
+  "term": "Loan term",
+  "define": "How long you have to repay a loan, counted in months or years. A longer term means smaller payments and more interest in total.",
+  "example": "A $10,000 loan with a 120-month term is repaid in 120 monthly payments, over ten years."
+}

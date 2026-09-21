@@ -1,0 +1,5 @@
+{
+  "term": "Overdraft fee",
+  "define": "A charge your bank may add when it lets a payment through that your account cannot cover. If the bank turns the payment down instead, the charge is usually called an NSF (non-sufficient funds) fee.",
+  "example": "Autopay takes $40 when your checking account holds $15. The bank covers the gap and adds a fee of its own."
+}

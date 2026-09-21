@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Dashboard from '../islands/Dashboard.tsx';
+import type { CatalogueLesson } from '../islands/Dashboard.tsx';
+import { REGIONS } from '../lib/regions';
+import { site } from '../lib/site';
+import { lessonPath, lessonsFor } from '../lib/lessons';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// The catalogue the dashboard measures progress against: every published lesson, in edition and
+// track order. Titles and paths only; the reader's own record never leaves the browser.
+const lessons: CatalogueLesson[] = [];
+for (const region of REGIONS) {
+  const published = await lessonsFor(region.code);
+  for (const track of region.tracks) {
+    for (const lesson of published.filter((l) => l.data.track === track.slug)) {
+      lessons.push({
+        id: lesson.id,
+        title: lesson.data.title,
+        track: track.slug,
+        trackTitle: track.title,
+        region: region.code,
+        regionName: region.name,
+        minutes: lesson.data.readingMinutes,
+        path: lessonPath(lesson),
+      });
+    }
+  }
+}
+---
+
+<BaseLayout
+  title={`Dashboard — ${site.name}`}
+  description="Your lessons, checks, review queue and learning time, kept on this device."
+  path="dashboard"
+  noindex
+>
+  <section class="section">
+    <div class="container">
+      <Dashboard client:load lessons={lessons} base={base} accounts={site.accountsEnabled} />
+      <noscript>
+        <p class="note">
+          The dashboard reads the progress kept in this browser, so it needs JavaScript. Every lesson
+          and calculator works without it.
+        </p>
+      </noscript>
+    </div>
+  </section>
+</BaseLayout>

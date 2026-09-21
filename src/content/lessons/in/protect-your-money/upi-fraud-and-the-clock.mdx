@@ -1,0 +1,298 @@
+---
+title: "UPI fraud: the one rule and the three-day clock"
+summary: "The UPI PIN only sends money. Reporting inside three working days limits what the loss costs you."
+region: in
+track: protect-your-money
+order: 1
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-20
+
+situation: "A payment request for ₹1 arrives under a shop name you have never bought from. The note calls it a refund. Approving it would send ₹1 out of your account, not bring it in."
+
+prediction:
+  q: "The request says ₹1 and the note calls it a refund. What does approving it with your UPI PIN do?"
+  options:
+    - text: "₹1 arrives in your account"
+      why: "Money arriving needs nothing from you. The sender needs only your UPI ID, and no screen on your side asks for a PIN."
+    - text: "₹1 leaves your account, and the sender learns the request works"
+      why: "A request is a bill. The PIN approves money going out, and a ₹1 test that goes through is usually followed by a larger one."
+    - text: "Nothing moves until the shop confirms on its side"
+      why: "There is no second step. Your PIN is the final approval, and the money moves the moment it goes through."
+  answer: 1
+
+takeaways:
+  - "The UPI PIN approves money leaving your account. Nothing arriving needs a PIN, a scan, a new app or a call."
+  - "Report on 1930 or cybercrime.gov.in before anything else. More than ₹11,158 crore was saved that way in over 32.80 lakh complaints up to 30 June 2026."
+  - "Tell your bank within three working days. RBI's rules limit what falls on you, and the day you report is the day the loss stops."
+
+explorable:
+  kind: drill
+  intro: "Seven screens, about five seconds each: pay, refuse, or report. One is an ordinary payment, so refusing everything is not the answer. Every name and link here is made up."
+  scenarios:
+    - screen:
+        kind: request
+        from: "Vasant Mobile Store (merchant)"
+        amount: 1
+        lines:
+          - "Payment request to you"
+          - "Note: refund test of ₹1, approve to receive"
+        action: "Approve and enter UPI PIN"
+      check:
+        q: "You have never bought anything from this shop. What do you do?"
+        options:
+          - text: "Approve it, because ₹1 is too small to matter"
+            why: "The amount is not the test. A request plus a PIN page only ever pays out, and a ₹1 that goes through tells the sender your number is live."
+          - text: "Decline it, and report the sender if more arrive"
+            why: "A request is a bill, so declining costs nothing. A refund you are owed comes back the way you paid, with nothing to approve."
+          - text: "Approve it and watch the balance"
+            why: "Watching starts after the money has gone. The PIN page is the last step, not a preview."
+        answer: 1
+    - screen:
+        kind: qr
+        from: "Order Refunds Desk"
+        lines:
+          - "Your refund of ₹1,250 is ready."
+          - "Scan this code and enter your PIN to receive it."
+        action: "Scan to receive refund"
+      check:
+        q: "You returned a pair of shoes and are waiting for ₹1,250. This arrives on chat from a number you do not know. What do you do?"
+        options:
+          - text: "Scan it, since a refund is money coming in"
+            why: "Scanning only ever starts a payment from your side. Your own code is the one you share in order to be paid."
+          - text: "Leave the code, and check the refund on the order page you bought from"
+            why: "A refund goes back the way the payment came. The seller's order page shows its status, with no code and no PIN."
+          - text: "Scan it, but stop before the PIN page"
+            why: "The scan has already set up a payment to a stranger. The cue came earlier: money promised in return for a scan."
+        answer: 1
+    - screen:
+        kind: chat
+        from: "Support desk (Arun)"
+        lines:
+          - "Sorry about the failed recharge of ₹299."
+          - "Install the helper app from quickfix-support.example and read me the code it shows."
+        action: "Install app and share code"
+      check:
+        q: "A recharge failed and ₹299 left your account. You searched for a support number, and this person called back. What do you do?"
+        options:
+          - text: "Install it, since he already knows about the failed payment"
+            why: "He knows because your call told him. An app that shares your screen lets a stranger watch the PIN being typed and read every code."
+          - text: "Install nothing, and raise the failed payment inside the payment app"
+            why: "Failed payments are raised from the app's own help section. A number found through a search may belong to nobody official."
+          - text: "Install it, then remove it after the call"
+            why: "The harm happens while the screen is shared. Removing the app later does not undo what was seen."
+        answer: 1
+    - screen:
+        kind: qr
+        from: "Sharma General Store"
+        amount: 85
+        lines:
+          - "Paying Sharma General Store"
+          - "You scanned this code at the counter."
+        action: "Enter UPI PIN to pay"
+      check:
+        q: "You bought bread and eggs, scanned the code on the counter yourself, and the name on screen matches the shop. What do you do?"
+        options:
+          - text: "Refuse, because every QR code carries a risk"
+            why: "A code you chose to scan, at a counter in front of you, is an ordinary payment. The risky code is one sent to you with a promise of money."
+          - text: "Check the name and the amount, then enter your PIN"
+            why: "You started it, you mean to pay, and the name matches the shop. That is the PIN doing its one job."
+          - text: "Ask the shopkeeper to send a request instead"
+            why: "That adds a step and removes nothing. A request is the shape the first screen in this drill used."
+        answer: 1
+    - screen:
+        kind: call
+        from: "Caller: bank security team"
+        lines:
+          - "A payment of ₹8,000 is pending on your account."
+          - "Read me the code we have just sent you, to stop it."
+        action: "Read out the code"
+      check:
+        q: "An SMS with a six-digit code arrives while the caller waits on the line. What do you do?"
+        options:
+          - text: "Read out the code, since it stops a payment you did not make"
+            why: "The SMS itself names what the code approves. Read aloud, it approves that action for the caller instead of you."
+          - text: "Hang up, read the SMS, then call the number on your card"
+            why: "The message says whether anything is pending. A number you already have settles it, and the caller's urgency does not."
+          - text: "Read out only the first three digits"
+            why: "Half a code is still the start of one. No bank asks for any part of it."
+        answer: 1
+    - screen:
+        kind: call
+        from: "Video call: Officer Verma"
+        lines:
+          - "A parcel in your name has been seized."
+          - "Stay on this call and tell no one."
+          - "Move your balance to a verification account."
+        action: "Transfer for verification"
+      check:
+        q: "A man in uniform, in what looks like an office, says this on a video call. What do you do?"
+        options:
+          - text: "Stay on the call and transfer the money so it can be checked"
+            why: "No agency arrests anyone or takes money on a video call. A demand for a transfer is the tell, whatever the uniform says."
+          - text: "Hang up, tell someone at home, and report the call on 1930"
+            why: "The script works only while the call lasts. Hanging up ends it, and the report puts the number on record."
+          - text: "Stay on, but ask to see an identity card first"
+            why: "A card held up to a camera is as easy to fake as the uniform. Staying on the line is what the script needs from you."
+        answer: 1
+    - screen:
+        kind: chat
+        from: "Group admin: Meridian Trade Circle"
+        amount: 15000
+        lines:
+          - "Your account on our app shows ₹42,000 in profit."
+          - "Deposit ₹15,000 as a withdrawal charge to release it."
+        action: "Deposit ₹15,000"
+      check:
+        q: "You joined this group from an advertisement and have put in ₹5,000 so far. What do you do?"
+        options:
+          - text: "Deposit the ₹15,000, since the profit is far larger"
+            why: "The ₹42,000 is a figure on a screen, not money in a bank. A charge demanded before a withdrawal is the pattern."
+          - text: "Send nothing, and report what has already gone"
+            why: "SEBI's investor material names unsolicited offers, pressure to decide quickly and promises of high returns as the signals, and says to check that a firm is regulated."
+          - text: "Deposit half and see whether the withdrawal arrives"
+            why: "Half is still money sent, and it is usually followed by one more charge before anything can be taken out."
+        answer: 1
+  reflection: "Take the screen you were slowest on. Which cue did you miss, and where on your own phone would that cue appear?"
+
+quiz:
+  - q: "Ten minutes ago you approved a request, and ₹4,000 has gone to a stranger. What do you do first?"
+    options:
+      - text: "Message the person and ask for it back"
+        why: "That spends the minutes that matter on the one person who will not help, and it often brings a second request."
+      - text: "Call 1930 now, with the transaction ID, date and amount ready"
+        why: "The complaint reaches the bank holding the money, so it can be blocked before it moves again."
+      - text: "Wait a day to see whether the bank reverses it"
+        why: "Nothing marks the payment out until someone reports it, and the money keeps moving meanwhile."
+    answer: 1
+  - q: "You are booking a bus ticket. You type your UPI ID at checkout, and a request for the exact fare arrives under the site's name. What do you do?"
+    options:
+      - text: "Decline it, because every request is a scam"
+        why: "A request is a bill. This is one you asked for, from the business you are paying, for the amount you expected."
+      - text: "Check the name and the amount, then approve with your PIN"
+        why: "You started it and you mean to pay. The rule is not never approve; it is never approve in order to receive."
+      - text: "Approve it without reading, since you started it"
+        why: "The name and amount on the PIN page are the last check, and reading them takes two seconds."
+    answer: 1
+  - q: "On Saturday you see that ₹6,000 left your account on Friday evening. Your branch is shut until Monday. What do you do?"
+    options:
+      - text: "Wait for Monday and tell the branch in person"
+        why: "Monday may still sit inside the three working days, but the money moves in hours. Waiting leaves the receiving account open."
+      - text: "Call 1930 now, and raise it in the bank's app the same day"
+        why: "The helpline runs outside branch hours, and the app records your complaint with a time on it. Neither waits for Monday."
+      - text: "Message the account that received it"
+        why: "That warns whoever holds the money before the bank does, and nothing about it starts a freeze."
+    answer: 1
+  - q: "Your UPI app is on a phone the whole family uses. Your brother wants it back right after you have paid for something. What do you do first?"
+    options:
+      - text: "Close the app, keep its lock switched on, and keep the PIN out of the phone"
+        why: "On a shared phone the PIN in your head is most of the protection, and the app lock is the door in front of it."
+      - text: "Nothing, because any payment still needs the PIN"
+        why: "True, and on a shared phone that PIN is the part most often seen over a shoulder or kept in a note."
+      - text: "Save the PIN in the phone's notes so nobody has to ask you"
+        why: "A saved PIN belongs to whoever holds the phone next. The slip is treating it like a Wi-Fi password."
+    answer: 0
+
+transfer:
+  - "Every time a PIN page opens. Read the name and the amount, and ask whether you are trying to pay this person."
+  - "When you sell something online. A buyer needs your UPI ID or your number, and nothing else from you."
+  - "In the first hour after money leaves wrongly. The helpline and the portal come before every other call."
+  - "When someone at home describes a call that wants money or a code. You can name the tell for them."
+
+glossary: [upi, upi-pin, collect-request, qr-code, otp, digital-arrest, customer-liability]
+
+reportTo:
+  phone: "1930"
+  url: "https://cybercrime.gov.in"
+  label: "Report it the same hour. The complaint reaches the bank that holds the money, and the portal step has to be finished within 24 hours."
+
+sources:
+  - title: "Lok Sabha Unstarred Question 251: more than ₹11,158 crore saved in over 32.80 lakh complaints through the cyber fraud reporting system, to 30 June 2026 (21 July 2026)"
+    url: "https://sansad.in/getFile/lsapps/loksabhaquestions/annex/188/AU251_hTDkTd.pdf"
+    publisher: "Ministry of Home Affairs, Government of India"
+  - title: "Customer protection, limiting liability in unauthorised electronic banking transactions: zero liability when a third-party breach is reported within three working days, capped from the fourth to the seventh (6 July 2017)"
+    url: "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11040"
+    publisher: "Reserve Bank of India"
+  - title: "BHIM UPI guidelines: the UPI PIN is required for all payment transactions and is never shared; a QR code is shared to be paid and scanned to pay (updated 4 June 2026)"
+    url: "https://www.npci.org.in/uploads/BHIM_UPI_Guidelines_2026_012a0b1bce.pdf"
+    publisher: "National Payments Corporation of India"
+  - title: "Steps for reporting financial cyber frauds: what to give the 1930 helpline, and completing the complaint on the portal within 24 hours (accessed 21 September 2026)"
+    url: "https://cybercrime.gov.in/uploadmedia/instructions_citizenreportingcyberfrauds.pdf"
+    publisher: "National Cyber Crime Reporting Portal, Ministry of Home Affairs"
+  - title: "Curbing cyber frauds in Digital India: the 1930 helpline, prompt reporting and freezing of fraudulent transactions where possible (7 October 2025)"
+    url: "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/oct/doc2025107659501.pdf"
+    publisher: "Press Information Bureau, Government of India"
+  - title: "Staying away from investment frauds: unsolicited offers, pressure to decide quickly, promises of high returns, and checking that a firm is regulated (accessed 21 September 2026)"
+    url: "https://investor.sebi.gov.in/beware-of-investment.html"
+    publisher: "Securities and Exchange Board of India"
+---
+
+## The PIN only sends money
+
+Your <Term id="upi-pin">UPI PIN</Term> does one thing: it approves money leaving your account. **If a screen asks for your PIN so that money can reach you, the money is about to go the other way.**
+
+Receiving needs nothing from you. Whoever is paying needs your UPI ID or your number, and that is all.
+
+NPCI, which runs <Term id="upi">UPI</Term>, sets out the same rule. The PIN is required for every payment and is shared with no one. A <Term id="qr-code">QR code</Term> works the same way round: you share yours to be paid, and you scan someone else's to pay.
+
+<svg class="chart" viewBox="0 0 320 140" role="img" aria-labelledby="pin-title pin-desc">
+  <title id="pin-title">Which way the money moves, and what it needs from you</title>
+  <desc id="pin-desc">Two arrows. Money coming in points towards you and needs nothing from you. Money going out points away from you and needs your UPI PIN.</desc>
+  <text class="chart-label" x="0" y="12">Money coming in to you</text>
+  <polygon class="chart-a" points="0,32 26,18 26,46" />
+  <rect class="chart-a" x="26" y="24" width="294" height="16" />
+  <text class="chart-note" x="0" y="62">Needs from you: nothing</text>
+  <text class="chart-label" x="0" y="88">Money going out from you</text>
+  <rect class="chart-b" x="0" y="100" width="294" height="16" />
+  <polygon class="chart-b" points="320,108 294,94 294,122" />
+  <text class="chart-note" x="0" y="138">Needs from you: your UPI PIN</text>
+</svg>
+
+| Money | Needs from you |
+| --- | --- |
+| Coming in | Nothing |
+| Going out | Your UPI PIN |
+
+## One approval, many costumes
+
+Most UPI fraud is one move: getting that approval out of you, or watching you give it.
+
+The plainest version is the <Term id="collect-request">collect request</Term>, a bill dressed as a payment. The note beside it is typed by the sender, so it can say refund, advance or test.
+
+The rest swap the prop. A QR code sent with a promise attached. A helper app that shows a stranger your screen. A caller who wants a code. A uniform on a video call. An app where the profit is only a display.
+
+**Ask one question at every PIN page: am I trying to pay this person?**
+
+## A call that wants money or a code
+
+An <Term id="otp">OTP</Term> is a permission slip. Read it out and you have approved, for someone else, whatever the message describes. Banks do not ask for it, and the message says so in its own text.
+
+A <Term id="digital-arrest">digital arrest</Term> call is the same demand under more pressure. It opens with a case you have never heard of. Then come the orders: stay on camera, tell no one, move the balance. No agency arrests anyone or collects money on a video call.
+
+**Hanging up costs nothing and ends both calls.** Then say it out loud to someone at home.
+
+## Money that exists only on a screen
+
+The newer version arrives through a group chat. An app shows a balance, then a profit, then a charge to be paid before any withdrawal. The figures are drawn on a screen; only your deposits were ever real.
+
+SEBI's investor material names the signals. An offer arrives that you did not ask for, with pressure to decide quickly. A high return is promised, and nobody sets out where the money goes. The same page says to check that the firm, and the people promoting a scheme, are regulated.
+
+That check takes a minute on the regulator's own site. Pressure to decide quickly is what removes the minute.
+
+## The first hour
+
+**Call 1930 or report on cybercrime.gov.in before you do anything else.** Have ready your mobile number, the bank or app the money left from, the UPI ID or account it left from, the transaction ID, the date and a screenshot.
+
+The helpline sends back an acknowledgement number. The official instructions say the complaint must then be completed on the portal within 24 hours. A police officer checks it and asks the bank holding the money to block it.
+
+More than ₹11,158 crore was saved through that system in over 32.80 lakh complaints, counted to 30 June 2026.
+
+## The three working days
+
+RBI's rules on <Term id="customer-liability">customer liability</Term> depend on how fast you report. Where a breach was neither your fault nor the bank's, telling the bank within three working days leaves nothing on you. From the fourth working day to the seventh, the amount is capped, and for an ordinary savings account that cap is ₹10,000.
+
+If you approved the payment yourself after being tricked, the rules read differently. The loss up to the moment you report is yours, and what happens after it is the bank's.
+
+**So the day you report is the day the loss stops.** Report on the day you notice, working day or not.

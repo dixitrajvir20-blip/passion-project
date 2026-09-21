@@ -1,0 +1,5 @@
+{
+  "term": "BrokerCheck",
+  "define": "A free register run by FINRA. It shows whether a person or firm is registered to sell securities or give investment advice, which licences they hold, and any complaints or disciplinary events on the record.",
+  "example": "You search a name on BrokerCheck before money moves, and find no registration at all."
+}

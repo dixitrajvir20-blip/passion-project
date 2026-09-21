@@ -1,0 +1,5 @@
+{
+  "term": "PAN (Permanent Account Number)",
+  "define": "The ten-character number the Income Tax Department issues to a taxpayer. Tax withheld from a payment made to you is deposited against it, which is how the credit reaches your record.",
+  "example": "A payer who has your PAN can deposit the tax it deducts in your name, so a return can claim it back."
+}

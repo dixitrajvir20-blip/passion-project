@@ -4,15 +4,15 @@
  */
 
 export const site = {
-  name: 'LaunchPad',
-  tagline: 'Learn how money actually works.',
+  name: 'Business Lab',
+  tagline: 'Free lessons on money and business for ages 15 to 21',
   description:
     'A free learning hub where anyone aged 15 to 21 can learn how money and business work, then practise with calculators. Editions for India, Europe and the United States.',
   url: 'https://dixitrajvir20-blip.github.io/passion-project',
   owner: 'Rajvir Dixit',
   ownerLocation: 'New York, United States',
   /** Replace with a real mailbox before launch. Used on Privacy, Terms, Accessibility. */
-  contactEmail: 'hello@launchpad-project.example',
+  contactEmail: 'hello@business-lab.example',
   repo: 'https://github.com/dixitrajvir20-blip/passion-project',
   /**
    * Who owns what (docs/PROJECT_BRIEF.md §12). Lessons and other text are shared so teachers and
@@ -54,6 +54,13 @@ if (site.accountsEnabled && !import.meta.env.PUBLIC_AUTH_ORIGIN) {
 }
 
 export const consentCategories = [
+  {
+    id: 'stats' as const,
+    label: 'Learning time on this device',
+    description:
+      'Counts the minutes you spend on the site, day by day, so your dashboard can show them. Kept in this browser only; nothing is sent to us.',
+    active: true,
+  },
   {
     id: 'analytics' as const,
     label: 'Usage statistics',

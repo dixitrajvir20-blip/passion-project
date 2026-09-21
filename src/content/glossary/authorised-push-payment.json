@@ -1,0 +1,5 @@
+{
+  "term": "Authorised push payment",
+  "define": "A transfer you set up and approved yourself, even if a lie got you to do it. Because you authorised it, the refund rule for unauthorised payments does not apply.",
+  "example": "Sending rent to a new IBAN from a scam message is an authorised push payment: the bank did what you asked."
+}

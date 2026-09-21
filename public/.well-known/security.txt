@@ -1,5 +1,5 @@
-# LaunchPad security contact (RFC 9116)
-Contact: mailto:hello@launchpad-project.example
+# Business Lab security contact (RFC 9116)
+Contact: mailto:hello@business-lab.example
 Contact: https://github.com/dixitrajvir20-blip/passion-project/security/advisories/new
 Expires: 2027-09-17T00:00:00.000Z
 Preferred-Languages: en, hi

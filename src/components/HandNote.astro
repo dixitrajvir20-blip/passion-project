@@ -1,0 +1,32 @@
+---
+/**
+ * A short hand-lettered aside ("free, forever", "Step #1"), in the way Aardvark Book Club and Ivy
+ * Kids annotate their pages. Drawn from Kalam at build time (src/lib/hand.ts). The words are in the
+ * page as real text for screen readers and search; the drawing is decoration. Never put the only
+ * copy of an instruction in a note.
+ */
+import { drawHand } from '../lib/hand';
+
+interface Props {
+  text: string;
+  /** Tilt: 'left' (the default), 'right' or 'none'. */
+  tilt?: 'left' | 'right' | 'none';
+  class?: string;
+}
+
+const { text, tilt = 'left', class: className = '' } = Astro.props;
+const art = await drawHand(text);
+---
+
+{art ? (
+  <span class:list={['hand', `hand-${tilt}`, className]}>
+    <span class="visually-hidden">{text}</span>
+    <svg viewBox={`0 ${-art.top} ${art.width} ${art.height}`} aria-hidden="true" focusable="false">
+      <g transform="scale(1 -1)">
+        {art.glyphs.map((g) => <path transform={`translate(${g.x} 0)`} d={g.d} />)}
+      </g>
+    </svg>
+  </span>
+) : (
+  <span class:list={['hand', 'hand-text', `hand-${tilt}`, className]}>{text}</span>
+)}

@@ -12,6 +12,8 @@ import { readFileSync, readdirSync, statSync, mkdirSync, writeFileSync } from 'n
 import { join, resolve } from 'node:path';
 import { Resvg } from '@resvg/resvg-js';
 
+import { badge } from './brand-mark.mjs';
+
 const DIST = resolve('dist');
 const OUT = join(DIST, 'og');
 const W = 1200;
@@ -25,9 +27,8 @@ const token = (name, block = tokens) => {
   return m[1];
 };
 const dark = tokens.slice(tokens.indexOf('@media (prefers-color-scheme: dark)'));
-const colour = { navy: token('brand-navy'), gold: token('brand-gold'), ink: token('ink', dark), muted: token('muted', dark) };
-// The logo's pad tint: a logo-only colour, documented in docs/BRAND_GUIDE.md §4, not a token.
-const PAD = '#5FA0F5';
+const colour = { navy: token('field'), gold: token('brand-gold'), ink: '#FFFFFF', muted: '#C2D4F0' };
+const NAME = 'Business Lab';
 const REGION = { in: 'India edition', eu: 'Europe edition', us: 'United States edition' };
 
 function pages(dir) {
@@ -50,9 +51,9 @@ const unescapeHtml = (s) => s.replace(/&(?:amp|#39|quot|lt|gt);/g, (entity) => E
 
 function describe(file, html) {
   const rel = '/' + file.slice(DIST.length + 1).replace(/index\.html$/, '');
-  const parts = unescapeHtml(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? 'LaunchPad').split(' — ').map((p) => p.trim());
-  // Page titles are "<Page> — LaunchPad <edition>"; the home page is "LaunchPad — <tagline>".
-  const title = parts[0] === 'LaunchPad' && parts[1] ? parts[1] : parts[0];
+  const parts = unescapeHtml(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? NAME).split(' — ').map((p) => p.trim());
+  // Page titles are "<Page> — Business Lab <edition>"; the home page is "Business Lab — <tagline>".
+  const title = parts[0] === NAME && parts[1] ? parts[1] : parts[0];
   const region = rel.match(/^\/(in|eu|us)\//)?.[1];
   const kind = /\/learn\/[^/]+\/[^/]+\//.test(rel) ? 'Lesson' : /\/tools\/[^/]+\//.test(rel) ? 'Calculator' : /\/learn\//.test(rel) ? 'Lessons' : null;
   const label = [kind, region ? REGION[region] : null].filter(Boolean).join('  ·  ');
@@ -90,12 +91,8 @@ function card({ title, label }) {
   const foot = label || 'Free lessons and calculators for ages 15 to 21';
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" font-family="Bricolage Grotesque">
   <rect width="${W}" height="${H}" fill="${colour.navy}"/>
-  <g transform="translate(72 64) scale(0.875)">
-    <path d="M25 47V19" stroke="${colour.gold}" stroke-width="6" stroke-linecap="round" fill="none"/>
-    <path d="M15 28 25 18 35 28" stroke="${colour.gold}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    <path d="M25 47h24" stroke="${PAD}" stroke-width="6" stroke-linecap="round" fill="none"/>
-  </g>
-  <text x="140" y="106" font-size="34" font-weight="700" letter-spacing="-0.7" fill="${colour.ink}">LaunchPad</text>
+  <g transform="translate(72 60) scale(0.9375)">${badge()}</g>
+  <text x="146" y="106" font-size="36" font-weight="800" letter-spacing="-0.7" fill="${colour.ink}">${NAME}</text>
   ${titleText}
   <text x="72" y="572" font-size="26" font-weight="600" fill="${colour.gold}">${esc(foot)}</text>
   <text x="${W - 72}" y="572" font-size="26" text-anchor="end" fill="${colour.muted}">Free. No ads, nothing to sell.</text>
@@ -113,4 +110,8 @@ for (const file of pages(DIST)) {
   writeFileSync(join(OUT, `${slugFor(file)}.png`), png);
   made++;
 }
-console.log(`Share images: ${made} written to dist/og/`);
+// The generic card, for pages that are not meant to be shared on their own.
+writeFileSync(join(DIST, 'og-default.png'), new Resvg(card({ title: 'Money and business, taught for where you live.', label: '' }), {
+  font: { fontFiles: [FONT], loadSystemFonts: false, defaultFontFamily: 'Bricolage Grotesque' },
+}).render().asPng());
+console.log(`Share images: ${made} written to dist/og/, plus og-default.png`);

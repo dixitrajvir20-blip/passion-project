@@ -18,7 +18,7 @@ const lessons = await lessonsFor(region.code);
 ---
 
 <BaseLayout
-  title={`Learn — LaunchPad ${region.name}`}
+  title={`Learn — Business Lab ${region.name}`}
   description={`Three tracks on money, starting a business, and how business works — written for ${region.name}.`}
   region={region.code}
   regionSub="learn"
@@ -49,7 +49,7 @@ const lessons = await lessonsFor(region.code);
         <div class="column">
           <p class="note">
             The {region.name} lessons are being written. The
-            <a href={`${prefix}/tools/break-even`}>break-even calculator</a> already works with
+            <a href={`${prefix}/tools/break-even`}>break-even calculator</a> already works with{' '}
             {region.name} numbers, and the <a href={`${base}/in/learn`}>India edition</a> has the first lessons.
           </p>
         </div>

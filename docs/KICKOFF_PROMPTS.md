@@ -40,12 +40,12 @@ implements the template in LEARNING_DESIGN (hook + prediction poll → concept �
 explorable → faded practice → retrieval check → summary → "explain it to a friend"); a Quiz
 island; a Term popover (use the Popover API behind @supports with a plain details fallback);
 the Leitner review queue in src/lib/progress.ts; and the FIRST THREE India lessons, written per
-REGIONAL_TEACHING (chai stall unit economics, spotting a UPI scam, your first earnings) with
+REGIONAL_TEACHING (a coaching centre's break-even, spotting a UPI fraud, your first payslip) with
 sources the content-reviewer can open.
 Gates: lesson page ≤50KB JS; quiz keyboard-accessible; content-reviewer verified every source;
 a11y-perf-auditor passes; design-reviewer says Ship. Before you build, critique your own plan:
 would you have proposed the same plan for any other site? If yes, it's a default — make it
-specific to LaunchPad and say what changed.
+specific to Business Lab and say what changed.
 ```
 
 ## Phase 3 — The calculator set
@@ -97,5 +97,5 @@ verdict. The protect-files hook will stop you editing the legal pages — that's
 - "Run the ship-check skill and paste the report."
 - "Use the design-reviewer subagent on src/pages/index.astro and tell me the one thing to remove."
 - "Take screenshots at 360 and 1280 in light and dark and describe what changed."
-- "Would you have proposed this for any other product? Make it LaunchPad-specific."
+- "Would you have proposed this for any other product? Make it Business Lab-specific."
 - "What in this diff would fail the anti-slop checklist in docs/BRAND_GUIDE.md §8?"

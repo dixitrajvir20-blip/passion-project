@@ -1,20 +1,33 @@
 ---
+/**
+ * The edition menu: a dropdown showing the current edition's flag and name; open it to pick
+ * another. Built on <details>, so it opens and closes without JavaScript, and the choices are
+ * ordinary links. A little script closes it on Escape or on a click elsewhere. It is on every page
+ * in the same place (WCAG 3.2.3); inside an edition, switching keeps you on the same kind of page.
+ */
+import Flag from './Flag.astro';
 import { REGIONS } from '../lib/regions';
 
 interface Props {
-  current: string;
+  current?: string;
   /** Sub-path within the edition, so switching keeps you on the same kind of page. */
   sub?: string;
 }
 
 const { current, sub = '' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const tail = sub ? `/${sub}` : '';
+const tail = current && sub ? `/${sub}` : '';
+const active = REGIONS.find((r) => r.code === current);
 ---
 
 <nav class="region-tabs" aria-label="Choose your edition">
-  <div class="container">
-    <ul>
+  <details class="edition-menu" data-edition-menu>
+    <summary class="edition-current">
+      {active ? <Flag code={active.code as 'in' | 'eu' | 'us'} /> : null}
+      <span class="edition-current-label">{active ? `${active.name} edition` : 'Choose an edition'}</span>
+      <span class="edition-caret" aria-hidden="true">▾</span>
+    </summary>
+    <ul class="edition-list">
       {REGIONS.map((region) => (
         <li>
           <a
@@ -22,15 +35,29 @@ const tail = sub ? `/${sub}` : '';
             aria-current={region.code === current ? 'true' : undefined}
             data-region={region.code}
           >
-            {region.tab}
+            <Flag code={region.code as 'in' | 'eu' | 'us'} />
+            <span>{region.name}</span>
+            {region.code === current && <span class="edition-mark" aria-hidden="true">✓</span>}
           </a>
         </li>
       ))}
     </ul>
-  </div>
+  </details>
 </nav>
 
 <script>
+  const menu = document.querySelector<HTMLDetailsElement>('[data-edition-menu]');
+  if (menu) {
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    });
+  }
   // Remember the edition so the front page can offer it next time. Preference only:
   // exempt from consent (WP29 Opinion 04/2012; UK PECR preference exception).
   const current = document.querySelector('.region-tabs a[aria-current]');
@@ -44,38 +71,59 @@ const tail = sub ? `/${sub}` : '';
 </script>
 
 <style>
-  .region-tabs {
-    background: var(--bg);
-    padding: var(--space-3) 0 0;
-  }
-  ul {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: var(--space-1);
-    list-style: none;
-    margin: 0;
-    padding: var(--space-1);
-    background: var(--bg-2);
-    border-radius: var(--radius-pill);
-  }
-  li { margin: 0; }
-  a {
+  .region-tabs { position: relative; }
+  .edition-menu { position: relative; }
+  .edition-current {
     display: inline-flex;
     align-items: center;
+    gap: var(--space-2);
     min-height: 44px;
-    padding: 0 var(--space-4);
+    padding: 0 var(--space-3) 0 var(--space-3);
     border-radius: var(--radius-pill);
-    color: var(--ink-2);
-    text-decoration: none;
+    background: var(--paper);
+    color: var(--brand-navy);
+    border: 1.5px solid var(--brand-navy);
+    font-family: var(--font-display);
     font-size: var(--text-sm);
-    font-weight: 600;
-    transition: background var(--dur-fast), color var(--dur-fast);
-  }
-  a:hover { color: var(--ink); background: var(--bg-3); }
-  /* Weight and fill carry the state, not colour alone. */
-  a[aria-current] {
-    color: var(--ink);
-    background: var(--bg);
     font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    white-space: nowrap;
   }
+  .edition-current::-webkit-details-marker { display: none; }
+  .edition-current:hover { background: var(--gold-pale); }
+  .edition-menu[open] .edition-current { background: var(--gold-pale); }
+  .edition-caret { font-size: var(--text-xs); }
+  .edition-menu[open] .edition-caret { transform: rotate(180deg); }
+
+  .edition-list {
+    position: absolute;
+    right: 0;
+    top: calc(100% + var(--space-2));
+    z-index: 50;
+    min-width: 240px;
+    margin: 0;
+    padding: var(--space-2);
+    list-style: none;
+    background: var(--paper);
+    border: 1.5px solid var(--brand-navy);
+    border-radius: var(--radius-m);
+  }
+  .edition-list li { margin: 0; }
+  .edition-list a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-s);
+    color: var(--brand-navy);
+    font-family: var(--font-body);
+    font-size: var(--text-ui);
+    text-decoration: none;
+  }
+  .edition-list a:hover { background: var(--field-pale); }
+  .edition-list a[aria-current] { font-weight: 700; background: var(--gold-pale); }
+  .edition-mark { margin-left: auto; font-weight: 700; }
+  .edition-list :global(.flag), .edition-current :global(.flag) { flex: none; border-radius: var(--radius-xs); }
 </style>

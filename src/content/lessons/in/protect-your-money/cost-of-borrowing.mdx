@@ -1,0 +1,189 @@
+---
+title: "Every loan as a yearly rate: apps and cards"
+summary: "A ₹500 fee for seven days and a card's minimum due are both yearly rates, once you work them out."
+region: in
+track: protect-your-money
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-20
+
+situation: "An app offers ₹5,000 for seven days and takes a ₹500 fee for it. The same week your card statement shows ₹20,000 owed and a minimum amount due of ₹1,000. Both figures look small beside what they are attached to."
+
+prediction:
+  q: "The app charges ₹500 to lend ₹5,000 for seven days. As a simple yearly rate, what is that?"
+  options:
+    - text: "About 10% a year: the fee divided by the amount"
+      why: "10% is the price of one week, not of a year. The length of the loan is the part that is easy to skip."
+    - text: "About 120% a year, since 10% a month makes 120%"
+      why: "Seven days is a week, not a month. Reading a week's cost as a month's divides the real rate by about four."
+    - text: "About 521% a year, since that week repeats about 52 times"
+      why: "A week is a fifty-second of a year, so the weekly cost multiplies by about 52. A short loan hides its rate in its length."
+  answer: 2
+
+takeaways:
+  - "A fee is a rate in disguise. Divide it by the amount borrowed, then multiply by how many of those periods fit in a year."
+  - "Before you sign a digital loan, an RBI-regulated lender must give you a Key Facts Statement with the APR, and a cooling-off period of at least one day after."
+  - "A card's minimum amount due pays that month's interest first. The rest of the balance stays owed, and your repayment record goes to the credit information companies each fortnight."
+
+worked:
+  kind: split
+  context: "The card statement from the top of the page: ₹20,000 owed, with a minimum amount due of ₹1,000. The rate here, 3.5% a month, is an example; your own statement prints its own rate and its own minimum. The minimum is 5% of the balance and the month's interest is 3.5% of it, so the difference, 1.5%, is the part that comes off what you owe."
+  income: 20000
+  shares:
+    - { label: "Minimum amount due, 5% of the balance", percent: 5 }
+    - { label: "Interest for the month, at 3.5% a month", percent: 3.5 }
+    - { label: "What comes off the ₹20,000", percent: 1.5 }
+
+explorable:
+  kind: loan
+  principal: 20000
+  rate: 36
+  terms: [6, 12, 24, 36]
+  prompts:
+    - "Start at 12 months. The 36% a year here is an example rate, not an offer. Read the third line, what borrowing costs, and hold that figure in mind."
+    - "Now tap 36 months. The monthly payment falls and the total cost rises, because the same debt sits there for three years of interest instead of one."
+
+practice:
+  kind: loan
+  context: "A friend is offered ₹5,000 by a lender on RBI's list. Its Key Facts Statement shows 36% a year, an example rate, with no other charges, repaid over 12 months."
+  principal: 5000
+  rate: 36
+  months: 12
+
+quiz:
+  - q: "Two apps will lend you ₹10,000. One shows 2.5% a month and calls its fees small. The other shows an APR of 34% a year on a Key Facts Statement. What do you do?"
+    options:
+      - text: "Take the 2.5% one, because 2.5 is smaller than 34"
+        why: "A monthly rate set beside a yearly one is not a comparison. 2.5% a month is at least 30% a year before any fee is counted."
+      - text: "Ask the first app for its Key Facts Statement, then compare the two APRs"
+        why: "An APR is the yearly cost with the interest and every charge folded in. One yearly figure against another is the only fair comparison."
+      - text: "Take whichever has the smaller monthly payment"
+        why: "A smaller monthly payment usually means a longer term, and more months of interest. The payment size is not the cost."
+    answer: 1
+  - q: "A shop offers your ₹12,000 phone on a no-interest plan: ₹12,000 in three monthly parts, plus a ₹600 processing fee taken today. How do you read the cost?"
+    options:
+      - text: "It is free credit, because the plan charges no interest"
+        why: "The ₹600 is the price of the credit, whatever the plan calls it. A fee instead of interest is still a charge for the three months."
+      - text: "₹600 on ₹12,000 buys three months, so 5% a quarter, or about 20% a year at the least"
+        why: "The fee turns into a rate once you divide it by the amount and stretch it to a year. Each instalment shrinks what you owe, so the real APR is higher still."
+      - text: "₹600 is the yearly cost, so about 5% a year"
+        why: "The ₹600 buys three months, not twelve. Reading a quarter's cost as a year's divides the real rate by four."
+    answer: 1
+  - q: "Your card statement shows ₹20,000 owed, a minimum amount due of ₹1,000, and a due date on Friday. You have ₹6,000 you had not planned to spend. What do you do?"
+    options:
+      - text: "Pay the ₹1,000 minimum and keep the ₹5,000 for the month"
+        why: "That is on time, and the ₹19,000 left keeps collecting interest. The statement's own warning is about exactly this."
+      - text: "Pay the ₹6,000, so the interest next month runs on a smaller balance"
+        why: "Anything above the minimum is still on time, and it cuts the balance the rate is charged on. The rest stays owed."
+      - text: "Pay nothing now and clear the whole ₹20,000 next month"
+        why: "Missing the due date adds a late charge, and the miss is reported to the credit information companies. The rate keeps running meanwhile."
+    answer: 1
+  - q: "You took a ₹6,000 digital loan yesterday from an RBI-regulated lender. Today a scholarship covers the fee and the money is no longer needed. What do you do?"
+    options:
+      - text: "Nothing. The agreement is signed, so the loan has to run its term"
+        why: "Digital loans from RBI-regulated lenders carry a cooling-off period of at least one day. Signing does not close the exit."
+      - text: "Stop repaying and let the loan lapse"
+        why: "Missed payments add charges, and the default reaches the credit information companies within the fortnight. Going quiet costs more than exiting."
+      - text: "Use the cooling-off period: repay what you borrowed and the cost for the days you held it"
+        why: "Inside the cooling-off period you can exit with no penalty, paying the proportionate cost. A processing fee the statement listed may still be kept."
+    answer: 2
+  - q: "You missed a card payment four months ago and cleared it soon after. A lender has now turned down a small loan. What do you do first?"
+    options:
+      - text: "Apply to three more lenders until one says yes"
+        why: "Each application is recorded, and a run of them makes the next lender warier. Nothing about the record itself changes."
+      - text: "Claim the free full credit report you can ask for once each calendar year, and read it"
+        why: "Lenders send your repayment record to the credit information companies twice a month. The report is where you see what the lender saw."
+      - text: "Assume the record is wrong and put it out of mind"
+        why: "It may be right, and it may not. If something is wrong, a correction goes through the company or the lender, and the rules give them 30 days."
+    answer: 1
+
+transfer:
+  - "Any offer priced as a fee: a week's loan, a no-cost instalment plan, a charge for paying late. Turn it into a yearly rate before you set it beside anything else."
+  - "Before you sign a digital loan. Read the Key Facts Statement, find the APR and the cooling-off period, and look the lender up on RBI's lists."
+  - "Each time a card statement arrives. Read the balance, the minimum amount due and the rate, then decide how much of the balance you are leaving to collect interest."
+  - "Once in a calendar year, when you claim the free full credit report and check that it matches what you actually did."
+
+glossary: [interest, key-facts-statement, apr, cooling-off-period, nbfc, minimum-amount-due, credit-information-company, credit-report]
+tool: loan
+
+sources:
+  - title: "Reserve Bank of India (Digital Lending) Directions, 2025: Key Facts Statement, APR, a cooling-off period of at least one day, the published list of digital lending apps, and the bar on reading contacts, files and call logs (8 May 2025)"
+    url: "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12848"
+    publisher: "Reserve Bank of India"
+  - title: "Key Facts Statement (KFS) for Loans and Advances: APR is the annual cost of credit including interest and all other charges, and fees left off the statement need the borrower's explicit consent (15 April 2024)"
+    url: "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12663"
+    publisher: "Reserve Bank of India"
+  - title: "RBI cautions against unauthorised digital lending platforms and mobile apps: excessive rates, hidden charges, rough recovery, and the Sachet portal for complaints (23 December 2020)"
+    url: "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=50846"
+    publisher: "Reserve Bank of India"
+  - title: "Master Direction, Credit Card and Debit Card, Issuance and Conduct Directions, 2022: the minimum amount due must avoid negative amortisation, and every billing statement carries the minimum-payment warning (updated 7 March 2024)"
+    url: "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12300"
+    publisher: "Reserve Bank of India"
+  - title: "Master Direction, Reserve Bank of India (Credit Information Reporting) Directions, 2025: fortnightly submission of borrower data to all credit information companies, alerts on default reporting, one free full credit report a year, and a 30-day correction timeline (6 January 2025)"
+    url: "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12764"
+    publisher: "Reserve Bank of India"
+  - title: "Free Annual Credit Report to Individuals: credit information companies must give each individual one free full credit report, with the credit score, once a calendar year (1 September 2016)"
+    url: "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=10590"
+    publisher: "Reserve Bank of India"
+---
+
+## Turn the fee into a rate
+
+An app offers ₹5,000 for seven days and takes ₹500 for it. A single fee sounds flat, so it reads as small.
+
+It is not flat. ₹500 on ₹5,000 is 10% of what you borrowed, and it buys one week. A year holds about 52 of those weeks.
+
+**A fee becomes a rate once you divide it by the amount and stretch it over a year.** At 10% a week, the simple yearly rate is about 521%.
+
+Two steps, on any offer. Divide the charge by the sum borrowed. Then multiply by how many of those periods fit in a year. <Term id="interest">Interest</Term> quoted by the month needs only the second step. Every rate below is an example.
+
+| Offer | The rate it names | The same cost, simple, over a year |
+| --- | --- | --- |
+| ₹500 to borrow ₹5,000 for 7 days | 10% for the week | about 521% |
+| A card at 3.5% a month | 3.5% a month | 42% |
+| A loan at 3% a month | 3% a month | 36% |
+
+## What the lender must show you first
+
+Before you sign a digital loan, an RBI-regulated lender gives you a <Term id="key-facts-statement">Key Facts Statement</Term>. It lists the amount, each repayment, every charge, and the <Term id="apr">APR</Term>.
+
+APR is the yearly cost of the credit, with the interest and every charge folded in. **It is the one number on which two offers can be compared.** A charge left off the statement cannot be added later without your clear agreement.
+
+Then comes a <Term id="cooling-off-period">cooling-off period</Term>, at least one day long. Inside it you can hand the loan back. You repay what you borrowed and the cost for those days, and no penalty is charged. A processing fee the statement listed may be kept.
+
+## Checking who is behind an app
+
+A loan app is a front counter. The money comes from a bank or an <Term id="nbfc">NBFC</Term>, a finance company registered with the Reserve Bank of India.
+
+**A lawful app names that lender before you agree to anything.** RBI publishes a list of digital lending apps, filled in by the lenders themselves, and a list of registered NBFCs. A listing is not RBI approval. Still, if neither name is there, nothing supports the claim.
+
+RBI has warned publicly about unauthorised lending apps: excessive rates, hidden charges, rough collection. Its rules also bar a lawful app from reading your contacts, files or call logs. Complaints about an entity RBI does not regulate go to its Sachet portal, sachet.rbi.org.in.
+
+## The minimum due is not the bill
+
+A card statement names two figures: what you owe, and a <Term id="minimum-amount-due">minimum amount due</Term>. Paying the minimum by the due date counts as on time. The rest stays owed, and it carries interest.
+
+On the ₹20,000 above, at an example rate of 3.5% a month, the month's interest is ₹700. The ₹1,000 minimum covers that first. **Only ₹300 of it comes off the ₹20,000.**
+
+RBI requires the minimum to be at least the month's interest and charges, so the balance cannot grow while you pay it. RBI's wording for every statement says that paying only the minimum leaves "repayment stretching over months / years with consequential compounded interest payment".
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="min-title min-desc">
+  <title id="min-title">Where a ₹1,000 minimum amount due goes</title>
+  <desc id="min-desc">One bar in two parts. ₹700 pays the month's interest on the ₹20,000 balance. Only ₹300 comes off the balance itself.</desc>
+  <rect class="chart-b" x="0" y="26" width="220" height="36" rx="6" />
+  <rect class="chart-a" x="224" y="26" width="96" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Interest for the month: ₹700</text>
+  <text class="chart-label" x="320" y="80" text-anchor="end">Off the balance: ₹300</text>
+  <text class="chart-note" x="0" y="100">₹1,000 minimum amount due, on ₹20,000 at 3.5% a month</text>
+</svg>
+
+## What reaches your credit report
+
+Lenders and card issuers send your repayment record to the <Term id="credit-information-company">credit information companies</Term> every fortnight. A late payment or a default is reported, and you are sent an alert when it is.
+
+That record becomes your <Term id="credit-report">credit report</Term>, and it is what the next lender reads. **A ₹500 fee is over in a week. A missed payment travels to the next lender.**
+
+You can ask each company for one free full credit report, with the score, once in a calendar year. Read it. If something in it is wrong, a correction goes through the company or the lender, and the rules give them 30 days.

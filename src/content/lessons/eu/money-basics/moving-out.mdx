@@ -1,0 +1,196 @@
+---
+title: "Can you afford to move out? The 40% line"
+summary: "Test a rent against your net pay with Eurostat's 40% line, and see what is left for everything else."
+region: eu
+track: money-basics
+order: 3
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-21
+
+situation: "A room in a shared flat is offered at €520 a month plus bills. Your net pay is €1,125, and the landlord wants an answer by Friday."
+
+prediction:
+  q: "Your net pay is €1,125 a month. The room is €520, and the flat's bills come to about €80. Which figure tells you whether that is affordable?"
+  options:
+    - text: "The rent on its own, against your monthly pay"
+      why: "Rent alone leaves out heating, electricity, water and the rest. Eurostat measures total housing costs, and the landlord's price is only part of them."
+    - text: "Rent and bills together, as a share of net pay"
+      why: "€600 of €1,125 is 53%. Eurostat counts a household as overburdened above 40%, so this offer is well past the line."
+    - text: "Whether €520 is a normal price for a room in this city"
+      why: "A normal price in an expensive city can still be unaffordable on your pay. The comparison that settles it is against your own net pay."
+  answer: 1
+
+takeaways:
+  - "Eurostat counts a household as overburdened when total housing costs pass 40% of disposable income. Bills count, not the rent alone."
+  - "The deposit, the first month's rent and the move itself all land at once. Size that figure before you answer the landlord."
+  - "What is left after housing has to cover food, transport, your phone and a buffer. That remainder decides it."
+
+worked:
+  kind: split
+  context: "The offer from the top of the page, against net pay of €1,125 a month. The rent is €520 and the bills are taken as €80, which is the figure to ask the current tenants for. Eurostat draws its line at 40% of disposable income, and the last row is what is left once housing is paid."
+  income: 1125
+  shares:
+    - { label: "Housing at the 40% line", percent: 40 }
+    - { label: "Rent and bills in this offer", percent: 53.3 }
+    - { label: "Left for everything else", percent: 46.7 }
+
+explorable:
+  kind: split
+  incomes: [900, 1125, 1400]
+  lines:
+    - { label: "Rent and bills", percent: 40, hint: "Housing as Eurostat counts it: the rent, plus water, electricity, gas and heating" }
+    - { label: "Food", percent: 20, hint: "The weekly shop, and anything eaten out" }
+    - { label: "Transport and phone", percent: 10, hint: "A travel pass or fuel, and the phone plan" }
+    - { label: "Savings", percent: 10, hint: "The buffer for a month that goes wrong" }
+  prompts:
+    - "Tap €1,125, the net pay from the top of the page. Rent and bills start on the 40% line, at €450. Raise that share a step at a time until the amount passes the €600 this room would cost, then read the line about what has no job yet."
+    - "Tap €900, a month with fewer shifts. Every amount falls with the income, but a real rent does not. Raise the housing share until its amount is back at €450, then read what that leaves the rest of the month."
+
+practice:
+  kind: split
+  context: "A friend in another city is offered a studio at €430 a month, with bills of about €70. Her net pay is €1,240 a month, so her 40% line is worked out first."
+  income: 1240
+  shares:
+    - { label: "Housing at the 40% line", percent: 40 }
+    - { label: "Rent and bills in the studio", percent: 40.3 }
+  target: "Rent and bills in the studio"
+
+quiz:
+  - q: "The €520 room plus €80 of bills would take 53% of your net pay. The landlord wants an answer by Friday. What do you do?"
+    options:
+      - text: "Sign, because rooms go quickly in this city"
+        why: "The slip is letting the landlord's deadline set the size of the decision. At 53% of net pay, €525 is left to cover food, transport and everything else."
+      - text: "Turn this one down and keep looking nearer the line"
+        why: "On €1,125 the 40% line is €450 of housing cost, bills included. A cheaper room, or one more flatmate, brings the total inside it."
+      - text: "Sign, and plan to pick up extra shifts to cover the gap"
+        why: "This counts hours nobody has offered yet. The rent is fixed for the term, so a quiet month leaves the gap open."
+    answer: 1
+  - q: "A room at €480 a month asks for a deposit of two months' rent, plus the first month in advance, on the day you collect the keys. You have €1,300 saved. What do you work out first?"
+    options:
+      - text: "Whether €480 a month fits your pay"
+        why: "That matters, and it is not the first problem here. Day one asks for three months of rent at once, which is €1,440."
+      - text: "The total due on day one, against what you have saved"
+        why: "Two months of deposit plus the first month is €1,440. With €1,300 saved, the move is €140 short before any rent falls due."
+      - text: "Nothing, because the deposit comes back anyway"
+        why: "It comes back at the end, if nothing is owed. Until then it is held, and it cannot pay for the move or the first food shop."
+    answer: 1
+  - q: "A room is listed at €300 in a city where similar rooms cost €550. The landlord says he is working abroad, cannot arrange a viewing, and asks for the deposit by money transfer before he posts the keys. What do you do?"
+    options:
+      - text: "Pay the deposit, because the price is worth a small risk"
+        why: "A price far under the market, an absent landlord and money before keys are the pattern the European Consumer Centre in Germany describes. Its advice is to pay nothing in advance."
+      - text: "Ask for a video call instead of a viewing, then pay"
+        why: "A call shows a room, not that the person showing it may let it. The advice is to pay nothing until you have seen the property and signed."
+      - text: "Pay nothing, and report the listing to the portal"
+        why: "Three warning signs arrive together: the price, the absent landlord and the advance transfer. Portals act on reports, and the police are the route once money has gone."
+    answer: 2
+  - q: "Two rooms are open to you. One is €380 with €80 of bills, a 40-minute bus ride from work. One is €520 with €80 of bills, a 10-minute walk. Your net pay is €1,125. How do you compare them?"
+    options:
+      - text: "Take the nearer room, since the time saved is worth €140 a month"
+        why: "The time saved may well be worth it. That is a judgement to make once the travel cost and the remainder are on paper, not instead of them."
+      - text: "Work out what is left after housing for each, then price the travel"
+        why: "The cheaper room leaves €665 before a travel pass. The nearer one leaves €525 and no fare. Both figures are needed before the walk can be priced."
+      - text: "Take the cheaper room, because it sits inside the 40% line"
+        why: "€460 of €1,125 is 41%, which is just over the line. It is far closer than the other room, and the remainder still decides it."
+    answer: 1
+
+transfer:
+  - "When a room is offered and an answer is wanted quickly. Work out rent plus bills as a share of your net pay before you reply."
+  - "Before you agree to anything. Add the deposit, the first month and the cost of the move into one figure, and check it against your savings."
+  - "When your rent, your pay or your city changes. The 40% line moves with your net pay, so the sum is worth doing again."
+  - "When a listing asks for money before a viewing. Pay nothing, report it to the portal operator, and tell the police if you have already paid."
+
+glossary: [net-pay, housing-cost-overburden, disposable-income, emergency-fund, rental-deposit, rental-contract, european-consumer-centre]
+tool: budget
+
+reportTo:
+  url: "https://www.eccnet.eu/"
+  label: "Report the listing to the portal operator, and tell the police if you have paid. For free advice on a dispute with a business in another EU country, Norway or Iceland, find your national European Consumer Centre at"
+
+sources:
+  - title: "Glossary: housing cost overburden rate, more than 40% of disposable income, and what counts as total housing costs (accessed 21 September 2026)"
+    url: "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Housing_cost_overburden_rate"
+    publisher: "Eurostat, European Commission"
+  - title: "Living conditions in Europe: housing. EU overburden rate 8.2% in 2024; 31.6% of people rent (data extracted November 2025)"
+    url: "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Living_conditions_in_Europe_-_housing"
+    publisher: "Eurostat, European Commission"
+  - title: "Young people: housing conditions. Average age of leaving the parental home 26.2 in 2024, from 21.4 in Finland to 31.3 in Croatia; overburden rate 9.7% at ages 15-29 (data extracted August 2025)"
+    url: "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Young_people_-_housing_conditions"
+    publisher: "Eurostat, European Commission"
+  - title: "Fraud on property portals: how the scammers work, and why to pay nothing in advance (updated 27 March 2026)"
+    url: "https://www.evz.de/en/shopping-internet/internet-fraud/rental-fraud.html"
+    publisher: "European Consumer Centre Germany"
+  - title: "European Consumer Centres Network: free advice on a business in another EU country, Norway or Iceland (accessed 21 September 2026)"
+    url: "https://www.eccnet.eu/"
+    publisher: "European Consumer Centres Network"
+---
+
+## The room, and the number it has to fit
+
+€520 a month, plus bills. Your <Term id="net-pay">net pay</Term> is €1,125. The question is not whether €520 sounds like a lot. It is what €520 leaves.
+
+Young people in the EU left the parental home at an average age of 26.2 in 2024. The average was 21.4 years in Finland and 31.3 years in Croatia. Whatever a room costs where you live, the test is the same one.
+
+**That test is rent plus bills, measured against the pay that reaches your account.**
+
+## What the 40% line measures
+
+Eurostat, the EU's statistics office, has a marker for this. A household is in <Term id="housing-cost-overburden">housing cost overburden</Term> when total housing costs come to more than 40% of <Term id="disposable-income">disposable income</Term>.
+
+Two details matter. The line is drawn on total housing costs, which take in water, electricity, gas and heating, not on the rent alone. And it describes a household, so on one income the sum is yours.
+
+In 2024, 8.2% of people in the EU lived in an overburdened household. Among 15 to 29-year-olds it was 9.7%.
+
+**The 40% line is a marker, not a rule.** It is where official statistics count housing as taking too large a share.
+
+## Run it on this offer
+
+Three figures go into the sum. Your net pay, €1,125. The rent, €520. And the bills, which the advert does not mention.
+
+Ask the current tenants what the bills come to, and use their figure rather than an estimate. Take €80 for now. The same three figures work in any currency: in Poland the sum is in złoty, in Sweden in kronor.
+
+<svg class="chart" viewBox="0 0 320 114" role="img" aria-labelledby="rent-title rent-desc">
+  <title id="rent-title">Housing cost against the 40% line, on €1,125 of net pay</title>
+  <desc id="rent-desc">Two bars, both measured against €1,125 of net pay. The 40% line is €450 of housing cost. Rent of €520 plus €80 of bills is €600, which is 53% of net pay.</desc>
+  <rect class="chart-a" x="0" y="22" width="128" height="22" rx="6" />
+  <rect class="chart-b" x="0" y="66" width="171" height="22" rx="6" />
+  <text class="chart-label" x="0" y="16">The 40% line: €450</text>
+  <text class="chart-label" x="0" y="60">This room and its bills: €600</text>
+  <text class="chart-note" x="0" y="108">Both as a share of €1,125 of net pay</text>
+</svg>
+
+**What decides this is the figure left after housing, not the rent on its own.** Here that figure is €525 a month.
+
+## What the remainder has to cover
+
+After housing, €525 covers food, transport, your phone and whatever breaks. It also has to leave something for an <Term id="emergency-fund">emergency fund</Term>.
+
+Write that list out before you answer the landlord, using real figures from your own last three months.
+
+**If the list does not fit, the room is not affordable.** A cheaper room, one more flatmate, or a few more months where you are: those are the levers you still hold. The rent, once the contract is signed, is not one of them.
+
+## What day one costs
+
+Rent is monthly. The move is not.
+
+A <Term id="rental-deposit">rental deposit</Term> is money the landlord holds against unpaid rent or damage, and returns at the end if nothing is owed. Deposit rules are national: how large one may be, and how it must be held, differs between countries. Your national housing or consumer authority states the rule where you are renting.
+
+Add the deposit, the first month and the cost of the move itself. **That total, not the monthly rent, is what has to fit inside your savings.**
+
+| Due on day one in this example, at €520 a month | Amount |
+| --- | --- |
+| Deposit, two months' rent | €1,040 |
+| First month's rent | €520 |
+| Bills deposit or connection | €60 |
+| Moving your things | €80 |
+| Total before the first payday | €1,700 |
+
+## Never pay before you see it
+
+The European Consumer Centre in Germany describes a steady pattern. The price sits far below the local market. The landlord is abroad and cannot arrange a viewing. Money is wanted by transfer, before any keys. Its advice is plain: "Never pay in advance, either for the deposit or for the keys".
+
+**Pay nothing until you have seen the property and signed for it.** A <Term id="rental-contract">rental contract</Term> sets the rent, the notice period and who pays which bills.
+
+Report a listing that asks for money up front to the portal operator. A <Term id="european-consumer-centre">European Consumer Centre</Term> advises free of charge when the business is in another EU country.

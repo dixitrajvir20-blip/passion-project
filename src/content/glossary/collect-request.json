@@ -1,0 +1,5 @@
+{
+  "term": "Collect request",
+  "define": "A UPI message asking you to approve a payment. Approving it and entering your PIN sends your money to whoever asked. Since October 2025 UPI no longer carries requests between two people; requests from business accounts still run, so a scam request now arrives under a shop name.",
+  "example": "A 'refund' that arrives as a request to approve is money about to leave your account, not enter it."
+}

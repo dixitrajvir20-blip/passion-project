@@ -1,134 +1,103 @@
 ---
 import Logo from './Logo.astro';
+import RegionTabs from './RegionTabs.astro';
 import { site } from '../lib/site';
 
 interface Props {
   /** Region code when inside an edition; links stay global without one. */
   region?: string;
+  /** Sub-path the edition switch keeps when changing edition. */
+  regionSub?: string;
   path?: string;
 }
 
-const { region, path = '' } = Astro.props;
+const { region, regionSub = '', path = '' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = region ? `${base}/${region}` : base;
 
-const links = region
-  ? [
-      { label: 'Learn', to: `${prefix}/learn`, key: 'learn' },
-      { label: 'Tools', to: `${prefix}/tools`, key: 'tools' },
-      { label: 'Glossary', to: `${base}/glossary`, key: 'glossary' },
-      // Five items do not fit a 360px row; About is also in the footer, so it yields on phones.
-      { label: 'About', to: `${base}/about`, key: 'about', wide: true },
-      { label: 'Search', to: `${base}/search`, key: 'search' },
-    ]
-  : [
-      { label: 'Glossary', to: `${base}/glossary`, key: 'glossary' },
-      { label: 'About', to: `${base}/about`, key: 'about' },
-      { label: 'Search', to: `${base}/search`, key: 'search' },
-    ];
+const links = [
+  { label: 'Learn', to: region ? `${prefix}/learn` : `${base}/#editions`, key: 'learn' },
+  { label: 'Calculators', to: region ? `${prefix}/tools` : `${base}/#calculators`, key: 'tools' },
+  { label: 'Glossary', to: `${base}/glossary`, key: 'glossary', wide: true },
+  { label: 'Dashboard', to: `${base}/dashboard`, key: 'dashboard' },
+  { label: 'About', to: `${base}/about`, key: 'about', wide: true },
+  { label: 'Search', to: `${base}/search`, key: 'search' },
+];
 ---
 
-<header class="site-header">
+<header class="site-header on-field" id="top">
   <div class="container header-inner">
-    <a class="brand" href={region ? prefix : `${base}/`} aria-label="LaunchPad home">
-      <Logo size={26} />
-      <span class="wordmark">LaunchPad</span>
+    <a class="brand" href={region ? prefix : `${base}/`} aria-label={`${site.name} home`}>
+      <Logo size={40} />
+      <span class="wordmark">{site.name}</span>
     </a>
-    <nav aria-label="Main">
+    <nav class="main-nav" aria-label="Main">
       <ul>
         {links.map((l) => (
-          <li class={'wide' in l && l.wide ? 'nav-wide' : undefined}>
-            <a href={l.to} aria-current={path === l.key ? 'page' : undefined} data-astro-prefetch>
-              {l.label}
-            </a>
+          <li class={l.wide ? 'nav-wide' : undefined}>
+            <a href={l.to} aria-current={path === l.key ? 'page' : undefined} data-astro-prefetch>{l.label}</a>
           </li>
         ))}
         {site.accountsEnabled && (
-          <li class="nav-account">
-            <a class="btn btn-secondary btn-sm" href={`${base}/account`} aria-current={path === 'account' ? 'page' : undefined}>
-              Sign in
-            </a>
-          </li>
+          <li><a href={`${base}/account`} aria-current={path === 'account' ? 'page' : undefined}>Sign in</a></li>
         )}
       </ul>
     </nav>
+    <RegionTabs current={region} sub={regionSub} />
   </div>
 </header>
 
 <style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid var(--line);
-  }
-  @supports not (backdrop-filter: blur(1px)) {
-    .site-header { background: var(--bg); }
-  }
-  @media (prefers-reduced-transparency: reduce) {
-    .site-header { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
-  }
+  /* The header sits on the dark-blue field: white wordmark, a white pill group for the site's
+     sections, and the edition menu at the right. */
+  .site-header { background: var(--field); position: relative; z-index: 40; }
+  @media (min-width: 900px) { .site-header { position: sticky; top: 0; } }
 
   .header-inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'brand editions' 'nav nav';
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    height: var(--header-h);
+    gap: var(--space-3) var(--space-3);
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
   }
+  @media (min-width: 900px) {
+    .header-inner { grid-template-columns: auto 1fr auto; grid-template-areas: 'brand nav editions'; min-height: var(--header-h); }
+  }
+  .brand { grid-area: brand; display: inline-flex; align-items: center; gap: var(--space-3); color: var(--ink); text-decoration: none; min-height: 44px; }
+  .wordmark { font-family: var(--font-display); font-weight: 800; font-size: var(--text-wordmark); letter-spacing: -0.02em; color: var(--ink); }
+  @media (max-width: 559px) { .wordmark { display: none; } }
+  .site-header :global(.region-tabs) { grid-area: editions; justify-self: end; }
 
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    color: var(--ink);
-    text-decoration: none;
-    padding: var(--space-2) 0;
-    min-height: 44px;
-  }
-  .wordmark {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--text-wordmark);
-    letter-spacing: -0.02em;
-    color: var(--ink);
-  }
-  /* On narrow screens the mark alone is the brand, so the whole nav fits on one 52px row. */
-  @media (max-width: 639px) { .wordmark { display: none; } }
-
-  nav ul {
+  .main-nav { grid-area: nav; justify-self: start; }
+  @media (min-width: 900px) { .main-nav { justify-self: center; } }
+  .main-nav ul {
     display: flex;
-    align-items: center;
-    gap: var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-1);
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: var(--space-1);
+    border-radius: var(--radius-pill);
   }
-  @media (min-width: 640px) { nav ul { gap: var(--space-5); } }
-  nav li { margin: 0; }
-  @media (max-width: 479px) { .nav-wide { display: none; } }
-
-  nav a:not(.btn) {
+  .main-nav li { margin: 0; }
+  @media (max-width: 419px) { .nav-wide { display: none; } }
+  .main-nav ul { background: var(--paper); }
+  .main-nav a {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
-    color: var(--ink-2);
-    text-decoration: none;
+    min-height: 40px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-pill);
+    color: var(--brand-navy);
+    font-family: var(--font-display);
     font-size: var(--text-sm);
-    font-weight: 400;
-    transition: color var(--dur-fast);
-  }
-  nav a:not(.btn):hover { color: var(--ink); }
-  nav a:not(.btn)[aria-current='page'] {
-    color: var(--ink);
     font-weight: 700;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 8px;
-    text-decoration-color: var(--accent);
+    text-decoration: none;
   }
-  .nav-account { margin-left: var(--space-2); }
+  @media (min-width: 640px) { .main-nav a { padding: 0 var(--space-4); } }
+  .main-nav a:hover { background: var(--field-pale); }
+  .main-nav a[aria-current='page'] { background: var(--gold-pale); color: var(--on-gold); }
+  .main-nav a:focus-visible { outline-offset: 1px; }
 </style>

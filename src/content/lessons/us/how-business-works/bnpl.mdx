@@ -1,0 +1,185 @@
+---
+title: "How pay-in-four makes money, and what it costs you"
+summary: "The seller pays the plan a cut of each sale. Your side of the cost arrives when instalments stack or one is late."
+region: us
+track: how-business-works
+order: 2
+readingMinutes: 7
+level: beginner
+author: { name: "Rajvir", country: "US" }
+reviewedBy: "Business Lab editor"
+lastReviewed: 2026-09-20
+
+situation: "Three purchases in one week, $60 each, each split into four payments of $15. That is twelve instalments running over the next six weeks, against take-home pay of $1,317 every two weeks."
+
+prediction:
+  q: "The plan adds no interest to your $60, and the seller is paid in full today. Where does the plan's money come from?"
+  options:
+    - text: "Interest, added quietly to the later instalments"
+      why: "Pay-in-four is normally 0% to the buyer. The four payments add up to the price, and the price did not change."
+    - text: "A cut of each sale, paid by the seller"
+      why: "In the CFPB's figures for five large lenders, fees charged to sellers were the largest revenue line, well ahead of anything paid by borrowers."
+    - text: "Late fees alone, from the people who miss a payment"
+      why: "Late fees are real revenue, but a much smaller one. In the same figures they were a fraction of what sellers paid."
+  answer: 1
+
+takeaways:
+  - "Pay-in-four is credit. The seller is paid in full today, and you owe a lender the rest over six weeks."
+  - "The plan's largest revenue is a cut of the sale, paid by the seller, so a price has to cover it like any other selling cost."
+  - "Instalments are small one at a time. Plans cannot see each other, so you are the only one who can add them up against a payday."
+
+worked:
+  kind: split
+  context: "The next payday, two weeks after those three purchases: $1,317 of take-home pay. Each plan takes one $15 instalment from it. The last line is the three together, as a share of this paycheck, rounded to the dollar."
+  income: 1317
+  shares:
+    - { label: "Rent, bills and food", percent: 62 }
+    - { label: "Savings, moved on payday", percent: 10 }
+    - { label: "The three instalments due today", percent: 3.4 }
+
+explorable:
+  kind: split
+  incomes: [1317, 2634]
+  lines:
+    - { label: "Rent, bills and food", percent: 62, hint: "Fixed dates, whatever the month brings" }
+    - { label: "Savings, moved on payday", percent: 10, hint: "Before any spending" }
+    - { label: "Pay-later instalments", percent: 3.4, hint: "Three plans, $15 each on each payday" }
+    - { label: "Everything else", percent: 24.6, hint: "Transport, phone, going out" }
+  prompts:
+    - "Tap $2,634, a month with two paydays in it. The instalments line now holds six payments: one from each plan on each payday."
+    - "Press + once on the instalments line, then read the sentence under the rows. The month does not grow, so another line has to come down."
+
+practice:
+  kind: split
+  context: "A friend is paid $1,050 every two weeks after deductions, and has four plans running. Between them the plans take 4% of this paycheck."
+  income: 1050
+  shares:
+    - { label: "Rent, bills and food", percent: 55 }
+    - { label: "Savings", percent: 8 }
+    - { label: "Pay-later instalments", percent: 4 }
+  target: "Pay-later instalments"
+
+quiz:
+  - q: "You sell prints for $40 each and a pay-later plan offers to pay you in full at the till for a cut of each sale. What do you work out before turning it on?"
+    options:
+      - text: "Nothing, because the buyer pays the plan and not you"
+        why: "The buyer pays $40 either way. The plan's cut comes out of the $40 before it reaches you, so it is your cost, not theirs."
+      - text: "What the cut comes to in dollars, against what you keep on one print"
+        why: "A cut of the price is a bigger share of your margin than of the price. That figure decides whether the extra orders are worth it."
+      - text: "Whether the plan charges the buyer interest"
+        why: "Most pay-in-four is 0% to the buyer. That is the plan's offer to them, and it changes nothing about what the plan charges you."
+    answer: 1
+  - q: "Three plans already take $15 each on Friday. At a fourth checkout, a $15 instalment every two weeks is offered. What decides whether it fits?"
+    options:
+      - text: "Whether $15 fits on its own"
+        why: "On its own $15 always fits. The slip is judging each plan alone when one payday has to carry all four."
+      - text: "All four instalments together, against what is left of Friday's pay"
+        why: "The four leave on the same date. What is left after rent and food is the figure they have to fit inside."
+      - text: "Whether the plan approves you at the checkout"
+        why: "Approval is the lender's view of its own risk. It cannot see the plans you hold elsewhere, so it is not a check on your month."
+    answer: 1
+  - q: "It is Thursday. Your account holds $9, an instalment of $15 runs on Friday, and pay lands on Saturday. What do you do?"
+    options:
+      - text: "Let autopay try, then pay on Saturday"
+        why: "A failed payment can bring a late fee, often around $7 in the CFPB's figures. Your bank can add an overdraft or NSF fee for the same attempt."
+      - text: "Contact the lender today, and move money in if you can"
+        why: "Before the date is when there are options. The lender may say no, and asking still costs less than two fees on a $15 payment."
+      - text: "Pay it with a credit card instead"
+        why: "That settles one loan with another. A card balance left unpaid carries interest, which a $15 instalment never did."
+    answer: 1
+  - q: "A friend says pay-later plans cannot hurt you because they never reach your credit report. Two of your plans are behind. How do you read that?"
+    options:
+      - text: "He is right, so a missed instalment has no consequences"
+        why: "The CFPB says an unpaid loan can be turned over to a debt collector. That happens whether or not a credit report ever showed the plan."
+      - text: "Some plans are reported and some are not, and an unpaid one can still reach a collector"
+        why: "Payment history may not be reported, which is why your own list matters. It can also be reported once the loan goes bad."
+      - text: "He is wrong, because every plan is reported like a credit card"
+        why: "Reporting varies by lender. Assuming every plan shows up is as unreliable as assuming none of them does."
+    answer: 1
+
+transfer:
+  - "At any checkout that offers to split the price. Add the new instalment to the ones already running, on the date they share."
+  - "On payday, before the first spend, when you list what leaves the account this fortnight."
+  - "When you sell something and a plan offers to pay you up front. Its cut comes out of what you keep on each sale."
+  - "When a due date lands before payday. That gap is the one that turns a 0% plan into a fee."
+
+glossary: [buy-now-pay-later, autopay, merchant-discount-fee, loan-stacking, credit-report, late-fee, overdraft-fee, debt-collector, cash-flow]
+tool: budget
+
+sources:
+  - title: "CFPB research on buy now, pay later: about 63% of borrowers at six firms had more than one loan running at once during 2022 (13 January 2025)"
+    url: "https://www.consumerfinance.gov/archive/newsroom/cfpb-research-reveals-heavy-buy-now-pay-later-use-among-borrowers-with-high-credit-balances-and-multiple-pay-in-four-loans/"
+    publisher: "Consumer Financial Protection Bureau"
+  - title: "Buy Now, Pay Later: market trends and consumer impacts, report page (15 September 2022)"
+    url: "https://www.consumerfinance.gov/data-research/research-reports/buy-now-pay-later-market-trends-and-consumer-impacts/"
+    publisher: "Consumer Financial Protection Bureau"
+  - title: "Buy Now, Pay Later: market trends and consumer impacts, full report: merchant discount fees 2.49% and late fees 0.28% of volume in 2021, late fees often around $7, 10.5% of borrowers charged at least one (September 2022)"
+    url: "https://files.consumerfinance.gov/f/documents/cfpb_buy-now-pay-later-market-trends-consumer-impacts_report_2022-09.pdf"
+    publisher: "Consumer Financial Protection Bureau"
+  - title: "What happens if I can't pay back a buy now, pay later loan: late fees, a frozen account, a debt collector and credit reporting (last reviewed 30 August 2024)"
+    url: "https://www.consumerfinance.gov/ask-cfpb/what-happens-if-i-cant-pay-back-a-buy-now-pay-later-bnpl-loan-en-2116/"
+    publisher: "Consumer Financial Protection Bureau"
+  - title: "Do buy now, pay later loans have fees: most charge late fees, and a bank may add an overdraft or NSF fee on autopay (last reviewed 30 August 2024)"
+    url: "https://www.consumerfinance.gov/ask-cfpb/do-buy-now-pay-later-bnpl-loans-have-fees-en-2118/"
+    publisher: "Consumer Financial Protection Bureau"
+  - title: "What is a buy now, pay later loan: payment history may not be reported to credit reporting companies (last reviewed 21 May 2024)"
+    url: "https://www.consumerfinance.gov/ask-cfpb/what-is-a-buy-now-pay-later-bnpl-loan-en-2119/"
+    publisher: "Consumer Financial Protection Bureau"
+---
+
+## Four payments is credit
+
+At the checkout a button splits $60 into four payments of $15. The seller is still paid in full today. A lender pays it, and you pay the lender back. That is <Term id="buy-now-pay-later">buy now, pay later</Term>, or pay-in-four.
+
+The price does not change. Splitting changes when you pay, not how much. **After the payment made at the till, $45 of that $60 is still owed.**
+
+Most plans ask you to set up <Term id="autopay">autopay</Term> from a debit card or a bank account. Each instalment then leaves on its date by itself, whether or not the money is there.
+
+## Who pays the plan
+
+A lender that charges you no interest still earns. Most of what it earns comes from the other side of the sale: the seller pays a <Term id="merchant-discount-fee">merchant discount fee</Term>, a cut of each sale the plan brings in.
+
+The Consumer Financial Protection Bureau (CFPB) collected these figures from five large lenders. In 2021 those seller fees came to 2.49% of everything bought through them. Late fees came to 0.28%.
+
+**A price has to cover that cut, the way it covers every other cost of selling.** What the plan sells the seller is bigger orders: its own pitch to retailers quotes higher average order values and more finished checkouts.
+
+## Three plans, one payday
+
+One plan is easy to follow. Three at once is not. Looking at six large lenders, the CFPB found that about 63% of their borrowers had more than one loan running at the same time during 2022. That is <Term id="loan-stacking">loan stacking</Term>.
+
+Each lender sees only its own plans. Your <Term id="credit-report">credit report</Term> may show some of them, all of them or none, because payment history is not always reported.
+
+**So you are the only one who can add every instalment against one payday.** Three $60 purchases in a week make twelve instalments of $15, spread across six weeks.
+
+<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="stack-title stack-desc">
+  <title id="stack-title">Three $60 purchases, split into twelve instalments</title>
+  <desc id="stack-desc">A single bar of $180 in two parts. $45 is paid at the three tills on the day. $135 is owed over the next six weeks, in nine instalments of $15.</desc>
+  <rect class="chart-a" x="0" y="26" width="76" height="36" rx="6" />
+  <rect class="chart-b" x="80" y="26" width="240" height="36" rx="6" />
+  <text class="chart-label" x="0" y="16">Paid today $45</text>
+  <text class="chart-label" x="320" y="80" text-anchor="end">Owed $135</text>
+  <text class="chart-note" x="0" y="100">Three purchases of $60, twelve instalments of $15</text>
+</svg>
+
+| Line | Amount |
+| --- | --- |
+| Three purchases at $60 | $180 |
+| Paid at the tills, three instalments of $15 | −$45 |
+| Owed over the next six weeks | $135 |
+| Due on each of the three later paydays | $45 |
+
+## What a missed instalment costs
+
+A 0% plan stays free only while every instalment clears. When one fails, the plan's own terms decide what follows, and they differ from lender to lender.
+
+Most plans charge a <Term id="late-fee">late fee</Term>. In the CFPB's report it was often around $7 on an average loan of $135, and 10.5% of borrowers were charged at least one during 2021. One lender's policy allowed more than one fee for the same missed instalment. Your bank can add an <Term id="overdraft-fee">overdraft fee</Term> on top.
+
+**Act before the date, not after.** An unpaid loan can be turned over to a <Term id="debt-collector">debt collector</Term> and reported to a credit bureau.
+
+## Add it up before the next checkout
+
+Three checks, and all of them before the button.
+
+First, the instalments already running: what each takes, and on which date. Second, which payday each date falls in, because pay every two weeks and instalments every two weeks do not always line up. Third, what is left of that paycheck once rent and food have their share.
+
+<Term id="cash-flow">Cash flow</Term> is the name for that timing. Money earned is not the same as money in the account on a Friday. **A plan is a loan, so it belongs on the list with everything else you owe.**

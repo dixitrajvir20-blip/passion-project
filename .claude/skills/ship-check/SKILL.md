@@ -1,6 +1,6 @@
 ---
 name: ship-check
-description: The release gate for LaunchPad. Run before every commit that touches UI, content or config. Builds, tests, checks contrast, takes screenshots and produces a short report.
+description: The release gate for Business Lab. Run before every commit that touches UI, content or config. Builds, tests, checks contrast, takes screenshots and produces a short report.
 ---
 
 # Ship check

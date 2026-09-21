@@ -7,8 +7,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
-  title="Sign in — LaunchPad"
-  description="Keep your LaunchPad progress on every device. Sign in with your email, no password, or move progress with a sync code."
+  title="Sign in — Business Lab"
+  description="Keep your Business Lab progress on every device. Sign in with your email, no password, or move progress with a sync code."
   path="account"
   noindex={!site.accountsEnabled}
 >
@@ -20,6 +20,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           Optional. Everything works without an account; signing in only keeps your progress in
           step across devices.
         </p>
+        {!site.accountsEnabled && (
+          <p class="note">
+            Accounts are not switched on yet: nothing you enter here is stored or sent. To move
+            progress to another device today, use a sync code (below). Your progress and learning
+            time are on the <a href={`${base}/dashboard`}>dashboard</a>.
+          </p>
+        )}
       </div>
 
       <div class="signin-wrap">

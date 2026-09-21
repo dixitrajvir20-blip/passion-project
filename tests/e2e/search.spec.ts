@@ -7,16 +7,16 @@ test('search runs on the device, finds a lesson, and links to it under the site 
   });
 
   await page.goto('search');
-  await page.getByLabel('Search for').fill('chai');
+  await page.getByLabel('Search for').fill('payslip');
   const first = page.locator('.results li').first();
-  await expect(first.locator('.r-title')).toContainText('chai stall');
-  await expect(first.locator('.r-title')).toHaveAttribute('href', /^\/passion-project\/in\/learn\/how-business-works\/chai-stall\/?$/);
+  await expect(first.locator('.r-title')).toContainText('payslip');
+  await expect(first.locator('.r-title')).toHaveAttribute('href', /^\/passion-project\/in\/learn\/money-basics\/first-payslip\/?$/);
   await expect(first.locator('.r-excerpt mark').first()).toBeVisible();
   await expect(page.locator('[data-status]')).toContainText(/result/);
   expect(outside).toEqual([]);
 
   await first.locator('.r-title').click();
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('chai stall');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('payslip');
 });
 
 test('the edition filter narrows results and remembers the reader’s edition', async ({ page }) => {
@@ -40,7 +40,9 @@ test('a search with no match says so, and the engine is only loaded once the box
   await page.waitForLoadState('networkidle');
   expect(engine).toEqual([]);
 
-  await page.getByLabel('Search for').fill('zzqxv');
+  // A plain absent word. Pagefind returns loose matches for terms that open with a repeated
+  // letter ("zzz" matches four pages), so the term here has to be an ordinary one.
+  await page.getByLabel('Search for').fill('brontosaurus');
   await expect(page.locator('[data-status]')).toContainText('Nothing found');
   expect(engine.length).toBeGreaterThan(0);
 });
@@ -50,7 +52,7 @@ test('the WebAssembly allowance exists on the search page and nowhere else', asy
   const searchCsp = await page.locator('meta[http-equiv="content-security-policy"]').getAttribute('content');
   expect(searchCsp).toContain("'wasm-unsafe-eval'");
   expect(searchCsp).toMatch(/script-src[^;]*'self'/); // the allowance is added to 'self', never in place of it
-  await page.goto('in/learn/how-business-works/chai-stall');
+  await page.goto('in/learn/money-basics/first-payslip');
   const lessonCsp = await page.locator('meta[http-equiv="content-security-policy"]').getAttribute('content');
   expect(lessonCsp).not.toContain('wasm-unsafe-eval');
 });

@@ -1,0 +1,5 @@
+{
+  "term": "Overdraft",
+  "define": "Spending more than your bank account holds, so the balance goes below zero and the bank lends you the difference, usually for interest or a fee.",
+  "example": "Your account holds €40 and a €100 repair goes through. If the bank allows an overdraft, the balance shows −€60, and that €60 is a loan."
+}

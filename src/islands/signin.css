@@ -2,7 +2,8 @@
 
 .signin { max-width: 440px; margin: 0 auto; }
 .signin-card {
-  background: var(--bg-2);
+  background: var(--field-pale);
+  border: 1.5px solid var(--line);
   border-radius: var(--radius-l);
   padding: var(--space-6);
 }
@@ -36,8 +37,8 @@
   display: flex;
   gap: var(--space-3);
   align-items: flex-start;
-  background: color-mix(in srgb, var(--gold) 22%, var(--bg));
-  color: var(--ink);
+  background: var(--gold-pale);
+  color: var(--on-gold);
   border-radius: var(--radius-m);
   padding: var(--space-3) var(--space-4);
   font-size: var(--text-sm);

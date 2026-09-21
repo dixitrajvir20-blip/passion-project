@@ -1,0 +1,5 @@
+{
+  "term": "Verification of payee",
+  "define": "A free check your bank runs before a transfer: it compares the name you typed with the name on the account behind the IBAN, and reports a match, a close match or no match. Required of euro-area banks since 9 October 2025, and of other EU banks by 9 July 2027.",
+  "example": "You type a landlord's name, the bank reports no match, and you find out before sending that the IBAN belongs to someone else."
+}

@@ -1,0 +1,5 @@
+{
+  "term": "QR code",
+  "define": "A square pattern a phone camera can read. In UPI, scanning one fills in who you are about to pay. A shop shows its code to be paid; you scan a code only to pay, never to receive.",
+  "example": "Scanning a shop's printed code at the counter fills in the shop as the person you are paying."
+}

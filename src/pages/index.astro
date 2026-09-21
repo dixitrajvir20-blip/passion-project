@@ -1,174 +1,144 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { REGIONS } from '../lib/regions';
+import EditionSum from '../components/EditionSum.astro';
+import HandNote from '../components/HandNote.astro';
+import Blobs from '../components/Blobs.astro';
+import Doodle from '../components/Doodle.astro';
+import { REGIONS, getRegion } from '../lib/regions';
+import { TOOLS } from '../lib/tools';
 import { site } from '../lib/site';
+import { lessonPath, lessonsFor } from '../lib/lessons';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const ncfe = REGIONS[0].stats[0].source;
+const panels = ['panel-field', 'panel-gold', 'panel-pale'];
+
+// "Start with these": the first money-basics and how-business-works lesson of each edition.
+const starters = (
+  await Promise.all(
+    REGIONS.map(async (region) => {
+      const lessons = await lessonsFor(region.code);
+      return ['money-basics', 'how-business-works']
+        .map((track) => lessons.find((lesson) => lesson.data.track === track))
+        .filter((lesson) => lesson !== undefined)
+        .map((lesson) => ({ region, lesson }));
+    }),
+  )
+).flat();
+const doodles = ['coin', 'phone', 'tag', 'calculator', 'plane', 'coin'] as const;
+const everywhere = TOOLS.filter((tool) => !tool.regions);
+const reasons = ['Free, with nothing to sell', 'No ads and no tracking', 'No sign-up needed', 'Real numbers in your currency', 'A source and a date on every figure', 'Built to load on a cheap phone'];
+const india = getRegion('in');
 ---
 
-<BaseLayout title={`LaunchPad — ${site.tagline}`} description={site.description}>
-  <section class="hero">
-    <div class="container">
-      <div class="column centered hero-copy">
-        <h1 class="display">Learn how money actually works.</h1>
+<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description} bare>
+  <section class="hero on-field">
+    <Blobs />
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <HandNote text="free, forever" class="hero-note" />
+        <h1 class="mega">Money and business, taught for where you live.</h1>
         <p class="lede">
-          Free lessons and calculators for ages 15 to 21. No ads, no sign-up, nothing to sell.
+          Free lessons and calculators for ages 15 to 21. Each edition has its own currency, payment
+          apps, rules and scams, because a lesson about money only helps if it is about your money.
         </p>
-        <div class="btn-row centered">
-          <a class="btn btn-lg" href="#editions">Choose your edition</a>
-          <a class="btn btn-link" href={`${base}/about`}>Read why this exists</a>
+        <div class="btn-row">
+          <a class="cta" href="#editions"><span class="cta-label">Choose your edition</span><span class="cta-arrow" aria-hidden="true">↓</span></a>
+          <p class="resume" id="resume" hidden><a class="btn btn-secondary" id="resume-link" href={`${base}/`}>Continue where you left off</a></p>
         </div>
       </div>
-
-      <figure class="hero-visual" aria-hidden="true">
-        <div class="device">
-          <div class="device-body">
-            <p class="device-label">Break-even · chai stall</p>
-            <p class="device-figure numbers">286 cups</p>
-            <p class="device-sub">to cover ₹2,000 of monthly costs at ₹7 kept per cup</p>
-            <div class="device-bars">
-              <div class="bar bar-cost"><i></i></div>
-              <div class="bar bar-rev"><i></i></div>
-            </div>
-            <div class="device-legend"><span>Costs</span><span>Sales</span></div>
-          </div>
+      <div class="flashcards" aria-label="A worked example from a lesson">
+        <div class="flashcard flashcard-back" aria-hidden="true"></div>
+        <div class="flashcard flashcard-mid" aria-hidden="true"></div>
+        <div class="flashcard flashcard-front">
+          <HandNote text="a worked example" tilt="none" class="flashcard-note" />
+          <EditionSum region={india} />
         </div>
-      </figure>
+        <p class="sticky-rule" aria-hidden="true">Price − cost = kept</p>
+      </div>
     </div>
   </section>
 
-  <section id="editions" class="section section-tight">
+  <section id="editions" class="section editions-section" aria-labelledby="editions-h">
     <div class="container">
-      <div class="column centered">
-        <h2>Pick where you are.</h2>
-        <p class="lede">
-          The ideas are the same everywhere. The examples, the currency and the rules are not, so
-          each edition is written for the money system you actually live in.
-        </p>
-      </div>
-
-      <ul class="list-plain editions" data-reveal-group>
-        {REGIONS.map((region) => (
-          <li data-reveal>
-            <a class="card card-arrow" href={`${base}/${region.code}`} data-astro-prefetch>
-              <h3>{region.name}</h3>
-              <p>{region.problem}</p>
-              <p class="card-meta">Open the {region.name} edition</p>
-            </a>
+      <h2 id="editions-h" class="section-title">Choose your edition</h2>
+      <ul class="list-plain editions">
+        {REGIONS.map((region, index) => (
+          <li class:list={['panel', 'edition', panels[index]]}>
+            <span class="pill pill-white currency">{region.currency}</span>
+            <h3 class="edition-name">{region.name}</h3>
+            <p class="edition-problem">{region.problem}</p>
+            <div class="edition-sum"><EditionSum region={region} /></div>
+            <ul class="pills" aria-label={`${region.name} topics`}>
+              {region.tags.map((tag) => <li><span class="pill">{tag}</span></li>)}
+            </ul>
+            <a class="btn-link edition-link" href={`${base}/${region.code}`} data-astro-prefetch>Open the {region.name} edition</a>
           </li>
         ))}
       </ul>
-
-      <p class="note centered resume" id="resume" hidden>
-        <a id="resume-link" href={`${base}/`}>Continue where you left off</a>
-      </p>
     </div>
   </section>
 
-  <section class="section section-dark">
+  <section class="section steps-section" aria-labelledby="steps-h">
     <div class="container">
-      <div class="column" data-reveal>
-        <span class="eyebrow">Why it exists</span>
-        <h2>Money knowledge is usually passed down, not taught.</h2>
-        <p class="lede">
-          If your family has it, you get it. If not, school rarely fills the gap, and the advice
-          that reaches you online is usually attached to something for sale.
+      <h2 id="steps-h" class="section-title">How a lesson works</h2>
+      <ol class="list-plain steps-cards">
+        <li class="step-card step-1 on-field"><span class="step-num">Step 1</span><h3>Answer first</h3><p>Every lesson opens with a question. A guess, right or wrong, makes the answer stick.</p></li>
+        <li class="step-card step-2"><span class="step-num">Step 2</span><h3>See the idea</h3><p>One idea, one worked calculation, real numbers in your currency.</p></li>
+        <li class="step-card step-3"><span class="step-num">Step 3</span><h3>Try your own numbers</h3><p>Change them and watch the answer move.</p></li>
+        <li class="step-card step-4 on-field"><span class="step-num">Step 4</span><h3>Check your understanding</h3><p>Three questions, which come back for review a few days later.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="calculators" class="section" aria-labelledby="calc-h">
+    <div class="container">
+      <div class="panel panel-gold taxonomy">
+        <h2 id="calc-h" class="taxonomy-title">Calculators that answer</h2>
+        <ul class="list-plain taxonomy-list">
+          {everywhere.map((tool) => (
+            <li><a href="#editions" data-edition-path={`tools/${tool.slug}`}>{tool.short}</a></li>
+          ))}
+        </ul>
+        <p class="taxonomy-foot">Nothing you type leaves your phone.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section why" aria-labelledby="why-h">
+    <div class="container">
+      <div class="panel panel-pale why-panel">
+        <h2 id="why-h">Why {site.name}</h2>
+        <p class="why-lede">
+          Most people learn money at home, if at all. {site.name} grew out of a school club built on
+          one idea, that business is a life skill, and this site is for everyone who has no one to ask.
         </p>
-      </div>
-      <ul class="list-plain reasons" data-reveal-group>
-        <li data-reveal>
-          <h3>Starts from zero</h3>
-          <p>No savings to risk, no adviser to call, no network. Every lesson assumes exactly that.</p>
-        </li>
-        <li data-reveal>
-          <h3>Real numbers, your currency</h3>
-          <p>A chai stall in rupees, an Etsy shop in dollars, a market stall in euros. Switch any time.</p>
-        </li>
-        <li data-reveal>
-          <h3>Nothing for sale</h3>
-          <p>No products recommended, no affiliate links, no tracking. Sources on every statistic.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <article class="feature" data-reveal>
-        <div>
-          <span class="eyebrow">Lessons</span>
-          <h2>Short enough for a phone. Deep enough to change a decision.</h2>
-          <p>
-            Each lesson takes under ten minutes, opens with a question you might actually face, and
-            ends with a quick check so it sticks. Read it on a slow connection; it still works.
-          </p>
-          <a class="btn btn-link" href="#editions" data-edition-path="learn">See the lesson tracks</a>
-        </div>
-        <div class="feature-visual">
-          <div class="mock lesson-mock">
-            <p class="mock-eyebrow">Money basics · 6 min</p>
-            <p class="mock-title">Spotting a UPI scam before you tap</p>
-            <p class="mock-q">A payment request for ₹1 arrives from a shop you have never used. Approving it would…</p>
-            <ul class="mock-options"><li>Bring ₹1 in</li><li class="is-right">Send your money out</li><li>Do nothing</li></ul>
-          </div>
-        </div>
-      </article>
-
-      <article class="feature flip" data-reveal>
-        <div>
-          <span class="eyebrow">Calculators</span>
-          <h2>Your numbers, worked out in front of you.</h2>
-          <p>
-            Break-even, budgets, savings growth, loan repayments and side-hustle profit. Every
-            result shows the maths underneath it, and nothing you type leaves your browser.
-          </p>
-          <a class="btn btn-link" href="#editions" data-edition-path="tools/break-even">Try the break-even calculator</a>
-        </div>
-        <div class="feature-visual">
-          <div class="mock results-mock numbers">
-            <div><span>Kept per sale</span><strong>₹7</strong></div>
-            <div><span>Cups to break even</span><strong>286</strong></div>
-            <div><span>Profit at 400 cups</span><strong>₹800</strong></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="feature" data-reveal>
-        <div>
-          <span class="eyebrow">Honest by design</span>
-          <h2>Education, never advice.</h2>
-          <p>
-            No stock tips, no promised returns, no named products. Statistics carry their source and
-            a date. Market examples use old data, on purpose, so nothing here reads as a signal.
-          </p>
-          <a class="btn btn-link" href={`${base}/disclaimer`}>Read the disclaimer</a>
-        </div>
-        <div class="feature-visual">
-          <div class="mock source-mock">
-            <p class="mock-figure numbers">27%</p>
-            <p>of Indian adults are financially literate</p>
-            <p class="mock-source"><a href={ncfe.url} rel="noopener noreferrer">Source: {ncfe.title}, 2019</a></p>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container column centered" data-reveal>
-      <h2>Start with a calculator.</h2>
-      <p class="lede">Put your own numbers in and see what happens. It takes a minute.</p>
-      <div class="btn-row centered">
-        <a
-          class="btn btn-lg"
-          href="#editions"
-          data-edition-path="tools/break-even"
-          data-edition-label="Open the break-even calculator"
-        >Choose your edition</a>
+        <ul class="why-list">
+          {reasons.map((reason) => <li>{reason}</li>)}
+        </ul>
+        <p class="why-more"><a href={`${base}/about`}>More about {site.name}</a></p>
       </div>
     </div>
   </section>
+
+  {starters.length > 0 && (
+    <section class="sheet starters" aria-labelledby="start-h">
+      <div class="container">
+        <div class="starters-head">
+          <h2 id="start-h" class="section-title">Start with these</h2>
+        </div>
+        <ul class="grid-table cols-3">
+          {starters.map(({ region, lesson }, index) => (
+            <li class="starter">
+              <span class:list={['sticker', { 'sticker-left': index % 2 === 1 }]}>{region.name} · {lesson.data.readingMinutes} min</span>
+              {index < doodles.length && index % 3 === 0 && <Doodle name={doodles[index]} class="starter-doodle" />}
+              <h3><a href={`${base}/${lessonPath(lesson)}`}>{lesson.data.title}</a></h3>
+              <p>{lesson.data.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 </BaseLayout>
 
 <script>
@@ -183,13 +153,12 @@ const ncfe = REGIONS[0].stats[0].source;
       const link = document.getElementById('resume-link');
       if (wrap && link instanceof HTMLAnchorElement) {
         link.href = new URL(saved, document.baseURI).pathname;
-        link.textContent = `Continue with the ${names[saved]} edition`;
+        link.textContent = `Continue with ${names[saved]}`;
         wrap.hidden = false;
       }
       // Links that default to the chooser go straight to the edition the reader already picked.
       for (const el of document.querySelectorAll<HTMLAnchorElement>('a[data-edition-path]')) {
         el.href = new URL(`${saved}/${el.dataset.editionPath}`, document.baseURI).pathname;
-        if (el.dataset.editionLabel) el.textContent = el.dataset.editionLabel;
       }
     }
   } catch {
@@ -198,61 +167,85 @@ const ncfe = REGIONS[0].stats[0].source;
 </script>
 
 <style>
-  .hero { padding: var(--space-8) 0 var(--space-7); overflow: hidden; }
-  @media (min-width: 900px) { .hero { padding: var(--space-10) 0 var(--space-8); } }
-  .hero-copy .lede { margin-bottom: var(--space-6); }
+  /* Hero: a dark-blue field with blobs, a giant flush-left headline, and a stack of flashcards. */
+  .hero { position: relative; overflow: hidden; padding: var(--space-7) 0 var(--space-8); }
+  @media (min-width: 900px) { .hero { padding: var(--space-8) 0 var(--space-9); } }
+  .hero-grid { position: relative; z-index: 1; display: grid; gap: var(--space-8); align-items: center; }
+  @media (min-width: 980px) { .hero-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+  .hero-copy :global(.hero-note) { margin-bottom: var(--space-4); }
+  .hero h1 { margin-bottom: var(--space-5); max-width: 15ch; }
+  .hero .lede { color: var(--ink-2); margin-bottom: var(--space-6); }
+  .resume { margin: 0; }
 
-  .hero-visual { margin: var(--space-8) auto 0; max-width: 520px; }
-  .device {
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-l);
-    box-shadow: var(--shadow-signature);
-    overflow: hidden;
+  .flashcards { position: relative; min-height: 360px; max-width: 460px; width: 100%; justify-self: center; }
+  .flashcard { position: absolute; inset: 0 var(--space-5) var(--space-6) var(--space-5); background: var(--paper); border: 2px solid var(--line-strong); border-radius: var(--radius-l); }
+  .flashcard-back { transform: rotate(7deg) translate(var(--space-4), var(--space-2)); background: var(--gold-pale); }
+  .flashcard-mid { transform: rotate(-4deg); }
+  .flashcard-front { position: relative; inset: auto; margin: 0 var(--space-5) var(--space-6); padding: var(--space-5) var(--space-5) var(--space-6); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
+  .flashcard-front :global(.flashcard-note) { margin-bottom: var(--space-2); }
+  .sticky-rule {
+    position: absolute; left: 0; bottom: 0; margin: 0; padding: var(--space-3) var(--space-4);
+    background: var(--gold); color: var(--on-gold); border: 2px solid var(--line-strong); border-radius: var(--radius-s);
+    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3);
   }
-  .device-body { padding: var(--space-5) var(--space-6) var(--space-6); text-align: left; }
-  .device-label { font-size: var(--text-sm); color: var(--muted); margin: 0 0 var(--space-2); }
-  .device-figure { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; letter-spacing: var(--tracking-display); line-height: 1; color: var(--ink); margin: 0 0 var(--space-2); }
-  .device-sub { font-size: var(--text-sm); color: var(--ink-2); margin: 0 0 var(--space-5); }
-  .device-bars { display: grid; gap: var(--space-2); }
-  .bar { height: 14px; border-radius: var(--radius-pill); background: var(--bg-2); overflow: hidden; }
-  .bar i { display: block; height: 100%; border-radius: var(--radius-pill); }
-  .bar-cost i { width: 62%; background: var(--ink-2); }
-  .bar-rev i { width: 88%; background: var(--series-1); }
-  @media (prefers-reduced-motion: no-preference) {
-    .js .bar i { transform-origin: left; animation: grow var(--dur-slow) var(--ease) both; }
-    .js .bar-rev i { animation-delay: 150ms; }
-    @keyframes grow { from { transform: scaleX(0); } }
+
+  .section-title { font-size: var(--text-h1); margin: 0 0 var(--space-6); text-align: center; }
+
+  /* Editions: three big rounded panels, each its own colour, on white. */
+  .editions-section { background: var(--bg); }
+  .editions { display: grid; gap: var(--space-4); }
+  @media (min-width: 980px) { .editions { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .edition { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6) var(--space-5); margin: 0; }
+  @media (min-width: 980px) { .edition { padding: var(--space-6); } }
+  .currency { align-self: flex-end; margin-bottom: calc(var(--space-6) * -1); }
+  .edition-name { font-size: var(--text-h1); line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
+  .edition-problem { margin: 0; color: var(--ink-2); }
+  /* A receipt: white paper and navy ink in both themes. */
+  .edition-sum { background: var(--paper); color: var(--brand-navy); border-radius: var(--radius-m); padding: var(--space-4); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
+  .edition-link { align-self: flex-start; margin-top: auto; padding-left: 0; }
+
+  /* How a lesson works: four tilted cards. */
+  .steps-section { background: var(--field-pale); }
+  .steps-cards { display: grid; gap: var(--space-5); }
+  @media (min-width: 720px) { .steps-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .steps-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); } }
+  .step-card { margin: 0; padding: var(--space-5); border-radius: var(--radius-l); border: 2px solid var(--line-strong); min-height: calc(var(--space-10) + var(--space-8)); color: var(--ink-2); }
+  .step-card h3 { font-size: var(--text-h3); line-height: var(--leading-tight); margin: var(--space-3) 0 var(--space-3); }
+  .step-card p { margin: 0; font-size: var(--text-ui); }
+  .step-num { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); color: var(--gold-text); }
+  .step-1 { background: var(--field); }
+  .step-2 { background: var(--gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --gold-text: var(--on-gold); --focus: var(--on-gold); border-color: var(--on-gold); }
+  .step-3 { background: var(--bg); }
+  .step-4 { background: var(--field-deep); }
+
+  /* The gold taxonomy panel: stacked giant questions, each a link. */
+  .taxonomy { text-align: center; }
+  .taxonomy-title { margin: 0 0 var(--space-5); font-size: var(--text-h3); color: var(--on-gold); }
+  .taxonomy-list { display: grid; gap: var(--space-2); }
+  .taxonomy-list li { margin: 0; }
+  .taxonomy-list a {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h1); line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-display); color: var(--on-gold); text-decoration: none; text-wrap: balance;
   }
-  .device-legend { display: flex; gap: var(--space-4); font-size: var(--text-xs); color: var(--muted); margin-top: var(--space-2); }
-  .device-legend span::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: var(--radius-xs); margin-right: var(--space-2); background: var(--ink-2); }
-  .device-legend span:last-child::before { background: var(--series-1); }
+  .taxonomy-list a:hover { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; }
+  .taxonomy-foot { margin: var(--space-6) auto 0; font-weight: 700; }
 
-  .editions { display: grid; gap: var(--space-4); margin: var(--space-7) 0 var(--space-5); }
-  @media (min-width: 900px) { .editions { grid-template-columns: repeat(3, 1fr); } }
-  .editions h3 { font-size: var(--text-h2); margin-bottom: var(--space-3); }
-  .editions .card { min-height: 100%; padding-right: var(--space-8); }
-  .resume { max-width: 480px; }
+  /* Why: pills scattered around the badge on wide screens, a tilted wrap on phones. */
+  .why-panel h2 { margin-top: 0; font-size: var(--text-h1); }
+  .why-lede { font-size: var(--text-lg); max-width: 60ch; }
+  .why-list { columns: 2; column-gap: var(--space-7); margin: var(--space-5) 0; padding-left: var(--space-5); }
+  .why-list li { break-inside: avoid; }
+  @media (max-width: 639px) { .why-list { columns: 1; } }
+  .why-more { margin: 0; font-weight: 700; }
 
-  .reasons { display: grid; gap: var(--space-5); margin-top: var(--space-7); }
-  @media (min-width: 900px) { .reasons { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); } }
-  .reasons li { border-top: 1px solid var(--line); padding-top: var(--space-4); }
-  .reasons h3 { font-size: var(--text-h3); margin-bottom: var(--space-2); }
-  .reasons p { margin: 0; font-size: var(--text-ui); }
-
-  .mock { width: 100%; max-width: 360px; background: var(--bg); border-radius: var(--radius-m); padding: var(--space-5); border: 1px solid var(--line); }
-  .mock p { margin: 0 0 var(--space-2); }
-  .mock-eyebrow { font-size: var(--text-xs); color: var(--muted); }
-  .mock-title { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 700; color: var(--ink); letter-spacing: var(--tracking-heading); }
-  .mock-q { font-size: var(--text-sm); color: var(--ink-2); margin-top: var(--space-3); }
-  .mock-options { list-style: none; padding: 0; margin: var(--space-3) 0 0; display: grid; gap: var(--space-2); }
-  .mock-options li { margin: 0; font-size: var(--text-sm); border: 1px solid var(--line); border-radius: var(--radius-s); padding: var(--space-2) var(--space-3); }
-  .mock-options .is-right { border-color: var(--accent); color: var(--ink); font-weight: 700; }
-  .results-mock div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
-  .results-mock div:last-child { border-bottom: 0; }
-  .results-mock span { font-size: var(--text-sm); color: var(--muted); }
-  .results-mock strong { font-family: var(--font-display); font-size: var(--text-h3); letter-spacing: var(--tracking-heading); }
-  .mock-figure { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; line-height: 1; letter-spacing: var(--tracking-display); color: var(--ink); }
-  .source-mock p:nth-child(2) { font-size: var(--text-md); color: var(--ink-2); }
-  .mock-source { font-size: var(--text-xs); }
+  /* Start with these: the Ivy Kids sheet with an outlined grid and tilted stickers. */
+  .starters { margin-top: var(--space-6); }
+  .starters-head { text-align: center; }
+  .starter { padding-top: var(--space-8); }
+  .starter h3 { font-size: var(--text-h3); margin: 0 0 var(--space-2); }
+  .starter h3 a { color: var(--ink); text-decoration: none; }
+  .starter h3 a:hover { text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 3px; }
+  .starter p { margin: 0; font-size: var(--text-ui); color: var(--ink-2); }
+  .starter :global(.sticker) { position: absolute; top: var(--space-4); right: var(--space-4); }
+  .starter :global(.starter-doodle) { position: absolute; top: calc(var(--space-5) * -1); left: var(--space-4); background: var(--bg); }
 </style>

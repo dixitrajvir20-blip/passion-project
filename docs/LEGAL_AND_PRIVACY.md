@@ -1,4 +1,4 @@
-# LaunchPad legal & privacy notes
+# Business Lab legal & privacy notes
 
 Version 1.0 · 17 September 2026. **Not legal advice.** This is a sourced working brief so the
 owner can build compliantly now and know exactly what to confirm with a lawyer before accounts
@@ -7,7 +7,7 @@ launch. Audience: India, EU and US (UK possible). Sources are named inline with 
 ## The design decision that removes most of the problem
 
 **Collect no personal data until there is a clear reason.** With no accounts, no cookies and no
-analytics, LaunchPad processes essentially no personal data, which means no consent banner is
+analytics, Business Lab processes essentially no personal data, which means no consent banner is
 required, no parental-consent machinery is needed, and the breach surface is near zero. Every
 feature that changes this (accounts, analytics, a newsletter, embeds) is gated and adds its own
 compliance step. Build privacy-first and stay there as long as possible.
@@ -20,9 +20,15 @@ compliance step. Build privacy-first and stay there as long as possible.
   edition, the currency, the reader's own progress, and the consent choice itself are all exempt.
 - The UK's Data (Use and Access) Act 2025 (in force 5 Feb 2026) added explicit PECR exemptions
   for **preference** and **statistical** storage, with clear information and an easy opt-out.
-- **Result: no banner is required for the current site.** We still publish a full
+- **Result: no banner is required for the site's necessary storage.** We still publish a full
   `/cookies` page listing every key, and a "Privacy choices" dialog, because transparency is the
   actual obligation.
+- **Learning time (19 Sep 2026).** The dashboard can show minutes spent on the site per day. That
+  is not strictly necessary for anything the reader asked for, so it is an optional category
+  (`stats`, key `lp:activity`) and a banner asks on the first visit: "Reject all" is as easy as
+  "Accept all", nothing is recorded before a choice, a later no removes what was kept, and Global
+  Privacy Control counts as no. It stays in the browser; nothing is sent. `/cookies` must list the
+  key (owner's edit; the page is protected).
 - If analytics or embeds are ever switched on, a banner appears with "Reject all" as easy as
   "Accept all" (EDPB cookie-banner taskforce, Jan 2023; CNIL fines on Google/Facebook Jan 2022),
   nothing runs before a choice, and Global Privacy Control is honoured as "reject". The consent
@@ -80,7 +86,7 @@ The single most important editorial constraint. Enforced by the content-reviewer
 - **India (SEBI, 29 Jan 2025, updated 8 May 2026):** an "education-only" person must not (i)
   advise or recommend on specific securities without registration, or (ii) claim returns or
   performance. Market **price data must be lagged** — the rule was three months, updated in 2026
-  to **30 days** for education-only use. Practical rule for LaunchPad: never name a security with
+  to **30 days** for education-only use. Practical rule for Business Lab: never name a security with
   a price or target; use data ≥30 days old or fictional; no "returns" claims; no ties to
   unregistered tipsters. (We standardise on the stricter, simpler rule: ≥30 days, no named
   securities, no forecasts.) *Confirm the current wording before publishing any market example.*
@@ -109,7 +115,7 @@ is no sale; the privacy policy says so plainly.
 2. The analytics-without-consent position for Germany, the Netherlands and Austria specifically.
 3. Whether lesson-progress localStorage is "strictly necessary" vs "requested by the user" (we
    treat it as exempt; get this confirmed).
-4. DPDP: whether LaunchPad is a Data Fiduciary for Indian users, the adequacy of the Rule 10
+4. DPDP: whether Business Lab is a Data Fiduciary for Indian users, the adequacy of the Rule 10
    parental-consent flow, and the exact current SEBI price-data wording.
 5. UK Children's Code DPIA scope; newsletter consent under PECR.
 6. CCPA / state thresholds (confirm we are not a "business"/controller).

@@ -1,7 +1,22 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 const REGIONS = ['in', 'eu', 'us'];
+
+// Every published lesson, found from the content folder, so a new lesson is audited the day it lands:
+// src/content/lessons/<edition>/<track>/<slug>.mdx is served at <edition>/learn/<track>/<slug>.
+const LESSON_ROOT = 'src/content/lessons';
+// Folders only: macOS drops .DS_Store files into any folder opened in Finder.
+const folders = (dir: string) => readdirSync(dir, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name);
+const LESSONS = folders(LESSON_ROOT).flatMap((edition) =>
+  folders(join(LESSON_ROOT, edition)).flatMap((track) =>
+    readdirSync(join(LESSON_ROOT, edition, track))
+      .filter((file) => file.endsWith('.mdx'))
+      .map((file) => `${edition}/learn/${track}/${file.replace(/\.mdx$/, '')}`),
+  ),
+);
 
 // Relative, no leading slash: these must resolve under the /passion-project base.
 const PAGES = [
@@ -9,19 +24,19 @@ const PAGES = [
   'glossary',
   'search',
   'about',
+  'write',
+  'dashboard',
   'privacy',
   'cookies',
   'terms',
   'accessibility',
   'disclaimer',
   'account',
-  ...REGIONS.flatMap((r) => [r, `${r}/learn`, `${r}/learn/money-basics`, `${r}/review`, `${r}/tools`]),
+  ...REGIONS.flatMap((r) => [r, `${r}/learn`, ...folders(join(LESSON_ROOT, r)).map((track) => `${r}/learn/${track}`), `${r}/review`, `${r}/tools`]),
   ...['break-even', 'budget', 'savings', 'side-hustle', 'loan'].map((tool) => `in/tools/${tool}`),
   'eu/tools/break-even',
   'us/tools/loan',
-  'in/learn/how-business-works/chai-stall',
-  'in/learn/money-basics/upi-scam',
-  'in/learn/money-basics/first-earnings',
+  ...LESSONS,
   'in/tools/spot-the-fake',
 ];
 
@@ -30,12 +45,6 @@ for (const path of PAGES) {
     await page.goto(path);
     // Guard against silently auditing the 404 page if a base path ever breaks.
     await expect(page.locator('h1')).not.toContainText('That page does not exist');
-    // Reveal-on-scroll content starts transparent; wait for the safety net so axe sees real colours.
-    await page.waitForFunction(() =>
-      Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]')).every(
-        (el) => el.classList.contains('is-in') && getComputedStyle(el).opacity === '1',
-      ),
-    );
 
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])

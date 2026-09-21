@@ -1,0 +1,5 @@
+{
+  "term": "Statement balance",
+  "define": "The full amount owed on a card at the end of one billing cycle, printed on the statement with a due date. Paying it in full by that date normally keeps purchases free of interest.",
+  "example": "A statement balance of $400 due on the 12th: all $400 paid by the 12th, and the purchases on it cost no interest."
+}

@@ -1,7 +1,6 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import RegionTabs from '../components/RegionTabs.astro';
 import ConsentManager from '../islands/ConsentManager.tsx';
 import { site, consentCategories, CONSENT_VERSION } from '../lib/site';
 import { REGIONS } from '../lib/regions';
@@ -21,9 +20,12 @@ interface Props {
   noindex?: boolean;
   /** Shown beside search results: "Lesson", "Calculator". */
   kind?: string;
+  /** Pages that draw their own coloured hero and sheets (home, edition fronts, lessons,
+      calculators). Every other page sits on one white reading sheet over the blue field. */
+  bare?: boolean;
 }
 
-const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false, kind } = Astro.props;
+const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false, kind, bare = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // Search: an edition's pages are found from that edition; shared pages are found from all of them.
@@ -57,8 +59,9 @@ const jsonLd = {
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0b0f" />
+    {/* The browser bar continues the navy edition line at the top of every page. */}
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0b4aa2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#071a4a" />
     <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={`${base}/icons/icon-192.png`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
@@ -83,10 +86,9 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header region={region} path={path} />
-    {region && <RegionTabs current={region} sub={regionSub} />}
+    <Header region={region} regionSub={regionSub} path={path} />
     {/* data-pagefind-body: only <main> is indexed, so the header, tabs and footer never match a search. */}
-    <main id="main" tabindex="-1" data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
+    <main id="main" tabindex="-1" class:list={[{ 'page-sheet': !bare }]} data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
       {!noindex && editions.map((r) => <span data-pagefind-filter={`edition:${r.name}`}></span>)}
       {!noindex && kind && <span data-pagefind-meta={`kind:${kind}`}></span>}
       <slot />
@@ -97,29 +99,34 @@ const jsonLd = {
 </html>
 
 <script>
-  // Mark JS as available so reveal animations can start hidden without hiding content
-  // from anyone whose JS never runs.
+  // Lets styles tell a page with scripts from one without; nothing is hidden on the strength of it.
   document.documentElement.classList.add('js');
+</script>
 
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
-  if (reduce || !('IntersectionObserver' in window)) {
-    items.forEach((el) => el.classList.add('is-in'));
-  } else {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-in');
-            io.unobserve(entry.target);
-          }
-        }
-      },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
-    );
-    items.forEach((el) => io.observe(el));
-    // Safety net: nothing stays hidden if the observer never fires (find-in-page, odd
-    // scroll containers, very fast readers). After this, only the entrance is animated.
-    window.setTimeout(() => items.forEach((el) => el.classList.add('is-in')), 1500);
+<script>
+  import { isAllowed, readConsent } from '../lib/consent';
+  import { consentCategories } from '../lib/site';
+  import { ACTIVITY_KEY, addSeconds, clearActivity, loadActivity, saveActivity } from '../lib/activity';
+
+  // Learning time for the dashboard: seconds per calendar day, on this device, only after a yes in
+  // Privacy choices. A later no removes what was kept. Counts only while a page is visible.
+  const TICK = 5;
+  let storage: Storage | undefined;
+  try {
+    storage = window.localStorage;
+  } catch {
+    storage = undefined;
   }
+  const check = (add: boolean) => {
+    if (!storage) return;
+    if (isAllowed(readConsent(storage), 'stats', consentCategories)) {
+      if (add) saveActivity(storage, addSeconds(loadActivity(storage), TICK));
+    } else if (storage.getItem(ACTIVITY_KEY) !== null) {
+      clearActivity(storage);
+    }
+  };
+  window.setInterval(() => document.visibilityState === 'visible' && check(true), TICK * 1000);
+  // A no takes effect the moment it is given, not on the next tick.
+  document.addEventListener('lp:consent-changed', () => check(false));
+  check(false);
 </script>

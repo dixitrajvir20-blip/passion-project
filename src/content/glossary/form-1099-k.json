@@ -1,0 +1,5 @@
+{
+  "term": "Form 1099-K",
+  "define": "A US tax form that a payment app or online marketplace sends when what it paid you for goods or services in a year passes a set line. For 2025 onward, the IRS line is more than $20,000 across more than 200 payments.",
+  "example": "A student who sold $2,400 of prints last year will usually get no Form 1099-K, and the income counts all the same."
+}

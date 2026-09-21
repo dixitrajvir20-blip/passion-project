@@ -1,0 +1,5 @@
+{
+  "term": "Binary option",
+  "define": "A contract with two outcomes only: a fixed payout if a price moves the way the contract names by a set time, or nothing at all. National regulators across the EU prohibit selling binary options to retail customers.",
+  "example": "An app that pays 18 euro on a 10 euro stake if a price is higher at 17:00, and nothing if it is not, is offering a binary option."
+}

@@ -2,12 +2,12 @@
 
 Version 1.1 · 17 September 2026. Read `LEARNING_DESIGN.md` for how a lesson teaches (the hook → concept → worked example → explorable → check template) and `REGIONAL_TEACHING.md` for what's local to each edition. This file is the schema, the voice, and the hard limits.
 
-## Article frontmatter (Zod schema in src/content/config.ts)
+## Article frontmatter (the live Zod schema is `src/content/schema.ts`; this shows the spirit of the fields)
 ```yaml
 ---
-title: "How a chai stall makes money"          # 6-10 words, sentence case
-summary: "Unit economics explained with one cup of tea."  # ≤ 120 chars
-track: how-business-works                      # money-basics | start-something | how-business-works
+title: "Break-even: how many students a coaching centre needs"   # 6-10 words, sentence case
+summary: "Fixed costs, contribution per student, and the count that covers them."  # ≤ 120 chars
+track: start-something                         # money-basics | start-something | how-business-works | protect-your-money | credit-and-fraud
 order: 1
 lang: en                                       # en | hi | ...
 translationOf: null                            # slug of the source article if translated
@@ -15,17 +15,17 @@ readingMinutes: 5
 level: beginner                                # beginner | intermediate
 regions: [IN, US, GLOBAL]                      # examples used
 author: { name: "Rajvir", country: "US" }      # first name + country only
-reviewedBy: "LaunchPad editor"              # role, not a minor's full name
+reviewedBy: "Business Lab editor"              # role, not a minor's full name
 lastReviewed: 2026-09-17
-glossary: [unit-economics, gross-margin, fixed-cost]
+glossary: [fixed-cost, contribution, break-even]
 tool: break-even                               # tool linked in "Try it"
 sources:
   - { title: "…", url: "https://…", publisher: "…" }
 quiz:
-  - q: "If a cup costs ₹8 to make and sells for ₹15, what is the margin per cup?"
-    options: ["₹7", "₹15", "₹23", "₹8"]
+  - q: "A student pays ₹1,500 a month and uses ₹300 of printed material. What does each student contribute towards fixed costs?"
+    options: ["₹1,200", "₹1,500", "₹1,800", "₹300"]
     answer: 0
-    why: "Margin per unit = price − variable cost = 15 − 8."
+    why: "Contribution per unit = price − variable cost = 1,500 − 300."
 ---
 ```
 
@@ -53,7 +53,7 @@ quiz:
 - Write per edition: use the currency, rails, institutions and example businesses from `REGIONAL_TEACHING.md` for the edition the lesson belongs to, not a generic average.
 
 ## Copyright and reuse (must follow)
-LaunchPad's lessons are licensed **CC BY-NC-SA 4.0** and the code is **MIT** (PROJECT_BRIEF §12). Every lesson page
+Business Lab's lessons are licensed **CC BY-NC-SA 4.0** and the code is **MIT** (PROJECT_BRIEF §12). Every lesson page
 carries the notice, a `rel="license"` link and the licence in its structured data; that is automatic. What writers control:
 
 - **Write it yourself.** Read the source, close it, then write. Never paste from a source and edit it into shape: a
@@ -68,14 +68,35 @@ carries the notice, a `rel="license"` link and the licence in its structured dat
 - **Your contribution.** You keep the copyright in what you write and license it to readers under CC BY-NC-SA 4.0 by
   submitting it. You are credited by first name and country. Writers under 18 need a parent's or teacher's OK first.
 - **Do not use AI-generated text or images that imitate a named source, author or brand.**
-- **Not covered by the licence:** the LaunchPad name and logo, and anything belonging to a third party that we link to.
+- **Not covered by the licence:** the Business Lab name and logo, and anything belonging to a third party that we link to.
 
-## Starter article list (24)
-**Money Basics:** Your first paycheck or pocket money: where it should go · Needs vs wants and the 50/30/20 idea · Compound growth explained with small monthly amounts · Saving vs investing: what's the difference? · UPI, cards, and "buy now, pay later" · Credit scores: US scores vs CIBIL in India · Scams that target students · Inflation: why the same money buys less
+## The curriculum (36 lessons, 12 per edition)
 
-**Start Something:** Test a business idea in a weekend without spending money · Pricing your first product · Break-even: how many do you need to sell? · Selling online: Instagram, WhatsApp Business, Etsy, marketplaces · The one-page business plan · Pitch your idea in 60 seconds · Side hustles for students (and checking your local rules) · Taxes basics for young earners (general + official links)
+Rewritten on 20 September 2026 from research into what 15–21-year-olds in each region actually
+struggle with (`docs/research/regional-core.md`). Each lesson answers one documented struggle in a
+real situation, never a toy business. Tracks differ by edition because the struggles do.
 
-**How Business Works:** How a chai stall makes money · What an income statement tells you · Supply and demand around you · How startups raise money · How businesses use AI (and where it goes wrong) · How to read a stock pitch (education only) · Careers in business: what people actually do · How a phone gets from factory to your pocket
+**India** — *Your first salary:* your first payslip, from CTC to in-hand · TDS was cut, tax is nil:
+how the refund comes back · Changing jobs: what happens to your EPF · a one-month buffer, and
+interest that compounds. *Protect your money:* UPI fraud and the three-day clock · the part-time job
+that makes you a money mule · every loan as a yearly rate, apps and cards · options trading and tips
+groups, SEBI's own numbers. *Start a service business:* pricing freelance work from cost, time and
+tax · break-even for a coaching centre · a month's accounts, profit on paper and cash in hand ·
+Udyam registration and a first regulated loan.
+
+**Europe** — *Your first pay and what it has to cover:* reading your first payslip · sizing a
+three-month buffer · can you afford to move out, the 40% line · interest on interest, and what
+inflation takes back. *Credit, payments and fraud:* buy now, pay later is credit · before you send,
+checking the payee · the job offer that is really money laundering · money advice on social media,
+who is paying. *Run it like a business:* reading an income statement · break-even with platform and
+card fees · pricing for customers in another EU country · declaring platform income under DAC7.
+
+**United States** — *Money basics:* your first paycheck, what each deduction is · the first $400, a
+cushion before an overdraft · starting a credit file without paying interest · a student loan as a
+monthly payment. *Working for yourself:* pricing a job so it pays after tax · break-even for a
+custom apparel business · reading a coffee shop's income statement · setting money aside for
+self-employment tax. *Who gets paid, and by whom:* how a freelance platform makes its money · how
+pay-in-four makes money · who pays the person giving you investment tips · how a job scam is run.
 
 ## Review checklist (before publishing)
 - [ ] Facts checked against the listed sources

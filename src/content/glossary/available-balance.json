@@ -1,0 +1,5 @@
+{
+  "term": "Available balance",
+  "define": "The part of your account balance you can actually spend right now, once holds and payments that have not finished settling are taken off.",
+  "example": "Your app shows $220, but a $60 hold from a car rental has not cleared, so the available balance is $160."
+}

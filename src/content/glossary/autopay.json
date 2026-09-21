@@ -1,0 +1,5 @@
+{
+  "term": "Autopay",
+  "define": "A setting that lets a lender take each payment from your card or bank account on its due date, without you doing anything. The money has to be there when it runs.",
+  "example": "A pay-later plan that takes $30 from your debit card every other Friday is on autopay."
+}

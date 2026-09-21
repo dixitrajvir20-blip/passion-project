@@ -1,0 +1,5 @@
+{
+  "term": "Card security code",
+  "define": "The three or four extra digits printed on a payment card, often called the CVV or CVC. It is asked for to check that whoever is paying has the card in hand.",
+  "example": "An online checkout asks for the card number, the expiry date and the security code before it takes a payment."
+}

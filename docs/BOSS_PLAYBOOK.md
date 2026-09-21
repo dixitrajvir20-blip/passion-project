@@ -1,4 +1,4 @@
-# LaunchPad build playbook
+# Business Lab build playbook
 
 Version 1.0 · 17 September 2026. This is how the site gets built by Claude Code, sprint by sprint,
 with the acceptance criteria and verification gates that stop it drifting. Rajvir is the product

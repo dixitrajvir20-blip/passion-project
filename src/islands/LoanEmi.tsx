@@ -1,6 +1,6 @@
 import { amortization, emi } from '../lib/finance';
 import { money, number, percent } from '../lib/format';
-import { CurrencyField, HowItWorks, NumberField, Result, ToolActions, toNumber, useFields, useLocale } from './tool-kit';
+import { CurrencyField, HowItWorks, Figure, NumberField, Result, ToolActions, toNumber, useFields, useLocale } from './tool-kit';
 import './tools.css';
 
 interface Props {
@@ -48,9 +48,10 @@ export default function LoanEmi({ defaults, localeCode }: Props) {
 
         <div class="results">
           <h2>What it means</h2>
-          <Result label="You pay each month" value={usable ? money(result.emi, locale) : '—'} />
+          <Figure label="you pay each month" value={usable ? money(result.emi, locale) : '—'} />
+          <Result label="You borrow" value={money(principal, locale)} />
           <Result label="Interest over the whole loan" value={usable ? money(result.totalInterest, locale) : '—'} />
-          <Result label="Total you pay back" value={usable ? money(result.totalPaid, locale) : '—'} />
+          <Result main label="Total you pay back" value={usable ? money(result.totalPaid, locale) : '—'} />
 
           <p class="plain">
             {usable

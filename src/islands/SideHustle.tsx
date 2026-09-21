@@ -1,6 +1,6 @@
 import { sideHustleProfit } from '../lib/finance';
 import { money, number } from '../lib/format';
-import { CurrencyField, HowItWorks, NumberField, Result, ToolActions, capitalise, exact, toNumber, useFields, useLocale } from './tool-kit';
+import { CurrencyField, HowItWorks, Figure, NumberField, Result, ToolActions, capitalise, exact, toNumber, useFields, useLocale } from './tool-kit';
 import './tools.css';
 
 interface Props {
@@ -50,15 +50,15 @@ export default function SideHustle({ defaults, unitName, localeCode }: Props) {
 
         <div class="results">
           <h2>What it means</h2>
-          <Result label="Money in" value={money(result.revenue, locale)} />
-          <Result label="Cost of what you sold" value={money(result.costs, locale)} />
-          <Result label="Fees" value={money(result.fees, locale)} />
-          <Result label="Left for you" value={money(result.profit, locale)} loss={result.profit < 0} />
-          <Result
-            label="Per hour of your time"
+          <Figure
+            label="per hour of your time"
             value={result.profitPerHour === null ? '—' : exact(Math.round(result.profitPerHour * 100) / 100, locale)}
             loss={result.profitPerHour !== null && result.profitPerHour < 0}
           />
+          <Result label="Money in" value={money(result.revenue, locale)} />
+          <Result minus label="Cost of what you sold" value={money(result.costs, locale)} />
+          <Result minus label="Fees" value={money(result.fees, locale)} />
+          <Result main label="Left for you" value={money(result.profit, locale)} loss={result.profit < 0} />
 
           <p class="plain">
             {result.profitPerHour === null
