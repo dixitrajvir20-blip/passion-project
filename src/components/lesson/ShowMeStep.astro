@@ -37,8 +37,9 @@ const last = rest.length === 0;
   <li class="showme-next">
     <details class="showme-more">
       <summary>
-        <span class="showme-next-label">Next line</span>
-        <span class="showme-count numbers">{index + 1} of {total}</span>
+        <span class="showme-next-label">Show line <span class="numbers">{index + 2}</span></span>
+        <span class="showme-open-label">Line <span class="numbers">{index + 2}</span></span>
+        <span class="showme-count numbers">of {total}</span>
       </summary>
       <ol class="ledger showme-lines" start={index + 2}>
         <ShowMeStep steps={rest} index={index + 1} total={total} localeCode={localeCode} />

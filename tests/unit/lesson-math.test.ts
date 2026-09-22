@@ -155,9 +155,10 @@ describe('deductionSteps', () => {
   it('prints one line per deduction, each from the figure before it, ending on the answer', () => {
     const steps = deductionSteps(payslip);
     expect(steps.map((s) => ('money' in s.result ? s.result.money : 0))).toEqual([32900, 30800, 30600]);
-    expect(steps[0].parts).toEqual([{ money: 35000 }, { op: '−' }, { money: 2100 }]);
-    expect(steps[0].note).toBe('Gross salary');
-    expect(steps[2].note).toBe('In-hand pay');
+    expect(steps[0].parts).toEqual([{ money: 35000 }, { op: '−' }, { money: 2100 }, { op: "employer's EPF share" }]);
+    expect(steps[0].label).toBe('Gross salary');
+    expect(steps[1].label).toBe('Left');
+    expect(steps[2].label).toBe('In-hand pay');
     expect(steps[1].caption).toMatch(/12% of the basic pay/);
   });
 

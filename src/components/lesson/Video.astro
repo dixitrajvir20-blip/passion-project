@@ -13,14 +13,15 @@ interface Props {
   channel: string;
   minutes: number;
   startSeconds?: number;
+  endSeconds?: number;
   note?: string;
 }
 
-const { youtubeId, title, channel, minutes, startSeconds, note } = Astro.props;
+const { youtubeId, title, channel, minutes, startSeconds, endSeconds, note } = Astro.props;
 ---
 
 <figure class="video">
-  <VideoPlayer client:visible youtubeId={youtubeId} title={title} minutes={minutes} startSeconds={startSeconds} />
+  <VideoPlayer client:visible youtubeId={youtubeId} title={title} channel={channel} minutes={minutes} startSeconds={startSeconds} endSeconds={endSeconds} />
   <figcaption class="video-caption">
     <span class="video-title">{title}</span>
     <span class="video-meta">{channel} · <span class="numbers">{minutes} min</span>{note && ` · ${note}`}</span>

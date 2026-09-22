@@ -11,7 +11,7 @@ import { join } from 'node:path';
 const out = process.argv[2] ?? 'screenshots';
 const base = process.env.BASE_URL ?? 'http://localhost:4321/passion-project/';
 const pages = [
-  '', 'in', 'in/learn', 'in/learn/start-something', 'in/learn/start-something/break-even-coaching-centre', 'dashboard',
+  '', 'in', 'in/learn', 'in/learn/start-something', 'in/learn/start-something/break-even-coaching-centre', 'in/learn/money-basics/first-payslip', 'dashboard',
   'in/review', 'in/tools', 'in/tools/break-even', 'in/tools/savings', 'in/tools/budget', 'in/tools/loan',
   'account', 'privacy', 'glossary',
 ];

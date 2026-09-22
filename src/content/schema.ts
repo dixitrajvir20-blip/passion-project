@@ -175,7 +175,7 @@ export const lessonSchema = z
       transfer: z.array(z.string()).min(2).max(4),
 
       /**
-       * Lesson template. v1 is the 2026-09-20 shape. v2 (2026-09-22) opens with the moment and a
+       * Lesson template. v1 is the 2026-09-20 shape. v2 (2026-09-21) opens with the moment and a
        * video, then "show me" (the calculation one line at a time), your turn, change one thing,
        * three actions, a details fold, three checks. New content rules apply to v2 only until all
        * 36 lessons carry it.
@@ -191,8 +191,9 @@ export const lessonSchema = z
           channel: z.string().min(2).max(60),
           minutes: z.number().positive().max(30),
           language: z.string().default('en'),
-          /** Start here when only part of the video teaches the idea. */
+          /** Start and stop here when only part of the video teaches the idea. */
           startSeconds: z.number().int().nonnegative().optional(),
+          endSeconds: z.number().int().positive().optional(),
           /** One sentence of context, e.g. "Made for the US; the idea is the same." */
           note: z.string().max(160).optional(),
         })

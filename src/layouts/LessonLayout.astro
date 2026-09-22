@@ -123,7 +123,6 @@ if (d.practice?.kind === 'deduction') {
 
 /** Template v2 (22 Sep 2026): the moment and the video first, then the calculation one line at a time. */
 const isV2 = d.template === 'v2';
-const stepCount = isV2 ? [d.document, d.video, d.worked, d.practice, d.explorable].filter(Boolean).length + 1 : 0;
 ---
 
 <BaseLayout
@@ -140,13 +139,13 @@ const stepCount = isV2 ? [d.document, d.video, d.worked, d.practice, d.explorabl
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
   </Fragment>
 
-  <article class="lesson" data-lesson-id={lesson.id} data-locale={region.locale}>
+  <article class:list={['lesson', { 'lesson-v2': isV2 }]} data-lesson-id={lesson.id} data-locale={region.locale}>
     <header class="lesson-head on-field">
       <div class="container">
         <div class="column">
           <p class="lesson-crumbs">
             <a class="pill pill-white" href={`${prefix}/learn/${track.slug}`}>{region.name} · {track.title} · Lesson {d.order}</a>
-            <span class="pill">{d.readingMinutes} min{isV2 && ` · ${stepCount} steps`}</span>
+            <span class="pill">{d.readingMinutes} min</span>
           </p>
           <h1>{d.title}</h1>
           <p class="lede">{d.summary}</p>
@@ -158,11 +157,13 @@ const stepCount = isV2 ? [d.document, d.video, d.worked, d.practice, d.explorabl
               </ul>
             </div>
           )}
-          <p class="lesson-meta">
-            Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
-          </p>
-          {/* Said before the lesson, not after: the teach-back effect comes from expecting to explain. */}
-          <p class="lesson-expect">Read with a view to explaining it to someone else afterwards. It changes what you notice.</p>
+          {!isV2 && (
+            <p class="lesson-meta">
+              Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
+            </p>
+          )}
+          {/* Said before the lesson, not after: the teach-back effect comes from expecting to explain. In v2 the objectives carry it. */}
+          {!isV2 && <p class="lesson-expect">Read with a view to explaining it to someone else afterwards. It changes what you notice.</p>}
         </div>
       </div>
     </header>
@@ -176,6 +177,7 @@ const stepCount = isV2 ? [d.document, d.video, d.worked, d.practice, d.explorabl
           {isV2 && d.document && (
             <section aria-labelledby="the-document">
               <h2 id="the-document" class="visually-hidden">The document</h2>
+              <p class="doc-task">Read it line by line. Tap a line to see what it is. One question follows.</p>
               <Document kind={d.document.kind} title={d.document.title} lines={d.document.lines} />
               <Poll
                 id="find"
@@ -231,6 +233,7 @@ const stepCount = isV2 ? [d.document, d.video, d.worked, d.practice, d.explorabl
                 channel={d.video.channel}
                 minutes={d.video.minutes}
                 startSeconds={d.video.startSeconds}
+                endSeconds={d.video.endSeconds}
                 note={d.video.note}
               />
             </section>
@@ -428,6 +431,11 @@ const stepCount = isV2 ? [d.document, d.video, d.worked, d.practice, d.explorabl
 
           {/* Sources and the licence are the same boilerplate on every lesson: keep them out of search. */}
           <footer class="lesson-fine" data-pagefind-ignore>
+            {isV2 && (
+              <p class="lesson-meta">
+                Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
+              </p>
+            )}
             <h2 id="sources">Sources</h2>
             <ul>
               {d.sources.map((source) => (

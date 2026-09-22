@@ -23,8 +23,7 @@ const { context, steps, localeCode } = Astro.props;
 <div class="showme" data-showme>
   <p class="showme-context">{context}</p>
   <p class="showme-controls">
-    <span class="showme-hint">Press <strong>Next line</strong> to see each step.</span>
-    <button type="button" class="btn-link showme-all" data-showme-all hidden>Show every line</button>
+    <button type="button" class="showme-all" data-showme-all hidden>Show every line</button>
   </p>
   <ol class="ledger showme-lines">
     <ShowMeStep steps={steps} index={0} total={steps.length} localeCode={localeCode} />

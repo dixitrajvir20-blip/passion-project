@@ -163,11 +163,12 @@ export function deductionSteps(n: DeductionNumbers): Step[] {
   return n.lines.map((line, index) => {
     const before = index === 0 ? n.start : result.running[index - 1];
     const last = index === n.lines.length - 1;
+    const name = line.label.charAt(0).toLowerCase() + line.label.slice(1);
     return {
-      label: line.label,
-      parts: [{ money: before }, { op: '−' }, { money: line.amount }],
+      // The row says what the figure is (gross salary, in-hand pay); the sum under it names the line that came off.
+      label: last ? n.endLabel : (line.subtotalLabel ?? 'Left'),
+      parts: [{ money: before }, { op: '−' }, { money: line.amount }, { op: name }],
       result: { money: result.running[index] },
-      note: last ? n.endLabel : line.subtotalLabel,
       caption: line.caption,
     };
   });

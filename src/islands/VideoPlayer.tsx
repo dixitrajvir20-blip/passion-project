@@ -5,8 +5,10 @@ import { consentCategories } from '../lib/site';
 interface Props {
   youtubeId: string;
   title: string;
+  channel: string;
   minutes: number;
   startSeconds?: number;
+  endSeconds?: number;
 }
 
 /**
@@ -15,7 +17,7 @@ interface Props {
  * the choice is put to them right here, with a plain link out as the alternative. Nothing is
  * fetched from a third party until that yes. The CSP allows frames from youtube-nocookie.com only.
  */
-export default function VideoPlayer({ youtubeId, title, minutes, startSeconds = 0 }: Props) {
+export default function VideoPlayer({ youtubeId, title, channel, minutes, startSeconds = 0, endSeconds }: Props) {
   const [state, setState] = useState<'poster' | 'ask' | 'playing'>('poster');
   const [allowed, setAllowed] = useState(false);
 
@@ -42,7 +44,7 @@ export default function VideoPlayer({ youtubeId, title, minutes, startSeconds = 
   const watchHref = `https://www.youtube.com/watch?v=${youtubeId}${startSeconds ? `&t=${startSeconds}s` : ''}`;
 
   if (state === 'playing') {
-    const src = `https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0${startSeconds ? `&start=${startSeconds}` : ''}`;
+    const src = `https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0${startSeconds ? `&start=${startSeconds}` : ''}${endSeconds ? `&end=${endSeconds}` : ''}`;
     return (
       <div class="video-frame">
         <iframe
@@ -58,6 +60,10 @@ export default function VideoPlayer({ youtubeId, title, minutes, startSeconds = 
 
   return (
     <div class="video-frame video-poster">
+      <p class="video-poster-head">
+        <span class="video-poster-title">{title}</span>
+        <span class="video-poster-channel">{channel}</span>
+      </p>
       <button type="button" class="video-play" onClick={() => setState(allowed ? 'playing' : 'ask')}>
         <svg class="video-play-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M8 5v14l11-7z" />
@@ -67,8 +73,8 @@ export default function VideoPlayer({ youtubeId, title, minutes, startSeconds = 
         </span>
       </button>
       {state === 'ask' && (
-        <div class="video-ask" role="status">
-          <p>Playing loads YouTube's player from youtube-nocookie.com. YouTube may set its own cookies once a video plays.</p>
+        <div class="video-ask">
+          <p role="status">Playing loads YouTube's player from youtube-nocookie.com. YouTube may set its own cookies once a video plays.</p>
           <p class="btn-row">
             <button type="button" class="btn btn-sm" onClick={() => document.dispatchEvent(new CustomEvent('lp:open-consent'))}>
               Choose, then play

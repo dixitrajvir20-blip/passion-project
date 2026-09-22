@@ -32,7 +32,7 @@ export const site = {
   analyticsEnabled: import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true',
   /**
    * Lesson videos (YouTube, privacy-enhanced player) load only behind a tap and only with consent.
-   * On by default since 22 Sep 2026, when every lesson gained a teaching video; PUBLIC_EMBEDS_ENABLED=false turns it off.
+   * On by default since 21 Sep 2026, when every lesson gained a teaching video; PUBLIC_EMBEDS_ENABLED=false turns it off.
    */
   embedsEnabled: import.meta.env.PUBLIC_EMBEDS_ENABLED !== 'false',
 };

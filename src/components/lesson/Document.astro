@@ -32,16 +32,17 @@ const kindLabel = {
   <dl class="doc-lines">
     {lines.map((line) => (
       <div class="doc-line">
-        <dt class="doc-label">{line.label}</dt>
-        <dd class="doc-value numbers">{line.value}</dd>
-        {line.hint && (
-          <dd class="doc-hint">
-            <details>
-              <summary>What is this?</summary>
+        <dt class="doc-label">
+          {line.hint ? (
+            <details class="doc-hint">
+              <summary>{line.label}</summary>
               <p>{line.hint}</p>
             </details>
-          </dd>
-        )}
+          ) : (
+            line.label
+          )}
+        </dt>
+        <dd class="doc-value numbers">{line.value}</dd>
       </div>
     ))}
   </dl>

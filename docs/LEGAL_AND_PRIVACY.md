@@ -29,6 +29,13 @@ compliance step. Build privacy-first and stay there as long as possible.
   "Accept all", nothing is recorded before a choice, a later no removes what was kept, and Global
   Privacy Control counts as no. It stays in the browser; nothing is sent. `/cookies` must list the
   key (owner's edit; the page is protected).
+- **Lesson videos (21 Sep 2026).** Every lesson opens with a short teaching video from YouTube.
+  The page ships a drawn poster and nothing from Google; on play, the privacy-enhanced player
+  (youtube-nocookie.com) loads only if the reader has said yes to the `embeds` category ("Videos
+  from other sites"), otherwise the choice is put to them in place, with a plain link out as the
+  alternative. The category is active by default now, so the banner names it; Global Privacy
+  Control counts as no. `/cookies` and `/privacy` need a line each (owner's edit; the pages are
+  protected). YouTube's own terms and cookies apply once a video plays, and the player says so.
 - If analytics or embeds are ever switched on, a banner appears with "Reject all" as easy as
   "Accept all" (EDPB cookie-banner taskforce, Jan 2023; CNIL fines on Google/Facebook Jan 2022),
   nothing runs before a choice, and Global Privacy Control is honoured as "reject". The consent
