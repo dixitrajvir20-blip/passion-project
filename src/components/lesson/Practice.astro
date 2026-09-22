@@ -34,7 +34,8 @@ const show = (value: Choice['value']) =>
       {hints.map((hint, index) => (
         <li>
           <details class="practice-hint">
-            <summary>Hint{' '}<span class="numbers">{index + 1} of {hints.length}</span>{index === hints.length - 1 ? ', the answer' : index === 0 ? ', the method' : ''}</summary>
+            {/* One element for the label: the summary is a flex row, which would drop the space before the number. */}
+            <summary><span>Hint <span class="numbers">{index + 1} of {hints.length}</span>{index === hints.length - 1 ? ', the answer' : index === 0 ? ', the method' : ''}</span></summary>
             <p class="numbers">{hint}</p>
           </details>
         </li>
