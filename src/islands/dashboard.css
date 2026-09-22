@@ -26,7 +26,7 @@
 .stat-card .stat-name { font-size: var(--text-ui); color: var(--ink-2); }
 .stat-card .stat-value { font-family: var(--font-display); font-size: var(--text-result); font-weight: 800; letter-spacing: var(--tracking-display); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; margin: var(--space-2) 0; }
 .stat-card .stat-note { font-size: var(--text-sm); color: var(--muted); }
-.stat-primary { background: var(--field-pale); border-color: var(--brand-blue); color: var(--ink-2); }
+.stat-primary { background: var(--field-pale); border-color: var(--frame); color: var(--ink-2); }
 
 .dash-grid { display: grid; gap: var(--space-4); }
 @media (min-width: 900px) { .dash-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .dash-card.wide { grid-column: span 2; } }
@@ -37,7 +37,7 @@
 /* Weekly chart: seven bars, today marked, a table for anyone who wants the numbers. */
 .week-chart { display: block; width: 100%; max-width: 560px; height: auto; }
 .week-chart .bar { fill: var(--field-pale); }
-.week-chart .bar.has-time { fill: var(--field); }
+.week-chart .bar.has-time { fill: var(--series-1); }
 .week-chart .bar.today { fill: var(--gold); }
 .week-chart .label { fill: var(--muted); font-family: var(--font-body); font-size: var(--text-xs); text-anchor: middle; }
 .week-chart .value { fill: var(--ink); font-family: var(--font-body); font-size: var(--text-xs); font-weight: 700; text-anchor: middle; }
@@ -53,7 +53,7 @@
 .ring-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-5); align-items: center; }
 .ring { width: 96px; height: 96px; }
 .ring .track { fill: none; stroke: var(--field-pale); stroke-width: 12; }
-.ring .done { fill: none; stroke: var(--field); stroke-width: 12; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+.ring .done { fill: none; stroke: var(--series-1); stroke-width: 12; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
 .ring .done.is-empty { display: none; }
 .ring-value { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 800; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
 .track-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }

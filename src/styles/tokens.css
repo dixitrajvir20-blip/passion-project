@@ -20,6 +20,8 @@
   --field: #ffffff;          /* the page field is white since 21 Sep 2026 (Rajvir: "less blue"); blue is kept for borders and one band */
   --field-deep: #e8f0fb;     /* blobs, now a pale tone on white */
   --band: #0b4aa2;           /* the one blue band: the header. White on it 8.3:1, gold on it 5.0:1 */
+  --frame: #0c61c4;          /* the blue frame: the rule under heroes and title bands, panel outlines (3:1+ on white) */
+  --band-surface: #ffffff;   /* heroes and title bands: white in light, the field in dark */
   --field-pale: #e8f0fb;     /* soft panels on white sheets */
 
   /* Surfaces */
@@ -141,6 +143,8 @@
     --field: #071a4a;
     --field-deep: #040f2e;
     --band: #071a4a;
+    --frame: #3987e5;        /* 4.5:1 on the dark sheet */
+    --band-surface: #071a4a;
     --field-pale: #121d57;
 
     --bg: #101a4f;

@@ -65,6 +65,12 @@ const pairs = [
   ['success', 'bg', 4.5, 'success text'],
   ['focus', 'bg', 3, 'focus ring on sheets (non-text)'],
   ['line-strong', 'bg', 3, 'card and pill outlines (non-text)'],
+  ['frame', 'bg', 3, 'the blue frame: rules under heroes and title bands, panel outlines (non-text)'],
+  ['frame', 'band-surface', 3, 'the rule under a hero, against the hero itself (non-text)'],
+  ['ink', 'band-surface', 4.5, 'headings on heroes and title bands'],
+  ['ink-2', 'band-surface', 4.5, 'text on heroes and title bands'],
+  ['muted', 'band-surface', 4.5, 'secondary text on heroes and title bands'],
+  ['accent-text', 'band-surface', 4.5, 'links on heroes and title bands'],
 ];
 
 let failed = false;

@@ -383,10 +383,10 @@ test.describe('template v2 with JavaScript off', () => {
 
     // Your turn: the hints open one at a time, method first; the given lines are the calculator's, the last is the reader's.
     const practice = page.locator('.practice').first();
-    await expect(practice.locator('.hint')).toHaveCount(3);
-    await expect(practice.locator('.hint > p').first()).toBeHidden();
-    await practice.locator('.hint > summary').first().click();
-    await expect(practice.locator('.hint > p').first()).toContainText('in order');
+    await expect(practice.locator('.practice-hint')).toHaveCount(3);
+    await expect(practice.locator('.practice-hint > p').first()).toBeHidden();
+    await practice.locator('.practice-hint > summary').first().click();
+    await expect(practice.locator('.practice-hint > p').first()).toContainText('in order');
     await expect(practice.locator('.steps')).toContainText('₹26,320');
     await practice.getByLabel('₹24,440', { exact: true }).check();
     await practice.locator('.poll summary').click(); // the hints are summaries too

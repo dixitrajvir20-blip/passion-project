@@ -116,8 +116,7 @@ img, svg, video { max-width: 100%; height: auto; }
 .section-dark { background: var(--bg); color: var(--ink-2); }
 .on-band { color: var(--ink-2); }
 /* Surfaces that were the blue field: white now, with a blue rule underneath ("blue as a border"). */
-section.on-field, header.on-field { background: var(--bg); border-bottom: 3px solid var(--brand-blue); }
-.on-field + .sheet, .on-field + .page-sheet { border-radius: 0; }
+section.on-field, header.on-field { background: var(--band-surface); border-bottom: 3px solid var(--frame); }
 
 .stack > * + * { margin-top: var(--space-4); }
 .cluster { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
@@ -212,8 +211,8 @@ a.card:hover { background: var(--field-pale); }
 /* Big rounded section panels (Aardvark): one colour each, joined by gaps. */
 .panel { border-radius: var(--radius-xl); padding: var(--space-7) var(--space-5); position: relative; overflow: hidden; }
 @media (min-width: 900px) { .panel { padding: var(--space-8); } }
-.panel-field { background: var(--bg); border: 2px solid var(--brand-blue); }
-.panel-deep { background: var(--field-pale); border: 2px solid var(--brand-blue); }
+.panel-field { background: var(--bg); border: 2px solid var(--frame); }
+.panel-deep { background: var(--field-pale); border: 2px solid var(--frame); }
 /* Dark panels carry the field's light text. The remap itself lives in tokens.css. */
 .panel-pale { background: var(--field-pale); }
 .panel-white { background: var(--bg); }

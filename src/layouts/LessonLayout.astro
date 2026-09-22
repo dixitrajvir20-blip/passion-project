@@ -140,15 +140,15 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
           <h1>{d.title}</h1>
           <p class="lede">{d.summary}</p>
           {isV2 && (
-            <p class="lesson-steps" aria-label="In this lesson">
-              <span class="lesson-steps-label">In this lesson</span>
+            <nav class="lesson-steps" aria-labelledby="lesson-steps-label">
+              <span id="lesson-steps-label" class="lesson-steps-label">In this lesson</span>
               {d.document && <a href="#the-document">The document</a>}
               {d.video && <a href="#watch">Watch</a>}
               {d.worked && <a href="#show-me">Show me</a>}
               {d.practice && <a href="#your-turn">Your turn</a>}
               {d.explorable && <a href="#try-it">{d.explorable.kind === 'drill' ? 'Decide' : 'Change one thing'}</a>}
               <a href="#quick-check">Checks</a>
-            </p>
+            </nav>
           )}
           {isV2 && d.objectives && (
             <div class="lesson-after">
@@ -250,7 +250,7 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
             <section aria-labelledby="show-me">
               <h2 id="show-me">Show me</h2>
               <ShowMe context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
-              {d.keyIdea && <p class="key-idea"><strong>{d.keyIdea}</strong></p>}
+              {d.keyIdea && <p class="key-idea"><strong class="hl">{d.keyIdea}</strong></p>}
             </section>
           )}
 
@@ -266,8 +266,8 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
                 localeCode={region.locale}
               />
               {practiceMore && d.practiceMore && (
-                <div class="practice-more">
-                  <h3 id="one-more">One more, with different numbers</h3>
+                <details class="lesson-details practice-more">
+                  <summary id="one-more">One more, with different numbers</summary>
                   <Practice
                     id="practice-more"
                     context={d.practiceMore.context}
@@ -277,7 +277,7 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
                     hints={practiceMore.hints}
                     localeCode={region.locale}
                   />
-                </div>
+                </details>
               )}
             </section>
           )}

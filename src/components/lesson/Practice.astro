@@ -33,9 +33,9 @@ const show = (value: Choice['value']) =>
     <ol class="hints" aria-label="Hints">
       {hints.map((hint, index) => (
         <li>
-          <details class="hint">
+          <details class="practice-hint">
             <summary>Hint{' '}<span class="numbers">{index + 1} of {hints.length}</span>{index === hints.length - 1 ? ', the answer' : index === 0 ? ', the method' : ''}</summary>
-            <p>{hint}</p>
+            <p class="numbers">{hint}</p>
           </details>
         </li>
       ))}

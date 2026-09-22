@@ -262,6 +262,11 @@ describe('lesson content', () => {
         if (lesson.data.keyIdea) expect(words(lesson.data.keyIdea), 'key idea').toBeLessThanOrEqual(25);
       });
 
+      it('v2: the key idea is the one highlighted sentence, so the body carries no bold', () => {
+        if (!v2 || !lesson.data.keyIdea) return;
+        expect(lesson.body, 'a **bold** sentence in the body beside a keyIdea').not.toContain('**');
+      });
+
       it('v2: states three things the reader can do afterwards, one per check', () => {
         if (!v2) return;
         expect(lesson.data.objectives, 'objectives').toHaveLength(3);
