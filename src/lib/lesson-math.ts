@@ -272,12 +272,16 @@ function num(choice: Choice): number {
   return 'money' in choice.value ? choice.value.money : choice.value.count;
 }
 
-/** Two slips can land on the same number; keep the correct one, or the first. */
+/**
+ * Two slips can land on the same number; keep the correct one, or the first. A wrong slip at or
+ * below zero is dropped as nonsense, but a correct answer at or below zero stays: a month that
+ * ends in a loss is exactly the kind of answer a lesson needs to be able to ask for.
+ */
 function dedupe(choices: Choice[]): Choice[] {
   const seen = new Map<number, Choice>();
   for (const choice of choices) {
     const key = num(choice);
-    if (key <= 0) continue;
+    if (key <= 0 && !choice.correct) continue;
     const existing = seen.get(key);
     if (!existing || (choice.correct && !existing.correct)) seen.set(key, choice);
   }

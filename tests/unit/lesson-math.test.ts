@@ -172,3 +172,14 @@ describe('deductionSteps', () => {
     expect(values).toContain(32900); // stopped after the first
   });
 });
+
+describe('a loss is a valid answer', () => {
+  it('deductionChoices keeps a correct answer at or below zero and still drops nonsense slips', () => {
+    const n = { start: 500, startLabel: 'Revenue', lines: [{ label: 'Cost of sales', amount: 40 }, { label: 'Software', amount: 60 }, { label: 'Studio share', amount: 420 }], endLabel: 'Net profit before tax' };
+    const choices = deductionChoices(n);
+    const right = choices.find((c) => c.correct);
+    expect(right && 'money' in right.value ? right.value.money : NaN).toBe(-20);
+    expect(choices.filter((c) => c.correct)).toHaveLength(1);
+    for (const c of choices) if (!c.correct) expect('money' in c.value ? c.value.money : 0).toBeGreaterThan(0);
+  });
+});
