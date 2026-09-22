@@ -50,7 +50,7 @@ surface it sits on (WCAG 2.2 AA: 4.5:1 for text, 3:1 for large text and non-text
 | Token | Hex | Role |
 |---|---|---|
 | Band blue | `#0B4AA2` | The header band only (`--band`); the page itself is white since v3.1 |
-| Link blue | `#0C61C4` | Links, the rule under heroes and title bands, the outline of the front-page panels |
+| Link blue | `#0C61C4` | Links, and as `--frame` the rule under heroes and title bands and the outline of the front-page panels (dark mode lifts it to `#3987E5`, 4.5:1 on the dark sheet) |
 | Navy ink | `#0B1240` | All text on white and gold; the footer; outlines |
 | Marigold | `#F2C14E` | The one accent: links and the primary action on the field, stickers, the loud panel |
 | Paper white | `#FFFFFF` | Sheets, cards, receipts |

@@ -32,10 +32,12 @@ Palette, roles and every contrast figure are in the brand guide §2. In code:
 
 - Links and button fills: `--accent` / `--accent-text`. Focus ring: `--focus`.
 - Gold is a fill or a mark, never small text on light. Eyebrows use `--gold-text`.
-- The page is `--field` (dark blue). Anything placed directly on it carries `.on-field`, which
-  re-maps ink to white, links and focus to gold, and the primary button to gold (`tokens.css`);
-  `.panel-field` and `.panel-deep` carry the same remap. `.section-dark` (navy) is the footer.
-  Because `color` inherits as a computed value, `base.css` also sets `color` on those classes.
+- The page is `--field`, white since v4.1. The header carries `.on-band` (the one blue band,
+  `--band`), which re-maps ink to white and links and focus to gold (`tokens.css`); heroes and
+  title bands carry `.on-field`, now a `--band-surface` (white; the field in dark mode) with a
+  3px `--frame` rule under it; `.panel-field` and `.panel-deep` are outlined in `--frame`.
+  `.section-dark` (navy) is the footer. Because `color` inherits as a computed value, `base.css`
+  also sets `color` on those classes. The contrast script checks `--frame` against both surfaces.
 - Sheets and cards are `--bg` (white); soft panels `--field-pale`; the calculator bench `--bg-2`.
   Receipts, flashcards and the edition menu use `--paper`, white in both modes.
 - The highlighter: `--highlight` behind ink, for a lesson's key sentence (`.lesson-body p strong`).
@@ -74,6 +76,14 @@ banned-font list there is enforced in review.
 - **Blobs**, **Doodle** — decoration behind heroes and at card edges; hidden from assistive tech.
 - **Poll** `Poll.astro` — the question card: a small label, options as outlined rows, one navy
   reveal button. Works without JavaScript.
+- **Lesson template v2 pieces** — `Document.astro` (the drawn payslip, statement, offer, loan
+  sheet, payout or app screen, each line a `<details>` hint), `Video.astro` + `VideoPlayer.tsx`
+  (poster drawn in tokens; the youtube-nocookie iframe only after play and a yes to `embeds`),
+  `ShowMe.astro` + `ShowMeStep.astro` (the ledger one captioned line at a time, nested
+  `<details>`), `Practice.astro` (the faded ledger, three `.practice-hint` disclosures, the poll),
+  `.key-idea` (the one highlighted sentence, `.hl`), the `.lesson-steps` nav under the title,
+  `.lesson-after` (objectives as type under a hairline) and `.practice-more` (a folded second run).
+  All HTML-first; only the video player and the explorers are islands.
 - **Callout** `.callout` — the "Key points" sticky note.
 - **Dashboard** island (`src/islands/Dashboard.tsx`, `/dashboard`) — reads `lp:progress`,
   `lp:activity` and `lp:region`; sidebar + cards; SVG bars and ring coloured by class; a table for
