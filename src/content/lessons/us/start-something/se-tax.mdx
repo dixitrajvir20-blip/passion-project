@@ -1,107 +1,158 @@
 ---
 title: "Setting money aside for self-employment tax"
-summary: "Past $400 a year of net profit, self-employment tax is due. Work out the share and set it aside as the money arrives."
+summary: "Once your own work nets $400 in a year, self-employment tax is due. Work out the share and set it aside as money lands."
 region: us
 track: start-something
 order: 4
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-20
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "You cleared $5,000 this year from tutoring and from reselling online, after the costs of doing the work. Nothing was withheld from any of it, your return is due in April, and you have set nothing aside."
+objectives:
+  - "Tell when self-employment tax is due on your own work, even with a job that withholds."
+  - "Work out the tax on a month's profit, taking off only the costs of the work."
+  - "Set the tax aside as payments land, and know when the IRS expects it during the year."
 
-prediction:
-  q: "Nothing was withheld from that $5,000. Roughly how much of it goes to Social Security and Medicare tax?"
-  options:
-    - text: "Nothing, because no employer took anything out"
-      why: "Nothing came out because nobody employs you. Once net earnings from your own work reach $400 in a year, the tax is owed anyway."
-    - text: "About $383, the 7.65% a paycheck gives up"
-      why: "That 7.65% is the worker's half only. At a job the employer pays the same again. Working for yourself, both halves are yours."
-    - text: "About $707, because both halves are yours"
-      why: "Both halves make 15.3%, and the IRS applies that to 92.35% of net earnings. On $5,000 it comes to a little over $700."
-  answer: 2
+situation: "Tutoring and reselling left you $5,000 this year after costs, with no tax taken out. On your first tax return, $707 of it is self-employment tax."
 
-takeaways:
-  - "Self-employment tax is 15.3% of 92.35% of your net earnings, once they reach $400 in a year. That is the IRS rate as of 2026."
-  - "Income tax is a separate tax, worked out on your total income for the year, and it can come on top."
-  - "Once you expect to owe $1,000 or more, the IRS looks for payments on four dates during the year rather than one bill in April."
+document:
+  kind: statement
+  title: "Your year, tutoring and reselling"
+  lines:
+    - { label: "Tutoring, paid by families", value: "$3,400", hint: "Paid to you directly, by app or in cash. It counts whether or not a tax form arrives for it." }
+    - { label: "Resale sales", value: "$2,600", hint: "What buyers paid through an online marketplace, before its fees." }
+    - { label: "Shipping and packaging", value: "−$600", hint: "A cost of doing the work. Every cost you can show lowers the profit the tax is worked out from." }
+    - { label: "Marketplace fees", value: "−$400", hint: "Kept by the marketplace before it paid you. Also a cost of the work." }
+    - { label: "Jacket listed, then kept", value: "Not a cost", hint: "Something you keep is personal. It stays out, even though the reselling money paid for it." }
+    - { label: "Net profit", value: "$5,000", hint: "What the work left you. Self-employment tax is worked out from this line." }
+    - { label: "Tax taken out", value: "$0", hint: "Nobody employs you, so nobody took any tax out and sent it on for you." }
+  find:
+    q: "Which line is self-employment tax worked out from?"
+    options:
+      - text: "Tutoring and resale sales together, $6,000"
+        why: "That is what came in. The $1,000 of shipping, packaging and fees comes off first."
+      - text: "Net profit, $5,000"
+        why: "The tax starts from what the work left you, after the costs of doing it."
+      - text: "Tax taken out, $0"
+        why: "That shows nothing was sent on for you. The tax is still owed, and it starts from net profit."
+    answer: 1
+
+video:
+  youtubeId: "eMxTgPtpvmE"
+  title: "Estimated Tax Payments"
+  channel: "IRSvideos"
+  minutes: 3
+  note: "The IRS’s own; an older upload, so the lesson carries the current thresholds."
 
 worked:
   kind: split
-  context: "The $5,000 from the top of the page: what tutoring and reselling brought in this year, minus the costs of doing the work. The IRS counts 92.35% of net earnings, then takes 15.3% of that. The two rates together come to 14.13% of net profit, and the second line applies that rate. Figures are rounded to the dollar."
+  context: "The statement's $5,000 net profit: the part the IRS counts, then the tax."
   income: 5000
   shares:
-    - { label: "Counted for the tax, 92.35% of net profit", percent: 92.35 }
-    - { label: "Self-employment tax, 15.3% of that", percent: 14.13 }
+    - { label: "Counted for the tax", percent: 92.35 }
+    - { label: "Self-employment tax", percent: 14.13 }
+  captions:
+    - "The IRS counts 92.35% of net profit: 100% less the 7.65% an employer would pay."
+    - "15.3% of $4,618, paid to the IRS for Social Security and Medicare: 14.13% of $5,000."
 
-explorable:
-  kind: split
-  incomes: [1000, 2500, 5000, 9000]
-  lines:
-    - { label: "Self-employment tax", percent: 14.13, hint: "15.3% of 92.35% of the year's net profit" }
-    - { label: "Income tax, at an example rate", percent: 10, hint: "Your own rate depends on your total income for the year" }
-    - { label: "Left for you", percent: 75.87, hint: "What the work really paid, once both taxes have a place" }
-  prompts:
-    - "Tap $1,000, then $2,500. Both are past the $400 line, and the tax is worked out from all of the net profit, not from the part above $400."
-    - "Tap $9,000 and add the two tax lines together. Past $1,000 of tax expected for the year, the IRS looks for payments on four dates instead of one."
+keyIdea: "Self-employment tax is 15.3% of 92.35% of net profit, about 14.13%, once net earnings reach $400 a year."
 
 practice:
   kind: split
-  context: "A friend cleared $3,000 this year from weekend photography, after her costs. She splits it the same three ways. The income tax rate here is an example, not hers."
+  context: "A friend made $3,000 from photography this year, after costs."
   income: 3000
   shares:
-    - { label: "Income tax, at an example rate", percent: 10 }
+    - { label: "Income tax, an example", percent: 10 }
     - { label: "Self-employment tax", percent: 14.13 }
     - { label: "Left for her", percent: 75.87 }
   target: "Self-employment tax"
+  hints:
+    - "Self-employment tax is 14.13% of the whole net profit, whatever income tax turns out to be."
+    - "$3,000 × 14.13 ÷ 100."
+    - "$424. Taking 14.13% of the $2,700 left after income tax gives $382, which falls short."
+
+practiceMore:
+  kind: split
+  context: "Her brother made $8,000 mowing lawns, after gas and repairs."
+  income: 8000
+  shares:
+    - { label: "Income tax, an example", percent: 12 }
+    - { label: "Self-employment tax", percent: 14.13 }
+    - { label: "Left for him", percent: 73.87 }
+  target: "Self-employment tax"
+  hints:
+    - "Same method: 14.13% of the whole $8,000, not of what is left after income tax."
+    - "$8,000 × 14.13 ÷ 100."
+    - "$1,130, not $995 from what is left after income tax. That alone passes $1,000, so the IRS generally expects payments during the year."
+
+explorable:
+  kind: split
+  incomes: [250, 500, 1000, 2000]
+  lines:
+    - { label: "Self-employment tax", percent: 14.13, hint: "15.3% of 92.35% of the month's net profit" }
+    - { label: "Income tax, an example", percent: 10, hint: "Yours depends on your whole year's income, and may be nil" }
+    - { label: "Left for you", percent: 75.87, hint: "What the month's work really paid you" }
+  prompts:
+    - "Tap $1,000, a month's net profit: $141 goes to self-employment tax, and $283 at $2,000."
+    - "At $1,000, press −5% twice on income tax, for a year with none due. Self-employment tax stays $141."
+
+takeaways:
+  - "The day a payment lands, move 14.13% of what it leaves after costs out of your spending money."
+  - "Keep a dated line and the receipt for every payment and cost. Each cost you can show lowers the tax."
+  - "If your year's tax could reach $1,000, plan to pay by April 15, June 15, September 15 and January 15."
+
+details:
+  - "Self-employment tax is 12.4% for Social Security and 2.9% for Medicare, 15.3% in all, as of 2026. It applies once net earnings from self-employment reach $400 in a year, whatever your age."
+  - "The IRS applies the rate to 92.35% of net earnings, and half of the tax comes off your income before income tax is figured. The 14.13% here is 92.35% × 15.3%, rounded, and figures are rounded to the dollar."
+  - "At a job, 6.2% for Social Security and 1.45% for Medicare come out of pay, and the employer pays the same again."
+  - "Estimated tax covers income tax and self-employment tax together. The IRS generally expects it from people who will owe $1,000 or more when they file."
+  - "The four due dates are April 15, June 15, September 15 and January 15 of the next year, or the next business day when one falls on a weekend or holiday."
+  - "Paying too little during the year can bring a penalty, and the IRS lists exceptions. With a job as well, a new Form W-4 there can raise withholding instead."
+  - "Estimated tax is not required for a year if you had no tax liability the year before, were a US citizen or resident alien all year, and that year ran 12 months."
+  - "Net profit is figured on Schedule C, filed with your tax return. The IRS asks gig workers to keep records and receipts as the year goes."
+  - "Income is reported whether or not a Form 1099-K arrives for it, including income paid in cash."
+  - "Whether income tax is due depends on your total income for the year. State income tax rules vary, and your state's tax agency sets them out."
 
 quiz:
-  - q: "You work at a grocery store, where Social Security and Medicare come out of every paycheck. Tutoring on weekends left you $1,500 after costs this year. A friend says the store already covers those taxes. What do you plan for?"
+  - q: "You work at a grocery store, where Social Security and Medicare come out of every paycheck. Weekend tutoring left you $1,500 after costs this year. What do you plan for?"
     options:
-      - text: "Nothing more, because the pay stub already shows both taxes"
-        why: "Those lines cover the store's pay only. Nobody sends in Social Security and Medicare on the tutoring money unless you do."
+      - text: "Nothing more, because the store's pay stub already shows both taxes"
+        why: "Those lines cover the store's pay only. Nobody sends anything in on the tutoring money unless you do."
       - text: "Self-employment tax on the tutoring money as well"
         why: "Tutoring is separate work, and $1,500 of net profit is past the $400 line. The tax on it comes to about $212."
-      - text: "Self-employment tax on the part above $400 only"
-        why: "The $400 is a line you cross, not an amount that comes off first. Past it, the tax is worked out from all the net profit."
+      - text: "Self-employment tax on the $1,100 above $400 only"
+        why: "The $400 is a line you cross, not an amount taken off first. Past it, the tax is worked out on all the net profit."
     answer: 1
-  - q: "In one month of reselling you pay $120 for shipping labels, $40 for packaging, and $60 for a jacket you listed and then decided to keep. Which of these belong in your record of costs?"
+  - q: "A month of reselling brings in $700. You pay $120 for shipping labels, $40 for packaging, and $60 for a jacket you listed, then kept. How much self-employment tax does the month add?"
     options:
-      - text: "All three, because each was paid out of the reselling money"
-        why: "A jacket you keep is a personal cost. Only the costs of doing the work lower the net profit the tax is worked out from."
-      - text: "The labels and the packaging, with the receipts kept"
-        why: "Both are costs of doing the work, so $160 lowers the net profit. The IRS asks gig workers to keep receipts as they go."
-      - text: "None of them, because small costs are not worth the trouble"
-        why: "Left out all year, they add up to real money. The tax is then worked out on profit you never kept."
+      - text: "$99, on the $700 of sales"
+        why: "That skips the costs. Labels and packaging come off before the tax is worked out."
+      - text: "$76, on $540 of net profit"
+        why: "$700 − $120 − $40 leaves $540, and 14.13% of that is $76. The jacket you kept is personal."
+      - text: "$68, on $480 of net profit"
+        why: "That takes the jacket off too. Something you keep is a personal cost, not a cost of the work."
+      - text: "$83, which is 15.3% of the $540"
+        why: "The IRS counts 92.35% of net profit first, so the rate on the whole of it is about 14.13%."
     answer: 1
-  - q: "It is October. Freelance design has left you $7,500 after costs this year, nothing has been withheld, and you have set nothing aside. What is the most useful next step?"
+  - q: "It is October. Freelance design has left you $7,500 after costs this year, nothing withheld and nothing set aside. What is the most useful next step?"
     options:
       - text: "Wait and pay the whole bill in April, when the return is due"
-        why: "The IRS generally expects tax of $1,000 or more to be paid during the year. Paying too little along the way can add a penalty."
-      - text: "Read the IRS estimated tax pages, and set aside from the next payment on"
+        why: "The money has to be there in April, and the IRS generally expects tax of $1,000 or more to be paid during the year."
+      - text: "Set aside from the next payment on, and read the IRS estimated tax pages"
         why: "Self-employment tax alone on $7,500 is about $1,060, past the $1,000 line. The next of the four due dates is January 15."
-      - text: "Ask each client to withhold the tax from what it pays you"
-        why: "A client hiring you for a job does not withhold for you. If you also have a job, a new W-4 there can raise withholding instead."
-    answer: 1
-  - q: "Clients pay you by app two or three times a week, and you mean to keep 25% back for tax. Which way makes that money most likely to still be there in April?"
-    options:
-      - text: "Work out the whole year's share in March, from the totals"
-        why: "The tax is the same either way. What changes is whether the money is still there in March, after months in a spending balance."
-      - text: "Move the 25% out of the spending balance the day each payment lands"
-        why: "Moving the share on the day it arrives is a small step each time, and it keeps tax money out of the balance you spend from."
-      - text: "Keep one account and try to stay above what you think you owe"
-        why: "One balance mixes tax money with spending money, and the amount owed grows with every job."
+      - text: "Ask each client to take the tax out of what it pays you"
+        why: "A client hiring you for a job does not withhold for you. Setting the share aside is your step."
     answer: 1
 
 transfer:
   - "The first time someone pays you for your own work: tutoring, freelance, reselling. The set-aside and the record start with that payment."
   - "When you also have a job. The Social Security and Medicare on your paycheck cover that pay only, not your own work."
   - "Every time you quote a price. Tax is part of what the work costs you, the same way shipping is."
-  - "Early each year, when your records go into a tax return and the year is settled."
 
-glossary: [self-employed, withholding, net-earnings, self-employment-tax, business-expense, fica, tax-return, estimated-tax, w-4, form-1099-k, schedule-c, bookkeeping]
+glossary: [withholding, self-employed, net-earnings, business-expense, self-employment-tax, irs, estimated-tax, bookkeeping]
 tool: budget
 
 sources:
@@ -114,7 +165,7 @@ sources:
   - title: "Topic no. 751, Social Security and Medicare withholding rates: 6.2% and 1.45% from the employee, and the same again from the employer (updated 20 January 2026)"
     url: "https://www.irs.gov/taxtopics/tc751"
     publisher: "Internal Revenue Service"
-  - title: "Estimated taxes: expecting to owe $1,000 or more, the underpayment penalty and its exceptions, and raising withholding at a job instead (last reviewed 28 June 2026)"
+  - title: "Estimated taxes: expecting to owe $1,000 or more, the underpayment penalty and its exceptions, no estimated tax after a year with no tax liability, and raising withholding at a job instead (last reviewed 28 June 2026)"
     url: "https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
     publisher: "Internal Revenue Service"
   - title: "Manage taxes for your gig work: the four due dates of April 15, June 15, September 15 and January 15, and keeping records and receipts through the year (last reviewed 28 June 2026)"
@@ -128,67 +179,12 @@ sources:
     publisher: "USA.gov, General Services Administration"
 ---
 
-## Nothing is withheld, and it is still owed
+## Nothing withheld, still owed
 
-At a job, your employer takes Social Security and Medicare out of every paycheck and sends them on. That is <Term id="withholding">withholding</Term>. Tutoring and reselling work differently. You are <Term id="self-employed">self-employed</Term>, so the full amount reaches you and nothing is sent on for you.
+A job takes Social Security and Medicare, federal retirement and health programs, out of your pay: <Term id="withholding">withholding</Term>. Tutoring and reselling make you <Term id="self-employed">self-employed</Term>, so nothing comes out. Your <Term id="net-earnings">net earnings</Term> are your net profit: what came in, minus the <Term id="business-expense">business expenses</Term> of the work. Once they reach $400 in a year, <Term id="self-employment-tax">self-employment tax</Term> is due, whatever your age.
 
-**That does not mean nothing is owed.** Once your <Term id="net-earnings">net earnings</Term> from your own work reach $400 in a year, <Term id="self-employment-tax">self-employment tax</Term> applies. The test is the size of those earnings, not your age.
+## Why about 14.13%, and when to pay it
 
-Net earnings are what came in, minus the <Term id="business-expense">business expenses</Term> of doing the work. That figure is also called your net profit. Shipping labels count. So does a platform fee. A jacket you listed and then kept does not.
+At a job you pay 7.65%, and the employer pays 7.65% more. Working for yourself you are both, so the rate is 15.3%. The <Term id="irs">IRS</Term> applies it to 92.35% of net profit: 100% less the employer's 7.65%. That is about 14.13% of the whole.
 
-## Why the rate is 15.3%
-
-At a job, Social Security takes 6.2% of your pay and Medicare takes 1.45%. Together they are <Term id="fica">FICA</Term>, and your employer pays the same again on top.
-
-Working for yourself, you are the worker and the employer at once. **So you pay both halves: 12.4% for Social Security and 2.9% for Medicare, 15.3% in all.** That is the IRS rate as of 2026.
-
-The rate does not apply to all of your net earnings. The IRS applies it to 92.35% of them. The calculation below works that through on the $5,000 from the top of the page.
-
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="se-title se-desc">
-  <title id="se-title">Self-employment tax on $5,000 of net profit</title>
-  <desc id="se-desc">A single bar in two parts. Self-employment tax takes about $707 of the $5,000. The other $4,293 is what is left before any income tax.</desc>
-  <rect class="chart-a" x="0" y="26" width="271" height="36" rx="6" />
-  <rect class="chart-b" x="275" y="26" width="45" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Left after this tax $4,293</text>
-  <text class="chart-label" x="320" y="80" text-anchor="end">Self-employment tax $707</text>
-  <text class="chart-note" x="0" y="100">$5,000 of net profit, before any income tax</text>
-</svg>
-
-## Income tax is a separate question
-
-Self-employment tax pays for Social Security and Medicare. Income tax is a different tax, and it can come on top.
-
-Whether you owe income tax depends on your total income for the year: your own work, any job, anything else. **Self-employment tax is worked out on its own, so it can be due in a year with little or no income tax.**
-
-When you file, half of the self-employment tax comes off your income before income tax is figured. State rules are separate again and vary by state, and your state's tax agency sets them out.
-
-## Set the share aside as it arrives
-
-The tax is settled once a year, on your <Term id="tax-return">tax return</Term>. The money for it arrives a few dollars at a time. **So give the tax a line of its own, and move it the day each payment lands.**
-
-Money held in a separate account is not part of the balance you spend from. Where you keep it is your choice, and this lesson does not pick one.
-
-The table shows the year behind the $5,000: two kinds of work, and the costs of doing them.
-
-| Tutoring and reselling, this year | Amount |
-| --- | --- |
-| Tutoring, paid directly by families | $3,400 |
-| Resale sales, through an online marketplace | $2,600 |
-| Shipping, packaging and marketplace fees | −$1,000 |
-| Net profit for the year | $5,000 |
-
-## Paying during the year
-
-The IRS generally expects tax of $1,000 or more to be paid during the year, not in one go when you file. Those payments are <Term id="estimated-tax">estimated tax</Term>, and they cover income tax and self-employment tax together.
-
-The four due dates are April 15, June 15, September 15 and January 15, or the next business day when one falls on a weekend or holiday. Paying too little along the way can mean a penalty, and the IRS lists exceptions. If you also have a job, the IRS says you can have more taken from that paycheck with a new <Term id="w-4">W-4</Term> instead.
-
-**For your own numbers, start from the IRS pages listed below.**
-
-## Keep the record as you go
-
-<Term id="bookkeeping">Bookkeeping</Term> here is one line per payment: the date, who paid, how much. Add one line per cost, and keep the receipt. The IRS asks gig workers to keep their records and receipts as the year goes, not to rebuild them in April.
-
-Income counts whether or not a form arrives for it. A marketplace sends some sellers a <Term id="form-1099-k">Form 1099-K</Term>, and the IRS says this income is reported either way, including when it is paid in cash.
-
-At the end of the year those lines become a <Term id="schedule-c">Schedule C</Term>: what came in, what it cost, what is left. **Every cost you can show lowers the net profit the tax is worked out from.**
+Set that aside as payments land. Expect to owe $1,000 or more for the year, and the IRS generally looks for <Term id="estimated-tax">estimated tax</Term> on four dates. <Term id="bookkeeping">Bookkeeping</Term>, a dated line per payment and cost, gives the figure.

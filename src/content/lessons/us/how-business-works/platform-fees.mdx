@@ -1,6 +1,6 @@
 ---
 title: "How a freelance platform makes its money"
-summary: "One $80 job, one example fee: the $16 taken is more than a quarter of the $58 you keep."
+summary: "A client pays $84 and $64 reaches you: who keeps the $20, and why a 20% cut takes over a quarter of what you keep."
 region: us
 track: how-business-works
 order: 1
@@ -8,98 +8,143 @@ readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "A bakery near you hires you through a freelance platform to design a logo, and agrees a price of $80. The platform keeps 20% of that, and the bakery is charged a fee of its own on top. Your first payout is $64."
+objectives:
+  - "Turn a platform's cut into dollars and set it against what a job leaves you."
+  - "Weigh what a platform's fees buy before you take a client off the platform."
+  - "Record each job's full price and its fee, not only the payout."
 
-prediction:
-  q: "The job pays $80. The platform keeps 20% of the price, which is $16, and a licensed font for the job costs you $6. Next to the money you actually keep, how big is that $16?"
-  options:
-    - text: "A fifth of it, because the fee is 20%"
-      why: "The $16 is a fifth of the $80 price. It is taken before your own costs, so it is a bigger share of the smaller amount left."
-    - text: "More than a quarter of it"
-      why: "After the fee and the font you keep $58. The $16 is about 28% of that, because the fee is worked out on the price."
-    - text: "Nothing, because the client pays the platform"
-      why: "The platform charges the client a fee on top in this example. The 20% still comes out of the $80 before the money reaches you."
-  answer: 1
+situation: "A bakery paid $84 through a platform for your first freelance logo, priced at $80. After the platform's cut and a $6 font, $58 is yours."
 
-takeaways:
-  - "A platform charges for what it brings you: clients you did not have to find, and agreed terms for getting paid."
-  - "A percentage of the price is a bigger percentage of your margin. Here 20% of $80 is $16, more than a quarter of the $58 left."
-  - "A fee on every job is a cost of that job. Price it in before you quote, and keep your own record of what was taken."
+document:
+  kind: payout
+  title: "Logo job, paid out"
+  lines:
+    - { label: "Client paid", value: "$84", hint: "Everything the bakery paid: your price plus a fee the platform charges clients." }
+    - { label: "Client fee", value: "−$4", hint: "The platform's charge to the bakery, on top of your price. It never reaches you." }
+    - { label: "Job price", value: "$80", hint: "The price you agreed for the logo. The platform's cut is worked out on this figure." }
+    - { label: "Platform fee, 20%", value: "−$16", hint: "The platform's cut of your price. The rate is an example; each platform sets its own." }
+    - { label: "Paid to you", value: "$64", hint: "What reaches your bank. Your own costs for the job still come out of it." }
+    - { label: "Payment status", value: "Released on delivery", hint: "The platform held the bakery's money until you delivered the logo. That is part of what the fees pay for." }
+  find:
+    q: "How much did the platform earn from this one job?"
+    options:
+      - text: "$16, the platform fee"
+        why: "That is its cut of your price. It also charged the bakery $4, so it earned from both sides."
+      - text: "$20, the two fees together"
+        why: "The bakery paid $84 and $64 reached you. The $20 between them stayed with the platform."
+      - text: "$84, since the whole payment went through it"
+        why: "The money passed through the platform, and $64 of it was paid on to you."
+    answer: 1
 
 worked:
-  kind: margin
-  context: "The logo job from the top of the page, at $80. The platform keeps 20%, which is $16, and a licensed font for this job costs $6, so one job costs $22 to deliver. Your month costs $290: a laptop you are paying off, design software and your portfolio site."
-  unitName: jobs
-  fixed: 290
-  variable: 22
-  price: 80
+  kind: deduction
+  context: "The payout above, from what the bakery paid to what you keep."
+  start: 84
+  startLabel: "What the client paid"
+  lines:
+    - { label: "Client fee", amount: 4, caption: "Charged to the bakery on top of your price. The platform keeps it.", subtotalLabel: "Job price" }
+    - { label: "Platform fee, 20%", amount: 16, caption: "The platform's cut: 20% of your $80 price, taken before your own costs.", subtotalLabel: "Paid to you" }
+    - { label: "Licensed font", amount: 6, caption: "Your own cost for this job, paid from the $64 that reached you." }
+  endLabel: "Amount you keep"
 
-explorable:
-  kind: margin
-  unitName: jobs
-  fixed: 290
-  variable: 6
-  prices: [40, 60, 80, 120]
-  prompts:
-    - "These are the same jobs billed straight to a client who found you through a friend, so no platform takes a cut. Tap $80: each job keeps $74, and the month takes four of them instead of five."
-    - "Tap $40. Billed direct, a $40 job keeps $34 and the month takes nine. On the platform, 20% of $40 is $8, so the same job would keep $26 and the month would take twelve."
+keyIdea: "A cut of the price is a bigger share of what you keep: $16 is 20% of $80, but over a quarter of $58."
 
 practice:
-  kind: margin
-  context: "A friend edits short videos on a platform, at $120 a job. The platform keeps 15%, which is $18, and a stock music licence for each video costs $9, so one video costs $27 to deliver. Her month costs $310: a laptop payment, editing software and a file transfer plan."
-  unitName: videos
-  fixed: 310
-  variable: 27
-  price: 120
+  kind: deduction
+  context: "A friend's video job: the client pays $126, her $120 price plus a $6 fee. The platform's 15% is $18, and a music track costs her $9."
+  start: 126
+  startLabel: "What the client paid"
+  lines:
+    - { label: "Client fee", amount: 6, subtotalLabel: "Job price" }
+    - { label: "Platform fee, 15%", amount: 18, subtotalLabel: "Paid to her" }
+    - { label: "Music track", amount: 9 }
+  endLabel: "Amount she keeps"
+  hints:
+    - "Start from what the client paid, then take off the client fee, the platform's cut and her own cost, in that order."
+    - "$126 − $6 − $18 − $9."
+    - "$93 is hers. $120 is only her price; the platform's cut and the music track still come out of it."
+
+practiceMore:
+  kind: deduction
+  context: "The platform's cut rises to 25%. The bakery's second logo has the same terms: $80, a $4 client fee, a $6 font."
+  start: 84
+  startLabel: "What the client paid"
+  lines:
+    - { label: "Client fee", amount: 4, subtotalLabel: "Job price" }
+    - { label: "Platform fee, 25%", amount: 20, subtotalLabel: "Paid to you" }
+    - { label: "Licensed font", amount: 6 }
+  endLabel: "Amount you keep"
+  hints:
+    - "Only the platform's line changes. Work out 25% of the $80 price, then run the chain as before."
+    - "$84 − $4 − $20 − $6."
+    - "$54 is yours. The cut is 25% of the $80 price, $20, not 25% of the $84 the bakery paid."
+
+explorable:
+  kind: deduction
+  starts: [40, 80, 120]
+  startLabel: "Job price"
+  lines:
+    - { label: "Platform fee, 20%", percentOfStart: 20, subtotalLabel: "Paid to you" }
+    - { label: "Licensed font", amount: 6 }
+  endLabel: "Amount you keep"
+  prompts:
+    - "Tap $40. The cut is $8, the font still $6, so you keep $26; the cut is almost a third of it."
+    - "Tap $120. The cut grows with the price to $24, but the font stays $6, so you keep $90."
+
+takeaways:
+  - "Before you quote, turn the platform's rate into dollars and see what the job leaves you."
+  - "If a client offers to pay directly, weigh the fee against the held payment and written scope, and read your terms."
+  - "Record every job as two lines: the full price and the fee."
+
+details:
+  - "Every fee in this lesson is an example: 20% of the price from the freelancer, and $4 from the client. Each platform sets its own fees and can change them."
+  - "The Federal Trade Commission's guidance on gig work (7 January 2025): research a platform before you sign up, including how it pays, which charges can come out of your pay, and how to avoid them."
+  - "The same guidance suggests asking people already working on a platform what they earn and what it costs them."
+  - "The Internal Revenue Service says income from gig work goes on your tax return even when no information return, such as a Form 1099-K, arrives."
+  - "A payment platform has to send a Form 1099-K when it paid you more than $20,000 across more than 200 payments in a year. The One, Big, Beautiful Bill restored that line; a state may set a lower one."
+  - "The Internal Revenue Service also says the gross amount on a Form 1099-K is not adjusted for fees, refunds or shipping, and that those can be deducted from it."
+  - "Break-even, as the Small Business Administration sets it out, is fixed costs divided by price minus variable cost. With $290 a month of costs, a job that leaves $58 covers the month in five jobs; without the platform's cut it would leave $74, and four would do."
 
 quiz:
-  - q: "A client you met on the platform messages you: pay me directly next time and we both skip the fee. What do you do?"
+  - q: "Your platform's cut of your price rises from 20% to 25% next month. Your logos still sell at $80, with a $6 font. What do you do first?"
     options:
-      - text: "Take it, since the work is identical either way"
-        why: "The work is the same. What goes is the protection: nobody holds the money until you deliver, and nothing records what was agreed."
-      - text: "Keep the job on the platform and price the fee into the quote"
-        why: "The fee buys the held payment and the written scope for both sides. Your terms may cover taking a client off the platform, so read them before you answer."
-      - text: "Split it: half through the platform, half directly"
-        why: "Half the job then has no record and no held payment, and your terms may treat it the same way. The fee is not avoided, only the protection is."
+      - text: "Nothing, since five points is too small to matter"
+        why: "Five points of $80 is $4 a job, and all of it comes out of the $58 you keep."
+      - text: "Work out the new cut in dollars and what a job leaves, then set your next quote from that"
+        why: "At 25% the cut is $20, so an $80 job leaves you $54, not $58. Your next quote starts from that figure."
+      - text: "Raise the price by 5%, the same as the rise"
+        why: "That makes the job $84, but a quarter of $84 is $21, so it leaves $57. Still less than the $58 you keep now."
     answer: 1
-  - q: "A neighbour asks for the same logo work for $70, paid to you directly. The platform job is $80. Which pays you more for the job?"
+  - q: "A client you met on the platform messages you: pay me directly next time, and we both skip the fees. What do you weigh before you answer?"
     options:
-      - text: "The $80, because it is the bigger number"
-        why: "On the platform, $16 of the $80 goes in the fee, so $64 reaches you. The $70 from a neighbour arrives whole."
-      - text: "The $70, once the platform's cut is counted"
-        why: "The $80 job pays you $64. The neighbour is a client you found yourself, which is the part a platform charges for."
-      - text: "They are the same, since $10 is small either way"
-        why: "The gap is not $10. The fee makes the platform job $64 to you, so the direct job pays $6 more for the same hours."
+      - text: "Only the $16 you would save on an $80 job"
+        why: "The $16 is real, but it paid for things you would lose. The saving is only half the question."
+      - text: "The $16 against what it buys: money held until delivery, a written scope, and your platform's terms"
+        why: "Off the platform nobody holds the money until you deliver, nothing records what was agreed, and your terms may forbid it."
+      - text: "Whether the client seems trustworthy"
+        why: "Trust helps, but it is not a record. If the file is refused or the payment never comes, there is no one to take it to."
     answer: 1
-  - q: "The platform emails that its cut rises from 20% to 25% next month. Your logo jobs still sell at $80 and still need a $6 font. What do you do before it starts?"
+  - q: "Your first year of freelance work ends. The platform's summary shows $4,800 of job prices and $960 of fees; $3,840 reached your bank. What goes in your records?"
     options:
-      - text: "Nothing, since five points is too small to notice"
-        why: "Five points of $80 is $4 a job, taken out of the $58 you keep. Over a month that adds a sixth job to your break-even."
-      - text: "Work the new fee out in dollars, then requote the job"
-        why: "At 25% the fee is $20, so a job keeps $54 and the month takes six jobs instead of five. A new price has to cover that."
-      - text: "Move to another platform at once, since fees only go up"
-        why: "One rise is not a pattern. Work out the dollars first, then compare a second platform on what it charges and the clients it brings."
-    answer: 1
-  - q: "You are keeping records for your first year of freelance work. The platform's summary shows $4,800 of jobs, with $960 of fees taken out of that figure. What belongs in your records?"
-    options:
-      - text: "Only the $3,840 that reached your account"
-        why: "The IRS says the total a platform reports is not reduced by its fees. Recording the net alone leaves nothing to support the $960."
-      - text: "Both lines: $4,800 came in, and $960 went out in fees"
-        why: "The IRS says fees can be deducted from the total a platform reports, and your own record is what supports the deduction."
-      - text: "Neither, because the platform files its own forms"
-        why: "The IRS says gig income is reported even when no form arrives. What a platform files is not a substitute for your records."
+      - text: "$3,840, the money that actually arrived"
+        why: "A Form 1099-K reports your jobs before fees. Recording only the payouts leaves nothing to show the $960 you paid."
+      - text: "$4,800 of income and $960 of fees, as two lines"
+        why: "The full price is what you earned, and the fees can be deducted from it. Your record is what supports that."
+      - text: "Nothing until a tax form arrives"
+        why: "Freelance income counts on your tax return whether or not a form arrives. Many small freelancers never get one."
     answer: 1
 
 transfer:
-  - "Before you quote on any freelance platform. Turn its fee rates into dollars at your own price, then quote what is left."
-  - "When you compare two platforms. Compare what one job leaves you, and how much work each one brings."
-  - "When a client asks to move the job off the platform and the fee looks like a saving for both of you."
-  - "Every January, when the year's fees are set against the year's income in your records."
+  - "Before you quote on any freelance platform: turn its rates into dollars at your price, then see what the job leaves you."
+  - "When you compare a platform with finding clients yourself: set what one job leaves you against the work each one brings."
+  - "When a client asks to move a job off the platform to skip the fees."
+  - "Each January, when the year's fees are set against the year's income in your records."
 
-glossary: [platform-fee, variable-cost, margin, fixed-cost, break-even, scope-of-work, escrow, form-1099-k]
-tool: break-even
+glossary: [platform-fee, escrow, scope-of-work, margin, form-1099-k]
+tool: side-hustle
 
 sources:
   - title: "Taking the guesswork out of gigs: research a platform before signing up, including the charges that can be deducted from your pay and how to avoid them (7 January 2025)"
@@ -111,78 +156,22 @@ sources:
   - title: "What to do with Form 1099-K: the gross payment amount is not adjusted for fees, refunds or shipping, and those can be deducted from it (last reviewed 27 July 2026)"
     url: "https://www.irs.gov/businesses/what-to-do-with-form-1099-k"
     publisher: "Internal Revenue Service"
+  - title: "Form 1099-K FAQs, general information: platforms report when payments pass $20,000 across more than 200 transactions, a state may set a lower line, and income is taxable even without a form (Fact Sheet 2025-08, updated 23 October 2025)"
+    url: "https://www.irs.gov/newsroom/form-1099-k-faqs-general-information"
+    publisher: "Internal Revenue Service"
   - title: "Calculate your startup costs: fixed costs, and break-even as fixed costs divided by price minus variable cost (page undated, accessed 21 September 2026)"
     url: "https://www.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs"
     publisher: "U.S. Small Business Administration"
 ---
 
-## Where the $80 goes
+## Who pays the platform
 
-The bakery agrees $80 for the logo. The platform keeps 20% of that, so $16 never reaches you. That cut is a <Term id="platform-fee">platform fee</Term>.
+The bakery paid $84 and $64 reached you, so the platform kept $20. It charged the bakery $4 on top, and took a <Term id="platform-fee">platform fee</Term> of 20% of your price. Both fees are examples.
 
-A licensed font for this job costs $6. What is left is $58.
+The fees buy something: a client found for you, money held in <Term id="escrow">escrow</Term> until you delivered, and a written <Term id="scope-of-work">scope of work</Term>.
 
-The client's side is not $80 either. The platform charges the bakery $4 on top, so the bakery pays $84 for work that pays you $64. Every fee rate in this lesson is an example; each platform sets its own.
+## The cut comes off the price
 
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="job-title job-desc">
-  <title id="job-title">Where an $80 freelance job goes</title>
-  <desc id="job-desc">A single bar in three parts. $58 is kept, the licensed font costs $6, and the platform fee is $16.</desc>
-  <rect class="chart-a" x="0" y="26" width="226" height="36" rx="6" />
-  <rect class="chart-b" x="230" y="26" width="23" height="36" rx="6" />
-  <rect class="chart-b" x="257" y="26" width="63" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Kept $58</text>
-  <text class="chart-label" x="320" y="16" text-anchor="end">Platform fee $16</text>
-  <text class="chart-label" x="230" y="80">Font $6</text>
-  <text class="chart-note" x="0" y="100">One $80 job on the platform</text>
-</svg>
+The platform takes 20% of the whole $80, before your own costs such as the $6 font. So the $16 is a bigger share of your <Term id="margin">margin</Term>, what the job leaves you, than of the price.
 
-| Where the bakery's $84 goes | Amount |
-| --- | --- |
-| Fee the client pays on top | $4 |
-| Platform's 20% of the $80 | $16 |
-| Licensed font for this job | $6 |
-| Kept | $58 |
-
-## A percentage of the price, not the profit
-
-It is easy to read 20% as a fifth of your profit. It is not. **A percentage fee is worked out on the price, not on what you keep.**
-
-Twenty percent of $80 is $16. Set that beside the $58 you keep, and it is about 28% of it.
-
-The fee is a <Term id="variable-cost">variable cost</Term>: every job you take pays it again. Your <Term id="margin">margin</Term> is what is left once the fee and the font are paid.
-
-The thinner that margin, the harder the same rate bites. On a job that mostly pays for materials, a fifth of the price can be most of what you keep.
-
-## The month behind one job
-
-Your month costs $290 whether a job comes in or not: a laptop you are paying off, design software and your portfolio site. Those are <Term id="fixed-cost">fixed costs</Term>.
-
-Each $80 job puts $58 towards them, so five jobs cover the month. The fifth job is your <Term id="break-even">break-even</Term> point.
-
-Without the platform's cut, four would do it. **The fee costs you one extra job a month.**
-
-## What the fee buys
-
-A fee is not a penalty. It is the price of what the platform brings.
-
-Here it brings the bakery, a client who would not have found you, and holds the bakery's money in <Term id="escrow">escrow</Term> until the logo is delivered. The job is written down as a <Term id="scope-of-work">scope of work</Term> before it starts, so both sides know what $80 covers. Platforms differ; check what yours covers.
-
-Finding your own clients costs nothing in fees. It costs unpaid hours, and the risk of an invoice nobody pays.
-
-The useful question is not whether 20% is high. **It is whether what a platform brings is worth what it takes.**
-
-## When a client asks to pay you directly
-
-Sooner or later a client suggests paying outside the platform and splitting the fee. From both sides it looks like a saving.
-
-What it removes is the part you were paying for. Nobody holds the money until you deliver. There is no record of what was agreed, and no route to take if the file is refused or the payment never arrives.
-
-The terms you agreed to when you joined may cover this too. Read them before you answer.
-
-## Find the fees before you sign up
-
-Fees are easier to price in before you start.
-
-The FTC's guidance for anyone taking on gig work is to research the platform first. Find out how it pays, what charges can be taken out of your pay, and which of those you can avoid. It also suggests asking people already working there what they earn and what it costs them.
-
-Then keep your own record of what each job was charged. The IRS says the total a platform reports on a <Term id="form-1099-k">Form 1099-K</Term> is not reduced by its fees, and that fees can be deducted from it. Your record is what supports that.
+A <Term id="form-1099-k">Form 1099-K</Term> reports your jobs before fees, so keep your own record of each fee.

@@ -1,40 +1,88 @@
 ---
 title: "Break-even for a custom apparel business"
-summary: "One shirt leaves $10.50 after its own costs. Work out how many shirts cover $900 a month."
+summary: "Fifty shirts at $18 bring in the month's $900, yet covering it takes 86. The gap is what each shirt costs."
 region: us
 track: start-something
 order: 2
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "You print shirts for school clubs and local teams. The press and its printer are on a twelve-month payment plan, and that payment is due in a slow month as much as a busy one. Before the next quote goes out, you want the number of shirts that covers a month."
+objectives:
+  - "Work out what one sale leaves once the plain shirt, ink, bag and platform fee come off."
+  - "Work out how many shirts cover the month, and redo the count when a cost changes."
+  - "Tell how a payment plan on equipment moves the count, while it runs and after it ends."
 
-prediction:
-  q: "A shirt sells for $18, and $7.50 of that goes on the plain shirt, the ink, the packaging and the platform fee. The press payment, design software and storage come to $900 a month. How many shirts cover the month?"
-  options:
-    - text: "50 shirts"
-      why: "That divides the month by the full price. Part of every $18 goes straight back out on the shirt itself, so only what is left can pay the $900."
-    - text: "86 shirts"
-      why: "The month's $900 divided by the $10.50 a shirt leaves, rounded up. The 86th shirt is the one that clears the month."
-    - text: "120 shirts"
-      why: "That divides the month by what a shirt costs to make. The $900 is paid by what is left after that cost, not by the cost itself."
-  answer: 1
+situation: "You print shirts for school clubs at $18 each, and the business pays $900 of bills a month. Fifty shirts bring in $900, yet you sold sixty last month and ended $270 down. The month needed 86."
 
-takeaways:
-  - "Contribution is the price minus everything one sale used up, the platform fee included. Only that part can pay the month's bills."
-  - "Break-even is fixed costs divided by contribution, rounded up, because part of a shirt cannot be sold."
-  - "Equipment on a payment plan is a fixed cost until the last payment, and break-even drops when it ends."
+document:
+  kind: statement
+  title: "Shirt printing, last month"
+  lines:
+    - { label: "Shirts sold, 60 × $18", value: "$1,080", hint: "What came in from last month's orders. Every club paid the full price." }
+    - { label: "Plain shirts, ink, bags, 60 × $5.20", value: "−$312", hint: "Bought again for every shirt: $3.20 for the shirt, $1.10 of ink, $0.90 for the bag and label." }
+    - { label: "Platform fee, 60 × $2.30", value: "−$138", hint: "The marketplace's charge on each shirt sold. Like the ink, it grows with every order." }
+    - { label: "Press and printer payment", value: "−$600", hint: "One payment of a twelve-month plan. Due in a month with no orders, until the last one." }
+    - { label: "Design software", value: "−$60", hint: "A monthly subscription, the same whatever you print." }
+    - { label: "Storage unit", value: "−$240", hint: "Space for plain shirts and finished orders, rented by the month." }
+    - { label: "Left after every cost", value: "−$270", hint: "Orders minus every cost. Sixty shirts left the month short, not level." }
+  find:
+    q: "Which lines would you still pay in a month with no orders at all?"
+    options:
+      - text: "The plain shirts, ink, bags and platform fee"
+        why: "Those come with each shirt. No orders means no shirts bought and no fee charged."
+      - text: "The press payment, the software and the storage"
+        why: "Those three come to $900 whatever you print. Only what each shirt leaves can pay them."
+      - text: "Every cost line on the statement"
+        why: "The shirt costs and the fee stop when orders stop. Only $900 of the $1,350 in costs keeps coming."
+    answer: 1
+
+video:
+  youtubeId: "Nw2IioaF6Lc"
+  title: "Cost Volume Profit Analysis (CVP): calculating the Break Even Point"
+  channel: "Edspira"
+  minutes: 8
+  note: "Accounting-course framing; the apparel numbers are the lesson’s."
 
 worked:
   kind: margin
-  context: "The shirts from the top of the page. One sells for $18, and the plain shirt, the ink, the bag and the platform fee on each shirt come to $7.50. The press payment, the design software and the storage unit come to $900 a month, whatever gets printed."
+  context: "The statement above, per shirt: $18 in, $7.50 of shirt, ink, bag and fee out, and $900 of fixed costs."
   unitName: shirts
   fixed: 900
   variable: 7.5
   price: 18
+  captions:
+    - "$7.50 of each $18 goes to your suppliers and the platform; $10.50 is left for the month."
+    - "Only that $10.50 pays the $900; dividing by the whole $18 gives fifty, thirty-six short."
+
+keyIdea: "Break-even is the month's fixed costs divided by what one shirt leaves after its own costs, rounded up to a whole shirt."
+
+practice:
+  kind: margin
+  context: "A classmate embroiders caps: $26 each, $14.75 of cap, thread, bag and platform fee, and $560 a month for her machine and bench."
+  unitName: caps
+  fixed: 560
+  variable: 14.75
+  price: 26
+  hints:
+    - "Take the cap's own costs off the price, then divide the $560 by what one cap leaves."
+    - "$26 − $14.75 = $11.25, then $560 ÷ $11.25 = 49.8."
+    - "Fifty caps, as 49.8 rounds up. Dividing by the whole $26 price gives twenty-two, twenty-eight short."
+
+practiceMore:
+  kind: margin
+  context: "A friend prints hoodies at $40: $12.50 for the hoodie, $1.50 of ink, $0.80 for the bag, a $3.20 platform fee, and $900 a month."
+  unitName: hoodies
+  fixed: 900
+  variable: 18
+  price: 40
+  hints:
+    - "Add the four costs of one hoodie, take them off the price, then divide the $900 by what is left."
+    - "$12.50 + $1.50 + $0.80 + $3.20 = $18, then $900 ÷ $22 = 40.9."
+    - "Forty-one hoodies, as 40.9 rounds up. Forty would leave the month $20 short."
 
 explorable:
   kind: margin
@@ -43,62 +91,58 @@ explorable:
   variable: 7.5
   prices: [10, 14, 18, 22, 28]
   prompts:
-    - "Start at $18 and read the count. Then tap $22: four dollars on the price takes more than twenty shirts off the month."
-    - "Tap $10. The price falls by a little under half. The count rises more than fourfold, because what a shirt leaves shrinks much faster than the price does."
+    - "Tap $22. Each shirt leaves $14.50, so 63 shirts cover the month, 23 fewer than at $18."
+    - "Tap $10. The price falls by under half, yet the count rises from 86 to 360: each shirt leaves only $2.50."
 
-practice:
-  kind: margin
-  context: "A classmate embroiders caps for local teams. A cap sells for $26, and the plain cap, the thread, a bag and the platform fee come to $14.75. Her machine payment, design subscription and share of a rented bench come to $560 a month."
-  unitName: caps
-  fixed: 560
-  variable: 14.75
-  price: 26
+takeaways:
+  - "Take every per-shirt cost off the price, platform fee included, before you quote a club."
+  - "Redo the count whenever a supplier, a fee page or a monthly bill changes."
+  - "Count a payment plan as a fixed cost until its last payment, then count again."
+
+details:
+  - "The Small Business Administration's guide to start-up costs uses the same sum: break-even units are fixed costs divided by the price minus the variable cost."
+  - "Every price and cost in this lesson is an example. A real shop puts its own figures into the same sum."
+  - "A plan that spreads $7,200 over twelve months adds $600 to each of those months, which here is 57 more shirts a month until it ends."
+  - "This lesson counts money that leaves each month. An accountant also spreads a press's cost over its working life as depreciation, which the Small Business Administration lists among fixed costs."
+  - "Past break-even every shirt adds its whole contribution: a month at 60 shirts is $270 down, and a month at 120 is $360 up."
+  - "The IRS lets a small business keep any kind of records that clearly show its income and expenses; except in a few cases, no special kind is required. Keep the documents each sale and purchase produces."
+  - "The Small Business Administration describes two ways to keep the books: the cash method records a sale when the payment arrives, and the accrual method when the sale is made."
 
 quiz:
-  - q: "A club asks for 40 shirts at $15 each instead of $18, for a spring event. The press is free that week. What do you work out first?"
+  - q: "A club asks for 40 shirts at $15 each instead of $18, for a spring event. You have time to print them. What do you work out first?"
     options:
-      - text: "Nothing to work out: turn it down, because $15 is under your price"
+      - text: "Nothing: turn it down, because $15 is under your price"
         why: "The price on its own is not the test. At $15 each shirt still leaves $7.50, and 40 of them put $300 toward the month."
       - text: "What the order leaves after the $7.50 a shirt, and what that covers of the month"
         why: "Forty shirts at $15 leave $300 toward the $900. That is a third of the month from one order, at a price you would not advertise."
-      - text: "Nothing to work out: take it, because every sale adds to profit"
+      - text: "Nothing: take it, because every sale adds to profit"
         why: "A sale adds to profit only once the month is covered. Below that it pays part of the bills, which is not the same thing."
+    answer: 1
+  - q: "The marketplace emails that its fee on each shirt rises by 45 cents from the first of next month. Your shirts sell at $18 and cost $7.50 each. What do you do with the email?"
+    options:
+      - text: "Nothing, since 45 cents on an $18 shirt is small"
+        why: "It is small next to $18, not next to the $10.50 you keep. At the same price the month would need four more shirts."
+      - text: "Put the new fee into what a shirt costs, then find break-even again"
+        why: "A shirt now costs $7.95 and leaves $10.05, so the month goes from 86 shirts to 90. You have until the first to plan for it."
+      - text: "Wait and see whether the payouts come out lower"
+        why: "A payout tells you after the month, when the shirts are already sold at the old price. The email gives you the date in advance."
     answer: 1
   - q: "Your twelfth press payment goes out in June and the plan is finished. A teammate says nothing changes, because you still use the press every week. What happens in July?"
     options:
       - text: "Nothing changes, because the press is still part of the business"
-        why: "Break-even counts money leaving each month, not equipment in the room. The press is yours in July and costs nothing that month."
+        why: "This break-even counts money leaving each month, not equipment in the room. The press is paid for, so July has no payment."
       - text: "Fixed costs fall to $300 and break-even falls to 29 shirts"
         why: "The same $10.50 a shirt now has a third as much to cover, so the month clears at 29 shirts instead of 86."
       - text: "Break-even falls only if the price goes up as well"
         why: "A price rise is one way to move break-even. Here the other side of the sum moved: $600 of fixed costs stopped."
-    answer: 1
-  - q: "The marketplace emails that its fee on each shirt rises by 45 cents from the first of next month. Your shirts sell at $18 and cost $7.50 each to make and ship. What do you do with the email?"
-    options:
-      - text: "Nothing, since 45 cents on an $18 shirt is small"
-        why: "It is small next to $18 and not next to the $10.50 you keep. At the same price the month would need four more shirts."
-      - text: "Put the new fee into what a shirt costs, then find break-even again"
-        why: "The cost of one shirt becomes $7.95 and the month goes from 86 shirts to 90. You have until the first to change the price or the order size."
-      - text: "Wait and see whether the payouts come out lower"
-        why: "A payout tells you after the month, when the shirts are already sold at the old price. The fee page gives you the date in advance."
-    answer: 1
-  - q: "It is the 24th, the month's 86th shirt has shipped, and a team orders 30 more at the usual $18. How much does that order add to the month's profit?"
-    options:
-      - text: "$540, which is 30 shirts at $18"
-        why: "That counts the whole price as profit. Each of those shirts still costs $7.50 to make and ship."
-      - text: "$315, which is 30 shirts at $10.50 each"
-        why: "The month's $900 is already covered, so nothing more comes off these. Past break-even a shirt adds its whole contribution."
-      - text: "Nothing, because the month is already covered"
-        why: "Covered means the bills are paid, not that later sales stop counting. The shirts after break-even are where a month's profit comes from."
     answer: 1
 
 transfer:
   - "Before you quote a club or a team, so the price you give still leaves something after the shirt and the fee."
   - "When a supplier or a platform changes a price, in the month before the change starts."
   - "Before you sign anything with monthly payments, because the payment joins your fixed costs until it ends."
-  - "At the end of a month, to set the shirts you sold against the count the month needed."
 
-glossary: [platform-fee, contribution-margin, variable-cost, unit-economics, fixed-cost, break-even, bookkeeping]
+glossary: [platform-fee, variable-cost, contribution-margin, fixed-cost, break-even, profit]
 tool: break-even
 
 sources:
@@ -115,79 +159,10 @@ sources:
 
 ## What one shirt leaves
 
-You print shirts for school clubs and local teams. A shirt sells for $18. The plain shirt, the ink, the bag it ships in and the <Term id="platform-fee">platform fee</Term> on each shirt come to $7.50.
+The plain shirt, ink, bag and <Term id="platform-fee">platform fee</Term> come to $7.50, charged again on every shirt. Those are <Term id="variable-cost">variable costs</Term>. What is left of the $18, $10.50, is the shirt's <Term id="contribution-margin">contribution margin</Term>: the only part that can pay the month.
 
-So one shirt leaves $10.50. That is its <Term id="contribution-margin">contribution margin</Term>: the only part of the $18 that can pay for anything else.
+## Why sixty fell short
 
-Every item in that $7.50 is a <Term id="variable-cost">variable cost</Term>: it is charged again on the next shirt. The platform fee belongs there too, alongside the ink.
+The press payment, design software and storage are <Term id="fixed-cost">fixed costs</Term>: $900 however many shirts you print. Sixty shirts leave $630 toward them, so the month ended $270 down.
 
-**Contribution is the price minus everything that one shirt used up.** If it came out at zero, no number of shirts would help. That is what <Term id="unit-economics">unit economics</Term> means.
-
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="shirt-title shirt-desc">
-  <title id="shirt-title">Where $18 from one shirt goes</title>
-  <desc id="shirt-desc">A single bar in two parts. $7.50 is the plain shirt, the ink, the bag and the platform fee on each shirt. $10.50 is left to cover the month's fixed costs.</desc>
-  <rect class="chart-b" x="0" y="26" width="131" height="36" rx="6" />
-  <rect class="chart-a" x="135" y="26" width="185" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Costs $7.50</text>
-  <text class="chart-label" x="320" y="16" text-anchor="end">Left $10.50</text>
-  <text class="chart-note" x="0" y="100">One shirt sold at $18</text>
-</svg>
-
-| Where $18 goes | Amount |
-| --- | --- |
-| Plain shirt | $3.20 |
-| Ink and transfer paper | $1.10 |
-| Bag and label | $0.90 |
-| Platform fee on each shirt | $2.30 |
-| Left after the shirt | $10.50 |
-
-## The month costs $900 whatever you sell
-
-Three bills arrive whether you print one shirt or three hundred. The press that fixes each design onto a shirt, and its printer, are on a twelve-month payment plan at $600 a month. Design software is $60, and a storage unit for plain shirts and finished orders is $240.
-
-Those are <Term id="fixed-cost">fixed costs</Term>: costs that do not change with how much you make.
-
-**A payment plan on equipment is a fixed cost until the last payment.** The press is yours at the end. Until then the $600 is due in a month with no orders in it.
-
-| The month, whatever you sell | Amount |
-| --- | --- |
-| Press and printer, monthly payment | $600 |
-| Design software | $60 |
-| Storage unit | $240 |
-| Fixed costs | $900 |
-
-## How many shirts cover the month
-
-Divide the month's fixed costs by what one shirt leaves, then round up. The Small Business Administration gives the same sum in its guide to start-up costs.
-
-Here it lands at 86 shirts. That count is your <Term id="break-even">break-even</Term> point. The 86th shirt clears the month; the 85th leaves the month a little short.
-
-**Round up, because part of a shirt cannot be sold.**
-
-This is one month's answer, not a target for the year. It moves whenever a price, a cost or a monthly bill changes, which is often.
-
-## When the payment plan ends
-
-The twelfth payment is the last one. From the month after, fixed costs are $300 rather than $900, and break-even falls to 29 shirts.
-
-Nothing about the shirt changed. The same $10.50 now has a third as much to cover.
-
-**When a plan ends, the month's count drops with it.** A plan that spreads $7,200 over twelve months adds $600 to each of those months, which here is fifty-seven more shirts.
-
-Leases, financing and monthly subscriptions all behave this way. Each one looks small by itself, and each stays in the month's costs until it ends.
-
-## Past the 86th shirt
-
-Up to break-even every shirt's $10.50 is spoken for. It goes to the press payment, the software and the storage.
-
-Past that point nothing is left to cover. The 87th shirt adds its whole $10.50 to profit, and so does every shirt after it.
-
-**Past break-even each shirt adds its whole contribution.** A month at 60 shirts is $270 down. A month at 120 is $360 up. The gap between them is sixty shirts, at $10.50 each.
-
-## Checking the number each month
-
-Do the sum before you send a quote, not after. A shirt discounted to $15 leaves $7.50 instead of $10.50, and the month then takes 120 shirts.
-
-Redo the count whenever something moves: a supplier's price, a fee page, the last payment on a plan. Note each order and each cost as it happens, because that record is where the numbers come from.
-
-That habit is <Term id="bookkeeping">bookkeeping</Term>, and a spreadsheet is enough for it. The IRS sets no required format. It asks only that your records make plain what the business took in and what it paid out. Keep the receipts and invoices that sit behind those entries.
+The 86th shirt is <Term id="break-even">break-even</Term>, and each one after it adds $10.50 of <Term id="profit">profit</Term>. The press plan ends after twelve payments; then the count falls to 29.
