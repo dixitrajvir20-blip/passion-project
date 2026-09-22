@@ -352,9 +352,10 @@ html:not(.js) .video-play { display: none; }
 .doc-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h3); }
 .doc-note { font-size: var(--text-xs); }
 .doc-lines { margin: 0; }
-.doc-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); padding: var(--space-2) 0; border-top: 1px dotted var(--brand-navy); margin: 0; }
+/* Both columns may shrink, so a long value ("Friday 3 October") wraps instead of starving the label at 360px. */
+.doc-line { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, auto); gap: var(--space-1) var(--space-3); padding: var(--space-2) 0; border-top: 1px dotted var(--brand-navy); margin: 0; }
 .doc-label { margin: 0; }
-.doc-value { margin: 0; font-weight: 700; text-align: right; }
+.doc-value { margin: 0; font-weight: 700; text-align: right; overflow-wrap: anywhere; }
 .doc-hint summary { display: inline-flex; align-items: center; min-height: var(--space-6); cursor: pointer; list-style: none; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: var(--gold); }
 .doc-hint summary::-webkit-details-marker { display: none; }
 .doc-hint p { margin: var(--space-1) 0 0; font-size: var(--text-sm); font-weight: 400; }
