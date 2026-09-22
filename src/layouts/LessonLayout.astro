@@ -90,39 +90,29 @@ if (d.worked?.kind === 'split') workedSteps = splitSteps(d.worked);
 if (d.worked?.kind === 'loan') workedSteps = loanSteps(d.worked);
 if (d.worked?.kind === 'growth') workedSteps = growthSteps(d.worked);
 if (d.worked?.kind === 'deduction') workedSteps = deductionSteps(d.worked);
+// The four older kinds carry their captions beside the numbers, one per line, in order.
+if (d.worked && d.worked.kind !== 'deduction' && d.worked.captions) {
+  const captions = d.worked.captions;
+  workedSteps = workedSteps.map((step, index) => ({ ...step, caption: step.caption ?? captions[index] }));
+}
 
-let practice: { given: Step[]; question: string; choices: Choice[] } | null = null;
-if (d.practice?.kind === 'margin') {
-  practice = {
-    given: marginSteps(d.practice, d.practice.unitName).slice(0, 1),
-    question: `How many ${d.practice.unitName} cover the month?`,
-    choices: marginChoices(d.practice),
-  };
+type Practice = { given: Step[]; question: string; choices: Choice[]; hints: string[] };
+function practiceFor(p: NonNullable<typeof d.practice>): Practice {
+  const hints = p.hints ?? [];
+  if (p.kind === 'margin') return { given: marginSteps(p, p.unitName).slice(0, 1), question: `How many ${p.unitName} cover the month?`, choices: marginChoices(p), hints };
+  if (p.kind === 'loan') return { given: loanSteps(p).slice(0, 1), question: 'What does this loan cost in total?', choices: loanChoices(p), hints };
+  if (p.kind === 'growth') return { given: growthSteps(p).slice(0, 2), question: 'How much of that is growth?', choices: growthChoices(p), hints };
+  if (p.kind === 'deduction') return { given: deductionSteps(p).slice(0, -1), question: `What is the ${p.endLabel.toLowerCase()}?`, choices: deductionChoices(p), hints };
+  const target = p.target;
+  return { given: splitSteps(p).filter((step) => step.label !== target), question: `How much goes to ${target.toLowerCase()}?`, choices: splitChoices(p, target), hints };
 }
-if (d.practice?.kind === 'loan') {
-  practice = { given: loanSteps(d.practice).slice(0, 1), question: 'What does this loan cost in total?', choices: loanChoices(d.practice) };
-}
-if (d.practice?.kind === 'growth') {
-  practice = { given: growthSteps(d.practice).slice(0, 2), question: 'How much of that is growth?', choices: growthChoices(d.practice) };
-}
-if (d.practice?.kind === 'split') {
-  const target = d.practice.target;
-  practice = {
-    given: splitSteps(d.practice).filter((step) => step.label !== target),
-    question: `How much goes to ${target.toLowerCase()}?`,
-    choices: splitChoices(d.practice, target),
-  };
-}
-if (d.practice?.kind === 'deduction') {
-  practice = {
-    given: deductionSteps(d.practice).slice(0, -1),
-    question: `What is the ${d.practice.endLabel.toLowerCase()}?`,
-    choices: deductionChoices(d.practice),
-  };
-}
+const practice = d.practice ? practiceFor(d.practice) : null;
+const practiceMore = d.practiceMore ? practiceFor(d.practiceMore) : null;
 
 /** Template v2 (22 Sep 2026): the moment and the video first, then the calculation one line at a time. */
 const isV2 = d.template === 'v2';
+// A drill is decided, not adjusted: its heading says so.
+const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you look' : 'Try it') : isV2 ? 'Change one thing' : 'Try your own numbers';
 ---
 
 <BaseLayout
@@ -144,11 +134,22 @@ const isV2 = d.template === 'v2';
       <div class="container">
         <div class="column">
           <p class="lesson-crumbs">
-            <a class="pill pill-white" href={`${prefix}/learn/${track.slug}`}>{region.name} · {track.title} · Lesson {d.order}</a>
+            <a class="pill pill-outline" href={`${prefix}/learn/${track.slug}`}>{region.name} · {track.title} · Lesson {d.order}</a>
             <span class="pill">{d.readingMinutes} min</span>
           </p>
           <h1>{d.title}</h1>
           <p class="lede">{d.summary}</p>
+          {isV2 && (
+            <nav class="lesson-steps" aria-labelledby="lesson-steps-label">
+              <span id="lesson-steps-label" class="lesson-steps-label">In this lesson</span>
+              {d.document && <a href="#the-document">The document</a>}
+              {d.video && <a href="#watch">Watch</a>}
+              {d.worked && <a href="#show-me">Show me</a>}
+              {d.practice && <a href="#your-turn">Your turn</a>}
+              {d.explorable && <a href="#try-it">{d.explorable.kind === 'drill' ? 'Decide' : 'Change one thing'}</a>}
+              <a href="#quick-check">Checks</a>
+            </nav>
+          )}
           {isV2 && d.objectives && (
             <div class="lesson-after">
               <p class="lesson-after-label">After this you can</p>
@@ -190,7 +191,7 @@ const isV2 = d.template === 'v2';
             </section>
           )}
 
-          {!isV2 && (
+          {!isV2 && d.prediction && (
             <Poll
               id="guess"
               question={d.prediction.q}
@@ -239,35 +240,51 @@ const isV2 = d.template === 'v2';
             </section>
           )}
 
-          {isV2 && d.worked && (
-            <section aria-labelledby="show-me">
-              <h2 id="show-me">Show me</h2>
-              <ShowMe context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
-            </section>
-          )}
-
           {isV2 && (
             <div class="lesson-body">
               <slot />
             </div>
           )}
 
+          {isV2 && d.worked && (
+            <section aria-labelledby="show-me">
+              <h2 id="show-me">Show me</h2>
+              <ShowMe context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
+              {d.keyIdea && <p class="key-idea"><strong class="hl">{d.keyIdea}</strong></p>}
+            </section>
+          )}
+
           {isV2 && practice && d.practice && (
             <section aria-labelledby="your-turn">
-              <h2 id="your-turn">{isV2 ? 'Your turn' : 'Practice'}</h2>
+              <h2 id="your-turn">Your turn</h2>
               <Practice
                 context={d.practice.context}
                 given={practice.given}
                 question={practice.question}
                 choices={practice.choices}
+                hints={practice.hints}
                 localeCode={region.locale}
               />
+              {practiceMore && d.practiceMore && (
+                <details class="lesson-details practice-more">
+                  <summary id="one-more">One more, with different numbers</summary>
+                  <Practice
+                    id="practice-more"
+                    context={d.practiceMore.context}
+                    given={practiceMore.given}
+                    question={practiceMore.question}
+                    choices={practiceMore.choices}
+                    hints={practiceMore.hints}
+                    localeCode={region.locale}
+                  />
+                </details>
+              )}
             </section>
           )}
 
           {d.explorable && (
             <section aria-labelledby="try-it">
-              <h2 id="try-it">{isV2 ? 'Change one thing' : 'Try your own numbers'}</h2>
+              <h2 id="try-it">{tryItHeading}</h2>
               {d.explorable.kind === 'margin' && (
                 <MarginExplorer
                   client:visible={{ rootMargin: '600px' }}

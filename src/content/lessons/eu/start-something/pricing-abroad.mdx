@@ -4,114 +4,157 @@ summary: "Postage, returns and VAT change what a cross-border sale keeps. Price 
 region: eu
 track: start-something
 order: 3
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "You print and sell A2 posters online from home in Portugal, at €25 each. The first order from another EU country arrives, from a buyer in Austria. Postage there is €11, against the €4 you pay at home, and the buyer can still send the poster back."
+objectives:
+  - "Work out what one sale abroad keeps after printing, packing and postage."
+  - "Set one delivery-included price that covers the country with the highest postage."
+  - "Handle a cancellation inside 14 days, and know who pays the return postage."
 
-prediction:
-  q: "A €25 poster sold at home leaves €13.50 after printing, packaging and €4 of postage. Postage to Austria is €11. If you hold the €25 price with delivery included, what does that sale leave?"
-  options:
-    - text: "€13.50, the same as at home"
-      why: "Postage to Austria costs €7 more than at home, and that €7 comes out of the €13.50. Nothing else covers it."
-    - text: "€6.50"
-      why: "Printing and packaging take €7.50 and the postage takes €11, so €18.50 of the €25 is spent before anything is kept."
-    - text: "Nothing, because postage abroad costs more than making the poster"
-      why: "The €11 postage is more than the €7.50 of print and packaging, but well under the €25 price. The sale still keeps something."
-  answer: 1
+situation: "You print A2 posters in Portugal and sell them online at €25, delivery included. Your first order from Austria keeps €6.50; a sale at home keeps €13.50."
 
-takeaways:
-  - "A sale abroad costs more to finish than a sale at home. The postage comes out of what the sale keeps unless the price or the shipping charge carries it."
-  - "Online buyers across the EU can cancel within 14 days of delivery, with no reason needed. They pay the return postage only if your page said so before the order."
-  - "Once distance sales to other EU countries pass €10,000 a year, the buyer's country's rate applies to them. Whether a small seller registers at all is set nationally, so ask your own tax authority."
+document:
+  kind: statement
+  title: "One poster, ordered from Austria"
+  lines:
+    - { label: "Price, delivery included", value: "€25.00", hint: "What the buyer in Austria paid: your usual price at home. VAT is left out of this example." }
+    - { label: "Printing", value: "−€6.00", hint: "Paper and ink for one A2 poster. It costs the same wherever the poster goes." }
+    - { label: "Packing", value: "−€1.50", hint: "The tube and the label. Also the same for every order." }
+    - { label: "Postage to Austria", value: "−€11.00", hint: "Paid to the carrier on every order. The same tube posted inside Portugal costs €4." }
+    - { label: "Margin on this sale", value: "€6.50", hint: "What is left towards the month's fixed costs: the printer lease, listing fees and a studio share." }
+    - { label: "The same poster sold at home", value: "€13.50", hint: "€25 minus €6 of printing, €1.50 of packing and €4 of postage in Portugal." }
+    - { label: "Return postage paid by", value: "Not stated", hint: "Your shop page never said. If this buyer cancels within the 14 days, the return postage is yours." }
+  find:
+    q: "Which line explains why this sale keeps €7 less than the same poster sold at home?"
+    options:
+      - text: "Printing, €6"
+        why: "Printing costs the same wherever the poster goes, so it cannot open a gap between two sales."
+      - text: "Postage to Austria, €11"
+        why: "Posting at home costs €4. The price stayed at €25, so the extra €7 comes out of what the sale keeps."
+      - text: "Price, delivery included, €25"
+        why: "The price is the same as at home. What changed is what this sale costs to post."
+    answer: 1
 
 worked:
-  kind: margin
-  context: "The sale to Austria from the top of the page: €25 with delivery included. One poster costs €6 to print, €1.50 to pack and €11 to post, so €18.50 in all. The printer lease, the listing fees and the studio share come to €130 a month. VAT is left out of this example, and the count assumes every poster this month goes abroad."
-  unitName: posters
-  fixed: 130
-  variable: 18.5
-  price: 25
-
-explorable:
-  kind: margin
-  unitName: posters
-  fixed: 130
-  variable: 18.5
-  prices: [18, 25, 28, 32, 36]
-  prompts:
-    - "Start at €25, the price you charge at home. Then tap €32 and compare two things: what one sale keeps, and how many posters the month needs."
-    - "Tap €18, a little under the €18.50 that one sale abroad costs to finish. Read what the answer becomes, then work out why."
+  kind: deduction
+  context: "The order above, from price to margin."
+  start: 25
+  startLabel: "Delivery-included price"
+  lines:
+    - { label: "Printing", amount: 6, caption: "Paper and ink for one poster, paid to your supplier, whatever the country.", subtotalLabel: "After printing" }
+    - { label: "Packing", amount: 1.5, caption: "The tube and label, from your supplier: the same at home and abroad.", subtotalLabel: "After packing" }
+    - { label: "Postage to Austria", amount: 11, caption: "Paid to the carrier on every order: €11 to Austria, against €4 at home." }
+  endLabel: "Margin on this sale"
 
 practice:
-  kind: margin
-  context: "A designer in Tallinn sells A1 prints in a tube to buyers in Finland and Latvia, at €45 with delivery included. Each print costs €10, the tube and packing €8, and postage abroad €12. Her share of a studio is €120 a month."
-  unitName: prints
-  fixed: 120
-  variable: 30
-  price: 45
+  kind: deduction
+  context: "A designer in Tallinn sells A1 prints to Finland at €45, delivery included: €10 to print, €8 to pack, €12 to post."
+  start: 45
+  startLabel: "Delivery-included price"
+  lines:
+    - { label: "Printing", amount: 10, subtotalLabel: "After printing" }
+    - { label: "Packing", amount: 8, subtotalLabel: "After packing" }
+    - { label: "Postage to Finland", amount: 12 }
+  endLabel: "Margin on this sale"
+  hints:
+    - "Start from the price and take each cost of this sale off in order: printing, packing, then postage."
+    - "€45 − €10 − €8 − €12."
+    - "€15 is left. Stopping at €27, after packing, leaves out the €12 of postage to Finland."
+
+practiceMore:
+  kind: deduction
+  context: "A seller in Valencia sells notebooks to France at €30, delivery included: €9 to make, €2 to pack, €8 to post."
+  start: 30
+  startLabel: "Delivery-included price"
+  lines:
+    - { label: "Making", amount: 9, subtotalLabel: "After making" }
+    - { label: "Packing", amount: 2, subtotalLabel: "After packing" }
+    - { label: "Postage to France", amount: 8 }
+  endLabel: "Margin on this sale"
+  hints:
+    - "The same three lines: what one notebook costs to make, to pack, then to post to France."
+    - "€30 − €9 − €2 − €8."
+    - "€11 is left. Stopping after the making cost gives €21; packing and postage come off too."
+
+keyIdea: "A sale keeps its price minus what it costs to make, pack and post; postage abroad costs more."
+
+explorable:
+  kind: deduction
+  starts: [20, 25, 32]
+  startLabel: "Delivery-included price"
+  lines:
+    - { label: "Printing", amount: 6, subtotalLabel: "After printing" }
+    - { label: "Packing", amount: 1.5, subtotalLabel: "After packing" }
+    - { label: "Postage to Austria", amount: 11 }
+  endLabel: "Margin on this sale"
+  prompts:
+    - "Tap €32. The extra €7 of postage is in the price, and the sale keeps €13.50, as at home."
+    - "Tap €20. Each euro off the price comes off the margin: €5 below €25 leaves €1.50."
+
+takeaways:
+  - "Before accepting an order from abroad, take its printing, packing and postage off the price."
+  - "Say on your shop page, before the order, who pays return postage. Say nothing and it is yours."
+  - "As sales to other EU countries near €10,000 a year, ask your tax authority whose VAT applies."
+
+details:
+  - "The 14-day right and the refund rules come from EU consumer law (Directive 2011/83/EU on consumer rights). They cover people buying for themselves, not businesses."
+  - "The refund, with the standard delivery charge, is due within 14 days of the buyer telling you. You may hold it until the goods are back or the buyer shows proof of posting them."
+  - "Extra paid for a faster delivery than your standard option does not have to be refunded."
+  - "If your page leaves the right out, the buyer's time to cancel runs on for a further 12 months."
+  - "Goods made to the buyer's specification or clearly personalised, such as a poster printed with her own photograph, sit outside the right."
+  - "The €10,000 limit is one EU-wide figure for a calendar year: sales of goods to buyers in all other EU countries together, plus some online services. Below it you may charge your own country's rate."
+  - "Above it, the rate of the buyer's country applies, and each EU country sets its own rates."
+  - "The One Stop Shop gives one registration in your own country and one return for those sales, in place of registering in each country."
+  - "Whether a small seller charges VAT at all is set nationally: countries exempt some small businesses on conditions they set. Your own tax authority can say which apply."
+  - "In EU countries that do not use the euro, the same sums run in the national currency."
 
 quiz:
+  - q: "A buyer in Belgium orders a framed poster at €40, delivery included. Printing is €6, the frame and packing €9, and postage to Belgium €14. Before you accept, what does the sale keep?"
+    options:
+      - text: "€26, the price minus the postage"
+        why: "Printing and the frame are costs of this sale too. They come off before anything is kept."
+      - text: "€25, the price minus printing and the frame"
+        why: "That leaves out the postage. Posting it to Belgium costs €14, and this order pays it."
+      - text: "€11, after printing, the frame and the postage"
+        why: "€40 − €6 − €9 − €14. Every cost of making, packing and posting this one sale comes off the price."
+    answer: 2
+  - q: "You post to Spain for €9 and to Finland for €12. Printing and packing are €7.50. You want one delivery-included price that keeps at least €13.50 on every order. What is the lowest price that does it?"
+    options:
+      - text: "€25, your price at home"
+        why: "A sale to Finland keeps €25 − €7.50 − €12 = €5.50. The home price only carries home postage."
+      - text: "€30"
+        why: "Spain keeps €13.50, but Finland keeps €10.50. One price has to cover the country with the highest postage."
+      - text: "€33"
+        why: "€7.50 + €12 + €13.50 = €33, built on Finland's postage, the highest. Finland keeps €13.50; Spain keeps €16.50."
+      - text: "€37, your home price plus Finland's postage"
+        why: "Your €25 already carried €4 of home postage, so only the difference needs adding. Finland keeps €17.50, more than you need."
+    answer: 2
   - q: "A buyer in Austria cancels a plain poster nine days after it arrived, giving no reason. Your shop page never said who pays the return postage. What do you do?"
     options:
       - text: "Refuse, because the poster is not faulty"
-        why: "A fault is not needed. An online buyer has 14 days from delivery to cancel without a reason, so refusing breaks the rule."
-      - text: "Refund, and carry the €11 return postage yourself"
-        why: "The buyer carries that cost only if the shop said so before the order. Nothing was said, so it stays with the seller."
-      - text: "Refund, and take the return postage out of what you send back"
-        why: "Return costs can only be passed on if they were stated before the order. Deducting them now leaves the refund short."
-    answer: 1
-  - q: "Two orders arrive the same day. A buyer in Ireland wants a plain poster. A buyer in Belgium wants one printed with her own photograph and name. Which order needs room in its price for a possible return?"
-    options:
-      - text: "Both, since any online order can be cancelled"
-        why: "Goods made to order for one buyer, or personalised, are an exception. The printed photograph was made for her alone, so a change of mind does not cancel it."
-      - text: "Only the plain poster"
-        why: "The plain poster can come back within 14 days for any reason. The personalised one was made to order, so the right does not cover it."
-      - text: "Neither, because both buyers are in other countries"
-        why: "The 14 days apply to online buyers across the EU. A border does not remove them."
-    answer: 1
-  - q: "A buyer in Ireland paid €25 for a poster and €11 for your standard postage, then cancelled inside the 14 days. She asks what comes back. What is right?"
-    options:
-      - text: "The €25 only, because the postage was already spent"
-        why: "The standard delivery charge is part of the refund. Holding it back leaves the refund €11 short."
-      - text: "The €25 and the €11 standard postage, within 14 days of being told"
-        why: "The refund covers the price and the standard delivery charge. Only the extra paid for a faster option than your standard one can be kept."
-      - text: "Nothing until the poster is back and checked"
-        why: "The money can wait for the poster to arrive back, or for the buyer's proof of posting. Once one of those is in hand, waiting longer is not allowed."
-    answer: 1
-  - q: "You are writing the shipping section of your shop page. Postage to Austria costs €11 and you want the buyer to pay it. When does the €11 have to be on screen?"
-    options:
-      - text: "On the invoice you send after the order"
-        why: "By then the buyer has already agreed to pay. The total, with every delivery charge, belongs before the order is placed."
-      - text: "Before the buyer places the order, inside the total"
-        why: "The full price with delivery and any other charge is shown before the order. Who pays the return postage belongs on the same page."
-      - text: "Only if the buyer asks what postage costs"
-        why: "Every buyer has to see the total with delivery. Waiting to be asked leaves it hidden from everyone who does not ask."
-    answer: 1
-  - q: "Your sales to buyers in other EU countries are set to pass €10,000 this year. A seller in another country tells you to use his VAT rate. What do you do?"
-    options:
-      - text: "Use his rate, since VAT is an EU tax"
-        why: "The EU sets shared rules, but each country sets its own rates. His rate belongs to his country, not to the buyer's."
-      - text: "Ask your own national tax authority what changes above €10,000, and about the One Stop Shop"
-        why: "Above that limit the rate of the buyer's country applies. The One Stop Shop is one registration for it, and your tax authority says what you must do."
-      - text: "Leave VAT out, because sales across a border are not taxed"
-        why: "Distance sales carry VAT like other sales. Some small sellers can use a VAT exemption, on conditions each country sets, so it is worth checking rather than assuming."
+        why: "A fault is not needed. An online buyer has 14 days from delivery to cancel without giving a reason."
+      - text: "Refund the €25, and carry the return postage yourself"
+        why: "The buyer pays for a return only if your page said so before the order. It did not, so the cost is yours."
+      - text: "Refund the €25, minus the return postage"
+        why: "Return postage can be passed on only if the page said so before the order. Deducting it now leaves the refund short."
     answer: 1
 
 transfer:
-  - "When a buyer in another EU country asks whether you post there. Work out what that one sale costs to finish before you answer."
-  - "When you write your shop page. Say who pays the return postage, and show the total with delivery before the order is placed."
-  - "When your sales to other EU countries grow. The €10,000 limit changes whose VAT applies, so take the question to your tax authority."
-  - "When you buy online yourself. The same 14 days protect you, and the seller's page has to say who pays for a return."
+  - "When a buyer in another EU country asks whether you post there: work out what that one sale keeps before you answer."
+  - "When you write your shop page: show the total with delivery, and who pays for a return, before the order is placed."
+  - "When your sales to other EU countries grow: the €10,000 limit changes whose VAT applies."
+  - "When you buy online yourself: the same 14 days protect you."
 
-glossary: [margin, variable-cost, right-of-withdrawal, distance-sale, vat, one-stop-shop, fixed-cost]
+glossary: [variable-cost, margin, fixed-cost, right-of-withdrawal, vat, distance-sale, one-stop-shop]
 tool: break-even
 
 sources:
-  - title: "E-commerce, distance and off-premises selling: pre-contract information, the 14-day withdrawal right, refunds and the extra year (last checked 12 July 2026)"
+  - title: "E-commerce, distance and off-premises selling: pre-contract information, the 14-day withdrawal right, refunds and the extra year, under the consumer rights directive, 2011/83/EU (last checked 12 July 2026)"
     url: "https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm"
     publisher: "European Commission, Your Europe"
   - title: "Returns: cancelling a purchase made online, who pays return postage, and the exceptions (last checked 28 April 2026)"
@@ -126,6 +169,9 @@ sources:
   - title: "The One Stop Shop: the EU-wide €10,000 threshold that replaced the national ones (accessed 21 September 2026)"
     url: "https://vat-one-stop-shop.ec.europa.eu/index_en"
     publisher: "European Commission, Directorate-General for Taxation and Customs Union"
+  - title: "Place of taxation: below €10,000 of distance sales of goods to other EU countries in a calendar year, VAT is due where the transport begins; above it, where it ends (accessed 22 September 2026)"
+    url: "https://taxation-customs.ec.europa.eu/taxation/vat/vat-directive/place-taxation_en"
+    publisher: "European Commission, Directorate-General for Taxation and Customs Union"
   - title: "VAT rules and rates: each EU country sets its own rates (last checked 13 July 2026)"
     url: "https://europa.eu/youreurope/business/taxation/vat/vat-rules-rates/index_en.htm"
     publisher: "European Commission, Your Europe"
@@ -134,63 +180,14 @@ sources:
     publisher: "European Commission, Your Europe"
 ---
 
-## What one sale abroad costs
+## Why the same price keeps less abroad
 
-Take a single poster. Sold in Portugal at €25, it costs €6 to print, €1.50 to pack and €4 to post. The sale keeps €13.50. That is its <Term id="margin">margin</Term>.
+Printing and packing cost the same wherever a poster goes. Postage, a <Term id="variable-cost">variable cost</Term> paid on every order, is €11 to Austria and €4 at home.
 
-Send the same poster to Austria and the printing and packing still cost €7.50. The postage changes: €11, against €4 at home. Postage is a <Term id="variable-cost">variable cost</Term>, paid again on every sale.
+At the same €25, the extra €7 comes out of the sale's <Term id="margin">margin</Term>, the part that pays the month's <Term id="fixed-cost">fixed costs</Term>. One price with delivery included must carry the highest postage you pay.
 
-**Hold the €25 price with delivery included, and the extra €7 comes out of the €13.50.** Only the cost of delivering it changed.
+## Returns and tax cross the border too
 
-## The 14-day right is part of the cost
+Online buyers across the EU have a <Term id="right-of-withdrawal">right of withdrawal</Term>: 14 days from delivery to cancel, no reason needed. They pay the return postage only if your page said so before the order.
 
-Buyers who order online from an EU business, for themselves, have a <Term id="right-of-withdrawal">right of withdrawal</Term>. For goods it runs 14 days from delivery, no reason needed.
-
-If a buyer cancels, you refund the price and the standard delivery charge within 14 days of being told. Extra paid for faster delivery stays with you.
-
-The buyer pays return postage only if your page said so before the order. Say nothing and that cost is yours. Leave the right off the page and the buyer gets a further year to cancel.
-
-Goods made to order for one buyer, or personalised, sit outside the right. **Some orders come back. The postage already paid on them is still a cost.**
-
-## Carrying the postage, or charging it
-
-There are two common ways to cover the postage. Put the postage inside the price and offer delivery included, or show the price and add postage by country.
-
-Either way the buyer has to see the total, with delivery and any other charge, before placing the order. The same page says who pays if the poster comes back.
-
-One price with delivery included is simpler to show. It works only when it covers the most expensive country you post to. **Build it on the €4 you pay at home, and every order abroad takes €7 out of what the sale keeps.**
-
-## Whose VAT applies above €10,000
-
-<Term id="vat">VAT</Term> is a tax on sales. The buyer pays it inside the price, and a seller who charges it passes that part to the tax authority. So the part you keep is the price without the VAT.
-
-One EU-wide limit governs <Term id="distance-sale">distance sales</Term>: €10,000 a year in total to buyers in other EU countries. Under it, you can charge your own country's rate. Over it, the rate of the buyer's country applies.
-
-Charging the buyer's rate could mean registering in each of those countries. The <Term id="one-stop-shop">One Stop Shop</Term> exists so one registration and one return cover them all. **Whether a small seller registers at all is set nationally, so take that question to your own tax authority.**
-
-## Where the €25 goes
-
-Here is the sale to Austria at €25 with delivery included, before any VAT.
-
-<svg class="chart" viewBox="0 0 320 124" role="img" aria-labelledby="abroad-title abroad-desc">
-  <title id="abroad-title">Where €25 from one poster sold abroad goes</title>
-  <desc id="abroad-desc">A single bar in four parts. Printing is €6, packing is €1.50, postage to Austria is €11, and €6.50 is kept.</desc>
-  <rect class="chart-b" x="0" y="26" width="74" height="36" rx="6" />
-  <rect class="chart-b" x="78" y="26" width="18" height="36" rx="6" />
-  <rect class="chart-b" x="100" y="26" width="136" height="36" rx="6" />
-  <rect class="chart-a" x="240" y="26" width="80" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Print €6</text>
-  <text class="chart-label" x="320" y="16" text-anchor="end">Kept €6.50</text>
-  <text class="chart-label" x="100" y="80">Postage €11</text>
-  <text class="chart-label" x="96" y="98" text-anchor="end">Packing €1.50</text>
-  <text class="chart-note" x="0" y="118">One poster sold to Austria at €25, delivery included</text>
-</svg>
-
-| Where €25 goes | Amount |
-| --- | --- |
-| Printing | €6.00 |
-| Packing | €1.50 |
-| Postage to Austria | €11.00 |
-| Kept | €6.50 |
-
-What the sale keeps goes towards the month's <Term id="fixed-cost">fixed costs</Term> before any of it is profit. If that poster comes back and the return postage is yours, the month carries another €11. In the EU countries that do not use the euro, the same sums run in the national currency. **Price a cross-border sale from what that sale costs, not from the price at home.**
+Once your <Term id="distance-sale">distance sales</Term> to other EU countries pass €10,000 a year, <Term id="vat">VAT</Term> is due at the rate of the buyer's country. The <Term id="one-stop-shop">One Stop Shop</Term> lets one registration in your own country cover them all.

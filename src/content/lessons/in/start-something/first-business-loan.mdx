@@ -4,102 +4,153 @@ summary: "What free Udyam registration opens, and how to read a ₹1,50,000 loan
 region: in
 track: start-something
 order: 4
-readingMinutes: 7
+readingMinutes: 9
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "The coaching centre you run with your brother needs ₹1,50,000 for desks, chairs and a projector. A bank branch explains its small-business loans and asks for papers; an app on your phone offers the same money tonight."
+objectives:
+  - "Register a business on Udyam for free, and spot a site that charges for it."
+  - "Compare two loan offers on their totals, not on the monthly payment."
+  - "Ask for a loan's Key Facts Statement and its APR before you sign."
 
-prediction:
-  q: "₹1,50,000 over 36 months, at two example rates: 11% a year and 36% a year. Over the three years, how much more does the 36% loan cost?"
-  options:
-    - text: "About ₹27,000 more, so roughly twice the cost of the 11% loan"
-      why: "That is double the cheaper loan. The rate here is more than three times higher, and the interest it adds up to is more than three times as much too."
-    - text: "About ₹70,000 more, which is over three and a half times the interest"
-      why: "Both loans hand back the ₹1,50,000. What sits above it is the cost: about ₹26,800 at 11%, and about ₹97,300 at 36%."
-    - text: "Nothing, as long as it is repaid over the same 36 months"
-      why: "The length is the same in both, so it cannot be what separates them. The rate is the only thing that changed."
-  answer: 1
+situation: "The coaching centre you run with your brother needs ₹1,50,000 for desks and a projector. The bank's Key Facts Statement shows ₹4,910.81 a month for 36 months and ₹26,789.16 of interest; an app offers the money tonight."
 
-takeaways:
-  - "Udyam registration is free and online. It records a business as a micro, small or medium enterprise and issues a certificate that banks and government departments read."
-  - "A government lending scheme is a set of written rules on an official page. The lender, not the scheme, decides each application."
-  - "A retail or small-business term loan from an RBI-regulated lender comes with a Key Facts Statement, and it carries the APR. Read any loan as a monthly payment, a length and a total."
+document:
+  kind: loan-sheet
+  title: "The bank's loan for the centre, before you sign"
+  lines:
+    - { label: "Borrower", value: "Coaching centre, micro enterprise", hint: "The size the bank reads from the centre's Udyam certificate. Registering is online and free." }
+    - { label: "Loan amount", value: "₹1,50,000", hint: "What reaches the centre's account, for desks, chairs and a projector." }
+    - { label: "Interest rate", value: "11% a year", hint: "An example rate. It is charged each month on what is still owed, not on the full ₹1,50,000." }
+    - { label: "Loan term", value: "36 months", hint: "How long the loan runs. More months make each payment smaller and the total larger." }
+    - { label: "Monthly instalment (EMI)", value: "₹4,910.81", hint: "The same payment every month: part interest, part the ₹1,50,000 coming back to the bank." }
+    - { label: "Processing fee and other charges", value: "₹0", hint: "Every charge has to be listed here. One left off cannot be added later without your explicit consent." }
+    - { label: "Annual percentage rate (APR)", value: "11% a year", hint: "The interest and every charge as one yearly rate. With no fees it equals the interest rate. Compare offers on it." }
+    - { label: "Total interest", value: "₹26,789.16", hint: "What borrowing costs: the total below minus the ₹1,50,000 borrowed." }
+    - { label: "Total amount payable", value: "₹1,76,789.16", hint: "All 36 instalments added up. Set this beside any other offer's total." }
+    - { label: "Collateral", value: "None", hint: "Nothing pledged. Banks are told not to take collateral on loans up to ₹10 lakh to micro and small enterprises." }
+  find:
+    q: "Which line tells you what borrowing the ₹1,50,000 costs?"
+    options:
+      - text: "Monthly instalment, ₹4,910.81"
+        why: "That is one payment, and most of it repays the ₹1,50,000 itself. It is not the price."
+      - text: "Interest rate, 11% a year"
+        why: "A rate, not an amount, and it leaves out how long the loan runs. The rupee cost is further down."
+      - text: "Total interest, ₹26,789.16"
+        why: "Everything paid back minus the ₹1,50,000 borrowed. That gap is the price of the money."
+      - text: "Total amount payable, ₹1,76,789.16"
+        why: "That includes the ₹1,50,000 you borrowed. Only the part above it is the cost."
+    answer: 2
+
+video:
+  youtubeId: "QEdQw9pZV14"
+  title: "Amortization schedules and time to pay off | Financial mathematics (TX TEKS) | Khan Academy"
+  channel: "Khan Academy"
+  minutes: 4
+  note: "Made for the US; the loan arithmetic is the same. The lesson carries the Udyam half."
 
 worked:
   kind: loan
-  context: "The ₹1,50,000 from the top of the page, repaid over three years. The 11% a year is an example rate, used here to show the shape of the calculation. Your own Key Facts Statement prints the rate and the APR you were actually offered."
+  context: "The sheet above: ₹1,50,000 at an example 11% a year, over 36 months."
   principal: 150000
   rate: 11
   months: 36
+  captions:
+    - "The EMI: the centre pays the bank this every month, part interest, part the ₹1,50,000 back."
+    - "All 36 payments added up: everything the centre pays the bank."
+    - "The total minus the ₹1,50,000: the interest, the bank's price for the money."
+
+keyIdea: "A loan's cost is the payment times the months, minus what you borrowed: compare offers on that."
+
+practice:
+  kind: loan
+  context: "A friend borrows ₹60,000 for a printing machine at 13% a year, an example rate, over 24 months."
+  principal: 60000
+  rate: 13
+  months: 24
+  hints:
+    - "Multiply the monthly payment by the months to get the total, then take away what was borrowed."
+    - "₹2,852.51 × 24 = ₹68,460.24, then ₹68,460.24 − ₹60,000."
+    - "₹8,460.24. Charging 13% on the full ₹60,000 for two years gives ₹15,600, but each payment shrinks what is owed."
+
+practiceMore:
+  kind: loan
+  context: "Suppose the app charges an example 36% a year on the same ₹1,50,000 over 36 months."
+  principal: 150000
+  rate: 36
+  months: 36
+  hints:
+    - "The same method: the monthly payment times 36, then take away the ₹1,50,000 borrowed."
+    - "₹6,870.57 × 36 = ₹2,47,340.52, then ₹2,47,340.52 − ₹1,50,000."
+    - "₹97,340.52, over three and a half times the bank's ₹26,789.16. ₹2,47,340.52 is everything repaid, not the cost."
 
 explorable:
   kind: loan
   principal: 150000
-  rate: 36
-  terms: [12, 24, 36, 48]
+  rate: 11
+  terms: [12, 24, 36, 60]
   prompts:
-    - "It opens at 12 months, at an example rate of 36% a year. Read the sentence under the figure: what is paid back in all, and what borrowing costs."
-    - "Now tap 36 months. The monthly payment falls by more than half, while the cost of borrowing roughly triples, because the money is held for three times as long."
+    - "Tap 36 months, the bank's offer: ₹4,911 a month and ₹26,789 of interest."
+    - "Tap 60 months. The payment falls to ₹3,261; the interest climbs to ₹45,682."
 
-practice:
-  kind: loan
-  context: "A friend borrows ₹60,000 for a printing machine. Her Key Facts Statement shows 13% a year, an example rate, with no other charges, over 24 months."
-  principal: 60000
-  rate: 13
-  months: 24
+takeaways:
+  - "Register on the government's Udyam portal yourself, with an Aadhaar number and a PAN; it costs nothing."
+  - "For every loan offer, write down the payment, the months and the total, and compare the totals."
+  - "Before you sign, ask for the Key Facts Statement and its APR."
+
+details:
+  - "Udyam registration is paperless and self-declared, and carries no fee. No document is uploaded; investment and turnover are taken from government databases. A GST number is needed only where the GST law requires one."
+  - "Under the gazette notification of 21 March 2025, an enterprise is micro while investment in plant, machinery or equipment stays within ₹2.5 crore and turnover within ₹10 crore."
+  - "All bank loans to micro, small and medium enterprises count as priority sector lending, a category the Reserve Bank sets for banks. For it, banks go by the classification on the Udyam certificate."
+  - "The Reserve Bank's published answers on small enterprises say banks are mandated not to accept collateral on loans up to ₹10 lakh to units in the micro and small sector."
+  - "A Key Facts Statement is required for all retail and MSME term loans sanctioned on or after 1 October 2024 (Reserve Bank, 15 April 2024). It is given before the loan contract is signed, in a language the borrower understands. A fee left off it cannot be charged without the borrower's explicit consent."
+  - "The Reserve Bank of India (Digital Lending) Directions, 2025 (8 May 2025) add a cooling-off period, set by the lender's board and never less than one day, in which a digital loan can be left without a penalty by repaying the principal and the cost for the days held. Lenders report their loan apps to the Reserve Bank, which publishes the list as reported, without checking it."
+  - "Under Pradhan Mantri MUDRA Yojana, banks, regional rural banks, small finance banks, NBFCs and microfinance institutions lend up to ₹20 lakh without collateral to non-corporate, non-farm micro and small enterprises. The lender, not the scheme, decides each application."
+  - "MUDRA loans come in four categories. ₹1,50,000 falls in Kishor: above ₹50,000 and up to ₹5 lakh."
+  - "Every rate in this lesson is an example: 11% a year for the bank, 36% for the app, 13% and 12% for the others. Your own Key Facts Statement prints the rate and the APR you are actually offered."
 
 quiz:
   - q: "You search for the Udyam portal. The first result is a site offering to register the coaching centre for ₹1,499, with expert help. What do you do?"
     options:
       - text: "Pay it, because the form looks hard to fill in"
         why: "Registration carries no fee, and nothing is payable to anyone for it. A charge is the sign that this is not the government's portal."
-      - text: "Use the government's own Udyam portal, where registration carries no fee"
-        why: "The process is free, paperless and self-declared. An Aadhaar number and a PAN are enough to start it, and no document is uploaded."
-      - text: "Skip registration, since it turns out to cost money"
-        why: "The ₹1,499 belonged to that site, not to the registration. The certificate is what a bank reads when it classifies the enterprise."
+      - text: "Use the government's own Udyam portal, where registering is free"
+        why: "It is paperless and self-declared. An Aadhaar number and a PAN are enough to start, and no document is uploaded."
+      - text: "Skip registering, since it turns out to cost money"
+        why: "The ₹1,499 belongs to that site, not to registration. The certificate is what a bank reads to see the centre's size."
     answer: 1
-  - q: "An app will transfer ₹1,50,000 tonight. It shows a monthly instalment and a processing fee, and there is no Key Facts Statement anywhere in the flow. What do you do?"
+  - q: "A lender offers ₹80,000 for two laptops at 12% a year, an example rate: ₹3,765.88 a month for 24 months, or ₹2,106.71 a month for 48. Your brother wants the smaller payment. What do you do first?"
     options:
-      - text: "Take it, since the instalment is one the centre can afford"
-        why: "An instalment on its own hides the rate and the length. On a term loan like this, an RBI-regulated lender has to give a Key Facts Statement first."
-      - text: "Ask for the Key Facts Statement with the APR, and look the app up on RBI's published list"
-        why: "The APR puts the interest rate and every charge into one yearly figure. Lenders have to report their loan apps to RBI, which publishes what they report."
-      - text: "Compare the two instalments and take the smaller one"
-        why: "A smaller instalment often means more months, and more months of interest. The size of the payment is not the cost of the loan."
+      - text: "Take 48 months, since a smaller payment means a cheaper loan"
+        why: "48 × ₹2,106.71 is ₹1,01,122.08, about ₹10,741 more than the 24-month total. The smaller payment runs twice as long."
+      - text: "Multiply each payment by its months, and compare the two totals"
+        why: "₹90,381.12 against ₹1,01,122.08. The lower payment costs about ₹10,741 more in interest, and now you can weigh that."
+      - text: "Treat them as the same, because the rate is 12% in both"
+        why: "The same rate charged for more months adds up to more interest. The rate alone leaves out the length."
     answer: 1
-  - q: "Your brother says a government scheme will cover the projector. What settles whether the coaching centre qualifies?"
+  - q: "The app will send ₹1,50,000 tonight. It shows a monthly instalment and a processing fee, and no Key Facts Statement anywhere. What do you do?"
     options:
-      - text: "A video listing the schemes small businesses can get"
-        why: "A video is a copy of the rules at best. Rules change, and the change reaches the official page first."
-      - text: "The scheme's own official page, which sets out who qualifies and how to apply"
-        why: "Each scheme has written rules. Under PMMY, for example, a ₹1,50,000 loan sits in the Kishor band, and a lender decides the application."
-      - text: "Whether a coaching centre nearby was given one"
-        why: "A neighbour's loan shows the scheme exists. It does not show that this enterprise meets the rules, or which band it falls in."
-    answer: 1
-  - q: "The bank asks what the coaching centre would pledge against ₹1,50,000. There is nothing to pledge. What do you do?"
-    options:
-      - text: "Offer the family's gold, so the loan goes through"
-        why: "That moves the risk onto whoever owns it. What the rules require is worth asking about before anything is pledged."
-      - text: "Ask whether the loan can run without collateral, and give the Udyam Registration Number"
-        why: "RBI tells banks not to take collateral on loans up to ₹10 lakh to micro and small enterprises. The certificate is how the enterprise is classified."
-      - text: "Use the app instead, since it asks for nothing"
-        why: "Nothing pledged is not the same as nothing at stake. At the example rate of 36% a year, ₹1,50,000 over 36 months costs about ₹97,300 in interest."
+      - text: "Accept, since the instalment is one the centre can afford"
+        why: "An instalment alone hides the rate, the length and the total. A regulated lender shows a Key Facts Statement before you sign."
+      - text: "Ask for the Key Facts Statement, and set its APR beside the bank's 11%"
+        why: "The APR folds the interest and the fee into one yearly rate, which is the fair way to set it beside the bank's offer."
+      - text: "Accept now, and read the terms once the money arrives"
+        why: "The statement is meant to come before you sign, so the price is known while you can still say no."
     answer: 1
 
 transfer:
-  - "Before any money is borrowed for a business, whoever is lending it. Write down the monthly payment, the number of months and the total."
-  - "When a business is set up, or when a bank asks what it is. Udyam registration is free, and the certificate is what a lender classifies you by."
-  - "When a scheme is mentioned at home or in a group. Its official page carries the rules, the limits and the way to apply."
-  - "Any time a lender or an app will not show a Key Facts Statement with the APR before you sign."
+  - "Before the business borrows anything: write the payment, the months and the total for every offer."
+  - "When a bank asks the business's size, or what it can pledge: show the Udyam certificate."
+  - "When a lender or an app will not show a Key Facts Statement with the APR: ask for it before you sign."
 
-glossary: [udyam-registration, pan, micro-enterprise, priority-sector-lending, collateral, government-scheme, key-facts-statement, apr, emi, interest]
+glossary: [udyam-registration, pan, micro-enterprise, collateral, key-facts-statement, apr, interest, emi]
 tool: loan
 
 sources:
-  - title: "Benefits of taking Udyam Registration: registration is fully digital and paperless with no document to upload, the process carries no fee and nothing is payable to anyone for it, an Aadhaar number and a PAN are enough, investment and turnover are taken automatically from government databases, and a registered enterprise becomes eligible for priority sector lending (February 2022)"
+  - title: "Benefits of taking Udyam Registration: registration is fully digital and paperless with no document to upload, the process carries no fee and nothing is payable to anyone for it, an Aadhaar number and a PAN are enough, investment and turnover are taken automatically from government databases, and a registered enterprise becomes eligible for priority sector lending (December 2021)"
     url: "https://www.dcmsme.gov.in/Benefits%20of%20UR.pdf"
     publisher: "Office of the Development Commissioner, Ministry of Micro, Small and Medium Enterprises"
   - title: "Frequently asked questions on micro, small and medium enterprises: a micro enterprise is one whose investment in plant and machinery or equipment stays within ₹2.5 crore and turnover within ₹10 crore under the gazette notification of 21 March 2025; banks are mandated not to accept collateral on loans up to ₹10 lakh to units in the MSE sector; and banks are guided by the classification recorded in the Udyam Registration Certificate (updated 29 July 2025)"
@@ -116,69 +167,14 @@ sources:
     publisher: "Press Information Bureau, Government of India"
 ---
 
-## Two offers for the same ₹1,50,000
+## What the certificate is for
 
-The room needs desks, chairs and a projector, and the quotes come to ₹1,50,000. A bank branch takes forms and a few days, and puts the cost in writing before anything is signed. An app will send the money tonight.
+<Term id="udyam-registration">Udyam registration</Term> records the coaching centre as an enterprise. It is online and free: nobody is owed a fee for it. An Aadhaar number and a <Term id="pan">PAN</Term> are enough.
 
-Both hand over the same ₹1,50,000. What differs is the price, and the rulebook the lender works under.
+The certificate shows the centre is a <Term id="micro-enterprise">micro enterprise</Term>, the smallest size. That is why the statement asks for no <Term id="collateral">collateral</Term>: banks are told to take none on loans up to ₹10 lakh to micro and small enterprises. The lender still decides the loan.
 
-**Read both offers as one question: what does this money cost, and for how long.**
+## Three numbers on every loan
 
-<svg class="chart" viewBox="0 0 320 128" role="img" aria-labelledby="cost-title cost-desc">
-  <title id="cost-title">What borrowing ₹1,50,000 for 36 months costs at two example rates</title>
-  <desc id="cost-desc">Two bars showing interest only. At 11% a year it is about ₹26,800. At 36% a year it is about ₹97,300, more than three and a half times as much. Both rates are examples.</desc>
-  <text class="chart-label" x="0" y="14">At 11% a year: ₹26,800</text>
-  <rect class="chart-a" x="0" y="22" width="83" height="20" rx="6" />
-  <text class="chart-label" x="0" y="72">At 36% a year: ₹97,300</text>
-  <rect class="chart-b" x="0" y="80" width="300" height="20" rx="6" />
-  <text class="chart-note" x="0" y="122">Interest only, on ₹1,50,000 over 36 months. Both rates are examples.</text>
-</svg>
+Every loan comes down to the <Term id="emi">EMI</Term>, the months and the total. The EMI times the months is the total. The total minus what you borrowed is the price.
 
-| ₹1,50,000 over 36 months | Each month | Interest in all |
-| --- | --- | --- |
-| At 11% a year (example) | ₹4,911 | ₹26,800 |
-| At 36% a year (example) | ₹6,871 | ₹97,300 |
-
-The interest figures are rounded to the nearest hundred rupees.
-
-## What Udyam registration is
-
-<Term id="udyam-registration">Udyam registration</Term> is the government's record of a business as an enterprise. It is done online, on the portal run by the Ministry of Micro, Small and Medium Enterprises, and it carries no fee. Nothing is payable to anyone for it.
-
-Registration is self-declared and paperless, so no document is uploaded. An Aadhaar number and a <Term id="pan">PAN</Term> are enough to start, and the figures for investment and turnover are taken from government records.
-
-Size sets the category. Under limits set in March 2025, a business is a <Term id="micro-enterprise">micro enterprise</Term> while investment stays within ₹2.5 crore and turnover within ₹10 crore. **A coaching centre with two rooms sits far inside that.**
-
-## What the certificate opens
-
-The certificate does not approve a loan. It identifies the enterprise, and rules are written around that identity.
-
-Banks are guided by the classification on the certificate when a loan is counted towards <Term id="priority-sector-lending">priority sector lending</Term>. Loans to micro, small and medium enterprises can all count towards it.
-
-RBI also tells banks not to take <Term id="collateral">collateral</Term> on loans up to ₹10 lakh to micro and small enterprises. **Registration is what puts an enterprise inside those rules.**
-
-## How a government scheme works
-
-A <Term id="government-scheme">government scheme</Term> is a programme with written rules: who qualifies, what they get, and how to apply. Those rules sit on an official page.
-
-Pradhan Mantri MUDRA Yojana is one example. It lends up to ₹20 lakh without collateral to micro and small businesses that are not companies and not farms. Four bands split it by size, and ₹1,50,000 falls in the Kishor band, above ₹50,000 and up to ₹5 lakh.
-
-Banks lend under it, and so do regional rural banks, small finance banks, finance companies and microfinance institutions. **A lender decides each application, so the scheme's own page is where to start.**
-
-## The Key Facts Statement
-
-A retail or small-business term loan sanctioned since 1 October 2024 comes with a <Term id="key-facts-statement">Key Facts Statement</Term>, handed to you before you sign. It carries the <Term id="apr">APR</Term>: the yearly cost of the credit, with the interest rate and every charge in one figure. Charges left off it cannot be added later without your explicit consent.
-
-Digital loans have their own RBI directions, from 8 May 2025. Each lender sets a cooling-off period, never shorter than a day, in which a new loan can be exited without penalty. Lenders also report their loan apps to RBI, which publishes what they report.
-
-**An instalment shown with no Key Facts Statement does not meet that rule.**
-
-## Read a loan as three numbers
-
-Any loan answers three questions. What comes out each month, how many months it runs, and what it adds up to in the end.
-
-The monthly figure is the <Term id="emi">EMI</Term>. What you pay above the ₹1,50,000 is <Term id="interest">interest</Term>, and that is the number two offers should be compared on.
-
-A smaller monthly payment is not a cheaper loan. It usually means more months, and more months of interest on the money still owed.
-
-**Write the payment, the months and the total for both offers, side by side, before anyone signs anything.**
+For a loan like this, a lender the Reserve Bank regulates must give you a <Term id="key-facts-statement">Key Facts Statement</Term> before you sign. Its <Term id="apr">APR</Term> puts the <Term id="interest">interest</Term> and every charge into one yearly rate.

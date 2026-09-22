@@ -1,40 +1,86 @@
 ---
 title: "Break-even with platform and card fees included"
-summary: "A platform fee and a card charge come out of every booking. Put both inside the cost of one job."
+summary: "Why a €55 bike service needs twelve bookings a month, not ten, once the platform and card fees come off."
 region: eu
 track: start-something
 order: 2
-readingMinutes: 7
+readingMinutes: 10
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "You repair bicycles at weekends from a rented bay in a shared workshop. Every service is booked and paid through a platform, which takes a fee from each booking before the money reaches you. You want to know how many bookings a month cover your costs."
+objectives:
+  - "Work out what one booking keeps once platform fees and parts come off."
+  - "Work out how many bookings cover the month, and what each extra one adds."
+  - "Weigh a fee charged per booking against a plan charged per month."
 
-prediction:
-  q: "A full service is booked at €55. Parts and consumables cost €22, and the bay, insurance and tool loan come to €320 a month. You planned on ten bookings to cover the month. Then the fee page shows €5 taken from every booking. How many bookings cover the €320 now?"
-  options:
-    - text: "Still ten, because €5 is small beside €55"
-      why: "The €5 is small beside the price and large beside what you keep. Each booking now leaves €28 instead of €33, so ten bring in €280."
-    - text: "Eleven, because the fee is about 9% of the price"
-      why: "9% is the fee's share of the price. Taken out of the €33 you were keeping, the same €5 is about 15%. The count rises by a fifth, not by a tenth."
-    - text: "Twelve"
-      why: "Each booking keeps €55 − €22 − €5 = €28. Covering €320 at €28 a booking takes 11.4 of them, and you cannot take part of a booking, so it rounds up."
-  answer: 2
+situation: "You repair bicycles at weekends, booked through a platform at €55. Counting only parts, ten bookings cover your €320 of monthly costs. With the €5 of fees, it takes twelve."
 
-takeaways:
-  - "A fee taken from every booking is a cost of that booking. Put it in before you work out what one job keeps."
-  - "A fee is a small share of the price and a much larger share of what you keep. Here €5 is about 9% of €55, and about 15% of the €33 left after parts."
-  - "Break-even is fixed costs divided by what one job keeps, rounded up. Past that point, each job adds its whole contribution."
+document:
+  kind: payout
+  title: "One booking: full service"
+  lines:
+    - { label: "Booking price", value: "€55.00", hint: "What the customer paid for the service. Not what reaches you." }
+    - { label: "Platform booking fee", value: "−€4.00", hint: "The platform's flat charge for listing you and taking the booking. Some platforms take a percentage of the price instead." }
+    - { label: "Card payment charge", value: "−€1.00", hint: "What taking the customer's card costs, shared by the card's bank, the card network and the payment firm." }
+    - { label: "Paid to you", value: "€50.00", hint: "What arrives in your account. The €22 of parts for this service still comes out of it." }
+    - { label: "Seller plan", value: "Basic, €0 a month", hint: "A monthly plan charge would join your €320 of monthly costs. This plan charges nothing." }
+  find:
+    q: "What does one €55 booking bring you before you pay for parts?"
+    options:
+      - text: "€55, the booking price"
+        why: "That is what the customer paid. The platform fee and the card charge come off before anything reaches you."
+      - text: "€51, the price minus the platform fee"
+        why: "Close, but the card charge comes off too. Both are taken from every booking."
+      - text: "€50, the amount paid to you"
+        why: "The payout line is what arrives. The €22 of parts then comes out of it, leaving €28."
+    answer: 2
+
+video:
+  youtubeId: "mN8dGY57IBk"
+  title: "Breakeven | Contribution | A-Level, IB & BTEC Business"
+  channel: "tutor2u"
+  minutes: 9
+  note: "Exam-syllabus framing in pounds; the platform and card fees are the lesson’s addition."
 
 worked:
   kind: margin
-  context: "The repair service from the top of the page: €55 a booking, €22 of parts and consumables, and about €5 of platform commission and card charge taken from every booking. The fees are counted inside the cost of one job, so a job costs €27. The bay, insurance and tool loan come to €320 a month."
+  context: "The payout above, plus €22 of parts: €27 comes off each €55 booking."
   unitName: repairs
   fixed: 320
   variable: 27
   price: 55
+  captions:
+    - "€22 of parts go to your supplier and €5 to the platform and card firms; €28 stays with you."
+    - "Only what each repair keeps pays the €320; after twelve, each one is €28 of profit."
+
+practice:
+  kind: margin
+  context: "An alterations service in Lyon: €40 a job, €11 of materials, €4 of platform and card fees, and €210 a month for a bench."
+  unitName: jobs
+  fixed: 210
+  variable: 15
+  price: 40
+  hints:
+    - "Take the materials and the fees off the price, then divide the €210 by what one job keeps."
+    - "€40 − €11 − €4 = €25, then €210 ÷ €25 = 8.4."
+    - "Nine jobs, as 8.4 rounds up. Leaving out the €4 of fees gives €29 a job and eight, one short."
+
+practiceMore:
+  kind: margin
+  context: "A tutor in Ghent: €30 a session, €4.50 of commission, €0.50 of card charge, €1 of worksheets, €125 a month of fixed costs."
+  unitName: sessions
+  fixed: 125
+  variable: 6
+  price: 30
+  hints:
+    - "Add the commission, the card charge and the worksheets into one cost per session, then divide the €125 by what is left."
+    - "€30 − €4.50 − €0.50 − €1 = €24, then €125 ÷ €24 = 5.2."
+    - "Six sessions. Counting only the worksheets gives €29 a session and five, one short: here the fees are most of the cost."
+
+keyIdea: "A fee on every booking is part of its cost; break-even is fixed costs divided by what one booking keeps."
 
 explorable:
   kind: margin
@@ -43,16 +89,23 @@ explorable:
   variable: 27
   prices: [27, 40, 48, 55, 70]
   prompts:
-    - "Start at €55, then tap €48. The €27 is held still here, so you see the price on its own. The price falls by about an eighth; does the count rise by about an eighth, or by more?"
-    - "Tap €27. That is what one repair costs you once the fees are inside. What happens to the count, and why?"
+    - "Tap €48. A price about an eighth lower needs sixteen repairs, a third more than twelve."
+    - "Tap €27, the parts plus the fees. Nothing is left, so no count covers the month."
 
-practice:
-  kind: margin
-  context: "An alterations service in Lyon works from a rented bench in a shared studio. Jobs are booked and paid through a platform: €40 a job, €11 of thread, zips and packaging, and €4 of platform and card fees. The bench costs €210 a month."
-  unitName: jobs
-  fixed: 210
-  variable: 15
-  price: 40
+takeaways:
+  - "Add every per-booking fee to the parts before you price a service."
+  - "Plan on the break-even count with fees inside, not the one without."
+  - "Check each payout, and redo the sum whenever a fee changes."
+
+details:
+  - "Part of the card charge is the interchange fee, paid to the bank that issued the customer's card. Regulation (EU) 2015/751 caps it at 0.2% of a consumer debit card payment and 0.3% of a consumer credit card payment."
+  - "The rest of the card charge goes to the card network and to the firm that processes the payment for you."
+  - "A seller in the EU may not add a surcharge for paying with a consumer debit or credit card. Business cards, and cards from companies that both issue the card and take the payment for the seller, sit outside that ban."
+  - "Where a charge for paying is still allowed, it may not be more than what taking that payment costs the seller. Some countries ban such charges completely, so check the rules where you trade."
+  - "Under EU consumer rules the customer must see the full price, extras included, before placing an order."
+  - "Regulation (EU) 2019/1150 requires an online platform to give its business sellers at least 15 days' notice before changing its terms. All but the smallest platforms must also run a complaints system for those sellers. In November 2025 the Commission proposed repealing it, as newer EU platform laws go further, so check which rules apply now."
+  - "Platforms charge in several ways: a percentage, a flat amount per booking, a monthly plan, or a mix. A flat €1.20 is about 10% of a €12 booking and about 2% of a €55 one."
+  - "The fees in this lesson are examples. Outside the euro area the sum is the same: a repairer in Warsaw runs the same lines in złoty."
 
 quiz:
   - q: "A repairer in Ghent works through a platform that takes 10% of each booking. She raises a service from €50 to €60 and changes nothing else. She says each booking now keeps €10 more. What do you tell her?"
@@ -64,41 +117,31 @@ quiz:
       - text: "Each booking keeps nothing more, because the commission takes the rise"
         why: "The commission takes 10% of the rise, which is €1, not the whole €10."
     answer: 1
-  - q: "It is the last week of the month. Twelve bookings have covered the €320, and a neighbour asks for one more service at €55. What does that thirteenth booking add?"
+  - q: "Your parts for a service rise from €22 to €25. The fees stay at €5 and the month still costs €320. How many bookings cover the month now, and what does each one after that add?"
     options:
-      - text: "€55, because the month's costs are already paid"
-        why: "Parts and fees still come out of the thirteenth booking. Only the fixed costs are already covered."
-      - text: "€28, because the fixed costs do not grow with it"
-        why: "The €320 is paid for the month, so this booking gives up only its own €22 of parts and €5 of fees."
-      - text: "Nothing, because profit starts next month"
-        why: "Break-even is a point inside the month, not a date. Every booking after it adds its contribution."
+      - text: "Twelve, and €28 for each booking after that"
+        why: "That is the old sum. Each booking now keeps €55 − €25 − €5 = €25, so twelve bring in €300."
+      - text: "Thirteen, and €25 for each booking after that"
+        why: "€320 ÷ €25 is 12.8, which rounds up to thirteen. Past that, each booking adds its €25, since the €320 is already paid."
+      - text: "Thirteen, and €55 for each booking after that"
+        why: "Thirteen is right. After it, parts and fees still come out of every booking; only the €320 is already paid."
     answer: 1
-  - q: "You also fix punctures for €12, and most customers book one on its own. The platform's charge on any booking includes a flat €1.20 on top of its percentage. What does that flat part do here?"
-    options:
-      - text: "Little, since €1.20 is a small amount either way"
-        why: "The amount is small; the share is not. On a €12 booking the flat part is 10% of the price."
-      - text: "It takes 10% of a €12 booking, so a puncture keeps much less than it looks"
-        why: "A flat charge is paid per booking, not per euro. On a €55 service the same €1.20 is about 2%."
-      - text: "It cancels out, because the percentage part is smaller on a cheap booking"
-        why: "The percentage part is smaller. The flat part is the same €1.20 on a €12 booking as on a €55 one."
-    answer: 1
-  - q: "The platform offers a pro plan: €45 a month, and its charge per booking falls from €5 to €1. Most months you take about nine bookings. How do you decide?"
+  - q: "The platform offers a pro plan: €60 a month, and its charges per booking fall from €5 to €1. Most months you take about thirteen bookings. How do you decide?"
     options:
       - text: "Take it, because the charge per booking drops to a fifth of what it was"
-        why: "The saving is €4 a booking. At nine bookings that is €36, against €45 a month, so the plan costs €9 more."
+        why: "The saving is €4 a booking. At thirteen bookings that is €52, against €60 a month, so the plan costs €8 more."
       - text: "Skip it, because a monthly charge is always worse than a charge per booking"
-        why: "Not always. At fifteen bookings the plan saves €60 against €45. The type of charge is not the test."
-      - text: "Weigh €4 saved a booking against €45 a month, at the bookings you really take"
-        why: "The plan moves cost from each booking to the month. It pays from twelve bookings, and at nine it costs €9 more."
+        why: "Not always. At twenty bookings the plan saves €80 against its €60. The type of charge is not the test."
+      - text: "Weigh €4 saved a booking against €60 a month, at the bookings you really take"
+        why: "The plan moves cost from each booking to the month. It only pays beyond fifteen bookings; at thirteen it costs €8 more."
     answer: 2
 
 transfer:
   - "Before you list a service on a platform. Open the fee page and add every charge per booking to the cost of that job."
   - "When a platform changes what it charges. Put the new figure into the sum and work out break-even again before it starts."
   - "When you compare two platforms. Compare what reaches you from one booking, not the headline percentage."
-  - "When a month passes break-even. From there each booking adds its whole contribution, which is the part that pays you."
 
-glossary: [platform-fee, commission, contribution-margin, variable-cost, fixed-cost, break-even, interchange-fee, surcharge]
+glossary: [platform-fee, commission, variable-cost, contribution-margin, fixed-cost, break-even, surcharge]
 tool: break-even
 
 sources:
@@ -123,82 +166,21 @@ sources:
   - title: "Regulation (EU) 2019/1150 on fairness and transparency for business users of online intermediation services"
     url: "https://eur-lex.europa.eu/eli/reg/2019/1150/oj"
     publisher: "Official Journal of the European Union"
+  - title: "Platform-to-business trading practices: on 19 November 2025 the Commission proposed repealing the P2B Regulation (page updated 2 July 2026)"
+    url: "https://digital-strategy.ec.europa.eu/en/policies/platform-business-trading-practices"
+    publisher: "European Commission, Shaping Europe's digital future"
 ---
 
-## Where €55 goes
+## Fees are a cost of the job
 
-You repair bicycles at weekends from a rented bay in a shared workshop. A full service is booked and paid through a platform, at €55. Parts and consumables, the small supplies used up on one service, cost €22.
+A <Term id="platform-fee">platform fee</Term> comes off every booking: a flat sum, as here, or a <Term id="commission">commission</Term>, a percentage that grows with the price. With the card charge, fees take €5 of each €55. Like parts, they are paid on every job, so they are a <Term id="variable-cost">variable cost</Term>.
 
-On paper that leaves €33. The platform's <Term id="commission">commission</Term> and the card charge take about €5 more. Each of those is a <Term id="platform-fee">platform fee</Term>.
+What parts and fees leave is the <Term id="contribution-margin">contribution margin</Term>. The €5 is about 9% of the price but 15% of the €33 left after parts.
 
-So the booking leaves you €28. That €28 is its <Term id="contribution-margin">contribution margin</Term>: what one job adds once its own costs are paid. The fees are a <Term id="variable-cost">variable cost</Term>. Take one more booking and you pay them again.
+## What pays the month
 
-**Every charge taken from a booking belongs in the cost of that booking.**
+Your workshop space, insurance and tool loan are <Term id="fixed-cost">fixed costs</Term>, €320 a month. <Term id="break-even">Break-even</Term> is that divided by what one booking keeps, rounded up.
 
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="fee-title fee-desc">
-  <title id="fee-title">Where €55 from one bicycle service goes</title>
-  <desc id="fee-desc">A single bar in three parts. The two costs are parts and consumables at €22 and the platform commission and card charge at €5. The €28 kept is the third part.</desc>
-  <rect class="chart-b" x="0" y="26" width="125" height="36" rx="6" />
-  <rect class="chart-b" x="129" y="26" width="28" height="36" rx="6" />
-  <rect class="chart-a" x="161" y="26" width="159" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Parts €22</text>
-  <text class="chart-label" x="320" y="16" text-anchor="end">Kept €28</text>
-  <text class="chart-label" x="129" y="80">Fees €5</text>
-  <text class="chart-note" x="0" y="100">One service booked at €55</text>
-</svg>
+A monthly plan joins the €320; if it cuts the fee per booking, compare its charge with that saving times your usual bookings.
 
-| Where €55 goes | Amount |
-| --- | --- |
-| Parts and consumables | €22 |
-| Platform commission and card charge | €5 |
-| Kept from the booking | €28 |
-
-## What the fee takes from what you keep
-
-Five euros sounds minor next to €55. It is about 9% of the price. But it comes out of the €33 left after parts, and there it is about 15%.
-
-That is the gap that makes fees easy to miss. You measure a fee against the price, not against what the job leaves.
-
-The card charge is not one charge. Part of it is <Term id="interchange-fee">interchange</Term>, which goes to the bank that issued the customer's card. EU rules cap that at 0.2% on a consumer debit payment and 0.3% on a consumer credit one. The rest goes to the card network and to the firm that takes your payments.
-
-## Fees per booking, fees per month
-
-The bay, the insurance and the loan on your tools come to €320 a month. You pay that whether you take twelve bookings or none. Those are <Term id="fixed-cost">fixed costs</Term>.
-
-Fees split the same way. A commission on each booking belongs with the parts, inside the cost of that job. A monthly charge for a seller account belongs with the bay, in fixed costs.
-
-The sum does not change outside the euro area. A repairer in Warsaw runs the same lines in złoty.
-
-**Put each fee on the line that matches how it is charged: per booking, or per month.**
-
-## Twelve bookings, not ten
-
-Without the fees, each booking would keep €33, and ten would cover the €320. With €5 of fees inside the cost, it takes twelve.
-
-You cannot do part of a repair, so a fraction of a booking rounds up to a whole one. Twelve is your <Term id="break-even">break-even</Term> point for the month.
-
-Five euros a booking moved the count by two. That is a fifth more repairs for the same fixed costs.
-
-## After the twelfth
-
-Once the €320 is covered, the month's fixed costs are paid. They do not grow when you take a thirteenth booking.
-
-So the thirteenth adds its whole €28 to your profit, not €55, because parts and fees still come out of it. So does the fourteenth, and every booking after that.
-
-The first eleven bookings all go on costs, and the twelfth finishes them. A quiet month works the same way in reverse. At eight bookings you are €96 short of the €320.
-
-## Charging extra for paying by card
-
-In the EU a seller cannot add a <Term id="surcharge">surcharge</Term> when a customer pays with an everyday consumer debit or credit card. Two kinds of card sit outside that rule. One is a business or company card, billed to an employer. The other is a card from a company that also takes the payment itself.
-
-A charge that is still allowed is limited to what taking that payment costs you. Some countries ban them completely, so check the rules where you trade.
-
-The customer has to see the full total, extras included, before the order is placed. **So the card fee belongs in the price you set, not at the checkout.**
-
-## Check the payout, then watch for changes
-
-After your first bookings, open the statement that shows what reached your account. Each payout should be your price minus the fees you counted. If less arrived, a charge is missing from your sum.
-
-Fees also change. Under EU rules a platform must give its business sellers at least 15 days' notice before new terms take effect. The same rules require larger platforms to run a complaints system for their sellers.
-
-So when notice arrives, put the new figure into the cost of one booking. Work out break-even again before the change starts.
+You cannot add a <Term id="surcharge">surcharge</Term> for an everyday EU consumer card, so the card charge goes in your price.

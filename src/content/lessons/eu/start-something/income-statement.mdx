@@ -1,116 +1,162 @@
 ---
 title: "Reading an income statement from a freelance design service"
-summary: "Revenue, cost of sales and the month's own costs, from four websites at €600 down to net profit before tax."
+summary: "Why €2,400 of March invoices leaves €1,450 of net profit before tax, one line at a time."
 region: eu
 track: start-something
 order: 1
-readingMinutes: 7
+readingMinutes: 10
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "You build websites for small firms in your town. In March you invoiced four of them at €600 each. Before any of the €2,400 is yours, the software, the shared desk you rent and the train fares to clients come out."
+objectives:
+  - "Read an income statement line by line, and compare two months by net profit."
+  - "Sort costs into cost of sales and running costs, and say which stay when work stops."
+  - "Explain why a profitable month can leave less in the account than its profit."
 
-prediction:
-  q: "You invoiced four sites at €600 in March, which comes to €2,400. Stock images, hosting and fonts for those jobs cost €300. Software, the desk and travel cost €650. How much of the €2,400 is yours, before tax?"
-  options:
-    - text: "€2,400, because all four sites were billed"
-      why: "That is revenue: what the work sold for. Every bill for those jobs, and for the month itself, is paid out of it first."
-    - text: "€2,100, once the images and hosting are paid"
-      why: "That is gross profit. The software, the desk and the travel have not come out yet, and they are another €650."
-    - text: "€1,450, once every cost is out"
-      why: "€2,400 minus €300 minus €650. That is net profit before tax, and tax on business profit is worked out from it."
-  answer: 2
+situation: "You build websites for small firms. March's four invoices at €600 came to €2,400, yet your March statement ends on €1,450."
 
-takeaways:
-  - "Revenue is what the work sold for. Cost of sales is what those jobs used up. The gap between them is gross profit."
-  - "The month's own costs come out of gross profit. A subscription and a desk are charged whether four jobs arrive or none."
-  - "Net profit before tax is the bottom line, and the tax on business profit starts from it. Read three or four months before you trust one."
+document:
+  kind: statement
+  title: "March, freelance web design"
+  lines:
+    - { label: "Revenue: four sites at €600", value: "€2,400", hint: "The top line: what the work sold for, counted when invoiced. VAT added on top of the price stays off it." }
+    - { label: "Cost of sales", value: "−€300", hint: "Images, hosting and fonts the four sites used, €75 a site. Bought only because of those jobs." }
+    - { label: "Gross profit", value: "€2,100", hint: "Revenue minus cost of sales. It tests the work itself, before the month's own bills." }
+    - { label: "Software", value: "−€90", hint: "A monthly subscription, charged whether four sites arrive or none." }
+    - { label: "Shared desk", value: "−€400", hint: "Rent for a desk in a shared office, also charged in a month with no work." }
+    - { label: "Travel to clients", value: "−€160", hint: "Train fares to meetings. It rises and falls with the number of jobs." }
+    - { label: "Net profit before tax", value: "€1,450", hint: "The bottom line: what March left after every cost, before any tax on the profit." }
+  find:
+    q: "Which line says whether March paid for your time?"
+    options:
+      - text: "Revenue, €2,400"
+        why: "That is what the work sold for. €950 of costs still come off it before anything is yours."
+      - text: "Gross profit, €2,100"
+        why: "Close, but the software, the desk and the travel have not come off yet."
+      - text: "Net profit before tax, €1,450"
+        why: "The bottom line is what the month left after every cost. It is the one that answers the question."
+    answer: 2
+
+video:
+  youtubeId: "Z7C4cz2HkeY"
+  title: "Introduction to the income statement | Stocks and bonds | Finance & Capital Markets | Khan Academy"
+  channel: "Khan Academy"
+  minutes: 9
+  endSeconds: 540
+  note: "Stops at 9:00. A company-scale example; the order of the lines is the same for a freelancer."
 
 worked:
-  kind: split
-  context: "The subtraction is in the table above. Here the same March is read a second way, with each line as a share of the €2,400 it started from. That is how months of different sizes are compared. The shares are rounded to two decimals, so each figure lands on the nearest euro."
-  income: 2400
-  shares:
-    - { label: "Cost of sales", percent: 12.5 }
-    - { label: "Running costs for the month", percent: 27.08 }
-    - { label: "Net profit before tax", percent: 60.42 }
-
-explorable:
-  kind: margin
-  unitName: sites
-  fixed: 650
-  variable: 75
-  prices: [600, 450, 300, 150, 60]
-  prompts:
-    - "Start at €600, the price in the statement, then tap €300. Halving the price does more than halve what a site leaves behind: €525 becomes €225, because the €75 of images, hosting and fonts comes out either way."
-    - "Now tap €60, which is under the €75 of images, hosting and fonts inside each site. Read what the answer becomes, and why no number of sites covers the month at that price."
+  kind: deduction
+  context: "The statement above, from revenue to the bottom line."
+  start: 2400
+  startLabel: "Revenue"
+  lines:
+    - { label: "Cost of sales", amount: 300, caption: "Paid to suppliers for the images, hosting and fonts the sites used: €75 a site.", subtotalLabel: "Gross profit" }
+    - { label: "Software", amount: 90, caption: "Paid to the software maker every month, whether four sites arrive or none.", subtotalLabel: "After software" }
+    - { label: "Shared desk", amount: 400, caption: "Rent to the shared office, due even in a month with no work.", subtotalLabel: "After the desk" }
+    - { label: "Travel to clients", amount: 160, caption: "Train fares to clients, which rise and fall with the jobs." }
+  endLabel: "Net profit before tax"
 
 practice:
-  kind: split
-  context: "A friend near Porto edits video for local businesses. In November she invoiced €1,500. Music licences and cloud storage for those jobs took 8% of it, and her software and her share of a studio took 32%. Her lines are written the same way, as shares of the €1,500."
-  income: 1500
-  shares:
-    - { label: "Cost of sales", percent: 8 }
-    - { label: "Software and studio", percent: 32 }
-    - { label: "Net profit before tax", percent: 60 }
-  target: "Net profit before tax"
+  kind: deduction
+  context: "A friend near Porto edits video. November: €1,500 invoiced; licences and storage for those jobs €120; software €60; studio share €420."
+  start: 1500
+  startLabel: "Revenue"
+  lines:
+    - { label: "Cost of sales", amount: 120, subtotalLabel: "Gross profit" }
+    - { label: "Software", amount: 60, subtotalLabel: "After software" }
+    - { label: "Studio share", amount: 420 }
+  endLabel: "Net profit before tax"
+  hints:
+    - "Start from revenue. Take off cost of sales, then each running cost, in order."
+    - "€1,500 − €120 − €60 − €420."
+    - "€900 before tax. Stopping at gross profit gives €1,380; taking cost of sales off twice gives €780."
+
+practiceMore:
+  kind: deduction
+  context: "Her quiet December: €500 invoiced, €40 of licences and storage, software €60 and studio share €420."
+  start: 500
+  startLabel: "Revenue"
+  lines:
+    - { label: "Cost of sales", amount: 40, subtotalLabel: "Gross profit" }
+    - { label: "Software", amount: 60, subtotalLabel: "After software" }
+    - { label: "Studio share", amount: 420 }
+  endLabel: "Net profit before tax"
+  hints:
+    - "Same order: cost of sales first, then the running costs, which do not shrink in a quiet month."
+    - "€500 − €40 − €60 − €420."
+    - "−€20, a loss. Gross profit was €460, but the €480 of fixed costs came off in full."
+
+keyIdea: "Net profit is revenue minus what the jobs used and what running the month cost."
+
+explorable:
+  kind: deduction
+  starts: [600, 2400, 3600]
+  startLabel: "Revenue"
+  lines:
+    - { label: "Cost of sales", percentOfStart: 12.5, subtotalLabel: "Gross profit" }
+    - { label: "Software", amount: 90, subtotalLabel: "After software" }
+    - { label: "Shared desk", amount: 400, subtotalLabel: "After the desk" }
+    - { label: "Travel to clients", percentOfStart: 6.67 }
+  endLabel: "Net profit before tax"
+  prompts:
+    - "Tap €600, one site. Cost of sales and travel shrink, but the €490 for software and the desk stays: the month loses €5."
+    - "Tap €3,600, six sites. Net profit rises €970 on March, not €1,200: each extra site leaves €485 after its own costs."
+
+takeaways:
+  - "Close each month with three lines: revenue, gross profit, net profit before tax."
+  - "Test any cost that repeats monthly against a quiet month, not your best one."
+  - "Read each statement beside a list of invoices not yet paid."
+
+details:
+  - "EU accounting rules call the income statement the profit and loss account, often shortened to P&L. It covers one period: a month, a quarter or a year."
+  - "Every limited liability company doing business in the EU draws up annual accounts in three parts: the balance sheet, the profit and loss account and the notes. Simpler rules apply to small and micro companies."
+  - "EU accounting rules do not cover the self-employed, sole traders or other businesses without limited liability. What you must keep and file then depends on your country; its tax authority says which records it wants."
+  - "Company tax falls on a company's profit, and each EU country writes its own rules and rates. If you work for yourself without a company, your country's income tax rules say what the tax is worked out from."
+  - "VAT is a percentage of the sale price, collected at each step of the chain and borne in the end by the final consumer; a seller who charges it hands it on. Rates are set country by country, and no standard rate may be below 15%."
+  - "Eurostat measures a period's sales, which it calls turnover, from what was billed in it, with the VAT charged to customers left out."
+  - "The EU and OECD financial competence framework for children and youth lists managing personal, household and business finances separately as a competence for ages 16 to 18."
+  - "The figures in this lesson (four sites at €600, €75 of cost of sales a site, €490 of fixed costs a month) are an example, not a typical price for design work."
 
 quiz:
-  - q: "Someone else builds websites in the next town. She invoiced €4,000 in April against your €2,400, and says her month was the better one. What settles it?"
+  - q: "Someone in the next town also builds websites. She invoiced €4,000 in April against your €2,400, and says her month was the better one. What settles it?"
     options:
       - text: "Her month, because she invoiced more"
         why: "Invoiced money is the top line. What each month left after its own costs sits further down, and it can run the other way."
-      - text: "The net profit on each statement"
-        why: "Say her €4,000 carried €3,200 of costs, leaving €800. Your €2,400 carried €950, leaving €1,450. The bottom line settles it."
       - text: "The gross profit on each statement"
-        why: "Gross profit stops before the software, the desk and the travel that both of you still owe. It answers a narrower question."
-    answer: 1
-  - q: "In August your one booking is postponed and you build nothing at all. What does August's statement show?"
+        why: "Gross profit stops before the running costs that both of you still pay. It answers a narrower question."
+      - text: "The net profit on each statement"
+        why: "Say her €4,000 carried €3,200 of costs, leaving €800. Your €2,400 left €1,450. The bottom line settles it."
+    answer: 2
+  - q: "In August your one booking is postponed and you build nothing. Which of March's costs are still on August's statement?"
     options:
-      - text: "Nothing, because there was no work"
-        why: "A month with no sales still has a statement. The subscription and the desk were charged on their usual dates."
-      - text: "A loss, because the fixed costs were charged anyway"
-        why: "Revenue is zero and cost of sales is zero, but €490 still left the account. August's bottom line is below zero."
-      - text: "Zero profit, because nothing was spent either"
-        why: "Spending did not stop with the work. Cost of sales stops when the jobs stop; the desk and the software do not."
+      - text: "None of them, because there was no work"
+        why: "Cost of sales and travel stop with the jobs. The software and the desk are charged on their usual dates."
+      - text: "The software and the desk, so August ends €490 down"
+        why: "Both are running costs that stay when the work stops. With no revenue to cover them, the bottom line is a €490 loss."
+      - text: "All of them, because the statement repeats March's lines"
+        why: "Images, hosting, fonts and train fares are bought for jobs. With no sites to build, none of them is needed."
     answer: 1
-  - q: "In May your invoices came to €2,904, and €504 of that is VAT at an example rate of 21%. What goes on the top line?"
+  - q: "Your business account held nothing on 1 March. March's statement shows €1,450 of net profit and every bill is paid, yet the account now holds €850. What do you check first?"
     options:
-      - text: "€2,904, everything the clients paid"
-        why: "The €504 is VAT: the buyer pays it inside the price and the seller hands it on. Eurostat measures a period's sales with the VAT left out."
-      - text: "€2,400, the work without the VAT"
-        why: "Revenue is the price the business charged for the work. The VAT is added on top of that price, so it stays off the top line."
-      - text: "€2,904 now, with the VAT taken off at the end of the year"
-        why: "Leaving it in makes every line below it look €504 better than it is. That part of the price is collected for the tax authority, not earned."
-    answer: 1
-  - q: "March's statement shows €1,450 of net profit and every bill paid. The shared account holds €850. What do you check first?"
-    options:
+      - text: "Which invoices have been paid, and when the rest are due"
+        why: "A €600 invoice due on 15 April counts in March but has not arrived: €1,450 − €600 = €850. That is the whole gap."
       - text: "Whether the statement was added up wrong"
         why: "The sums can be right and the account still short. A statement says what was earned in March, not what has arrived."
-      - text: "Which invoices have been paid, and when each one is due"
-        why: "A €600 invoice due on 15 April is counted in March and is not in the account yet. That is the whole gap."
       - text: "Whether a client was charged too little"
-        why: "Charging too little shows up as a thin bottom line, not as a gap between profit and the balance. Here the profit is there and the cash is not."
-    answer: 1
-  - q: "A studio offers you a desk at €400 a month on a twelve-month contract. You have March's statement in front of you. What would you want beside it?"
-    options:
-      - text: "Nothing more, because March covers €400 easily"
-        why: "March had four sites in it. A cost charged in all twelve months is met by the quiet months as well as the busy ones."
-      - text: "Three or four months of statements, quiet ones included"
-        why: "The desk is charged every month. Several statements show the range of revenue that has to carry it, not only the best month."
-      - text: "Next month's bookings"
-        why: "A booking is an expectation. Past statements show what came in, including the months when nothing was booked."
-    answer: 1
+        why: "Charging too little shows as a thin bottom line, not as a gap between profit and the balance. Here the profit is there and the cash is not."
+    answer: 0
 
 transfer:
-  - "At the end of any month you were paid for work. Write the three lines: revenue, gross profit, net profit."
+  - "At the end of any month you were paid for work: write the three lines."
   - "Before taking on a cost that repeats every month, such as a subscription, a desk or a lease."
-  - "When a tax return asks what you earned from working for yourself. It starts from profit, not from what clients paid in."
+  - "When you prepare a tax return for work you did for yourself, and need the year's revenue and costs."
   - "When someone says a business must be doing well because it is busy. Ask what the bottom line says."
 
-glossary: [income-statement, revenue, cost-of-sales, gross-profit, operating-expenses, fixed-cost, net-profit, limited-liability-company, self-employed, invoice, cash-flow, vat]
+glossary: [income-statement, revenue, invoice, vat, cost-of-sales, gross-profit, operating-expenses, net-profit, fixed-cost, cash-flow]
 tool: break-even
 
 sources:
@@ -137,72 +183,14 @@ sources:
     publisher: "European Union and OECD"
 ---
 
-## Four sites, and one top line
+## Top line, bottom line
 
-You invoiced four sites at €600 in March. That €2,400 is <Term id="revenue">revenue</Term>, the top line of an <Term id="income-statement">income statement</Term>: what the work sold for, before a single cost is taken off.
+An <Term id="income-statement">income statement</Term> covers one stretch of time, here March. It starts from <Term id="revenue">revenue</Term>, what the work sold for, counted when you send the <Term id="invoice">invoice</Term>. Any <Term id="vat">VAT</Term> you charge stays off it: you collect that for the tax authority.
 
-An income statement covers one stretch of time, here one month. EU accounting rules call it the profit and loss account, often shortened to P&L.
+Revenue minus <Term id="cost-of-sales">cost of sales</Term>, what the jobs used, is <Term id="gross-profit">gross profit</Term>. Take off the month's running costs, its <Term id="operating-expenses">operating expenses</Term>, and <Term id="net-profit">net profit</Term> remains. Only that bottom line says whether the month paid.
 
-**Revenue is where the counting starts, not what you made.** The rest of the statement is the costs, in two groups, and what each group leaves behind.
+## Profit is not cash
 
-## What the four jobs used up
+The software and the desk are <Term id="fixed-cost">fixed costs</Term>: €490 is owed even in a month with no work. Travel is not; it stops when the jobs do.
 
-Stock images, the hosting bought for those sites and two licensed fonts cost €300. That is <Term id="cost-of-sales">cost of sales</Term>: what the jobs themselves used up. None of it would have been bought without the four jobs.
-
-Revenue minus cost of sales is <Term id="gross-profit">gross profit</Term>, here €2,100. **It tests the work itself: does a site leave money behind before the month's own bills?**
-
-Spread over the four sites, that €300 is €75 each. So a €600 site leaves €525, and four of them leave €2,100.
-
-## The costs of the month itself
-
-Then come the costs of running the month: software at €90, a shared desk at €400, and €160 of train fares to clients. Together that is €650 of <Term id="operating-expenses">operating expenses</Term>.
-
-Two of the three are <Term id="fixed-cost">fixed costs</Term>. The subscription and the desk are charged whether four sites arrive or none, so €490 is owed even in a month with no work.
-
-Take the €650 from gross profit and you reach <Term id="net-profit">net profit</Term> before tax: €1,450. **That is what the month left you, and it is the bottom line.**
-
-## March on one page
-
-Here is the month from the top line to the bottom line. The first bar is what the jobs used, the second what the month cost, and the third what was left. If you invoice in złoty or krona, the lines work the same.
-
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="pl-title pl-desc">
-  <title id="pl-title">Where €2,400 of March invoices went</title>
-  <desc id="pl-desc">A single bar in three parts. Cost of sales is €300, the month's running costs are €650, and net profit before tax is €1,450.</desc>
-  <rect class="chart-b" x="0" y="26" width="38" height="36" rx="6" />
-  <rect class="chart-b" x="42" y="26" width="84" height="36" rx="6" />
-  <rect class="chart-a" x="130" y="26" width="190" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Cost of sales €300</text>
-  <text class="chart-label" x="320" y="16" text-anchor="end">Net profit €1,450</text>
-  <text class="chart-label" x="42" y="80">Running costs €650</text>
-  <text class="chart-note" x="0" y="100">Four sites invoiced at €600 in March</text>
-</svg>
-
-| March at the design service | Amount |
-| --- | --- |
-| Revenue: four sites at €600 | €2,400 |
-| Cost of sales: images, hosting, fonts | −€300 |
-| Gross profit | €2,100 |
-| Software | −€90 |
-| Shared desk | −€400 |
-| Travel to clients | −€160 |
-| Net profit before tax | €1,450 |
-
-## What the bottom line is for
-
-Tax on business profit starts from profit, not from the money clients paid in. Each EU country sets its own rules and rates, so what you owe and what you have to file depends on where you are. Ask your national tax authority.
-
-Who has to produce a statement depends on how the business is set up. A <Term id="limited-liability-company">limited liability company</Term> keeps yearly accounts in every EU country. The profit and loss account is one of the three parts of those accounts, beside the balance sheet and the notes. If you are <Term id="self-employed">self-employed</Term> with no company, the rules that apply depend on your country. **The three lines are still how you know whether the month paid.**
-
-## Earned in March, paid in April
-
-The March statement counts a sale when the work is <Term id="invoice">invoiced</Term>, not when the money lands. Eurostat measures a period's sales the same way: the totals billed in it. A client who pays on 15 April still belongs in March. **That gap between earning and being paid is what <Term id="cash-flow">cash flow</Term> tracks, and it is why a profitable month can leave a thin account.**
-
-If you charge <Term id="vat">VAT</Term>, that part of the price is not yours to count. The buyer pays it inside the price and you hand it on, so a top line leaves it out. Each EU country sets its own rates, and a standard rate cannot be below 15%.
-
-## Why one month is not enough
-
-March had four sites in it. August may have one, and the desk and the subscription are charged in both.
-
-So read three or four months together before trusting a figure. Write each cost as a share of revenue, the way the calculation below does. A quiet month then shows itself at once: the same €490 is about a fifth of a €2,400 month and half of a €980 one.
-
-Business money and personal money are also easier to read apart than together. The EU and OECD framework for 16 to 18 year olds lists keeping them separate as a skill of its own.
+A March invoice paid in April still counts in March, so the account can hold less than the profit. The timing of money in and out is <Term id="cash-flow">cash flow</Term>.

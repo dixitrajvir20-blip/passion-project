@@ -19,7 +19,7 @@ of his school club, Business Lab).
 - @docs/BOSS_PLAYBOOK.md — how this gets built, sprint by sprint, with the gates
 - docs/KICKOFF_PROMPTS.md is Rajvir's paste-in prompts; the *_Build_Brief.pdf files are these docs as PDFs
 
-## Current state (20 Sept 2026) — Phases 1–4 done; design v4 and the research curriculum in place
+## Current state (22 Sept 2026) — Phases 1–4 done; design v4.1 (white page) and every lesson on template v2
 - **Astro 7 static build** with **Preact islands**, deployed to **GitHub Pages** under
   `/passion-project` (`astro.config.mjs` sets `base`; every internal link goes through it).
 - Three editions — **India `/in`, Europe `/eu`, United States `/us`** — rendered from one
@@ -43,14 +43,19 @@ of his school club, Business Lab).
   money-basics / protect-your-money / start-something; Europe money-basics / credit-and-fraud /
   start-something; the US money-basics / start-something / how-business-works.
   Every lesson carries a CC BY-NC-SA 4.0 notice, `rel="license"` and LearningResource JSON-LD.
-- **Template v2 (21 Sept)**: a tester found the lessons too long and not teaching, so lessons
-  are moving to a teaching-first shape (the moment and a drawn document, a short verified video
-  in a click-to-load player, "show me" one ledger line at a time, your turn, change one thing,
-  three actions, a details fold, three checks). Engine: `Video.astro` + `VideoPlayer.tsx`,
-  `ShowMe.astro`, `Document.astro`, the `deduction` calculation kind, `template: v2` in the
-  schema; rules in `docs/CONTENT_GUIDE.md` and `tests/unit/lessons.test.ts` (v2 lessons only).
-  Pilot: `in/money-basics/first-payslip`; the other 35 follow in batches. CSP allows frames from
-  youtube-nocookie.com only; the `embeds` consent category is on by default.
+- **Template v2 (21–22 Sept), all 36 lessons**: a tester found the lessons too long and not
+  teaching, so every lesson is now teaching-first: the moment and a drawn document with a "find
+  this line" question, a short verified video in a click-to-load player (32 lessons; four run on
+  "show me" alone), the body ("why it works"), "show me" one captioned ledger line at a time, a
+  highlighted key idea, your turn with three free hints (method, sum, answer) and a folded "one
+  more", change one thing (the lesson's own calculation, or "decide before you look" for the nine
+  drills), three actions, a details fold, three checks matched to three objectives. Engine:
+  `Video.astro` + `VideoPlayer.tsx`, `ShowMe.astro`, `Document.astro`, `Practice.astro` hints,
+  the `deduction` kind, `captions` on the other kinds, `template: v2` in the schema; rules in
+  `docs/CONTENT_GUIDE.md` and `tests/unit/lessons.test.ts`. Written by a writer + independent
+  editor agent per lesson on 22 Sept (`workflows/scripts/lessons-to-template-v2-*.js`). CSP allows
+  frames from youtube-nocookie.com only; the `embeds` consent category is on by default. The
+  v1 fields (`prediction`, `transfer`) are still in the schema and can go.
 - **Five calculators** in every edition (break-even, budget, savings growth, side-hustle, loan) on one
   kit (`src/islands/tool-kit.tsx`), plus India's **"UPI: spot the fake"** drill, from
   `src/pages/[region]/tools/[tool].astro` and `src/lib/tools.ts`. Per-edition defaults in `regions.ts`.
@@ -73,8 +78,10 @@ of his school club, Business Lab).
 - **Share images** are drawn at build time (`scripts/og-images.mjs`, resvg); `scripts/brand-icons.mjs`
   writes the favicon and app icons from `scripts/brand-mark.mjs`.
 - **Not built yet**: Hindi/i18n, root LICENSE files, the real account backend, the `lp:activity`
-  row on `/cookies` and the learning-time sentence on `/privacy` (protected pages, Rajvir's edit).
-  See docs/BOSS_PLAYBOOK.md.
+  row on `/cookies` and the learning-time sentence on `/privacy` (protected pages, Rajvir's edit),
+  per-edition glossary examples (shared entries such as `interest` show ₹ examples in Europe and
+  US popovers), and the standalone interactive tools beyond the five calculators (research and
+  spec in progress on 22 Sept). See docs/BOSS_PLAYBOOK.md.
 
 ## Stack
 - Astro static output, Preact islands (`client:load`/`client:visible`), plain CSS custom

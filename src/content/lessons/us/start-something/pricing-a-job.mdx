@@ -1,60 +1,137 @@
 ---
 title: "Pricing a job so it pays after tax"
-summary: "A two-hour shoot is six hours of work. Price it from what it spends, the hours and the tax."
+summary: "Why quoting $60 an hour for a two-hour game pays you $10.59 an hour, and how to price the whole job."
 region: us
 track: start-something
 order: 1
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "A local youth soccer club asks what you charge to photograph a two-hour game. You are about to say $60 an hour, because that sounds like a serious rate for serious work."
+objectives:
+  - "Count every hour a job takes, and work out what a price pays for each."
+  - "Set tax aside from what a job leaves after its costs, not from the whole price."
+  - "Price extra work from a written scope, instead of doing it for nothing."
 
-prediction:
-  q: "Two hours at $60 comes to $120. What does that $120 have to cover?"
-  options:
-    - text: "The two hours at the game, and nothing else"
-      why: "The photos are still on a card when the game ends. In this example, sorting and editing the set takes three hours, longer than the game itself."
-    - text: "The two hours, plus editing, travel, what the job spends and the tax on the profit"
-      why: "Three of those never appear on the clock, and all of them are paid before anything is left for you."
-    - text: "The two hours and the travel, with editing billed later as an extra"
-      why: "One price with nothing written down reads as the finished photos. Editing is billed on its own only if the scope says so."
-  answer: 1
+situation: "A youth soccer club asks your price for photographing a two-hour game. You nearly say $60 an hour, $120 in all; after costs and tax, $63.52 is left for six hours of work."
 
-takeaways:
-  - "A job is priced from what it spends, every hour it takes, and the tax owed on what is left."
-  - "Self-employment tax applies once net earnings from self-employment reach $400 in a year. The IRS gives the rate as 15.3%."
-  - "For work with a clear end, one price with a written scope lets you price extra work instead of absorbing it."
+document:
+  kind: statement
+  title: "What one game at $120 pays you"
+  lines:
+    - { label: "Your quote", value: "$120", hint: "Two hours at $60, the rate you nearly said. The club reads it as the price of the whole job." }
+    - { label: "Travel, cards and gallery", value: "−$45", hint: "Gas there and back, memory cards, and the online gallery the club downloads from. Every game spends it again." }
+    - { label: "Left after the game's costs", value: "$75", hint: "What the $120 keeps once the game's own costs are paid." }
+    - { label: "Tax set-aside, 15.3%", value: "−$11.48", hint: "Self-employment tax on the $75. Nobody takes it out of your pay, so you put it aside yourself." }
+    - { label: "Pay for your six hours", value: "$63.52", hint: "What the game pays you. The month's camera, software, phone and site costs still come out of it." }
+    - { label: "Shooting the game", value: "2 hours", hint: "The part the club sees, and the only hours that $60 an hour counted." }
+    - { label: "Sorting and editing", value: "3 hours", hint: "Picking the best shots from hundreds and editing them. Longer than the game itself." }
+    - { label: "Travel there and back", value: "1 hour", hint: "Getting to the field and home again. The club never sees this hour." }
+    - { label: "Each hour pays", value: "$10.59", hint: "$63.52 shared across all six hours, before the month's costs." }
+  find:
+    q: "A friend shares the $63.52 over 2 hours and says each hour pays $31.76. Which lines did they leave out?"
+    options:
+      - text: "Travel, cards and gallery, −$45"
+        why: "That is already off the $63.52. The gap is in the hours, not the costs."
+      - text: "Sorting and editing, and travel there and back"
+        why: "$63.52 over the two hours of shooting is $31.76. Shared across all six hours it is $10.59."
+      - text: "Tax set-aside, −$11.48"
+        why: "The set-aside is already off the $63.52 too. What differs is how many hours share it."
+    answer: 1
+
+video:
+  youtubeId: "xXUUzhKoV7A"
+  title: "Quick Tips for Entrepreneurs: Pricing Tips for Small Businesses"
+  channel: "YES Employment and Entrepreneurship"
+  minutes: 9
+  note: "Does not cover self-employment tax, which the lesson adds."
 
 worked:
-  kind: margin
-  context: "The game from the top of the page, priced at $225 for the session. Travel, memory cards and a share of the online gallery cost $45 each time, and fixed costs run $270 a month."
-  unitName: sessions
-  fixed: 270
-  variable: 45
-  price: 225
+  kind: deduction
+  context: "The quote above, line by line, from $120 to your pay."
+  start: 120
+  startLabel: "Your quote"
+  lines:
+    - { label: "Travel, cards and gallery", amount: 45, caption: "What the game spends before you are paid: gas, memory cards and the online gallery.", subtotalLabel: "Left after the game's costs" }
+    - { label: "Tax set-aside, 15.3%", amount: 11.48, caption: "15.3% of the $75, held back for the government as self-employment tax; the rest pays six hours, $10.59 each." }
+  endLabel: "Pay for your six hours"
+
+keyIdea: "A price pays the job's costs and your tax first; what is left pays every hour, including the ones the client never sees."
+
+practice:
+  kind: deduction
+  context: "You quote $225 instead. The game still spends $45, and 15.3% of what is left goes aside for tax."
+  start: 225
+  startLabel: "Quote"
+  lines:
+    - { label: "Travel, cards and gallery", amount: 45, subtotalLabel: "Left after the game's costs" }
+    - { label: "Tax set-aside, 15.3%", amount: 27.54 }
+  endLabel: "Pay for your six hours"
+  hints:
+    - "Take the game's costs off the quote, then set aside 15.3% of what is left."
+    - "$225 − $45 = $180; 15.3% of $180 is $27.54; $180 − $27.54."
+    - "$152.46, about $25.41 an hour over six hours. Stopping at $180 leaves the tax out."
+
+practiceMore:
+  kind: deduction
+  context: "A friend charges $120 for a headshot session, spends $30 on prints, travel and the gallery, and sets 15.3% of the rest aside."
+  start: 120
+  startLabel: "Price"
+  lines:
+    - { label: "Prints, travel and gallery", amount: 30, subtotalLabel: "Left after the session's costs" }
+    - { label: "Tax set-aside, 15.3%", amount: 13.77 }
+  endLabel: "Pay for her session"
+  hints:
+    - "The same two steps: the session's costs off the price, then 15.3% of what is left."
+    - "$120 − $30 = $90; 15.3% of $90 is $13.77; $90 − $13.77."
+    - "$76.23 is hers. A set-aside of 15.3% of the full $120, $18.36, would tax money the session spent."
 
 explorable:
   kind: margin
-  unitName: sessions
+  unitName: games
   fixed: 270
   variable: 45
-  prices: [120, 150, 225, 300]
+  prices: [120, 150, 225]
   prompts:
-    - "Tap $120, the $60 an hour you almost said, charged for the two hours on the clock. Read how many sessions a month that takes to cover $270 of fixed costs."
-    - "Now tap $225 and compare the two counts. Nothing about the work in a session has changed."
+    - "Tap $120. Camera, software, phone and site cost $270 a month; four games cover it, 24 hours of work."
+    - "Tap $225. Each game leaves $180, so two games cover the month: 12 hours instead of 24."
 
-practice:
-  kind: margin
-  context: "A friend photographs headshots for people applying for jobs, at $120 a session. Prints, travel and the online gallery cost her $30 each time. Her fixed costs are $300 a month: a lens she is paying off, editing software and her portfolio site."
-  unitName: sessions
-  fixed: 300
-  variable: 30
-  price: 120
+takeaways:
+  - "Before you quote, list every hour the job takes: shooting, editing and travel."
+  - "Set aside 15.3% of what each job leaves after its costs, on the day it is paid."
+  - "Quote one price with a written list of what it includes, and price anything extra."
+
+details:
+  - "The Internal Revenue Service gives the self-employment tax rate as 15.3%: 12.4% for Social Security and 2.9% for Medicare. It applies once net earnings from self-employment reach $400 in a year."
+  - "The tax is generally worked out on 92.35% of net earnings, so 15.3% of what a job leaves runs a little above the tax itself. A set-aside is a planning rule; the real figure comes from the whole year."
+  - "Income tax is a separate tax, worked out on your total income for the year, and it can apply on top."
+  - "The Internal Revenue Service's gig economy pages say income from your own work is reported even when it is paid in cash, property or goods, and even when no form arrives."
+  - "People who work for themselves may owe estimated tax during the year, paid on four due dates. The same pages set out the records and receipts to keep, and the costs that can be deducted."
+  - "The $45 a game and the $270 a month are examples. The month is a used camera and lens paid off at $150, editing software at $30, a share of the phone bill at $40, and a portfolio site with insurance at $50."
+  - "The count of games that covers the month is the break-even point, which the Small Business Administration sets out as fixed costs divided by price minus the cost of each one."
 
 quiz:
+  - q: "A school offers $90 to photograph a one-hour awards night. The night spends $30, editing takes two hours and travel one. Before tax, what does each hour pay?"
+    options:
+      - text: "$60, the $90 less the night's $30"
+        why: "That pays only the hour the school sees. Editing and travel take three more hours from the same $60."
+      - text: "$22.50, the $90 shared over four hours"
+        why: "That shares the whole $90 over four hours, but $30 of it went on the night's costs, not to you."
+      - text: "$15, the $60 left after costs shared over four hours"
+        why: "$90 − $30 = $60, shared by an hour of shooting, two of editing and one of travel."
+    answer: 2
+  - q: "A family pays $150 for photos of a birthday party, and the job spent $30. How much do you move aside for self-employment tax?"
+    options:
+      - text: "$22.95, 15.3% of the $150 they paid"
+        why: "The tax is worked out on what the work earns after its costs. The $30 the party spent is not earnings."
+      - text: "$18.36, 15.3% of the $120 left after costs"
+        why: "Net earnings are what came in minus the costs of the work. The set-aside follows the same rule."
+      - text: "Nothing, because no tax form will arrive"
+        why: "Income from your own work is reported with or without a form. Past $400 of net earnings in a year, the tax applies."
+    answer: 1
   - q: "You quoted $225 for the game, with 30 edited photos included. The club now asks for 40 more from the same game. What do you do?"
     options:
       - text: "Send them, because they come from a game you already shot"
@@ -64,46 +141,22 @@ quiz:
       - text: "Point to the 30 agreed, and quote a price for the extra 40"
         why: "A written list of what a price includes lets you say yes to more work without doing it for nothing."
     answer: 2
-  - q: "By October you edit a full game set in half the time. A friend says to cut your price, since the job now takes you fewer hours. What do you do?"
-    options:
-      - text: "Cut the price to match the hours"
-        why: "The club is buying the photos, not the clock. A lower price for the same set pays you less for the skill that made it quick."
-      - text: "Keep the price, because what you deliver has not changed"
-        why: "Under one price per job, working faster raises what each hour earns. Under an hourly rate the same speed would have cut the bill."
-      - text: "Switch to an hourly rate now that you are fast"
-        why: "An hourly rate on work you finish quickly is a smaller bill. It fits jobs with no clear end, not a game with a fixed set of photos."
-    answer: 1
-  - q: "By December your photography has brought in $2,600, against $700 of costs. No tax form arrives in January. What do you do?"
-    options:
-      - text: "Nothing, because nobody sent a form"
-        why: "The IRS gig economy pages say this income is reported even when no form arrives. A form is a record of income, not the reason tax is owed."
-      - text: "Report it, and expect self-employment tax, because net earnings passed $400"
-        why: "Net earnings are what came in minus the costs of the work. Past $400 of net earnings, self-employment tax applies."
-      - text: "Report only the payments that came through an app"
-        why: "Cash counts the same as an app payment. The IRS names cash, property and goods among the forms payment can take."
-    answer: 1
-  - q: "Three clubs tell you $225 sounds fair. Weeks later, none of them has booked a date. What do you do next?"
-    options:
-      - text: "Treat the price as settled and print a rate card"
-        why: "Nobody has paid at that price yet. Saying a price sounds fair costs a club nothing, so it is weak evidence either way."
-      - text: "Drop the price until someone says yes"
-        why: "Cutting before anyone has been asked to book gives away money for nothing. The block may be the date or the scope instead."
-      - text: "Ask each club to hold a date with a deposit"
-        why: "A deposit paid and a date held is the first real evidence a price works. It also shows whether the block is the price or the timing."
-    answer: 2
 
 transfer:
-  - "When a client asks your hourly rate. You can answer with one price for the job and a short list of what it includes."
-  - "When you quote for video editing, design, tutoring or event work. The same three parts go in: what the job spends, every hour it takes, and the tax set-aside."
-  - "When you get quicker at work you sell by the job, because each hour then earns more."
-  - "Before the tax year ends, when the IRS gig work pages set out the records to keep and who owes estimated tax."
+  - "When a client asks your hourly rate: answer with one price for the job and a short list of what it includes."
+  - "When you price editing, design, tutoring or event work: the same costs, hours and tax set-aside go in."
+  - "When a client asks for more than the written scope: price the extra before you start."
+  - "Each January, when you add up the year's jobs, their costs and what you set aside for tax."
 
-glossary: [hourly-rate, variable-cost, fixed-cost, margin, break-even, self-employment-tax, net-earnings, flat-fee, scope-of-work, order-deposit, estimated-tax]
+glossary: [hourly-rate, variable-cost, net-earnings, self-employment-tax, flat-fee, scope-of-work]
 tool: side-hustle
 
 sources:
   - title: "Self-employment tax (Social Security and Medicare taxes): the 15.3% rate and the $400 net earnings rule (last reviewed 27 June 2026)"
     url: "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes"
+    publisher: "Internal Revenue Service"
+  - title: "Topic no. 554, Self-employment tax: the amount subject to the tax is 92.35% of net earnings, and half the tax is deducted in figuring adjusted gross income (updated 26 May 2026)"
+    url: "https://www.irs.gov/taxtopics/tc554"
     publisher: "Internal Revenue Service"
   - title: "Gig economy tax center: income is reported even when it is paid in cash and no information return arrives (last reviewed 9 July 2026)"
     url: "https://www.irs.gov/businesses/gig-economy-tax-center"
@@ -116,74 +169,14 @@ sources:
     publisher: "U.S. Small Business Administration"
 ---
 
-## A two-hour booking is six hours of work
+## Six hours, not two
 
-A rate of $60 an hour sounds serious. An <Term id="hourly-rate">hourly rate</Term> pays for the hours you name, and a game is not two hours of work.
+Your $60 <Term id="hourly-rate">hourly rate</Term> counts only the two hours the club sees. Behind them sit three hours of editing and one of travel, so the price has to pay for all six.
 
-Shooting is two hours. Sorting and editing this set is about three. Travel there and back is one. That is six hours of work for a two-hour booking.
+Quote one <Term id="flat-fee">flat fee</Term> for the whole job, with a written <Term id="scope-of-work">scope of work</Term>, such as 30 edited photos. Extras then get their own price.
 
-At $120 for the session, those six hours pay $20 an hour, before one cost comes off. **The price has to cover all six hours, not the two the client sees.**
+## What comes off first
 
-So count the hours first, then build a price on them. It has three parts: what the session spends, the month it belongs to, and the tax on what is left.
+Every game spends $45 on travel, memory cards and the gallery, a <Term id="variable-cost">variable cost</Term> that comes off before you are paid.
 
-## What one session spends
-
-Travel, memory cards and a share of the online gallery come to about $45. That is the <Term id="variable-cost">variable cost</Term>: every extra session adds another $45.
-
-Other costs arrive whether or not you shoot. A used camera and lens are being paid off at $150 a month. Editing software is $30, a share of the phone bill $40, and a portfolio site with insurance $50. Those <Term id="fixed-cost">fixed costs</Term> come to $270 a month.
-
-At $225 a session you keep $180 of it. That is your <Term id="margin">margin</Term>, and it pays down the $270 before any of it is yours. The session that finishes that job is your <Term id="break-even">break-even</Term> point.
-
-## Set the tax aside before you spend it
-
-Money from your own work is taxable even when no form arrives. The IRS counts cash, property and goods the same way.
-
-<Term id="self-employment-tax">Self-employment tax</Term> pays for Social Security and Medicare. It applies once your <Term id="net-earnings">net earnings</Term> from self-employment reach $400 in a year. The IRS gives the rate as 15.3%.
-
-Treat it as a cost of the job. The $180 the session leaves, less a 15.3% set-aside of $27.54, is $152.46. Over six hours that is about $25 an hour.
-
-**A set-aside is a planning rule, not the final bill.** It runs high: the month's fixed costs still come off. The IRS works out the real figure from the whole year, and income tax can apply on top.
-
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="shoot-title shoot-desc">
-  <title id="shoot-title">Where the $225 for one session goes</title>
-  <desc id="shoot-desc">A single bar in three parts. The first two parts leave: $45 on travel, memory cards and the online gallery, then $27.54 set aside for self-employment tax. The third part, $152.46, stays from the session, for about six hours of work, before the month's fixed costs.</desc>
-  <rect class="chart-b" x="0" y="28" width="62" height="36" rx="6" />
-  <rect class="chart-b" x="64" y="28" width="38" height="36" rx="6" />
-  <rect class="chart-a" x="104" y="28" width="216" height="36" rx="6" />
-  <text class="chart-label" x="0" y="18">Spent $45</text>
-  <text class="chart-label" x="320" y="18" text-anchor="end">Left $152.46</text>
-  <text class="chart-label" x="83" y="80" text-anchor="middle">Tax $27.54</text>
-  <text class="chart-note" x="320" y="100" text-anchor="end">One session at $225, before the month's fixed costs</text>
-</svg>
-
-| What the $225 covers | Amount |
-| --- | --- |
-| Travel, memory cards, online gallery | −$45.00 |
-| Set aside for self-employment tax, 15.3% | −$27.54 |
-| Left from the session, for about six hours | $152.46 |
-
-## One price for the job, with a written scope
-
-A <Term id="flat-fee">flat fee</Term> is one price for a whole job, agreed before the work starts. It suits work with a clear end, such as a game or a set of headshots.
-
-Speed then works in your favor. Edit the set in half the time and the fee is the same, so each hour earns more. On an hourly rate that bill would have shrunk instead.
-
-Write down what the fee includes: the game, 30 edited photos, delivery within a week. That short <Term id="scope-of-work">scope of work</Term> is what lets you price the extras rather than absorb them.
-
-Hourly still fits some work. When nobody can say how long a job will run, the bill can follow the clock.
-
-## What a deposit tells you
-
-People will tell you a price sounds fair. It costs them nothing to say, and it settles nothing either way.
-
-A booking tells you more. Ask for a <Term id="order-deposit">deposit</Term>, say a third of the fee, to hold a date. A club that pays it has agreed to the price with money rather than words.
-
-A deposit can also protect the day, but only if you write down what happens when a booking is canceled late. Put that in the scope.
-
-If nobody books, there is still something to learn. Ask what stopped them. Sometimes the answer is the price. Often it is the date, the scope, or how few people have seen your work.
-
-## Keep the records from the first job
-
-Three numbers build the price. What the session spends, the month's fixed costs shared across the sessions you expect, and all six hours at the rate you want an hour to pay. Add the set-aside on top of that, rather than taking it out of your own pay later.
-
-Then keep every receipt and a record of every payment. The IRS gig work pages set out the records to keep and the costs that can be deducted. They also cover the <Term id="estimated-tax">estimated tax</Term> that people working for themselves may owe during the year.
+No employer holds tax back from your own work. Once your <Term id="net-earnings">net earnings</Term>, what the work brought in minus its costs, reach $400 in a year, <Term id="self-employment-tax">self-employment tax</Term> applies at 15.3%. So set aside 15.3% of what each game leaves after its costs.

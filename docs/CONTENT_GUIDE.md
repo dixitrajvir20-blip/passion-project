@@ -33,7 +33,10 @@ quiz:
 
 A tester said the lessons "had too much text" and "didn't actually teach"; six reader passes
 over all 36 agreed (ease 2.5 of 5). Template v2 fixes the shape, and `tests/unit/lessons.test.ts`
-holds every `template: v2` lesson to it. The pilot is `in/money-basics/first-payslip`.
+holds every `template: v2` lesson to it. The pilot was `in/money-basics/first-payslip` (21
+September); the other 35 followed on 22 September, each by a writer and an independent editor
+agent (their notes: `docs/research/lesson-v2-editor-notes.md`; the video picks:
+`docs/research/lesson-videos.md`). Every lesson now carries `template: v2`.
 
 1. **The moment.** `situation` (one or two sentences) and, where a real document exists, the
    `document`: the payslip, pay stub, loan sheet or payout drawn in tokens, each line with a hint,
@@ -50,11 +53,18 @@ holds every `template: v2` lesson to it. The pilot is `in/money-basics/first-pay
    affiliate links, discount codes, paid courses or product referrals. Two to ten minutes; it must
    teach this lesson's own idea; no promised returns, no named security, no fear framing. Verify
    the id, title and length before shipping. A lesson with no acceptable video runs on step 3 alone.
-3. **Show me.** `worked` becomes the teaching: one ledger line at a time behind "Next line", each
-   line with a `caption` of twenty words or fewer saying what it is and who gets it, ending on the
+3. **Show me.** `worked` becomes the teaching (the short body, "why it works", sits just before it): one ledger line at a time behind "Next line", each
+   line with a caption of twenty words or fewer saying what it is and who gets it, ending on the
    answer. Kinds: margin, split, loan, growth, deduction (a chain of subtractions from a starting
-   figure: CTC to in-hand, price to payout, award to loan).
-4. **Your turn.** `practice`: the same calculation with new numbers, the last line blank.
+   figure: CTC to in-hand, price to payout, award to loan). The deduction kind carries a `caption`
+   on each line; the other four take `captions: [...]`, one per line in order (margin has two
+   lines, what you keep and the count; loan and growth three; split one per share). Every line is
+   captioned: the tests count them. `keyIdea` is the one-sentence rule the
+   calculation just showed, set as a highlighted line after it. `prediction` is optional and v2
+   does not render it; the document's "find this line" question is the opening question instead.
+4. **Your turn.** `practice`: the same calculation with new numbers, the last line blank, and three
+   `hints` in Khan Academy's order (the method, the sum, the answer), free to open. `practiceMore`
+   is "one more" with different numbers where the skill needs a second run.
 5. **Change one thing.** `explorable`: always this lesson's own calculation, with labelled
    controls and a result sentence.
 6. **What this means for you.** `takeaways`: three actions.
@@ -62,8 +72,9 @@ holds every `template: v2` lesson to it. The pilot is `in/money-basics/first-pay
    folded away. No check may turn on a figure that only the details fold explains.
 8. **Check your understanding.** Three `quiz` checks, one per `objectives` line ("After this you can…").
 
-The caps the tests enforce: 360 words of prose outside the fold (body, situation, contexts,
-prompts, captions, objectives, takeaways); 1,100 reader-facing words in all outside the details;
+The caps the tests enforce: 400 words of prose outside the fold (body, situation, contexts, key
+idea, prompts, captions, objectives, takeaways); 1,250 reader-facing words in all outside the details;
+hints and the key idea of 25 words or fewer;
 a body of at most two sections and 200 words; captions of twenty words or fewer; every acronym a
 reader meets is one of the lesson's glossary terms. The v1 fields (`prediction`, "Key points")
 stay in the schema until the last lesson migrates, then go.

@@ -16,9 +16,12 @@ interface Props {
   question: string;
   choices: Choice[];
   localeCode: string;
+  /** The method, then the sum, then the answer. Each opens on its own; none is a penalty. */
+  hints?: string[];
+  id?: string;
 }
 
-const { context, given, question, choices, localeCode } = Astro.props;
+const { context, given, question, choices, localeCode, hints = [], id = 'practice' } = Astro.props;
 const locale = localeByCode(localeCode);
 const show = (value: Choice['value']) =>
   'money' in value ? money(value.money, locale, Number.isInteger(value.money) ? 0 : 2) : number(value.count, locale);
@@ -26,8 +29,21 @@ const show = (value: Choice['value']) =>
 
 <div class="practice">
   <Worked context={context} steps={given} localeCode={localeCode} total={false} />
+  {hints.length > 0 && (
+    <ol class="hints" aria-label="Hints">
+      {hints.map((hint, index) => (
+        <li>
+          <details class="practice-hint">
+            {/* One element for the label: the summary is a flex row, which would drop the space before the number. */}
+            <summary><span>Hint <span class="numbers">{index + 1} of {hints.length}</span>{index === hints.length - 1 ? ', the answer' : index === 0 ? ', the method' : ''}</span></summary>
+            <p class="numbers">{hint}</p>
+          </details>
+        </li>
+      ))}
+    </ol>
+  )}
   <Poll
-    id="practice"
+    id={id}
     question={question}
     options={choices.map((choice) => ({ text: show(choice.value), why: choice.why }))}
     answer={choices.findIndex((choice) => choice.correct)}

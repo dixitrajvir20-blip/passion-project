@@ -15,20 +15,27 @@ export const LOCALES: Locale[] = [
 
 export const DEFAULT_LOCALE = LOCALES[0];
 
+/** Intl writes a negative with a hyphen-minus; the site sets every minus as the true sign (−). */
+const trueMinus = (text: string) => text.replace(/^-/, '\u2212');
+
 export function money(value: number, locale: Locale, fractionDigits = 0): string {
-  return new Intl.NumberFormat(locale.code, {
-    style: 'currency',
-    currency: locale.currency,
-    minimumFractionDigits: fractionDigits,
-    maximumFractionDigits: fractionDigits,
-  }).format(value);
+  return trueMinus(
+    new Intl.NumberFormat(locale.code, {
+      style: 'currency',
+      currency: locale.currency,
+      minimumFractionDigits: fractionDigits,
+      maximumFractionDigits: fractionDigits,
+    }).format(value),
+  );
 }
 
 export function number(value: number, locale: Locale, fractionDigits = 0): string {
-  return new Intl.NumberFormat(locale.code, {
-    minimumFractionDigits: fractionDigits,
-    maximumFractionDigits: fractionDigits,
-  }).format(value);
+  return trueMinus(
+    new Intl.NumberFormat(locale.code, {
+      minimumFractionDigits: fractionDigits,
+      maximumFractionDigits: fractionDigits,
+    }).format(value),
+  );
 }
 
 export function percent(value: number, locale: Locale, fractionDigits = 1): string {

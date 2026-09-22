@@ -1,98 +1,156 @@
 ---
 title: "Reading a coffee shop's monthly income statement"
-summary: "A record $30,000 of sales left $2,000. The lines in between are where it went."
+summary: "Why a record $30,000 month at a coffee shop kept $2,000, one line at a time."
 region: us
 track: start-something
 order: 3
-readingMinutes: 7
+readingMinutes: 10
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "You work weekend shifts at a coffee shop near your college. September was its best month for sales: $30,000. The owner prints the month's income statement and says the shop kept less of it than in March, when sales were lower."
+objectives:
+  - "Read an income statement down to net profit, and weigh a cost against what the month kept."
+  - "Tell which costs fall in a quiet month and which are owed anyway."
+  - "Explain why a month's profit can be more than the money in the account."
 
-prediction:
-  q: "September's sales were $30,000. Beans, milk and cups cost $10,500, and rent, wages, utilities, card fees and insurance came to $17,500. What did the month leave?"
-  options:
-    - text: "$19,500, what is left once the beans, milk and cups are paid for"
-      why: "That is gross profit. The running costs have not come off yet, and rent, wages and the rest add up to $17,500."
-    - text: "$12,500, sales minus the rent, wages and other running costs"
-      why: "That leaves out the $10,500 of beans, milk and cups. Every cost on the statement comes off, not only the running costs."
-    - text: "$2,000, once both sets of costs are off"
-      why: "Under 7 cents of every dollar of sales reached the bottom line. A record month for sales can still leave very little."
-  answer: 2
+situation: "You work weekends at a coffee shop. September's sales were a record $30,000, yet its income statement says the month kept $2,000."
 
-takeaways:
-  - "Sales minus the cost of what you sold is gross profit. Take the running costs off that, and what is left is net profit."
-  - "Rent, insurance and shifts already on the schedule are owed on a quiet day too, so a slow month can end in a loss."
-  - "Read the statement every month, each line as a share of sales, and you can see which line moved when the bottom line changes."
+document:
+  kind: statement
+  title: "September, the coffee shop"
+  lines:
+    - { label: "Sales", value: "$30,000", hint: "The top line: about 6,000 drinks at $5, counted on the day each was served." }
+    - { label: "Cost of goods sold", value: "−$10,500", hint: "Beans, milk and cups: $1.75 a drink, 35 cents of each sales dollar. It falls when sales fall." }
+    - { label: "Gross profit", value: "$19,500", hint: "Sales minus cost of goods sold: what the drinks leave before any other bill." }
+    - { label: "Rent", value: "−$6,000", hint: "Owed on the first of the month, whether September is busy or quiet." }
+    - { label: "Wages", value: "−$9,000", hint: "Shifts are booked before anyone knows how busy the week will be." }
+    - { label: "Utilities", value: "−$1,200", hint: "Power, water and internet: close to the same each month." }
+    - { label: "Card fees", value: "−$900", hint: "A small share of each card payment. It rises and falls with sales." }
+    - { label: "Insurance", value: "−$400", hint: "A flat bill, the same in any month." }
+    - { label: "Net profit", value: "$2,000", hint: "The bottom line: what September kept after every cost." }
+  find:
+    q: "The owner says September kept very little. Which line shows what she means?"
+    options:
+      - text: "Sales, $30,000"
+        why: "Sales were a record. That is what came in, not what was kept."
+      - text: "Gross profit, $19,500"
+        why: "That is before rent, wages and the smaller bills. $17,500 still comes off below it."
+      - text: "Net profit, $2,000"
+        why: "The bottom line is what the month kept after every cost: under 7 cents of each sales dollar."
+    answer: 2
+
+video:
+  youtubeId: "-__bUSEls5Y"
+  title: "The Income Statement, defined and explained"
+  channel: "Edspira"
+  minutes: 7
+  note: "Uses a manufacturer; the coffee shop is the lesson’s."
 
 worked:
-  kind: split
-  context: "September at the shop: $30,000 of sales, with every line under it written as a share of that, so any month can be set beside any other. Insurance is a flat bill and net profit is whatever the other lines leave, so neither lands on a round share. The ledger rounds to the dollar."
-  income: 30000
-  shares:
-    - { label: "Cost of goods sold: beans, milk, cups", percent: 35 }
-    - { label: "Rent", percent: 20 }
-    - { label: "Wages", percent: 30 }
-    - { label: "Utilities", percent: 4 }
-    - { label: "Card fees", percent: 3 }
-    - { label: "Insurance, the same in any month", percent: 1.3333 }
-    - { label: "Net profit, what is left", percent: 6.6667 }
+  kind: deduction
+  context: "The statement above, from sales to the bottom line."
+  start: 30000
+  startLabel: "Sales"
+  lines:
+    - { label: "Cost of goods sold", amount: 10500, caption: "Paid to suppliers for beans, milk and cups: about $1.75 a drink sold.", subtotalLabel: "Gross profit" }
+    - { label: "Rent", amount: 6000, caption: "Paid to the landlord, the same in a quiet month as a busy one.", subtotalLabel: "After rent" }
+    - { label: "Wages", amount: 9000, caption: "Paid to staff for shifts booked in advance, busy or not.", subtotalLabel: "After wages" }
+    - { label: "Utilities", amount: 1200, caption: "Paid to the power, water and internet companies.", subtotalLabel: "After utilities" }
+    - { label: "Card fees", amount: 900, caption: "Kept by the card payment company: a small share of each card sale.", subtotalLabel: "After card fees" }
+    - { label: "Insurance", amount: 400, caption: "Paid to the insurer: a flat bill, the same every month." }
+  endLabel: "Net profit"
 
-explorable:
-  kind: margin
-  unitName: cups
-  fixed: 17500
-  variable: 1.75
-  prices: [4, 4.5, 5, 5.5, 6]
-  prompts:
-    - "Tap $5, September's average price. The answer is the cups needed to cover the $17,500 of running costs; every cup after those adds to net profit."
-    - "Now tap $4.50 and set the answer beside the 6,000 cups September sold. The running costs have not moved, so a lower price needs more cups to reach them."
+keyIdea: "Net profit is sales minus what the drinks used and every running cost; a record month can still keep little."
 
 practice:
-  kind: split
-  context: "A second cafe on the same street, the same month: $24,000 of sales. Its lines are written as shares of that in the same way. The rent line is yours to work out."
-  income: 24000
-  shares:
-    - { label: "Cost of goods sold", percent: 35 }
-    - { label: "Wages", percent: 30 }
-    - { label: "Rent", percent: 25 }
-  target: "Rent"
+  kind: deduction
+  context: "A cafe on the same street: $22,000 of sales; cost of goods sold $7,700; rent $4,500; wages $6,600; other bills $1,900."
+  start: 22000
+  startLabel: "Sales"
+  lines:
+    - { label: "Cost of goods sold", amount: 7700, subtotalLabel: "Gross profit" }
+    - { label: "Rent", amount: 4500, subtotalLabel: "After rent" }
+    - { label: "Wages", amount: 6600, subtotalLabel: "After wages" }
+    - { label: "Other bills", amount: 1900 }
+  endLabel: "Net profit"
+  hints:
+    - "Start from sales. Take off cost of goods sold, then each running cost, in order."
+    - "$22,000 − $7,700 − $4,500 − $6,600 − $1,900."
+    - "$1,300 of net profit. Stopping at gross profit gives $14,300; taking nothing off gives $22,000."
+
+practiceMore:
+  kind: deduction
+  context: "Its quiet February: sales $16,000, cost of goods sold $5,600, other bills $1,700; rent and wages unchanged."
+  start: 16000
+  startLabel: "Sales"
+  lines:
+    - { label: "Cost of goods sold", amount: 5600, subtotalLabel: "Gross profit" }
+    - { label: "Rent", amount: 4500, subtotalLabel: "After rent" }
+    - { label: "Wages", amount: 6600, subtotalLabel: "After wages" }
+    - { label: "Other bills", amount: 1700 }
+  endLabel: "Net profit"
+  hints:
+    - "Same order. Cost of goods sold shrinks in a quiet month; rent and wages do not."
+    - "$16,000 − $5,600 − $4,500 − $6,600 − $1,700."
+    - "−$2,400, a loss. Gross profit was $10,400, but rent, wages and bills came to $12,800."
+
+explorable:
+  kind: deduction
+  starts: [25000, 30000, 35000]
+  startLabel: "Sales"
+  lines:
+    - { label: "Cost of goods sold", percentOfStart: 35, subtotalLabel: "Gross profit" }
+    - { label: "Rent", amount: 6000, subtotalLabel: "After rent" }
+    - { label: "Wages", amount: 9000, subtotalLabel: "After wages" }
+    - { label: "Utilities", amount: 1200, subtotalLabel: "After utilities" }
+    - { label: "Card fees", percentOfStart: 3, subtotalLabel: "After card fees" }
+    - { label: "Insurance", amount: 400 }
+  endLabel: "Net profit"
+  prompts:
+    - "Tap $25,000. Beans and card fees shrink, but $16,600 of rent, wages, utilities and insurance stays: a $1,100 loss."
+    - "Tap $35,000. Sales rise $5,000 and net profit rises $3,100: each extra dollar of sales keeps 62 cents."
+
+takeaways:
+  - "Judge a month by its net profit, not by its sales."
+  - "Test any new monthly bill against a quiet month, not your best one."
+  - "Check the account beside the statement before spending a month's profit."
+
+details:
+  - "The Securities and Exchange Commission's beginners' guide calls sales the top line and net profit the bottom line. It adds that net profit is also called net income or net earnings."
+  - "A record month can keep less than a smaller one. When bean and milk prices rise, cost of goods sold takes a bigger share of every sales dollar, and gross profit shrinks under it."
+  - "A sole proprietor, someone who owns a business on their own, reports it on Schedule C, Profit or Loss From Business, with their tax return. For tax year 2025 it runs the same way: gross receipts or sales, cost of goods sold, gross profit, expenses, then net profit or loss."
+  - "IRS Publication 334 (2025): under the cash method, income counts when you receive it; under an accrual method, when you earn it. The shop in this lesson uses the accrual method."
+  - "The Small Business Administration's guide to managing a business's finances asks owners to pick a method of accounting. Its example: a January sale paid in February goes on January's books under accrual, and on February's under cash."
+  - "The IRS says good records help you monitor the progress of a business and prepare its financial statements. That means every sale and cost written down as it happens, with the receipts behind it."
+  - "Every figure here is an example: about 6,000 drinks at $5, $1.75 of ingredients a drink, card fees of 3% of sales. A real shop's costs depend on its city, size and suppliers."
+  - "Take tax questions about your own business to the IRS, or to someone qualified to answer them."
 
 quiz:
   - q: "A supplier offers the shop a $1,500 refit of the counter and says the record month covers it. September shows $30,000 of sales and $2,000 of net profit. What do you point out?"
     options:
       - text: "A $30,000 month covers $1,500 many times over"
         why: "The $30,000 is the top line. Beans, rent, wages and the smaller bills have already claimed all but $2,000 of it."
-      - text: "Set the $1,500 against the $2,000 the month left, not against the $30,000 it took"
+      - text: "Set the $1,500 against the $2,000 the month kept, not the $30,000 it took in"
         why: "The bottom line is what the month kept, and $1,500 is three quarters of it. That is the comparison the decision rests on."
       - text: "Wait for a month with higher sales"
-        why: "Higher sales can leave less when the costs under them rise faster. September's own statement is the example."
-    answer: 1
-  - q: "March had $27,000 of sales and $2,550 of net profit. September had $30,000 of sales and $2,000. The owner asks what changed. Where do you look first?"
-    options:
-      - text: "At how many cups were sold"
-        why: "Sales rose, so the till is not where the $550 went. The fall is in the lines under the top line."
-      - text: "At each line as a share of sales, March beside September"
-        why: "Cost of goods took 32 cents in the dollar in March and 35 in September. The other lines cost more in dollars but took the same share of sales, or less."
-      - text: "At the bank balance at the end of each month"
-        why: "A balance mixes in money not yet paid in and money taken out for other things. Line by line is what compares two months."
+        why: "Higher sales can keep less when the costs under them rise faster."
     answer: 1
   - q: "January is always quiet, and the owner expects about $24,000 of sales. She assumes every cost falls with sales. Which ones do?"
     options:
       - text: "All of them, because a quieter month uses less of everything"
-        why: "Beans and milk fall with the cups sold. Rent, insurance and shifts already on the schedule are owed whatever January does."
-      - text: "Cost of goods and card fees fall with sales; rent, insurance and booked shifts do not"
-        why: "At the same 35 cents in the dollar, $24,000 of sales leaves $15,600 of gross profit. Rent, wages and insurance alone were $15,400 in September."
+        why: "Beans and milk fall with the drinks sold. Rent, insurance and shifts already booked are owed whatever January does."
+      - text: "Cost of goods sold and card fees fall; rent, insurance and booked shifts do not"
+        why: "At 35 cents in the dollar, $24,000 of sales leaves $15,600 of gross profit, and rent, wages and insurance alone take $15,400 of it."
       - text: "None of them, because every cost on the statement is fixed"
-        why: "Cost of goods is spent cup by cup. Fewer cups means fewer beans, and that line does fall."
+        why: "Cost of goods sold is spent drink by drink. Fewer drinks means fewer beans, and that line does fall."
     answer: 1
-  - q: "The statement counts a sale on the day the coffee is served. On 30 September the shop served a $900 office order that will be paid in October. The owner wants to take September's $2,000 out as pay today. What do you point out?"
+  - q: "On 30 September the shop served a $900 office order, to be paid in October. The owner wants to take September's $2,000 out as pay today. What do you point out?"
     options:
-      - text: "Check the account first, because $900 of September's profit has not arrived"
-        why: "The order counts in September because the coffee was served then. The money lands in October, so the account holds less than the statement shows."
+      - text: "Check the account first, because $900 of September's sales is still unpaid"
+        why: "The order counts in September, when the coffee was served, but the money lands in October. The account holds less than the statement shows."
       - text: "Take it, since the statement says the month made $2,000"
         why: "The statement says what the month earned, not what is in the account. Reading profit as cash is the slip."
       - text: "The statement is wrong, so move the order into October"
@@ -101,11 +159,10 @@ quiz:
 
 transfer:
   - "When a business reports record sales. Sales are the top line, and the bottom line can move the other way."
-  - "At the end of any month you run something of your own. Write it down in the same order: sales, cost of goods sold, running costs."
-  - "When a supplier raises a price. It shows up in one line, cost of goods sold, and in the gross profit under it."
-  - "At tax time if you work for yourself. The IRS form for a sole proprietor runs from gross receipts down to net profit."
+  - "At the end of any month you run something of your own: write sales, cost of goods sold, running costs and net profit, in that order."
+  - "At tax time if you work for yourself. The US tax form for a one-owner business runs from sales down to net profit."
 
-glossary: [income-statement, revenue, cost-of-goods-sold, gross-profit, operating-expenses, net-profit, variable-cost, fixed-cost, accrual-method, cash-flow, bookkeeping, schedule-c]
+glossary: [income-statement, revenue, cost-of-goods-sold, gross-profit, operating-expenses, net-profit, variable-cost, fixed-cost, accrual-method, cash-flow]
 tool: break-even
 
 sources:
@@ -121,103 +178,15 @@ sources:
   - title: "Recordkeeping: good records monitor the progress of your business and prepare your financial statements (last reviewed 1 May 2026)"
     url: "https://www.irs.gov/businesses/small-businesses-self-employed/recordkeeping"
     publisher: "Internal Revenue Service"
-  - title: "Manage your finances: picking a method of accounting, accrual against cash (accessed 21 September 2026)"
+  - title: "Manage your finances: pick a method of accounting; under accrual a January sale paid in February goes on January's books, under cash on February's (accessed 22 September 2026)"
     url: "https://www.sba.gov/business-guide/manage-your-business/manage-your-finances"
     publisher: "US Small Business Administration"
 ---
 
-## Sales are the top line
+## Top line, bottom line
 
-An <Term id="income-statement">income statement</Term> covers one stretch of time: a month, a quarter or a year. It asks three things in order: what came in, what it cost, and what was left. You may also see it called a profit and loss statement, or P&L.
+An <Term id="income-statement">income statement</Term> covers one stretch of time, here September. It starts from <Term id="revenue">revenue</Term>, the sales. Take off the <Term id="cost-of-goods-sold">cost of goods sold</Term>, what the drinks used, and <Term id="gross-profit">gross profit</Term> remains. Take off the <Term id="operating-expenses">operating expenses</Term>, the cost of running the shop, and <Term id="net-profit">net profit</Term> is left. Only that bottom line says what the month kept.
 
-The first line is <Term id="revenue">revenue</Term>. Many statements label it sales. In September the shop sold about 6,000 drinks at an average of $5, so revenue was $30,000.
+## Quiet months and money still owed
 
-**That is where the counting starts, not what the shop kept.** The Securities and Exchange Commission calls it the top line, and every line under it takes something away.
-
-## Gross profit: what a cup leaves
-
-Every drink uses beans, milk, a cup and a lid: about $1.75. Across September those came to $10,500, and added up they are the <Term id="cost-of-goods-sold">cost of goods sold</Term>, sometimes shortened to COGS.
-
-Take it from revenue and you reach <Term id="gross-profit">gross profit</Term>, $19,500 for the month. That line tests the product on its own. **Once a cup has paid for its own beans and milk, is anything left?**
-
-Here, yes. At $5 a cup with $1.75 of ingredients, each one leaves $3.25 toward everything else.
-
-## Net profit: after every bill
-
-Below gross profit come the costs of running the shop at all: rent, wages, utilities, card fees and insurance. Together they are <Term id="operating-expenses">operating expenses</Term>, $17,500 in September.
-
-Take those off gross profit and you reach <Term id="net-profit">net profit</Term>, the bottom line. **A record $30,000 of sales left $2,000.**
-
-Written as shares of sales, the shape is easier to carry in your head. Beans, milk and cups took 35 cents of every dollar, wages 30 and rent 20.
-
-<svg class="chart" viewBox="0 0 320 168" role="img" aria-labelledby="pl-title pl-desc">
-  <title id="pl-title">Where $30,000 of September sales went</title>
-  <desc id="pl-desc">Four bars read from the top. Sales of $30,000 fill the first bar. Below it, cost of goods sold takes $10,500, operating expenses take $17,500, and the last $2,000 is net profit.</desc>
-  <text class="chart-label" x="0" y="12">Sales: $30,000</text>
-  <rect class="chart-a" x="0" y="18" width="320" height="12" rx="4" />
-  <text class="chart-label" x="0" y="48">Cost of goods sold: $10,500</text>
-  <rect class="chart-b" x="0" y="54" width="112" height="12" rx="4" />
-  <text class="chart-label" x="0" y="84">Operating expenses: $17,500</text>
-  <rect class="chart-b" x="112" y="90" width="187" height="12" rx="4" />
-  <text class="chart-label" x="0" y="120">Net profit: $2,000</text>
-  <rect class="chart-a" x="299" y="126" width="21" height="12" rx="4" />
-  <text class="chart-note" x="0" y="162">September at the shop, from the top line down</text>
-</svg>
-
-| September at the shop | Amount |
-| --- | --- |
-| Revenue: about 6,000 drinks at $5 | $30,000 |
-| Cost of goods sold: beans, milk, cups | −$10,500 |
-| Gross profit | $19,500 |
-| Rent | −$6,000 |
-| Wages | −$9,000 |
-| Utilities | −$1,200 |
-| Card fees | −$900 |
-| Insurance | −$400 |
-| Net profit | $2,000 |
-
-## Rent and wages do not fall with a quiet week
-
-Split the costs a second way. Beans, milk and cups are a <Term id="variable-cost">variable cost</Term>: more when the shop sells more, less when it sells less. Card fees behave the same way, because they are a share of what customers pay.
-
-Rent and insurance are a <Term id="fixed-cost">fixed cost</Term>. They are the same in a quiet January as in a busy September. Most of the wage bill is close to fixed too, because shifts are scheduled before anyone knows how the week will go.
-
-**That is why a quiet month can end in a loss.** Rent, insurance and booked shifts are owed whatever the till takes.
-
-## A record month can leave less
-
-March sold $27,000 and left $2,550. September sold $3,000 more and left $550 less. Nothing went wrong at the till.
-
-Read each line as a share of sales and the movement shows up. Cost of goods went from 32 cents in the dollar to 35, because bean and milk prices rose. Rent, wages and card fees each cost more in dollars, but they held the same share of sales.
-
-**Gross profit rose by $1,140, and operating expenses rose by $1,690.** The gap between those two is the $550.
-
-At March's 32 cents in the dollar, September's beans and milk would have cost $9,600 instead of $10,500. The month would have kept about $2,900.
-
-| Line | March | September |
-| --- | --- | --- |
-| Revenue | $27,000 | $30,000 |
-| Cost of goods sold | −$8,640 | −$10,500 |
-| Gross profit | $18,360 | $19,500 |
-| Rent | −$5,400 | −$6,000 |
-| Wages | −$8,100 | −$9,000 |
-| Utilities | −$1,100 | −$1,200 |
-| Card fees | −$810 | −$900 |
-| Insurance | −$400 | −$400 |
-| Net profit | $2,550 | $2,000 |
-
-## When the money arrives
-
-The shop's statement counts a sale on the day the coffee is served, not the day it is paid. That is the <Term id="accrual-method">accrual method</Term>. Under the cash method, the sale would count when the money arrives instead.
-
-So an office order served on 30 September and paid in October sits in September's revenue and not yet in the bank. The gap between profit on paper and money to hand is <Term id="cash-flow">cash flow</Term>.
-
-**A month's profit and the money in the account are two different numbers.** Check both before spending what the statement shows.
-
-## Read it every month
-
-One statement is a snapshot. Twelve of them show which line is moving, and that is the thing to act on: a supplier's price, a lease, the schedule.
-
-That takes <Term id="bookkeeping">bookkeeping</Term>: every sale and every cost written down as it happens, with the receipts behind them. The IRS says good records help you "monitor the progress of your business" and prepare financial statements.
-
-Someone who runs a US business on their own, as a sole proprietor, files <Term id="schedule-c">Schedule C</Term>. It reads the same way, from gross receipts, the tax form's name for sales, down to net profit. Take tax questions to the IRS.
+Beans and card fees are a <Term id="variable-cost">variable cost</Term>, falling with sales. Rent, insurance and booked shifts are <Term id="fixed-cost">fixed costs</Term>, owed whatever the register takes. The statement also counts a sale when the coffee is served, not when it is paid: the <Term id="accrual-method">accrual method</Term>. So profit and the account can differ, and that timing is <Term id="cash-flow">cash flow</Term>.

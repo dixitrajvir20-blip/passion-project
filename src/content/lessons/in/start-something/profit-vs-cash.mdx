@@ -4,109 +4,163 @@ summary: "A coaching centre ends the month ₹10,800 ahead and still cannot pay 
 region: in
 track: start-something
 order: 3
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "A coaching centre with 24 students closes the month ₹10,800 ahead. On the 5th the rent falls due and the account cannot cover it, because half the fees arrive on the 20th."
+objectives:
+  - "Tell a month's profit apart from the balance on the day a bill falls due."
+  - "Work out whether the fees already in cover the bills due on a given date."
+  - "Weigh bringing money in sooner against what it takes off the month's profit."
 
-prediction:
-  q: "The month ends ₹10,800 ahead. By the 5th, ₹18,000 of fees has arrived and ₹18,000 of bills is dated that day. Why can the account not pay them?"
-  options:
-    - text: "The profit figure must be wrong, because a month cannot be ahead and short at once"
-      why: "Both figures are right. One describes the whole month; the other describes the balance on one day."
-    - text: "₹7,200 had already gone to the print shop on the 2nd, before the bills dated the 5th"
-      why: "Profit counts that cost against the whole month. Cash counts it on the day it left the account."
-    - text: "The other twelve students have stopped paying"
-      why: "They pay on the 20th, as they always do. A fee that arrives then still counts in this month's profit, and is still missing on the 5th."
-  answer: 1
+situation: "Rent is due on the 5th and your coaching centre's account is ₹7,200 short, though the month shows ₹10,800 of profit. Half the fees come on the 20th."
 
-takeaways:
-  - "Profit is the month's revenue minus the month's costs. Cash is what the account holds on the day a bill falls due."
-  - "A fee that arrives on the 20th still counts in this month's profit. It cannot pay a bill dated the 5th."
-  - "A cash plan is the same month written as dates: what is due when, and what is expected to arrive before it."
+document:
+  kind: statement
+  title: "Coaching centre, this month"
+  lines:
+    - { label: "Fees, 12 students, paid by the 3rd", value: "₹18,000", hint: "Twelve families at ₹1,500 who pay early in the month. This money is in the account." }
+    - { label: "Fees, 12 students, due on the 20th", value: "₹18,000", hint: "Twelve families who pay once their own salaries arrive. Earned this month, so counted; not yet in the account." }
+    - { label: "Notes and tests, paid on the 2nd", value: "−₹7,200", hint: "24 students at ₹300 each, paid to the print shop before the notes go out." }
+    - { label: "Electricity, due on the 5th", value: "−₹1,500", hint: "Lights and fans for the room. About the same each month; ₹1,500 is an example." }
+    - { label: "Projector instalment, due on the 5th", value: "−₹4,500", hint: "A fixed monthly payment on the projector, bought on credit." }
+    - { label: "Rent, due on the 5th", value: "−₹12,000", hint: "The largest bill, due on the same day as the two above." }
+    - { label: "Profit for the month", value: "₹10,800", hint: "Every fee minus every cost. True for the month as a whole; it says nothing about any one day." }
+  find:
+    q: "It is the 4th. Which line is counted in the month's profit but has not yet reached the account?"
+    options:
+      - text: "Fees paid by the 3rd, ₹18,000"
+        why: "That money has arrived. ₹7,200 of it has already gone to the print shop."
+      - text: "Fees due on the 20th, ₹18,000"
+        why: "Earned this month, so the profit counts it. It lands fifteen days after the bills dated the 5th."
+      - text: "Rent, due on the 5th, ₹12,000"
+        why: "Rent is money going out tomorrow, not money still to come in. It is the bill those missing fees were needed for."
+    answer: 1
+
+video:
+  youtubeId: "LU_6amWC6H8"
+  title: "Comparing accrual and cash accounting | Finance & Capital Markets | Khan Academy"
+  channel: "Khan Academy"
+  minutes: 4
+  note: "Made for the US; the idea is the same. What it calls accrual is the profit reading here; cash is the dated one."
 
 worked:
-  kind: split
-  context: "The month from the top of the page: 24 students at ₹1,500, so ₹36,000 of fees. Each line is the share of the fees that one cost took, and the last line is what was left."
-  income: 36000
-  shares:
-    - { label: "Printed material", percent: 20 }
-    - { label: "Rent and electricity", percent: 37.5 }
-    - { label: "Loan instalment", percent: 12.5 }
-    - { label: "Profit for the month", percent: 30 }
+  kind: deduction
+  context: "The same month by date: ₹18,000 of early fees, then each bill as it falls due."
+  start: 18000
+  startLabel: "Fees paid by the 3rd"
+  lines:
+    - { label: "Notes and tests", amount: 7200, caption: "Paid to the print shop on the 2nd: ₹7,200 of the early fees is gone.", subtotalLabel: "After the print shop" }
+    - { label: "Electricity", amount: 1500, caption: "The power company's bill, first of three dated the 5th. Still covered.", subtotalLabel: "After electricity" }
+    - { label: "Projector instalment", amount: 4500, caption: "The lender's monthly payment, due the same day, leaves ₹4,800.", subtotalLabel: "After the instalment" }
+    - { label: "Rent", amount: 12000, caption: "The landlord's ₹12,000 is more than the account holds; ₹7,200 of it waits for the 20th." }
+  endLabel: "Balance on the 5th"
 
-explorable:
-  kind: margin
-  unitName: students
-  fixed: 18000
-  variable: 300
-  prices: [1200, 1500, 1800]
-  prompts:
-    - "This is the first reading, and it has no dates in it: ₹18,000 of monthly costs, this centre's ₹1,500 fee, ₹300 of material a student. Read the count the month needs."
-    - "Tap ₹1,200, then ₹1,800. Each fee gives a different count. None of these counts says which day a fee reaches the account."
+keyIdea: "Profit counts every fee earned this month; a bill is paid only from fees in before its date."
 
 practice:
-  kind: split
-  context: "A friend's month at a spoken-English class: 14 students at ₹2,000, so ₹28,000 of fees. Four lines come out of that before anything is left."
-  income: 28000
-  shares:
-    - { label: "Rent", percent: 30 }
-    - { label: "Printed material", percent: 12.5 }
-    - { label: "Electricity", percent: 5 }
-    - { label: "Loan instalment", percent: 15 }
-  target: "Loan instalment"
+  kind: deduction
+  context: "A friend's spoken-English class: 6 of 14 families pay ₹2,000 by the 3rd. Workbooks ₹3,500 on the 1st; electricity ₹1,400, loan instalment ₹4,200 and rent ₹8,400 on the 5th."
+  start: 12000
+  startLabel: "Fees paid by the 3rd"
+  lines:
+    - { label: "Workbooks", amount: 3500, subtotalLabel: "After the workbooks" }
+    - { label: "Electricity", amount: 1400, subtotalLabel: "After electricity" }
+    - { label: "Loan instalment", amount: 4200, subtotalLabel: "After the instalment" }
+    - { label: "Rent", amount: 8400 }
+  endLabel: "Balance on the 5th"
+  hints:
+    - "Start from the six fees already paid, not all fourteen, and take each bill off in date order."
+    - "₹12,000 − ₹3,500 − ₹1,400 − ₹4,200 − ₹8,400."
+    - "−₹5,500, so the class is short on the 5th. Stopping after the workbooks gives ₹8,500; all fourteen fees give the ₹10,500 profit."
+
+practiceMore:
+  kind: deduction
+  context: "A classmate tutoring maths: 7 of 10 families pay ₹1,800 by the 3rd. Worksheets ₹2,000 on the 1st; internet ₹800, laptop instalment ₹3,000 and room rent ₹6,000 on the 5th."
+  start: 12600
+  startLabel: "Fees paid by the 3rd"
+  lines:
+    - { label: "Worksheets", amount: 2000, subtotalLabel: "After the worksheets" }
+    - { label: "Internet", amount: 800, subtotalLabel: "After internet" }
+    - { label: "Laptop instalment", amount: 3000, subtotalLabel: "After the instalment" }
+    - { label: "Room rent", amount: 6000 }
+  endLabel: "Balance on the 5th"
+  hints:
+    - "Only the seven fees already paid can meet the bills on the 5th; take each one off in date order."
+    - "₹12,600 − ₹2,000 − ₹800 − ₹3,000 − ₹6,000."
+    - "₹800 is left, so the 5th is covered. Stopping after the worksheets gives ₹10,600; forgetting every bill gives ₹12,600."
+
+explorable:
+  kind: deduction
+  starts: [15000, 18000, 25500, 36000]
+  startLabel: "Fee total by the 3rd"
+  lines:
+    - { label: "Notes and tests", amount: 7200, subtotalLabel: "After the print shop" }
+    - { label: "Electricity", amount: 1500, subtotalLabel: "After electricity" }
+    - { label: "Projector instalment", amount: 4500, subtotalLabel: "After the instalment" }
+    - { label: "Rent", amount: 12000 }
+  endLabel: "Balance on the 5th"
+  prompts:
+    - "Tap ₹25,500, seventeen early fees. ₹300 is left: five more early fees close the gap."
+    - "Tap ₹36,000, all 24 fees in. The balance is ₹10,800, the month's profit: no fee is still to come."
+
+takeaways:
+  - "Before the 1st, write each bill and each expected fee beside its date."
+  - "Measure each bill against the balance on its date, not the profit."
+  - "When a gap shows, move a date or keep money back, and count what each costs."
+
+details:
+  - "Accountants call the two readings the accrual basis and the cash basis. The accrual basis counts revenue and costs in the period they belong to, whenever the money moves; the cash basis counts them when the money is received or paid. NCERT's Class 11 accountancy textbook sets out both in chapter 2."
+  - "A month's profit statement follows the accrual basis, which is why all 24 fees count this month. A cash plan follows the dates on which money actually moves."
+  - "The rent, electricity, instalment and material figures are examples, carried over from the centre in the break-even lesson. A real centre puts its own amounts and dates into the same sum."
+  - "GST registration is due once aggregate turnover in a year passes ₹20 lakh, or ₹10 lakh in the special category states, according to the CBIC's GST FAQ. A centre taking ₹4,32,000 a year is well inside it. The limit can change, so check it on the GST portal before acting on it."
+  - "Udyam registration records a business as a micro, small or medium enterprise. It costs nothing, is filed online on a self-declaration starting from an Aadhaar number, and never needs renewing."
+  - "Neither registration records who has paid you. A dated, numbered receipt or invoice for every fee does, and it is what a cash plan is checked against."
 
 quiz:
-  - q: "It is the 4th. Twelve of the 24 fees are still to come, and the rent is due tomorrow. Which number do you look at first?"
+  - q: "It is the 4th. Twelve of the 24 fees are still to come, and ₹18,000 of bills falls due tomorrow. Which number do you look at first?"
     options:
-      - text: "The month's profit of ₹10,800"
-        why: "That figure covers the whole month, and part of it is money not yet received. Rent is paid out of the account."
-      - text: "What is in the account, against what is dated the 5th"
-        why: "Cash is a question about one date: ₹18,000 banked, less the ₹7,200 paid to the print shop, against ₹18,000 due."
-      - text: "The fee per student"
-        why: "The fee sets the month's revenue. It says nothing about which day the money lands."
+      - text: "The month's profit, ₹10,800"
+        why: "That covers the whole month, and part of it is fees not yet paid. Bills are paid out of the account."
+      - text: "The balance now, against the bills dated the 5th"
+        why: "Cash is a question about one date: ₹18,000 came in, ₹7,200 went to the print shop, and ₹18,000 is due."
+      - text: "The fee per student, ₹1,500"
+        why: "The fee sets the month's revenue. It says nothing about the day the money lands."
     answer: 1
-  - q: "The same twelve families pay around the 20th every month. A friend suggests taking ₹100 off the fee for anyone who pays by the 1st. What does that do?"
+  - q: "Next month fifteen families pay by the 3rd. The print shop still takes ₹7,200 on the 2nd, and ₹18,000 falls due on the 5th. Does the account cover it?"
+    options:
+      - text: "Yes, with ₹4,500 to spare"
+        why: "That forgets the print shop. ₹22,500 came in, but ₹7,200 of it left on the 2nd."
+      - text: "No, it is ₹2,700 short"
+        why: "₹22,500 − ₹7,200 leaves ₹15,300 against ₹18,000 due. Two more early fees would close it."
+      - text: "Yes, because the month still shows ₹10,800 of profit"
+        why: "Profit is the same whichever day the fees land. It cannot pay a bill dated the 5th."
+    answer: 1
+  - q: "To close the gap, you offer the twelve late families ₹100 off if they pay by the 3rd. If all twelve take it, what does the offer do?"
     options:
       - text: "Nothing, because the fees arrive either way"
-        why: "The month's total falls by ₹1,200 if all twelve take it. What that buys is their fees arriving before the 5th instead of after the 20th."
-      - text: "It trades ₹1,200 of profit for fees that arrive nearly three weeks earlier"
-        why: "Twelve discounts of ₹100 come to ₹1,200. Whether that is worth it depends on what the gap on the 5th costs now."
-      - text: "It closes the shortfall at no cost"
-        why: "A discount is a real cost, taken off every fee that uses it. It moves money forward rather than adding any."
-    answer: 1
-  - q: "The gap on the 5th is ₹7,200 and it closes on the 20th. A lender offers ₹10,000 for 30 days for a flat fee. What do you work out first?"
-    options:
-      - text: "Nothing, since the money comes back on the 20th"
-        why: "The gap does close. The fee does not, and it is charged for the full 30 days whether the gap lasts fifteen or thirty."
-      - text: "The fee in rupees, set against a gap of ₹7,200 that lasts fifteen days"
-        why: "A cost means something only next to what it buys. Fifteen days of cover is what this fee would be paying for."
-      - text: "Which lender charges the lowest rate"
-        why: "That comparison comes after the first question. The amount is ₹7,200 and the gap is fifteen days, whoever is lending."
-    answer: 1
-  - q: "The centre takes ₹4,32,000 of fees in a year. A neighbour says every business needs a GST number before it can give receipts. What do you do?"
-    options:
-      - text: "Register, because anyone taking money for work needs a number"
-        why: "The law ties registration to a turnover limit, not to the act of being paid."
-      - text: "Check the limit that applies, on the GST portal"
-        why: "The CBIC's FAQ puts the limit at ₹20 lakh of turnover in a year, and ₹10 lakh in some states. ₹4,32,000 is well inside both."
-      - text: "Stop writing receipts until a number arrives"
-        why: "A receipt is your own record of who paid and when. Without it a cash plan has nothing to check against."
+        why: "They arrive on different days: ₹16,800 before the 5th, not on the 20th. The month's total falls by ₹1,200."
+      - text: "It gives up ₹1,200 of profit so the 5th is paid in full"
+        why: "Twelve discounts of ₹100 cost ₹1,200. In return ₹16,800 arrives before the 5th, more than the ₹7,200 gap."
+      - text: "It closes the gap at no cost"
+        why: "A discount is a real cost, taken off every fee that uses it. It moves money earlier; it does not add any."
     answer: 1
 
 transfer:
-  - "On the 1st of any month you are responsible for, while a date can still be moved."
-  - "When a customer or a parent asks to pay later, and you need to know whether the month can carry it."
-  - "When you read a small business's accounts and the profit line looks settled."
+  - "On the 1st of any month you run a business, while a date can still move."
+  - "When a customer asks to pay later, and you need to know whether the month can carry it."
   - "If you work freelance and invoice at 30 days, while your own bills stay monthly."
 
-glossary: [revenue, profit, fixed-cost, variable-cost, cash-flow, turnover, working-capital, invoice, gst-registration, udyam-registration]
+glossary: [revenue, profit, cash-flow, working-capital]
 tool: break-even
 
 sources:
+  - title: "Accountancy, Financial Accounting Part I, Class XI, chapter 2 'Theory Base of Accounting', section 2.4: the cash basis records income and costs when money is received or paid, the accrual basis in the period they belong to (reprint 2026-27, accessed 22 September 2026)"
+    url: "https://ncert.nic.in/textbook/pdf/keac102.pdf"
+    publisher: "National Council of Educational Research and Training"
   - title: "Frequently asked questions on GST, questions 3 and 15: registration is required once aggregate turnover in a year passes ₹20 lakh, and ₹10 lakh in the special category states (page last updated 3 December 2021)"
     url: "https://cbic-gst.gov.in/faq.html"
     publisher: "Central Board of Indirect Taxes and Customs, Government of India"
@@ -118,69 +172,12 @@ sources:
     publisher: "Ministry of Micro, Small and Medium Enterprises, Government of India"
 ---
 
-## Two sets of numbers, one month
+## Two readings of one month
 
-A coaching centre teaches 24 students at ₹1,500 a month. That is ₹36,000 of <Term id="revenue">revenue</Term>. Four costs come out of it, and ₹10,800 is left as <Term id="profit">profit</Term>.
+Your 24 students pay ₹1,500 each: ₹36,000 of <Term id="revenue">revenue</Term>. Take off every cost and ₹10,800 is <Term id="profit">profit</Term>. It counts each fee earned this month, whenever it is paid, and has no dates.
 
-Rent, electricity and the loan instalment are <Term id="fixed-cost">fixed costs</Term>. They are the same whether 24 students turn up or 18. Printed material is a <Term id="variable-cost">variable cost</Term> of ₹300 a student, so it grows with the batch.
+## Why the 5th comes up short
 
-Rent alone takes a third of the fees. Electricity takes what one student pays.
+The account works by dates. Twelve families pay by the 3rd, twelve on the 20th. The print shop takes ₹7,200 on the 2nd; three bills fall due on the 5th. On the 5th only the early fees can pay them.
 
-**Profit measures the whole month. It says nothing about the balance in the account on the 5th.**
-
-## The dates do not line up
-
-Twelve families pay in the first few days. The other twelve pay around the 20th, once their own salaries have arrived.
-
-The bills keep their own dates. The print shop is paid on the 2nd. Rent, electricity and the instalment all fall due on the 5th. Together they come to ₹18,000, the exact amount the early fees brought in.
-
-The printing had already taken ₹7,200 of that. So the account is ₹7,200 short on the 5th, in a month that ends ₹10,800 ahead.
-
-That distance between earning money and holding it is <Term id="cash-flow">cash flow</Term>.
-
-<svg class="chart" viewBox="0 0 320 112" role="img" aria-labelledby="cash-title cash-desc">
-  <title id="cash-title">Money in and money out by the 5th</title>
-  <desc id="cash-desc">Two bars. ₹18,000 of fees has arrived by the 5th. ₹25,200 of bills has fallen due by then, so ₹7,200 of it cannot be paid until the 20th.</desc>
-  <rect class="chart-a" x="0" y="20" width="229" height="28" rx="6" />
-  <rect class="chart-b" x="0" y="66" width="320" height="28" rx="6" />
-  <text class="chart-label" x="0" y="12">Fees in by the 5th: ₹18,000</text>
-  <text class="chart-label" x="0" y="58">Bills due by the 5th: ₹25,200</text>
-  <text class="chart-note" x="0" y="108">The ₹7,200 difference waits for the 20th</text>
-</svg>
-
-| By the 5th | Amount |
-| --- | --- |
-| Fees received, 12 of 24 students | ₹18,000 |
-| Printed material, paid on the 2nd | −₹7,200 |
-| Rent, due on the 5th | −₹12,000 |
-| Electricity, due on the 5th | −₹1,500 |
-| Loan instalment, due on the 5th | −₹4,500 |
-| Short until the 20th | −₹7,200 |
-
-## A cash plan is a list of dates
-
-A profit calculation has no dates in it. A cash plan is the same month written as a calendar: what is due on which date, and what is expected to arrive before it.
-
-Write the next four weeks in two dated columns. Look for an outgoing line that lands before the money meant to cover it. Finding one early leaves time to move a date.
-
-The money kept back for those gaps is <Term id="working-capital">working capital</Term>. It is not profit, and it is not spare.
-
-The other half of the plan is knowing who has paid. A dated, numbered receipt or <Term id="invoice">invoice</Term> for every fee answers that in seconds.
-
-## What has to be registered
-
-<Term id="gst-registration">GST registration</Term> is due once a business passes a <Term id="turnover">turnover</Term> limit set in the law. The CBIC's FAQ puts that limit at ₹20 lakh in a year, and ₹10 lakh in some states. A centre taking ₹4,32,000 a year is well inside it.
-
-A figure like that can change. Check the one that applies to your business on the GST portal before you act on it.
-
-<Term id="udyam-registration">Udyam registration</Term>, the ministry's record of micro and small enterprises, is a separate thing. It costs nothing, it is filed online from an Aadhaar number, and it does not need renewing.
-
-**Neither one records who has paid you.** The receipt book does that, and it is where a cash plan starts.
-
-## Read the month twice
-
-The first reading is revenue minus costs. It tells you whether the work is worth doing at all, and it is the reading a lender or a parent will ask for.
-
-The second reading is every amount with a date beside it. It tells you which week is tight, and it decides whether you can take a second batch or a bigger room.
-
-A month can pass the first reading and still leave the 5th unpaid.
+The timing of money in and out is <Term id="cash-flow">cash flow</Term>. Money kept back to bridge such a gap is <Term id="working-capital">working capital</Term>: it is not spare.

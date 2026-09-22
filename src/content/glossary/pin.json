@@ -1,0 +1,5 @@
+{
+  "term": "PIN",
+  "define": "Personal identification number: a short secret number that confirms a payment is really yours. Your UPI PIN approves money leaving your account; nothing arriving ever needs it.",
+  "example": "A screen that asks for your PIN so that you can receive money is a screen that pays someone else."
+}

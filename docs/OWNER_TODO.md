@@ -56,3 +56,13 @@ The login screen at `/account` is a preview and stores nothing. Turning it on ne
 checklist in `docs/AUTH_AND_ACCOUNTS.md`: a backend, an email domain, the lawyer items in
 `docs/LEGAL_AND_PRIVACY.md` (India under-18 parental consent above all), a header-capable
 host. Say "open phase 6" when that is the plan.
+
+## 6. Two things the lesson editors left for a person (22 Sep 2026)
+
+- `docs/research/lesson-v2-editor-notes.md` lists, per lesson, what the independent editor
+  could not settle from this machine: EUR-Lex directive texts that do not load without a browser
+  (the claims were checked against the Commission's own summaries instead), and a few judgement
+  calls. A read-through with the source open takes a minute a lesson.
+- Glossary entries are shared across editions, so a Europe or US popover can show a rupee
+  example (`interest`, `budget`, `money-mule`). Per-edition examples are a content change Claude
+  can make once you say which entries matter most.

@@ -65,6 +65,12 @@ const pairs = [
   ['success', 'bg', 4.5, 'success text'],
   ['focus', 'bg', 3, 'focus ring on sheets (non-text)'],
   ['line-strong', 'bg', 3, 'card and pill outlines (non-text)'],
+  ['frame', 'bg', 3, 'the blue frame: rules under heroes and title bands, panel outlines (non-text)'],
+  ['frame', 'band-surface', 3, 'the rule under a hero, against the hero itself (non-text)'],
+  ['ink', 'band-surface', 4.5, 'headings on heroes and title bands'],
+  ['ink-2', 'band-surface', 4.5, 'text on heroes and title bands'],
+  ['muted', 'band-surface', 4.5, 'secondary text on heroes and title bands'],
+  ['accent-text', 'band-surface', 4.5, 'links on heroes and title bands'],
 ];
 
 let failed = false;
@@ -90,9 +96,9 @@ for (const [name, theme] of [['light + more contrast', lightMore], ['dark + more
   }
 }
 
-// The dark-blue field re-maps the tokens (the .on-field block in tokens.css); check those pairs.
-const field = tokens(block(css, '.on-field, .panel-field, .panel-deep {'));
-console.log('\non-field');
+// The blue band (the header) re-maps the tokens (the .on-band block in tokens.css); check those pairs.
+const field = tokens(block(css, '.on-band {'));
+console.log('\non-band');
 for (const [fg, min, what] of [['ink', 4.5, 'headings'], ['ink-2', 4.5, 'text'], ['muted', 4.5, 'secondary'], ['accent-text', 4.5, 'links'], ['on-accent', 4.5, 'gold button label'], ['focus', 3, 'focus ring'], ['line-strong', 3, 'card outlines']]) {
   const bgKey = fg === 'on-accent' ? 'accent' : 'bg';
   const r = ratio(field[fg], field[bgKey]);

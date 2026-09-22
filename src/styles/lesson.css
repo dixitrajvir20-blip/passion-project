@@ -300,6 +300,11 @@ a.lesson-row:hover .lesson-num { color: var(--accent-text); }
 .video-play-glyph { width: var(--space-5); height: var(--space-5); fill: currentColor; }
 .video-ask { max-width: 100%; padding: var(--space-4); border-radius: var(--radius-m); background: var(--paper); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); }
 html:not(.js) .video-play { display: none; }
+/* On a phone the poster is 16:9 of ~312px: the head stacks above the play pill instead of sitting under it. */
+@media (max-width: 559px) {
+  .video-poster { align-content: start; justify-items: start; gap: var(--space-2); padding: var(--space-3) var(--space-4); }
+  .video-poster-head { position: static; text-align: left; }
+}
 .video-ask p { margin: 0 0 var(--space-3); font-size: var(--text-sm); }
 .video-ask .btn-row { margin: 0; }
 .video-link { display: inline-flex; align-items: center; min-height: var(--space-6); color: var(--paper); font-size: var(--text-sm); text-decoration-color: var(--gold); }
@@ -347,9 +352,10 @@ html:not(.js) .video-play { display: none; }
 .doc-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h3); }
 .doc-note { font-size: var(--text-xs); }
 .doc-lines { margin: 0; }
-.doc-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); padding: var(--space-2) 0; border-top: 1px dotted var(--brand-navy); margin: 0; }
+/* Both columns may shrink, so a long value ("Friday 3 October") wraps instead of starving the label at 360px. */
+.doc-line { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, auto); gap: var(--space-1) var(--space-3); padding: var(--space-2) 0; border-top: 1px dotted var(--brand-navy); margin: 0; }
 .doc-label { margin: 0; }
-.doc-value { margin: 0; font-weight: 700; text-align: right; }
+.doc-value { margin: 0; font-weight: 700; text-align: right; overflow-wrap: anywhere; }
 .doc-hint summary { display: inline-flex; align-items: center; min-height: var(--space-6); cursor: pointer; list-style: none; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: var(--gold); }
 .doc-hint summary::-webkit-details-marker { display: none; }
 .doc-hint p { margin: var(--space-1) 0 0; font-size: var(--text-sm); font-weight: 400; }
@@ -359,8 +365,26 @@ html:not(.js) .video-play { display: none; }
   .showme-more > summary { display: none; }
 }
 
+/* v2: the step list, hints, the key idea, one more */
+.lesson-steps { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: var(--space-3) 0 0; font-size: var(--text-sm); }
+.lesson-steps-label { color: var(--muted); font-weight: 700; }
+.lesson-steps a { display: inline-flex; align-items: center; min-height: var(--space-6); color: var(--accent-text); text-decoration: none; }
+.lesson-steps a:hover, .lesson-steps a:focus-visible { text-decoration: underline; }
+.hints { list-style: none; margin: 0 0 var(--space-4); padding: 0; }
+.hints li { margin: 0; }
+.practice-hint > summary { display: inline-flex; align-items: center; min-height: 44px; cursor: pointer; font-weight: 700; color: var(--accent-text); list-style: none; }
+.practice-hint > summary::-webkit-details-marker { display: none; }
+.practice-hint > summary::before { content: '+'; margin-right: var(--space-2); font-family: var(--font-display); font-weight: 800; }
+.practice-hint[open] > summary::before { content: '−'; }
+.practice-hint > p { margin: 0 0 var(--space-3) var(--space-5); font-size: var(--text-md); color: var(--ink-2); }
+.key-idea { margin: var(--space-4) 0 0; font-size: var(--text-lg); }
+/* "One more" is folded: a second run for readers who want it, not a third box for everyone. */
+.practice-more { margin-top: var(--space-5); }
+.practice-more > summary { font-size: var(--text-md); }
+
 /* v2 header and folds */
-.lesson-after { margin-top: var(--space-4); padding: var(--space-4) var(--space-5); border-radius: var(--radius-l); background: var(--paper); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --accent-text: var(--brand-blue); }
+/* Type under a hairline, not a box: the title band is white now. */
+.lesson-after { margin-top: var(--space-5); padding: var(--space-4) 0 0; border-top: 1px solid var(--line); }
 .lesson-after-label { margin: 0 0 var(--space-2); font-size: var(--text-sm); font-weight: 700; }
 .lesson-after ul { margin: 0; padding-left: var(--space-5); }
 .lesson-after li { margin: 0; }

@@ -82,10 +82,10 @@ const india = getRegion('in');
     <div class="container">
       <h2 id="steps-h" class="section-title">How a lesson works</h2>
       <ol class="list-plain steps-cards">
-        <li class="step-card step-1 on-field"><span class="step-num">Step 1</span><h3>Answer first</h3><p>Every lesson opens with a question. A guess, right or wrong, makes the answer stick.</p></li>
-        <li class="step-card step-2"><span class="step-num">Step 2</span><h3>See the idea</h3><p>One idea, one worked calculation, real numbers in your currency.</p></li>
-        <li class="step-card step-3"><span class="step-num">Step 3</span><h3>Try your own numbers</h3><p>Change them and watch the answer move.</p></li>
-        <li class="step-card step-4 on-field"><span class="step-num">Step 4</span><h3>Check your understanding</h3><p>Three questions, which come back for review a few days later.</p></li>
+        <li class="step-card step-1"><span class="step-num">Step 1</span><h3>Start from the real thing</h3><p>A payslip, a loan sheet, a payment screen, drawn line by line. Find the line that matters before anyone explains it.</p></li>
+        <li class="step-card step-2"><span class="step-num">Step 2</span><h3>Watch, then see it worked</h3><p>A short video from a regulator or a teacher, then the calculation one line at a time, each line explained.</p></li>
+        <li class="step-card step-3"><span class="step-num">Step 3</span><h3>Your turn, then change one thing</h3><p>The same sum with new numbers and three hints, then the levers, to see what moves the answer.</p></li>
+        <li class="step-card step-4"><span class="step-num">Step 4</span><h3>Check your understanding</h3><p>Three questions, which come back for review a few days later.</p></li>
       </ol>
     </div>
   </section>
@@ -197,15 +197,15 @@ const india = getRegion('in');
   @media (min-width: 980px) { .editions { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .edition { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6) var(--space-5); margin: 0; }
   @media (min-width: 980px) { .edition { padding: var(--space-6); } }
-  .currency { align-self: flex-end; margin-bottom: calc(var(--space-6) * -1); }
+  .currency { align-self: flex-end; margin-bottom: calc(var(--space-6) * -1); border: 1.5px solid var(--brand-navy); }
   .edition-name { font-size: var(--text-h1); line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
   .edition-problem { margin: 0; color: var(--ink-2); }
   /* A receipt: white paper and navy ink in both themes. */
-  .edition-sum { background: var(--paper); color: var(--brand-navy); border-radius: var(--radius-m); padding: var(--space-4); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
+  .edition-sum { background: var(--paper); color: var(--brand-navy); border: 1.5px solid var(--brand-navy); border-radius: var(--radius-m); padding: var(--space-4); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
   .edition-link { align-self: flex-start; margin-top: auto; padding-left: 0; }
 
   /* How a lesson works: four tilted cards. */
-  .steps-section { background: var(--field-pale); }
+  .steps-section { background: var(--bg); }
   .steps-cards { display: grid; gap: var(--space-5); }
   @media (min-width: 720px) { .steps-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1100px) { .steps-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); } }
@@ -213,7 +213,7 @@ const india = getRegion('in');
   .step-card h3 { font-size: var(--text-h3); line-height: var(--leading-tight); margin: var(--space-3) 0 var(--space-3); }
   .step-card p { margin: 0; font-size: var(--text-ui); }
   .step-num { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); color: var(--gold-text); }
-  .step-1 { background: var(--field); }
+  .step-1 { background: var(--field-pale); }
   .step-2 { background: var(--gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --gold-text: var(--on-gold); --focus: var(--on-gold); border-color: var(--on-gold); }
   .step-3 { background: var(--bg); }
   .step-4 { background: var(--field-deep); }

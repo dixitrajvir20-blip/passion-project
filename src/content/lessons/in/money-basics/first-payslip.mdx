@@ -83,6 +83,27 @@ practice:
     - { label: "Her EPF share", amount: 1680, subtotalLabel: "After her EPF share" }
     - { label: "Professional tax", amount: 200 }
   endLabel: "In-hand pay"
+  hints:
+    - "Start from the CTC and take each line off in order: the employer's share, her share, then the tax."
+    - "₹28,000 − ₹1,680 − ₹1,680 − ₹200."
+    - "₹24,440 arrives. Stopping after the first line gives ₹26,320; forgetting every line gives ₹28,000."
+
+practiceMore:
+  kind: deduction
+  context: "The same friend, now in a state with no professional tax: monthly CTC ₹40,000, employer's EPF share ₹2,400, her EPF share ₹2,400."
+  start: 40000
+  startLabel: "Monthly CTC"
+  lines:
+    - { label: "Employer's EPF share", amount: 2400, subtotalLabel: "Gross salary" }
+    - { label: "Her EPF share", amount: 2400, subtotalLabel: "After her EPF share" }
+    - { label: "Professional tax", amount: 0 }
+  endLabel: "In-hand pay"
+  hints:
+    - "Two fund shares come off; the tax line is ₹0 in this state."
+    - "₹40,000 − ₹2,400 − ₹2,400 − ₹0."
+    - "₹35,200 arrives: 88% of the CTC, because both shares are 6% of it here."
+
+keyIdea: "In-hand pay is the CTC minus both fund shares and your state's tax; income tax joins only when due."
 
 explorable:
   kind: deduction
@@ -180,4 +201,4 @@ sources:
 
 Two lines then come off. Your <Term id="epf">EPF</Term> share is 12% of <Term id="basic-pay">basic pay</Term>, held in a fund in your name. The employer adds 12% too, and part of that goes to the <Term id="eps">pension scheme</Term>. <Term id="professional-tax">Professional tax</Term> is set by your state. <Term id="tds">TDS</Term> is income tax taken monthly; nil at this pay.
 
-What is left is your <Term id="in-hand-pay">in-hand pay</Term>, ₹30,600. **Plan the month on that figure: it is the only one that arrives.**
+What is left is your <Term id="in-hand-pay">in-hand pay</Term>, ₹30,600. Plan the month on that figure: it is the only one that arrives.

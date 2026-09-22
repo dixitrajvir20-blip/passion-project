@@ -118,8 +118,9 @@ export default function ConsentManager({ categories, version }: Props) {
           <h2>Your progress stays on this device</h2>
           <p>
             Business Lab sets no cookies and builds no profile. Your lesson progress is kept in this
-            browser so you can pick up where you left off. May it also record your learning time,
-            on this device only, for your dashboard? Nothing optional runs until you choose.
+            browser so you can pick up where you left off. Two things need a yes from you: lessons
+            include short videos from YouTube, which load only when you tap play, and the dashboard
+            can record your learning time on this device. Nothing optional runs until you choose.
           </p>
           <div class="btn-row">
             <button type="button" class="btn btn-secondary btn-sm" onClick={() => commit(allChoices(categories, false))}>

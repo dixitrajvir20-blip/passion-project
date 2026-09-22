@@ -8,22 +8,28 @@ const LESSON_ID = 'in/start-something/break-even-coaching-centre';
 test.describe('a lesson with JavaScript off', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('can still be read, guessed at, practised and checked', async ({ page }) => {
+  test('can still be read, found on the document, shown, practised and checked', async ({ page }) => {
     await page.goto(LESSON);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('coaching centre');
 
-    // The opening guess: pick, then reveal. Nothing about this needs a script.
-    const guess = page.locator('.poll').first();
-    await guess.locator('input[type=radio]').first().check(); // the fee-not-contribution slip
-    await guess.locator('summary').click();
-    await expect(guess.locator('.answer')).toContainText('15'); // 18,000 ÷ the 1,200 each fee leaves
-    await expect(guess.locator('.fb').first()).toBeVisible(); // feedback for the option picked
+    // Find it on the document: pick, then reveal. Nothing about this needs a script. The right
+    // option is read off the markup, so rewording the question never turns this into a false failure.
+    const find = page.locator('.poll').first();
+    const right = Number(await find.getAttribute('data-answer'));
+    await find.locator('input[type=radio]').nth(right).check();
+    await find.locator('summary').click();
+    await expect(find.locator('.answer')).toBeVisible();
+    await expect(find.locator('.fb').nth(right)).toBeVisible(); // feedback for the option picked
 
-    // Worked example is server-computed; every quick check reveals its answer and its why.
-    await expect(page.locator('.worked .steps').first()).toContainText('₹1,200'); // 1,500 − 300
-    await expect(page.locator('.worked .steps').first()).toContainText('15');
+    // Show me is server-computed from the calculator: the first line is open, the next folds out.
+    const showme = page.locator('.showme');
+    await expect(showme.locator('.showme-line').first()).toContainText('₹1,200'); // 1,500 − 300
+    await page.locator('.showme-more > summary').first().click();
+    await expect(showme).toContainText('15'); // 18,000 ÷ 1,200
+
+    // Every quick check reveals its answer and its why.
     const checks = page.locator('.poll[data-check-id]');
-    await expect(checks).toHaveCount(4);
+    await expect(checks).toHaveCount(3);
     for (const check of await checks.all()) {
       await check.locator('summary').click();
       await expect(check.locator('.answer')).toBeVisible();
@@ -64,7 +70,7 @@ test('the quick check scores each question, schedules it, and says when it retur
   await checks.nth(0).locator('summary').click();
   await expect(checks.nth(0).locator('.poll-status')).toHaveText('Correct.');
 
-  const wrong = ((await rightOf(1)) + 1) % 3;
+  const wrong = ((await rightOf(1)) + 1) % (await checks.nth(1).locator('input[type=radio]').count());
   await checks.nth(1).locator('input[type=radio]').nth(wrong).check();
   await checks.nth(1).locator('summary').click();
   await expect(checks.nth(1).locator('.poll-status')).toHaveText('Not quite.');
@@ -72,18 +78,16 @@ test('the quick check scores each question, schedules it, and says when it retur
 
   await checks.nth(2).locator('summary').click();
   await expect(checks.nth(2).locator('.poll-status')).toContainText('No pick');
-  await checks.nth(3).locator('summary').click();
-  await expect(checks.nth(3).locator('.poll-status')).toContainText('No pick');
 
   const line = page.locator('[data-return-line]');
   await expect(line).toBeVisible();
-  await expect(line).toContainText('1 of 4');
+  await expect(line).toContainText('1 of 3');
   await expect(line).toContainText('come back from');
   await expect(line).not.toContainText(/due|overdue/i);
 
   const stored = await page.evaluate(() => JSON.parse(window.localStorage.getItem('lp:progress')!));
-  expect(stored.quiz[LESSON_ID]).toMatchObject({ correct: 1, total: 4 });
-  expect(Object.keys(stored.review).sort()).toEqual([`${LESSON_ID}#q1`, `${LESSON_ID}#q2`, `${LESSON_ID}#q3`, `${LESSON_ID}#q4`]);
+  expect(stored.quiz[LESSON_ID]).toMatchObject({ correct: 1, total: 3 });
+  expect(Object.keys(stored.review).sort()).toEqual([`${LESSON_ID}#q1`, `${LESSON_ID}#q2`, `${LESSON_ID}#q3`]);
   expect(stored.review[`${LESSON_ID}#q1`].box).toBe(1);
   // A quiz result is not a bookmark: reading and checking are separate marks.
   expect(stored.done).toEqual([]);
@@ -91,7 +95,7 @@ test('the quick check scores each question, schedules it, and says when it retur
 
 test('a term opens in place, closes with Escape, and hands focus back', async ({ page }) => {
   await page.goto(LESSON);
-  const term = page.locator('button.term').first();
+  const term = page.locator('button.term', { hasText: 'variable cost' }).first();
   await expect(term).toHaveText('variable cost');
   await term.click();
   const pop = page.locator('#pop-variable-cost');
@@ -107,7 +111,7 @@ test('the explorable answers in a sentence and hands off to the full calculator'
   const explorer = page.locator('.explorer');
   // The explorable hydrates when the reader gets near it (client:visible), not at page load.
   await explorer.scrollIntoViewIfNeeded();
-  await waitForIslands(page);
+  await waitForIslands(page, '.explorer');
   // Every key says what it is, not a bare number.
   await explorer.getByRole('button', { name: '₹1,500 per student' }).click();
   await expect(explorer).toContainText('15 students'); // 18,000 ÷ (1,500 − 300)
@@ -129,7 +133,7 @@ test('a price that only covers the cost of the sale says so instead of printing 
   await page.goto('eu/learn/start-something/break-even-fees');
   const explorer = page.locator('.explorer');
   await explorer.scrollIntoViewIfNeeded();
-  await waitForIslands(page);
+  await waitForIslands(page, '.explorer');
 
   await explorer.getByRole('button', { name: '€27 per repair', exact: true }).click(); // the same as the cost of one
   await expect(explorer).toContainText('Never');
@@ -138,10 +142,10 @@ test('a price that only covers the cost of the sale says so instead of printing 
 
 test('practice offers the slips people make, and the worked steps come from the calculator', async ({ page }) => {
   await page.goto(LESSON);
-  const practice = page.locator('.practice');
+  const practice = page.locator('.practice').first(); // "one more" is a second practice below it
   await expect(practice.locator('.steps')).toContainText('₹800'); // 1,200 − 400, given
   await practice.getByLabel('12', { exact: true }).check(); // 14,000 ÷ 1,200: divided by the price
-  await practice.locator('summary').click();
+  await practice.locator('.poll summary').click(); // the hints are summaries too
   await expect(practice.locator('.answer')).toContainText('18'); // 14,000 ÷ 800, rounded up
   await expect(practice.locator('.fb:visible')).toContainText('divides by the full price');
 });
@@ -160,7 +164,9 @@ test('marking a lesson read shows on the track page, separately from its checks'
 test('a check that is ready comes back on the review page, and nothing is called overdue', async ({ page }) => {
   // Which option is right is read off the lesson, so rewording the question cannot fail this.
   await page.goto(LESSON);
-  const right = Number(await page.locator('.poll[data-check-id]').first().getAttribute('data-answer'));
+  const first = page.locator('.poll[data-check-id]').first();
+  const right = Number(await first.getAttribute('data-answer'));
+  const asked = (await first.locator('legend').textContent())!.trim().slice(0, 40);
 
   await page.goto('in/learn');
   await page.evaluate((id) => {
@@ -185,7 +191,7 @@ test('a check that is ready comes back on the review page, and nothing is called
   await line.getByRole('link').click();
   await waitForIslands(page);
   await expect(page.locator('.poll')).toHaveCount(1);
-  await expect(page.locator('.poll legend')).toContainText('two streets away');
+  await expect(page.locator('.poll legend')).toContainText(asked);
   await page.locator('.poll input[type=radio]').nth(right).check();
   await page.getByRole('button', { name: 'Show the answer' }).click();
   await expect(page.locator('.poll-status')).toHaveText('Correct.');
@@ -239,7 +245,7 @@ test.describe('the scam drill with JavaScript off', () => {
     for (const path of ['in/learn/protect-your-money/upi-fraud-and-the-clock', 'in/tools/spot-the-fake']) {
       await page.goto(path);
       const situations = page.locator('.drill-list > li');
-      expect(await situations.count()).toBeGreaterThanOrEqual(5);
+      expect(await situations.count()).toBeGreaterThanOrEqual(3);
       const first = situations.first();
       await expect(first.locator('.mock-screen')).toContainText('A made-up screen for practice');
       await first.locator('input[type=radio]').first().check();
@@ -273,26 +279,24 @@ test('the scam lesson ends with the official reporting route, as a tappable numb
   await expect(report.getByRole('link', { name: 'cybercrime.gov.in' })).toHaveAttribute('href', /^https:\/\/cybercrime\.gov\.in/);
 });
 
-// The split explorer is tested on the moving-out lesson, whose four lines leave a fifth of the
-// month without a job. (The India payslip lesson is moving to a payslip explorable.)
-const SPLIT_LESSON = 'eu/learn/money-basics/moving-out';
+// The split explorer is tested on the US self-employment-tax lesson, the one lesson that still
+// splits a month three ways (the tax, an example income tax, what is left) since template v2.
+const SPLIT_LESSON = 'us/learn/start-something/se-tax';
 
-test('the moving-out lesson has a working split explorer that reports without judging', async ({ page }) => {
+test('the self-employment lesson has a working split explorer that reports without judging', async ({ page }) => {
   await page.goto(SPLIT_LESSON);
   const explorer = page.locator('.explorer');
   await explorer.scrollIntoViewIfNeeded();
-  await waitForIslands(page);
-  await explorer.getByRole('button', { name: '€1,400' }).click();
-  await expect(explorer).toContainText('€560'); // rent and bills at 40% of 1,400
+  await waitForIslands(page, '.explorer');
+  await explorer.getByRole('button', { name: '$1,000' }).click();
+  await expect(explorer).toContainText('$141'); // 15.3% of 92.35% of 1,000
   // The answer names the total the lines add up to; the change line names the lever and its effect.
-  await expect(explorer.locator('.explorer-result')).toHaveText('The lines add up to €1,120, so €280 of the €1,400 is not given a job yet.');
-  await expect(explorer.locator('.explorer-change')).toHaveText('That is €275 more coming in than at €1,125, and €56 more is left without a job.');
+  await expect(explorer.locator('.explorer-result')).toHaveText('Every dollar has a job: the lines add up to $1,000, with $0 left over.');
+  await expect(explorer.locator('.explorer-change')).toHaveText('That is $500 more coming in than at $500, and the same $0 is left without a job.');
 
   // The step is on the button, and one tap moves the line by exactly that much.
-  await explorer.getByRole('button', { name: '+5% for Savings' }).click();
-  await expect(explorer.locator('.explorer-change')).toHaveText('That is €70 more for Savings than at 10%, and €70 less is left without a job.');
-  // The four lines come to 80%, so five nudges of 5% push the plan past what came in.
-  for (let i = 0; i < 4; i++) await explorer.getByRole('button', { name: '+5% for Savings' }).click();
+  await explorer.getByRole('button', { name: '+5% for Income tax, an example' }).click();
+  await expect(explorer.locator('.explorer-change')).toHaveText('That is $50 more for Income tax, an example than at 10%, and the plan is now $50 more than came in.');
   await expect(explorer).toContainText(/more than came in/);
   await expect(explorer).not.toContainText(/too much|should|better|worse/i);
 });
@@ -301,13 +305,13 @@ test('the split explorer rows and the leftover always add back to what came in',
   await page.goto(SPLIT_LESSON);
   const explorer = page.locator('.explorer');
   await explorer.scrollIntoViewIfNeeded();
-  await waitForIslands(page);
+  await waitForIslands(page, '.explorer');
 
   // Rounding each row and then deriving the leftover from the unrounded percentages would let
   // these disagree by a rupee, which is exactly the kind of sum this site cannot get wrong.
   const rupees = async (loc: ReturnType<typeof page.locator>) =>
     (await loc.allTextContents()).map((t) => Number(t.replace(/[^0-9]/g, '')));
-  for (const income of ['€1,400', '€1,125', '€900']) {
+  for (const income of ['$250', '$1,000', '$2,000']) {
     await explorer.getByRole('button', { name: income }).click();
     const rows = await rupees(explorer.locator('.split-amount'));
     const left = Number((await explorer.locator('.explorer-result [data-left]').textContent())!.replace(/[^0-9]/g, ''));
@@ -316,20 +320,20 @@ test('the split explorer rows and the leftover always add back to what came in',
   }
 });
 
-test('the moving-out split opens in the budget planner with the same numbers', async ({ page }) => {
+test('the self-employment split opens in the budget planner with the same numbers', async ({ page }) => {
   await page.goto(SPLIT_LESSON);
   const explorer = page.locator('.explorer');
   await explorer.scrollIntoViewIfNeeded();
-  await waitForIslands(page);
-  await explorer.getByRole('button', { name: '€1,400' }).click();
+  await waitForIslands(page, '.explorer');
+  await explorer.getByRole('button', { name: '$1,000' }).click();
   await explorer.getByRole('link', { name: /budget planner/ }).click();
-  await expect(page).toHaveURL(/eu\/tools\/budget\/?\?/);
+  await expect(page).toHaveURL(/us\/tools\/budget\/?\?/);
   await waitForIslands(page);
-  await expect(page.getByLabel('What comes in each month')).toHaveValue('1400');
-  await expect(page.getByLabel('Name of line 2')).toHaveValue('Food');
-  // Rent 560 + food 280 + transport and phone 140 are all needs; savings 140 is its own.
-  await expect(page.locator('.results')).toContainText('€980');
-  await expect(page.locator('.results')).toContainText('€280'); // the fifth with no job yet
+  await expect(page.getByLabel('What comes in each month')).toHaveValue('1000');
+  await expect(page.getByLabel('Name of line 2')).toHaveValue('Income tax, an example');
+  // 141 + 100 + 759: every line lands as a need, and the month has nothing without a job.
+  await expect(page.locator('.results')).toContainText('$1,000');
+  await expect(page.locator('.results')).toContainText('Every part of what comes in has a job.');
 });
 
 test('the review date on a lesson is the date in its frontmatter, whatever the build machine’s time zone', async ({ page }) => {
@@ -381,11 +385,15 @@ test.describe('template v2 with JavaScript off', () => {
     await expect(lines.nth(2)).toBeHidden();
     await expect(next).toContainText('Line 2'); // the control stays, renamed, so focus has somewhere to be
 
-    // Your turn: the given lines are the calculator's, the last is the reader's.
-    const practice = page.locator('.practice');
+    // Your turn: the hints open one at a time, method first; the given lines are the calculator's, the last is the reader's.
+    const practice = page.locator('.practice').first();
+    await expect(practice.locator('.practice-hint')).toHaveCount(3);
+    await expect(practice.locator('.practice-hint > p').first()).toBeHidden();
+    await practice.locator('.practice-hint > summary').first().click();
+    await expect(practice.locator('.practice-hint > p').first()).toContainText('in order');
     await expect(practice.locator('.steps')).toContainText('₹26,320');
     await practice.getByLabel('₹24,440', { exact: true }).check();
-    await practice.locator('summary').click();
+    await practice.locator('.poll summary').click(); // the hints are summaries too
     await expect(practice.locator('.answer')).toContainText('₹24,440');
   });
 });

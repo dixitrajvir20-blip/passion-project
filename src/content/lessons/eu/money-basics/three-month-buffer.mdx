@@ -1,39 +1,90 @@
 ---
 title: "Sizing a three-month buffer and reaching it"
-summary: "Three months of essentials, not of pay: your own figure, and the monthly amount that reaches it in a year."
+summary: "Why a buffer is €2,190, not €3,450, and how €185 each payday reaches it in twelve months."
 region: eu
 track: money-basics
 order: 2
-readingMinutes: 7
+readingMinutes: 9
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "Your flatmate's part-time job ends with a week's notice. Next month's rent share is due on the 1st, and she has €90 towards it. You wonder how many months you could cover if it were you."
+objectives:
+  - "Size a buffer as three months of your essentials, not three months of pay."
+  - "Turn a buffer goal into a payday transfer and the month you reach it."
+  - "Tell what a bank account's deposit guarantee covers, and what it does not."
 
-prediction:
-  q: "Your net pay is €1,150 a month. Rent share, transport, phone and food come to €730. A colleague says to keep three months of pay as a buffer. What figure do you aim for?"
-  options:
-    - text: "€3,450, three months of pay"
-      why: "Three months of pay counts the spending you would stop in a month with no income. The buffer only has to cover the costs that still arrive."
-    - text: "€2,190, three months of essentials"
-      why: "Rent share, transport, phone and food are €730 a month. Three of those months is €2,190, enough to get through a gap with no income."
-    - text: "€730, one month of essentials"
-      why: "One month of essentials covers a repair or a late payment. Three months is the size set for a gap with no income at all."
-  answer: 1
+situation: "Your flatmate loses her job with a week's notice, and rent is due on the 1st. So you open a buffer goal: €185 each payday, earning €10 in a year."
 
-takeaways:
-  - "A buffer is three months of essentials, not three months of pay: the rent share, transport, phone and food that arrive whether or not you are earning."
-  - "Reaching it is a monthly amount and a date. €2,190 in twelve months is about €185 a month; at €100 a month it takes 22 months. The rate barely moves either date."
-  - "In every EU country, money in a bank account is covered by a deposit guarantee, up to €100,000 per person, per bank, if the bank fails. Where the buffer waits is your choice."
+document:
+  kind: app-screen
+  title: "Buffer goal"
+  lines:
+    - { label: "Net pay this month", value: "€1,150", hint: "What reached your account. The €185 comes out of it, but the goal is not sized from it." }
+    - { label: "Rent share", value: "€400", hint: "Due on the 1st whether or not you are paid. An essential." }
+    - { label: "Transport pass", value: "€60", hint: "Gets you to work, or to interviews for the next job. An essential." }
+    - { label: "Phone", value: "€20", hint: "How an employer, a landlord or your bank reaches you. An essential." }
+    - { label: "Food", value: "€250", hint: "Can shrink a little in a hard month, never to nothing. An essential." }
+    - { label: "Essentials a month", value: "€730", hint: "The four lines above added up: what still arrives in a month with no pay." }
+    - { label: "Goal: three months", value: "€2,190", hint: "Three months of essentials. Three months of pay would be €3,450, counting spending that would stop." }
+    - { label: "Each payday", value: "€185", hint: "Moved first, before any spending. €2,190 ÷ 12 is €182.50, rounded up to €185." }
+    - { label: "Goal reached", value: "Month 12", hint: "Twelve transfers of €185 make €2,220, just past the goal." }
+    - { label: "Example rate", value: "1% a year", hint: "An assumption so the screen can do the sum. Nobody can promise it." }
+    - { label: "Interest, 12 months", value: "€10", hint: "What the example rate adds in a year: less than a tenth of one transfer." }
+  find:
+    q: "The €2,190 goal is three times which line?"
+    options:
+      - text: "Net pay this month, €1,150"
+        why: "Three times that is €3,450. It counts spending that would stop in a month with no pay."
+      - text: "Essentials a month, €730"
+        why: "€730 × 3 is €2,190. The buffer covers what still arrives when pay stops."
+      - text: "Each payday, €185"
+        why: "That is how fast the goal fills, not what the buffer has to cover."
+    answer: 1
+
+video:
+  youtubeId: "n4YoZDQs6VA"
+  title: "Saving wisely: emergency fund | Financial mathematics (TX TEKS) | Khan Academy"
+  channel: "Khan Academy"
+  minutes: 3
+  note: "Made for the US; the idea is the same."
 
 worked:
   kind: growth
-  context: "The target from the top of the page, €2,190, given twelve months. The rate is 0% on purpose, so the working shows what €185 a month does by itself. Anything an account adds comes on top."
+  context: "The screen's sum: €185 each payday for twelve months, at the example 1%."
   monthly: 185
-  rate: 0
+  rate: 1
   years: 1
+  captions:
+    - "Twelve transfers of €185: €2,220, past the €2,190 goal in month twelve."
+    - "Your balance with monthly interest at the example 1%: an assumption, not a promise."
+    - "€10, under a tenth of one transfer: the €185 sets the date, not the rate."
+
+practice:
+  kind: growth
+  context: "Your flatmate, back in work, moves €100 each payday for two years at an example 1%."
+  monthly: 100
+  rate: 1
+  years: 2
+  hints:
+    - "Growth is what the balance reaches minus what she moved in herself."
+    - "€2,423 − €2,400."
+    - "€23. Taking 1% of all €2,400 for two years gives €48, but late transfers barely grow."
+
+practiceMore:
+  kind: growth
+  context: "Your €185 each payday for twelve months, at an example 2% instead of 1%."
+  monthly: 185
+  rate: 2
+  years: 1
+  hints:
+    - "Same method: the balance after twelve months minus the €2,220 you moved in."
+    - "€2,240 − €2,220."
+    - "€20. Taking 2% of all €2,220 gives €44, but most transfers grow for only part of the year."
+
+keyIdea: "Goal ÷ months gives the payday transfer. The transfer sets the date; the rate barely moves it."
 
 explorable:
   kind: growth
@@ -41,34 +92,42 @@ explorable:
   rate: 1
   horizons: [1, 2, 3]
   prompts:
-    - "Tap €100 and 1 year, then 2 years. The target of €2,190 is passed in the second year; at €100 a month it takes 22 months. Now tap €250: the target lands inside a year."
-    - "Tap €185 and 1 year, and compare the growth with a single €185 deposit. At an example 1%, the rate adds less than a tenth of one deposit. The deposits do the rest."
+    - "At €100 a month: €1,206 after 12 months, short of €2,190. Tap 2 years: €2,423, past it in month 22."
+    - "Tap €250 a month and 1 year: €3,014, past €2,190 in month 9, and only €14 is growth."
 
-practice:
-  kind: growth
-  context: "Your flatmate, back in work, sets aside €100 a month for 2 years. The 1% a year is an example rate, not a promise."
-  monthly: 100
-  rate: 1
-  years: 2
+takeaways:
+  - "Add up the essentials that arrive with no pay, and multiply by three."
+  - "Divide the goal by the months you allow, and move that amount first on payday."
+  - "Before choosing where it waits, check how fast you can reach it and what protects it."
+
+details:
+  - "Across the EU, 49% of adults aged 18 to 65 do not have enough savings to cover three months of living costs without borrowing. The European Commission gives that figure, from its 2023 survey, in its financial literacy strategy of 30 September 2025."
+  - "In that 2023 survey the youngest adults were the least likely to have a long cushion: 17% of 18 to 24 year olds could cover six months or more, against 40% of those aged 55 and over."
+  - "Every EU country runs its own deposit guarantee scheme under one EU directive. The limit is €100,000 per person, per bank, or the same amount in the national currency."
+  - "Company shares, investment funds and crypto-assets are not bank deposits, so a deposit guarantee does not cover a fall in their value. The EU's separate investor compensation schemes pay out when an investment firm fails to hand back what it holds for you, not when prices fall."
+  - "If whatever holds your money is not a bank, ask how it is protected, and check with your national deposit guarantee scheme or financial regulator."
+  - "Poland, Sweden and Czechia are among the EU countries with their own currencies. There the goal is worked out in złoty, kronor or koruna."
+  - "The sums here add the example rate monthly, a twelfth of the yearly figure each month, and each transfer starts earning in the month after it arrives."
+  - "One month of essentials, €730 here, is a first stop on the way to three."
 
 quiz:
-  - q: "Your buffer has reached €700. The bike you ride to work needs a €220 repair. The shop offers to split it into four payments with nothing extra to pay. What do you do?"
+  - q: "You move to a cheaper room. Your rent share drops to €350; transport €60, phone €20 and food €250 stay the same, and pay is still €1,150. What is your new goal?"
     options:
-      - text: "Split it into four payments so the buffer stays whole"
-        why: "Nothing extra this time, but it is still a debt. Each of the next four months starts €55 short, while the money built for this repair sits unused."
-      - text: "Pay from the buffer, then refill it with the usual amount each month"
-        why: "This is the job the buffer was built for. The balance drops, the repair is done, and the payday habit brings it back up."
-      - text: "Take the €220 from this month's food money"
-        why: "Food is an essential that comes back next week. Cutting it moves the problem into the next few days instead of solving it."
+      - text: "€3,450, three months of pay"
+        why: "Pay did not change, but the buffer never covered pay. It covers the costs that still arrive with no income."
+      - text: "€2,040, three months of the new essentials"
+        why: "€350 + €60 + €20 + €250 is €680 a month. Three of those months is €2,040."
+      - text: "€2,190, the goal you already had"
+        why: "That goal was built on a €400 rent share. The goal moves whenever your essentials do."
     answer: 1
-  - q: "You have set a target of €2,190 and decided to save whatever is left at the end of each month. After two months the buffer holds €0. What do you change?"
+  - q: "Your goal is €2,190, and you give it 18 months instead of 12. A friend says to save whatever is left at the end of each month. What do you set up?"
     options:
-      - text: "Wait for a month with more left over"
-        why: "What is left over is decided by every spend before it, and some months that is nothing. The target has no date this way."
-      - text: "Move a fixed amount on payday, and write down the month it reaches €2,190"
-        why: "The amount moves before spending can decide it. Twelve payments of €185 land in a month you can name in advance."
-      - text: "Raise the target so it feels more important"
-        why: "A larger target changes nothing about what moves each month. It only pushes the date further out."
+      - text: "Whatever is left at the end of each month"
+        why: "What is left is decided by every spend before it, and some months it is nothing. The goal gets no date."
+      - text: "About €122 moved each payday, reaching €2,190 in month 18"
+        why: "€2,190 ÷ 18 is €121.67. Moved first on payday, €122 lands the goal in a month you can name."
+      - text: "€100 each payday, since any regular amount will do"
+        why: "€100 a month reaches €2,190 in month 22, four months after the date you chose."
     answer: 1
   - q: "Your buffer is in a savings account at a bank in Ireland. Separately, an app puts your spare change into investment funds, and one month those funds fall by 10%. A friend says the €100,000 guarantee covers that loss. How do you read it?"
     options:
@@ -79,23 +138,13 @@ quiz:
       - text: "Right, as long as the app is based in the EU"
         why: "Where the app is based does not change what the money is. Funds that lost value are an investment loss, not a failed bank."
     answer: 1
-  - q: "You built a buffer in Vienna, and now you are moving to Stockholm for a job. Rent is higher, and you will be paid in Swedish kronor. What happens to your three-month target?"
-    options:
-      - text: "Keep the old euro target, since it is already worked out"
-        why: "The target is three months of your essentials. A new rent and a new currency make a new number."
-      - text: "Work it out again from your new monthly essentials, in kronor"
-        why: "The idea travels, but the number does not. Sweden is outside the euro, so the new target is three months of Swedish costs, in kronor."
-      - text: "Drop the target until you understand the Swedish rules"
-        why: "Some rules do differ between countries, and they are worth checking. Setting money aside each month does not have to wait for that."
-    answer: 1
 
 transfer:
   - "The day a wage, an apprentice payment or a grant lands. Move the buffer amount first, before the first spend."
   - "When a repair, a deposit on a room or a gap between contracts comes up. That is what the buffer is for, and then it refills."
   - "When you move city or country, or your rent changes. Work the three months out again, in the local currency."
-  - "When something holding your money is not a bank. Ask how the money is protected, and check with your national deposit guarantee scheme or financial regulator."
 
-glossary: [overdraft, emergency-fund, net-pay, needs-and-wants, interest, inflation, liquidity, deposit-guarantee, investment-fund, crypto-asset]
+glossary: [emergency-fund, overdraft, net-pay, interest, liquidity, deposit-guarantee, investment-fund]
 tool: savings
 
 sources:
@@ -111,77 +160,21 @@ sources:
   - title: "Deposit guarantee schemes: the EU directive, applied by every member state (page dated 17 July 2026)"
     url: "https://finance.ec.europa.eu/banking/banking-regulation/deposit-guarantee-schemes_en"
     publisher: "European Commission"
+  - title: "Investor compensation schemes: they pay out when an investment firm fails to return a client's assets, and do not cover investment risk such as shares falling in value (accessed 22 September 2026)"
+    url: "https://finance.ec.europa.eu/financial-markets/financial-markets-policy/securities-markets/investor-compensation-schemes_en"
+    publisher: "European Commission"
 ---
 
-## The month with no income
+## The goal, and the date
 
-Across the EU, 49% of adults aged 18 to 65 do not have enough savings to cover three months of living costs. The European Commission published that figure in September 2025.
+An <Term id="emergency-fund">emergency fund</Term>, or buffer, pays the month when income stops. Without one, that month goes on an <Term id="overdraft">overdraft</Term> or loan.
 
-The Commission's 2023 survey shows the gap is widest for the youngest adults. Only 17% of 18 to 24 year olds could cover six months or more, against 40% of people aged 55 and over.
+Size it from essentials, not <Term id="net-pay">net pay</Term>: the rent share, transport, phone and food that still arrive with no pay. Three months of those is the goal: €730 × 3 = €2,190, not €3,450.
 
-Your flatmate has no buffer. The rent share is due on the 1st, and the gap gets filled with debt: an <Term id="overdraft">overdraft</Term>, instalments at the checkout, or a loan from a friend.
-
-An <Term id="emergency-fund">emergency fund</Term>, or buffer, is money kept for that month. **Its job is to pay the essentials when income stops.**
-
-## Three months of what
-
-The target is three months of essentials, not three months of pay. Essentials are the costs that arrive whether or not you are earning: your rent share, transport, your phone and food. The rest of your <Term id="needs-and-wants">needs and wants</Term> can wait or shrink in a bad month.
-
-Say your <Term id="net-pay">net pay</Term> is €1,150 a month and your essentials come to €730. Three months of pay would be €3,450. Three months of essentials is €2,190, and that is the target.
-
-| Essential | Per month |
-| --- | --- |
-| Rent share | €400 |
-| Transport pass | €60 |
-| Phone | €20 |
-| Food | €250 |
-| One month of essentials | €730 |
-| Three months of essentials | €2,190 |
-
-**The number is yours, and it moves with you.** Rent differs between cities and countries. Poland, Sweden and Czechia have their own currencies, so there the target is in złoty, kronor or koruna.
-
-## A monthly amount and a date
-
-A target of €2,190 on its own has no date. Divide it by the months you give it, and it becomes a monthly amount and a date. Twelve months means about €185 a month. At €100 a month it takes 22 months. At €250 a month, nine.
-
-<svg class="chart" viewBox="0 0 320 158" role="img" aria-labelledby="months-title months-desc">
-  <title id="months-title">Months to reach €2,190 at three monthly amounts</title>
-  <desc id="months-desc">Three bars. €100 a month takes 22 months. €185 a month takes 12 months. €250 a month takes 9 months.</desc>
-  <rect class="chart-a" x="0" y="22" width="320" height="22" rx="6" />
-  <rect class="chart-a" x="0" y="66" width="175" height="22" rx="6" />
-  <rect class="chart-a" x="0" y="110" width="131" height="22" rx="6" />
-  <text class="chart-label" x="0" y="16">€100 a month: 22 months</text>
-  <text class="chart-label" x="0" y="60">€185 a month: 12 months</text>
-  <text class="chart-label" x="0" y="104">€250 a month: 9 months</text>
-  <text class="chart-note" x="0" y="152">Months to €2,190, with no interest counted</text>
-</svg>
-
-| Each month | Months to €2,190 |
-| --- | --- |
-| €100 | 22 |
-| €185 | 12 |
-| €250 | 9 |
-
-**Move the amount on payday, before the first spend, so saving is not whatever is left over.** Left over is decided by every purchase before it, and some months it is nothing.
-
-One month of essentials, €730, is a useful first target on the way to three.
-
-## Why the rate is not the plan
-
-The calculation above uses a rate of 0% on purpose. It shows what the monthly amount does by itself: €185 a month is past €2,190 inside a year, with no help from <Term id="interest">interest</Term>.
-
-Whatever an account pays comes on top, and at the rates a buffer usually earns, it is small. In the practice step below, an example 1% over two years adds less than one month's deposit.
-
-Prices rise too. A low rate may not keep up with <Term id="inflation">inflation</Term>, which the lesson on inflation takes further. For this money, that is the price of knowing it is there. **The rate decides very little here. The amount and the months decide the date.**
+Divide the goal by the months you give it: €2,190 ÷ 12 is about €185, moved on payday before spending decides what is left. <Term id="interest">Interest</Term> adds little.
 
 ## Where it waits
 
-Two things matter about where a buffer waits. You can reach the money within a day or two, which is <Term id="liquidity">liquidity</Term>, and the amount does not rise and fall while it sits there. Keeping it apart from spending money makes it harder to spend by accident.
+It must be reachable within a day or two, which is <Term id="liquidity">liquidity</Term>, and steady in value.
 
-**Where exactly it waits is your decision.** This lesson describes what is protected and what is not, and leaves the choice with you.
-
-## What the guarantee covers
-
-In every EU country, money in a bank account is covered by a <Term id="deposit-guarantee">deposit guarantee</Term>. If the bank fails, the national scheme pays it back. The limit is €100,000 for each person at each bank, or that figure converted into the national currency. Each country runs its own scheme under one EU rule.
-
-Company shares, <Term id="investment-fund">investment funds</Term> and <Term id="crypto-asset">crypto-assets</Term> are not bank deposits. Their value can fall on the day you need the money, and the guarantee does not cover a fall in value. If the place holding your money is not a bank, ask how it is protected, and check with your national scheme or financial regulator.
+In every EU country, a <Term id="deposit-guarantee">deposit guarantee</Term> covers bank accounts. If the bank fails, a national scheme repays up to €100,000 per person, per bank. <Term id="investment-fund">Investment funds</Term> are not deposits. Their value can fall, and no guarantee covers that.

@@ -1,102 +1,150 @@
 ---
 title: "Starting a credit file without paying interest"
-summary: "What a credit file records, what moves a score, and why a balance carried past the due date costs money."
+summary: "What starts a credit file, what a score reads, and what a $400 card balance costs if it carries."
 region: us
 track: money-basics
 order: 3
-readingMinutes: 6
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "The rental application for your first apartment asks to run a credit check. You are 18, you have never had a card or a loan, and there is nothing on file to check."
+objectives:
+  - "Pay a card statement so it is reported on time and costs no interest."
+  - "Pay for a big cost so the share of your card's limit in use stays low."
+  - "Get your own credit reports free, from the one site authorized to give them."
 
-prediction:
-  q: "The check comes back with no file at all. Which of these would put a record on file over the next year?"
-  options:
-    - text: "Paying rent and your phone bill on time from checking"
-      why: "The CFPB says most utility and phone companies do not send payment history to the bureaus. For rent, its advice is to ask the landlord whether they join a rent-reporting program."
-    - text: "An account a lender reports to the bureaus each month, paid on time"
-      why: "A file is built from reported accounts. Scores read how those accounts are handled over time, so the record has to run for months before it says much."
-    - text: "Checking your own report every week"
-      why: "Looking at your own report is a soft inquiry. It is not an application, so it adds nothing to the file and lowers nothing."
-  answer: 1
+situation: "Your first card statement says $400, due 12 October. Paid in full by then, it costs nothing; cleared in 12 payments at an example 27.5% a year, it costs $62."
 
-takeaways:
-  - "A credit file records accounts that lenders report: what you owe, your limit, and whether each payment arrived on time. A score is a formula run on that file."
-  - "Paying on time counts most, and the CFPB says to keep balances low against your limits. Several applications close together can read to a lender as financial strain."
-  - "Interest is charged on a balance carried past the due date. On most cards, the statement balance paid in full by that date leaves no interest to charge on purchases."
+document:
+  kind: statement
+  title: "Your first card statement"
+  lines:
+    - { label: "Statement balance", value: "$400.00", hint: "Everything charged this cycle. Paid in full by the due date, the purchases on it cost no interest." }
+    - { label: "Minimum payment due", value: "$25.00", hint: "The least that counts as on time. Whatever you leave unpaid carries over and collects interest." }
+    - { label: "Payment due date", value: "12 October", hint: "Pay at least the minimum by this date, or the payment is late. The card reports on-time and late payments to the credit bureaus." }
+    - { label: "Credit limit", value: "$1,000.00", hint: "The most the card lends at one time. Borrowed money, not money you have." }
+    - { label: "Available credit", value: "$600.00", hint: "The limit minus what you owe now: how much more the card would lend." }
+    - { label: "Purchase APR", value: "27.5%", hint: "The yearly rate on any balance you carry. An example; your card prints its own." }
+    - { label: "Interest charged", value: "$0.00", hint: "Nothing yet. This is your first statement, so no balance has carried over." }
+    - { label: "Paying only the minimum", value: "Costs more, takes longer", hint: "Each statement must show how long the minimum alone takes to clear the balance. The part left unpaid collects interest." }
+  find:
+    q: "Which amount, paid by 12 October, keeps these purchases free of interest?"
+    options:
+      - text: "Minimum payment due, $25"
+        why: "On time, so the record stays clean, but the other $375 carries over and collects interest."
+      - text: "Statement balance, $400"
+        why: "All of it by the due date: reported on time, and the purchases cost nothing extra."
+      - text: "Available credit, $600"
+        why: "That is how much more the card would lend. It is not something you owe."
+    answer: 1
+
+video:
+  youtubeId: "YoOsvcxLy40"
+  title: "A Tale of Two Credit Scores | Teacher Resources | Financial Literacy | Khan Academy"
+  channel: "Khan Academy"
+  minutes: 7
+  note: "Example rates only; no product is named."
 
 worked:
   kind: loan
-  context: "A $1,000 balance left on a card and cleared over 12 equal payments. The rate is an example: 27.5% is the average APR the CFPB reported for new general purpose accounts opened in 2024. Paying the statement balance in full by the due date instead would cost none of this."
-  principal: 1000
+  context: "The $400 statement, carried and cleared in 12 equal payments at the example rate."
+  principal: 400
   rate: 27.5
   months: 12
-
-explorable:
-  kind: loan
-  principal: 1000
-  rate: 27.5
-  terms: [6, 12, 24, 36]
-  prompts:
-    - "Tap 6 months, then 36. The monthly payment gets smaller and the cost of borrowing gets bigger, on the same $1,000."
-    - "Find the shortest term whose monthly payment you could cover from your own income. Of the four, that one costs the least in total."
+  captions:
+    - "Paid to the card company each month for a year."
+    - "Everything you hand the card company over the year."
+    - "The card company's interest. Paid in full by the due date, this line is $0."
 
 practice:
   kind: loan
-  context: "A friend has a $600 balance on a card at 24% a year, an example rate, and clears it over 12 equal payments. Work out the last line: what does borrowing the $600 cost in total?"
+  context: "A friend carries a $600 balance at an example 24% a year and clears it in 12 equal payments."
   principal: 600
   rate: 24
   months: 12
+  hints:
+    - "Multiply the monthly payment by the number of months, then take off the $600 borrowed."
+    - "$56.74 × 12 = $680.88, then $680.88 − $600."
+    - "$80.88. Charging 24% on the full $600 for a year gives $144, but each payment shrinks what is owed."
+
+practiceMore:
+  kind: loan
+  context: "A cousin carries $900 at an example 27.5% and clears it in 6 equal payments."
+  principal: 900
+  rate: 27.5
+  months: 6
+  hints:
+    - "The same method: the monthly payment times six, minus what was borrowed."
+    - "$162.26 × 6 = $973.56, then $973.56 − $900."
+    - "$73.56. Charging 27.5% on the full $900 for six months gives $123.75, but each payment shrinks what is owed."
+
+keyIdea: "Carrying a balance buys interest, not a better record; paid in full by the due date, the last line is $0."
+
+explorable:
+  kind: loan
+  principal: 400
+  rate: 27.5
+  terms: [6, 12, 24, 36]
+  prompts:
+    - "Tap 12 months: about $39 a month and $62 of interest, against $0 paid in full."
+    - "Tap 24 months: the payment falls to $22, and the interest doubles to $124."
+
+takeaways:
+  - "Pay each statement balance in full by its due date."
+  - "Keep the balance low against the limit; apply for credit only when you need it."
+  - "Read your reports free at annualcreditreport.com, typed in yourself, and dispute any error."
+
+details:
+  - "The 27.5% rate is the average APR the Consumer Financial Protection Bureau (CFPB) reported for new general purpose card accounts opened in 2024, in its December 2025 report to Congress. Here it is an example."
+  - "Card companies do not have to offer a grace period, but most cards have one: pay the statement balance in full by the due date and purchases carry no interest. Leave part unpaid and interest runs on it, and new purchases collect interest from the day they are made (CFPB)."
+  - "The US has three nationwide credit bureaus, and their reports on you may not match. Most scores run from 300 to 850, and a score can differ by formula, by the bureau's data and by the day it is worked out."
+  - "The CFPB says most utility and phone companies do not send payment history to the bureaus. For rent, its advice is to ask your landlord whether they take part in a rent-reporting program."
+  - "The CFPB's advice for a good score: pay on time, keep balances low against your limits, let your history grow, and apply only for credit you need. Several applications close together can read to a lender as financial strain."
+  - "The CFPB lists 'carrying a balance improves my score' among credit score myths, and says paying in full each month does the most for a score."
+  - "Negative marks, such as a payment reported late, can generally stay on a report for seven years."
+  - "Each nationwide bureau gives a free report once a week, which the Federal Trade Commission (FTC) says is now permanent. The one authorized site for them is annualcreditreport.com."
+  - "If a report is wrong, tell both the bureau and the company that reported it. Both have to correct errors free, and the bureau has 30 days to investigate (FTC)."
+  - "Every rate and figure in this lesson is an example. Your own card prints its own terms."
 
 quiz:
-  - q: "Your statement shows $400 due on the 12th, and you have $450 in checking. A friend says to pay $380 and leave $20, so the card has something to report. What do you do?"
+  - q: "Your statement shows $400 due on 12 October, and you have $450 in checking. A friend says to pay $380 and leave $20, so the card has something to report. What do you do?"
     options:
-      - text: "Leave the $20, so there is activity on the account"
-        why: "The account is reported either way. That $20 carried past the due date is what starts interest, and new purchases then collect interest from the moment each one is made."
-      - text: "Pay the whole $400 by the 12th"
-        why: "The statement balance paid in full by its due date is reported as on time, and on most cards there is then no interest on purchases."
-      - text: "Pay the minimum and keep the rest in checking"
-        why: "On time, so the record stays clean, but the unpaid part carries. Interest then runs on it and on anything bought after it."
+      - text: "Leave the $20, so there is activity to report"
+        why: "The card reports the account either way. The $20 left over collects interest, and so do new purchases from the day you make them."
+      - text: "Pay the whole $400 by 12 October"
+        why: "Paid in full by the due date, the account is reported on time and the purchases cost no interest."
+      - text: "Pay the $25 minimum and keep the rest in checking"
+        why: "On time, so the record stays clean, but $375 carries over and collects interest at the example 27.5%."
     answer: 1
-  - q: "You were approved for a first card in March. In April a store offers 15% off a $90 order for opening its card, and in May a phone deal offers the same. What do you do?"
+  - q: "Next month a $450 repair comes up. Your card's limit is $1,000 and nothing else is on it. You can put all $450 on the card, or pay $250 from checking and $200 on the card. You pay the statement in full either way. Which reads better on your file?"
     options:
-      - text: "Take both offers, since the money off is real"
-        why: "The trade is two applications, and so two hard inquiries, plus two brand-new accounts, for $13.50 a time on a file whose value is months of steady history."
-      - text: "Use the card you already have and skip both"
-        why: "No application means no inquiry. Months of on-time payments on one reported account is what gives a thin file something to score."
-      - text: "Take one now and the other in three months"
-        why: "Spacing them leaves fewer applications close together, but the second account is still new, and a young file mostly needs time to pass."
+      - text: "All $450 on the card, since it is paid in full anyway"
+        why: "Paying in full keeps the payment record clean both ways. The difference is the share of the limit in use: $450 of $1,000 is 45%."
+      - text: "Split it, so the card carries $200 of the $1,000 limit"
+        why: "$200 is 20% of the limit, against 45%. A score reads a lower share as less stretched."
+      - text: "Neither, because using a card at all reads badly"
+        why: "Using a reported account and clearing it is how a history gets built. A balance close to the limit is what reads as stretched."
     answer: 1
-  - q: "You search for your free credit report. The top result is an ad for a site offering a free score if you enter a card number for a $1 verification. What do you do?"
+  - q: "You search for your free credit report. The top result is an ad offering a free score if you enter a card number for a $1 verification. What do you do?"
     options:
       - text: "Use it, since $1 is nothing"
-        why: "The reports federal law entitles you to cost nothing, so no payment is needed. A site charging for one is selling a service of its own."
+        why: "The reports the law entitles you to are free at the one authorized site. A site asking for a card number is selling something else."
       - text: "Type annualcreditreport.com yourself and read the reports there"
-        why: "The FTC names it as the one authorized site for those free reports. Look-alike sites register near-misses of that address and wait for a typing slip."
+        why: "It is the one site authorized to give the free reports. Look-alike sites register near-misses of the address and wait for a typing slip."
       - text: "Skip it, because checking lowers your score"
-        why: "Checking your own report is a soft inquiry and never lowers a score. Not looking only hides errors that could be corrected free."
-    answer: 1
-  - q: "You need a $450 part and your only card has a $600 limit. You could put the whole $450 on the card and pay the statement in full, or pay $250 from checking and put $200 on the card. Which reads better?"
-    options:
-      - text: "The whole $450 on the card, since the statement is paid in full either way"
-        why: "Paying in full keeps the payment record clean both ways, so that is not the difference. The difference is the share of the limit used: $450 of $600 is 75%."
-      - text: "Split it, so the card carries $200 of the $600 limit"
-        why: "$200 of $600 is about 33%, against 75% for the whole part. The CFPB says to keep balances low against your limits."
-      - text: "Neither, because using a card at all reads badly"
-        why: "Using a reported account and clearing it is how a history gets built. It is a balance sitting close to the limit that reads as stretched."
+        why: "Checking your own report is a soft inquiry and never lowers a score. Not looking only hides errors you could have corrected free."
     answer: 1
 
 transfer:
-  - "When you apply to rent. A landlord may read a credit report, and an empty file is not a bad one. Ask what else they accept, such as proof of income, or someone who signs the lease with you."
-  - "Each time a card statement arrives. The statement balance paid in full by the due date is what keeps purchases free of interest."
-  - "When a checkout offers money off for opening an account. That is an application, and it leaves a hard inquiry on the report."
-  - "Once a week, free, at annualcreditreport.com. Reading your own reports is how an error gets found, and having one corrected costs nothing."
+  - "When a landlord runs a credit check. No file is not a bad file; ask what else they accept, such as proof of income."
+  - "Each time a card statement arrives: the statement balance, paid in full by the due date."
+  - "When a checkout offers money off for opening a store card. That is an application, and it adds a hard inquiry."
+  - "Any week you like, free, at annualcreditreport.com, typed in yourself."
 
-glossary: [credit-invisible, credit-bureau, credit-report, credit-score, credit-limit, credit-utilization, hard-inquiry, soft-inquiry, statement-balance, apr]
-
+glossary: [credit-invisible, credit-bureau, credit-report, credit-limit, credit-score, credit-utilization, hard-inquiry, soft-inquiry, statement-balance, apr]
 tool: loan
 
 sources:
@@ -127,6 +175,12 @@ sources:
   - title: "The Consumer Credit Card Market: report to Congress, page 5 (published 30 December 2025)"
     url: "https://files.consumerfinance.gov/f/documents/cfpb_consumer-credit-card-market-report_2025.pdf"
     publisher: "Consumer Financial Protection Bureau"
+  - title: "Credit score myths that might be holding you back from improving your credit: paying in full every month is the best way to build a score (15 January 2019)"
+    url: "https://www.consumerfinance.gov/archive/blog/credit-score-myths-might-be-holding-you-back-improving-your-credit/"
+    publisher: "Consumer Financial Protection Bureau, blog"
+  - title: "The payoff box on a card bill: each statement shows how long paying only the minimum takes (last reviewed 22 January 2024)"
+    url: "https://www.consumerfinance.gov/ask-cfpb/a-box-on-my-credit-card-bill-says-that-i-will-pay-off-the-balance-in-three-years-if-i-pay-a-certain-amount-what-does-that-mean-do-i-have-to-pay-that-much-if-i-pay-that-much-and-make-new-purchases-will-i-still-owe-nothing-after-three-years-en-36/"
+    publisher: "Consumer Financial Protection Bureau"
   - title: "Free credit reports: weekly reports and the one authorized site (June 2026)"
     url: "https://consumer.ftc.gov/articles/free-credit-reports"
     publisher: "Federal Trade Commission, consumer advice"
@@ -135,63 +189,10 @@ sources:
     publisher: "Federal Trade Commission, consumer advice"
 ---
 
-## An empty file is not a bad score
+## What starts a file
 
-If you have never borrowed, a credit check comes back with almost nothing. That is being <Term id="credit-invisible">credit invisible</Term>: no history with any of the three nationwide bureaus, and nothing to score.
+With no card or loan, you are <Term id="credit-invisible">credit invisible</Term>: no file yet, not a bad one. A file starts when a lender reports an account to a <Term id="credit-bureau">credit bureau</Term>. A debit card lends nothing, so it reports nothing. Your <Term id="credit-report">credit report</Term> then shows the balance, the <Term id="credit-limit">credit limit</Term> and whether each payment was on time. A <Term id="credit-score">credit score</Term> is a formula run on it. Paying on time counts most; a low <Term id="credit-utilization">credit utilization</Term>, the share of the limit in use, helps too. Applying adds a <Term id="hard-inquiry">hard inquiry</Term>, which can lower a score a little; reading your own report is a <Term id="soft-inquiry">soft inquiry</Term>, which never does.
 
-A file starts when a lender reports an account to a <Term id="credit-bureau">credit bureau</Term>. A debit card moves money you already have, so there is no borrowing to report. The CFPB says most utility and phone companies send no payment history either. For rent, its advice is to ask your landlord whether they join a rent-reporting program.
+## Where interest starts
 
-**What a file needs is one account that gets reported, paid on time, month after month.** After that, what matters is time. Scores read how accounts are handled over months and years.
-
-## What the file records
-
-A <Term id="credit-report">credit report</Term> lists each reported account: what you owe, your <Term id="credit-limit">credit limit</Term>, and whether each payment arrived on time.
-
-A <Term id="credit-score">credit score</Term> is a formula run on that report. The CFPB calls it a prediction of how you handle credit, starting with whether a loan gets repaid on time. Most scores run from 300 to 850.
-
-**You have several scores, not one.** Different formulas, and different bureaus, give different numbers on the same day.
-
-Negative marks, such as a payment reported late, can generally stay for seven years. On-time payments can stay while you keep paying, which is why time does so much of the work here.
-
-## What moves the number
-
-| What the score reads | Helps | Hurts |
-| --- | --- | --- |
-| Payment history | Every payment by its due date | A payment reported late |
-| Share of limits in use | Small balances, cleared monthly | Balances close to the limit |
-| Age of accounts | Accounts kept open for years | Several accounts opened at once |
-| New applications | Applying only when you need to | Applications close together |
-
-The share of your limits you are using is your <Term id="credit-utilization">credit utilization</Term>. On a $600 limit, a $120 balance is 20% and a $480 balance is 80%. The second reads as stretched, even when every payment is on time.
-
-Applying for credit adds a <Term id="hard-inquiry">hard inquiry</Term>. **Several applications close together can read to a lender as financial strain, the CFPB warns.** Checking your own report is a <Term id="soft-inquiry">soft inquiry</Term> and changes nothing.
-
-<svg class="chart" viewBox="0 0 320 150" role="img" aria-labelledby="util-title util-desc">
-  <title id="util-title">The same $600 limit, used two ways</title>
-  <desc id="util-desc">Two bars, each standing for a $600 credit limit. On the first, $120 is used and $480 is still free, which is 20 percent in use. On the second, $480 is used and $120 is still free, which is 80 percent in use.</desc>
-  <text class="chart-label" x="0" y="14">$120 used of $600: 20%</text>
-  <rect class="chart-b" x="0" y="22" width="60" height="30" rx="6" />
-  <rect class="chart-a" x="64" y="22" width="256" height="30" rx="6" />
-  <text class="chart-label" x="0" y="80">$480 used of $600: 80%</text>
-  <rect class="chart-b" x="0" y="88" width="252" height="30" rx="6" />
-  <rect class="chart-a" x="256" y="88" width="64" height="30" rx="6" />
-  <text class="chart-note" x="0" y="144">Left part of each bar: used. Right part: still free.</text>
-</svg>
-
-## Interest starts when a balance carries
-
-A card statement shows a <Term id="statement-balance">statement balance</Term> and a due date. On most cards you can pay that balance in full by the due date and owe no interest on purchases.
-
-Leave any part of it and two things happen. Interest runs on the unpaid part, and anything you buy after that starts collecting interest the moment you buy it.
-
-The <Term id="apr">APR</Term> is the yearly rate that interest is charged at. On new general purpose card accounts opened in 2024, the CFPB reported an average APR of 27.5%.
-
-**A carried balance is not how a file gets built.** The account is reported either way.
-
-## Reading your own file, free
-
-Each of the three nationwide bureaus lets you pull your report once a week at no charge. The FTC says that has been made permanent. Those reports come from one place: annualcreditreport.com.
-
-Look-alike sites register near-misses of that address, so it is worth typing the address rather than tapping an ad. Anything asking for payment is selling a service of its own.
-
-**If something on a report is wrong, tell the bureau and the company that reported it.** The FTC says both have to correct an error, both have to do it free, and the bureau has 30 days to investigate.
+Pay the whole <Term id="statement-balance">statement balance</Term> by the due date and, on most cards, purchases cost no interest. Leave any part and the card's <Term id="apr">APR</Term> applies to it, and to new purchases from the day you make them. The account is reported either way.
