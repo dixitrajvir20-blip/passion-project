@@ -30,8 +30,11 @@ export const site = {
   accountsEnabled: import.meta.env.PUBLIC_ACCOUNTS_ENABLED === 'true',
   /** Cookieless analytics stay off until documented on the privacy page. */
   analyticsEnabled: import.meta.env.PUBLIC_ANALYTICS_ENABLED === 'true',
-  /** Third-party embeds (YouTube etc.) load only behind a click and only with consent. */
-  embedsEnabled: import.meta.env.PUBLIC_EMBEDS_ENABLED === 'true',
+  /**
+   * Lesson videos (YouTube, privacy-enhanced player) load only behind a tap and only with consent.
+   * On by default since 21 Sep 2026, when every lesson gained a teaching video; PUBLIC_EMBEDS_ENABLED=false turns it off.
+   */
+  embedsEnabled: import.meta.env.PUBLIC_EMBEDS_ENABLED !== 'false',
 };
 
 /**

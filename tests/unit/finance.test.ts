@@ -7,6 +7,7 @@ import {
   compoundGrowth,
   sideHustleProfit,
   budgetSplit,
+  deductions,
 } from '../../src/lib/finance';
 import { money, number, parseAmount, localeByCode, DEFAULT_LOCALE } from '../../src/lib/format';
 
@@ -207,5 +208,24 @@ describe('amortization', () => {
   it('returns nothing for a loan with no term or no amount', () => {
     expect(amortization(1000, 5, 0)).toEqual([]);
     expect(amortization(0, 5, 12)).toEqual([]);
+  });
+});
+
+describe('deductions', () => {
+  it('walks a payslip from CTC to in-hand one line at a time', () => {
+    const r = deductions(35000, [
+      { label: "Employer's EPF share", amount: 2100 },
+      { label: 'Your EPF share', amount: 2100 },
+      { label: 'Professional tax', amount: 200 },
+    ]);
+    expect(r.running).toEqual([32900, 30800, 30600]);
+    expect(r.deducted).toBe(4400);
+    expect(r.net).toBe(30600);
+  });
+
+  it('keeps cents honest', () => {
+    const r = deductions(1600, [{ label: 'Social Security', amount: 99.2 }, { label: 'Medicare', amount: 23.2 }]);
+    expect(r.running).toEqual([1500.8, 1477.6]);
+    expect(r.net).toBe(1477.6);
   });
 });

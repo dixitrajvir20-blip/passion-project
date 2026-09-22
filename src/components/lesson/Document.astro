@@ -1,0 +1,49 @@
+---
+/**
+ * The real artefact the lesson is about, drawn in tokens: a payslip, a pay stub, a loan
+ * key-facts sheet, a platform payout, an aid letter. Each line can carry a plain-language hint
+ * the reader opens in place. The same rule as MockScreen: never a screenshot, never a real
+ * employer, bank, app or regulator name or mark; an accurate-looking fake of a real brand is
+ * impersonation and teaches the wrong tell.
+ */
+interface Props {
+  kind: 'payslip' | 'statement' | 'offer' | 'loan-sheet' | 'payout' | 'app-screen';
+  title: string;
+  lines: { label: string; value: string; hint?: string }[];
+}
+
+const { kind, title, lines } = Astro.props;
+const kindLabel = {
+  payslip: 'Payslip',
+  statement: 'Statement',
+  offer: 'Offer letter',
+  'loan-sheet': 'Key facts sheet',
+  payout: 'Payout statement',
+  'app-screen': 'App screen',
+}[kind];
+---
+
+<figure class="doc" data-doc-kind={kind}>
+  <figcaption class="doc-head">
+    <span class="doc-kind">{kindLabel}</span>
+    <span class="doc-title">{title}</span>
+    <span class="doc-note">A made-up document for practice</span>
+  </figcaption>
+  <dl class="doc-lines">
+    {lines.map((line) => (
+      <div class="doc-line">
+        <dt class="doc-label">
+          {line.hint ? (
+            <details class="doc-hint">
+              <summary>{line.label}</summary>
+              <p>{line.hint}</p>
+            </details>
+          ) : (
+            line.label
+          )}
+        </dt>
+        <dd class="doc-value numbers">{line.value}</dd>
+      </div>
+    ))}
+  </dl>
+</figure>

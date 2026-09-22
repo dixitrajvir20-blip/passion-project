@@ -108,12 +108,16 @@ test('the explorable answers in a sentence and hands off to the full calculator'
   // The explorable hydrates when the reader gets near it (client:visible), not at page load.
   await explorer.scrollIntoViewIfNeeded();
   await waitForIslands(page);
-  await explorer.getByRole('button', { name: '₹1,500' }).click();
+  // Every key says what it is, not a bare number.
+  await explorer.getByRole('button', { name: '₹1,500 per student' }).click();
   await expect(explorer).toContainText('15 students'); // 18,000 ÷ (1,500 − 300)
-  await expect(explorer.getByRole('button', { name: '₹1,500' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(explorer.getByRole('button', { name: '₹1,500 per student' })).toHaveAttribute('aria-pressed', 'true');
 
-  await explorer.getByRole('button', { name: '₹1,200' }).click();
+  await explorer.getByRole('button', { name: '₹1,200 per student' }).click();
   await expect(explorer).toContainText('20 students'); // a fifth off the fee needs five more students
+  // The answer names the lever and the effect, and a second line says what moved since the last tap.
+  await expect(explorer.locator('.explorer-result')).toContainText('At ₹1,200 per student, each student leaves ₹900, so the month needs 20 students');
+  await expect(explorer.locator('.explorer-change')).toHaveText('That is 5 more students than at ₹1,500.');
 
   await explorer.getByRole('link', { name: /full calculator/ }).click();
   await expect(page).toHaveURL(/in\/tools\/break-even\/?\?.*price=1200/);
@@ -127,7 +131,7 @@ test('a price that only covers the cost of the sale says so instead of printing 
   await explorer.scrollIntoViewIfNeeded();
   await waitForIslands(page);
 
-  await explorer.getByRole('button', { name: '€27', exact: true }).click(); // the same as the cost of one
+  await explorer.getByRole('button', { name: '€27 per repair', exact: true }).click(); // the same as the cost of one
   await expect(explorer).toContainText('Never');
   await expect(explorer).toContainText('Selling more only loses more');
 });
@@ -269,22 +273,32 @@ test('the scam lesson ends with the official reporting route, as a tappable numb
   await expect(report.getByRole('link', { name: 'cybercrime.gov.in' })).toHaveAttribute('href', /^https:\/\/cybercrime\.gov\.in/);
 });
 
-test('the payslip lesson has a working split explorer that reports without judging', async ({ page }) => {
-  await page.goto('in/learn/money-basics/first-payslip');
+// The split explorer is tested on the moving-out lesson, whose four lines leave a fifth of the
+// month without a job. (The India payslip lesson is moving to a payslip explorable.)
+const SPLIT_LESSON = 'eu/learn/money-basics/moving-out';
+
+test('the moving-out lesson has a working split explorer that reports without judging', async ({ page }) => {
+  await page.goto(SPLIT_LESSON);
   const explorer = page.locator('.explorer');
   await explorer.scrollIntoViewIfNeeded();
   await waitForIslands(page);
-  await explorer.getByRole('button', { name: '₹35,000' }).click();
-  await expect(explorer).toContainText('₹10,500'); // rent and bills at 30% of 35,000
+  await explorer.getByRole('button', { name: '€1,400' }).click();
+  await expect(explorer).toContainText('€560'); // rent and bills at 40% of 1,400
+  // The answer names the total the lines add up to; the change line names the lever and its effect.
+  await expect(explorer.locator('.explorer-result')).toHaveText('The lines add up to €1,120, so €280 of the €1,400 is not given a job yet.');
+  await expect(explorer.locator('.explorer-change')).toHaveText('That is €275 more coming in than at €1,125, and €56 more is left without a job.');
 
-  // The five lines come to 75%, so six nudges of 5% push the plan past what came in.
-  for (let i = 0; i < 6; i++) await explorer.getByRole('button', { name: 'More for Savings' }).click();
+  // The step is on the button, and one tap moves the line by exactly that much.
+  await explorer.getByRole('button', { name: '+5% for Savings' }).click();
+  await expect(explorer.locator('.explorer-change')).toHaveText('That is €70 more for Savings than at 10%, and €70 less is left without a job.');
+  // The four lines come to 80%, so five nudges of 5% push the plan past what came in.
+  for (let i = 0; i < 4; i++) await explorer.getByRole('button', { name: '+5% for Savings' }).click();
   await expect(explorer).toContainText(/more than came in/);
-  await expect(explorer).not.toContainText(/too much|should/i);
+  await expect(explorer).not.toContainText(/too much|should|better|worse/i);
 });
 
 test('the split explorer rows and the leftover always add back to what came in', async ({ page }) => {
-  await page.goto('in/learn/money-basics/first-payslip');
+  await page.goto(SPLIT_LESSON);
   const explorer = page.locator('.explorer');
   await explorer.scrollIntoViewIfNeeded();
   await waitForIslands(page);
@@ -293,29 +307,29 @@ test('the split explorer rows and the leftover always add back to what came in',
   // these disagree by a rupee, which is exactly the kind of sum this site cannot get wrong.
   const rupees = async (loc: ReturnType<typeof page.locator>) =>
     (await loc.allTextContents()).map((t) => Number(t.replace(/[^0-9]/g, '')));
-  for (const income of ['₹35,000', '₹30,600', '₹15,300']) {
+  for (const income of ['€1,400', '€1,125', '€900']) {
     await explorer.getByRole('button', { name: income }).click();
     const rows = await rupees(explorer.locator('.split-amount'));
-    const left = Number((await explorer.locator('.explorer-says').textContent())!.replace(/[^0-9]/g, ''));
+    const left = Number((await explorer.locator('.explorer-result [data-left]').textContent())!.replace(/[^0-9]/g, ''));
     const total = Number(income.replace(/[^0-9]/g, ''));
     expect(rows.reduce((sum, n) => sum + n, 0) + left).toBe(total);
   }
 });
 
-test('the payslip split opens in the budget planner with the same numbers', async ({ page }) => {
-  await page.goto('in/learn/money-basics/first-payslip');
+test('the moving-out split opens in the budget planner with the same numbers', async ({ page }) => {
+  await page.goto(SPLIT_LESSON);
   const explorer = page.locator('.explorer');
   await explorer.scrollIntoViewIfNeeded();
   await waitForIslands(page);
-  await explorer.getByRole('button', { name: '₹35,000' }).click();
+  await explorer.getByRole('button', { name: '€1,400' }).click();
   await explorer.getByRole('link', { name: /budget planner/ }).click();
-  await expect(page).toHaveURL(/in\/tools\/budget\/?\?/);
+  await expect(page).toHaveURL(/eu\/tools\/budget\/?\?/);
   await waitForIslands(page);
-  await expect(page.getByLabel('What comes in each month')).toHaveValue('35000');
+  await expect(page.getByLabel('What comes in each month')).toHaveValue('1400');
   await expect(page.getByLabel('Name of line 2')).toHaveValue('Food');
-  // Rent 10,500 + food 7,000 + travel 2,450 + phone 1,050 are all needs; savings 5,250 is its own.
-  await expect(page.locator('.results')).toContainText('₹21,000');
-  await expect(page.locator('.results')).toContainText('₹8,750'); // the quarter with no job yet
+  // Rent 560 + food 280 + transport and phone 140 are all needs; savings 140 is its own.
+  await expect(page.locator('.results')).toContainText('€980');
+  await expect(page.locator('.results')).toContainText('€280'); // the fifth with no job yet
 });
 
 test('the review date on a lesson is the date in its frontmatter, whatever the build machine’s time zone', async ({ page }) => {
@@ -338,4 +352,77 @@ test('progress keeps calendar days, never the time someone studied', async ({ pa
   const raw = await page.evaluate(() => window.localStorage.getItem('lp:progress'));
   expect(raw).not.toBeNull();
   expect(raw!).not.toMatch(/T\d\d:\d\d/);
+});
+
+// ---- Template v2: the pilot lesson (India, first payslip) ----
+
+test.describe('template v2 with JavaScript off', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('the document question, show me and your turn all work without a script', async ({ page }) => {
+    await page.goto('in/learn/money-basics/first-payslip');
+
+    // Find it on the document: pick, reveal.
+    const find = page.locator('.poll').first();
+    await find.locator('input[type=radio]').nth(2).check();
+    await find.locator('summary').click();
+    await expect(find.locator('.answer')).toContainText('₹30,600');
+
+    // Show me: one line on screen, the rest behind "Show line N", all three in the page.
+    const lines = page.locator('.showme-line');
+    await expect(lines).toHaveCount(3);
+    await expect(lines.nth(0)).toBeVisible();
+    await expect(lines.nth(0)).toContainText('Gross salary');
+    await expect(lines.nth(1)).toBeHidden();
+    const next = page.locator('.showme-more > summary').first();
+    await expect(next).toContainText('Show line 2');
+    await next.click();
+    await expect(lines.nth(1)).toBeVisible();
+    await expect(lines.nth(2)).toBeHidden();
+    await expect(next).toContainText('Line 2'); // the control stays, renamed, so focus has somewhere to be
+
+    // Your turn: the given lines are the calculator's, the last is the reader's.
+    const practice = page.locator('.practice');
+    await expect(practice.locator('.steps')).toContainText('₹26,320');
+    await practice.getByLabel('₹24,440', { exact: true }).check();
+    await practice.locator('summary').click();
+    await expect(practice.locator('.answer')).toContainText('₹24,440');
+  });
+});
+
+test('the teaching video loads nothing from YouTube until the reader taps play and has said yes', async ({ page }) => {
+  const outside: string[] = [];
+  page.on('request', (req) => {
+    const host = new URL(req.url()).hostname;
+    if (/youtube|ytimg|google/.test(host)) outside.push(req.url());
+  });
+  await page.goto('in/learn/money-basics/first-payslip');
+  await page.getByRole('button', { name: 'Reject all' }).click(); // the consent banner, out of the way
+
+  const video = page.locator('.video');
+  // Only the video's island matters here; the explorer further down hydrates when scrolled to.
+  const hydrated = () => expect(video.locator('astro-island[ssr]')).toHaveCount(0);
+  await video.scrollIntoViewIfNeeded();
+  await hydrated();
+  await expect(video.locator('.video-poster-title')).toContainText('How to Read Your Salary Slip');
+  await expect(video.locator('iframe')).toHaveCount(0);
+
+  // Play without a yes: the choice is put to the reader, and still nothing loads.
+  await video.getByRole('button', { name: /^Play/ }).click();
+  await expect(video.locator('.video-ask')).toBeVisible();
+  await expect(video.locator('iframe')).toHaveCount(0);
+  expect(outside).toEqual([]);
+
+  // A yes to "Videos from other sites", then play: the privacy-enhanced player, stopped at 8:00.
+  await page.evaluate(() =>
+    window.localStorage.setItem('lp:consent', JSON.stringify({ v: 1, at: new Date().toISOString(), source: 'user', choices: { embeds: true, stats: false } })),
+  );
+  await page.reload();
+  await video.scrollIntoViewIfNeeded();
+  await hydrated();
+  await video.getByRole('button', { name: /^Play/ }).click();
+  const frame = video.locator('iframe');
+  await expect(frame).toHaveCount(1);
+  await expect(frame).toHaveAttribute('src', 'https://www.youtube-nocookie.com/embed/dq44PB-rs2k?rel=0&end=480');
+  await expect(frame).toHaveAttribute('title', /Salary Slip/);
 });

@@ -60,6 +60,12 @@ reading, search and patience, and resent being talked down to.
 
 ## The lesson template (6–10 minutes on a phone)
 
+*Revised 21 September 2026 as template v2, after a tester found the first version too long and not
+teaching. The order now is: the moment with the real document, watch (a short verified video),
+show me (the calculation one line at a time, each line captioned), your turn, change one thing,
+three actions, details folded away, three checks. The steps below are the evidence behind it; the
+word caps and the video rules are in `CONTENT_GUIDE.md`.*
+
 Segment length matters: MOOC engagement drops after ~6 minutes per video (Guo 2014), so a lesson
 is short and chunked. Modelled on Khan Academy's mastery loop and Brilliant's problem-first style.
 

@@ -25,6 +25,9 @@ export default defineConfig({
         "img-src 'self' data:",
         "font-src 'self'",
         "connect-src 'self'",
+        // The lesson video player: youtube-nocookie.com only, and only after the reader taps play
+        // and has said yes to "Videos from other sites" (src/islands/VideoPlayer.tsx).
+        "frame-src https://www.youtube-nocookie.com",
         "object-src 'none'",
         "base-uri 'none'",
         "form-action 'self'",

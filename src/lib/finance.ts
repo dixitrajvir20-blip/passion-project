@@ -190,3 +190,31 @@ export function amortization(principal: number, annualRatePercent: number, month
   }
   return years;
 }
+
+export interface DeductionLine {
+  label: string;
+  amount: number;
+}
+
+export interface DeductionResult {
+  start: number;
+  /** The figure after each line, in order. */
+  running: number[];
+  deducted: number;
+  net: number;
+}
+
+/**
+ * A chain of subtractions from one starting figure: a payslip from CTC or gross to in-hand, a
+ * platform payout from the price to what arrives, an aid letter from the award to the loan. The
+ * running figures are what a "show me" ledger prints one line at a time.
+ */
+export function deductions(start: number, lines: DeductionLine[]): DeductionResult {
+  const running: number[] = [];
+  let current = start;
+  for (const line of lines) {
+    current = Math.round((current - line.amount) * 100) / 100;
+    running.push(current);
+  }
+  return { start, running, deducted: Math.round((start - current) * 100) / 100, net: current };
+}

@@ -201,6 +201,77 @@ describe('lesson content', () => {
         }
       });
 
+      // ---- Template v2 (22 Sep 2026): the rules that keep a lesson short and teaching-first ----
+      // They apply only to lessons that carry template: v2, so the rest of the suite stays green
+      // while the 36 are migrated in batches. The caps are set from the pilot lessons.
+      const v2 = lesson.data.template === 'v2';
+      const wordsIn = (parts: unknown[]) => parts.flatMap((p) => (Array.isArray(p) ? p : [p])).filter((p): p is string => typeof p === 'string').reduce((sum, p) => sum + words(p), 0);
+
+      it('v2: keeps the prose a reader meets before the checks to 360 words', () => {
+        if (!v2) return;
+        const d = lesson.data;
+        const outside =
+          words(lesson.prose) +
+          wordsIn([d.situation, d.worked?.context, d.practice?.context, d.explorable?.prompts, d.objectives, d.takeaways]) +
+          wordsIn((d.worked?.lines ?? []).map((l: { caption?: string }) => l.caption));
+        expect(outside, `${outside} words of prose outside the fold (body, situation, contexts, prompts, captions, objectives, takeaways)`).toBeLessThanOrEqual(360);
+      });
+
+      it('v2: keeps everything a reader can meet outside the details fold to 1,100 words', () => {
+        if (!v2) return;
+        const skip = new Set(['url', 'sources', 'glossary', 'tool', 'kind', 'track', 'region', 'details', 'prediction', 'video', 'youtubeId', 'author', 'reviewedBy']);
+        const total = words(lesson.prose) + wordsIn(collectStrings(lesson.data, skip));
+        expect(total, `${total} reader-facing words outside the details fold`).toBeLessThanOrEqual(1100);
+      });
+
+      it('v2: keeps the body to two sections and 200 words', () => {
+        if (!v2) return;
+        const sections = lesson.body.split(/^## /m).slice(1);
+        expect(sections.length, 'body sections').toBeLessThanOrEqual(2);
+        expect(words(lesson.prose), `${words(lesson.prose)} words of body prose`).toBeLessThanOrEqual(200);
+      });
+
+      it('v2: captions on the show-me lines are one short sentence, twenty words or fewer', () => {
+        if (!v2 || !lesson.data.worked?.lines) return;
+        for (const line of lesson.data.worked.lines) {
+          if (!line.caption) continue;
+          expect(words(line.caption), `"${line.caption}"`).toBeLessThanOrEqual(20);
+        }
+      });
+
+      it('v2: states three things the reader can do afterwards, one per check', () => {
+        if (!v2) return;
+        expect(lesson.data.objectives, 'objectives').toHaveLength(3);
+        expect(lesson.data.quiz, 'three checks, one per objective').toHaveLength(3);
+      });
+
+      it('v2: every acronym a reader meets is a term the lesson defines', () => {
+        if (!v2) return;
+        const skip = new Set(['url', 'sources', 'glossary', 'tool', 'kind', 'track', 'region', 'details', 'prediction', 'video', 'author', 'reviewedBy']);
+        const text = [lesson.prose, ...collectStrings(lesson.data, skip)].join(' ');
+        const acronyms = new Set((text.match(/\b[A-Z]{2,6}\b/g) ?? []).filter((a) => !/^(US|EU|UK|USA)$/.test(a)));
+        const defined = new Set((lesson.data.glossary ?? []).map((id: string) => id.toUpperCase().replace(/-/g, '')));
+        for (const acronym of acronyms) {
+          expect(defined.has(acronym), `"${acronym}" is used but is not one of the lesson's glossary terms`).toBe(true);
+        }
+      });
+
+      it('v2: puts the law, the dates and the statistics in the details fold, not in the checks', () => {
+        if (!v2 || !lesson.data.details) return;
+        // A figure that appears only in details cannot be what a check turns on.
+        const detailFigures = new Set((lesson.data.details.join(' ').match(/[₹$€]\s?[\d,]+|\b\d{1,2}(\.\d+)?%/g) ?? []));
+        const elsewhere = [lesson.prose, ...collectStrings(lesson.data, new Set(['details', 'sources', 'url']))].join(' ');
+        for (const check of lesson.data.quiz) {
+          for (const option of check.options) {
+            for (const fig of `${option.text} ${option.why}`.match(/[₹$€]\s?[\d,]+|\b\d{1,2}(\.\d+)?%/g) ?? []) {
+              if (detailFigures.has(fig) && !elsewhere.replace(`${option.text} ${option.why}`, '').includes(fig)) {
+                expect.fail(`check option "${option.text}" turns on ${fig}, which only the details fold explains`);
+              }
+            }
+          }
+        }
+      });
+
       it('has no inline style, style block or script (the CSP drops them silently)', () => {
         expect(lesson.body).not.toMatch(/\sstyle=/);
         expect(lesson.body).not.toMatch(/<style/i);

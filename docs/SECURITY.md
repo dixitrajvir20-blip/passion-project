@@ -77,6 +77,14 @@ X-Frame-Options: DENY   # legacy backup for frame-ancestors
 Astro's build already emits the CSP meta (`astro.config.mjs` → `security.csp`) with SHA-256
 hashes of every inline script and style. Test the deployed set with MDN HTTP Observatory.
 
+## Lesson videos and the CSP
+
+Lesson videos are YouTube iframes, so `frame-src https://www.youtube-nocookie.com` was added to
+the meta CSP on 21 September 2026: that host and no other, and only the privacy-enhanced domain.
+The iframe is created by `src/islands/VideoPlayer.tsx` after a tap on play and a yes to the
+`embeds` consent category; the poster is drawn in tokens (`img-src` still allows nothing from a
+third party). `frame-ancestors` remains unavailable on GitHub Pages as before.
+
 ## Search and the CSP
 
 Search is Pagefind: a static index built at deploy time and queried in the browser, so no search

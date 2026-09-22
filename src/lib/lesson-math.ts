@@ -3,7 +3,7 @@
  * calculators use. A lesson passes numbers; it never types out arithmetic. One slip in a worked
  * example teaches the wrong procedure, and no amount of source-checking would catch it.
  */
-import { breakEven, compoundGrowth, emi } from './finance';
+import { breakEven, compoundGrowth, deductions, emi } from './finance';
 
 export interface MarginNumbers {
   /** What you pay each month whatever you sell. */
@@ -39,6 +39,17 @@ export interface Step {
   parts: ({ money: number } | { count: number } | { op: string })[];
   result: { money: number } | { count: number };
   note?: string;
+  /** One sentence a "show me" walkthrough reads under the line: what it is, who gets it. */
+  caption?: string;
+}
+
+export interface DeductionNumbers {
+  /** The figure the story opens with: the CTC, the gross, the price, the award. */
+  start: number;
+  startLabel: string;
+  lines: { label: string; amount: number; caption?: string; subtotalLabel?: string }[];
+  /** What the last running figure is called: in-hand pay, net pay, what arrives. */
+  endLabel: string;
 }
 
 export interface Choice {
@@ -140,6 +151,42 @@ export function splitChoices(n: SplitNumbers, targetLabel: string): Choice[] {
     },
   ];
 
+  return dedupe(candidates).sort((a, b) => num(a) - num(b));
+}
+
+/**
+ * A payslip (or any chain of subtractions) as one line per deduction: what it was, minus this line,
+ * what is left. The last line is the answer. Captions ride along for the stepped walkthrough.
+ */
+export function deductionSteps(n: DeductionNumbers): Step[] {
+  const result = deductions(n.start, n.lines);
+  return n.lines.map((line, index) => {
+    const before = index === 0 ? n.start : result.running[index - 1];
+    const last = index === n.lines.length - 1;
+    const name = line.label.charAt(0).toLowerCase() + line.label.slice(1);
+    return {
+      // The row says what the figure is (gross salary, in-hand pay); the sum under it names the line that came off.
+      label: last ? n.endLabel : (line.subtotalLabel ?? 'Left'),
+      parts: [{ money: before }, { op: '−' }, { money: line.amount }, { op: name }],
+      result: { money: result.running[index] },
+      caption: line.caption,
+    };
+  });
+}
+
+/**
+ * "What arrives?" The slips: stopping after the first line, forgetting every line, or taking one
+ * line off twice. Ascending order, so position gives nothing away.
+ */
+export function deductionChoices(n: DeductionNumbers): Choice[] {
+  const result = deductions(n.start, n.lines);
+  const first = n.lines[0];
+  const candidates: Choice[] = [
+    { value: { money: result.net }, correct: true, why: `${n.startLabel} minus every line, in order.` },
+    { value: { money: n.start }, correct: false, why: `That is the ${n.startLabel.toLowerCase()} before any line comes off. Nothing has been taken away yet.` },
+    { value: { money: result.running[0] }, correct: false, why: `That stops after ${first.label.toLowerCase()}. The lines after it come off too.` },
+    { value: { money: round2(result.net - first.amount) }, correct: false, why: `That takes ${first.label.toLowerCase()} off twice. Each line comes off once.` },
+  ];
   return dedupe(candidates).sort((a, b) => num(a) - num(b));
 }
 

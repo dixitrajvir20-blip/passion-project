@@ -43,6 +43,14 @@ of his school club, Business Lab).
   money-basics / protect-your-money / start-something; Europe money-basics / credit-and-fraud /
   start-something; the US money-basics / start-something / how-business-works.
   Every lesson carries a CC BY-NC-SA 4.0 notice, `rel="license"` and LearningResource JSON-LD.
+- **Template v2 (21 Sept)**: a tester found the lessons too long and not teaching, so lessons
+  are moving to a teaching-first shape (the moment and a drawn document, a short verified video
+  in a click-to-load player, "show me" one ledger line at a time, your turn, change one thing,
+  three actions, a details fold, three checks). Engine: `Video.astro` + `VideoPlayer.tsx`,
+  `ShowMe.astro`, `Document.astro`, the `deduction` calculation kind, `template: v2` in the
+  schema; rules in `docs/CONTENT_GUIDE.md` and `tests/unit/lessons.test.ts` (v2 lessons only).
+  Pilot: `in/money-basics/first-payslip`; the other 35 follow in batches. CSP allows frames from
+  youtube-nocookie.com only; the `embeds` consent category is on by default.
 - **Five calculators** in every edition (break-even, budget, savings growth, side-hustle, loan) on one
   kit (`src/islands/tool-kit.tsx`), plus India's **"UPI: spot the fake"** drill, from
   `src/pages/[region]/tools/[tool].astro` and `src/lib/tools.ts`. Per-edition defaults in `regions.ts`.

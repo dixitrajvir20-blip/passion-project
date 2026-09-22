@@ -1,0 +1,49 @@
+---
+/**
+ * One line of a "show me" walkthrough, and the door to the next. Each line is a ledger row with
+ * its caption; the following lines sit inside a <details> so the reader reveals them one at a
+ * time. Nested lists, not a script: correct with JavaScript off, every line in the page for
+ * search and print, and instant under reduced motion.
+ */
+import ShowMeStep from './ShowMeStep.astro';
+import { money, number, localeByCode } from '../../lib/format';
+import type { Step } from '../../lib/lesson-math';
+
+interface Props {
+  steps: Step[];
+  index: number;
+  total: number;
+  localeCode: string;
+}
+
+const { steps, index, total, localeCode } = Astro.props;
+const [step, ...rest] = steps;
+const locale = localeByCode(localeCode);
+const show = (value: { money: number } | { count: number }) =>
+  'money' in value ? money(value.money, locale, Number.isInteger(value.money) ? 0 : 2) : number(value.count, locale);
+const last = rest.length === 0;
+---
+
+<li class:list={['ledger-row', 'showme-line', { 'ledger-total': last }]}>
+  <span class="ledger-label">
+    <span class="step-label">{step.label}</span>
+    <span class="step-sum numbers">{step.parts.map((part) => ('op' in part ? ` ${part.op} ` : show(part)))}<span class="visually-hidden"> =</span></span>
+  </span>
+  <strong class="ledger-figure numbers">{show(step.result)}</strong>
+  {step.note && <span class="step-note">{step.note}</span>}
+  {step.caption && <span class="showme-caption">{step.caption}</span>}
+</li>
+{!last && (
+  <li class="showme-next">
+    <details class="showme-more">
+      <summary>
+        <span class="showme-next-label">Show line <span class="numbers">{index + 2}</span></span>
+        <span class="showme-open-label">Line <span class="numbers">{index + 2}</span></span>
+        <span class="showme-count numbers">of {total}</span>
+      </summary>
+      <ol class="ledger showme-lines" start={index + 2}>
+        <ShowMeStep steps={rest} index={index + 1} total={total} localeCode={localeCode} />
+      </ol>
+    </details>
+  </li>
+)}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { growthChoices, growthSteps, loanChoices, loanSteps, marginChoices, marginSteps, splitChoices, splitSteps } from '../../src/lib/lesson-math';
+import { growthChoices, growthSteps, loanChoices, loanSteps, marginChoices, marginSteps, splitChoices, splitSteps, deductionSteps, deductionChoices } from '../../src/lib/lesson-math';
 import { compoundGrowth, emi } from '../../src/lib/finance';
 
 const example = { fixed: 2000, variable: 8, price: 15 };
@@ -137,5 +137,38 @@ describe('growth', () => {
     expect(values).toContain(60000); // what was put in
     expect(values).toContain(36000); // 6% of 60,000 for 10 years, the flat-interest slip
     expect(values).toEqual([...values].sort((a, b) => a - b));
+  });
+});
+
+describe('deductionSteps', () => {
+  const payslip = {
+    start: 35000,
+    startLabel: 'Monthly CTC',
+    lines: [
+      { label: "Employer's EPF share", amount: 2100, caption: 'Paid straight into your fund. It never reaches your payslip.', subtotalLabel: 'Gross salary' },
+      { label: 'Your EPF share', amount: 2100, caption: '12% of the basic pay. Your savings, in your name.' },
+      { label: 'Professional tax', amount: 200, caption: "Your state's tax. Another state charges another amount, or none." },
+    ],
+    endLabel: 'In-hand pay',
+  };
+
+  it('prints one line per deduction, each from the figure before it, ending on the answer', () => {
+    const steps = deductionSteps(payslip);
+    expect(steps.map((s) => ('money' in s.result ? s.result.money : 0))).toEqual([32900, 30800, 30600]);
+    expect(steps[0].parts).toEqual([{ money: 35000 }, { op: '−' }, { money: 2100 }, { op: "employer's EPF share" }]);
+    expect(steps[0].label).toBe('Gross salary');
+    expect(steps[1].label).toBe('Left');
+    expect(steps[2].label).toBe('In-hand pay');
+    expect(steps[1].caption).toMatch(/12% of the basic pay/);
+  });
+
+  it('offers the slips people make, all different, in ascending order', () => {
+    const choices = deductionChoices(payslip);
+    const values = choices.map((c) => ('money' in c.value ? c.value.money : 0));
+    expect(values).toEqual([...values].sort((a, b) => a - b));
+    expect(new Set(values).size).toBe(values.length);
+    expect(choices.find((c) => c.correct)?.value).toEqual({ money: 30600 });
+    expect(values).toContain(35000); // forgot every line
+    expect(values).toContain(32900); // stopped after the first
   });
 });

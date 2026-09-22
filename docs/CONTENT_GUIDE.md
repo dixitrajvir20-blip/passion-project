@@ -29,6 +29,45 @@ quiz:
 ---
 ```
 
+## Lesson template v2 (21 September 2026): teaching first, then doing
+
+A tester said the lessons "had too much text" and "didn't actually teach"; six reader passes
+over all 36 agreed (ease 2.5 of 5). Template v2 fixes the shape, and `tests/unit/lessons.test.ts`
+holds every `template: v2` lesson to it. The pilot is `in/money-basics/first-payslip`.
+
+1. **The moment.** `situation` (one or two sentences) and, where a real document exists, the
+   `document`: the payslip, pay stub, loan sheet or payout drawn in tokens, each line with a hint,
+   and one `find` question a reader can answer from the picture alone. Never a screenshot, never a
+   real employer, bank, app or regulator name.
+2. **Watch.** One `video` that teaches the idea: an 11-character YouTube id, the title exactly as
+   published, the channel, the length in minutes, an optional `startSeconds`, and a one-line
+   `note` for context ("Made for the US; the idea is the same"). It plays in a click-to-load player
+   from youtube-nocookie.com behind the "Videos from other sites" consent; nothing loads before the
+   reader taps play and has said yes. Choosing one: regulator or government first (RBI, SEBI, NPCI,
+   EPFO, the Income Tax Department, CFPB, FTC, IRS, ECB, national central banks), then nonprofit or
+   university (Khan Academy, NGPF), then education platforms and public broadcasters (CrashCourse,
+   Zerodha Varsity), then a creator only if nothing better exists and its description carries no
+   affiliate links, discount codes, paid courses or product referrals. Two to ten minutes; it must
+   teach this lesson's own idea; no promised returns, no named security, no fear framing. Verify
+   the id, title and length before shipping. A lesson with no acceptable video runs on step 3 alone.
+3. **Show me.** `worked` becomes the teaching: one ledger line at a time behind "Next line", each
+   line with a `caption` of twenty words or fewer saying what it is and who gets it, ending on the
+   answer. Kinds: margin, split, loan, growth, deduction (a chain of subtractions from a starting
+   figure: CTC to in-hand, price to payout, award to loan).
+4. **Your turn.** `practice`: the same calculation with new numbers, the last line blank.
+5. **Change one thing.** `explorable`: always this lesson's own calculation, with labelled
+   controls and a result sentence.
+6. **What this means for you.** `takeaways`: three actions.
+7. **Details, if you want them.** `details`: law, dates, thresholds, statistics, per-country rules,
+   folded away. No check may turn on a figure that only the details fold explains.
+8. **Check your understanding.** Three `quiz` checks, one per `objectives` line ("After this you can…").
+
+The caps the tests enforce: 360 words of prose outside the fold (body, situation, contexts,
+prompts, captions, objectives, takeaways); 1,100 reader-facing words in all outside the details;
+a body of at most two sections and 200 words; captions of twenty words or fewer; every acronym a
+reader meets is one of the lesson's glossary terms. The v1 fields (`prediction`, "Key points")
+stay in the schema until the last lesson migrates, then go.
+
 ## Voice
 - Second person ("you"), short sentences, active voice, grade ~8 reading level.
 - Start with a real situation a 15-21 year-old faces. Then the idea. Then an example from 2+ countries. Then "try it."

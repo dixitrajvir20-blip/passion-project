@@ -11,15 +11,21 @@ import Poll from '../components/lesson/Poll.astro';
 import Worked from '../components/lesson/Worked.astro';
 import Practice from '../components/lesson/Practice.astro';
 import Drill from '../components/lesson/Drill.astro';
+import Video from '../components/lesson/Video.astro';
+import ShowMe from '../components/lesson/ShowMe.astro';
+import Document from '../components/lesson/Document.astro';
 import MarginExplorer from '../islands/MarginExplorer.tsx';
 import SplitExplorer from '../islands/SplitExplorer.tsx';
 import LoanExplorer from '../islands/LoanExplorer.tsx';
 import GrowthExplorer from '../islands/GrowthExplorer.tsx';
+import DeductionExplorer from '../islands/DeductionExplorer.tsx';
 import LessonScript from '../components/lesson/LessonScript.astro';
 import { getRegion } from '../lib/regions';
 import { site } from '../lib/site';
 import { lessonPath, type Lesson } from '../lib/lessons';
 import {
+  deductionChoices,
+  deductionSteps,
   growthChoices,
   growthSteps,
   loanChoices,
@@ -83,6 +89,7 @@ if (d.worked?.kind === 'margin') workedSteps = marginSteps(d.worked, d.worked.un
 if (d.worked?.kind === 'split') workedSteps = splitSteps(d.worked);
 if (d.worked?.kind === 'loan') workedSteps = loanSteps(d.worked);
 if (d.worked?.kind === 'growth') workedSteps = growthSteps(d.worked);
+if (d.worked?.kind === 'deduction') workedSteps = deductionSteps(d.worked);
 
 let practice: { given: Step[]; question: string; choices: Choice[] } | null = null;
 if (d.practice?.kind === 'margin') {
@@ -106,6 +113,16 @@ if (d.practice?.kind === 'split') {
     choices: splitChoices(d.practice, target),
   };
 }
+if (d.practice?.kind === 'deduction') {
+  practice = {
+    given: deductionSteps(d.practice).slice(0, -1),
+    question: `What is the ${d.practice.endLabel.toLowerCase()}?`,
+    choices: deductionChoices(d.practice),
+  };
+}
+
+/** Template v2 (22 Sep 2026): the moment and the video first, then the calculation one line at a time. */
+const isV2 = d.template === 'v2';
 ---
 
 <BaseLayout
@@ -122,7 +139,7 @@ if (d.practice?.kind === 'split') {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
   </Fragment>
 
-  <article class="lesson" data-lesson-id={lesson.id} data-locale={region.locale}>
+  <article class:list={['lesson', { 'lesson-v2': isV2 }]} data-lesson-id={lesson.id} data-locale={region.locale}>
     <header class="lesson-head on-field">
       <div class="container">
         <div class="column">
@@ -132,11 +149,21 @@ if (d.practice?.kind === 'split') {
           </p>
           <h1>{d.title}</h1>
           <p class="lede">{d.summary}</p>
-          <p class="lesson-meta">
-            Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
-          </p>
-          {/* Said before the lesson, not after: the teach-back effect comes from expecting to explain. */}
-          <p class="lesson-expect">Read with a view to explaining it to someone else afterwards. It changes what you notice.</p>
+          {isV2 && d.objectives && (
+            <div class="lesson-after">
+              <p class="lesson-after-label">After this you can</p>
+              <ul>
+                {d.objectives.map((line) => <li>{line}</li>)}
+              </ul>
+            </div>
+          )}
+          {!isV2 && (
+            <p class="lesson-meta">
+              Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
+            </p>
+          )}
+          {/* Said before the lesson, not after: the teach-back effect comes from expecting to explain. In v2 the objectives carry it. */}
+          {!isV2 && <p class="lesson-expect">Read with a view to explaining it to someone else afterwards. It changes what you notice.</p>}
         </div>
       </div>
     </header>
@@ -146,36 +173,101 @@ if (d.practice?.kind === 'split') {
         <div class="column">
           <p class="situation">{d.situation}</p>
 
-          <Poll
-            id="guess"
-            question={d.prediction.q}
-            options={d.prediction.options}
-            answer={d.prediction.answer}
-            revealLabel="Show the answer"
-            label="Before you read"
-          />
+          {/* v2: the real document, and a question the reader can answer from it alone. */}
+          {isV2 && d.document && (
+            <section aria-labelledby="the-document">
+              <h2 id="the-document" class="visually-hidden">The document</h2>
+              <p class="doc-task">Read it line by line. Tap a line to see what it is. One question follows.</p>
+              <Document kind={d.document.kind} title={d.document.title} lines={d.document.lines} />
+              <Poll
+                id="find"
+                question={d.document.find.q}
+                options={d.document.find.options}
+                answer={d.document.find.answer}
+                revealLabel="Show the line"
+                label="Find it on the document"
+              />
+            </section>
+          )}
 
-          <aside class="callout" aria-labelledby="in-30">
-            <h2 id="in-30">Key points</h2>
-            <ul>
-              {d.takeaways.map((line) => <li>{line}</li>)}
-            </ul>
-          </aside>
+          {!isV2 && (
+            <Poll
+              id="guess"
+              question={d.prediction.q}
+              options={d.prediction.options}
+              answer={d.prediction.answer}
+              revealLabel="Show the answer"
+              label="Before you read"
+            />
+          )}
 
-          <div class="lesson-body">
-            <slot />
-          </div>
+          {!isV2 && (
+            <aside class="callout" aria-labelledby="in-30">
+              <h2 id="in-30">Key points</h2>
+              <ul>
+                {d.takeaways.map((line) => <li>{line}</li>)}
+              </ul>
+            </aside>
+          )}
 
-          {d.worked && (
+          {!isV2 && (
+            <div class="lesson-body">
+              <slot />
+            </div>
+          )}
+
+          {!isV2 && d.worked && (
             <section aria-labelledby="work-it">
               <h2 id="work-it">The calculation</h2>
               <Worked context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
             </section>
           )}
 
+          {/* v2: watch, then see the same idea as a calculation, one line at a time. */}
+          {isV2 && d.video && (
+            <section aria-labelledby="watch">
+              <h2 id="watch">Watch</h2>
+              <Video
+                youtubeId={d.video.youtubeId}
+                title={d.video.title}
+                channel={d.video.channel}
+                minutes={d.video.minutes}
+                startSeconds={d.video.startSeconds}
+                endSeconds={d.video.endSeconds}
+                note={d.video.note}
+              />
+            </section>
+          )}
+
+          {isV2 && d.worked && (
+            <section aria-labelledby="show-me">
+              <h2 id="show-me">Show me</h2>
+              <ShowMe context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
+            </section>
+          )}
+
+          {isV2 && (
+            <div class="lesson-body">
+              <slot />
+            </div>
+          )}
+
+          {isV2 && practice && d.practice && (
+            <section aria-labelledby="your-turn">
+              <h2 id="your-turn">{isV2 ? 'Your turn' : 'Practice'}</h2>
+              <Practice
+                context={d.practice.context}
+                given={practice.given}
+                question={practice.question}
+                choices={practice.choices}
+                localeCode={region.locale}
+              />
+            </section>
+          )}
+
           {d.explorable && (
             <section aria-labelledby="try-it">
-              <h2 id="try-it">Try your own numbers</h2>
+              <h2 id="try-it">{isV2 ? 'Change one thing' : 'Try your own numbers'}</h2>
               {d.explorable.kind === 'margin' && (
                 <MarginExplorer
                   client:visible={{ rootMargin: '600px' }}
@@ -221,6 +313,17 @@ if (d.practice?.kind === 'split') {
                   toolHref={`${prefix}/tools/${d.tool ?? 'savings'}`}
                 />
               )}
+              {d.explorable.kind === 'deduction' && (
+                <DeductionExplorer
+                  client:visible={{ rootMargin: '600px' }}
+                  starts={d.explorable.starts}
+                  startLabel={d.explorable.startLabel}
+                  lines={d.explorable.lines}
+                  endLabel={d.explorable.endLabel}
+                  prompts={d.explorable.prompts}
+                  localeCode={region.locale}
+                />
+              )}
               {d.explorable.kind === 'drill' && (
                 <Drill
                   lessonId={lesson.id}
@@ -233,9 +336,9 @@ if (d.practice?.kind === 'split') {
             </section>
           )}
 
-          {practice && d.practice && (
+          {!isV2 && practice && d.practice && (
             <section aria-labelledby="your-turn">
-              <h2 id="your-turn">Practice</h2>
+              <h2 id="your-turn">{isV2 ? 'Your turn' : 'Practice'}</h2>
               <Practice
                 context={d.practice.context}
                 given={practice.given}
@@ -244,6 +347,24 @@ if (d.practice?.kind === 'split') {
                 localeCode={region.locale}
               />
             </section>
+          )}
+
+          {isV2 && (
+            <section aria-labelledby="for-you">
+              <h2 id="for-you">What this means for you</h2>
+              <ul class="lesson-actions">
+                {d.takeaways.map((line) => <li>{line}</li>)}
+              </ul>
+            </section>
+          )}
+
+          {isV2 && d.details && d.details.length > 0 && (
+            <details class="lesson-details">
+              <summary>Details, if you want them</summary>
+              <ul>
+                {d.details.map((line) => <li>{line}</li>)}
+              </ul>
+            </details>
           )}
 
           <section aria-labelledby="quick-check">
@@ -310,6 +431,11 @@ if (d.practice?.kind === 'split') {
 
           {/* Sources and the licence are the same boilerplate on every lesson: keep them out of search. */}
           <footer class="lesson-fine" data-pagefind-ignore>
+            {isV2 && (
+              <p class="lesson-meta">
+                Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
+              </p>
+            )}
             <h2 id="sources">Sources</h2>
             <ul>
               {d.sources.map((source) => (

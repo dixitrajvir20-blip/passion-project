@@ -27,6 +27,13 @@ And in `src/pages/privacy.astro` under "What we collect", one line about the Wri
 "If you email us a lesson or a question, we keep the email for as long as it takes to answer or
 publish, then delete it. Do not include personal details you do not want us to hold."
 
+**Videos (21 Sep 2026).** The `embeds` category ("Videos from other sites") is now live. On
+`src/pages/cookies.astro`, the sentence about optional categories should read: "Three optional
+categories exist. Two are live and ask first: learning time on this device, and videos from other
+sites; the third is not in use." On `src/pages/privacy.astro`, under third parties: "Lessons
+include short videos from YouTube. Nothing loads from YouTube until you tap play and say yes in
+Privacy choices; YouTube's own privacy terms apply once a video plays."
+
 ## 2. A real contact address
 
 `src/lib/site.ts` still has `hello@business-lab.example`. It appears on Privacy, Terms,
