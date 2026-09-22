@@ -33,7 +33,10 @@ quiz:
 
 A tester said the lessons "had too much text" and "didn't actually teach"; six reader passes
 over all 36 agreed (ease 2.5 of 5). Template v2 fixes the shape, and `tests/unit/lessons.test.ts`
-holds every `template: v2` lesson to it. The pilot is `in/money-basics/first-payslip`.
+holds every `template: v2` lesson to it. The pilot was `in/money-basics/first-payslip` (21
+September); the other 35 followed on 22 September, each by a writer and an independent editor
+agent (their notes: `docs/research/lesson-v2-editor-notes.md`; the video picks:
+`docs/research/lesson-videos.md`). Every lesson now carries `template: v2`.
 
 1. **The moment.** `situation` (one or two sentences) and, where a real document exists, the
    `document`: the payslip, pay stub, loan sheet or payout drawn in tokens, each line with a hint,
