@@ -51,10 +51,14 @@ holds every `template: v2` lesson to it. The pilot is `in/money-basics/first-pay
    teach this lesson's own idea; no promised returns, no named security, no fear framing. Verify
    the id, title and length before shipping. A lesson with no acceptable video runs on step 3 alone.
 3. **Show me.** `worked` becomes the teaching (the short body, "why it works", sits just before it): one ledger line at a time behind "Next line", each
-   line with a `caption` of twenty words or fewer saying what it is and who gets it, ending on the
+   line with a caption of twenty words or fewer saying what it is and who gets it, ending on the
    answer. Kinds: margin, split, loan, growth, deduction (a chain of subtractions from a starting
-   figure: CTC to in-hand, price to payout, award to loan). `keyIdea` is the one-sentence rule the
-   calculation just showed, set as a highlighted line after it.
+   figure: CTC to in-hand, price to payout, award to loan). The deduction kind carries a `caption`
+   on each line; the other four take `captions: [...]`, one per line in order (margin has two
+   lines, what you keep and the count; loan and growth three; split one per share). Every line is
+   captioned: the tests count them. `keyIdea` is the one-sentence rule the
+   calculation just showed, set as a highlighted line after it. `prediction` is optional and v2
+   does not render it; the document's "find this line" question is the opening question instead.
 4. **Your turn.** `practice`: the same calculation with new numbers, the last line blank, and three
    `hints` in Khan Academy's order (the method, the sum, the answer), free to open. `practiceMore`
    is "one more" with different numbers where the skill needs a second run.

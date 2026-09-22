@@ -90,6 +90,11 @@ if (d.worked?.kind === 'split') workedSteps = splitSteps(d.worked);
 if (d.worked?.kind === 'loan') workedSteps = loanSteps(d.worked);
 if (d.worked?.kind === 'growth') workedSteps = growthSteps(d.worked);
 if (d.worked?.kind === 'deduction') workedSteps = deductionSteps(d.worked);
+// The four older kinds carry their captions beside the numbers, one per line, in order.
+if (d.worked && d.worked.kind !== 'deduction' && d.worked.captions) {
+  const captions = d.worked.captions;
+  workedSteps = workedSteps.map((step, index) => ({ ...step, caption: step.caption ?? captions[index] }));
+}
 
 type Practice = { given: Step[]; question: string; choices: Choice[]; hints: string[] };
 function practiceFor(p: NonNullable<typeof d.practice>): Practice {
@@ -106,6 +111,8 @@ const practiceMore = d.practiceMore ? practiceFor(d.practiceMore) : null;
 
 /** Template v2 (22 Sep 2026): the moment and the video first, then the calculation one line at a time. */
 const isV2 = d.template === 'v2';
+// A drill is decided, not adjusted: its heading says so.
+const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you look' : 'Try it') : isV2 ? 'Change one thing' : 'Try your own numbers';
 ---
 
 <BaseLayout
@@ -139,7 +146,7 @@ const isV2 = d.template === 'v2';
               {d.video && <a href="#watch">Watch</a>}
               {d.worked && <a href="#show-me">Show me</a>}
               {d.practice && <a href="#your-turn">Your turn</a>}
-              {d.explorable && <a href="#try-it">Change one thing</a>}
+              {d.explorable && <a href="#try-it">{d.explorable.kind === 'drill' ? 'Decide' : 'Change one thing'}</a>}
               <a href="#quick-check">Checks</a>
             </p>
           )}
@@ -184,7 +191,7 @@ const isV2 = d.template === 'v2';
             </section>
           )}
 
-          {!isV2 && (
+          {!isV2 && d.prediction && (
             <Poll
               id="guess"
               question={d.prediction.q}
@@ -277,7 +284,7 @@ const isV2 = d.template === 'v2';
 
           {d.explorable && (
             <section aria-labelledby="try-it">
-              <h2 id="try-it">{isV2 ? 'Change one thing' : 'Try your own numbers'}</h2>
+              <h2 id="try-it">{tryItHeading}</h2>
               {d.explorable.kind === 'margin' && (
                 <MarginExplorer
                   client:visible={{ rootMargin: '600px' }}

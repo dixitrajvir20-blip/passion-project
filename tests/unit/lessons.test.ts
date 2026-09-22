@@ -214,7 +214,8 @@ describe('lesson content', () => {
         const outside =
           words(lesson.prose) +
           wordsIn([d.situation, d.worked?.context, d.practice?.context, d.practiceMore?.context, d.keyIdea, d.explorable?.prompts, d.objectives, d.takeaways]) +
-          wordsIn((d.worked?.lines ?? []).map((l: { caption?: string }) => l.caption));
+          wordsIn((d.worked?.lines ?? []).map((l: { caption?: string }) => l.caption)) +
+          wordsIn(d.worked?.captions ?? []);
         expect(outside, `${outside} words of prose outside the fold (body, situation, contexts, key idea, prompts, captions, objectives, takeaways)`).toBeLessThanOrEqual(400);
       });
 
@@ -233,11 +234,24 @@ describe('lesson content', () => {
       });
 
       it('v2: captions on the show-me lines are one short sentence, twenty words or fewer', () => {
-        if (!v2 || !lesson.data.worked?.lines) return;
-        for (const line of lesson.data.worked.lines) {
-          if (!line.caption) continue;
-          expect(words(line.caption), `"${line.caption}"`).toBeLessThanOrEqual(20);
-        }
+        if (!v2 || !lesson.data.worked) return;
+        const captions: string[] = [
+          ...(lesson.data.worked.lines ?? []).map((l: { caption?: string }) => l.caption),
+          ...(lesson.data.worked.captions ?? []),
+        ].filter(Boolean);
+        for (const caption of captions) expect(words(caption), `"${caption}"`).toBeLessThanOrEqual(20);
+      });
+
+      it('v2: a show-me walkthrough captions every line, so no line arrives unexplained', () => {
+        if (!v2 || !lesson.data.worked) return;
+        const w = lesson.data.worked;
+        const expected =
+          w.kind === 'deduction' ? w.lines.length
+          : w.kind === 'split' ? w.shares.length
+          : w.kind === 'margin' ? (w.price > w.variable ? 2 : 1)
+          : 3; // loan and growth
+        const given = w.kind === 'deduction' ? w.lines.filter((l: { caption?: string }) => l.caption).length : (w.captions ?? []).length;
+        expect(given, `${w.kind}: ${given} captions for ${expected} lines`).toBe(expected);
       });
 
       it('v2: hints go method, sum, answer, each in one short sentence', () => {
@@ -304,7 +318,7 @@ describe('lesson content', () => {
       });
 
       it('asks decisions, not recall: every check has feedback for each option', () => {
-        const checks = [lesson.data.prediction, ...lesson.data.quiz];
+        const checks = [lesson.data.prediction, ...lesson.data.quiz].filter(Boolean);
         for (const check of checks) {
           expect(check.options.length).toBeGreaterThanOrEqual(2);
           expect(check.answer).toBeLessThan(check.options.length);
