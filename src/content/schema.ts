@@ -68,18 +68,25 @@ const worked = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('deduction'), context: z.string(), ...deductionNumbers }),
 ]);
 
+/**
+ * Stepwise hints, Khan Academy's one-hint-per-step: the method, then the sum, then the answer.
+ * Free to open (no penalty), because the struggling reader is who this is for.
+ */
+const hints = { hints: z.array(z.string().min(8).max(170)).min(1).max(3).optional() };
+
 const practice = z.discriminatedUnion('kind', [
-  z.object({ kind: z.literal('margin'), context: z.string(), unitName: z.string(), ...marginNumbers }),
+  z.object({ kind: z.literal('margin'), context: z.string(), unitName: z.string(), ...marginNumbers, ...hints }),
   z.object({
     kind: z.literal('split'),
     context: z.string(),
     income: z.number().positive(),
     shares: z.array(share).min(2),
     target: z.string(),
+    ...hints,
   }),
-  z.object({ kind: z.literal('loan'), context: z.string(), ...loanNumbers }),
-  z.object({ kind: z.literal('growth'), context: z.string(), ...growthNumbers }),
-  z.object({ kind: z.literal('deduction'), context: z.string(), ...deductionNumbers }),
+  z.object({ kind: z.literal('loan'), context: z.string(), ...loanNumbers, ...hints }),
+  z.object({ kind: z.literal('growth'), context: z.string(), ...growthNumbers, ...hints }),
+  z.object({ kind: z.literal('deduction'), context: z.string(), ...deductionNumbers, ...hints }),
 ]);
 
 const explorable = z.discriminatedUnion('kind', [
@@ -170,6 +177,10 @@ export const lessonSchema = z
       worked: worked.optional(),
       explorable: explorable.optional(),
       practice: practice.optional(),
+      /** "One more": the same skill again with different numbers, after the first practice. */
+      practiceMore: practice.optional(),
+      /** One sentence after "show me" that states the rule the calculation just showed. */
+      keyIdea: z.string().min(12).max(170).optional(),
       quiz: z.array(check).min(3).max(5),
       /** Where the reader will meet this outside the lesson. */
       transfer: z.array(z.string()).min(2).max(4),

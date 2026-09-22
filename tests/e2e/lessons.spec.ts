@@ -381,11 +381,15 @@ test.describe('template v2 with JavaScript off', () => {
     await expect(lines.nth(2)).toBeHidden();
     await expect(next).toContainText('Line 2'); // the control stays, renamed, so focus has somewhere to be
 
-    // Your turn: the given lines are the calculator's, the last is the reader's.
-    const practice = page.locator('.practice');
+    // Your turn: the hints open one at a time, method first; the given lines are the calculator's, the last is the reader's.
+    const practice = page.locator('.practice').first();
+    await expect(practice.locator('.hint')).toHaveCount(3);
+    await expect(practice.locator('.hint > p').first()).toBeHidden();
+    await practice.locator('.hint > summary').first().click();
+    await expect(practice.locator('.hint > p').first()).toContainText('in order');
     await expect(practice.locator('.steps')).toContainText('₹26,320');
     await practice.getByLabel('₹24,440', { exact: true }).check();
-    await practice.locator('summary').click();
+    await practice.locator('.poll summary').click(); // the hints are summaries too
     await expect(practice.locator('.answer')).toContainText('₹24,440');
   });
 });

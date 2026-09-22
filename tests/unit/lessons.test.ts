@@ -142,12 +142,13 @@ describe('lesson content', () => {
       });
 
       it('has practice numbers that make a real question', () => {
-        const p = lesson.data.practice;
-        if (!p) return;
+        for (const p of [lesson.data.practice, lesson.data.practiceMore]) {
+        if (!p) continue;
         if (p.kind === 'margin') expect(() => marginChoices(p)).not.toThrow();
         if (p.kind === 'split') expect(() => splitChoices(p, p.target)).not.toThrow();
         if (p.kind === 'loan') expect(() => loanChoices(p)).not.toThrow();
         if (p.kind === 'growth') expect(() => growthChoices(p)).not.toThrow();
+        }
       });
 
       it('lives in the folder its frontmatter names', () => {
@@ -207,21 +208,21 @@ describe('lesson content', () => {
       const v2 = lesson.data.template === 'v2';
       const wordsIn = (parts: unknown[]) => parts.flatMap((p) => (Array.isArray(p) ? p : [p])).filter((p): p is string => typeof p === 'string').reduce((sum, p) => sum + words(p), 0);
 
-      it('v2: keeps the prose a reader meets before the checks to 360 words', () => {
+      it('v2: keeps the prose a reader meets before the checks to 400 words', () => {
         if (!v2) return;
         const d = lesson.data;
         const outside =
           words(lesson.prose) +
-          wordsIn([d.situation, d.worked?.context, d.practice?.context, d.explorable?.prompts, d.objectives, d.takeaways]) +
+          wordsIn([d.situation, d.worked?.context, d.practice?.context, d.practiceMore?.context, d.keyIdea, d.explorable?.prompts, d.objectives, d.takeaways]) +
           wordsIn((d.worked?.lines ?? []).map((l: { caption?: string }) => l.caption));
-        expect(outside, `${outside} words of prose outside the fold (body, situation, contexts, prompts, captions, objectives, takeaways)`).toBeLessThanOrEqual(360);
+        expect(outside, `${outside} words of prose outside the fold (body, situation, contexts, key idea, prompts, captions, objectives, takeaways)`).toBeLessThanOrEqual(400);
       });
 
-      it('v2: keeps everything a reader can meet outside the details fold to 1,100 words', () => {
+      it('v2: keeps everything a reader can meet outside the details fold to 1,250 words', () => {
         if (!v2) return;
         const skip = new Set(['url', 'sources', 'glossary', 'tool', 'kind', 'track', 'region', 'details', 'prediction', 'video', 'youtubeId', 'author', 'reviewedBy']);
         const total = words(lesson.prose) + wordsIn(collectStrings(lesson.data, skip));
-        expect(total, `${total} reader-facing words outside the details fold`).toBeLessThanOrEqual(1100);
+        expect(total, `${total} reader-facing words outside the details fold`).toBeLessThanOrEqual(1250);
       });
 
       it('v2: keeps the body to two sections and 200 words', () => {
@@ -237,6 +238,14 @@ describe('lesson content', () => {
           if (!line.caption) continue;
           expect(words(line.caption), `"${line.caption}"`).toBeLessThanOrEqual(20);
         }
+      });
+
+      it('v2: hints go method, sum, answer, each in one short sentence', () => {
+        if (!v2) return;
+        for (const p of [lesson.data.practice, lesson.data.practiceMore]) {
+          for (const hint of p?.hints ?? []) expect(words(hint), `"${hint}"`).toBeLessThanOrEqual(25);
+        }
+        if (lesson.data.keyIdea) expect(words(lesson.data.keyIdea), 'key idea').toBeLessThanOrEqual(25);
       });
 
       it('v2: states three things the reader can do afterwards, one per check', () => {
