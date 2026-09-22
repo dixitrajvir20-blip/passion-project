@@ -4,170 +4,149 @@ summary: "A platform reports what it paid you and what it kept. Your own costs a
 region: eu
 track: start-something
 order: 4
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "You teach maths for €20 an hour through a tutoring platform, and earned €400 over the year. In January the platform emails you a seller statement and says the same figures have gone to a tax authority."
+objectives:
+  - "Read a seller statement and name what it cannot show: your own costs."
+  - "Work out the profit your return is built on, from statement and receipts."
+  - "Tell when income belongs on your return even though no platform reported it."
 
-prediction:
-  q: "The statement shows €400 paid to you and €60 of platform fees. Travel and materials cost you another €90. Which figure does a tax return ask you about?"
-  options:
-    - text: "€400, because that is the figure the platform reported"
-      why: "That is what learners paid through the platform. The fee it kept and the costs of doing the work are reported alongside it."
-    - text: "€250, once the €60 fee and the €90 of travel and materials come off"
-      why: "A return asks for the income and the costs of earning it. The €60 never reached you, and the €90 was spent to earn the €400."
-    - text: "No figure, because €400 is too small to go on a return"
-      why: "A threshold decides which form you file. It does not decide whether the income counts, and the figures have already gone."
-  answer: 1
+situation: "You tutor maths through a platform, and in January it sends a statement: learners paid €400 for your sessions, and a copy went to the tax authority. After fees and your own costs, the year left you €250."
 
-takeaways:
-  - "Since 2023, EU platforms report their sellers once a year: name, address, tax number, what you were paid each quarter, and the fees the platform charged."
-  - "A return asks for the income and the costs of earning it. The platform's fee and your own costs both come off the €400."
-  - "Personal income tax is set country by country. Ireland's €5,000 line does not apply elsewhere, so take the question to your own tax authority."
+document:
+  kind: payout
+  title: "Tutoring platform, last year"
+  lines:
+    - { label: "Name, address, tax number", value: "On file", hint: "Details you gave the platform, so the tax authority can match the report to you." }
+    - { label: "Sessions taught", value: "20", hint: "One hour each, at €20. The report counts the jobs your pay covered." }
+    - { label: "Total paid by learners", value: "€400", hint: "What learners paid for your sessions. Not what the work left you." }
+    - { label: "Fees kept by the platform", value: "−€60", hint: "15% of each €20 session, €3 an hour. It never reached you." }
+    - { label: "Paid out to you", value: "€340", hint: "What reached your bank account over the year: €400 less the €60 fee." }
+    - { label: "Paid out, by quarter", value: "€68 · €102 · €34 · €136", hint: "The report gives your pay after fees for each quarter. The summer was quiet." }
+    - { label: "Copy sent to", value: "The tax authority", hint: "Pay, fees and sessions, filed by 31 January and passed on to the country you live in. Check them against your record." }
+  find:
+    q: "Your bus fares and printed worksheets cost €90. Which line of the statement shows them?"
+    options:
+      - text: "Fees kept by the platform, −€60"
+        why: "That is what the platform kept for itself. Your own costs are a separate €90."
+      - text: "Paid out to you, €340"
+        why: "That is the €400 less the platform's fee only. Your €90 has not come off it."
+      - text: "None of them: the platform cannot know what the work cost you"
+        why: "Your costs sit in your card history and receipts, not in the report. Taking them off is your step."
+    answer: 2
 
 worked:
-  kind: split
-  context: "The tutoring year from the top of the page. Learners paid €400 through the platform. The platform kept €60, which is 15% of that. Travel to lessons and printed worksheets came to €90, which is 22.5% of it. The last line is what is left."
-  income: 400
-  shares:
-    - { label: "Platform fee kept", percent: 15 }
-    - { label: "Travel and worksheets", percent: 22.5 }
-    - { label: "Profit", percent: 62.5 }
-
-explorable:
-  kind: drill
-  intro: "Four messages that arrive around a seller statement. None of them is a scam. Each one turns on the difference between what a platform reports and what a return asks for."
-  scenarios:
-    - screen:
-        kind: message
-        from: "Seller statements (tutoring platform)"
-        amount: 400
-        lines:
-          - "Your seller statement for last year."
-          - "Paid to you: €400. Fees we kept: €60."
-          - "A copy has gone to the tax authority."
-        action: "Download statement"
-      check:
-        q: "You spent about €90 on bus fares and printed worksheets, and wrote none of it down. What do you do with this statement?"
-        options:
-          - text: "Declare the €400, since that is the figure they already hold"
-            why: "The €400 is what learners paid. The costs of doing the work are yours to report, and the platform's report cannot know them."
-          - text: "Rebuild the €90 from bank lines and receipts, then work out the profit"
-            why: "The statement gives the income, not the costs. Card history and a travel pass are the records that support the €90."
-          - text: "Leave the costs out and raise them if anyone asks"
-            why: "A return is filled in by you, not by the tax authority. Costs left off it are costs you get no credit for."
-        answer: 1
-    - screen:
-        kind: chat
-        from: "Tomás (classmate)"
-        lines:
-          - "I sold 12 old games on a marketplace."
-          - "About €180 in all."
-          - "That gets reported too, right?"
-      check:
-        q: "He wants to know whether his sales are reported the way your tutoring is. What do you tell him?"
-        options:
-          - text: "Yes, the same rule covers both, so his €180 was sent as well"
-            why: "Sales of goods have their own floor under the EU rule. Ireland's Revenue sets it out as fewer than 30 sales and under €2,000 in the year."
-          - text: "Under 30 sales of goods and under €2,000 in the year, a platform leaves him out"
-            why: "That is the exclusion for goods. It settles what is reported, not whether the money is taxable, which is a separate national question."
-          - text: "No, because selling your own second-hand things is never reported"
-            why: "The floor is a count of sales and an amount, not a label. Above it, a marketplace reports goods sellers like any other."
-        answer: 1
-    - screen:
-        kind: chat
-        from: "Elina (housemate in Finland)"
-        lines:
-          - "My pre-completed tax return arrived."
-          - "The tutoring money is not on it."
-          - "So it must not count."
-      check:
-        q: "Her platform earnings are missing from a pre-completed return. What is the right reading of that?"
-        options:
-          - text: "The figures were never sent, so there is nothing to add"
-            why: "Finland's tax administration says platform data is not automatically added to a pre-completed return. The figures still reached it."
-          - text: "The amounts still belong on the return, and she puts them there"
-            why: "A pre-completed return is a draft to check. Finland's tax administration says the responsibility for including everything received stays with her."
-          - text: "She asks the platform to send the figures again"
-            why: "The platform already reported, by 31 January. Putting the amounts on her return is her step, not the platform's."
-        answer: 1
-    - screen:
-        kind: chat
-        from: "Marek (a student's father)"
-        lines:
-          - "Can I pay you directly next term?"
-          - "€20 an hour, by bank transfer."
-          - "Then the platform takes nothing."
-      check:
-        q: "Paying you outside the platform would stop the €3 fee on each session. What does it change about tax?"
-        options:
-          - text: "Nothing is reported, so there is nothing to declare"
-            why: "Being reported and being taxable are two different things. Revenue's registration lines cover income payroll has not taxed, whatever its source."
-          - text: "You keep more of each session, and the income still goes on your return"
-            why: "The fee stops, so the profit rises by €3 an hour. The tax rules did not change because the payment route did."
-          - text: "You would have to register a business before taking a transfer"
-            why: "Whether registration is needed is set by your own country, not by how you are paid. Its point of single contact lists the steps."
-        answer: 1
-  reflection: "Think of one thing you have been paid for online. Write down what came in, what the platform kept, and one cost of doing the work."
+  kind: deduction
+  context: "From what learners paid to the profit: one line is on the statement, two are yours."
+  start: 400
+  startLabel: "Total paid by learners"
+  lines:
+    - { label: "Platform fee", amount: 60, caption: "15% of each session, kept by the platform. The statement shows it.", subtotalLabel: "Paid out to you" }
+    - { label: "Bus fares to lessons", amount: 54, caption: "Fares to lessons, paid to the bus company. Your card history shows them, not the statement.", subtotalLabel: "After bus fares" }
+    - { label: "Printed worksheets", amount: 36, caption: "Printing for lessons, paid to a print shop. Your receipt proves it; the platform never saw it." }
+  endLabel: "Profit"
 
 practice:
-  kind: split
-  context: "A friend in Ireland edits photos through a platform. Clients paid her €900 over the year. The platform kept 12% of that in fees, and her editing software and storage came to 15% of it. What is left is her profit."
-  income: 900
-  shares:
-    - { label: "Platform fee kept", percent: 12 }
-    - { label: "Software and storage", percent: 15 }
-    - { label: "Profit", percent: 73 }
-  target: "Profit"
+  kind: deduction
+  context: "A friend in Ireland edits photos through a platform. Clients paid her €900, the platform kept €108, and software and storage cost €135."
+  start: 900
+  startLabel: "Total paid by clients"
+  lines:
+    - { label: "Platform fee", amount: 108, subtotalLabel: "Paid out to her" }
+    - { label: "Software and storage", amount: 135 }
+  endLabel: "Profit"
+  hints:
+    - "Start from what clients paid, then take off the platform's fee and her own costs, in order."
+    - "€900 − €108 − €135."
+    - "€657 is her profit. Stopping at the payout gives €792, which leaves her software and storage out."
+
+practiceMore:
+  kind: deduction
+  context: "Elina, in Finland, walks dogs booked through an app. Owners paid €1,200; the app kept €240; treats and bags cost €45, bus fares €75."
+  start: 1200
+  startLabel: "Total paid by owners"
+  lines:
+    - { label: "App fee", amount: 240, subtotalLabel: "Paid out to her" }
+    - { label: "Treats and bags", amount: 45, subtotalLabel: "After treats and bags" }
+    - { label: "Bus fares", amount: 75 }
+  endLabel: "Profit"
+  hints:
+    - "Take off the app's fee first, then each of her own costs: treats and bags, then bus fares."
+    - "€1,200 − €240 − €45 − €75."
+    - "€840 is her profit. Declaring the €960 payout would leave out €120 of costs she can show."
+
+keyIdea: "Profit is what learners paid, minus the platform's fee and your own costs; only your records show those costs."
+
+explorable:
+  kind: deduction
+  starts: [200, 400, 800]
+  startLabel: "Total paid by learners"
+  lines:
+    - { label: "Platform fee", percentOfStart: 15, subtotalLabel: "Paid out to you" }
+    - { label: "Bus fares to lessons", percentOfStart: 13.5, subtotalLabel: "After bus fares" }
+    - { label: "Printed worksheets", percentOfStart: 9 }
+  endLabel: "Profit"
+  prompts:
+    - "Tap €800, twice the sessions. Fee, fares and worksheets all double, and profit is €500, not €800."
+    - "Tap €200. The statement would say €200; after €75 comes off, profit is €125."
+
+takeaways:
+  - "Check the yearly statement's total and fees against your own record."
+  - "Keep a dated line for every payment in and every cost out, with its receipt."
+  - "Ask your tax authority which form fits your income, instead of leaving the income off."
+
+details:
+  - "DAC7, the EU's platform reporting rule, has applied since 1 January 2023. It covers personal services, sales of goods, and renting out property or means of transport."
+  - "Platforms report each seller's name, address and tax number, and for each quarter what they paid the seller after their fees, the number of activities, and the fees charged. They file by 31 January and give each seller a copy by the same date."
+  - "The small-seller exclusion covers sales of goods only: fewer than 30 sales and under €2,000 in the year. Personal services such as tutoring have no matching floor."
+  - "A report filed in one EU country is passed on to the country where the seller lives. The Dutch tax administration says the figures it receives do not set anyone's tax by themselves."
+  - "Finland's tax administration says sellers report platform income and the expenses that go with it themselves, and that platform data is not added automatically to a pre-completed return."
+  - "Taxes on personal income are set by each EU country, so there is no single EU figure for small earnings. Outside the euro area the same sums run in national currency."
+  - "In Ireland, Revenue says the self-employed should register for self-assessment, and anyone must above €5,000 of taxable income that payroll has not taxed, or €30,000 before costs. Below both, it points to a Form 12."
+  - "VAT has its own limit: the small-business exemption applies under €85,000 of turnover a year, or lower where a country sets it lower."
+  - "Whether you register as a sole trader is a separate question, set by your own country. Each EU country runs a point of single contact that lists the steps."
 
 quiz:
-  - q: "Your seller statement shows €400 paid and €60 of fees kept. You also have bus tickets and a print-shop receipt totalling €90, in a folder. What figure do you work from?"
+  - q: "Your statement shows learners paid €400 and the platform kept €60. A classmate says the tax authority now has all it needs to work out your tax. What is missing from its copy?"
     options:
-      - text: "€400, the amount the platform reported"
-        why: "That is what learners paid. Both the €60 the platform kept and the €90 you spent are costs of earning it."
-      - text: "€340, the €400 less the platform's €60 fee"
-        why: "The fee is a cost, and so are the travel and the worksheets. Leaving out the €90 overstates the profit by €90."
-      - text: "€250, once the €60 and the €90 are both off"
-        why: "Profit is what came in minus what it cost to earn. The tickets and the receipt are what let you show the €90."
-    answer: 2
-  - q: "You live in Ireland and made €250 of profit from tutoring. One of Revenue's lines for registering is €5,000 of taxable income that payroll has not taxed. What do you do?"
-    options:
-      - text: "Nothing, because €250 is far below €5,000"
-        why: "That figure decides whether you register for self-assessment, not whether the income counts. Revenue points smaller amounts to a Form 12."
-      - text: "Declare it on the form Revenue's page points your level of income to"
-        why: "Below that line, Revenue's page points to a Form 12 through myAccount. The income is declared either way."
-      - text: "Register for self-assessment anyway, to be safe"
-        why: "Self-assessment is the route Revenue sets above those lines. Below them its page points to a Form 12, and the income is declared there."
+      - text: "Nothing: the report carries your pay and the fees"
+        why: "It carries both, but not what the work cost you. Without the €90, the figures overstate your profit."
+      - text: "Your €90 of bus fares and worksheets"
+        why: "Only your card history and receipts hold those. Taking them off is your step, on your return."
+      - text: "Your name and tax number"
+        why: "The report carries those, so the figures can be matched to you."
     answer: 1
-  - q: "A forum post says platforms only report sellers who pass €2,000 in a year, so your €400 of tutoring is safe. What do you make of it?"
+  - q: "A friend's statement says clients paid €600 and the platform kept €90. Her software cost €120, and she has the receipts. What figure is her return built on?"
     options:
-      - text: "It fits, so the €400 was never sent"
-        why: "That floor covers sales of goods, under 30 sales and under €2,000. Tutoring is a personal service, and Revenue's list has no matching floor for it."
-      - text: "That floor is for goods, and tutoring is a personal service"
-        why: "Revenue's list of excluded sellers sets the 30 sales and €2,000 test for goods only. The kind of activity decides it, not the amount."
-      - text: "It fits, because €400 is under €2,000 either way"
-        why: "€400 is under €2,000, which is why the number looks reassuring. The floor does not cover services at all."
-    answer: 1
-  - q: "It is March. Last year's tutoring ran on cash bus fares and a worksheet subscription, with nothing written down. The statement says €400. What is the first move?"
-    options:
-      - text: "Declare the €400, since none of the costs can be shown now"
-        why: "Some of them can. A card or account line shows the subscription, and a monthly travel pass leaves a record of its own."
-      - text: "Put a round estimate for costs on the return and move on"
-        why: "An estimate with no record behind it is the part you cannot show if the return is queried. Build the figure from records that exist."
-      - text: "Pull the bank and card lines for those months, then start a dated record now"
-        why: "Bank and card lines are a record that already exists. A dated line per payment from now on makes next year's figures a matter of reading them off."
+      - text: "€600, the total clients paid"
+        why: "That is what clients paid. The €90 fee and the €120 of software both come off it."
+      - text: "€510, the €600 less the platform's fee"
+        why: "That is her payout. The software is a cost of the work too, so another €120 comes off."
+      - text: "€390, once the fee and the software are both off"
+        why: "€600 − €90 − €120. The receipts are what let her show the €120."
     answer: 2
+  - q: "A student's father offers to pay you €20 an hour by bank transfer next term, outside the platform. What does that change about your return?"
+    options:
+      - text: "Nothing is reported, so nothing needs declaring"
+        why: "Being reported and being taxable are separate. The return asks for your income, however it was paid."
+      - text: "The €3 fee per session stops, and the income still goes on your return"
+        why: "Your profit rises by €3 an hour. Paying another way changes the fee, not the tax rules."
+      - text: "You must register a business before taking a transfer"
+        why: "Whether you need to register is set by your own country, not by how you are paid."
+    answer: 1
 
 transfer:
-  - "In January, when a platform sends its yearly seller statement. Check the amount and the fees against your own record."
+  - "In January, when a platform sends its yearly seller statement. Check the total and the fees against your own record."
   - "Before the first paid job on a new platform. Open a dated line for every payment in and every cost out."
   - "When a return is due. Your national tax authority's page says which form fits your level of income."
   - "When someone offers to pay you outside a platform. The fee stops; the income still belongs on the return."
 
-glossary: [platform-reporting, platform-fee, business-expense, net-profit, self-assessment, vat, sole-trader, point-of-single-contact, bookkeeping, tax-return]
+glossary: [platform-reporting, platform-fee, business-expense, net-profit, tax-return, bookkeeping]
 tool: side-hustle
 
 sources:
@@ -186,11 +165,14 @@ sources:
   - title: "Sellers that do not have reporting obligations under DAC7: for sales of goods only, fewer than 30 transactions and under €2,000 in the reportable period (published 31 August 2026)"
     url: "https://www.revenue.ie/en/companies-and-charities/international-tax/aeoi/dac7/excluded-sellers.aspx"
     publisher: "Revenue, Ireland"
-  - title: "Who should register for Income Tax self-assessment: taxable non-PAYE income over €5,000 or gross non-PAYE income over €30,000, and Form 12 through myAccount below both (published 9 December 2025)"
+  - title: "Who should register for Income Tax self-assessment: the self-employed should; anyone must with taxable non-PAYE income over €5,000 or gross non-PAYE income over €30,000, and Form 12 through myAccount below both (published 9 December 2025)"
     url: "https://www.revenue.ie/en/self-assessment-and-self-employment/guide-to-self-assessment/register-it-self-assessment.aspx"
     publisher: "Revenue, Ireland"
   - title: "Selling goods and services on a digital platform: you report the income and the deductible expenses yourself, and platform data is not added automatically to a pre-completed return (9 December 2024)"
     url: "https://www.vero.fi/en/individuals/tax-cards-and-tax-returns/income/earned-income/selling-goods-and-services-on-a-digital-platform/"
+    publisher: "Finnish Tax Administration"
+  - title: "The information-reporting requirement of a Reporting Platform Operator (DAC7): consideration is reported net of the platform's fees, commissions and taxes, with the consideration, number of activities and fees given for each quarter, and the seller gets the same information by the end of January (issued 21 April 2023, accessed 22 September 2026)"
+    url: "https://www.vero.fi/en/detailed-guidance/guidance/209369/the-information-reporting-requirement-of-a-reporting-platform-operator--dac7/"
     publisher: "Finnish Tax Administration"
   - title: "Information about DAC7 for sellers: the yearly overview from the platform, exchange with the member state where the seller lives, and no automatic assessment (accessed 21 September 2026)"
     url: "https://www.belastingdienst.nl/wps/wcm/connect/en/business/content/information-for-sellers-dac7"
@@ -203,55 +185,10 @@ sources:
     publisher: "European Commission, Your Europe"
 ---
 
-## What the platform sends
+## What the platform reports
 
-Since 2023, an online platform in the EU must collect its sellers' details and report them once a year. The rule is <Term id="platform-reporting">platform reporting</Term>, or DAC7. It covers personal services, sales of goods, and renting out property or transport.
+Since 2023, platforms report their EU sellers once a year: <Term id="platform-reporting">platform reporting</Term>. The report names you and gives what you were paid and the <Term id="platform-fee">platform fee</Term> it kept. It reaches your tax authority, but it cannot show what the work cost you. Bus fares and worksheets are <Term id="business-expense">business expenses</Term>, costs of doing paid work.
 
-The report names you, your address and your tax number. It gives what you were paid each quarter, how many jobs that covered, and the fees the platform charged.
+## What your return asks for
 
-**A report filed in one EU country still reaches the tax authority where you live.** The Dutch tax administration passes on the reports it receives. In Ireland, Revenue says the platform must also give you a copy by 31 January.
-
-## What a return asks for
-
-The €400 is what learners paid through the platform. It is not what the work left you.
-
-A <Term id="platform-fee">platform fee</Term> of €60 never reached you. Travel to lessons and printed worksheets cost another €90. Both are <Term id="business-expense">business expenses</Term>: costs of doing the work you were paid for.
-
-Finland's tax administration puts it on the seller to report both the income received through a platform and the expenses that go with it.
-
-**Take the €60 and the €90 off, and €250 is left: the <Term id="net-profit">profit</Term> the return is built on.** The platform's report shows the €400 and its own €60. It cannot show your €90.
-
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="split-title split-desc">
-  <title id="split-title">Where €400 of platform income goes</title>
-  <desc id="split-desc">A single bar in two parts. €250 is profit, the figure a tax return asks about. €150 went out first, as €60 of platform fees and €90 of travel and worksheets.</desc>
-  <rect class="chart-a" x="0" y="26" width="200" height="36" rx="6" />
-  <rect class="chart-b" x="204" y="26" width="116" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Profit €250</text>
-  <text class="chart-label" x="320" y="80" text-anchor="end">Out first €150</text>
-  <text class="chart-note" x="0" y="100">€400 paid through the platform, over a year</text>
-</svg>
-
-| Line | Amount |
-| --- | --- |
-| Paid through the platform | €400 |
-| Platform fee kept | −€60 |
-| Travel and worksheets | −€90 |
-| Profit | €250 |
-
-## Thresholds are set by each country
-
-Taxes on personal income are the business of each member state, so there is no single EU figure for small earnings. The same sums run in national currency outside the euro area.
-
-In Ireland, Revenue sets the line at €5,000 of taxable income that payroll has not taxed, or €30,000 before costs. Above either, you register for <Term id="self-assessment">self-assessment</Term>. Below both, Revenue points to a Form 12. **A threshold decides which form you file, not whether the income counts.**
-
-<Term id="vat">VAT</Term> has its own limit: no higher than €85,000 a year, and lower where a country sets it lower. Whether you register as a <Term id="sole-trader">sole trader</Term> is a third question. Your tax authority and your country's <Term id="point-of-single-contact">point of single contact</Term> answer them.
-
-## Keep a record as you go
-
-The hard part of a return is rarely the arithmetic. It is working out, in March, what a bus fare in October cost.
-
-<Term id="bookkeeping">Bookkeeping</Term> here means one dated line per payment and per cost, with the receipt kept behind it. That record is what lets you take the €90 off.
-
-Finland's tax administration is direct about it: “You continue to have responsibility for including all the amounts you have received in your tax return”. Its page adds that platform data is not automatically added to a pre-completed return.
-
-**So a <Term id="tax-return">tax return</Term> is still yours to fill in.** The Dutch tax administration makes the same point: the figures it receives do not set your tax bill by themselves.
+A <Term id="tax-return">tax return</Term> asks for your income, reported or not, and the costs of earning it. Take the fee and your costs off what learners paid: what is left is the <Term id="net-profit">profit</Term>. In Ireland, the amount can change which form you file, not whether the income counts. <Term id="bookkeeping">Bookkeeping</Term>, a dated line per payment and cost, shows those costs.

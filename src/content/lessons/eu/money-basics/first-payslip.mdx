@@ -1,106 +1,165 @@
 ---
-title: "Reading your first payslip: gross, deductions, net"
-summary: "The lines between the contract figure and the money that arrives, and what the employer pays on top."
+title: "Your first payslip: from gross pay to net pay"
+summary: "Why a contract of €1,500 a month arrives as €1,150, one payslip line at a time."
 region: eu
 track: money-basics
 order: 1
-readingMinutes: 7
+readingMinutes: 10
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "Your first apprentice payslip arrives. The contract said €1,500 a month; the bank shows €1,150. The lines in between have names you have never seen."
+objectives:
+  - "Find net pay on a payslip and measure rent and bills against it."
+  - "Explain why a payslip in another EU country takes off different amounts."
+  - "Say who settles it when a part year of work has had too much tax taken."
 
-prediction:
-  q: "Your contract says €1,500 a month. The first payment into your account is €1,150. Where did the other €350 go?"
-  options:
-    - text: "The employer kept it to cover the cost of employing you"
-      why: "Neither line here is a fee the employer keeps. Social contributions and income tax are set by the country you work in, and the employer passes the money on."
-    - text: "To social contributions and income tax, both set by the country you work in"
-      why: "On this payslip €300 goes to social contributions and €50 to income tax. The names, the rates and the split with the employer differ from country to country."
-    - text: "It is held back and paid out at the end of the year"
-      why: "None of it is held for you. Income tax that was overpaid can come back after the year ends, but the money has already left the employer."
-  answer: 1
+situation: "Your first apprentice payslip arrives. The contract said €1,500 a month; your bank shows €1,150. The lines between have names you have never seen."
 
-takeaways:
-  - "Gross pay is the figure in the contract. Net pay is what arrives. Every line between them is set by the country you work in, not by the EU."
-  - "Your social contributions pay into health cover, a pension and support if you lose a job or cannot work. The employer pays a further share on top."
-  - "The tax line is a running estimate of your year, not a final bill. Plan the month on net pay, and give every euro a job."
+document:
+  kind: payslip
+  title: "First month"
+  lines:
+    - { label: "Hours paid", value: "160", hint: "The hours this month's pay is for. Check them against your own notes of the shifts you worked." }
+    - { label: "Gross pay", value: "€1,500", hint: "The figure in your contract, before anything comes off." }
+    - { label: "Pension contribution", value: "−€135", hint: "Your share into the public pension system. 9% of gross here; every country sets its own rate." }
+    - { label: "Health cover", value: "−€135", hint: "Your share for public health cover. Another 9% here, as an example." }
+    - { label: "Unemployment cover", value: "−€30", hint: "Your share for support if you lose a job later. 2% here, as an example." }
+    - { label: "Income tax", value: "−€50", hint: "An estimate of your tax for the whole year, taken month by month and sent on to the tax authority." }
+    - { label: "Net pay", value: "€1,150", hint: "What reaches your account. The figure the month runs on." }
+    - { label: "Employer contributions", value: "€300", hint: "Paid by the employer on top of your gross pay, into the same public systems. Never part of your pay." }
+    - { label: "Cost to the employer", value: "€1,800", hint: "Gross pay plus the employer's contributions. Not every country's payslip prints this line." }
+  find:
+    q: "Which line is the money you can spend this month?"
+    options:
+      - text: "Gross pay, €1,500"
+        why: "That is the contract figure. €350 of contributions and tax comes off it before anything arrives."
+      - text: "Net pay, €1,150"
+        why: "The net line is what reaches your account. Every plan for the month starts here."
+      - text: "Cost to the employer, €1,800"
+        why: "That adds the employer's €300 of contributions, paid on top. None of it is ever paid to you."
+    answer: 1
+
+video:
+  youtubeId: "U67mDkZWk6A"
+  title: "Understand Your Irish Payslip Taxes 2025 | PAYE , PRSI and USC detailed example"
+  channel: "Walter Dunphy"
+  minutes: 10
+  endSeconds: 600
+  note: "Ireland's 2025 rules, as one example; the details below explain its names. Names and rates differ by country, but the idea is the same."
 
 worked:
-  kind: split
-  context: "The payslip from the top of the page: €1,500 gross for one month. Both rates here are examples, because every country sets its own. These two lines come to €350, so €1,150 is left."
-  income: 1500
-  shares:
-    - { label: "Social contributions (example)", percent: 20 }
-    - { label: "Income tax (example)", percent: 3.33 }
-
-explorable:
-  kind: split
-  incomes: [700, 1150, 1600]
+  kind: deduction
+  context: "The payslip above, line by line. Every rate is an example; each country sets its own."
+  start: 1500
+  startLabel: "Gross pay"
   lines:
-    - { label: "Rent share", percent: 34.78, hint: "Your part of the rent and the bills" }
-    - { label: "Transport", percent: 5.22, hint: "A monthly pass, or fares to work" }
-    - { label: "Phone", percent: 1.74, hint: "The plan you are on now" }
-    - { label: "Food", percent: 21.74, hint: "Shopping, and meals bought out" }
-    - { label: "Savings", percent: 13.04, hint: "Moved on payday, before any spending" }
-  prompts:
-    - "Tap €1,150, the net pay from this payslip. That leaves €270 with no job yet. Decide what it is for, or move it into a line until nothing is left."
-    - "Tap €700, a month of shorter shifts. Rent and the phone did not shrink with your hours, so raise those two to what they really cost and see what gives way."
+    - { label: "Pension contribution", amount: 135, caption: "Your share for the public pension system: 9% of gross here.", subtotalLabel: "After pension" }
+    - { label: "Health cover", amount: 135, caption: "Your share for public health cover: another 9% here.", subtotalLabel: "After health cover" }
+    - { label: "Unemployment cover", amount: 30, caption: "Your share for unemployment cover, support if you lose a job: 2% here.", subtotalLabel: "After contributions" }
+    - { label: "Income tax", amount: 50, caption: "Income tax: an estimate of your year's tax, sent on to the tax authority." }
+  endLabel: "Net pay"
 
 practice:
-  kind: split
-  context: "A second payslip, from an apprenticeship in another country: €1,200 gross for one month. Both rates are examples, and both are worked out on the gross figure."
-  income: 1200
-  shares:
-    - { label: "Social contributions", percent: 18 }
-    - { label: "Income tax", percent: 6 }
-  target: "Income tax"
+  kind: deduction
+  context: "A friend's payslip in another country: €1,200 gross, pension €108, health cover €84, unemployment cover €24, income tax €72."
+  start: 1200
+  startLabel: "Gross pay"
+  lines:
+    - { label: "Pension contribution", amount: 108, subtotalLabel: "After pension" }
+    - { label: "Health cover", amount: 84, subtotalLabel: "After health cover" }
+    - { label: "Unemployment cover", amount: 24, subtotalLabel: "After contributions" }
+    - { label: "Income tax", amount: 72 }
+  endLabel: "Net pay"
+  hints:
+    - "Start from gross pay and take each line off in order: the three contributions, then income tax."
+    - "€1,200 − €108 − €84 − €24 − €72."
+    - "€912 arrives. Stopping after the pension line gives €1,092; taking nothing off gives €1,200."
+
+practiceMore:
+  kind: deduction
+  context: "A classmate's summer job elsewhere: €900 gross, pension €90, health cover €45, unemployment cover €9, income tax €0."
+  start: 900
+  startLabel: "Gross pay"
+  lines:
+    - { label: "Pension contribution", amount: 90, subtotalLabel: "After pension" }
+    - { label: "Health cover", amount: 45, subtotalLabel: "After health cover" }
+    - { label: "Unemployment cover", amount: 9, subtotalLabel: "After contributions" }
+    - { label: "Income tax", amount: 0 }
+  endLabel: "Net pay"
+  hints:
+    - "Three contributions come off; the income tax line is €0 this month."
+    - "€900 − €90 − €45 − €9 − €0."
+    - "€756 arrives: 84% of gross, because the three contributions take 16% of it."
+
+keyIdea: "Net pay is gross pay minus your contributions and income tax; the employer's share comes on top, never out of your pay."
+
+explorable:
+  kind: deduction
+  starts: [1000, 1500, 2000]
+  startLabel: "Gross pay"
+  lines:
+    - { label: "Pension contribution", percentOfStart: 9, subtotalLabel: "After pension" }
+    - { label: "Health cover", percentOfStart: 9, subtotalLabel: "After health cover" }
+    - { label: "Unemployment cover", percentOfStart: 2, subtotalLabel: "After contributions" }
+    - { label: "Income tax", percentOfStart: 3.33 }
+  endLabel: "Net pay"
+  prompts:
+    - "Tap €1,000, a month of shorter shifts. Net pay falls by €383, not €500, because every line shrinks with gross."
+    - "Tap €2,000: net pay is €1,533, €383 more than at €1,500. Real income tax often rises faster than pay; here it is a flat share."
+
+takeaways:
+  - "Plan the month on net pay: €1,150 here, not the €1,500 in the contract."
+  - "Check the hours against your own notes each payday, and ask about any gap."
+  - "Started mid-year? Ask your national tax authority how the year's tax is settled."
+
+details:
+  - "Which rules apply: under EU social security coordination you are, as a basic rule, covered by the country where you work, whatever your employer's base, and by one country's system at a time."
+  - "The EU coordination rules cover branches from sickness and invalidity to pensions and unemployment. Each country still decides who is insured, which benefits it pays and on what conditions."
+  - "Germany, as one example: employees and employers each pay, as a rule, half of the social insurance contributions, and the employer alone pays for accident insurance."
+  - "Eurostat's tax wedge adds income tax to the worker's and the employer's contributions and sets the total against what the job costs. For a single person without children on 67% of the average wage it was 39.5% across the EU in 2025: highest in Germany at 44.7%, lowest in Ireland at 22.5%."
+  - "Ireland, as one example of settling a year: once the year ends, an employee can ask Revenue for a statement of liability, a review of the year's tax, and a refund follows if too much was paid."
+  - "Ireland also asks you to tell Revenue when you start your first job. Without that, the employer may have to use emergency tax, a stand-in basis, until your details arrive."
+  - "The video uses Ireland's names. PAYE, pay as you earn, is how income tax is taken from pay. PRSI, pay-related social insurance, is the social contribution, paid by employee and employer. USC, the universal social charge, is a separate tax on pay."
+  - "The rates in this lesson (9% for the pension, 9% for health cover, 2% for unemployment cover and a €50 tax line) are examples. Your payslip shows your own country's."
+  - "The EU and OECD financial competence framework for children and youth lists understanding the main elements of a payslip among the competences for young people."
 
 quiz:
-  - q: "Your payslip shows 60 hours for the month. Your own notes say you worked 72. It is the week after payday. What do you do?"
+  - q: "You are looking at a room at €400 a month, with €60 of bills on top. Which figure do you measure that against?"
     options:
-      - text: "Leave it, because payroll software does not make mistakes"
-        why: "Software uses the hours someone typed in. A wrong figure is easiest to check while you still remember the shifts."
-      - text: "Tell the employer now, with your own dates and hours"
-        why: "Twelve hours is real money, and the same error can repeat next month. Your own record is what lets payroll check it."
-      - text: "Wait a few months to see whether it evens out"
-        why: "Nothing on a payslip corrects itself. An older mistake is harder to match against your notes, and the gap keeps growing."
+      - text: "€1,500, the gross pay in your contract"
+        why: "Contributions and income tax, €350 here, come off before the money arrives. Rent is paid from what lands."
+      - text: "€1,150, the net pay on your payslip"
+        why: "Net pay is what you can spend. Rent and bills of €460 take two-fifths of it, before food or travel."
+      - text: "€1,800, what the job costs your employer"
+        why: "That adds the employer's €300 of contributions, which are paid on top and never reach your account."
     answer: 1
-  - q: "Your cousin works a similar job in another EU country and says almost nothing comes off his pay. Yours shows contributions and tax. What do you conclude?"
+  - q: "Your cousin works a similar job in another EU country and says far less comes off his pay. What do you conclude?"
     options:
+      - text: "The rules of the country you work in set what comes off"
+        why: "As a basic rule you come under the law of the country where you do the work. Its rates are the ones on your payslip."
       - text: "Your employer is taking too much, since EU rules are the same everywhere"
         why: "There is no EU-wide rate. Each country sets its own income tax and social contributions, so two payslips across a border can look very different."
-      - text: "The rules of the country you work in decide what comes off"
-        why: "As a basic rule you come under the law of the country where you do the work, whatever your employer's base. Its rates are the ones on your payslip."
-      - text: "Ask to be paid under his country's rules instead"
-        why: "The system is not a choice. Working in one EU country means one country's social security covers you, whatever a relative pays elsewhere."
-    answer: 1
-  - q: "Your manager says the apprenticeship costs the company about €1,800 a month. Your contract says €1,500. What explains the €300?"
-    options:
-      - text: "The contract figure is out of date and should say €1,800"
-        why: "A contract quotes gross pay, which is what the job pays you. It is not meant to include what the employer pays on top."
-      - text: "The employer pays social contributions on top of your gross pay"
-        why: "Employer contributions go into the same public systems and count as part of what the job costs. They never appear as your pay."
-      - text: "The €300 is your own contributions, counted twice"
-        why: "Your own share is already inside the €1,500 and comes off it. The employer's share is separate money, paid on top of it."
-    answer: 1
-  - q: "You started work in September, and every payslip since has shown income tax. Your pay for the whole year is small. A friend says that tax is gone for good. What do you do?"
+      - text: "You can ask to be paid under his country's rules instead"
+        why: "The system is not a choice. Working in one EU country means that country's social security covers you, whatever a relative pays elsewhere."
+    answer: 0
+  - q: "You started work in September, and every payslip since has shown income tax. Your pay for the whole year is small. What do you do?"
     options:
       - text: "Accept it, because tax taken is tax gone"
-        why: "The monthly figure came from an estimate of a full year of work. When the real year turns out smaller, the estimate was too high."
-      - text: "Ask your national tax authority how the year is settled"
-        why: "Each country settles a year in its own way, and some need a form from you. In Ireland, for one, an employee can ask for a statement of liability once the year ends."
+        why: "The monthly figure is an estimate of a full year of work. When the real year turns out smaller, too much may have come off."
       - text: "Ask the employer to hand the money back"
-        why: "The employer already sent it on. Any correction comes through the tax authority's own process, not through payroll."
-    answer: 1
+        why: "The employer has already sent it on. Any correction comes through the tax authority, not through payroll."
+      - text: "Ask your national tax authority how the year is settled"
+        why: "Each country settles a year in its own way, and some need a form from you. Ireland, for one, reviews the year on request once it ends."
+    answer: 2
 
 transfer:
-  - "Every payday, not only the first. Read the payslip in the week it arrives, while you still remember the hours."
-  - "When you compare two offers. Turn both figures into net pay for the country you would work in, then compare."
-  - "When your pay changes: more hours, a higher rate, a new contract. Check which lines moved with it and which did not."
-  - "When you take a job in another EU country. One country's system covers you, and its rules set every line on the payslip."
+  - "Every payday, not only the first: read the payslip in the week it arrives, while you still remember the hours."
+  - "When you compare two offers: turn both into net pay for the country you would work in, then compare."
+  - "When your pay changes: more hours, a higher rate, a new contract. Check which lines moved with it."
+  - "When you take a job in another EU country, because its system then sets every line on the payslip."
 
 glossary: [gross-pay, net-pay, deduction, payslip, social-contributions, employer-contributions, tax-wedge]
 tool: budget
@@ -127,72 +186,20 @@ sources:
   - title: "Emergency tax: a different basis of deduction, used where an employer cannot get a Revenue Payroll Notification for you (published 24 February 2026)"
     url: "https://www.revenue.ie/en/jobs-and-pensions/emergency-tax/index.aspx"
     publisher: "Revenue, Irish Tax and Customs"
+  - title: "Pay Related Social Insurance (PRSI): paid by employers and employees, based on the employee's pay, and the main source of funding for social welfare payments (published 4 September 2026)"
+    url: "https://www.revenue.ie/en/employing-people/paying-your-employees-tax-to-revenue/prsi.aspx"
+    publisher: "Revenue, Irish Tax and Customs"
   - title: "End of year process for employees: request a statement of liability, refunds and underpayments (published 21 November 2025)"
     url: "https://www.revenue.ie/en/jobs-and-pensions/end-of-year-process/index.aspx"
     publisher: "Revenue, Irish Tax and Customs"
 ---
 
-## From €1,500 to €1,150
+## Gross, deductions, net
 
-Your contract names one figure. Your account receives a smaller one. The first is <Term id="gross-pay">gross pay</Term>: what the job pays before anything comes off. The second is <Term id="net-pay">net pay</Term>, the money that lands.
+Your contract quotes <Term id="gross-pay">gross pay</Term>, before anything comes off. Your account receives <Term id="net-pay">net pay</Term>, the only part you can spend. The <Term id="payslip">payslip</Term> lists each <Term id="deduction">deduction</Term> between them, and none is a fee the employer keeps.
 
-The €350 between them is not a fee the employer keeps. It is a set of <Term id="deduction">deductions</Term>, taken from your pay and sent on to the bodies they are owed to. Each one is named on your <Term id="payslip">payslip</Term>.
+## Who sets each line
 
-**Plan on net pay, because it is the only part you can spend.** The gross figure still matters. It is the number in job adverts, and the one a pay rise is measured against.
+Your <Term id="social-contributions">social contributions</Term> pay for a pension, health cover and support if you lose work. Income tax is an estimate of your year, taken monthly. Work part of a year and too much can come off; your tax authority settles it afterwards.
 
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="pay-title pay-desc">
-  <title id="pay-title">Where €1,500 of gross pay goes</title>
-  <desc id="pay-desc">A single bar in two parts. €1,150 is net pay, which reaches the account. €350 comes off first, for social contributions and income tax.</desc>
-  <rect class="chart-a" x="0" y="26" width="243" height="36" rx="6" />
-  <rect class="chart-b" x="247" y="26" width="73" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Net pay €1,150</text>
-  <text class="chart-label" x="320" y="80" text-anchor="end">Comes off €350</text>
-  <text class="chart-note" x="0" y="100">€1,500 gross pay, for one month</text>
-</svg>
-
-| Line on the payslip | Amount |
-| --- | --- |
-| Gross pay | €1,500 |
-| Social contributions (example) | −€300 |
-| Income tax (example) | −€50 |
-| Net pay | €1,150 |
-
-## What the contributions buy
-
-<Term id="social-contributions">Social contributions</Term> are the larger line here. They pay into public systems: health cover, a pension, and support if you lose a job or cannot work.
-
-Your employer pays into those same systems on top of your gross pay. Those <Term id="employer-contributions">employer contributions</Term> never reach your account, so the job costs more than your contract says.
-
-Germany shows one way the two sides divide it. Staff and employer there put in the same amount, and the employer covers accident insurance on its own. Every country sets its own shares.
-
-## What the job costs the employer
-
-Eurostat measures both sides together as the <Term id="tax-wedge">tax wedge</Term>. It adds income tax to both lots of social contributions, then sets the total against the full cost of employing someone.
-
-For a single person without children earning 67% of the average wage, the EU figure was 39.5% in 2025. Germany was highest, at 44.7%, and Ireland lowest, at 22.5%.
-
-Countries differ that much, so the same gross figure can leave very different net pay. **A friend's payslip from another country tells you little about yours.**
-
-## The tax line is an estimate
-
-Where income tax comes off each payslip, it is worked out from an estimate of your whole year. If you start in September, or your hours drop, more can come off than you owe for the year.
-
-What happens next depends on where you work. Ireland is one example. Once the year ends, an employee can ask Revenue for a statement of liability: a review of the year's tax. A refund follows if too much was paid.
-
-**So the monthly figure is a running estimate, not a final bill.** Your national tax authority sets out how your year is settled.
-
-## Check the payslip in the first week
-
-Some countries want something from you first. In Ireland, you tell Revenue, the tax office, when you start your first job. Without that, your employer may have to use emergency tax, a stand-in basis used until Revenue can send them your details.
-
-Then three checks, while the month is still fresh. The hours or days and the rate, against your own notes. Your name and your tax or social security number, because the deductions are recorded against them. Then gross, each deduction, and net.
-
-**If a line makes no sense, ask the employer or your national tax authority.** It is an ordinary question.
-
-## Plan the month on net
-
-Net pay is €1,150, and that is the figure the month runs on. Before the first spend, give each euro a job: a rent share, transport, a phone, food, and the amount that moves to savings on payday.
-
-What is left after that is not spare. It is the part you have not decided about yet.
-
-The shares are yours to set. Someone living at home needs far less for rent than someone renting a room in a city. **Change the lines until they match your own month.**
+Your employer pays <Term id="employer-contributions">employer contributions</Term> on top, so the job costs more than your contract says. The country you work in sets every rate. Tax and both sets of contributions make up the <Term id="tax-wedge">tax wedge</Term>, which differs widely across the EU.

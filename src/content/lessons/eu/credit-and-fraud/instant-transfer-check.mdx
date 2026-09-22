@@ -1,172 +1,161 @@
 ---
 title: "Before you send: checking the payee"
-summary: "An instant transfer arrives in seconds and cannot be taken back. The checks to run before you press send."
+summary: "An instant transfer lands in seconds and cannot be taken back. How to read the name check before you send."
 region: eu
 track: credit-and-fraud
 order: 2
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "A message says your landlord's bank account has changed, and gives a new IBAN for this month's rent of €450. Your bank app sends instant transfers. The money would arrive in seconds, and it cannot be recalled."
+objectives:
+  - "Read your bank's name check (match, close match or no match) and decide whether to send."
+  - "Check a changed bank account by a route you had before the message, not by replying to it."
+  - "Act in the first minutes if money has gone: your bank first, then the police."
 
-prediction:
-  q: "You type the new IBAN, and your bank app shows a warning: the name you entered does not match this account. What has the warning told you?"
-  options:
-    - text: "That the bank has blocked the payment"
-      why: "The check only warns. Under the EU rules the bank must tell you the money may reach an account the landlord does not hold, but the choice to go ahead stays with you."
-    - text: "That the account belongs to someone other than the name you typed"
-      why: "That is what the check is for. Since October 2025, euro-area banks compare the name to the IBAN before a transfer. A no match is the moment to stop and check by a route you trust."
-    - text: "That you probably made a typing error, so retype the name and send"
-      why: "A typo gives a close match, and the app then shows the real name. A no match on an account announced by message is the pattern of a changed-account scam."
-  answer: 1
+situation: "A message says your landlord's bank account has changed and gives a new IBAN for this month's €450 rent. You type it into your bank app, and this screen appears."
 
-takeaways:
-  - "In 2024, credit-transfer fraud in the European Economic Area (the EU plus Norway, Iceland and Liechtenstein) cost €2.2 billion. About 85% of it fell on the people who paid, because they had authorised the payment themselves."
-  - "Since 9 October 2025, euro-area banks check the payee name against the IBAN before a transfer. A no match is the moment to stop. Banks outside the euro area follow by July 2027."
-  - "An instant transfer cannot be recalled. If money has gone, tell your bank as soon as you notice, then report it to the police in your country."
+document:
+  kind: app-screen
+  title: "Confirm transfer"
+  lines:
+    - { label: "Paying", value: "Valtari Property", hint: "The name you typed. The money follows the IBAN, whatever name is here." }
+    - { label: "IBAN", value: "ending 7731", hint: "The account number, copied from the message. It decides where the money lands." }
+    - { label: "Amount", value: "€450.00" }
+    - { label: "Speed", value: "Instant", hint: "It arrives within ten seconds and cannot be taken back once sent." }
+    - { label: "Name check", value: "No match", hint: "The account behind this IBAN is not in the name you typed." }
+    - { label: "Warning", value: "Money may reach someone else", hint: "The bank must warn you. It does not block the payment." }
+    - { label: "Buttons", value: "Send anyway · Cancel", hint: "Send anyway pays whoever holds this account." }
+  find:
+    q: "Which line tells you to stop before you send?"
+    options:
+      - text: "Speed: instant"
+        why: "Speed raises the cost of a mistake, but it is not the warning."
+      - text: "Name check: no match"
+        why: "The account is not in your landlord's name. Stop, and call the number you already have."
+      - text: "IBAN: ending 7731"
+        why: "The digits alone say nothing about who holds the account. The name check does."
+    answer: 1
+
+video:
+  youtubeId: "-MscKgGy54Y"
+  title: "The Verification Of Payee (VOP) scheme"
+  channel: "European Payments Council (EPC)"
+  minutes: 3
+  note: "The scheme body’s own explainer, aimed partly at banks."
 
 explorable:
   kind: drill
-  intro: "Five transfer screens, the kind that appear in any bank app or chat. At least one is an ordinary payment, so refusing everything is not the answer. Decide what you would do, then look."
+  intro: "Three screens. One is an ordinary payment, so refusing everything is not the answer."
   scenarios:
     - screen:
-        kind: request
-        from: "Your bank app: confirm transfer"
-        amount: 450
-        lines:
-          - "To: Valtari Property, IBAN ending 7731"
-          - "Name check: no match. The name you entered is not the name on this account."
-          - "Reference: Rent, October"
-        action: "Send anyway"
-      check:
-        q: "You are paying the rent to the new IBAN from the message, and this warning appears. What do you do?"
-        options:
-          - text: "Send anyway. The landlord probably registered the account under another name"
-            why: "That is the guess the scam relies on. A no match means the bank holding that account reports a different name. Going ahead is choosing to pay whoever that is."
-          - text: "Cancel, and call the landlord on the number you already have"
-            why: "The warning is the check doing its job. One call to a number you had before the message settles whether the account changed at all."
-          - text: "Reply to the message and ask which name to use"
-            why: "The reply goes to whoever sent the message. If it was a scammer, they will supply a name that matches. A check only works if you pick the route yourself."
-        answer: 1
-    - screen:
-        kind: message
-        from: "Unknown number"
-        lines:
-          - "Hello, this is Valtari Property. Our bank has changed."
-          - "Please pay this month's rent to our new IBAN in the attached letter."
-          - "Payments to the old account will no longer be counted."
-      check:
-        q: "Rent is due in three days. This arrives from a number you do not have saved. What do you do?"
-        options:
-          - text: "Pay the new IBAN. The letter looks official, and it is only rent"
-            why: "A letter can be copied. The tell is a changed account announced by message, with a threat that the old account no longer counts. That is how a changed-account scam starts."
-          - text: "Pay the old IBAN as usual, and check with the landlord by a route you already have"
-            why: "The old account has worked for months. A real change survives a call to the number you already have, or a visit to the office."
-          - text: "Pay half to each account, to be safe"
-            why: "Half of €450 sent to a stranger is €225 gone, and it cannot be recalled. Splitting a payment checks nothing about who holds the account; a call does."
-        answer: 1
-    - screen:
-        kind: chat
-        from: "Tomas (seller, online marketplace)"
-        lines:
-          - "The platform takes a fee. Send €180 by instant transfer instead and I will post it today."
-          - "My IBAN is below. Put ‘gift’ as the reference."
-      check:
-        q: "You are buying a used laptop for €180. Paying through the platform holds the money until the laptop arrives. What do you do?"
-        options:
-          - text: "Pay by transfer. A lower price is a fair trade for skipping the fee"
-            why: "Off the platform there is no hold on the money and no dispute route. If nothing arrives, you authorised the payment, so the refund rule for unauthorised payments does not apply."
-          - text: "Pay by transfer, but only after he sends a photo of the parcel"
-            why: "A photo proves nothing about delivery. The tell is the move off the platform, whatever comes before it. The word ‘gift’ is there to weaken any claim later."
-          - text: "Keep the payment on the platform, or walk away"
-            why: "The platform's payment protection is what the fee pays for. A seller who insists on a transfer is asking you to give that up before you have anything."
-        answer: 2
-    - screen:
-        kind: request
-        from: "Your bank app: confirm transfer"
-        amount: 450
-        lines:
-          - "To: Valtari Property Oy, IBAN ending 2208"
-          - "Name check: match."
-          - "Same account as your last six rent payments."
-        action: "Confirm and send"
-      check:
-        q: "It is rent day. You picked the landlord from your saved payees, and this is the screen. What do you do?"
-        options:
-          - text: "Cancel. Every instant transfer is a risk"
-            why: "An instant transfer is an ordinary way to pay. The risk sits in a new account, a no match or a rush. Here the name matches and the account is the one you have paid six times."
-          - text: "Check the amount and the reference, then confirm"
-            why: "You chose the payee, the name matches, and the account is the one from six earlier payments. The last check is the amount, because the transfer cannot be recalled."
-          - text: "Send it as a slower standard transfer instead, to be safe"
-            why: "Speed is not the risk. A standard transfer cannot be recalled either once the bank has taken it; it only arrives later. The checks are the same on both."
-        answer: 1
-    - screen:
         kind: chat
         from: "Unknown number"
         lines:
-          - "Hi, it is Lena. New number, my phone died."
-          - "Can you send €150 to this IBAN today? I will pay you back on Friday."
+          - "Hi, it's Lena. New number, my phone died."
+          - "Can you send €150 to this IBAN? I'll pay you back on Friday."
           - "Please hurry, I need it before 5."
       check:
-        q: "Lena is a close friend, and she does borrow small sums now and then. What do you do?"
+        q: "Lena is a close friend who sometimes borrows small sums. What do you do?"
         options:
-          - text: "Send it. She is a friend, and it is only until Friday"
-            why: "A friend's name is the easiest thing to type. The tells are a new number, an IBAN you have never seen, and a deadline. Together they are the pattern of an impersonation scam."
-          - text: "Reach Lena by a route you already have: her old number, another app, a friend who is with her"
-            why: "A real Lena can be reached some other way, or can answer a question a stranger could not. Reaching her takes a minute; the transfer cannot be recalled."
+          - text: "Send it. It is only until Friday"
+            why: "A new number, a new IBAN and a deadline: the pattern of an impersonation scam."
+          - text: "Reach Lena by a route you already have"
+            why: "A real Lena can be reached another way in a minute. The transfer cannot be taken back."
           - text: "Send €50 now and the rest once she confirms"
-            why: "Fifty euros sent to a stranger is still gone, and it tells the sender the script works. A smaller amount is not a check."
+            why: "Fifty euros sent to a stranger is still gone. A smaller sum checks nothing."
         answer: 1
-  reflection: "Pick the screen you were least sure about. Which cue would you have missed, and where in your own bank app would it appear?"
+    - screen:
+        kind: request
+        from: "Your bank app: confirm transfer"
+        amount: 450
+        lines:
+          - "To: Valtari Property, account ending 2208"
+          - "Name check: close match. Name on the account: Valtari Property Oy."
+          - "You paid this account last month."
+        action: "Confirm and send"
+      check:
+        q: "Your saved payee for the landlord reads ‘Valtari Property’. What do you do?"
+        options:
+          - text: "Cancel. Any difference in the name is a warning"
+            why: "A close match shows the real name. ‘Oy’ is the Finnish ‘Ltd’, and this is last month's account."
+          - text: "Retype the name until the app says match"
+            why: "Retyping changes nothing about who holds the account."
+          - text: "Compare the name shown with the one you know, then confirm"
+            why: "That is what a close match is for. Same landlord, same account as last month."
+        answer: 2
+    - screen:
+        kind: chat
+        from: "Seller, online marketplace"
+        lines:
+          - "The platform takes a fee. Send €180 by instant transfer and I'll post it today."
+          - "Put ‘gift’ as the reference."
+      check:
+        q: "You are buying a used laptop. Paying on the platform holds your money until it arrives. What do you do?"
+        options:
+          - text: "Keep the payment on the platform, or walk away"
+            why: "The hold on your money is what the fee pays for. Insisting on a transfer means giving it up."
+          - text: "Pay by transfer. Skipping the fee is fair"
+            why: "Off the platform there is no hold, no dispute route, and no refund rule for a payment you approved."
+          - text: "Pay once he sends a photo of the parcel"
+            why: "A photo proves nothing. The tells are the move off the platform and the ‘gift’ reference."
+        answer: 0
+  reflection: "Which cue would you have missed, and where does it appear in your own bank app?"
+
+takeaways:
+  - "Read the name check on every transfer. No match is a stop; a close match is a name to compare."
+  - "When anyone announces a new account, confirm it by a route you had before the message."
+  - "If money has gone, call your bank the moment you notice, then the police."
+
+details:
+  - "An instant credit transfer in euro must reach the other account within ten seconds, at any hour on any day, and may cost no more than a standard transfer (Articles 5a and 5b of Regulation (EU) No 260/2012, added by Regulation (EU) 2024/886)."
+  - "Euro-area banks had to receive instant transfers from 9 January 2025, and send them with the name check from 9 October 2025."
+  - "Banks in EU countries outside the euro area, such as Poland or Sweden, must receive instant euro transfers from 9 January 2027, and send them with the name check by 9 July 2027. Until then, the check is yours to run."
+  - "The name check is free. It reports a match, a close match with the name on the account, no match, or that checking was not possible, and leaves the decision to you (Article 5c)."
+  - "Under the Payment Services Directive (PSD2), a payment order cannot be revoked once your bank has received it (Article 80). A transfer to the IBAN given counts as correctly made; if that IBAN was wrong, the bank must still make reasonable efforts to recover the money (Article 88)."
+  - "For an unauthorised payment, the payer's share of the loss is capped at €50, and nothing if the loss could not have been noticed, unless the payer acted fraudulently or with gross negligence (PSD2, Article 74)."
+  - "In 2024, payment fraud in the European Economic Area (the EU plus Norway, Iceland and Liechtenstein) cost €4.2 billion. €2.2 billion of it was on credit transfers, 16% more than in 2023, and about 85% of those losses fell on the people who paid (ECB and EBA joint report, December 2025)."
+  - "In November 2025 the Parliament and the Council agreed new rules under which a bank must refund a customer tricked by someone posing as that bank, if the customer reports it to the police and tells the bank. They had not taken effect when this lesson was reviewed; your national authority knows the position today."
+  - "Europol ties more than 90% of the mule transactions found in its money-mule operations to cybercrime."
 
 quiz:
-  - q: "Twenty minutes ago you sent €450 by instant transfer to the new IBAN. The landlord now confirms the account never changed. What do you do first?"
+  - q: "Paying a tutor €40 to the IBAN on her invoice, you type her name and the app says no match. What do you do?"
     options:
-      - text: "Message the number that sent the IBAN and ask for the money back"
-        why: "That spends the minutes that matter on the one person who will not help, and it can bring a second request dressed up as a refund."
-      - text: "Call your bank now, then report it to the police in your country"
-        why: "Your bank cannot recall the transfer, but it must try to recover the money, and the receiving bank must help. A mule account exists to pass money onward, so telling the bank early is the part you control. The police report follows."
-      - text: "Wait until tomorrow, since transfers can be reversed within a day"
-        why: "An instant transfer is final once sent. There is no reversal window, and each hour lets the money move further."
+      - text: "Send anyway. Names on accounts often differ a little"
+        why: "A small difference gives a close match. No match means the account is not in her name."
+      - text: "Stop, and check the IBAN with her in person or on a number you already have"
+        why: "No match is the stop sign. Invoices can be altered; she can confirm in a minute."
+      - text: "Retype her name until the check says match"
+        why: "Retyping changes nothing about who holds the account."
     answer: 1
-  - q: "Your cousin in Warsaw paid a new IBAN in 2026 and saw no name check. Your bank in Lisbon shows one every time. She asks whether her bank is breaking the rules. What do you tell her?"
+  - q: "Your club's treasurer emails new account details for the €120 trip deposit, due Friday. What do you do?"
     options:
-      - text: "Her bank is breaking the rules, so complain"
-        why: "Poland is outside the euro area. Under the regulation, banks there must offer the check by 9 July 2027, so in 2026 it may not exist yet."
-      - text: "Outside the euro area the check arrives by July 2027, so until then she runs it herself"
-        why: "The dates differ: euro-area banks from 9 October 2025, other EU banks by 9 July 2027. Until then, a call to a number she already has is the check."
-      - text: "The check only matters for large amounts"
-        why: "The check is free and covers every transfer, whatever the amount. The slip is treating a small transfer as a safe one."
-    answer: 1
-  - q: "A card payment of €90 appears on your account. You never made it, at a shop you have never used. What applies?"
+      - text: "Reply to the email to confirm the change"
+        why: "The reply goes to whoever sent it. If the email account was taken over, they will confirm."
+      - text: "Pay it. The email came from the treasurer's usual address"
+        why: "Email accounts get taken over, and addresses can be faked. The usual address proves little."
+      - text: "Ask the treasurer in person, or on a number you already had, then pay"
+        why: "A real change survives one question by a route the sender did not choose."
+    answer: 2
+  - q: "Twenty minutes after you paid the new IBAN, the landlord says the account never changed. What do you do first?"
     options:
-      - text: "The €90 is lost, since it left your account"
-        why: "This is an unauthorised payment: you did not make it. Under EU rules the bank refunds it, and at most €50 can fall on you, or nothing if you had no way to know the details were taken."
-      - text: "Report it to your bank, and expect a refund with at most €50 as your share"
-        why: "The rule for unauthorised payments is a refund, with the payer's share capped at €50, unless the payer was dishonest or seriously careless. Reporting it is what starts the refund."
-      - text: "It counts the same as a transfer you sent to a scammer"
-        why: "It does not. You authorised nothing here. The transfers in this lesson were authorised by the payer, which is why the refund rule does not cover them."
-    answer: 1
-  - q: "Your bank app shows a close match. The account name is ‘Valtari Property Oy’ and you typed ‘Valtari Property’. It is the IBAN you paid last month. What do you do?"
-    options:
-      - text: "Cancel. Any difference is a fraud sign"
-        why: "A close match shows the real account name so you can compare. The same IBAN as last month plus a name that differs by a company suffix is an ordinary result, not a warning."
-      - text: "Compare the name shown with the one you know, then confirm"
-        why: "That is what a close match is for. The bank shows the name on the account; if it is the company you mean and the IBAN is the one you have paid before, the check has done its job."
-      - text: "Retype the name until the app says match"
-        why: "Retyping the name changes nothing about who holds the account. The app only reports what the other bank sends back."
+      - text: "Message the number that sent the IBAN and ask for it back"
+        why: "That spends the minutes that matter on the one person who will not help."
+      - text: "Call your bank now, then report it to the police"
+        why: "The bank cannot pull the transfer back, but it must try to recover it. The money moves on fast."
+      - text: "Wait. The bank refunds any payment made after a lie"
+        why: "You approved this transfer, so the refund rule for unauthorised payments does not cover it."
     answer: 1
 
 transfer:
-  - "Any time a payee announces a new account: a landlord, a supplier, a club treasurer. Check by a route you had before the message arrived."
-  - "Each time your bank app shows a name check. Read it: a no match is a stop, a close match is a name to compare."
-  - "When a seller or a stranger asks you to leave a platform and pay by transfer instead."
-  - "When money has gone. Tell your bank first, as soon as you notice, then the police in your country."
+  - "Any time a payee announces a new account: a landlord, a club treasurer, a tutor."
+  - "Each time your bank app shows a name check."
+  - "When a seller asks you to leave a platform and pay by transfer."
 
-glossary: [instant-credit-transfer, iban, unauthorised-payment, authorised-push-payment, verification-of-payee, money-mule]
+glossary: [instant-credit-transfer, iban, verification-of-payee, unauthorised-payment, authorised-push-payment, money-mule]
 
 reportTo:
   url: "https://www.europol.europa.eu/report-a-crime/report-cybercrime-online"
@@ -202,65 +191,14 @@ sources:
     publisher: "Europol"
 ---
 
-## Ten seconds, and no way back
+## What the name check tells you
 
-An <Term id="instant-credit-transfer">instant credit transfer</Term> moves euros from your account to another within ten seconds, at any hour on any day. Since 9 October 2025, every euro-area bank that offers euro transfers must send them. It may not charge more for one than for a standard transfer.
+An <Term id="instant-credit-transfer">instant transfer</Term> lands within ten seconds and cannot be taken back. The money follows the <Term id="iban">IBAN</Term>, whatever name you type beside it. So before you send, your bank runs a name check, called <Term id="verification-of-payee">verification of payee</Term>, with the bank behind that IBAN.
 
-**Once you press send, the transfer cannot be recalled.** EU payment rules treat a transfer to the <Term id="iban">IBAN</Term> you typed as correctly made, whatever name you typed beside it. Your bank must make reasonable efforts to get the money back. It cannot take it back.
+A match means the names agree. A close match shows the real name, for you to compare. No match means the account is not in the name you typed. The bank warns you, but the choice stays yours.
 
-That is why every check in this lesson happens before the button, not after.
+The check cannot tell you whether a message is true. Check a changed account by a route you had before it arrived, never by the reply button.
 
-## Who bears the loss
+## Why the check comes before the button
 
-In 2024, payment fraud in the European Economic Area (the EU plus Norway, Iceland and Liechtenstein) cost €4.2 billion, the ECB and the EBA report. Credit transfers made up €2.2 billion of it, 16% more than the year before.
-
-**About 85% of the credit-transfer losses fell on the people who paid.** The main reason was not stolen cards or broken security. A scam got them to start the payment themselves.
-
-## Two kinds of payment
-
-An <Term id="unauthorised-payment">unauthorised payment</Term> is one you never approved: a card payment made with stolen details, say. EU rules say your bank refunds it. At most €50 of the loss can fall on you, and nothing if you could not have known, unless you were dishonest or seriously careless.
-
-An <Term id="authorised-push-payment">authorised push payment</Term> is one you set up and approved yourself, even if a lie got you there. **The refund rule does not cover it, because the bank did what you asked.** In November 2025 the Parliament and the Council agreed new EU rules covering one kind of scam, where someone poses as your bank. They are not law yet. Your national authority knows the position today.
-
-<svg class="chart" viewBox="0 0 320 140" role="img" aria-labelledby="pay-title pay-desc">
-  <title id="pay-title">Two kinds of payment, and who carries the loss</title>
-  <desc id="pay-desc">Two bars. An unauthorised payment, one you never approved, is refunded by the bank, with at most €50 falling on you. An authorised push payment, one you approved yourself, is not covered by that rule.</desc>
-  <text class="chart-label" x="0" y="12">Unauthorised payment</text>
-  <rect class="chart-a" x="0" y="20" width="284" height="20" rx="4" />
-  <rect class="chart-b" x="288" y="20" width="32" height="20" rx="4" />
-  <text class="chart-note" x="0" y="56">You never approved it. Refunded; at most €50 is yours</text>
-  <text class="chart-label" x="0" y="84">Authorised push payment</text>
-  <rect class="chart-b" x="0" y="92" width="320" height="20" rx="4" />
-  <text class="chart-note" x="0" y="128">You pressed send. No refund rule; the checks come first</text>
-</svg>
-
-| Payment | Who approved it | What the EU rules say |
-| --- | --- | --- |
-| Unauthorised | Nobody: it was made without you | Refund; at most €50 of the loss is yours |
-| Authorised | You pressed send | No refund rule; recovery depends on speed and your bank |
-
-## The name check
-
-Since 9 October 2025, banks in the euro area must run a <Term id="verification-of-payee">verification of payee</Term> before a transfer. Free of charge, the bank compares the name you typed with the name on the account behind the IBAN.
-
-A match means the names agree. A close match shows the name on the account, so you can compare. A no match means that is not the name on the account. The bank must warn you, but it does not block the payment.
-
-**A no match is the moment to stop, not to click through.** Outside the euro area, in Poland or Sweden, banks have until 9 July 2027 to offer it. Until then, the check is yours to run.
-
-## Checks the app cannot run
-
-The name check catches a wrong account. It cannot tell you whether the person asking is who they claim to be. Three questions do that.
-
-Did the account details arrive by message? A changed IBAN announced by text, email or chat is checked by a route you had before the message: the number saved in your phone, the office, the old account. Never the reply button.
-
-Are you being moved off a platform? A seller who wants a transfer instead of the platform's own payment is asking you to give up its protection before you have anything.
-
-Is there a rush? A deadline is part of the pattern. A real payee can wait for one call.
-
-## If money has gone
-
-**Tell your bank as soon as you notice, before anything else.** It cannot recall the transfer, but it must try to recover the money, and the receiving bank must help.
-
-The account you paid is often a <Term id="money-mule">money mule</Term>'s, lent or sold so that stolen money can move on. Europol's money-mule operations tie over 90% of the mule transactions they find to cybercrime. Mule accounts exist to pass money onward, so each hour lets it move further.
-
-Then report it to the police in your country; Europol lists each country's online route. Keep the IBAN, the amount, the time and every message. Tell whoever was impersonated too, so they can warn their other contacts.
+A card payment you never made is an <Term id="unauthorised-payment">unauthorised payment</Term>. Your bank refunds it, and in most cases no more than €50 falls on you. A transfer you approved, even after a lie, is an <Term id="authorised-push-payment">authorised push payment</Term>. **The refund rule does not cover it, because the bank did what you asked.** The account you paid often belongs to a <Term id="money-mule">money mule</Term>, who moves the money on quickly. So if money has gone, call your bank at once.

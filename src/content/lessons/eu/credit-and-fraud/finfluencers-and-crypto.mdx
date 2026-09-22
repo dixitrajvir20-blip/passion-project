@@ -1,192 +1,166 @@
 ---
 title: "Money advice on social media: who is paying?"
-summary: "Who is paid for a money post, how to check a firm is authorised, and what a risk warning is really telling you."
+summary: "Who is paid for a money post, how to check a firm, and what a risk warning tells you."
 region: eu
 track: credit-and-fraud
 order: 4
-readingMinutes: 8
+readingMinutes: 10
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "A creator you have followed for a year posts a screenshot of an account up €4,120, and a code that gives you both a bonus if you open an account with the app. Under the app's own advert, in small grey text, one line gives the share of its retail accounts that lose money."
+objectives:
+  - "Tell a paid post from information, whatever label sits under it."
+  - "Check whether a firm is authorised before any money goes to it."
+  - "Read a risk warning as a fact about that firm's own customers."
 
-prediction:
-  q: "What does the code at the end of that post tell you?"
-  options:
-    - text: "Nothing much: it is how the app counts new users"
-      why: "The code does count new users. It is also what pays the creator for each account opened with it, which makes the post an advert."
-    - text: "That the creator is paid when you use it, so the post is an advert"
-      why: "A code, a gift or a free account is payment. ESMA tells finfluencers to say so in plain words, not in small text and not in a hashtag."
-    - text: "That the creator has tested the app and rates it"
-      why: "A code shows someone is paid for sign-ups. It says nothing about whether anyone checked the firm, or whether it is authorised at all."
-  answer: 1
+situation: "A creator you have followed for a year posts a screenshot of an account up €4,120, and a code that gives you both a bonus when you sign up. Under the post, the app's own advert carries one line in small grey text."
 
-takeaways:
-  - "A referral link or code, a gift or a free account is payment, so the post is an advert. ESMA tells finfluencers to label a paid post in plain words, and to say what they already hold."
-  - "Providing investment services in an EU country takes permission from a national regulator. ESMA's advice is to ask your own regulator whether a company is authorised."
-  - "A promised monthly figure does not fit a product that can lose everything put in. A standard risk warning does the opposite: it prints the share of that firm's own retail accounts that lose money."
+document:
+  kind: app-screen
+  title: "A post in your feed"
+  lines:
+    - { label: "Posted by", value: "A creator you follow", hint: "A year of videos built your trust. This post uses it to sell something." }
+    - { label: "Screenshot", value: "Account up €4,120", hint: "One account on one day. Nothing in it can be checked, and losing days rarely get posted." }
+    - { label: "Code", value: "LEO20: a bonus for you both", hint: "The app pays the creator for every account opened with it. That makes the post an advert." }
+    - { label: "Tags", value: "#money #trading #goals #ad", hint: "The ad label is there, buried in a row of tags. It should be one a follower cannot miss." }
+    - { label: "Last line", value: "Not financial advice", hint: "A label, not a protection. It changes nothing about who is paid." }
+    - { label: "Advert's grey line", value: "73% of retail investor accounts lose money", hint: "The risk warning on contracts for difference: the share of this firm's own retail customers who lose money." }
+    - { label: "Button", value: "Open an account", hint: "First, search your national regulator's register for the firm's legal name." }
+  find:
+    q: "Which line tells you the creator is paid when you sign up?"
+    options:
+      - text: "The screenshot, up €4,120"
+        why: "That shows one account on one day, not who is paid."
+      - text: "The code, LEO20"
+        why: "The app pays the creator for each account opened with it, so the post is an advert."
+      - text: "The last line"
+        why: "That labels the post but changes nothing. The payment sits in the code."
+    answer: 1
+
+video:
+  youtubeId: "lF31x_K1v-A"
+  title: "The WORST Financial Advice on the Internet"
+  channel: "Two Cents"
+  minutes: 7
+  note: "A US public-broadcaster series; the lesson supplies the EU regulators."
 
 explorable:
   kind: drill
-  intro: "Six posts and screens from one week. Some are information, some are adverts, one is a fraud. Refusing everything is not the answer, so decide what each one is, then look."
+  intro: "Three screens. One is plain information, so refusing everything is not the answer."
   scenarios:
-    - screen:
-        kind: message
-        from: "Post from a creator you follow"
-        lines:
-          - "Month 3 with the app. Up €4,120."
-          - "Code LEO20 opens an account and we both get a bonus."
-          - "Not financial advice, just sharing my setup."
-        action: "Open the app"
-      check:
-        q: "You have watched this creator for a year and have never seen a losing month on screen. What is this post?"
-        options:
-          - text: "Information, because the gains are on screen and the account is real"
-            why: "A screenshot shows one account on one day, and nothing in it can be checked from outside."
-          - text: "Paid promotion: the code pays the creator for every account opened"
-            why: "Payment can be a code, a gift or a free account, and it makes the post an advert. What it does not do is tell you anything about the product."
-          - text: "Neither, because the post says it is not financial advice"
-            why: "That line labels the post, it does not change it. ESMA's factsheet tells finfluencers that such a disclaimer will not protect them."
-        answer: 1
     - screen:
         kind: chat
         from: "Group invite from a classmate"
         lines:
-          - "Private signals group. Members are making 20% a month."
+          - "Private crypto signals group. Members make 20% a month."
           - "Minimum €100 to join. Twelve places left today."
-          - "Payouts land every Friday."
+          - "Payouts every Friday."
         action: "Join the group"
       check:
-        q: "Your classmate joined three weeks ago and has been paid twice. What do you do?"
+        q: "Your classmate has been paid twice in three weeks. What do you do?"
         options:
-          - text: "Join with the minimum, since her payouts have arrived"
-            why: "Early payouts are part of the script. They show that money came back twice, not that anything sits behind the group."
-          - text: "Put nothing in, and ask your national regulator about the name behind it"
-            why: "A fixed monthly figure with a deadline is the pattern. Your regulator can say whether anyone behind it is authorised."
-          - text: "Join, but only with money you could afford to lose"
-            why: "That answers a different question. The tell is not how risky it is: it is a promised monthly figure on something that can lose everything put in."
+          - text: "Join with the minimum, since her payouts arrived"
+            why: "Early payouts are part of the script. They prove money came back, nothing more."
+          - text: "Put nothing in, and check the name behind it with your regulator"
+            why: "A set monthly gain with a deadline is the pattern. Your regulator knows who is authorised."
+          - text: "Join, but only with money you could lose"
+            why: "The tell is a promised monthly gain, whatever the stake."
         answer: 1
-    - screen:
-        kind: message
-        from: "Advert in your feed"
-        lines:
-          - "Trade around the clock. Open an account from €20."
-          - "73% of retail investor accounts lose money with this provider."
-        action: "Create account"
-      check:
-        q: "The advert is bright and the last line is grey and small. Which part tells you most about the product?"
-        options:
-          - text: "The grey line: 73 of every 100 of that firm's retail accounts lost money"
-            why: "That number is about the firm's own customers, and each firm prints its own. It is the one fact in the advert that can be held against the screenshot of gains."
-          - text: "The €20 start, because it shows how small the risk is"
-            why: "A small first payment says nothing about the product. These products are usually leveraged, so a loss is measured against the position taken, not against the €20."
-          - text: "Neither, since every advert carries a warning like that"
-            why: "Every firm selling these has to carry one, but the figure is its own. Treating a required line as noise is how the most specific number gets skipped."
-        answer: 0
     - screen:
         kind: message
         from: "App notification"
         lines:
-          - "Is the euro worth more at 17:00 than it is now?"
+          - "Will the euro buy more dollars at 17:00 than now?"
           - "Stake €10. Right: €18 back. Wrong: nothing."
           - "Streak bonus for three calls in a row."
         action: "Place your call"
       check:
-        q: "The app has charts, streaks and a leaderboard, and sits beside your betting apps. What is on offer?"
+        q: "The app has charts, streaks and a leaderboard. What is it offering?"
         options:
-          - text: "A short trade, where a small move gives a small gain"
-            why: "The payout does not follow the size of the move. It is fixed either way, which is the shape of a bet rather than a trade."
-          - text: "A binary option, which national measures across the EU keep away from retail customers"
-            why: "Two outcomes, a fixed payout or nothing. ESMA prohibited these for retail customers in 2018, and national measures took over between 2019 and 2020."
-          - text: "A game, so the financial rules do not apply to it"
-            why: "In July 2026 ESMA reminded firms that event contracts of this shape fall under the binary option measures when they count as financial instruments."
+          - text: "A short trade, where a small move pays a little"
+            why: "The payout ignores how far the price moves. That is a bet."
+          - text: "A binary option, which firms may not sell to retail customers"
+            why: "A fixed payout or nothing. EU countries bar firms from selling these to ordinary customers."
+          - text: "A game, so money rules do not apply"
+            why: "Streaks from games do not change the product underneath."
         answer: 1
     - screen:
         kind: message
         from: "News app alert"
         lines:
           - "European share prices fell today after weak growth figures."
-          - "Analysts expect a choppy week."
+          - "Analysts expect a bumpy week."
       check:
-        q: "Your group chat is arguing about what everyone should do about this. What is the alert itself?"
+        q: "Your group chat is arguing about what to do. What is the alert itself?"
         options:
-          - text: "Information: a report of what happened, with nothing in it to act on"
-            why: "A report says what happened. Any instruction the group draws from it is theirs, and none of them knows what the next day brings."
-          - text: "A signal to move money before prices drop further"
-            why: "Turning a report into an instruction is a step the report never took. The slip is reading news as a forecast."
-          - text: "Paid promotion, since news apps live on advertising"
-            why: "Adverts sit around a story. The tell for promotion is a code, a link or a gift tied to the thing being promoted."
+          - text: "Information: a report of what happened"
+            why: "A report says what happened. Any instruction drawn from it is the group's own."
+          - text: "A signal to move money before prices fall further"
+            why: "The report never said that. Reading news as a forecast is the slip."
+          - text: "Paid promotion, since news apps run on adverts"
+            why: "The tell for promotion is a code, a link or a gift tied to the thing."
         answer: 0
-    - screen:
-        kind: message
-        from: "Reply from your national regulator"
-        lines:
-          - "We have no record of this firm being authorised here."
-          - "It has no permission to provide investment services to you."
-          - "Check with us before you deal with any company."
-      check:
-        q: "You asked your regulator about the app from the creator's post, and this came back. What does it tell you?"
-        options:
-          - text: "That the regulator has not got round to authorising it yet"
-            why: "This is an answer, not a queue. The firm is offering investment services it has no permission to offer where you live."
-          - text: "That there is nothing behind it, and a creator's code does not change that"
-            why: "The regulator has answered the one question that matters here. A code from someone paid for sign-ups does not answer it."
-          - text: "That it is fine for small amounts"
-            why: "The size of a payment does not change whether a firm has permission. The slip is reading a regulator's answer as a rating rather than a yes or no."
-        answer: 1
-  reflection: "Pick the screen you were least sure about. Which single fact would have settled it, and where on your own phone would you look that fact up?"
+  reflection: "Which screen were you least sure about, and which one fact would have settled it?"
+
+takeaways:
+  - "Ask who gains when you tap. A code, a gift or a free account makes a post an advert."
+  - "Before any money goes in, search your national regulator's register for the firm's legal name."
+  - "Read the grey line before the gains: it is the one figure about people in your position."
+
+details:
+  - "ESMA's finfluencer factsheet (2025) asks for paid posts to be labelled in plain words, such as Ad, Paid partnership or Sponsored, and for creators to say what they already hold. It says a 'not investment advice' line will not protect the person posting."
+  - "Under the Market Abuse Regulation, a post that points people towards buying or selling a financial instrument, or gives a view on its price, can be an investment recommendation. ESMA's February 2024 warning says the poster must give their name and the date, mark opinion, and disclose conflicts inside the post; a link elsewhere may not be enough."
+  - "Telling one person what to do with their money is investment advice, which needs a licence from a national regulator."
+  - "Each member state names one authority under the Market Abuse Regulation, and ESMA publishes the list: for example the Central Bank of Ireland, CONSOB in Italy, the AMF in France and BaFin in Germany."
+  - "The Markets in Crypto-Assets Regulation (MiCA) applied in full from December 2024. ESMA's MiCA register lists the crypto-asset service providers authorised under it, and entities found providing those services without permission."
+  - "When ESMA restricted contracts for difference in March 2018, national studies showed 74% to 89% of retail accounts losing money, with average losses of €1,600 to €29,000 per client. The measures brought in the standard risk warning with each provider's own figure."
+  - "ESMA prohibited selling binary options to retail customers in 2018. Its measures could only be temporary, so national regulators replaced them with their own between March 2019 and April 2020."
+  - "On 3 July 2026 ESMA reminded firms that event contracts, bets on whether something happens, fall within the national binary option measures where they qualify as financial instruments."
+  - "ESMA's steps for someone defrauded: stop all contact, report to the police where you live, inform your national regulator, and search the IOSCO investor alerts portal. Sites using ESMA's name or logo, other than its own, are fake."
+  - "A European Parliament report on finfluencers, set for debate and a vote in April 2026, named hidden advertising, conflicts of interest, misleading claims and the spread of scams among the risks."
 
 quiz:
-  - q: "A creator you like ends a video by naming what she is adding to and reading out a code, then says the video is not investment advice. What do you take from that last line?"
+  - q: "A creator reads out a code and names what she holds, then says: not investment advice. What does that line change?"
     options:
-      - text: "That the rules do not apply to what she said"
-        why: "ESMA's factsheet for finfluencers says a disclaimer like that will not protect the person posting. What counts is what was said, not the label put on it."
-      - text: "Nothing: it does not change what the video is, and the code still says it is paid"
-        why: "A sentence at the end changes neither what was said nor who gains when you act on it."
-      - text: "That she is licensed, because only licensed people add disclaimers"
-        why: "A licence comes from a national regulator and appears on its register. It never comes from a line of speech."
+      - text: "The rules no longer apply to what she said"
+        why: "ESMA says a line like that will not protect the person posting."
+      - text: "Nothing: the code says she is paid, and her holding is a conflict of interest"
+        why: "A sentence at the end changes neither what was said nor who gains."
+      - text: "It shows she is licensed"
+        why: "A licence sits on a national regulator's register, never in a line of speech."
     answer: 1
-  - q: "You are about to open an account with an app a creator promotes. You have ten minutes. What is the best use of them?"
+  - q: "You have ten minutes before opening an account with an app a creator promotes. What is the best use of them?"
     options:
       - text: "Watch two more of the creator's videos about it"
-        why: "More of the same source is not a check. Every video comes from the person paid when you sign up."
-      - text: "Ask your national regulator whether the firm's legal name is authorised"
-        why: "That is the check ESMA points investors to, and it decides whether the firm has permission to provide the service at all."
-      - text: "Read the app store reviews and the star rating"
-        why: "Reviews can be bought and say nothing about permission to operate. A firm without permission can still have a well-built app."
+        why: "More of the same source is not a check. The creator is paid when you sign up."
+      - text: "Search your national regulator's register for the firm's legal name"
+        why: "That settles whether the firm may offer the service at all."
+      - text: "Read the app store reviews"
+        why: "Reviews can be bought and say nothing about permission to operate."
     answer: 1
   - q: "An advert says 73% of its retail investor accounts lose money. A friend says that proves the app is dishonest. How do you read the line?"
     options:
       - text: "As proof the firm is unauthorised"
-        why: "It points the other way. The firms that must print that line are the ones allowed to market the product."
-      - text: "As a statistic about that firm's own retail customers, which you can read without an account"
-        why: "The number is about people in your position at that firm. It describes the product, so it is worth reading whether or not you ever open anything."
-      - text: "As small print that every advert carries, so it can be skipped"
-        why: "The requirement is standard, but the figure is the firm's own. Skipping it drops the only checkable number in the advert."
+        why: "Not on its own. Whether the firm is authorised is your regulator's answer."
+      - text: "As a fact about that firm's own retail customers"
+        why: "It describes people in your position at that firm, before you open anything."
+      - text: "As small print every advert carries, so it can be skipped"
+        why: "The rule is standard, but the figure is the firm's own."
     answer: 1
-  - q: "Money has gone to an app that turned out not to be authorised. A week later someone messages offering to recover it for a fee. What do you do?"
-    options:
-      - text: "Pay the fee, since the money is lost anyway"
-        why: "A second payment is the second half of the same script. ESMA says it never approaches people for their details to help recover lost funds."
-      - text: "Pay, but only after they send proof of who they are"
-        why: "ESMA says any site using its name or logo, other than its own, is fake. Proof sent by the person asking for money proves nothing."
-      - text: "Send nothing, stop replying, and report it with the first loss"
-        why: "ESMA's steps for someone defrauded include cutting contact, then the police where you live, then your national regulator."
-    answer: 2
 
 transfer:
-  - "Any post that ends with a referral code, a link or a group invite. Ask who is paid when you use it."
-  - "Before an account is opened anywhere. The firm's legal name, and your national regulator's answer about it."
-  - "When an app turns a price into a yes-or-no question with a fixed payout. That is a bet, whatever the charts around it look like."
-  - "When someone at home or in a group chat repeats a promised monthly figure. You can now name the pattern for them."
+  - "Any post ending in a code, a link or a group invite: ask who is paid."
+  - "Before opening an account anywhere: the firm's legal name, and your regulator's answer."
+  - "An app offering a fixed payout or nothing on a price: that is a bet."
 
-glossary: [paid-promotion, referral-link, conflict-of-interest, investment-recommendation, financial-instrument, authorised-firm, contract-for-difference, leverage, crypto-asset, retail-client, risk-warning, binary-option]
+glossary: [referral-link, paid-promotion, esma, conflict-of-interest, authorised-firm, crypto-asset, contract-for-difference, risk-warning, retail-client, binary-option]
 
 reportTo:
   url: "https://www.esma.europa.eu/investor-corner/frauds-and-scams"
-  label: "Stop replying to them, report it to the police where you live, and tell your national regulator. ESMA's investor pages set out the steps."
+  label: "Stop replying; an offer to recover the money for a fee is the same scam. Report it to the police and your national regulator. The steps are at"
 
 sources:
   - title: "Warning for people posting Investment Recommendation on social media: the broad definition under the Market Abuse Regulation, the general requirements (name, date, facts kept apart from opinion, conflicts of interest disclosed inside the recommendation, on every channel) and the note that a link to a disclosure may not be enough, ESMA74-1103241886-912 (6 February 2024)"
@@ -218,85 +192,14 @@ sources:
     publisher: "European Parliament"
 ---
 
-## Who is paid when you tap
+## Who gains when you tap
 
-A <Term id="referral-link">referral link</Term> or code, a gift or a free account is payment. When a creator takes one, the post is <Term id="paid-promotion">paid promotion</Term>, whatever else it also is.
+A <Term id="referral-link">referral link</Term> or code, a gift or a free account is payment. A post that carries one is <Term id="paid-promotion">paid promotion</Term>, whatever else it is. <Term id="esma">ESMA</Term>, the EU's markets regulator, asks creators to label it in plain words, such as Ad or Sponsored.
 
-ESMA's factsheet for finfluencers asks for a label a follower cannot miss: the words Ad, Paid partnership or Sponsored. Small grey text will not do, and neither will a hashtag buried in a row of twenty.
+A creator who already holds what they praise has a <Term id="conflict-of-interest">conflict of interest</Term>, and that belongs in the post too. A "not financial advice" line changes neither. **The first question about any money post is who gains when you act on it.**
 
-**The same goes for what a creator already holds.** Someone who would gain if you bought the same thing has a <Term id="conflict-of-interest">conflict of interest</Term>, and ESMA says that belongs in the post too.
+## Check the firm, then the grey line
 
-The first question to ask about a money post is who gains when you act on it.
+Offering investment services in an EU country takes a national regulator's permission. A firm that has it is an <Term id="authorised-firm">authorised firm</Term>, listed on that regulator's register. Firms that trade or hold <Term id="crypto-asset">crypto-assets</Term> for you need permission too. Crypto can lose everything, so a promised monthly gain is a warning sign.
 
-## What the post counts as
-
-EU market abuse rules are broad. A post that points people towards buying or selling a <Term id="financial-instrument">financial instrument</Term>, or offers a view on its future price, can be an <Term id="investment-recommendation">investment recommendation</Term>. ESMA says everyday wording changes nothing, and that educational content can count too.
-
-Anyone posting one must give their name and the date, and mark which parts are opinion. Whatever they stand to gain goes in the post. ESMA adds that a link to it elsewhere may not be enough.
-
-Telling one person what to do with their money goes further. That is investment advice, and it needs a licence from a national regulator.
-
-**ESMA's factsheet says "this is not investment advice" will not protect the person posting.**
-
-## Authorised, and where to check
-
-Providing investment services in an EU country takes permission from a national regulator. A firm with that permission is an <Term id="authorised-firm">authorised firm</Term>. ESMA's advice to investors is to check with your own regulator whether a company is authorised.
-
-Under EU market abuse rules each member state names one authority. ESMA publishes the list: the Central Bank of Ireland, CONSOB in Italy, the AMF in France, BaFin in Germany.
-
-The EU's crypto rules for service providers came into full application in December 2024. ESMA's register lists the providers authorised under them, and entities found to be providing those services without permission.
-
-**Check the firm, not the person posting about it.**
-
-## What a risk warning is telling you
-
-ESMA's factsheet names the investments finfluencers most often market: <Term id="contract-for-difference">contracts for difference</Term>, other <Term id="leverage">leveraged</Term> products, and volatile <Term id="crypto-asset">crypto-assets</Term>. Each can lose everything put into it.
-
-When ESMA restricted contracts for difference in 2018, the measures included a standard <Term id="risk-warning">risk warning</Term> carrying one number: the share of that firm's own <Term id="retail-client">retail</Term> accounts that lose money.
-
-**That number describes customers, not markets.** Studies by national regulators, reported by ESMA in 2018, found 74 to 89 of every 100 retail accounts losing money. Average losses ran from €1,600 to €29,000 per customer.
-
-You need no account to read it, and it is the most checkable fact in the advert.
-
-<svg class="chart" viewBox="0 0 320 130" role="img" aria-labelledby="cfd-title cfd-desc">
-  <title id="cfd-title">Retail accounts losing money on contracts for difference</title>
-  <desc id="cfd-desc">Two bars, each the full width of 100 accounts. The lowest national study reported by ESMA in 2018 found 74 in every 100 retail accounts losing money; the highest found 89 in every 100.</desc>
-  <text class="chart-label" x="0" y="16">Lowest study: 74 in every 100</text>
-  <rect class="chart-a" x="0" y="22" width="237" height="22" rx="6" />
-  <text class="chart-label" x="0" y="70">Highest study: 89 in every 100</text>
-  <rect class="chart-a" x="0" y="76" width="285" height="22" rx="6" />
-  <text class="chart-note" x="0" y="122">Full width is 100 accounts. National studies, 2018</text>
-</svg>
-
-| Retail accounts trading contracts for difference | Finding |
-| --- | --- |
-| Share that lost money | 74 to 89 in every 100 |
-| Average loss per customer | €1,600 to €29,000 |
-
-## The promised monthly figure
-
-A promised 20% a month is the opening line of a familiar pattern. The rest of it: a private group, a small early payout that buys trust, and a deadline.
-
-ESMA's factsheet warns that the products pushed this way can lose all the money put into them. Something that can lose everything cannot also promise a set gain every month.
-
-**Hurry is part of the design.** Places running out, a window closing, a group that shuts tonight. The pressure is there so that nobody stops to check.
-
-The European Parliament took up the same subject in April 2026, naming hidden advertising, conflicts of interest and misleading claims among the risks.
-
-## When an app is really a bet
-
-Some apps turn a price into a yes-or-no question with a fixed payout: right, a set amount comes back; wrong, nothing does. That is a <Term id="binary-option">binary option</Term>.
-
-ESMA prohibited selling these to retail customers in 2018. Its measures could only be temporary, so regulators across the EU replaced them with national ones between 2019 and 2020. In July 2026 ESMA reminded firms that event contracts, meaning bets on whether something happens, fall under those measures when they count as financial instruments.
-
-**Nothing is owned, and how far the price moves does not matter.** Charts, streaks and a leaderboard are borrowed from betting apps. A fixed payout or nothing is a bet, whatever the screen around it looks like.
-
-## If money has already gone
-
-Stop replying to them. Then report it to the police where you live, and tell your national regulator. ESMA's investor pages list those steps, along with where to search alerts about suspected scams.
-
-Keep the firm's name, the app, the dates, the amounts and every message.
-
-**Treat any later offer to recover the money as part of the same script.** ESMA says it never approaches people for their details to help recover lost funds. It also says any site using its name or logo, other than its own, is fake.
-
-Tell someone at home what happened, and work through ESMA's list of steps with them.
+Adverts for <Term id="contract-for-difference">contracts for difference</Term> carry a <Term id="risk-warning">risk warning</Term>: the share of that firm's own <Term id="retail-client">retail</Term> accounts that lose money. It describes people in your position. A fixed sum or nothing on a price guess is a <Term id="binary-option">binary option</Term>, which firms may not sell to retail customers.
