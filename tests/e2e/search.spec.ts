@@ -41,9 +41,10 @@ test('a search with no match says so, and the engine is only loaded once the box
   await page.waitForLoadState('networkidle');
   expect(engine).toEqual([]);
 
-  // A plain absent word. Pagefind returns loose matches for terms that open with a repeated
-  // letter ("zzz" matches four pages), so the term here has to be an ordinary one.
-  await page.getByLabel('Search for').fill('brontosaurus');
+  // An absent word, quoted: Pagefind shortens an unmatched term until something matches ("zzz"
+  // found four pages, and "brontosaurus" found one once the lessons grew), and only a quoted term
+  // is looked up exactly.
+  await page.getByLabel('Search for').fill('"brontosaurus"');
   await expect(page.locator('[data-status]')).toContainText('Nothing found');
   expect(engine.length).toBeGreaterThan(0);
 });
