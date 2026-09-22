@@ -1,39 +1,87 @@
 ---
 title: "A one-month buffer, and interest that compounds"
-summary: "One month of your own costs, held aside, and the same interest maths on what you save and what you owe."
+summary: "Size a buffer from one month of your own costs, and see what ₹2,000 a month grows to in a year."
 region: in
 track: money-basics
 order: 4
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "A phone screen breaks on a Tuesday. The repair is ₹4,500. Your account holds ₹900, and a loan app offers the rest in minutes."
+objectives:
+  - "Size a buffer from one month of your own costs, with a number and a date."
+  - "Split a year of saving into what you put in and what growth added."
+  - "Work out what an unpaid balance costs when interest earns interest."
 
-prediction:
-  q: "You set ₹2,000 aside every month for 12 months, at an illustrative 6% a year. You have put in ₹24,000. What is there at the end?"
-  options:
-    - text: "₹24,000, because twelve months is too short for 6% to show"
-      why: "Growth over one year is small, but it is not nothing. Here it comes to ₹671 on top of the deposits."
-    - text: "About ₹24,700"
-      why: "Each ₹2,000 earns only for the months it has been there, so the growth is ₹671, not a full year of it."
-    - text: "₹25,440, which is 6% on top of ₹24,000"
-      why: "That gives every rupee a full year. The deposit made in month twelve has only just arrived."
-  answer: 1
+situation: "Your phone screen breaks. The repair is ₹4,500, your account holds ₹900, and a loan app offers the other ₹3,600 in minutes. You start moving ₹2,000 aside monthly; at an example 6%, a year adds ₹671."
 
-takeaways:
-  - "A buffer is one month of your own costs, written as a number and a date, not a plan to save more."
-  - "Over one year the deposits do nearly all the work: ₹24,000 put in, and ₹671 of growth at an illustrative 6%."
-  - "Compounding adds to savings and to what you owe. Every rate in this lesson is an example, not a promise."
+document:
+  kind: statement
+  title: "Last month, money in and out"
+  lines:
+    - { label: "Pay from a part-time job", value: "₹7,500", hint: "What arrived in the month. Every line below was paid from it." }
+    - { label: "Room share", value: "−₹2,500", hint: "Your part of the rent. The largest cost, and the one that cannot wait." }
+    - { label: "Food", value: "−₹1,800", hint: "Meals and groceries for the month." }
+    - { label: "Travel", value: "−₹600", hint: "Bus, metro or fuel to reach class and work." }
+    - { label: "Phone and data", value: "−₹300", hint: "The monthly plan. Without it, much else stops working." }
+    - { label: "Course materials", value: "−₹300", hint: "Books and printing for the month." }
+    - { label: "One month of costs", value: "₹5,500", hint: "The five costs added up. A one-month buffer is this figure, held aside." }
+    - { label: "Pay minus costs", value: "₹2,000", hint: "What can move aside each month. Moved on payday, it fills the ₹5,500 buffer by the third month." }
+  find:
+    q: "Which line is the size of a one-month buffer?"
+    options:
+      - text: "Pay from a part-time job, ₹7,500"
+        why: "That is what arrives. A buffer covers what goes out, and your costs are ₹2,000 lower than your pay."
+      - text: "One month of costs, ₹5,500"
+        why: "A buffer is one month of your own spending, held aside for the month something breaks or pay stops."
+      - text: "Pay minus costs, ₹2,000"
+        why: "That is how fast the buffer fills each month, not how big it needs to be."
+    answer: 1
+
+video:
+  youtubeId: "Rm6UdfRs3gw"
+  title: "Compound interest introduction | Interest and debt | Finance & Capital Markets | Khan Academy"
+  channel: "Khan Academy"
+  minutes: 7
+  note: "Made for the US with round example rates; the arithmetic is the same."
 
 worked:
   kind: growth
-  context: "₹2,000 a month, set aside for 12 months. The 6% a year is an illustrative rate, used to show the maths. No account is being promised here, and rates on offer change."
+  context: "₹2,000 moved aside on every payday for 12 months, at an example 6% a year."
   monthly: 2000
   rate: 6
   years: 1
+  captions:
+    - "Your own money: twelve payments of ₹2,000. The third passes the ₹5,500 buffer."
+    - "Each month's interest joins the balance and earns too, if the example 6% holds."
+    - "The balance minus your payments: small, since later payments had few months to earn."
+
+keyIdea: "Growth is the balance minus your payments; over one year, payments do nearly all the work."
+
+practice:
+  kind: growth
+  context: "A friend moves ₹1,500 a month aside for two years, at an example 5%."
+  monthly: 1500
+  rate: 5
+  years: 2
+  hints:
+    - "Growth is what the balance reaches minus what she paid in herself."
+    - "₹37,779 − ₹36,000."
+    - "₹1,779. Taking 5% of all ₹36,000 for two years gives ₹3,600, but late payments have barely begun to earn."
+
+practiceMore:
+  kind: growth
+  context: "Her brother moves ₹2,500 a month aside for one year, at an example 6%."
+  monthly: 2500
+  rate: 6
+  years: 1
+  hints:
+    - "Same method: the balance after twelve months minus the ₹30,000 he paid in."
+    - "₹30,839 − ₹30,000."
+    - "₹839. Taking 6% of the full ₹30,000 gives ₹1,800, as if every payment had a whole year to earn."
 
 explorable:
   kind: growth
@@ -41,61 +89,61 @@ explorable:
   rate: 6
   horizons: [1, 3, 5]
   prompts:
-    - "Tap ₹2,000 and 1 year, then 3 years. The deposits tripled, from ₹24,000 to ₹72,000. Check whether the growth on top tripled too."
-    - "Now compare ₹1,000 for 5 years with ₹4,000 for 1 year. One puts in ₹60,000, the other ₹48,000. Read both totals, and where the gap comes from."
+    - "Tap ₹2,000 a month, then 3 years. Payments triple, and growth rises about tenfold, from ₹671 to ₹6,672."
+    - "Tap ₹4,000 a month and 1 year: ₹1,342 of growth. Then ₹1,000 a month and 5 years: ₹9,770 of growth."
 
-practice:
-  kind: growth
-  context: "A friend keeps setting ₹1,500 a month aside for two years after her buffer is full. The 5% a year is an example rate, not an offer."
-  monthly: 1500
-  rate: 5
-  years: 2
+takeaways:
+  - "Add up last month's costs; write the buffer as that number and a date."
+  - "Move the set-aside on payday, before the month spends it."
+  - "Before borrowing in a hurry, find the APR and the total you repay; unpaid interest earns interest."
+
+details:
+  - "In a survey for the National Centre for Financial Education (fieldwork June 2018 to October 2019), 45% of adults said they could meet an expense the size of one month's income without borrowing."
+  - "In the same survey, 6% answered the compound interest question correctly, and 11% of those aged 18 to 29."
+  - "The calculator takes 6% a year as 0.5% a month. Each payment starts earning in the month after it arrives, so the twelfth earns nothing in the first year."
+  - "Rates on savings accounts and deposits change, and the one quoted today is not owed to you next year. Prices rise too, so a rough check is the rate minus the rise in prices."
+  - "A buffer is held so it can be reached this week, not in order to grow. This lesson does not pick a place for it."
+  - "In 2012 the Reserve Bank of India told banks to offer a Basic Savings Bank Deposit Account with no minimum balance, as a normal service available to all. A small balance need not cost a penalty."
+  - "The Key Facts Statement rule of 15 April 2024 covers retail and MSME term loans from regulated lenders, sanctioned from 1 October 2024. It does not cover credit card balances."
+  - "A charge left off the Key Facts Statement cannot be added later without your consent."
+  - "The 36% a year in this lesson is an example, not a quoted rate. The APR counts fees as well as interest, so a loan with fees has an APR above its interest rate."
 
 quiz:
-  - q: "The repair is ₹4,500, the account holds ₹900, and an app offers the rest in minutes. What do you work out before you agree?"
-    options:
-      - text: "How fast the money arrives"
-        why: "Speed is what the offer leads with. It says nothing about what the money costs, and the cost is the part you are agreeing to."
-      - text: "The total you repay, and the APR on the key facts statement"
-        why: "Total repaid minus the ₹3,600 borrowed is what it costs. A lender the RBI regulates must hand you that sheet before a retail term loan."
-      - text: "The monthly instalment, since that is what you have to find"
-        why: "An instalment you can meet says nothing about the total. Two loans with the same instalment can differ by months of interest."
-    answer: 1
-  - q: "Your costs last month came to ₹5,500, and you can set ₹2,000 aside each month. How do you write the buffer down?"
+  - q: "A friend's costs came to ₹7,200 last month, and she can move ₹2,500 aside each month. How should she write the buffer down?"
     options:
       - text: "As a habit: keep whatever is left at the end of each month"
-        why: "What is left at the end is whatever the month did not spend, which is not a figure you can plan around. A target needs a number and a date."
-      - text: "₹5,500, filled by the third payment, moved on the day money arrives"
-        why: "Three payments of ₹2,000 pass ₹5,500, so the date is real. Moving it first is what makes the number happen."
-      - text: "₹66,000, a year of costs, before any of it counts"
-        why: "A year of costs is ₹66,000 and a long way off. The shock this is sized for is one month, and the first month is the one that stops a loan."
+        why: "What is left is whatever the month did not spend, which is not a figure she can plan around. A target needs a number and a date."
+      - text: "₹7,200, passed with the third payment, moved on the day pay arrives"
+        why: "Two payments make ₹5,000 and three make ₹7,500, so the date is real. Moving it first is what makes the number happen."
+      - text: "₹86,400, a year of costs, before any of it counts"
+        why: "A year of costs is a long way off. The shock this is sized for is one month, and the first month is the one that stops a loan."
     answer: 1
-  - q: "A balance of ₹10,000 is left unpaid for 12 months at 36% a year, charged monthly. A friend says that costs ₹3,600. How do you read it?"
+  - q: "Your cousin moves ₹3,000 aside each month for a year at an example 6%. She expects ₹2,160 of growth, 6% of the ₹36,000 she puts in. What do you tell her?"
+    options:
+      - text: "She is right: 6% of ₹36,000 is ₹2,160"
+        why: "That gives every rupee a full year. Each payment earns only from the month after it arrives, and the last earns nothing."
+      - text: "About ₹1,007, and only if 6% holds all year"
+        why: "₹3,000 a month grows to ₹37,007, so growth is ₹1,007. The rate is an assumption, so even that is an estimate."
+      - text: "Nothing, because a year is too short to earn anything"
+        why: "Growth over one year is small, not zero. Here it is about ₹1,007 on top of her ₹36,000."
+    answer: 1
+  - q: "A balance of ₹10,000 goes a year with nothing repaid, at an example 36% a year charged as 3% a month. A friend budgets ₹3,600 of interest. What do you tell him?"
     options:
       - text: "₹3,600 is right, because 36% of ₹10,000 is ₹3,600"
-        why: "That charges the rate once, on the opening balance. Each month's interest joins the balance, and the next month is worked out on the larger figure."
-      - text: "About ₹4,260, because each month's interest joins the balance"
-        why: "3% a month on a growing balance reaches about ₹14,260 after 12 months. The extra ₹660 is interest charged on interest."
+        why: "That charges the rate once, on the opening balance. Each month's interest joins the balance, and the next month is worked out on more."
+      - text: "Budget about ₹4,260, because each month's interest is charged interest too"
+        why: "3% a month on a growing balance reaches about ₹14,260 after 12 months. The extra, about ₹660, is interest on interest."
       - text: "Less than ₹3,600, because the balance falls each month"
         why: "A balance falls only when something is repaid. Nothing was repaid here, so it grew every month."
     answer: 1
-  - q: "You show the plan to a friend. He says the 6% makes the ₹24,671 a figure you can count on. How do you read it?"
-    options:
-      - text: "He is right, because the calculator worked it out"
-        why: "A calculator works out what the rate you typed would do. It cannot know what any account pays next year."
-      - text: "It is what ₹2,000 a month comes to if 6% holds for the year"
-        why: "The rate is an assumption you feed in. Change it and the answer changes, while the deposits stay the part you control."
-      - text: "The rate is the whole point of the plan"
-        why: "Over one year the rate added ₹671 and the deposits added ₹24,000. Over long stretches the rate matters far more."
-    answer: 1
 
 transfer:
-  - "On the day money arrives. The buffer moves first, before anything is spent."
-  - "When something breaks and credit is offered in minutes. Check what the buffer already covers, then what the rest would cost in total."
+  - "On payday. The buffer amount moves first, before anything is spent."
+  - "When something breaks and credit is offered in minutes. Check what the buffer covers, then what the rest would cost in total."
   - "When your costs change, with a new room or a new phone plan. The buffer is one month of the new number."
-  - "When anyone quotes a rate. Ask who sets it, whether it can change, and what the figure assumes."
+  - "When a calculator or an app quotes a rate. Ask whether it can change, and what the figure assumes."
 
-glossary: [emergency-fund, interest, principal, compound-growth, key-facts-statement, apr, inflation]
+glossary: [emergency-fund, interest, principal, compound-growth, key-facts-statement, apr]
 tool: savings
 
 sources:
@@ -110,74 +158,14 @@ sources:
     publisher: "Reserve Bank of India"
 ---
 
-## What a buffer is
+## Why a month of your own costs
 
-A <Term id="emergency-fund">buffer</Term> is one month of your own costs, kept where you can reach it. Not a figure from someone else's life: your room, your food, your travel, your phone.
+A <Term id="emergency-fund">buffer</Term> is one month of your own costs, kept where you can reach it this week. On the statement that is ₹5,500, passed on your third payment of ₹2,000.
 
-Add up last month. Here it comes to ₹5,500.
-
-| Last month | Amount |
-| --- | --- |
-| Room share | ₹2,500 |
-| Food | ₹1,800 |
-| Travel | ₹600 |
-| Phone and data | ₹300 |
-| Course materials | ₹300 |
-| One month of costs | ₹5,500 |
-
-**Write it as a number and a date.** ₹5,500, and three payments of ₹2,000 pass it, so the date is your third payday.
-
-A survey for the National Centre for Financial Education (NCFE) put a plain question to adults across India. Faced today with a major expense the size of one month's income, could you pay it without borrowing or asking family or friends? Across the country, 45% said yes.
-
-## Growth on growth
-
-Money left in an account can earn <Term id="interest">interest</Term>. The amount you put in is the <Term id="principal">principal</Term>.
-
-Leave the interest in, and the next round of interest is worked out on the larger amount. That is <Term id="compound-growth">compound growth</Term>.
-
-Compound interest was the hardest calculation in that survey: 6% got it right, and 11% of those aged 18 to 29.
-
-Over 12 months it is a small effect. ₹2,000 a month at an illustrative 6% a year adds ₹671 to ₹24,000 of deposits. At 0% the same deposits stay ₹24,000.
-
-**It is not ₹25,440, which is 6% on the whole ₹24,000.** Each deposit earns only for the months it has been there, and the last one has only just arrived.
-
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="buffer-title buffer-desc">
-  <title id="buffer-title">₹2,000 a month for 12 months, at an illustrative 6% a year</title>
-  <desc id="buffer-desc">A single bar in two parts. The long part is ₹24,000, the deposits made over twelve months. The short part at the end is ₹671 of growth.</desc>
-  <rect class="chart-a" x="0" y="26" width="305" height="36" rx="6" />
-  <rect class="chart-b" x="309" y="26" width="11" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Put in: ₹24,000</text>
-  <text class="chart-label" x="320" y="80" text-anchor="end">Growth: ₹671</text>
-  <text class="chart-note" x="0" y="100">Over one year, the deposits do nearly all of the work.</text>
-</svg>
+Money in an account can earn <Term id="interest">interest</Term> on what you put in, the <Term id="principal">principal</Term>. Leave the interest in, and the next round is worked out on a larger balance: <Term id="compound-growth">compound growth</Term>.
 
 ## The same maths on what you owe
 
-Interest compounds against a borrower the same way. A balance of ₹10,000 at 36% a year, charged monthly, is charged 3% of what is owed each month.
+Borrow the ₹3,600 at an example 36% a year, charged as 3% a month, and repay nothing. A year later you owe about ₹5,130. One flat 36% charge would make it ₹4,896. The gap is each month's 3% charged on earlier interest too.
 
-Repay nothing for 12 months and it is about ₹14,260. One flat 36% charge on ₹10,000 would be ₹3,600, so about ₹660 is interest charged on interest.
-
-| ₹10,000 owed, nothing repaid | After 12 months |
-| --- | --- |
-| At 36% a year, charged monthly | about ₹14,260 |
-| One flat charge of 36% | ₹13,600 |
-
-Before you sign a retail term loan, a lender the Reserve Bank of India (RBI) regulates must hand you a <Term id="key-facts-statement">Key Facts Statement</Term>. It carries the <Term id="apr">APR</Term> and every charge, and a charge left off it cannot be added later without your consent. The rule covers those loans, not credit card balances.
-
-**Read the total you repay against what you borrowed.**
-
-## The rate is an assumption
-
-Every rate in this lesson is a figure typed into a calculator, not an offer. Rates on accounts change, and the one quoted today is not owed to you next year.
-
-Before comparing two rates, check what each one depends on, and whether the amount you put in can fall.
-
-Prices move as well. That is <Term id="inflation">inflation</Term>, and a rough check is to take the rise in prices away from the growth rate.
-
-**A buffer is not held in order to grow. It is held so the ₹4,500 repair does not become a loan.**
-
-## Where a buffer can sit
-
-Money you may need this week has to be reachable this week. This lesson does not pick a place for you, and the choice is yours to make.
-
-One rule is worth knowing. In 2012 the RBI told banks to offer a Basic Savings Bank Deposit Account. It carries no minimum balance, and banks were told not to hold it apart from the accounts they offer everyone else. A small balance does not have to cost you a penalty.
+Before a personal loan, a lender the Reserve Bank regulates must give you a <Term id="key-facts-statement">Key Facts Statement</Term> with the <Term id="apr">APR</Term> and every charge.

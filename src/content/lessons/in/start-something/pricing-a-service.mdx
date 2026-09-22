@@ -1,40 +1,89 @@
 ---
 title: "Pricing freelance work from cost, time and tax"
-summary: "A ₹15,000 website is 40 hours of work, ₹2,600 of costs, and tax a client may deduct first."
+summary: "Why a copied ₹8,000 website quote pays ₹135 an hour, and how cost, time and tax build a price."
 region: in
 track: start-something
 order: 1
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "A clinic near your college asks what you charge to build its website. You are about to say ₹8,000, because that is what a classmate charged for one last year."
+objectives:
+  - "Count every hour a job takes, and work out what a quote pays for each."
+  - "Work out how many jobs at a price cover the month's costs."
+  - "Record a payment that arrives short of the invoice, and check the tax taken in your name."
 
-prediction:
-  q: "You are about to quote ₹8,000 for the clinic's website. What does that ₹8,000 have to cover?"
-  options:
-    - text: "The pages you build, and nothing else"
-      why: "A domain, hosting and images are bought before the site goes live. They come out of the fee, whatever the fee is."
-    - text: "What the job buys, every hour it takes, and the tax that follows on what is left"
-      why: "Two of those never appear in the quote, and all three are paid out of the same ₹8,000."
-    - text: "The build, with revisions billed separately once the site is live"
-      why: "Revisions are billed on their own only when the quote says so before the work starts."
-  answer: 1
+situation: "A clinic near your college asks your price for a five-page website. You nearly say ₹8,000, what a classmate charged. At that price, you need four sites a month to cover your costs."
 
-takeaways:
-  - "A price is built from what the job buys, every hour it takes, and the tax that follows on what is left."
-  - "Some clients deduct tax before paying, so less arrives than the invoice says. That deduction is tax paid in your name."
-  - "One price for a job with a clear end, plus a written list of what it covers, so extra work gets its own price."
+document:
+  kind: statement
+  title: "Clinic website at ₹8,000"
+  lines:
+    - { label: "Quote, five pages", value: "₹8,000", hint: "What a classmate charged last year for a similar site, and the figure you nearly said." }
+    - { label: "Domain, one year", value: "−₹900", hint: "Bought for this site alone, and paid out of the fee." }
+    - { label: "Hosting, one year", value: "−₹1,200", hint: "Also bought for this site. It costs the same whatever you charge." }
+    - { label: "Stock images", value: "−₹500", hint: "Photographs licensed for the clinic's pages." }
+    - { label: "Left from the fee", value: "₹5,400", hint: "What the job keeps once its own costs come off. The month's costs and your hours are paid from this." }
+    - { label: "Building the pages", value: "22 hours", hint: "The part of the job everyone pictures." }
+    - { label: "Changes, calls and setup", value: "18 hours", hint: "A round of changes, collecting the clinic's text and photos, the domain setup and the handover. The clinic never sees these hours." }
+    - { label: "Each hour pays", value: "₹135", hint: "₹5,400 shared across all 40 hours, before any of the month's ₹18,600 of costs." }
+  find:
+    q: "A classmate says ₹8,000 pays ₹245 an hour. Which line did that count leave out?"
+    options:
+      - text: "Stock images, ₹500"
+        why: "The images are already off the ₹5,400. The gap is in the hours, not the costs."
+      - text: "Changes, calls and setup, 18 hours"
+        why: "₹5,400 over 22 hours is ₹245; over all 40 it is ₹135. Those 18 hours are paid from the same fee."
+      - text: "Quote, five pages, ₹8,000"
+        why: "Both counts start from the same ₹8,000. What differs is how many hours share it."
+    answer: 1
+
+video:
+  youtubeId: "qbvICSybHOc"
+  title: "Cost Plus Pricing | What is Cost Plus Pricing?"
+  channel: "Two Teachers"
+  minutes: 3
+  note: "A UK schools channel; no India tax layer, which the lesson adds."
 
 worked:
   kind: margin
-  context: "The clinic site from the top of the page, quoted at ₹15,000. The domain, hosting and stock images bought for it come to ₹2,600. The costs that arrive every month whether or not a client calls come to ₹18,600."
+  context: "The ₹8,000 quote above: ₹2,600 of costs per site, ₹18,600 each month."
   unitName: sites
   fixed: 18600
   variable: 2600
-  price: 15000
+  price: 8000
+  captions:
+    - "₹2,600 of the fee buys this site's domain, hosting and images; you keep ₹5,400."
+    - "Four sites is 160 hours of work, a full month, just to pay the costs."
+
+keyIdea: "Price from the job's costs, the month's costs and every hour it takes, not from someone else's quote."
+
+practice:
+  kind: margin
+  context: "A friend edits video at ₹9,000 a film. Storage, music and travel cost ₹1,800 a film; her month costs ₹10,800."
+  unitName: films
+  fixed: 10800
+  variable: 1800
+  price: 9000
+  hints:
+    - "Take one film's own costs off the fee, then divide the month's costs by what is left."
+    - "₹9,000 − ₹1,800 = ₹7,200, then ₹10,800 ÷ ₹7,200 = 1.5."
+    - "Two films, as 1.5 rounds up. Stopping at one leaves ₹3,600 of the month unpaid."
+
+practiceMore:
+  kind: margin
+  context: "A classmate designs logos at ₹4,000 each. Fonts and mock-ups cost ₹400 a logo; his month costs ₹7,500."
+  unitName: logos
+  fixed: 7500
+  variable: 400
+  price: 4000
+  hints:
+    - "The same two steps: the logo's own costs off the fee, then the month divided by what is left."
+    - "₹4,000 − ₹400 = ₹3,600, then ₹7,500 ÷ ₹3,600 = 2.1."
+    - "Three logos, as 2.1 rounds up. Stopping at two leaves ₹300 of the month unpaid."
 
 explorable:
   kind: margin
@@ -43,62 +92,60 @@ explorable:
   variable: 2600
   prices: [8000, 10000, 15000, 25000]
   prompts:
-    - "Tap ₹8,000, what your classmate charged, then ₹15,000. Read how many sites a month each price takes to cover ₹18,600 of standing costs."
-    - "Divide what one site keeps by the 40 hours it takes. At ₹8,000 the hour pays ₹135; at ₹15,000 it pays ₹310."
+    - "Tap ₹15,000: two sites, 80 hours instead of 160."
+    - "Tap ₹10,000: three sites, 120 hours, before the month is paid."
 
-practice:
-  kind: margin
-  context: "A friend edits video for small businesses and charges ₹9,000 for a finished film. Storage, music licences and travel come to ₹1,800 each time. Her standing costs are ₹10,800 a month."
-  unitName: films
-  fixed: 10800
-  variable: 1800
-  price: 9000
+takeaways:
+  - "Quote one price built on every hour, with a written list of what it covers."
+  - "Count the jobs a price needs to cover the month: four at ₹8,000, two at ₹15,000."
+  - "Invoice the full fee. If less arrives, find the tax taken in your name on the income tax portal."
+
+details:
+  - "The ₹18,600 is an example month: a laptop instalment of ₹9,900, internet and phone at ₹1,700, design and code subscriptions at ₹3,000, and a shared-office desk at ₹4,000."
+  - "The ₹300 an hour and the ₹1,500 deduction are example figures, not a rate for your case. Whether a client must deduct depends on the kind of payment, who the client is and how much it pays you, so a small one-off job may have nothing deducted."
+  - "Since 1 April 2026, tax deducted at source runs under sections 392 and 393 of the Income-tax Act, 2025. The department says the rates and monetary thresholds carried over from the 1961 Act."
+  - "Section 393 covers payments other than salary. Its tables give, for each kind of payment, the monetary threshold, which payers must deduct, and the rate. Below the threshold nothing is deducted."
+  - "The credit for tax deducted is claimed in the return for the year the income is assessable."
+  - "Part B of the Annual Information Statement shows tax deducted and collected at source, and takes your feedback on a wrong entry. Form 26AS, on the department's TRACES portal, shows the same deductions."
+  - "Working for yourself makes you self-employed for tax. Tax is worked out on the income from the work: the fees, less what the work cost."
+  - "For some listed professions, presumptive taxation declares 50% of the year's gross receipts as income, with no books of account required. Receipts can reach ₹75 lakh where cash is 5% or less of them, and ₹50 lakh otherwise."
+  - "The department's ITR-4 pages list which professions presumptive taxation covers. Whether yours is one of them is a question for those pages or a tax professional."
 
 quiz:
-  - q: "You quoted ₹15,000 for five pages with one round of changes. Two weeks in, the clinic asks for a booking form and a second round of changes. What do you do?"
+  - q: "A second clinic offers ₹10,000 for a similar site. It takes the same ₹2,600 of costs, 22 hours of building and 18 of changes, calls and setup. What does each hour pay?"
     options:
-      - text: "Build both, because they are small next to a site you are already making"
-        why: "A booking form is new work with its own testing. Those hours come out of the same ₹15,000, so every hour on the job earns less."
-      - text: "Point to the five pages and the one round agreed, and price the form on its own"
-        why: "The five pages and one round were the agreed list, so the booking form is quoted as new work."
-      - text: "Refuse, because the quote was for five pages"
-        why: "Refusing turns down paid work. The form can be priced as an addition to the agreed five pages."
-    answer: 1
-  - q: "The clinic site took 22 hours to build and 18 more on revisions, calls and setup. A classmate says to quote the next one from the 22. What do you do?"
+      - text: "₹185 an hour"
+        why: "₹10,000 less the site's ₹2,600 leaves ₹7,400, shared across all 40 hours the job takes."
+      - text: "₹250 an hour"
+        why: "That shares out the whole ₹10,000, but ₹2,600 of it buys the domain, hosting and images first."
+      - text: "About ₹336 an hour"
+        why: "That divides ₹7,400 by the 22 hours of building. The 18 hours of changes, calls and setup are paid from the same fee."
+    answer: 0
+  - q: "Another clinic offers ₹11,000 for the same five pages, with the same ₹2,600 of costs and 40 hours. Before you answer, how many such sites cover your ₹18,600 month?"
     options:
-      - text: "Quote from the 22 hours, because that is the actual building"
-        why: "The other 18 hours went into the same job. A price built on 22 pays nothing for them."
-      - text: "Quote from all 40 hours the job took"
-        why: "Forty hours keeping ₹12,400 is ₹310 an hour. Counting only 22 reports ₹564 and hides the other 18."
-      - text: "Quote from 22 hours and bill the rest by the hour afterwards"
-        why: "The client agrees to one price, then meets a second bill. Revisions and setup belong in the quote, or in a named extra."
+      - text: "Two, because two fees make ₹22,000"
+        why: "Each fee also pays ₹2,600 for its own site, so it keeps ₹8,400. Two keep ₹16,800, ₹1,800 short of the month."
+      - text: "Three, because each site keeps ₹8,400"
+        why: "₹18,600 ÷ ₹8,400 is 2.2, which rounds up to three: 120 hours of work before the month is paid for."
+      - text: "Eight, because ₹18,600 ÷ ₹2,600 is 7.2"
+        why: "That divides by what the site costs. The month is paid from what each site keeps, not from its costs."
     answer: 1
-  - q: "Your invoice said ₹15,000. ₹13,500 arrives, and the clinic's accounts desk says the rest was deducted as tax and deposited against your PAN. What do you do?"
+  - q: "Your invoice said ₹15,000. ₹13,500 arrives, and the clinic says ₹1,500 was deducted as tax against your PAN. What do you do?"
     options:
       - text: "Ask the clinic to pay the ₹1,500 it held back"
-        why: "That money has gone to the government in your name. The clinic cannot hand back what it no longer holds."
-      - text: "Record ₹15,000 as the fee, and check the deduction against your PAN on the portal"
-        why: "The fee is the ₹15,000 on the invoice. The statement on the portal is where the deduction shows, and the return claims it."
-      - text: "Treat ₹13,500 as the fee and leave the rest"
-        why: "That understates what the job paid and gives up tax already paid in your name."
-    answer: 1
-  - q: "A second clinic wants the same five-page site for ₹9,000, saying it is a small job. It would take the same 40 hours. What do you do?"
-    options:
-      - text: "Take it, because ₹9,000 still covers what the job buys"
-        why: "₹6,400 over 40 hours is ₹160 an hour, and the month's ₹18,600 still has to be covered from somewhere."
-      - text: "Quote ₹15,000 for the same site, or ₹9,000 for a smaller one"
-        why: "A smaller fee fits a smaller scope. The same 40 hours at ₹9,000 keeps ₹6,400 instead of ₹12,400."
-      - text: "Quote ₹9,000 now to win the client, then raise it later"
-        why: "The 40 hours are the same either way, and this quote becomes the figure the next one is compared with."
-    answer: 1
+        why: "The clinic pays that ₹1,500 to the government in your name. It is tax paid for you, not money the clinic owes you."
+      - text: "Record ₹13,500 as the fee and leave the rest"
+        why: "That understates what the job paid, and gives up tax already paid in your name."
+      - text: "Record ₹15,000 as the fee, and check the deduction on the income tax portal"
+        why: "The fee is the ₹15,000 you invoiced. The Annual Information Statement shows the deduction, and your return counts it as tax paid."
+    answer: 2
 
 transfer:
-  - "When a client asks your rate per hour, and you answer with one price for the job and a short list of what it covers."
+  - "When a client asks your rate per hour: answer with one price for the job and a short list of what it covers."
   - "When less money arrives than the invoice said, because tax was deducted in your name before payment."
-  - "When you price tutoring, photography or design work, where the same three parts go into the quote."
-  - "Each year, when you check the Annual Information Statement against your own invoices before the return is filed."
+  - "When you price tutoring, photography or design work, where the same parts go into the quote."
 
-glossary: [hourly-rate, variable-cost, fixed-cost, margin, break-even, tds, pan, annual-information-statement, form-26as, invoice, self-employed, presumptive-taxation, flat-fee, scope-of-work]
+glossary: [variable-cost, fixed-cost, margin, break-even, flat-fee, scope-of-work, tds, pan, invoice, annual-information-statement]
 tool: side-hustle
 
 sources:
@@ -116,67 +163,16 @@ sources:
     publisher: "Income Tax Department, Government of India"
 ---
 
-## Forty hours, not twenty-two
+## What the price has to pay for
 
-Building the five pages takes about 22 hours. Revisions take 9 more. Calls, and collecting the clinic's text and photographs, take 5. Setting up the domain, the hosting and the handover takes 4. That is 40 hours for a job that looks like 22.
+Each site needs its own ₹2,600 of domain, hosting and images: a <Term id="variable-cost">variable cost</Term>. The laptop, internet, software and desk cost ₹18,600 a month whatever you sell: <Term id="fixed-cost">fixed costs</Term>.
 
-At ₹8,000, once ₹2,600 of costs come off, those 40 hours pay ₹135 an hour. **The 18 hours the client never sees are paid out of the same fee.**
+What a fee keeps after those costs is its <Term id="margin">margin</Term>. The number of sites whose margins cover the fixed costs is <Term id="break-even">break-even</Term>.
 
-So count the hours first. Then build the price on three things: what the job buys, the month it belongs to, and the tax that follows.
+So build the price from cost, not a classmate's quote. The job's ₹2,600, plus 40 hours at an example ₹300 to pay you and a share of the month, makes ₹14,600. Quote ₹15,000 as a <Term id="flat-fee">flat fee</Term>, with a written <Term id="scope-of-work">scope of work</Term>.
 
-## What the job buys, and what the month costs
+## Tax the client may take first
 
-The domain is ₹900 for the year, hosting ₹1,200, and stock images ₹500. That is ₹2,600 bought for this site alone: the <Term id="variable-cost">variable cost</Term> of the job.
+Past a set amount, some clients must deduct income tax, <Term id="tds">TDS</Term>, before paying you. Say the clinic deducts ₹1,500 against your <Term id="pan">PAN</Term>: ₹13,500 arrives.
 
-Other costs arrive whether or not a client calls. A laptop is being paid off at ₹9,900 a month. Internet and phone come to ₹1,700. Design and code subscriptions are ₹3,000, and a desk at a shared office is ₹4,000. Those <Term id="fixed-cost">fixed costs</Term> are ₹18,600 a month.
-
-At ₹15,000 the job keeps ₹12,400. That is your <Term id="margin">margin</Term>, and it pays down the ₹18,600 first. Two sites at that price cover the month, which is the <Term id="break-even">break-even</Term> point.
-
-## The client may pay less than the invoice
-
-Some clients deduct tax from a professional fee before they pay it. That is <Term id="tds">TDS</Term>, tax deducted at source. For each kind of payment, the law names which payers must deduct, above what amount, and at what rate.
-
-Say the clinic deducts ₹1,500 as an example. It deposits that against your <Term id="pan">PAN</Term>, so ₹13,500 reaches your account.
-
-**The ₹1,500 is neither a charge nor a loss.** It is income tax paid in advance in your name.
-
-Since 1 April 2026 these rules sit in sections 392 and 393 of the Income-tax Act, 2025. The department says the rates and limits carried over unchanged from the old Act.
-
-<svg class="chart" viewBox="0 0 320 118" role="img" aria-labelledby="fee-title fee-desc">
-  <title id="fee-title">The invoice, and what reached the account</title>
-  <desc id="fee-desc">Two bars. The top bar is the full ₹15,000 on the invoice. The bar below it is shorter: ₹13,500 reached the account, and the small block at its end is ₹1,500 deducted as tax and held against your PAN.</desc>
-  <text class="chart-label" x="0" y="12">Invoice ₹15,000</text>
-  <rect class="chart-a" x="0" y="18" width="320" height="30" rx="6" />
-  <text class="chart-label" x="0" y="72">Reached your account ₹13,500</text>
-  <rect class="chart-a" x="0" y="78" width="288" height="30" rx="6" />
-  <rect class="chart-b" x="292" y="78" width="28" height="30" rx="6" />
-  <text class="chart-note" x="320" y="116" text-anchor="end">₹1,500 deducted before payment, an example figure</text>
-</svg>
-
-| Line | Amount |
-| --- | --- |
-| Fee on the invoice | ₹15,000 |
-| Tax deducted before payment (example) | −₹1,500 |
-| Reached your account | ₹13,500 |
-| Domain, hosting and stock images you paid for | −₹2,600 |
-| Cash left from the job, for 40 hours of work | ₹10,900 |
-
-## Checking the deduction, and the tax that follows
-
-Check it rather than take it on trust. The <Term id="annual-information-statement">Annual Information Statement</Term> on the income tax portal lists the tax deducted in your name. It takes your feedback where an entry looks wrong. <Term id="form-26as">Form 26AS</Term>, on the department's TRACES portal, carries the same data. You claim that credit in the return for the year the income belongs to.
-
-Your receipts from this job are the ₹15,000 on the <Term id="invoice">invoice</Term>, not the ₹13,500 that arrived. Working for yourself makes you <Term id="self-employed">self-employed</Term> for tax. Tax follows the income from the work, not the fee. For some listed professions, <Term id="presumptive-taxation">presumptive taxation</Term> counts half of the year's receipts as the income. The department's ITR-4 page sets out who qualifies and the limits.
-
-## One price, with a written scope
-
-A <Term id="flat-fee">flat fee</Term> is one price for a whole job, agreed before the work starts. It suits work with a clear end, such as a five-page site.
-
-Finish in 30 hours rather than 40 and the fee is the same, so each hour earns more. An <Term id="hourly-rate">hourly rate</Term> would have cut the bill instead.
-
-Write down what the fee covers: five pages, one round of changes, and the handover. That short <Term id="scope-of-work">scope of work</Term> is what lets you price extra work rather than absorb it.
-
-## Before you send the quote
-
-Four numbers, in that order. Every hour the job takes, including the ones the client will not see. What the job buys. A share of the month's standing costs. Then the tax, both the part a client may deduct before payment and the part due on the income.
-
-Then set the figure per hour against what an hour of your time is worth elsewhere. At ₹15,000, the 40 hours pay ₹310 each before the month's costs. At ₹8,000 they pay ₹135.
+Your fee is still the ₹15,000 on the <Term id="invoice">invoice</Term>. The ₹1,500 is tax paid in your name, listed in your <Term id="annual-information-statement">Annual Information Statement</Term>.

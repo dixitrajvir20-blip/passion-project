@@ -4,243 +4,222 @@ summary: "₹15,000 was withheld from ₹1,50,000 of internship fees, and no tax
 region: in
 track: money-basics
 order: 2
-readingMinutes: 7
+readingMinutes: 8
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "An internship paid ₹1,50,000 over the year, and ₹15,000 was withheld as tax before the money reached you. Your income for the year is far below the level at which income tax starts."
+objectives:
+  - "Find the tax withheld in your name on the statement, and match it to your invoices."
+  - "Work out the refund: withheld, minus tax due and any credit not on record."
+  - "Get it paid: file and verify the return, with a bank account the portal has validated."
 
-prediction:
-  q: "₹15,000 was withheld from ₹1,50,000 of fees, and no tax is due for the year. What happens to the ₹15,000?"
-  options:
-    - text: "The firm hands it back once you ask for it"
-      why: "The firm deposited it with the government against your PAN on the day it was withheld. It no longer holds the money."
-    - text: "It comes back as a refund, once a return is filed for that year"
-      why: "Withholding is an advance. The return compares the advance with the tax actually due, and the difference comes back."
-    - text: "It is gone, because tax taken at source is final"
-      why: "The amount is credited to you, not spent. Nothing is settled until a return works out what was really owed."
-  answer: 1
+situation: "You invoiced ₹1,50,000 for an internship over the year; ₹1,35,000 arrived. Your tax statement shows the other ₹15,000 taken as tax in your name, on an income too small to owe any."
 
-takeaways:
-  - "TDS is tax paid in advance in your name. It is not the final bill, and the return for the year settles the difference."
-  - "Under the new tax regime for 2025-26 the slabs charge nothing on the first ₹4,00,000. A rebate of up to ₹60,000 then clears the tax where taxable income stays at or below ₹12,00,000."
-  - "Form 26AS and the Annual Information Statement show what was withheld against your PAN. A refund arrives only after a return is filed and verified."
+document:
+  kind: statement
+  title: "Your tax credits, 2025-26"
+  lines:
+    - { label: "Payer", value: "A market research firm", hint: "Who paid you and took the tax off." }
+    - { label: "Paid or credited", value: "₹1,50,000", hint: "Your fees in full, before tax." }
+    - { label: "Tax deducted", value: "₹15,000", hint: "10% of each payment, taken before it reached you." }
+    - { label: "Tax deposited", value: "₹15,000", hint: "Paid to the government against your PAN, your tax number. The firm no longer holds it." }
+    - { label: "Refund paid", value: "None yet", hint: "Filled only once a return is processed. The statement records credits; it pays nothing." }
+  find:
+    q: "No tax is due on your year's income. Which line can come back to you?"
+    options:
+      - text: "Paid or credited, ₹1,50,000"
+        why: "The whole fee. ₹1,35,000 of it already reached you."
+      - text: "Tax deposited, ₹15,000"
+        why: "Tax paid in advance in your name. With none due, a return brings it back."
+      - text: "Refund paid, none yet"
+        why: "None until a return is filed. The return turns the credit into money."
+    answer: 1
+
+video:
+  youtubeId: "S7V2HkkknbM"
+  title: "How To File ITR 1?"
+  channel: "Income Tax India"
+  minutes: 5
+  endSeconds: 300
+  note: "Stops at 5:00. It files ITR-1; fee income can need another form, but the credit and refund steps are alike. Screens change each year."
 
 worked:
-  kind: split
-  context: "The internship from the top of the page: ₹1,50,000 of fees for the year, and this contract held back a tenth of it as tax before you were paid. Income of this size sits below where tax starts, so the second line is nil and the refund is the whole of the first."
-  income: 150000
-  shares:
-    - { label: "Tax withheld before you were paid", percent: 10 }
-    - { label: "Tax due on the year's income", percent: 0 }
+  kind: deduction
+  context: "The internship above, from the fees to the refund."
+  start: 150000
+  startLabel: "Fees invoiced"
+  lines:
+    - { label: "Paid into your account", amount: 135000, caption: "What reached you. The gap is tax the firm deposited against your PAN.", subtotalLabel: "Tax withheld in your name" }
+    - { label: "Tax due on the year", amount: 0, caption: "Tax is worked out on the year's total. ₹1,50,000 is under ₹4,00,000, so none is due.", subtotalLabel: "Refund due for the year" }
+    - { label: "Not yet on your statement", amount: 0, caption: "Credit missing from your statement cannot be refunded yet. Here all ₹15,000 is on record, so nothing comes off." }
+  endLabel: "Refund on this return"
+
+keyIdea: "The refund is what was withheld, minus the tax due on the year's total and any credit missing from the record."
+
+practice:
+  kind: deduction
+  context: "A classmate's contract: ₹2,40,000 invoiced, ₹2,16,000 arrived, no tax due. One payment's ₹6,000 is missing from her statement."
+  start: 240000
+  startLabel: "Fees invoiced"
+  lines:
+    - { label: "Paid into her account", amount: 216000, subtotalLabel: "Tax withheld in her name" }
+    - { label: "Tax due on the year", amount: 0, subtotalLabel: "Refund due for the year" }
+    - { label: "Not yet on her statement", amount: 6000 }
+  endLabel: "Refund on this return"
+  hints:
+    - "Invoices minus what arrived is the tax withheld. Take off any tax due, then what the statement lacks."
+    - "₹2,40,000 − ₹2,16,000 − ₹0 − ₹6,000."
+    - "₹18,000 now. ₹24,000 counts the missing ₹6,000, which can follow once the payer corrects its filing."
+
+practiceMore:
+  kind: deduction
+  context: "A cousin's freelance year: ₹7,00,000 invoiced, ₹6,30,000 arrived, and ₹17,500 not yet on her statement."
+  start: 700000
+  startLabel: "Fees invoiced"
+  lines:
+    - { label: "Paid into her account", amount: 630000, subtotalLabel: "Tax withheld in her name" }
+    - { label: "Tax due after the rebate", amount: 0, subtotalLabel: "Refund due for the year" }
+    - { label: "Not yet on her statement", amount: 17500 }
+  endLabel: "Refund on this return"
+  hints:
+    - "Same order. The rebate clears the slabs' tax, so the tax line is ₹0."
+    - "₹7,00,000 − ₹6,30,000 − ₹0 − ₹17,500."
+    - "₹52,500 now. Taking off ₹15,000, 5% of the ₹3,00,000 above ₹4,00,000, gives ₹37,500; the rebate clears that tax."
 
 explorable:
   kind: drill
-  intro: "Four screens from the months after a first year of paid work. None of them is a trick. The skill is telling the difference between a message that reports a deduction and the step that settles it."
+  intro: "Three screens after a first year of paid work. Decide what each asks of you."
   scenarios:
-    - screen:
-        kind: message
-        from: "Accounts desk (a market research firm)"
-        amount: 15000
-        lines:
-          - "Your last invoice for the year has been paid."
-          - "Tax of ₹15,000 was deducted for the year and deposited against your PAN."
-          - "The certificate follows once the quarter closes."
-      check:
-        q: "You invoiced ₹1,50,000 for the year and ₹1,35,000 reached your account. What does this message say about the ₹15,000?"
-        options:
-          - text: "The firm is holding it and will release it later"
-            why: "The message says it was deposited against your PAN. Money deposited with the government is out of the firm's hands."
-          - text: "It has gone to the government as tax in your name, ahead of the year's bill"
-            why: "That is what deduction at source means. The credit sits against your PAN until a return uses it."
-          - text: "It is a fee the firm charged for handling the contract"
-            why: "A fee would be the firm's own income. This line names a tax, deposited against your PAN, not money the payer keeps."
-        answer: 1
     - screen:
         kind: chat
         from: "A friend from college"
         lines:
-          - "Just ask them to give the ₹15,000 back."
-          - "You earned too little to pay tax, so they cut it by mistake."
+          - "Just ask the firm for the ₹15,000 back."
+          - "You earned too little to owe tax."
       check:
-        q: "Your total income for the year is ₹1,50,000, below where income tax starts. What do you do with this advice?"
+        q: "Your income for the year is ₹1,50,000. What do you do?"
         options:
-          - text: "Ask the firm to pay the ₹15,000 back to you"
-            why: "The firm applied the deduction rules for the payment and has already deposited the money. It cannot take it back out."
-          - text: "Leave the firm out of it and claim the amount on that year's return"
-            why: "Deduction happens on a payment, and tax is worked out on the whole year. Only the return puts the two together."
-          - text: "Treat the ₹15,000 as lost, since the rules were followed"
-            why: "The rules being followed is why it is claimable at all. The deposit is credited against your PAN."
+          - text: "Ask the firm to pay it back"
+            why: "Deposited against your PAN, it is out of the firm's hands."
+          - text: "Claim it on that year's return"
+            why: "Tax is settled on the year, and only a return claims the credit."
+          - text: "Treat it as lost"
+            why: "The deduction was lawful, which is why it is your credit."
         answer: 1
     - screen:
-        kind: chat
-        from: "Accounts desk (the same firm)"
+        kind: message
+        from: "The tax portal"
         lines:
-          - "Our filing shows ₹12,000 deducted in your name."
-          - "Please confirm the invoices you are counting."
+          - "Return for 2025-26 income submitted."
+          - "Verification pending."
       check:
-        q: "Your statement on the portal shows ₹12,000 of credit, and your own invoices show ₹15,000 was withheld. What do you do?"
+        q: "Six weeks on, no refund has arrived. What next?"
         options:
-          - text: "File with the ₹15,000, because your invoices are right"
-            why: "A claim above the credit on record gets queried. The record has to be corrected at its source first."
-          - text: "File with the ₹12,000 and let the rest go"
-            why: "That gives up ₹3,000 that was taken from you. A gap this size usually means one quarter is missing from the payer's filing."
-          - text: "Ask the payer to correct its filing, and give feedback on the entry in the statement"
-            why: "The credit comes from the payer's own return. Correcting it there, and flagging the entry, is what changes the record."
-        answer: 2
+          - text: "Keep waiting"
+            why: "Processing starts only after verification."
+          - text: "Verify the return"
+            why: "Verifying, usually with a one-time code, completes the filing; the refund follows."
+          - text: "File the return again"
+            why: "A second filing does not finish the first."
+        answer: 1
     - screen:
         kind: message
         from: "A calendar reminder you set"
         lines:
           - "It is September."
-          - "The filing date for last year's return has passed."
+          - "Last year's filing date has passed."
       check:
-        q: "You never filed, and ₹15,000 is still sitting as a credit against your PAN. What do you do?"
+        q: "You never filed, and ₹15,000 sits as a credit against your PAN. What do you do?"
         options:
-          - text: "Wait for next year's return and claim it there"
-            why: "Each year's credit belongs to that year's return. A later return does not carry it forward for you."
-          - text: "File a belated return for that year, inside the window the law allows"
-            why: "A belated return is still a return. For assessment year 2026-27 it may be filed on or before 31 December 2026, and a delayed-filing fee can apply."
-          - text: "Assume the refund comes on its own, since the credit is on record"
-            why: "Nothing is worked out until a return is filed. A credit alone does not tell the department what was owed."
+          - text: "Claim it on next year's return"
+            why: "Each year's credit belongs to that year's return."
+          - text: "File a belated return for that year"
+            why: "A late return can still claim it. For 2025-26 income, the window closes on 31 December 2026."
+          - text: "Wait for it to arrive"
+            why: "Nothing is refunded until a return is filed."
         answer: 1
-  reflection: "Think of work you or a friend has been paid for. Where would you look first to see whether any tax was withheld in your name?"
+  reflection: "Think of a payment smaller than its invoice. Where would you look first?"
 
-practice:
-  kind: split
-  context: "A classmate's design contract in the same year: ₹2,40,000 of fees from one firm. Two lines came off before the money reached her, a fifth held back until the work was signed off, and a tenth withheld as tax."
-  income: 240000
-  shares:
-    - { label: "Held back until sign-off", percent: 20 }
-    - { label: "Tax withheld", percent: 10 }
-  target: "Tax withheld"
+takeaways:
+  - "When a payment arrives short of its invoice, note the gap: tax in your name."
+  - "When the year closes, match Form 26AS to your invoices, and ask a payer to fix any missing entry."
+  - "File the return even when no tax is due, verify it, and validate your bank account on the portal."
+
+details:
+  - "Under the new tax regime for 2025-26 income, the slabs charge nil up to ₹4,00,000 and 5% from there to ₹8,00,000. A rebate of up to ₹60,000 applies where taxable income is at most ₹12,00,000."
+  - "Tax deducted on 2025-26 income shows in the statement for assessment year 2026-27, and is claimed in that year's return."
+  - "Form 26AS lists tax deducted and collected only. The Annual Information Statement shows the same deductions beside other reported transactions, and takes your feedback on an entry."
+  - "Processing starts only once a return is e-verified, for example with an Aadhaar one-time code or through net banking. The department's guidance puts a refund at about four to five weeks after that."
+  - "A refund is paid only into a pre-validated bank account. A name that does not match the PAN, a wrong branch (IFSC) code, a closed account and a PAN made inoperative by not being linked to Aadhaar are listed reasons one fails."
+  - "The usual filing date for 2025-26 income has passed. A belated return may be filed on or before 31 December 2026, and a delayed-filing fee, ₹1,000 where total income is at most ₹5,00,000, can apply."
+  - "The video files ITR-1, the form for salary, one house and interest. Fees for work are usually income from a profession, which goes on ITR-3, or on ITR-4 under the presumptive scheme."
+  - "The share withheld depends on the kind of payment; 10% is this lesson's example. The rules change each year, so check the department's current table before using your own numbers."
 
 quiz:
-  - q: "A second internship paid ₹40,000 in the same year, with nothing withheld from it. Your total income for the year is ₹1,90,000. What does that change about the return?"
+  - q: "Your statement shows ₹12,000 from the firm; your invoices show ₹15,000 withheld. What do you do before filing?"
     options:
-      - text: "Nothing was withheld there, so that ₹40,000 can be left out"
-        why: "A return reports the year's income, not only the part someone deducted tax from. Leaving income out is a separate problem from a refund."
-      - text: "One return covers both payments, and the refund is worked out on the whole year"
-        why: "Tax is worked out on the year's total income. The credits from each payer are then set against that one figure."
-      - text: "A separate return is needed for each payer"
-        why: "One return covers the year and every payer in it. The credits are listed inside that single return."
-    answer: 1
-  - q: "A year later the same work pays ₹6,00,000 for the year. A relative says tax starts above ₹4,00,000, so this time some must be due. What does the rebate do here?"
+      - text: "Claim ₹15,000, since your invoices are right"
+        why: "A claim above the credit on record is cut back to it."
+      - text: "Claim ₹12,000 and let the rest go"
+        why: "That gives up ₹3,000 of your own money, often from a quarterly filing the payer missed."
+      - text: "Ask the firm to correct its filing, and flag the entry"
+        why: "The credit comes from the payer's filing, so the fix happens there. Flagging the entry records your side."
+    answer: 2
+  - q: "A friend invoiced ₹5,00,000 that year, with ₹50,000 withheld, all on record. Her uncle says tax starts above ₹4,00,000. How much comes back?"
     options:
-      - text: "Tax is worked out on the ₹2,00,000 above ₹4,00,000, and the rebate then takes it to nil"
-        why: "At 5% that band comes to ₹10,000 of tax, and the rebate covers up to ₹60,000 while taxable income stays at or below ₹12,00,000."
-      - text: "The relative is right, so tax is due on the year after all"
-        why: "The slabs are only the first step. A rebate comes off the tax after the slabs have worked it out."
-      - text: "The whole ₹6,00,000 is charged at 5%, and the rebate covers part of that"
-        why: "Each band's rate applies only to the income inside that band. Nothing is charged on the first ₹4,00,000."
+      - text: "All ₹50,000"
+        why: "The slabs give ₹5,000 on the ₹1,00,000 above ₹4,00,000. The rebate clears it up to ₹12,00,000."
+      - text: "₹45,000, after ₹5,000 of tax"
+        why: "The rebate comes off after the slabs, and takes this tax to nil."
+      - text: "₹25,000, after 5% of all ₹5,00,000"
+        why: "Each band's rate applies only inside the band. The first ₹4,00,000 carries no tax."
     answer: 0
-  - q: "The return is showing as submitted, but you never finished the last step. Two months later no refund has arrived. What is the likely reason?"
+  - q: "The return was filed and verified weeks ago. The portal says the refund failed. What do you check first?"
     options:
-      - text: "The department is slow at this time of year"
-        why: "Processing starts only once a return has been verified. Until that happens there is nothing in the queue."
-      - text: "The return was never verified, so it has not been processed"
-        why: "Verification is what makes a filed return complete. Refunds are worked out after that step, not before it."
-      - text: "The refund was set against an older bill"
-        why: "That does happen, and the portal says so plainly when it does. Silence points at the step that was missed."
-    answer: 1
-  - q: "The return was filed and verified six weeks ago. The portal now says the refund failed. What do you check first?"
-    options:
-      - text: "Whether the payer deposited the tax at all"
-        why: "That credit was already accepted when the return was processed. A failure at this stage is about where the money was sent."
-      - text: "The bank account on the portal: whether it is pre-validated and matches your PAN"
-        why: "A refund is paid only into a pre-validated account. A name that does not match the PAN, a wrong branch code and a closed account are all listed reasons one fails."
-      - text: "Whether to file the whole return again"
-        why: "Filing again does not fix a payment that could not be delivered. The bank details are what the department is working from."
+      - text: "Whether the firm deposited the tax"
+        why: "The credit was settled when the return was processed. This failure is about the payment."
+      - text: "Your bank account: validated, and in the name on your PAN"
+        why: "A refund goes only to a validated account. A mismatched name, wrong branch code or closed account stops one."
+      - text: "Whether to file the return again"
+        why: "Filing again cannot fix a payment that failed."
     answer: 1
 
 transfer:
-  - "Each time a payment arrives smaller than the invoice. The gap is often tax withheld, and it stays yours until the year is settled."
-  - "At the end of a financial year, when Form 26AS and the statement can be checked against your own record of what was paid."
-  - "Before the filing date, when only a return turns a credit on record into money in your account."
-  - "When a friend says tax was cut from a stipend or a freelance payment and nothing can be done about it."
+  - "Each time a payment arrives smaller than its invoice."
+  - "When the financial year closes and your statement is ready to check."
 
-glossary: [tds, pan, tax-return, assessment-year, new-tax-regime, tax-slab, tax-rebate, form-26as, annual-information-statement]
+glossary: [tds, pan, tax-return, new-tax-regime, tax-slab, tax-rebate, form-26as, annual-information-statement]
+tool: side-hustle
 
 sources:
-  - title: "Salaried individuals for AY 2026-27: the new regime is the default, its slabs charge nil to ₹4,00,000 and 5% to ₹8,00,000, and a rebate of up to ₹60,000 applies where taxable income stays at or below ₹12,00,000 (accessed 21 September 2026)"
+  - title: "Salaried individuals for AY 2026-27: the new regime is the default, its slabs charge nil to ₹4,00,000 and 5% to ₹8,00,000, a rebate of up to ₹60,000 applies where taxable income stays at or below ₹12,00,000, ITR-1 covers salary, one house property and other sources, and ITR-3 and ITR-4 cover business or profession income (accessed 22 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1"
     publisher: "Income Tax Department, Government of India"
-  - title: "TDS compliance: tax deducted on income for FY 2025-26 appears in the Annual Information Statement for AY 2026-27, and the deductee claims that credit in the return for AY 2026-27 (accessed 21 September 2026)"
+  - title: "TDS compliance: tax deducted on income for FY 2025-26 appears in the Annual Information Statement for AY 2026-27, and the deductee claims that credit in the return for AY 2026-27, and a missing credit is fixed by the deductor filing a revised TDS return (accessed 22 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/tds-compliance"
     publisher: "Income Tax Department, Government of India"
-  - title: "Annual Information Statement: Part B carries TDS and TCS information and takes taxpayer feedback, while Form 26AS on TRACES shows TDS and TCS data only (accessed 21 September 2026)"
+  - title: "Annual Information Statement: Part B carries TDS and TCS information and takes taxpayer feedback, while Form 26AS on TRACES shows TDS and TCS data only (accessed 22 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/ais-annual-information-statement"
     publisher: "Income Tax Department, Government of India"
-  - title: "Refund status: processing starts only after the return is e-verified, the bank account must be pre-validated, a refund usually takes four to five weeks, and a name mismatch, an invalid branch code or a closed account are listed reasons one fails (accessed 21 September 2026)"
+  - title: "Refund status: processing starts only after the return is e-verified, the bank account must be pre-validated, a refund usually takes four to five weeks, and a name mismatch with the PAN, an invalid IFSC code, a closed account or an inoperative PAN are listed reasons one fails (accessed 22 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/refund_status_user_manual"
     publisher: "Income Tax Department, Government of India"
-  - title: "Income tax returns: the filing date for AY 2026-27, a belated return on or before 31 December 2026, and the delayed-filing fee of ₹1,000 where total income does not exceed ₹5,00,000 (accessed 21 September 2026)"
+  - title: "Income tax returns: the filing date for AY 2026-27, a belated return on or before 31 December 2026, the delayed-filing fee of ₹1,000 where total income does not exceed ₹5,00,000, and e-verification through Aadhaar OTP or net banking (accessed 22 September 2026)"
     url: "https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/income-tax-returns"
     publisher: "Income Tax Department, Government of India"
 ---
 
-## Withheld is not the same as owed
+## Withheld is not owed
 
-<Term id="tds">TDS</Term> means tax deducted at source. The payer takes tax off before paying you and deposits it with the government against your <Term id="pan">PAN</Term>.
+<Term id="tds">TDS</Term>, tax deducted at source, comes off a payment before it reaches you. The payer deposits it against your <Term id="pan">PAN</Term>, as tax paid in your name in advance.
 
-It is an advance, worked out payment by payment. The payer does not know what your income for the whole year will come to.
+The real bill is worked out once, on the year's total. Under the <Term id="new-tax-regime">new tax regime</Term>, the <Term id="tax-slab">tax slabs</Term> charge nothing on the first ₹4,00,000 and 5% from there to ₹8,00,000. A <Term id="tax-rebate">tax rebate</Term> then clears the tax on taxable income up to ₹12,00,000. Up to that income, everything withheld comes back.
 
-**The real bill is worked out once, on the year, by your <Term id="tax-return">tax return</Term>.** Where the advance came to more than the bill, the difference comes back. Where it came to less, the rest is paid then.
+## Where it shows, and how it returns
 
-Tax deducted on income for the 2025-26 financial year shows in the statement for the <Term id="assessment-year">assessment year</Term> that follows, and is claimed in that year's return.
+<Term id="form-26as">Form 26AS</Term> and the <Term id="annual-information-statement">Annual Information Statement</Term> list each deduction against your PAN. Only credits on record are refunded, and only the payer can add a missing one.
 
-<svg class="chart" viewBox="0 0 320 104" role="img" aria-labelledby="tds-title tds-desc">
-  <title id="tds-title">Where ₹1,50,000 of fees went before it reached you</title>
-  <desc id="tds-desc">A single bar in two parts. ₹1,35,000 was paid into the account. ₹15,000 was withheld as tax and deposited against the PAN, and it comes back once a return is filed.</desc>
-  <rect class="chart-a" x="0" y="26" width="284" height="36" rx="6" />
-  <rect class="chart-b" x="288" y="26" width="32" height="36" rx="6" />
-  <text class="chart-label" x="0" y="16">Paid to you: ₹1,35,000</text>
-  <text class="chart-label" x="320" y="80" text-anchor="end">Withheld: ₹15,000</text>
-  <text class="chart-note" x="0" y="100">₹1,50,000 of fees, across the year</text>
-</svg>
-
-| Line | For the year |
-| --- | --- |
-| Fees invoiced | ₹1,50,000 |
-| Tax withheld at source | −₹15,000 |
-| Paid into your account | ₹1,35,000 |
-| Tax due on the year's income | ₹0 |
-| Refund, after the return is filed | ₹15,000 |
-
-## Why the tax due is nil
-
-Tax is worked out on the year's total income, not on any one payment.
-
-Under the <Term id="new-tax-regime">new tax regime</Term> for the 2025-26 financial year, the department's <Term id="tax-slab">tax slabs</Term> charge nothing on the first ₹4,00,000. The next band, up to ₹8,00,000, is charged at 5%. A <Term id="tax-rebate">tax rebate</Term> of up to ₹60,000 then comes off the tax itself, where taxable income stays at or below ₹12,00,000.
-
-**At ₹1,50,000 for the year, the income sits below where tax starts, so nothing is due before the rebate is even reached.**
-
-The rules change from year to year, and other income counts towards the same total. Check the current table on incometax.gov.in before using your own numbers.
-
-## Where to see what was withheld
-
-Two statements show tax withheld in your name, and both sit inside your account on the tax portal.
-
-<Term id="form-26as">Form 26AS</Term> is the tax credit statement. The <Term id="annual-information-statement">Annual Information Statement</Term> shows the same deductions alongside other transactions reported about you, and it takes your feedback where an entry looks wrong.
-
-**Check both against your own record of every payment before filing.** A missing quarter usually means the payer's own filing is incomplete, and only the payer can correct that.
-
-## What a return does, and when
-
-A return is what turns a credit on record into money in your account.
-
-You report the year's income, set the tax already deducted against the bill, and ask for the difference. **A refund is worked out only after the return has been verified, so the last step counts as much as the first.**
-
-The account it is paid into has to be pre-validated on the portal and match your PAN. The department's guidance puts a refund at about four to five weeks.
-
-The filing date for assessment year 2026-27 fell in the middle of 2026. A belated return for that year may still be filed on or before 31 December 2026, and a delayed-filing fee can apply.
-
-## When nothing is claimed
-
-Money withheld and never claimed stays with the government. Nothing arrives to prompt you, because a credit on record is not a request for a refund.
-
-**The habit that prevents it is small: keep every invoice and payment note for the year in one folder, and check the two statements once the year closes.**
-
-A first year of paid work often has one payer and one credit to check. The same check covers four payers later, which is when forgetting one starts to cost more.
+A <Term id="tax-return">tax return</Term> for that year claims the refund. It is processed once you verify it online, and paid into a bank account the portal has validated.

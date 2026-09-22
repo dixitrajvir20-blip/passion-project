@@ -8,87 +8,74 @@ readingMinutes: 7
 level: beginner
 author: { name: "Rajvir", country: "US" }
 reviewedBy: "Business Lab editor"
-lastReviewed: 2026-09-21
+lastReviewed: 2026-09-22
+template: v2
 
-situation: "A message on a jobs channel offers ₹5,000 a week. The work is described as simple: money arrives in your bank account, you send it on to the accounts you are given, and you keep a commission. No interview, no office, no experience asked for."
+objectives:
+  - "Tell a job that pays for your hours from one that passes other people's money through your account."
+  - "Work out how much moves through your name for the commission you are offered."
+  - "Act in order if money has already arrived: move nothing, tell your bank, report on 1930."
 
-prediction:
-  q: "The offer pays ₹5,000 a week to receive money in your account and forward it. Whose money moves through the account?"
-  options:
-    - text: "The company's own money, moved between its own accounts"
-      why: "A company can already move its own money between its own accounts. Paying a stranger a commission to do it is the part that does not fit."
-    - text: "Money taken from people who have been defrauded, on its way out of reach"
-      why: "That is what the accounts are hired for. The national cybercrime centre has described mule accounts used to collect deposits for fake investment sites and betting websites."
-    - text: "Nothing real, because the messages are only a test of who replies"
-      why: "Money does arrive, which is what makes the offer convincing. It belongs to someone who has already lost it."
-  answer: 1
+situation: "A message on a jobs channel offers ₹5,000 a week, no interview needed. Money arrives in your account, you send it on the same day, and you keep your cut."
 
-takeaways:
-  - "A mule account takes in money that was taken from someone else. It was opened on your ID, so it stays in your name."
-  - "Banks report the accounts they suspect into the Suspect Registry. The government told Parliament in March 2026 that over 27 lakh mule accounts had been shared, and transactions of ₹9,518 crore declined."
-  - "The commission is the only money you keep. Selling or renting an account can bring legal action, and an approach can be reported at cybercrime.gov.in or on 1930."
+document:
+  kind: app-screen
+  title: "A message on a jobs channel"
+  lines:
+    - { label: "From", value: "Rehan, jobs channel admin", hint: "A first name in a group chat. No company to look up." }
+    - { label: "Interview", value: "None needed", hint: "An employer paying for your hours meets you first." }
+    - { label: "The work", value: "Receive money, send it on the same day", hint: "Other people's money comes in and goes out again. That is the whole job." }
+    - { label: "Pay", value: "Keep ₹5,000 a week out of what arrives", hint: "Paid out of the money passing through, not for hours worked." }
+    - { label: "To start", value: "Account details and a photo of your identity card", hint: "This is what is being hired. Every transfer will carry your name." }
+  find:
+    q: "Which line shows other people's money would pass through your account?"
+    options:
+      - text: "Interview: none needed"
+        why: "A warning sign, but it says nothing about whose money moves."
+      - text: "The work: send it on the same day"
+        why: "Money that is not yours arrives and leaves again. That is the mule job."
+      - text: "Pay: ₹5,000 a week"
+        why: "Real jobs pay that too. What it pays for is the line above."
+    answer: 1
+
+video:
+  youtubeId: "PLcxKJSeVgY"
+  title: "This Vigilance Awareness Week 2025 - Money Mule"
+  channel: "Indian Bank"
+  minutes: 3
+  note: "A public-sector bank’s awareness film. Nothing is sold in it."
+
+worked:
+  kind: deduction
+  context: "Say ₹1,00,000 arrives in a week and leaves in three transfers, until the promised ₹5,000 is left."
+  start: 100000
+  startLabel: "Money that arrived"
+  lines:
+    - { label: "The first transfer out", amount: 40000, caption: "Stolen money, sent on to an account the chat names, and recorded against yours.", subtotalLabel: "Still with you" }
+    - { label: "The second transfer out", amount: 35000, caption: "To an account you are given but know nothing about. The trail runs through yours.", subtotalLabel: "Still with you" }
+    - { label: "The third transfer out", amount: 20000, caption: "The last transfer out. What stays is the commission the message promised." }
+  endLabel: "Commission you keep"
+
+keyIdea: "Your ₹5,000 is 5% of what arrived: for every ₹1 you keep, ₹20 moved through an account in your name."
+
+practice:
+  kind: deduction
+  context: "Another offer pays 4% of what arrives. ₹75,000 arrives; ₹45,000 and then ₹27,000 go out."
+  start: 75000
+  startLabel: "Money that arrived"
+  lines:
+    - { label: "The first transfer out", amount: 45000, subtotalLabel: "Still with you" }
+    - { label: "The second transfer out", amount: 27000 }
+  endLabel: "Commission you keep"
+  hints:
+    - "Start from what arrived and take off each transfer out, in order."
+    - "₹75,000 − ₹45,000 − ₹27,000."
+    - "₹3,000 stays: 4% of the ₹75,000 that moved in your name. Stopping after one transfer gives ₹30,000."
 
 explorable:
   kind: drill
-  intro: "Five approaches of the kind that reach a jobs group or a chat. One is an ordinary job, so refusing everything is not the skill. Every name and link here is made up. Decide each one, then look."
+  intro: "Three messages. One is an ordinary job, so refusing everything is not the skill. Decide, then look."
   scenarios:
-    - screen:
-        kind: chat
-        from: "Rehan (jobs channel admin)"
-        amount: 5000
-        lines:
-          - "Part-time work, no interview needed."
-          - "Money comes to your account. You forward it the same day."
-          - "You keep ₹5,000 a week as commission."
-        action: "Share account details"
-      check:
-        q: "You have been looking for part-time work for weeks, and this arrives. What do you do?"
-        options:
-          - text: "Try it once, since a single transfer can be explained later"
-            why: "One transfer is enough for the account to appear in someone else's complaint. The account was opened on your ID, which is where the trail starts."
-          - text: "Ask for the company's name first, and agree only if it checks out"
-            why: "A name is typed into a chat in two seconds. The tell is not who is asking. It is being paid to let money pass through your account."
-          - text: "Decline, and report the approach at cybercrime.gov.in"
-            why: "Pay for the use of an account is the mule pitch. The portal takes reports of suspect numbers, handles and pages, not only of money already gone."
-        answer: 2
-    - screen:
-        kind: message
-        from: "Unknown number"
-        amount: 1500
-        lines:
-          - "₹1,500 for one SIM bought in your name."
-          - "Buy it today and hand over the card."
-          - "You keep the ID. We need only the card."
-        action: "Reply YES"
-      check:
-        q: "This reaches you a day after you posted in a jobs group. What do you do?"
-        options:
-          - text: "Sell it. The card leaves your hands, so the use of it is theirs"
-            why: "A connection is listed under the person whose ID took it, wherever the card ends up. In September 2024 the telecom department said it had disconnected over one crore connections tied to cybercrime and financial fraud."
-          - text: "Sell it, after asking them not to use it for anything illegal"
-            why: "Their answer costs them nothing and proves nothing. A number bought from a stranger is bought for the name attached to it."
-          - text: "Refuse, and keep your ID out of it"
-            why: "A number taken on your ID stays listed under your name, whoever holds the card. The cybercrime portal links a government tool for checking which connections are listed in your name."
-        answer: 2
-    - screen:
-        kind: message
-        from: "Sunrise Tutorials (admin office)"
-        amount: 7000
-        lines:
-          - "Evening data entry, three hours a day, six days a week."
-          - "₹7,000 a month, transferred by the institute."
-          - "Bring your ID to collect the appointment letter."
-        action: "Confirm joining date"
-      check:
-        q: "You applied for this two weeks ago and have been to the office in person. What do you do?"
-        options:
-          - text: "Refuse, because any job that asks for your ID is a risk"
-            why: "An employer takes your ID for its own records and to pay you. What no employer needs is your account for other people's money."
-          - text: "Take it, and check that the appointment letter names the institute"
-            why: "Money moves one way here, from the employer to you, for hours you worked. The letter and the institute's own transfer are what make it ordinary."
-          - text: "Take it, but ask to be paid in cash so the account stays clean"
-            why: "A transfer from an employer is a record that works in your favour. The account becomes a problem only when other people's money passes through it."
-        answer: 1
     - screen:
         kind: chat
         from: "Karan (introduced by a friend)"
@@ -96,84 +83,100 @@ explorable:
         lines:
           - "₹20,000 for one month's use of your account."
           - "We deposit, we withdraw. You do nothing."
-          - "Your other account stays untouched."
         action: "Hand over the card and passbook"
       check:
-        q: "Someone your friend vouches for offers this for an account you barely use. What do you do?"
+        q: "A friend vouches for him, and you barely use that account. What do you do?"
         options:
-          - text: "Agree, since it is an account you do not use anyway"
-            why: "An unused account is still an account in your name. Renting one out is the pattern the cybercrime alert of October 2024 describes."
-          - text: "Agree, but keep the phone and the PIN yourself"
-            why: "Holding the PIN does not change whose name receives the money. It also puts you at the screen when the transfers are made."
+          - text: "Agree, since the account sits unused"
+            why: "Unused or not, it is in your name, and every transfer is recorded against it."
           - text: "Refuse, and tell your friend what was asked"
-            why: "That alert tells people not to sell or rent an account, and says money from fraud landing in one can bring legal action, including arrest. Your friend may be the next person asked."
-        answer: 2
+            why: "Renting out an account is what the cybercrime centre warns against. Your friend may be asked next."
+        answer: 1
     - screen:
         kind: message
-        from: "EarnRise Tasks (support)"
-        amount: 8400
+        from: "Tutoring centre office"
+        amount: 7000
         lines:
-          - "Your task wallet shows ₹8,400 earned."
-          - "Withdrawal needs a ₹2,000 deposit to open the level."
-          - "Pay at earnrise-pay.example today."
-        action: "Deposit ₹2,000"
+          - "Evening data entry, three hours a day."
+          - "₹7,000 a month from the centre's account."
+          - "Send your account details for salary."
+        action: "Confirm joining date"
       check:
-        q: "Three days of liking videos in an app have built a balance you now want to withdraw. What do you do?"
+        q: "You applied two weeks ago and met them at the office. What do you do?"
         options:
-          - text: "Pay the ₹2,000, since the balance is far larger"
-            why: "The balance is a number on a screen, not money held for you. The portal's safety advice is to ignore an advertisement that promises money for little or no work."
-          - text: "Pay a smaller amount first, to test whether it really pays out"
-            why: "Any deposit is the first real money in the room, and it leaves. A part payment usually brings a new condition rather than a payout."
-          - text: "Stop, keep screenshots, and report it at cybercrime.gov.in"
-            why: "Nothing has been earned, so stopping costs nothing. A report can name the number, the handle and the payment page the app sent you to."
-        answer: 2
-  reflection: "Of the five, which came closest to something you or a friend has been sent, and which line in it would you stop on now?"
+          - text: "Refuse, since it asks for your account details"
+            why: "An employer needs your account to pay you, not to move other people's money."
+          - text: "Take it: they pay you from their own account"
+            why: "Money moves one way, from the employer to you, and stops with you."
+        answer: 1
+    - screen:
+        kind: chat
+        from: "Arjun (classmate)"
+        amount: 50000
+        lines:
+          - "My account is blocked for a few days."
+          - "My uncle will send you ₹50,000. Withdraw it for me and keep ₹2,500."
+        action: "Share account details"
+      check:
+        q: "He says it is one transfer, as a favour. What do you do?"
+        options:
+          - text: "Help, since it is one transfer for a friend"
+            why: "The ₹2,500 turns a favour into a hire. One transfer can put your account in a complaint."
+          - text: "Say no, and offer to go with him to his branch"
+            why: "A blocked account is sorted out by the bank that blocked it, not through yours."
+        answer: 1
+  reflection: "Which message were you least sure of, and which line would you stop on now?"
+
+takeaways:
+  - "Before you take a job, ask whose money will pass through your account. Only your own pay should."
+  - "Never lend, rent or sell your account, card or codes, not even to a friend."
+  - "If money has already arrived, move nothing, tell your bank today, and report on 1930."
+
+details:
+  - "The Minister of State for Home Affairs told the Rajya Sabha on 11 March 2026 that over 27 lakh mule accounts had been shared with the entities taking part in the Suspect Registry, and transactions of ₹9,518 crore declined."
+  - "In October 2024 the Indian Cyber Crime Coordination Centre described mule accounts used to collect deposits for fake investment sites and betting websites."
+  - "The same alert advised citizens not to sell or rent a bank account or a business registration certificate, and warned that fraud money in such an account can lead to legal consequences, including arrest."
+  - "The Citizen Financial Cyber Fraud Reporting and Management System was set up in 2021 for immediate reports, so that money can be stopped before it moves on. Its helpline is 1930."
+  - "The cybercrime portal's safety advice is to take any discrepancy in your account to your bank at once, and to ignore advertisements promising money for little or no work."
+  - "The portal's suspect repository can be searched by mobile number, email, bank account number, UPI ID or social media, and it links a government tool for checking the mobile connections in your name."
+  - "A phone connection works the same way: it stays listed under the person whose documents took it. In September 2024 the Department of Telecommunications said it had disconnected over one crore connections for involvement in cybercrime and financial frauds."
+  - "On 5 August 2026 the Supreme Court asked the Reserve Bank of India to prepare and circulate a standard procedure for mule accounts, and directed authorities to settle frozen-account cases faster."
 
 quiz:
-  - q: "₹40,000 arrived in your account yesterday from a stranger. The chat now tells you to send it on in three parts today and keep ₹4,000. What do you do?"
+  - q: "One offer pays ₹9,000 a month from a shop's account for weekend billing. Another pays ₹5,000 a week to pass money on. Which do you follow up?"
     options:
-      - text: "Forward it as asked and keep the ₹4,000"
-        why: "Forwarding is the step the account was hired for, and it moves the money further from the person it came from. The complaint that follows names the account it passed through."
-      - text: "Keep the whole amount, since it arrived without you asking"
-        why: "The money belongs to whoever lost it. Holding it leaves you with someone else's money and the same questions to answer."
-      - text: "Move nothing. Tell your bank today and report at cybercrime.gov.in"
-        why: "Taking a discrepancy in your account straight to the bank is part of the portal's own safety advice, and the reporting system was built for reports made at once."
+      - text: "The shop, which pays for hours worked"
+        why: "Money moves one way, from the employer to you, and stops there."
+      - text: "The ₹5,000 a week, since it pays more"
+        why: "It pays for the use of your account, not for your time."
+      - text: "Neither, since both want your account number"
+        why: "An employer needs it to pay you. What matters is whose money arrives."
+    answer: 0
+  - q: "An offer pays ₹6,000 a week, which it says is 5% of the money that arrives. How much moves through your account each week?"
+    options:
+      - text: "₹6,000, the commission"
+        why: "That is only what stays. Everything that arrives and leaves passes through your account."
+      - text: "₹1,20,000, everything that arrives"
+        why: "₹6,000 is 5% of ₹1,20,000, and every transfer in and out is recorded against your name."
+      - text: "₹1,14,000, the part you send on"
+        why: "That is what leaves. The ₹6,000 arrived in the same transfers."
+    answer: 1
+  - q: "₹40,000 arrived from a stranger yesterday. The chat says to send it on in three parts today and keep ₹4,000. What do you do?"
+    options:
+      - text: "Forward it and keep the ₹4,000"
+        why: "Forwarding is what the account was hired for. It moves the money further from the person who lost it."
+      - text: "Keep all of it, since you did not ask for it"
+        why: "It belongs to whoever lost it, and your account still holds it."
+      - text: "Move nothing, tell your bank today, and report on 1930"
+        why: "Stop, tell the bank, report. A report made at once gives the best chance of stopping the money."
     answer: 2
-  - q: "A classmate asks you to receive ₹60,000 from a relative because his own account is blocked. He offers you ₹3,000 for the trouble. What do you do?"
-    options:
-      - text: "Help him. He is a friend, and it is one transfer"
-        why: "The ₹3,000 is what turns a favour into a hire. A blocked account is a reason to go to his bank, not to use yours."
-      - text: "Say no, and offer to go with him to his branch instead"
-        why: "A friendship does not change whose name is on the transfer. A blocked account is sorted out by the bank that blocked it."
-      - text: "Help, but ask him to put the reason in writing first"
-        why: "A message from him is not a defence. What the bank sees is money arriving in your name from an account you cannot explain."
-    answer: 1
-  - q: "A cousin says this work is safe because the money never stays in the account. What do you tell him?"
-    options:
-      - text: "He is right, as long as the balance is back to zero each day"
-        why: "A zero balance is the point of the account, not a defence. Every transfer through it is recorded against the name that opened it."
-      - text: "Accounts used this way get reported, and banks decline transactions on them"
-        why: "Banks report suspect accounts into the Suspect Registry. The government told Parliament in March 2026 that over 27 lakh had been shared, and transactions of ₹9,518 crore declined."
-      - text: "It is safe if he opens a new account only for this"
-        why: "A new account needs the same ID as the old one. Opening one for this is a step towards the fraud, not away from it."
-    answer: 1
-  - q: "The person who recruited you asks you to bring two friends, with a bonus for each account. What do you do?"
-    options:
-      - text: "Bring them, since they can decide for themselves"
-        why: "Recruiting is a job inside the operation, not outside it. The bonus is paid for accounts, which is what the network is short of."
-      - text: "Refuse, and tell them what the pay is really for"
-        why: "Naming the pitch is what stops it spreading. The approach itself can be reported at cybercrime.gov.in, with the messages kept."
-      - text: "Bring one friend, and see how it goes"
-        why: "One account is still an account bought with a name. The bonus is the same payment for the same thing."
-    answer: 1
 
 transfer:
-  - "When a job pays you for the use of your account, your card or your SIM, rather than for hours or work done."
-  - "When money you did not expect arrives and someone asks you to move it on the same day."
-  - "When a friend or a relative asks you to receive a payment because their own account is blocked."
-  - "When an app shows earnings on a screen and asks for a deposit before it will pay out."
+  - "When a job pays for the use of your account or card, not for your hours."
+  - "When a friend asks you to receive a payment because their own account is blocked."
 
-glossary: [money-mule, kyc, suspect-registry, task-scam]
+glossary: [money-mule, kyc, suspect-registry]
+tool: spot-the-fake
 
 reportTo:
   phone: "1930"
@@ -204,72 +207,14 @@ sources:
     publisher: "Akashvani News, Prasar Bharati"
 ---
 
-## The pitch and the money
+## What the ₹5,000 pays for
 
-A <Term id="money-mule">money mule</Term> lets other people's money pass through a bank account. The pitch is a job: money arrives, you forward it, you keep a cut.
+The work in the message is the whole job: money arrives, you send it on, you keep a cut. The money was taken from people who were defrauded, and your account stands between them and whoever took it. Someone whose account is used this way is a <Term id="money-mule">money mule</Term>.
 
-The money is taken from people who have been defrauded. In October 2024 the national cybercrime centre described mule accounts being used to collect deposits for fake investment sites and betting websites.
+An employer pays you from its own account, for hours you worked. This offer pays you out of other people's money, for the use of your name.
 
-**Forwarding the money is the work you are paid for.** Money that passes through an ordinary account, in an ordinary name, is harder to follow.
+## Why the account stays yours
 
-No employer needs your account for money that is not its own.
+A bank opens an account only after a <Term id="kyc">KYC</Term> check on your identity documents. Every transfer in and out is recorded against that name, whoever types the instructions.
 
-<svg class="chart" viewBox="0 0 320 172" role="img" aria-labelledby="mule-title mule-desc">
-  <title id="mule-title">How money moves through a mule account</title>
-  <desc id="mule-desc">Money taken from someone who was defrauded arrives in your account, which was opened on your ID, and is forwarded to accounts you are given. A commission stays with you, and so does a record in your name.</desc>
-  <text class="chart-label" x="0" y="12">Money taken from someone else</text>
-  <rect class="chart-b" x="14" y="20" width="10" height="16" />
-  <polygon class="chart-b" points="19,48 6,34 32,34" />
-  <text class="chart-label" x="0" y="68">Your account, opened on your ID</text>
-  <rect class="chart-a" x="0" y="76" width="320" height="16" rx="4" />
-  <rect class="chart-b" x="14" y="104" width="10" height="16" />
-  <polygon class="chart-b" points="19,132 6,118 32,118" />
-  <text class="chart-label" x="0" y="152">Accounts you are given</text>
-  <text class="chart-note" x="0" y="170">The record keeps your name.</text>
-</svg>
-
-## Your name is on every transfer
-
-An account is opened after a <Term id="kyc">KYC</Term> check on the identity documents you hand over. It stays in your name, whoever types the instruction.
-
-A SIM works the same way. A connection is listed under the person whose ID took it, and a card in someone else's hand does not move that name.
-
-In September 2024 the Department of Telecommunications said it had disconnected over one crore mobile connections for involvement in cybercrime and financial frauds.
-
-**The commission is paid for the use of your name, not for hours of work.**
-
-## What the banks already do
-
-Banks report the accounts they suspect, and those details are shared through the <Term id="suspect-registry">Suspect Registry</Term> with the other institutions taking part.
-
-The government told Parliament in March 2026 that over 27 lakh mule accounts had been shared this way, and that transactions worth ₹9,518 crore had been declined.
-
-An account linked to cyber fraud can also be frozen. In August 2026 the Supreme Court asked the Reserve Bank of India to write a standard procedure for mule accounts. It also asked for cases about frozen accounts to be settled faster.
-
-**Once an account is shared this way, the institutions taking part decline its transactions.**
-
-| Question | An ordinary job | A mule offer |
-| --- | --- | --- |
-| Where your pay comes from | The employer's own account | The money you pass on |
-| What is being used | Your hours | Your account and your ID |
-| How it ends | You resign | Your account is named in a complaint |
-
-## The forms the offer takes
-
-The same ask arrives in different wrappers. Money in and money out for a commission. A month's rent for an account you barely use. Cash for a SIM bought in your name. A <Term id="task-scam">task app</Term> that shows earnings, then asks for a deposit before it pays.
-
-The cybercrime portal's safety advice is to ignore an advertisement that promises money for little or no work.
-
-**One question sorts them: am I paid for work, or for the use of my name?** Hours worked are the first. An account, a card, a SIM or an ID is the second.
-
-## If you have already said yes
-
-Move no more money. Report it on 1930 or at cybercrime.gov.in, and take the discrepancy in your account to your bank, which is part of the portal's own safety advice.
-
-The reporting system was set up in 2021 for immediate reports, so that money can be stopped before it moves on.
-
-A report can name the number, the handle, the page and the bank account you were given.
-
-The cybercrime centre's advice is to sell or rent nothing: not an account, not a business registration certificate. Money from fraud landing in such an account can bring legal action, including arrest.
-
-**An approach that never became a transfer is worth reporting too.**
+Banks report accounts they suspect into a shared <Term id="suspect-registry">Suspect Registry</Term>, and payments to them can be declined. Fraud money in a rented account can bring legal action against you, including arrest.
