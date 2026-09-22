@@ -90,9 +90,9 @@ for (const [name, theme] of [['light + more contrast', lightMore], ['dark + more
   }
 }
 
-// The dark-blue field re-maps the tokens (the .on-field block in tokens.css); check those pairs.
-const field = tokens(block(css, '.on-field, .panel-field, .panel-deep {'));
-console.log('\non-field');
+// The blue band (the header) re-maps the tokens (the .on-band block in tokens.css); check those pairs.
+const field = tokens(block(css, '.on-band {'));
+console.log('\non-band');
 for (const [fg, min, what] of [['ink', 4.5, 'headings'], ['ink-2', 4.5, 'text'], ['muted', 4.5, 'secondary'], ['accent-text', 4.5, 'links'], ['on-accent', 4.5, 'gold button label'], ['focus', 3, 'focus ring'], ['line-strong', 3, 'card outlines']]) {
   const bgKey = fg === 'on-accent' ? 'accent' : 'bg';
   const r = ratio(field[fg], field[bgKey]);

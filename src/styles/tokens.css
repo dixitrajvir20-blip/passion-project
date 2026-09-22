@@ -17,8 +17,9 @@
   /* v4 palette: dark blue, white and gold. The page is a dark-blue field with white text; reading
      happens on white sheets laid over it, in navy ink; gold is the sticker, the highlight and the one
      loud panel. Anything that sits directly on the field carries the .on-field remap below. */
-  --field: #0b4aa2;          /* the page field: white on it 8.3:1, gold on it 5.0:1 */
-  --field-deep: #073478;     /* blobs, the second tone */
+  --field: #ffffff;          /* the page field is white since 21 Sep 2026 (Rajvir: "less blue"); blue is kept for borders and one band */
+  --field-deep: #e8f0fb;     /* blobs, now a pale tone on white */
+  --band: #0b4aa2;           /* the one blue band: the header. White on it 8.3:1, gold on it 5.0:1 */
   --field-pale: #e8f0fb;     /* soft panels on white sheets */
 
   /* Surfaces */
@@ -139,6 +140,7 @@
   :root {
     --field: #071a4a;
     --field-deep: #040f2e;
+    --band: #071a4a;
     --field-pale: #121d57;
 
     --bg: #101a4f;
@@ -215,9 +217,10 @@
   --accent-soft: #16225e;
 }
 
-/* Anything placed directly on the dark-blue field: the header, heroes, the lesson title band, dark
-   panels. Text goes white, links and the primary action go gold, rules go pale. Same in both modes. */
-.on-field, .panel-field, .panel-deep {
+/* The one blue band (the header): text goes white, links and the primary action go gold, rules go
+   pale. Same in both modes. Heroes, the lesson title band and the front-page panels used to sit on
+   the blue field too; since 21 Sep 2026 they are white with a blue rule (see base.css .on-field). */
+.on-band {
   --bg: #0b4aa2;
   --bg-2: #073478;
   --bg-3: #1f5fbf;

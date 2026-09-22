@@ -25,7 +25,7 @@ const links = [
 ];
 ---
 
-<header class="site-header on-field" id="top">
+<header class="site-header on-band" id="top">
   <div class="container header-inner">
     <a class="brand" href={region ? prefix : `${base}/`} aria-label={`${site.name} home`}>
       <Logo size={40} />
@@ -50,7 +50,7 @@ const links = [
 <style>
   /* The header sits on the dark-blue field: white wordmark, a white pill group for the site's
      sections, and the edition menu at the right. */
-  .site-header { background: var(--field); position: relative; z-index: 40; }
+  .site-header { background: var(--band); position: relative; z-index: 40; }
   @media (min-width: 900px) { .site-header { position: sticky; top: 0; } }
 
   .header-inner {

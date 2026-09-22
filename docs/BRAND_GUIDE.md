@@ -1,6 +1,8 @@
 # Business Lab brand guide
 
-Version 3.0 · 19 September 2026 · owner: Rajvir Dixit. v3 sets the dark-blue, white and gold
+Version 3.1 · 21 September 2026 · owner: Rajvir Dixit. v3.1 turns the page white: blue is kept for the
+header band, the rules under heroes and title bands, and card outlines, after Rajvir found the blue
+field hard to read against ("less blue"). v3 set the dark-blue, white and gold
 palette, the rounded-panel layout drawn from Aardvark Book Club and Ivy Kids (their layouts, not
 their colours), the edition dropdown with flags, and the dashboard. v2 (18 Sept) did the rename
 from LaunchPad and the ledger. The tone is serious and professional: lessons are built from
@@ -21,7 +23,7 @@ life skill. The brand has to read as **trustworthy, calm and grown-up**, the opp
 loud "finance bro" and "get rich" look these readers are surrounded by, while still feeling
 made for them, not for their parents.
 
-One-line thesis: **work shown, nothing sold.** Dark-blue pages, white sheets to read on, gold
+One-line thesis: **work shown, nothing sold.** White pages with blue as the frame, gold
 for the one thing that matters on a screen. Every sum is written out the way a cash book writes
 it. Nothing looks like an advert, because nothing is one.
 
@@ -47,8 +49,8 @@ surface it sits on (WCAG 2.2 AA: 4.5:1 for text, 3:1 for large text and non-text
 
 | Token | Hex | Role |
 |---|---|---|
-| Field blue | `#0B4AA2` | The page itself, heroes, the title band of a lesson, dark panels |
-| Deep blue | `#073478` | Blob shapes and the second tone on the field |
+| Band blue | `#0B4AA2` | The header band only (`--band`); the page itself is white since v3.1 |
+| Link blue | `#0C61C4` | Links, the rule under heroes and title bands, the outline of the front-page panels |
 | Navy ink | `#0B1240` | All text on white and gold; the footer; outlines |
 | Marigold | `#F2C14E` | The one accent: links and the primary action on the field, stickers, the loud panel |
 | Paper white | `#FFFFFF` | Sheets, cards, receipts |

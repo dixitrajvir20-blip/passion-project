@@ -26,7 +26,7 @@
 .stat-card .stat-name { font-size: var(--text-ui); color: var(--ink-2); }
 .stat-card .stat-value { font-family: var(--font-display); font-size: var(--text-result); font-weight: 800; letter-spacing: var(--tracking-display); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; margin: var(--space-2) 0; }
 .stat-card .stat-note { font-size: var(--text-sm); color: var(--muted); }
-.stat-primary { background: var(--field); border-color: var(--field); color: var(--ink-2); }
+.stat-primary { background: var(--field-pale); border-color: var(--brand-blue); color: var(--ink-2); }
 
 .dash-grid { display: grid; gap: var(--space-4); }
 @media (min-width: 900px) { .dash-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .dash-card.wide { grid-column: span 2; } }

@@ -1,6 +1,6 @@
 # Business Lab design system
 
-Version 4.0 · 19 September 2026. Supersedes v3 (the light ledger look) and v2 (LaunchPad). Read `docs/BRAND_GUIDE.md` first —
+Version 4.1 · 21 September 2026 (the page is white; blue is the header band, the rules and the outlines; `.on-band` carries the white-ink remap, `.on-field` is now a white surface with a blue rule under it). v4.0 (19 September) supersedes v3 (the light ledger look) and v2 (LaunchPad). Read `docs/BRAND_GUIDE.md` first —
 this file is how the brand is built in code. The machine source of truth is
 `src/styles/tokens.css`; this document explains the rules behind it and how to extend them.
 
