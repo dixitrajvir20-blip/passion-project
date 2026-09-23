@@ -93,30 +93,30 @@ for (const path of PAGES) {
   });
 }
 
-// WCAG 2.4.11: nothing sticky or fixed may cover the focused element. Since v5.1 the header is one
-// blue bar that scrolls away with the page at every width (it never sticks), and the consent banner
-// is a block in the flow under it. So: the header is neither sticky nor fixed, and the first thing
-// Tab reaches in the page is on screen once focused.
-for (const width of [900, 1040, 1280]) {
+// WCAG 2.4.11: a jump target or a focused element must never sit under the sticky header. The
+// scroll padding and scroll margins are sized from --header-h, so wherever the header is sticky it
+// has to fit inside them, including the widths where the nav could wrap to a second row.
+for (const width of [900, 960, 1000, 1040, 1280]) {
   test.describe(`at ${width}px wide`, () => {
     test.use({ viewport: { width, height: 800 } });
 
-    test('the header never sticks, and a focused link in the page is on screen', async ({ page }) => {
+    test('a sticky header fits inside the scroll padding', async ({ page }) => {
+      let stuckAnywhere = false;
       for (const path of ['', 'us', 'us/tools', 'eu/tools', 'in/learn/money-basics/first-payslip', 'dashboard']) {
         await page.goto(path);
-        const position = await page.locator('.site-header').evaluate((header) => getComputedStyle(header).position);
-        expect(['sticky', 'fixed'], `/${path}: the header is ${position}`).not.toContain(position);
-        await page.locator('#main').focus();
-        await page.keyboard.press('Tab');
-        const focused = await page.evaluate(() => {
-          const el = document.activeElement;
-          const box = el?.getBoundingClientRect();
-          return { inMain: Boolean(el?.closest('main')), top: box?.top ?? -1, bottom: box?.bottom ?? -1, height: window.innerHeight };
+        await page.evaluate(() => document.fonts.ready);
+        const { h, stuck, pad } = await page.evaluate(() => {
+          const header = document.querySelector('.site-header')!;
+          return {
+            h: header.getBoundingClientRect().height,
+            stuck: ['sticky', 'fixed'].includes(getComputedStyle(header).position),
+            pad: parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop),
+          };
         });
-        expect(focused.inMain, `/${path}: Tab from #main lands in the page`).toBe(true);
-        expect(focused.top, `/${path}: the focused element's top`).toBeGreaterThanOrEqual(0);
-        expect(focused.bottom, `/${path}: the focused element's bottom`).toBeLessThanOrEqual(focused.height);
+        if (stuck) expect(h, `/${path}: a ${h}px sticky header in ${pad}px of scroll padding`).toBeLessThanOrEqual(pad - 8);
+        stuckAnywhere ||= stuck;
       }
+      if (width >= 1280) expect(stuckAnywhere, 'the header is sticky on a wide screen').toBe(true);
     });
   });
 }

@@ -1,90 +1,75 @@
 /*
-  Business Lab design tokens (v4: dark blue, white and gold) — the single source of truth for colour, type, space and motion.
-  Rules live in docs/DESIGN.md and docs/BRAND_GUIDE.md. Every value here has a contrast
-  figure in the brand guide; change one and re-run scripts/contrast-check.mjs.
+  Business Lab design tokens, v5.1 (22 September 2026): a white page, navy ink, one blue and one
+  typeface. This file is the single source of truth for colour, type, space, shape and motion;
+  docs/DESIGN.md explains the rules. There is no dark theme: the page is light at every OS setting,
+  and the browser's own forced colours still apply.
+
+  scripts/contrast-check.mjs (npm run contrast) reads the first token block below, the
+  prefers-contrast block and the two band remaps, and fails on any pair under WCAG 2.2 AA.
+  scripts/og-images.mjs reads its colours from the same first block. Values stay 6-digit hex so
+  both scripts can read them; keep the word for the document root out of these comments, because
+  the scripts find the token block by it.
 */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
-  /* Brand constants (never change per theme) */
-  --brand-black: #0b0b0f;
-  --brand-blue: #0c61c4;
-  --brand-navy: #0b1240;
-  --brand-gold: #f2c14e;
-  --paper: #ffffff;          /* receipts and flashcards stay white in both themes, with navy ink */
+  /* Colour. Navy ink on white; every grey is navy #0b1240 mixed into white (4, 8, 20 and 55%). */
+  --bg: #ffffff;             /* every page, the footer, boxes, dialogs, the dropdown and the popover */
+  --surface: #f5f6f7;        /* navy 4%: the one pale surface (results bench, explorer, code), always with an edge */
+  --tint: #ebecf0;           /* navy 8%: selected states only (checked option, pressed key, :target, mark) */
+  --ink: #0b1240;            /* headings (never blue), labels, figures, list-row titles: 17.88:1 on white */
+  --ink-2: #262f57;          /* body text: 12.91:1 */
+  --muted: #434d73;          /* captions, meta, hints, fine print: 8.24:1 */
+  --rule: #ced0d9;           /* navy 20%: decorative 1px dividers, never the only edge of a control */
+  --border: #797d96;         /* navy 55%: the 1px edge of a control or an instrument: 4.05:1 on white */
 
-  /* v4 palette: dark blue, white and gold. The page is a dark-blue field with white text; reading
-     happens on white sheets laid over it, in navy ink; gold is the sticker, the highlight and the one
-     loud panel. Anything that sits directly on the field carries the .on-field remap below. */
-  --field: #ffffff;          /* the page field is white since 21 Sep 2026 (Rajvir: "less blue"); blue is kept for borders and one band */
-  --field-deep: #e8f0fb;     /* blobs, now a pale tone on white */
-  --band: #0b4aa2;           /* the one blue band: the header. White on it 8.3:1, gold on it 5.0:1 */
-  --frame: #0c61c4;          /* the blue frame: the rule under heroes and title bands, panel outlines (3:1+ on white) */
-  --band-surface: #ffffff;   /* heroes and title bands: white in light, the field in dark */
-  --field-pale: #e8f0fb;     /* soft panels on white sheets */
+  /* The one blue has five jobs: the header bar, links in running text, the one primary button per
+     screen, the focus ring and the 4px current-item bars. Never a heading, label or row title. */
+  --blue: #0b4aa2;           /* 8.35:1 on white; white on it 8.35:1 */
+  --blue-dark: #08357a;      /* hover and active for links and the primary button: 11.66:1 */
+  --on-blue: #ffffff;        /* the primary label, text on the bar, the skip link's ring */
+  --focus: #0b4aa2;          /* a literal hex so the contrast script can read it; white inside the bar */
 
-  /* Surfaces */
-  --bg: #ffffff;             /* reading sheets and cards */
-  --bg-2: #eef3fb;
-  --bg-3: #dbe6f7;
-  --bg-inverse: #0b1240;
+  --error: #b3261e;          /* 6.54:1, always with words or a minus sign */
+  --success: #17683f;        /* 6.80:1, always with words */
 
-  /* Text: navy ink on every light colour */
-  --ink: #0b1240;
-  --ink-2: #262f57;
-  --muted: #434d73;
-  --line: #c6d8ec;
-  --line-strong: #0b1240;    /* the outline of cards, sheets and pills */
+  /* Chart data only, in fixed order (validated with the dataviz palette checker). Slots 3 to 5 sit
+     under 3:1 on white, so every chart carries direct labels and a table. */
+  --series-1: #0c61c4;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #e0a400;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+  --chart-grid: #e2e3e8;     /* navy 12%, decorative */
 
-  /* Actions */
-  --accent: #0b1240;         /* primary buttons: navy fill, white label */
-  --accent-hover: #1a2a6c;
-  --accent-text: #0c61c4;    /* links on white */
-  --accent-soft: #e6f3fe;
-  --on-accent: #ffffff;
+  /* Print: paper is white and ink is black. */
+  --print-paper: #ffffff;
+  --print-ink: #000000;
+  --print-muted: #444444;
+  --print-line: #999999;
 
-  /* Gold: fills, stickers and marks; navy text on it */
-  --gold: #f2c14e;
-  --gold-pale: #fbe3a6;
-  --gold-text: #7a5a0e;      /* the one place gold is text on white */
-  --on-gold: #0b1240;
-  --highlight: #fbe3a6;
-
-  /* Signals */
-  --error: #b3261e;
-  --success: #17683f;
-  --focus: #0c61c4;
-
-  /* Type */
-  --font-display: 'Bricolage Grotesque', 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  /* Type. One family, Atkinson Hyperlegible Next 400/700, self-hosted (fonts.css). */
   --font-body: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  --text-xs: 13px;
-  --text-sm: 15px;
-  --text-ui: 16px;      /* buttons, card copy, list copy */
-  --text-md: 17px;
-  --text-lg: clamp(19px, 1.1rem + 0.35vw, 21px);
-  --text-h3: clamp(20px, 1.15rem + 0.4vw, 24px);
-  --text-h2: clamp(28px, 1.45rem + 1.2vw, 40px);
-  --text-h1: clamp(36px, 1.9rem + 2.4vw, 60px);
-  --text-display: clamp(40px, 2rem + 4vw, 76px);
-  --text-mega: clamp(46px, 1.4rem + 6.6vw, 124px);   /* Aardvark-size hero and panel words */
-  --text-hand: clamp(20px, 1.05rem + 0.5vw, 26px);   /* hand-lettered notes (drawn from Kalam at build time) */
-  --text-sticker: 15px;
-  --text-figure: clamp(34px, 1.6rem + 2vw, 52px);
-  --text-result: clamp(28px, 1.5rem + 1vw, 34px);  /* calculator results, one-time codes */
-  --text-wordmark: 20px;
+  --text-xs: 14px;                                  /* fine print, sources, licence, chart labels */
+  --text-sm: 16px;                                  /* UI: nav, crumb, meta, hints, captions, tables, footer */
+  --text-md: clamp(18px, 17.4px + 0.2vw, 19px);     /* body, labels, inputs, options, buttons */
+  --text-lg: clamp(20px, 18.5px + 0.42vw, 24px);    /* lede, h3, legends, key idea, row titles, ledger figures */
+  --text-h2: clamp(24px, 21px + 0.85vw, 32px);      /* h2, ledger totals, dashboard values */
+  --text-h1: clamp(32px, 27px + 1.4vw, 44px);       /* page titles, headline figures */
+  --text-display: clamp(36px, 29px + 2vw, 52px);    /* the home h1 only */
 
-  --leading-tight: 1.05;
-  --leading-mega: 0.9;
-  --leading-snug: 1.2;
-  --leading-body: 1.55;
-  --tracking-display: -0.035em;
-  --tracking-heading: -0.015em;
+  --leading-body: 1.5;
+  --leading-ui: 1.35;
+  --leading-heading: 1.2;
+  --leading-h1: 1.1;
+  --tracking-h1: -0.01em;
 
-  /* Space (4px grid) */
+  /* Space: the 4px grid. */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -94,151 +79,116 @@
   --space-7: 48px;
   --space-8: 64px;
   --space-9: 96px;
-  --space-10: 128px;
+  --space-section: clamp(40px, 24px + 4vw, 64px);
 
-  /* Shape */
-  --radius-xs: 4px;
-  --radius-s: 8px;
-  --radius-m: 12px;
-  --radius-l: 20px;
-  --radius-xl: 32px;       /* the big section panels and sheets */
+  /* Layout. The container is --wide plus a gutter each side; --rail + --space-8 + --column = --wide. */
+  --gutter: clamp(16px, 3.2vw, 32px);
+  --wide: 960px;
+  --column: 640px;
+  --measure: 32em;
+  --rail: 256px;
+  --bar-h: 56px;             /* the blue bar: 56px, 64px from 1024px (below) */
+  --edition-row-h: 48px;     /* the white edition row under the bar, below 1024px */
+  --sticky-top: 24px;        /* the lesson rail, the results bench and the dashboard side nav */
+  --target: 44px;            /* minimum height of every text button, summary and link row */
+  --target-lg: 48px;         /* primary and secondary buttons, inputs, option rows, Menu rows */
+
+  /* Shape. One radius; the pill only on the consent switch. Rules and bars are square. */
+  --radius: 4px;
   --radius-pill: 999px;
+  --rule-w: 1px;
+  --control-w: 2px;
+  --bar-w: 4px;
 
-
-  /* Motion */
+  /* Motion: the consent switch knob only, and only under prefers-reduced-motion: no-preference. */
   --dur-fast: 150ms;
-  --dur: 240ms;
-  --dur-slow: 500ms;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-
-  /* Chart series (categorical, fixed order, validated with the dataviz palette checker).
-     Slots 3–5 sit under 3:1 on white by design: charts always carry direct labels + a table. */
-  --series-1: #0c61c4;
-  --series-2: #eb6834;
-  --series-3: #1baf7a;
-  --series-4: #e0a400;
-  --series-5: #e87ba4;
-  --series-6: #008300;
-  --series-7: #4a3aa7;
-  --series-8: #e34948;
-  --chart-grid: #e2e5ea;
-
-  /* Print: paper is white and ink is black whatever the screen theme was */
-  --print-paper: #ffffff;
-  --print-ink: #000000;
-  --print-muted: #444444;
-  --print-line: #999999;
-
-  /* Layout */
-  --header-h: 72px;
-  --edition-h: 44px;
-  --measure: 64ch;
-  --column: 720px;
-  --wide: 1120px;
-  --gutter: var(--space-5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --field: #071a4a;
-    --field-deep: #040f2e;
-    --band: #071a4a;
-    --frame: #3987e5;        /* 4.5:1 on the dark sheet */
-    --band-surface: #071a4a;
-    --field-pale: #121d57;
-
-    --bg: #101a4f;
-    --bg-2: #16225e;
-    --bg-3: #1d2b70;
-    --bg-inverse: #06092a;
-
-    --ink: #f4f7ff;
-    --ink-2: #d6def5;
-    --muted: #aebbe0;
-    --line: #2c3a80;
-    --line-strong: #f4f7ff;
-
-    --accent: #f2c14e;         /* gold buttons with navy labels in the dark */
-    --accent-hover: #fbe3a6;
-    --accent-text: #f2c14e;
-    --accent-soft: #16225e;
-    --on-accent: #0b1240;
-
-    --gold: #f2c14e;
-    --gold-pale: #fbe3a6;
-    --gold-text: #f2c14e;
-    --on-gold: #0b1240;
-    --highlight: #5c4a14;
-
-    --error: #ff9b8f;
-    --success: #7fdca8;
-    --focus: #f2c14e;
-
-    --series-1: #3987e5;
-    --series-2: #d95926;
-    --series-3: #199e70;
-    --series-4: #c98500;
-    --series-5: #d55181;
-    --series-6: #008300;
-    --series-7: #9085e9;
-    --series-8: #e34948;
-    --chart-grid: #2a2c34;
-  }
+@media (min-width: 1024px) {
+  :root { --bar-h: 64px; }
 }
 
-/* More contrast. Two blocks on purpose: an unscoped block sits after the dark block in
-   the cascade, so its light values would win in dark mode and drop --muted to ~1.7:1. */
+/* More contrast: the only override block, and it is light. */
 @media (prefers-contrast: more) {
   :root {
     --muted: #262f57;
-    --line: #6a7aa8;
-  }
-}
-@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
-  :root {
-    --muted: #d6def5;
-    --line: #8fa3e0;
+    --rule: #6d718c;
+    --border: #484d70;
   }
 }
 
-/* A navy section re-maps the tokens for everything inside it (brand guide §2). Kept here,
-   not in base.css, so every colour in the system is in one auditable file. */
-.section-dark {
-  --bg: #0b1240;
-  --bg-2: #16225e;
-  --bg-3: #1d2b70;
-  --ink: #f4f7ff;
-  --ink-2: #d6def5;
-  --muted: #aebbe0;
-  --line: #2c3a80;
-  --line-strong: #f4f7ff;
-  --accent: #f2c14e;
-  --accent-hover: #fbe3a6;
-  --accent-text: #f2c14e;
-  --on-accent: #0b1240;
-  --gold-text: #f2c14e;
-  --focus: #f2c14e;
-  --accent-soft: #16225e;
-}
-
-/* The one blue band (the header): text goes white, links and the primary action go gold, rules go
-   pale. Same in both modes. Heroes, the lesson title band and the front-page panels used to sit on
-   the blue field too; since 21 Sep 2026 they are white with a blue rule (see base.css .on-field). */
+/* The blue bar. Applied only to what always sits on it (the brand link, the Menu summary and the
+   wide nav), never to the header element, so the white Menu panel and edition row keep ink. */
 .on-band {
-  --bg: #0b4aa2;
-  --bg-2: #073478;
-  --bg-3: #1f5fbf;
   --ink: #ffffff;
-  --ink-2: #e4edfb;
-  --muted: #c2d4f0;
-  --line: #3a6fc4;
-  --line-strong: #ffffff;
-  --accent: #f2c14e;
-  --accent-hover: #fbe3a6;
-  --accent-text: #f2c14e;
-  --on-accent: #0b1240;
-  --accent-soft: #073478;
-  --gold-text: #f2c14e;
-  --focus: #f2c14e;
-  --highlight: #073478;      /* white text stays legible if a highlight ever lands on the field */
+  --ink-2: #ffffff;
+  --muted: #ffffff;
+  --focus: #ffffff;
+}
+
+/* The edition summary sits in the white row below 1024px and in the bar from 1024px. */
+@media (min-width: 1024px) {
+  .on-band-wide {
+    --ink: #ffffff;
+    --ink-2: #ffffff;
+    --muted: #ffffff;
+    --focus: #ffffff;
+  }
+}
+
+/* LEGACY: deleted in step 22. Every retired name, mapped to a v5.1 value, so pages not yet rewritten
+   still build and read white, gold-free, square and in one typeface. No var() aliases: plain values
+   only. The contrast script and the share-image script never read this block. */
+:root {
+  --field: #ffffff;
+  --field-deep: #f5f6f7;
+  --band: #0b4aa2;
+  --frame: #ced0d9;
+  --band-surface: #ffffff;
+  --field-pale: #f5f6f7;
+  --bg-2: #f5f6f7;
+  --bg-3: #ebecf0;
+  --bg-inverse: #0b1240;
+  --line: #ced0d9;
+  --line-strong: #0b1240;
+  --accent: #0b4aa2;
+  --accent-hover: #08357a;
+  --accent-text: #0b4aa2;
+  --accent-soft: #ebecf0;
+  --on-accent: #ffffff;
+  --gold: #ebecf0;
+  --gold-pale: #ebecf0;
+  --gold-text: #434d73;
+  --on-gold: #0b1240;
+  --highlight: #ebecf0;
+  --brand-black: #0b1240;
+  --brand-blue: #0c61c4;
+  --brand-navy: #0b1240;
+  --paper: #ffffff;
+  --font-display: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --text-ui: 16px;
+  --text-h3: clamp(20px, 18.5px + 0.42vw, 24px);
+  --text-figure: clamp(32px, 27px + 1.4vw, 44px);
+  --text-result: clamp(24px, 21px + 0.85vw, 32px);
+  --text-mega: clamp(36px, 29px + 2vw, 52px);
+  --text-hand: 20px;
+  --text-sticker: 16px;
+  --text-wordmark: 20px;
+  --leading-tight: 1.1;
+  --leading-mega: 1.1;
+  --leading-snug: 1.2;
+  --tracking-display: -0.01em;
+  --tracking-heading: 0em;
+  --radius-xs: 4px;
+  --radius-s: 4px;
+  --radius-m: 4px;
+  --radius-l: 4px;
+  --radius-xl: 4px;
+  --dur: 0ms;
+  --dur-slow: 0ms;
+  --header-h: 0px;
+  --edition-h: 0px;
+  --space-10: 128px;
 }

@@ -1,4 +1,5 @@
-/* Base styles. Components add only what the base does not cover. */
+/* Base styles, v5.1: a white page, navy ink, one blue, one typeface, one 4px radius, no motion.
+   Components add only what the base does not cover. Every value is a token from tokens.css. */
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -8,17 +9,14 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  background: var(--field);
-  scroll-padding-top: calc(var(--header-h) + var(--space-6));
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
+  background: var(--bg);
+  /* Nothing sticks to the top of the page, so a small pad is all a jump target needs. */
+  scroll-padding-top: var(--space-5);
 }
 
 body {
   margin: 0;
-  background: var(--field);
+  background: var(--bg);
   color: var(--ink-2);
   font-family: var(--font-body);
   font-size: var(--text-md);
@@ -27,352 +25,278 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Cross-document view transitions: a short fade between pages, nothing else. */
-@view-transition { navigation: auto; }
-::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--dur); }
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
-}
+/* Form controls take the page's one typeface, not the browser's own control font. Zero specificity,
+   so every size and weight set on a control still wins. */
+:where(button, input, select, textarea) { font-family: inherit; }
 
-/* Typography */
+/* Type. Headings are navy ink at 700 and never blue, even when a heading is a link. */
 h1, h2, h3, h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   color: var(--ink);
-  font-weight: 800;
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-heading);
+  font-weight: 700;
+  line-height: var(--leading-heading);
+  letter-spacing: 0;
   margin: 0 0 var(--space-4);
   text-wrap: balance;
 }
-h1 { font-size: var(--text-h1); line-height: var(--leading-tight); letter-spacing: var(--tracking-display); }
-h2 { font-size: var(--text-h2); margin-top: var(--space-7); letter-spacing: var(--tracking-display); }
-h3 { font-size: var(--text-h3); font-weight: 700; }
-.mega { font-size: var(--text-mega); line-height: var(--leading-mega); letter-spacing: var(--tracking-display); }
-h4 { font-size: var(--text-md); font-family: var(--font-body); letter-spacing: 0; }
+h1 { font-size: var(--text-h1); line-height: var(--leading-h1); letter-spacing: var(--tracking-h1); }
+h2 { font-size: var(--text-h2); margin-top: var(--space-7); }
+h3 { font-size: var(--text-lg); }
+h4 { font-size: var(--text-md); }
 h2:first-child, h3:first-child { margin-top: 0; }
+:is(h1, h2, h3, h4) a { color: var(--ink); text-decoration: none; }
+:is(h1, h2, h3, h4) a:hover { color: var(--ink); text-decoration: underline; text-decoration-thickness: var(--control-w); text-underline-offset: 0.16em; }
 
-.display { font-size: var(--text-display); }
-
-p, ul, ol { margin: 0 0 var(--space-4); }
+p, ul, ol, dl { margin: 0 0 1em; }
 p { max-width: var(--measure); text-wrap: pretty; }
-li { margin-bottom: var(--space-2); }
+li { margin-bottom: 0.5em; }
 
-.lede {
-  font-size: var(--text-lg);
-  color: var(--ink-2);
-  max-width: 56ch;
-}
+.lede { font-size: var(--text-lg); line-height: var(--leading-ui); color: var(--ink-2); }
 
+/* A small text label above a title (the protected legal pages use it). Never a pill. */
 .eyebrow {
   display: block;
-  font-family: var(--font-body);
+  margin-bottom: var(--space-2);
   font-size: var(--text-sm);
   font-weight: 700;
-  color: var(--gold-text);
-  margin-bottom: var(--space-3);
+  color: var(--muted);
   letter-spacing: 0;
 }
 
-a { color: var(--accent-text); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { color: var(--accent-hover); }
-@media (prefers-color-scheme: dark) { a:hover { color: var(--ink); } }
+/* Links, three kinds (docs/DESIGN.md §4).
+   (a) In running text: blue, always underlined, because blue is only 2.14:1 against the ink. */
+a {
+  color: var(--blue);
+  text-decoration-line: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.16em;
+}
+a:hover { color: var(--blue-dark); text-decoration-thickness: 3px; }
+
+/* (b) A row in a ruled list: ink 700, the whole row is the link, the title underlines on hover. */
+.index-row, .lesson-row, .taxonomy-list a, .r-title, .related li a, .dash-card .recent a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+:is(.index-row, .lesson-row, .taxonomy-list a, .r-title, .related li a, .dash-card .recent a):is(:hover, :focus-visible) { color: var(--ink); }
+.index-row:is(:hover, :focus-visible) .index-title,
+.lesson-row:is(:hover, :focus-visible) .lesson-title,
+:is(.taxonomy-list a, .r-title, .related li a, .dash-card .recent a):is(:hover, :focus-visible) {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: var(--control-w);
+  text-underline-offset: 0.16em;
+}
+
+/* (c) A standalone link: ink 700, always underlined. */
+.crumb a, .tool-handoffs a, .taxonomy-all a, .tool-jumps a, .glossary-link, .video-link {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration-line: underline;
+}
+:is(.crumb a, .tool-handoffs a, .taxonomy-all a, .tool-jumps a, .glossary-link, .video-link):hover { color: var(--ink); }
 
 strong { color: var(--ink); font-weight: 700; }
 small, .small { font-size: var(--text-sm); }
 .muted { color: var(--muted); }
 .numbers { font-variant-numeric: tabular-nums; }
-code { font-family: var(--font-mono); font-size: 0.92em; background: var(--bg-2); padding: 1px 5px; border-radius: var(--radius-xs); }
-hr, .hairline { border: 0; border-top: 1px solid var(--line); margin: var(--space-7) 0; }
-
-:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
+/* Key names such as lp:region: the same typeface, set bold on the surface. */
+code {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95em;
+  background: var(--surface);
+  padding: 0 var(--space-1);
+  border-radius: var(--radius);
 }
+hr { border: 0; border-top: var(--rule-w) solid var(--rule); margin: var(--space-7) 0; }
 
-/* 2.4.11 — the sticky header must never cover the focused element. */
-:target, :focus-visible { scroll-margin-top: calc(var(--header-h) + var(--space-6)); }
+/* The blue bar's remaps live in tokens.css; colour is set here because children inherit the
+   computed colour, not the variable. */
+.on-band { color: var(--ink); }
+@media (min-width: 1024px) { .on-band-wide { color: var(--ink); } }
+
+/* Focus: a 3px ring in --focus (white inside the bar), never a shadow. */
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offset: 0; }
+:target, :focus-visible { scroll-margin-top: var(--space-6); }
 
 img, svg, video { max-width: 100%; height: auto; }
 
 /* Layout */
 .container {
   width: 100%;
-  max-width: var(--wide);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
+  max-width: calc(var(--wide) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 .column { max-width: var(--column); }
-.centered { margin-left: auto; margin-right: auto; text-align: center; }
-.centered p, .centered .lede { margin-left: auto; margin-right: auto; }
+/* container and column on one element (the legal pages): one left-aligned 640px column inside the
+   960px container, so the text lines up with the header. :where keeps the p measure in charge. */
+.container.column { max-width: calc(var(--wide) + 2 * var(--gutter)); }
+:where(.container.column) > * { max-width: var(--column); }
 
-.section { padding: var(--space-8) 0; }
-@media (min-width: 900px) { .section { padding: var(--space-9) 0; } }
-.section-tight { padding: var(--space-7) 0; }
-.section-alt { background: var(--bg-2); }
+.section { padding-block: var(--space-section); }
 
-/* Navy sections and the dark-blue field: the token re-maps live in tokens.css. `color` is set here
-   because children inherit the computed colour, not the variable, so a remap alone would leave
-   body text in the outer context's ink. */
-.section-dark { background: var(--bg); color: var(--ink-2); }
-.on-band { color: var(--ink-2); }
-/* Surfaces that were the blue field: white now, with a blue rule underneath ("blue as a border"). */
-section.on-field, header.on-field { background: var(--band-surface); border-bottom: 3px solid var(--frame); }
+.list-plain { list-style: none; padding: 0; }
+.list-plain li { margin: 0; }
 
-.stack > * + * { margin-top: var(--space-4); }
-.cluster { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+.grid { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-.grid { display: grid; gap: var(--space-4); grid-template-columns: 1fr; }
-@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 980px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
-
-/* Buttons. The primary is a navy block; on a page-level call to action it carries a separate gold
-   arrow box beside it (.cta), the way Aardvark Book Club builds its buttons. Secondary buttons are
-   outlined pills. 44px is the floor for every target; one primary per view. */
+/* Buttons. The primary is blue, at most one per screen; the secondary is neutral (white, a 2px ink
+   edge, ink label). No transforms, no transitions, no arrow boxes, no shadows. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: 48px;
-  padding: 0 var(--space-5);
-  border-radius: var(--radius-s);
-  border: 2px solid var(--accent);
-  background: var(--accent);
-  color: var(--on-accent);
-  font-family: var(--font-display);
-  font-size: var(--text-ui);
+  min-height: var(--target-lg);
+  padding: 0 calc(var(--space-4) + var(--space-1));
+  border: var(--control-w) solid var(--blue);
+  border-radius: var(--radius);
+  background: var(--blue);
+  color: var(--on-blue);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
   font-weight: 700;
-  line-height: 1;
+  line-height: var(--leading-heading);
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), color var(--dur-fast);
 }
-.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--on-accent); }
-@media (prefers-reduced-motion: no-preference) { .btn:hover, .cta:hover .cta-label { transform: scale(1.03); } }
-.btn:active { transform: scale(0.98); }
-.btn[disabled], .btn[aria-disabled='true'] { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn:hover, .btn:active { background: var(--blue-dark); border-color: var(--blue-dark); color: var(--on-blue); }
+.btn[disabled], .btn[aria-disabled='true'] { opacity: 0.5; cursor: not-allowed; }
 
-/* Always white paper with navy ink, so it reads the same on a sheet and on the dark field. */
-.btn-secondary { background: var(--paper); color: var(--brand-navy); border-color: var(--brand-navy); border-radius: var(--radius-pill); }
-.btn-secondary:hover { background: var(--gold-pale); color: var(--brand-navy); border-color: var(--brand-navy); }
+.btn-secondary, .btn-secondary:hover, .btn-secondary:active { color: var(--ink); border-color: var(--ink); }
+.btn-secondary { background: var(--bg); }
+.btn-secondary:hover, .btn-secondary:active { background: var(--surface); }
 
+/* A text button or link: no fill or edge, ink 700, always underlined, 44px tall. */
 .btn-link {
-  background: none;
-  border: 0;
-  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: var(--target);
   padding: 0 var(--space-1);
-  min-height: 44px;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
-}
-.btn-link:hover { background: none; color: var(--ink); text-decoration-color: var(--gold); }
-.btn-link::after { content: '↗'; font-weight: 700; margin-left: var(--space-1); }
-
-.btn-sm { min-height: 44px; padding: 0 var(--space-4); font-size: var(--text-sm); }
-.btn-lg { min-height: 56px; padding: 0 var(--space-6); font-size: var(--text-md); }
-.btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
-.btn-row.centered { justify-content: center; }
-
-/* The page-level call to action: a navy label block and a gold arrow box, one link. */
-.cta { display: inline-flex; align-items: stretch; gap: var(--space-1); text-decoration: none; color: var(--on-accent); min-height: 56px; }
-.cta-label {
-  display: inline-flex; align-items: center; padding: 0 var(--space-6);
-  background: var(--accent); color: var(--on-accent); border-radius: var(--radius-s);
-  font-family: var(--font-display); font-weight: 700; font-size: var(--text-md);
-  transition: transform var(--dur-fast) var(--ease), background var(--dur-fast);
-}
-.cta-arrow {
-  display: inline-grid; place-items: center; min-width: 56px;
-  background: var(--paper); color: var(--brand-navy); border: 2px solid var(--brand-navy); border-radius: var(--radius-s);
-  font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3);
-  transition: transform var(--dur-fast) var(--ease);
-}
-.cta:hover .cta-label { background: var(--accent-hover); }
-@media (prefers-reduced-motion: no-preference) { .cta:hover .cta-arrow { transform: translate(2px, 2px); } }
-
-/* Cards: white on the field, a navy outline where they need edges (Ivy Kids). */
-.card {
-  display: block;
-  position: relative;
-  background: var(--bg);
-  border-radius: var(--radius-l);
-  padding: var(--space-6);
-  text-decoration: none;
-  color: inherit;
-  transition: background var(--dur) var(--ease);
-}
-.card h2, .card h3 { margin-top: 0; margin-bottom: var(--space-2); }
-.card p { margin-bottom: 0; font-size: var(--text-ui); }
-.card-meta { color: var(--muted); font-size: var(--text-sm); margin-top: var(--space-4); }
-a.card:hover { background: var(--field-pale); }
-.card-outline { background: var(--bg); border: 1.5px solid var(--line-strong); }
-
-/* Big rounded section panels (Aardvark): one colour each, joined by gaps. */
-.panel { border-radius: var(--radius-xl); padding: var(--space-7) var(--space-5); position: relative; overflow: hidden; }
-@media (min-width: 900px) { .panel { padding: var(--space-8); } }
-.panel-field { background: var(--bg); border: 2px solid var(--frame); }
-.panel-deep { background: var(--field-pale); border: 2px solid var(--frame); }
-/* Dark panels carry the field's light text. The remap itself lives in tokens.css. */
-.panel-pale { background: var(--field-pale); }
-.panel-white { background: var(--bg); }
-.panel-gold { background: var(--gold); color: var(--on-gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --muted: var(--on-gold); --accent-text: var(--on-gold); --line: var(--on-gold); --focus: var(--on-gold); }
-
-/* The white reading sheet laid over the field, rounded at the top (Ivy Kids). */
-.sheet { background: var(--bg); border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: var(--space-7) 0 var(--space-8); }
-@media (min-width: 900px) { .sheet { padding: var(--space-8) 0 var(--space-9); } }
-
-/* Pills and stickers. Tags are pale-gold pills; stickers are small tilted labels. */
-.pill { display: inline-flex; align-items: center; min-height: 32px; padding: 0 var(--space-3); border-radius: var(--radius-pill); background: var(--gold-pale); color: var(--on-gold); font-size: var(--text-sm); font-weight: 700; }
-.pill-white { background: var(--paper); color: var(--brand-navy); }
-.pill-outline { background: transparent; border: 1.5px solid var(--line-strong); color: var(--ink); }
-.pills { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
-.pills li { margin: 0; }
-.sticker { display: inline-block; padding: var(--space-1) var(--space-3); background: var(--gold-pale); color: var(--on-gold); font-family: var(--font-display); font-size: var(--text-sticker); font-weight: 700; border-radius: var(--radius-xs); }
-.sticker-left { transform: none; }
-.sticker-gold { background: var(--gold); }
-
-/* Outlined cards that share their borders like a table (Ivy Kids' programme grid). */
-.grid-table { display: grid; grid-template-columns: 1fr; border-top: 1.5px solid var(--line-strong); border-left: 1.5px solid var(--line-strong); list-style: none; margin: 0; padding: 0; background: var(--bg); }
-.grid-table > * { position: relative; margin: 0; padding: var(--space-6) var(--space-5); border-right: 1.5px solid var(--line-strong); border-bottom: 1.5px solid var(--line-strong); }
-@media (min-width: 720px) { .grid-table { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .grid-table.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.grid-table > * > .sticker { position: absolute; top: var(--space-4); right: var(--space-4); }
-
-/* Hand-lettered notes (HandNote.astro): drawn outlines, sized by the text token, ink coloured. */
-.hand { display: inline-block; color: var(--ink); line-height: 1; }
-.hand svg { display: block; height: calc(var(--text-hand) * 1.15); width: auto; fill: currentColor; overflow: visible; }
-.hand-text { font-size: var(--text-hand); }
-.hand-left { transform: rotate(-5deg); }
-.hand-right { transform: rotate(4deg); }
-
-/* Doodles (Doodle.astro): navy line, one gold spot. */
-.doodle { width: var(--space-7); height: var(--space-7); fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.doodle .doodle-spot { fill: var(--gold); stroke: none; }
-
-/* Blobs (Blobs.astro) sit behind hero content. */
-.blobs { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-.blobs .blob-deep { fill: var(--field-deep); }
-.blobs .blob-white { fill: var(--paper); opacity: 0.1; }
-.blobs .blob-pale { fill: var(--paper); opacity: 0.06; }
-
-/* Callouts: a pale-gold sticky note with a strip of tape, slightly askew. */
-.callout {
-  position: relative;
-  background: var(--gold-pale);
-  color: var(--on-gold);
-  border-radius: var(--radius-xs);
-  padding: var(--space-6) var(--space-6) var(--space-5);
-  margin: var(--space-7) 0 var(--space-6);
-  --ink: var(--on-gold);
-  --ink-2: var(--on-gold);
-  --focus: var(--on-gold);
-}
-.callout h2, .callout h3 { margin-top: 0; font-size: var(--text-md); font-family: var(--font-body); }
-.callout ul { margin-bottom: 0; padding-left: var(--space-5); }
-
-.note {
-  border-top: 1px solid var(--line);
-  padding-top: var(--space-4);
-  font-size: var(--text-sm);
-  color: var(--muted);
-}
-.note a { color: var(--accent-text); }
-
-/* Editorial figures (never a "stats banner": each figure carries its sentence and its source) */
-.figure {
-  font-family: var(--font-display);
-  font-size: var(--text-figure);
-  font-weight: 700;
-  letter-spacing: var(--tracking-display);
-  line-height: 1;
+  border: 0;
+  background: none;
   color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  margin: 0 0 var(--space-3);
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-align: start;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.16em;
 }
+.btn-link:hover, .btn-link:active { background: none; color: var(--ink); text-decoration-thickness: 3px; }
 
-/* Forms */
+.btn-sm { min-height: var(--target); padding: 0 var(--space-4); font-size: var(--text-sm); }
+/* A small text button keeps the text button's slim padding, so it lines up with the text around it. */
+.btn-link.btn-sm { padding-inline: var(--space-1); }
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+
+/* The crumb: one line, one link back ('← All tools'), and on a lesson its position. */
+.crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-3);
+  max-width: none;
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-sm);
+}
+.crumb a { display: inline-flex; align-items: center; min-height: var(--target); }
+.crumb-pos { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Folds: the site's own plain disclosure. The summary is ink 700 led by '+' ('−' once open), 44px
+   tall; no triangle and no left bar. :where() keeps it at zero specificity, so a component's own
+   rules win while the B groups rewrite them. The poll reveal, Show me and the header menus are not
+   folds: they have their own looks. */
+:where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table, details.lesson-steps-fold) > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target);
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+:where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table, details.lesson-steps-fold) > summary::-webkit-details-marker { display: none; }
+:where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table, details.lesson-steps-fold) > summary::before { content: '+'; flex: none; min-width: 1ch; font-weight: 700; }
+:where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table, details.lesson-steps-fold)[open] > summary::before { content: '−'; }
+:where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table, details.lesson-steps-fold) > summary:hover { text-decoration: underline; }
+.fold { margin: var(--space-5) 0; padding-top: var(--space-3); border-top: var(--rule-w) solid var(--rule); }
+
+/* Forms. The order is the tool kit's: label, hint, input, note, error. */
 .field { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-5); max-width: none; }
-.field > label, .field-label { font-weight: 700; color: var(--ink); font-size: var(--text-sm); }
+.field > label, .field-label { font-size: var(--text-md); font-weight: 700; color: var(--ink); }
 .hint { color: var(--muted); font-size: var(--text-sm); }
 /* A field's non-error line ("Counted as 2"): read with the field, never styled as a warning. */
 .field-note { color: var(--ink-2); font-size: var(--text-sm); }
-.input, input[type='text'], input[type='email'], input[type='number'], input[type='search'], select, textarea {
-  font-family: var(--font-body);
-  font-size: var(--text-md);
-  font-variant-numeric: tabular-nums;
-  min-height: 44px;
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-m);
-  background: var(--bg);
-  color: var(--ink);
-  width: 100%;
-}
-select { appearance: auto; }
-input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-input[aria-invalid='true'] { border-color: var(--error); }
 .error { color: var(--error); font-size: var(--text-sm); font-weight: 700; }
 .success { color: var(--success); }
 
-/* Tables (legal pages, storage lists) */
-.table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); margin: var(--space-4) 0 var(--space-6); }
-.table th, .table td { text-align: left; vertical-align: top; padding: var(--space-3) var(--space-3) var(--space-3) 0; border-bottom: 1px solid var(--line); }
+.input, input[type='text'], input[type='email'], input[type='number'], input[type='search'], select, textarea {
+  width: 100%;
+  min-height: var(--target-lg);
+  padding: var(--space-2) var(--space-3);
+  border: var(--control-w) solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: var(--leading-ui);
+  font-variant-numeric: tabular-nums;
+}
+input[type='number'] { max-width: 14em; }
+input[type='text'], input[type='email'] { max-width: 30em; }
+/* The native select: its popup stays light because the page is color-scheme light. */
+select { appearance: auto; padding-inline-end: calc(var(--space-6) + var(--space-1)); }
+input[aria-invalid='true'], select[aria-invalid='true'], textarea[aria-invalid='true'] { border-color: var(--error); }
+/* Zero specificity, so a component's own control (the consent switch, a poll option) keeps its size. */
+:where(input[type='radio'], input[type='checkbox']) { width: var(--space-5); height: var(--space-5); accent-color: var(--ink); }
+
+/* Tables: ruled rows, no stripes, no fills. */
+.table {
+  width: 100%;
+  margin: var(--space-4) 0 var(--space-6);
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: var(--leading-ui);
+  font-variant-numeric: tabular-nums;
+}
+.table caption { caption-side: top; padding-bottom: var(--space-2); text-align: start; font-size: var(--text-md); font-weight: 700; color: var(--ink); }
+.table th, .table td {
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  border-bottom: var(--rule-w) solid var(--rule);
+  text-align: start;
+  vertical-align: top;
+}
+.table th:last-child, .table td:last-child { padding-inline-end: 0; }
 .table th { color: var(--ink); font-weight: 700; }
+.table thead th { border-bottom: var(--control-w) solid var(--ink); }
+.table .num { text-align: end; }
+/* Money stays whole: a figure never breaks between its digits; the table scrolls in its wrap. */
+.table td.num, .table .numbers td { white-space: nowrap; overflow-wrap: normal; }
+/* Tables of words (the /cookies storage list) wrap instead, so they never scroll sideways at 320px. */
+.prose .table th, .prose .table td, .prose .table code { overflow-wrap: anywhere; }
 .table-wrap { overflow-x: auto; }
 
 /* Long-form pages */
-.prose h2 { font-size: var(--text-h3); margin-top: var(--space-7); }
-.prose h3 { font-size: var(--text-md); font-family: var(--font-body); }
-.prose ul, .prose ol { padding-left: var(--space-5); }
-.prose li { margin-bottom: var(--space-2); }
-.prose .updated { color: var(--muted); font-size: var(--text-sm); }
+.prose h2 { font-size: var(--text-h2); margin-top: var(--space-7); }
+.prose h3 { font-size: var(--text-lg); }
+.prose ul, .prose ol { padding-inline-start: var(--space-5); }
+.prose li { margin-bottom: 0.5em; }
+.updated, .prose .updated { color: var(--muted); font-size: var(--text-sm); }
 
-.list-plain { list-style: none; padding: 0; }
-.list-plain li { margin: 0; }
-
-.skip-link {
-  position: absolute;
-  left: var(--space-4);
-  top: -100px;
-  z-index: 50;
-  background: var(--bg);
-  color: var(--ink);
-  border: 2px solid var(--ink);
-  border-radius: var(--radius-s);
-  padding: var(--space-3) var(--space-4);
-  text-decoration: none;
-}
-.skip-link:focus { top: var(--space-3); }
-
-.visually-hidden {
-  position: absolute !important;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0 0 0 0);
-  white-space: nowrap; border: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-@media print {
-  .site-header, .site-footer, .region-tabs, .skip-link, .btn-row, [data-consent] { display: none !important; }
-  body { color: var(--print-ink); background: var(--print-paper); font-size: 12pt; }
-  a[href^='http']::after { content: ' (' attr(href) ')'; font-size: 0.85em; color: var(--print-muted); }
-  .card, .section-dark { background: none; color: var(--print-ink); border: 1px solid var(--print-line); }
-}
-
-/* Ledger: money written the way a cash book writes it. Label on the left, the figure on the right
-   of the same line, a dotted leader between them, a single rule above a total and a double rule
-   under the final answer. This is the site's one signature: it appears wherever a sum is done
-   (worked examples, calculator results, the edition figures) and nowhere as decoration. */
+/* Ledger: money written the way a cash book writes it. Label on the left, the figure on the right of
+   the same line, a dotted leader between them, a single rule above a total and a double rule under
+   the final answer. The site's one signature: wherever a sum is done, never as decoration. */
 .ledger { list-style: none; margin: var(--space-5) 0; padding: 0; font-variant-numeric: tabular-nums; }
 .ledger-row {
   display: flex;
@@ -388,63 +312,203 @@ input[aria-invalid='true'] { border-color: var(--error); }
   order: 2;
   flex: 1 1 var(--space-5);
   min-width: var(--space-4);
-  border-bottom: 2px dotted var(--muted);
+  border-bottom: var(--control-w) dotted var(--muted);
 }
 .ledger-figure {
   order: 3;
   flex: none;
-  margin-left: auto;
-  font-family: var(--font-display);
+  margin-inline-start: auto;
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
   font-weight: 700;
-  font-size: var(--text-h3);
-  letter-spacing: var(--tracking-heading);
   color: var(--ink);
   white-space: nowrap;
 }
-.ledger-total { border-top: 1px solid var(--ink); margin-top: var(--space-2); padding-top: var(--space-4); }
+.ledger-total { border-top: var(--rule-w) solid var(--ink); margin-top: var(--space-2); padding-top: var(--space-4); }
 .ledger-total .ledger-label { color: var(--ink); font-weight: 700; }
-/* The double rule of a closed sum, drawn in the ink of wherever the ledger sits. */
-.ledger-total .ledger-figure { font-size: var(--text-result); border-bottom: 3px double var(--ink); padding-bottom: 1px; }
+/* The double rule of a closed sum. */
+.ledger-total .ledger-figure { font-size: var(--text-h2); border-bottom: 3px double var(--ink); padding-bottom: 1px; }
 .ledger .is-loss { color: var(--error); }
 /* A running figure inside a longer sum: a single rule above, never the double rule of the answer. */
-.ledger-subtotal { border-top: 1px solid var(--ink); margin-top: var(--space-2); }
+.ledger-subtotal { border-top: var(--rule-w) solid var(--ink); margin-top: var(--space-2); }
 .ledger-subtotal .ledger-label { color: var(--ink); font-weight: 700; }
 /* A line under a row that says what the figure is ("comes to 9.0% of gross"), on its own line. */
 .ledger-note { order: 4; flex: 1 0 100%; margin: 0; color: var(--muted); font-size: var(--text-sm); }
-
-/* The highlighter: one sentence per lesson worth remembering, marked the way a student marks a
-   textbook. Text stays ink; the colour sits behind it, so contrast holds (15.6:1, dark 9.9:1). */
-.hl, mark {
-  background: var(--highlight);
-  color: var(--ink);
-  padding: 0 0.15em;
-  border-radius: var(--radius-xs);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+/* Narrow screens: a long figure drops to its own line and may wrap at a space; a figure wider than
+   the whole line breaks only as a last resort, instead of scrolling the page sideways. */
+@media (max-width: 399px) {
+  .ledger-figure { max-width: 100%; white-space: normal; overflow-wrap: break-word; }
 }
-@media (forced-colors: active) { .hl, mark { background: Mark; color: MarkText; } }
 
-/* Ruled index rows: lessons, calculators, contents. A row is a link; the arrow is type. */
-.index-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.index-list > li { margin: 0; border-bottom: 1px solid var(--line); }
+/* Search matches and the like: the tint behind ink. */
+mark { background: var(--tint); color: var(--ink); font-weight: 700; padding: 0 0.15em; }
+
+/* Ruled index rows (the home editions and starters, the tools index). A row is one link. */
+.index-list { list-style: none; margin: 0; padding: 0; border-top: var(--rule-w) solid var(--rule); }
+.index-list > li { margin: 0; border-bottom: var(--rule-w) solid var(--rule); }
 .index-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-1) var(--space-4);
   align-items: baseline;
+  min-height: var(--target);
   padding: var(--space-4) 0;
-  color: inherit;
+}
+.index-row:has(> .index-flag) { grid-template-columns: auto minmax(0, 1fr); }
+.index-row > .index-flag { grid-row: 1 / span 3; align-self: start; width: calc(var(--space-6)); height: auto; margin-top: var(--space-1); }
+.index-row:has(> .index-flag) > :not(.index-flag) { grid-column: 2; }
+.index-row .index-title { margin: 0; font-size: var(--text-lg); font-weight: 700; line-height: var(--leading-heading); color: var(--ink); }
+.index-row .index-sub { color: var(--ink-2); font-size: var(--text-md); font-weight: 400; }
+.index-row .index-meta { color: var(--muted); font-size: var(--text-sm); font-weight: 400; font-variant-numeric: tabular-nums; }
+
+/* Boxes: only where a box holds a figure or mixed content. */
+.box, .box-surface { border: var(--rule-w) solid var(--rule); border-radius: var(--radius); padding: var(--space-5); }
+.box { background: var(--bg); }
+.box-surface { background: var(--surface); }
+@media (max-width: 399px) { .box, .box-surface { padding: var(--space-4); } }
+
+.note {
+  padding-top: var(--space-4);
+  border-top: var(--rule-w) solid var(--rule);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.note a { color: inherit; }
+
+/* A set-apart line (the key idea): a 4px ink bar, never a highlighter and never blue. */
+.inset {
+  margin: var(--space-5) 0;
+  padding: var(--space-1) 0 var(--space-1) calc(var(--space-4) + var(--space-1));
+  border-inline-start: var(--bar-w) solid var(--ink);
+  color: var(--ink);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+/* Editorial figures: each carries its sentence and its source, so never a stat banner. */
+.figure {
+  margin: 0 0 var(--space-3);
+  color: var(--ink);
+  font-size: var(--text-h1);
+  font-weight: 700;
+  line-height: var(--leading-h1);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: break-word;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--gutter);
+  top: -100px;
+  z-index: 50;
+  padding: var(--space-2) var(--space-4);
+  border: var(--control-w) solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
+  font-weight: 700;
+  line-height: var(--leading-ui);
   text-decoration: none;
 }
-.index-row .index-title { font-family: var(--font-display); font-weight: 600; font-size: var(--text-h3); color: var(--ink); letter-spacing: var(--tracking-heading); line-height: var(--leading-snug); }
-.index-row .index-sub { grid-column: 1; color: var(--ink-2); font-size: var(--text-ui); }
-.index-row .index-meta { grid-column: 1; color: var(--muted); font-size: var(--text-sm); }
-.index-row .index-go { grid-column: 2; grid-row: 1; color: var(--accent-text); font-weight: 700; font-size: var(--text-ui); white-space: nowrap; }
-.index-row .index-go::after { content: ' ↗'; }
-a.index-row:hover .index-title { color: var(--accent-text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+/* Shown inside the 56px bar (4px down, about 45px tall), so its white ring (--on-blue, 8.35:1 on the
+   bar) stays on the blue. */
+.skip-link:focus { top: var(--space-1); }
+.skip-link:focus-visible { outline-color: var(--on-blue); }
 
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
 
-/* Ordinary pages: one white sheet with rounded top corners over the blue field (Ivy Kids). */
-.page-sheet { background: var(--bg); border-radius: var(--radius-xl) var(--radius-xl) 0 0; margin-top: var(--space-4); min-height: 60vh; }
-@media (min-width: 900px) { .page-sheet { margin-top: var(--space-6); } }
-.page-sheet > .section:first-child, .page-sheet > section:first-of-type { padding-top: var(--space-8); }
+/* Nothing on the site animates except the consent switch knob; this keeps it that way for anyone
+   who asks the system for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Forced colours: every state edge is a border already; mark keeps the system's own pair. */
+@media (forced-colors: active) {
+  mark { background: Mark; color: MarkText; }
+}
+
+@media print {
+  .site-header, .site-footer, .skip-link, .btn-row, [data-consent] { display: none !important; }
+  body { color: var(--print-ink); background: var(--print-paper); font-size: 12pt; }
+  a[href^='http']::after { content: ' (' attr(href) ')'; font-size: 0.85em; color: var(--print-muted); }
+  .box, .box-surface { background: none; border-color: var(--print-line); }
+  .table thead th { border-bottom-color: var(--print-ink); }
+  .inset { border-color: var(--print-ink); }
+}
+
+/* LEGACY: deleted in step 22. The v4 decorative classes, neutralised so pages the B groups have not
+   rewritten yet read white, gold-free, square and in one typeface: no rotation, no gold, the 4px
+   radius, fills only --surface, outlines 1px --rule, nothing that moves. */
+.index-go { display: none; }
+
+.card { display: block; position: relative; padding: var(--space-5); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--bg); color: inherit; text-decoration: none; }
+.card h2, .card h3 { margin-top: 0; margin-bottom: var(--space-2); }
+.card p { margin-bottom: 0; }
+.card-meta { margin-top: var(--space-4); color: var(--muted); font-size: var(--text-sm); }
+a.card:hover { background: var(--surface); }
+.card-outline { border-color: var(--rule); }
+
+.panel { position: relative; padding: var(--space-6) var(--space-5); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--bg); color: var(--ink-2); }
+.panel-deep, .panel-pale, .panel-gold { background: var(--surface); }
+
+.sheet { background: var(--bg); padding: var(--space-section) 0; }
+.page-sheet { background: var(--bg); }
+
+.pill { display: inline-flex; align-items: center; min-height: var(--space-6); padding: 0 var(--space-3); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--surface); color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
+.pill-white, .pill-outline { background: var(--bg); }
+a.pill { min-height: var(--target); }
+.pills { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+.pills li { margin: 0; }
+.sticker, .sticker-gold { display: inline-block; padding: var(--space-1) var(--space-3); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--surface); color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
+.sticker-left { transform: none; }
+
+.grid-table { display: grid; grid-template-columns: minmax(0, 1fr); margin: 0; padding: 0; list-style: none; border-top: var(--rule-w) solid var(--rule); border-inline-start: var(--rule-w) solid var(--rule); background: var(--bg); }
+.grid-table > * { position: relative; margin: 0; padding: var(--space-5); border-inline-end: var(--rule-w) solid var(--rule); border-bottom: var(--rule-w) solid var(--rule); }
+@media (min-width: 720px) { .grid-table { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .grid-table.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.grid-table > * > .sticker { position: absolute; top: var(--space-4); inset-inline-end: var(--space-4); }
+
+/* Hand-lettered notes: the drawing (a second typeface) goes; the words stay, set as a small label. */
+.hand { display: inline-block; color: var(--muted); font-size: var(--text-sm); font-weight: 700; }
+.hand svg { display: none; }
+.hand > .visually-hidden { position: static !important; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; }
+.doodle, .blobs { display: none; }
+/* The frames that held a doodle (the track cards and the track page head) would be empty boxes. */
+.course-card div.course-thumb, .course-head div.course-thumb { display: none; }
+
+/* The page-level call to action, as a plain primary button; its arrow is type. */
+.cta { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--target-lg); padding: 0 calc(var(--space-4) + var(--space-1)); border: var(--control-w) solid var(--blue); border-radius: var(--radius); background: var(--blue); color: var(--on-blue); font-weight: 700; text-decoration: none; }
+.cta:hover { background: var(--blue-dark); border-color: var(--blue-dark); color: var(--on-blue); }
+
+.mega, .display { font-size: var(--text-display); line-height: var(--leading-h1); letter-spacing: var(--tracking-h1); }
+
+.callout { margin: var(--space-6) 0; padding: var(--space-5); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--surface); color: var(--ink-2); }
+.callout h2, .callout h3 { margin-top: 0; font-size: var(--text-md); }
+.callout ul { margin-bottom: 0; padding-inline-start: var(--space-5); }
+.hl { color: var(--ink); font-weight: 700; }
+
+.section-alt { background: var(--surface); }
+.section-tight { padding-block: var(--space-7); }
+.section-dark { background: var(--bg); color: var(--ink-2); }
+section.on-field, header.on-field { background: var(--bg); border-bottom: var(--rule-w) solid var(--rule); }
+
+.stack > * + * { margin-top: var(--space-4); }
+.cluster { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+@media (min-width: 980px) { .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.centered { margin-inline: auto; text-align: center; }
+.centered p, .centered .lede { margin-inline: auto; }
+.btn-row.centered { justify-content: center; }
+.btn-lg { min-height: var(--target-lg); padding: 0 calc(var(--space-4) + var(--space-1)); font-size: var(--text-md); }
+.hairline { border: 0; border-top: var(--rule-w) solid var(--rule); margin: var(--space-7) 0; }

@@ -32,7 +32,7 @@ test.skip('no banner appears while nothing optional is in use', async ({ page })
 test('privacy choices open from the footer, list storage, and close by keyboard', async ({ page }) => {
   await page.goto('');
   await page.locator('[data-consent][data-hydrated]').waitFor({ state: 'attached' });
-  // The first-visit banner asks first, in the flow under the header; answer it, as a reader would.
+  // The first-visit banner sits over the footer; answer it first, as a reader would.
   await page.locator('.consent-banner').getByRole('button', { name: 'Reject all' }).click();
   const opener = page.getByRole('button', { name: 'Privacy choices' });
   await opener.click();

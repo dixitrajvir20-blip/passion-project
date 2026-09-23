@@ -1,5 +1,4 @@
 ---
-import { createHash } from 'node:crypto';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ConsentManager from '../islands/ConsentManager.tsx';
@@ -23,11 +22,12 @@ interface Props {
   noindex?: boolean;
   /** Shown beside search results: "Lesson", "Calculator". */
   kind?: string;
-  /** Kept for the pages that still pass it; since v5.1 every page is white and it does nothing. */
+  /** Pages that draw their own coloured hero and sheets (home, edition fronts, lessons,
+      calculators). Every other page sits on one white reading sheet over the blue field. */
   bare?: boolean;
 }
 
-const { title, description, path = '', region, regionSub = '', regionSubs, image = '/og-default.png', noindex = false, kind } = Astro.props;
+const { title, description, path = '', region, regionSub = '', regionSubs, image = '/og-default.png', noindex = false, kind, bare = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // Search: an edition's pages are found from that edition; shared pages are found from all of them.
@@ -37,36 +37,6 @@ const editions = region ? REGIONS.filter((r) => r.code === region) : REGIONS;
 const ogSlug = Astro.url.pathname.replace(base, '').replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
 const ogPath = image !== '/og-default.png' || noindex ? image : `/og/${ogSlug}.png`;
 const ogImage = new URL(`${base}${ogPath}`, Astro.site);
-
-// The optional consent categories in use, for the early banner check below (build-time constants).
-const consentIds = consentCategories.filter((c) => c.active).map((c) => c.id).join(' ');
-
-// The first-visit consent banner is a block in the flow under the header, in the server's HTML and
-// shown only while html[data-consent-ask] is set. This check sets it, and it has to run before the
-// body is parsed: a module script runs after parsing, so the banner could appear after the first
-// paint and push the page down. So it is a classic inline script in <head>, and its hash goes into
-// the page's CSP here (Astro hashes only the scripts it bundles). It asks when something optional
-// is in use, no answer for the current version is stored and Global Privacy Control is off. The
-// record is read by the same rules as readConsent and needsPrompt in src/lib/consent.ts, so the two
-// agree; the island (src/islands/ConsentManager.tsx) then decides and has the last word.
-const consentAsk = `(function () {
-  var root = document.documentElement;
-  var ids = (root.getAttribute('data-consent-ids') || '').split(' ').filter(Boolean);
-  if (ids.length === 0 || navigator.globalPrivacyControl === true) return;
-  var version = Number(root.getAttribute('data-consent-version'));
-  try {
-    var record = JSON.parse(window.localStorage.getItem('lp:consent') || 'null');
-    var choices = record && typeof record === 'object' ? record.choices : null;
-    var valid = choices && typeof choices === 'object' && !Array.isArray(choices) &&
-      typeof record.v === 'number' && (record.source === 'user' || record.source === 'gpc') &&
-      Object.keys(choices).every(function (key) { return typeof choices[key] === 'boolean'; });
-    if (valid && record.v >= version && ids.every(function (id) { return typeof choices[id] === 'boolean'; })) return;
-  } catch (error) {
-    // Blocked or unreadable storage: ask.
-  }
-  root.setAttribute('data-consent-ask', '');
-})();`;
-Astro.csp?.insertScriptHash(`sha256-${createHash('sha256').update(consentAsk).digest('base64')}`);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -82,7 +52,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="en" data-consent-version={CONSENT_VERSION} data-consent-ids={consentIds}>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -90,9 +60,10 @@ const jsonLd = {
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
-    {/* The page is light at every OS setting (there is no dark theme); the browser bar continues the blue bar. */}
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content={site.themeColor} />
+    <meta name="color-scheme" content="light dark" />
+    {/* The browser bar continues the navy edition line at the top of every page. */}
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0b4aa2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#071a4a" />
     <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={`${base}/icons/icon-192.png`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
@@ -108,7 +79,7 @@ const jsonLd = {
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preload" href={`${base}/fonts/atkinson-latin.woff2`} as="font" type="font/woff2" crossorigin />
-    <script is:inline set:html={consentAsk} />
+    <link rel="preload" href={`${base}/fonts/bricolage-latin.woff2`} as="font" type="font/woff2" crossorigin />
 
     {/* Only build-time constants from src/lib/site.ts belong in jsonLd. "<" is escaped anyway so a
         future per-page field can never close the script element. */}
@@ -118,16 +89,14 @@ const jsonLd = {
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header region={region} regionSub={regionSub} regionSubs={regionSubs} path={path} />
-    {/* The first-visit consent banner is a block in the flow directly under the header, so it never
-        covers a focused control. The Privacy choices dialog lives in the same island. */}
-    <ConsentManager client:load categories={consentCategories} version={CONSENT_VERSION} />
     {/* data-pagefind-body: only <main> is indexed, so the header, tabs and footer never match a search. */}
-    <main id="main" tabindex="-1" data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
+    <main id="main" tabindex="-1" class:list={[{ 'page-sheet': !bare }]} data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
       {!noindex && editions.map((r) => <span data-pagefind-filter={`edition:${r.name}`}></span>)}
       {!noindex && kind && <span data-pagefind-meta={`kind:${kind}`}></span>}
       <slot />
     </main>
     <Footer region={region} />
+    <ConsentManager client:load categories={consentCategories} version={CONSENT_VERSION} />
   </body>
 </html>
 
