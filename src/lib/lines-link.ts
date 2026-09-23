@@ -16,8 +16,16 @@ export interface LineText {
 
 export const LABEL_MAX = 40;
 const AMOUNT_MAX = 16;
+/** The longest text eight full rows can make; anything longer is not a link this site wrote. */
+export const LINES_TEXT_MAX = 8 * (LABEL_MAX + 1 + AMOUNT_MAX) + 7;
 
-const clean = (label: string) => label.replace(/[~|]/g, ' ').slice(0, LABEL_MAX);
+/**
+ * A label keeps letters, digits, spaces and the punctuation a payslip line needs, nothing else:
+ * a crafted link must not be able to print an address, a handle or markup-like text under this
+ * site's header (the security review of the tools, 23 September 2026).
+ */
+const clean = (label: string) =>
+  label.replace(/[^\p{L}\p{N} .,'()%&-]/gu, ' ').replace(/\s+/g, ' ').trim().slice(0, LABEL_MAX);
 
 export function encodeLines(rows: readonly LineText[]): string {
   return rows.map((row) => `${clean(row.label)}~${String(row.amount).replace(/[~|]/g, '')}`).join('|');
@@ -25,7 +33,7 @@ export function encodeLines(rows: readonly LineText[]): string {
 
 /** At most maxRows rows; a part without exactly one ~ is dropped. An empty text gives no rows. */
 export function decodeLines(text: string, maxRows: number): LineText[] {
-  if (typeof text !== 'string' || text === '') return [];
+  if (typeof text !== 'string' || text === '' || text.length > LINES_TEXT_MAX) return [];
   return text
     .split('|')
     .slice(0, Math.max(0, Math.floor(maxRows)))

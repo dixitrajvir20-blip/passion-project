@@ -149,6 +149,12 @@ test.describe('India: from CTC to in-hand pay', () => {
     await expect(results(page)).toContainText('₹1,000');
   });
 
+  test('a label in a link is text with only the characters a payslip needs', async ({ page }) => {
+    await open(page, `in/tools/take-home-pay#others=${encodeURIComponent('<b>x</b>~5')}`);
+    await expect(page.locator('#thp-others-name-0')).toHaveValue('b x b');
+    await expect(page.locator('.results b')).toHaveCount(0);
+  });
+
   test('other lines travel in the link, capped at five', async ({ page }) => {
     const others = encodeURIComponent('ESI~150|Labour welfare fund~20|a~1|b~1|c~1|d~1|e~1');
     await open(page, `in/tools/take-home-pay#others=${others}`);
@@ -289,11 +295,11 @@ test.describe('United States: the stub as printed, checked', () => {
     expect(page.url()).not.toContain('#');
   });
 
-  test('an old ?start= link still works, and its query stays', async ({ page }) => {
+  test('an old ?start= link still works, and its query leaves the address bar once read', async ({ page }) => {
     await open(page, 'us/tools/take-home-pay?start=1650');
     await expect(page.getByLabel('Gross pay on this paycheck')).toHaveValue('1650');
     await expect(results(page)).toContainText('$1,650.00');
-    expect(page.url()).toContain('?start=1650');
+    expect(page.url()).not.toContain('start=1650');
   });
 
   test('a pay frequency outside the list falls back to every two weeks', async ({ page }) => {

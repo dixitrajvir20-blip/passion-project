@@ -45,13 +45,16 @@ let snapshot: { hash: string; search: string } | null = null;
 
 export function linkSnapshot(): { hash: string; search: string } {
   if (snapshot) return snapshot;
+  // An in-page anchor on a tool page must never carry '=' in its id, or following it would reload.
   window.addEventListener('hashchange', () => {
     if (window.location.hash.includes('=')) window.location.reload();
   });
   snapshot = { hash: window.location.hash, search: window.location.search };
-  if (snapshot.hash.includes('=')) {
+  // Figures leave the address bar once read, whether they came in the fragment or in an old
+  // ?query: a shared phone's history keeps neither.
+  if (snapshot.hash.includes('=') || snapshot.search.includes('=')) {
     try {
-      window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search);
+      window.history.replaceState(window.history.state, '', window.location.pathname);
     } catch {
       // A sandboxed frame may refuse; the figures are still read.
     }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { linkFor, parseLinkParams } from '../../src/lib/link-params';
+import { CODEC_KEYS, linkFor, parseLinkParams } from '../../src/lib/link-params';
 
 describe('parseLinkParams', () => {
   it('reads the fragment', () => {
@@ -19,9 +19,11 @@ describe('parseLinkParams', () => {
     expect(parseLinkParams(`#a=${'1'.repeat(25)}`, '', ['a'])).toEqual({});
   });
 
-  it('gives the codec keys a larger cap of their own', () => {
-    expect(parseLinkParams(`#rows=${'a'.repeat(1999)}`, '', ['rows'])).toEqual({ rows: 'a'.repeat(1999) });
-    expect(parseLinkParams(`#rows=${'a'.repeat(2001)}`, '', ['rows'])).toEqual({});
+  it('gives every codec key a larger cap of its own', () => {
+    for (const key of CODEC_KEYS) {
+      expect(parseLinkParams(`#${key}=${'a'.repeat(1999)}`, '', [key])).toEqual({ [key]: 'a'.repeat(1999) });
+      expect(parseLinkParams(`#${key}=${'a'.repeat(2001)}`, '', [key])).toEqual({});
+    }
   });
 
   it('accepts a select value only when it is one of the options', () => {

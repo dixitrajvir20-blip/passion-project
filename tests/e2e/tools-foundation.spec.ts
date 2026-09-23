@@ -39,12 +39,12 @@ test.describe('calculator links carry the figures after the #', () => {
     await expect(price(page)).toHaveValue('20');
   });
 
-  test('an old ?link still works, and its query stays', async ({ page }) => {
+  test('an old ?link still works, and its query leaves the address bar once read', async ({ page }) => {
     await page.goto('in/tools/break-even?fixed=5000&variable=8&price=20&units=600');
     await waitForIslands(page);
     await expect(fixed(page)).toHaveValue('5000');
     await expect(page.locator('.results')).toContainText('417');
-    expect(page.url()).toContain('?fixed=5000');
+    expect(page.url()).not.toContain('fixed=5000');
   });
 
   test('a value longer than 24 characters is ignored', async ({ page }) => {

@@ -41,10 +41,18 @@ describe('payslip lines in a link', () => {
     expect(decodeLines('', 5)).toEqual([]);
   });
 
-  it('keeps a hostile label as text, never markup', () => {
+  it('keeps only the characters a payslip label needs, so a hostile label cannot read as markup or an address', () => {
     const [row] = decodeLines('<script>alert(1)</script>~5', 5);
-    expect(row.label).toBe('<script>alert(1)</script>');
+    expect(row.label).toBe('script alert(1) script');
     expect(row.amount).toBe('5');
+    expect(decodeLines('Refund fee to 98xxxxxxxx@upi~5', 5)[0].label).toBe('Refund fee to 98xxxxxxxx upi');
+    expect(decodeLines("Employer's ESI (0.75%) & LWF~5", 5)[0].label).toBe("Employer's ESI (0.75%) & LWF");
+  });
+
+  it('drops a text longer than eight full rows could make', () => {
+    const longest = Array.from({ length: 8 }, () => `${'a'.repeat(40)}~${'1'.repeat(16)}`).join('|');
+    expect(decodeLines(longest, 8)).toHaveLength(8);
+    expect(decodeLines(`${longest}|`, 8)).toEqual([]);
   });
 
   it('round-trips, with ~ and | taken out of a label', () => {

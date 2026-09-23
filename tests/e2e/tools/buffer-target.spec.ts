@@ -205,7 +205,7 @@ test.describe('links', () => {
     await expect(page.getByLabel('How often you are paid')).toHaveValue('weekly');
     await expect(figure(page)).toHaveText('Payday 2');
     await expect(results(page).locator('.result-figure-label')).toHaveText('about 2 weeks, counting your next payday as payday 1');
-    expect(page.url()).toContain('?essentials=5500');
+    expect(page.url()).not.toContain('essentials=5500'); // read once, then out of the address bar
   });
 
   test('Copy link carries every field after the #, and the link opens the same result', async ({ page, context }) => {
