@@ -1,14 +1,15 @@
 ---
 /**
- * One lesson, as one continuous editorial column. The order follows docs/LEARNING_DESIGN.md
- * (guess, idea, worked example, try it, your turn, quick check, where you'll meet it), but none of
- * those builder's words appear as headings, and nothing here is a card except the gold summary and
- * the explorable. Everything up to the explorable works with JavaScript off.
+ * One lesson (template v2) in one 640px reading column, design v5.1. The first screen is lean: a
+ * crumb line back to the track with the lesson's place and length, the title, the lede, "In this
+ * lesson" (a closed fold on phones, an open sticky list in a left rail from 1024px) and "After
+ * this you can". Then the moment and the document, the video, the idea, Show me, your turn, change
+ * one thing, three actions, the details fold and three checks. Everything up to the explorer works
+ * with JavaScript off. Every lesson is template v2: any other template stops the build.
  */
 import { getEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import Poll from '../components/lesson/Poll.astro';
-import Worked from '../components/lesson/Worked.astro';
 import Practice from '../components/lesson/Practice.astro';
 import Drill from '../components/lesson/Drill.astro';
 import Video from '../components/lesson/Video.astro';
@@ -43,10 +44,18 @@ import '../styles/lesson.css';
 interface Props {
   lesson: Lesson;
   next?: Lesson;
+  /** The lesson's place in its track (1-based) and the track's length, from [slug].astro. */
+  position: number;
+  count: number;
 }
 
-const { lesson, next } = Astro.props;
+const { lesson, next, position, count } = Astro.props;
 const d = lesson.data;
+// All 36 lessons moved to template v2 on 22 September 2026, and the v1 shape has no layout any
+// more: a lesson that is not v2 would render without its document, Show me or objectives.
+if (d.template !== 'v2') {
+  throw new Error(`src/content/lessons/${lesson.id}.mdx is template "${d.template}"; LessonLayout renders template v2 only (docs/CONTENT_GUIDE.md).`);
+}
 const region = getRegion(d.region);
 const track = region.tracks.find((t) => t.slug === d.track)!;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -110,10 +119,29 @@ function practiceFor(p: NonNullable<typeof d.practice>): Practice {
 const practice = d.practice ? practiceFor(d.practice) : null;
 const practiceMore = d.practiceMore ? practiceFor(d.practiceMore) : null;
 
-/** Template v2 (22 Sep 2026): the moment and the video first, then the calculation one line at a time. */
-const isV2 = d.template === 'v2';
-// A drill is decided, not adjusted: its heading says so.
-const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you look' : 'Try it') : isV2 ? 'Change one thing' : 'Try your own numbers';
+// The section headings, written once: "In this lesson" links to each one with exactly its words.
+const heading = {
+  document: 'The document',
+  watch: 'Watch',
+  showMe: 'Show me',
+  yourTurn: 'Your turn',
+  // A drill is decided, not adjusted: its heading says so.
+  tryIt: d.explorable?.kind === 'drill' ? 'Decide before you look' : 'Change one thing',
+  forYou: 'What this means for you',
+  checks: 'Check your understanding',
+  report: 'If it happens to you',
+};
+const steps = [
+  d.document && { id: 'the-document', text: heading.document },
+  d.video && { id: 'watch', text: heading.watch },
+  d.worked && { id: 'show-me', text: heading.showMe },
+  practice && d.practice && { id: 'your-turn', text: heading.yourTurn },
+  d.explorable && { id: 'try-it', text: heading.tryIt },
+  { id: 'for-you', text: heading.forYou },
+  { id: 'quick-check', text: heading.checks },
+  d.reportTo && { id: 'if-it-happens', text: heading.report },
+].filter((step): step is { id: string; text: string } => Boolean(step));
+
 // Named links to the lesson's tools. An explorer opens its own calculator (fixed by its kind), so
 // that one is not repeated here. Server-rendered: they work with JavaScript off.
 const handoffs = lessonToolLinks(region.code, d.tool, d.moreTools, d.explorable?.kind);
@@ -126,387 +154,326 @@ const handoffs = lessonToolLinks(region.code, d.tool, d.moreTools, d.explorable?
   regionSub="learn"
   path="learn"
   kind="Lesson"
-  bare
 >
   <Fragment slot="head">
     <link rel="license" href={site.contentLicence.url} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
   </Fragment>
 
-  <article class:list={['lesson', { 'lesson-v2': isV2 }]} data-lesson-id={lesson.id} data-locale={region.locale}>
-    <header class="lesson-head on-field">
-      <div class="container">
-        <div class="column">
-          <p class="lesson-crumbs">
-            <a class="pill pill-outline" href={`${prefix}/learn/${track.slug}`}>{region.name} · {track.title} · Lesson {d.order}</a>
-            <span class="pill">{d.readingMinutes} min</span>
-          </p>
-          <h1>{d.title}</h1>
-          <p class="lede">{d.summary}</p>
-          {isV2 && (
-            <nav class="lesson-steps" aria-labelledby="lesson-steps-label">
-              <span id="lesson-steps-label" class="lesson-steps-label">In this lesson</span>
-              {d.document && <a href="#the-document">The document</a>}
-              {d.video && <a href="#watch">Watch</a>}
-              {d.worked && <a href="#show-me">Show me</a>}
-              {d.practice && <a href="#your-turn">Your turn</a>}
-              {d.explorable && <a href="#try-it">{d.explorable.kind === 'drill' ? 'Decide' : 'Change one thing'}</a>}
-              <a href="#quick-check">Checks</a>
-            </nav>
-          )}
-          {isV2 && d.objectives && (
-            <div class="lesson-after">
-              <p class="lesson-after-label">After this you can</p>
-              <ul>
-                {d.objectives.map((line) => <li>{line}</li>)}
-              </ul>
-            </div>
-          )}
-          {!isV2 && (
-            <p class="lesson-meta">
-              Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
-            </p>
-          )}
-          {/* Said before the lesson, not after: the teach-back effect comes from expecting to explain. In v2 the objectives carry it. */}
-          {!isV2 && <p class="lesson-expect">Read with a view to explaining it to someone else afterwards. It changes what you notice.</p>}
-        </div>
-      </div>
-    </header>
+  <article class="lesson" data-lesson-id={lesson.id} data-locale={region.locale}>
+    <div class="container lesson-grid">
+      <p class="crumb">
+        <a href={`${prefix}/learn/${track.slug}`}>← {track.title}</a>{' '}
+        <span class="crumb-pos">Lesson {position} of {count} · {d.readingMinutes} min</span>
+      </p>
 
-    <div class="lesson-main sheet">
-      <div class="container">
-        <div class="column">
-          <p class="situation">{d.situation}</p>
+      <header class="lesson-head">
+        <h1>{d.title}</h1>
+        <p class="lede">{d.summary}</p>
+      </header>
 
-          {/* v2: the real document, and a question the reader can answer from it alone. */}
-          {isV2 && d.document && (
-            <section aria-labelledby="the-document">
-              <h2 id="the-document" class="visually-hidden">The document</h2>
-              <p class="doc-task">Read it line by line. Tap a line to see what it is. One question follows.</p>
-              <Document kind={d.document.kind} title={d.document.title} lines={d.document.lines} />
-              <Poll
-                id="find"
-                question={d.document.find.q}
-                options={d.document.find.options}
-                answer={d.document.find.answer}
-                revealLabel="Show the line"
-                label="Find it on the document"
-              />
-            </section>
-          )}
-
-          {!isV2 && d.prediction && (
-            <Poll
-              id="guess"
-              question={d.prediction.q}
-              options={d.prediction.options}
-              answer={d.prediction.answer}
-              revealLabel="Show the answer"
-              label="Before you read"
-            />
-          )}
-
-          {!isV2 && (
-            <aside class="callout" aria-labelledby="in-30">
-              <h2 id="in-30">Key points</h2>
-              <ul>
-                {d.takeaways.map((line) => <li>{line}</li>)}
-              </ul>
-            </aside>
-          )}
-
-          {!isV2 && (
-            <div class="lesson-body">
-              <slot />
-            </div>
-          )}
-
-          {!isV2 && d.worked && (
-            <section aria-labelledby="work-it">
-              <h2 id="work-it">The calculation</h2>
-              <Worked context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
-            </section>
-          )}
-
-          {/* v2: watch, then see the same idea as a calculation, one line at a time. */}
-          {isV2 && d.video && (
-            <section aria-labelledby="watch">
-              <h2 id="watch">Watch</h2>
-              <Video
-                youtubeId={d.video.youtubeId}
-                title={d.video.title}
-                channel={d.video.channel}
-                minutes={d.video.minutes}
-                startSeconds={d.video.startSeconds}
-                endSeconds={d.video.endSeconds}
-                note={d.video.note}
-              />
-            </section>
-          )}
-
-          {isV2 && (
-            <div class="lesson-body">
-              <slot />
-            </div>
-          )}
-
-          {isV2 && d.worked && (
-            <section aria-labelledby="show-me">
-              <h2 id="show-me">Show me</h2>
-              <ShowMe context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
-              {d.keyIdea && <p class="key-idea"><strong class="hl">{d.keyIdea}</strong></p>}
-            </section>
-          )}
-
-          {isV2 && practice && d.practice && (
-            <section aria-labelledby="your-turn">
-              <h2 id="your-turn">Your turn</h2>
-              <Practice
-                context={d.practice.context}
-                given={practice.given}
-                question={practice.question}
-                choices={practice.choices}
-                hints={practice.hints}
-                localeCode={region.locale}
-              />
-              {practiceMore && d.practiceMore && (
-                <details class="lesson-details practice-more">
-                  <summary id="one-more">One more, with different numbers</summary>
-                  <Practice
-                    id="practice-more"
-                    context={d.practiceMore.context}
-                    given={practiceMore.given}
-                    question={practiceMore.question}
-                    choices={practiceMore.choices}
-                    hints={practiceMore.hints}
-                    localeCode={region.locale}
-                  />
-                </details>
-              )}
-            </section>
-          )}
-
-          {d.explorable && (
-            <section aria-labelledby="try-it">
-              <h2 id="try-it">{tryItHeading}</h2>
-              {d.explorable.kind === 'margin' && (
-                <MarginExplorer
-                  client:visible={{ rootMargin: '600px' }}
-                  fixed={d.explorable.fixed}
-                  variable={d.explorable.variable}
-                  prices={d.explorable.prices}
-                  unitName={d.explorable.unitName}
-                  prompts={d.explorable.prompts}
-                  localeCode={region.locale}
-                  toolHref={`${prefix}/tools/${EXPLORER_TOOL.margin}`}
-                  initial={d.worked?.kind === 'margin' ? d.worked.price : undefined}
-                />
-              )}
-              {d.explorable.kind === 'split' && (
-                <SplitExplorer
-                  client:visible={{ rootMargin: '600px' }}
-                  incomes={d.explorable.incomes}
-                  lines={d.explorable.lines}
-                  prompts={d.explorable.prompts}
-                  localeCode={region.locale}
-                  toolHref={`${prefix}/tools/${EXPLORER_TOOL.split}`}
-                />
-              )}
-              {d.explorable.kind === 'loan' && (
-                <LoanExplorer
-                  client:visible={{ rootMargin: '600px' }}
-                  principal={d.explorable.principal}
-                  rate={d.explorable.rate}
-                  terms={d.explorable.terms}
-                  prompts={d.explorable.prompts}
-                  localeCode={region.locale}
-                  toolHref={`${prefix}/tools/${EXPLORER_TOOL.loan}`}
-                />
-              )}
-              {d.explorable.kind === 'growth' && (
-                <GrowthExplorer
-                  client:visible={{ rootMargin: '600px' }}
-                  amounts={d.explorable.amounts}
-                  rate={d.explorable.rate}
-                  horizons={d.explorable.horizons}
-                  prompts={d.explorable.prompts}
-                  localeCode={region.locale}
-                  toolHref={`${prefix}/tools/${EXPLORER_TOOL.growth}`}
-                />
-              )}
-              {d.explorable.kind === 'deduction' && (
-                <DeductionExplorer
-                  client:visible={{ rootMargin: '600px' }}
-                  starts={d.explorable.starts}
-                  startLabel={d.explorable.startLabel}
-                  lines={d.explorable.lines}
-                  endLabel={d.explorable.endLabel}
-                  prompts={d.explorable.prompts}
-                  localeCode={region.locale}
-                />
-              )}
-              {d.explorable.kind === 'drill' && (
-                <Drill
-                  lessonId={lesson.id}
-                  intro={d.explorable.intro}
-                  scenarios={d.explorable.scenarios}
-                  reflection={d.explorable.reflection}
-                  localeCode={region.locale}
-                />
-              )}
-              {handoffs.length > 0 && (
-                <ul class="tool-handoffs list-plain">
-                  {handoffs.map((h) => (
-                    <li><a href={`${prefix}/tools/${h.tool.slug}`}>{h.text}</a></li>
-                  ))}
-                </ul>
-              )}
-            </section>
-          )}
-
-          {!isV2 && practice && d.practice && (
-            <section aria-labelledby="your-turn">
-              <h2 id="your-turn">{isV2 ? 'Your turn' : 'Practice'}</h2>
-              <Practice
-                context={d.practice.context}
-                given={practice.given}
-                question={practice.question}
-                choices={practice.choices}
-                localeCode={region.locale}
-              />
-            </section>
-          )}
-
-          {!d.explorable && handoffs.length > 0 && (
-            <ul class="tool-handoffs list-plain">
-              {handoffs.map((h) => (
-                <li><a href={`${prefix}/tools/${h.tool.slug}`}>{h.text}</a></li>
-              ))}
-            </ul>
-          )}
-
-          {isV2 && (
-            <section aria-labelledby="for-you">
-              <h2 id="for-you">What this means for you</h2>
-              <ul class="lesson-actions">
-                {d.takeaways.map((line) => <li>{line}</li>)}
-              </ul>
-            </section>
-          )}
-
-          {isV2 && d.details && d.details.length > 0 && (
-            <details class="lesson-details">
-              <summary>Details, if you want them</summary>
-              <ul>
-                {d.details.map((line) => <li>{line}</li>)}
-              </ul>
-            </details>
-          )}
-
-          <section aria-labelledby="quick-check">
-            <h2 id="quick-check">Check your understanding</h2>
-            <p>
-              {d.quiz.length} questions, about two minutes. Answer first, then reveal. A question you get
-              wrong comes back for review sooner than one you get right.
-            </p>
-            {d.quiz.map((check, index) => (
-              <Poll
-                id={`q${index + 1}`}
-                question={check.q}
-                options={check.options}
-                answer={check.answer}
-                checkId={`${lesson.id}#q${index + 1}`}
-                label={`Question ${index + 1} of ${d.quiz.length}`}
-              />
+      {/* One nav at every width: a closed fold on a phone; from 1024px the lesson script opens it
+          and it stays in view in the left rail. With JavaScript off it is a closed fold anywhere. */}
+      <nav class="lesson-steps" aria-labelledby="lesson-steps-label">
+        <details class="lesson-steps-fold" data-steps-fold>
+          <summary>
+            <span id="lesson-steps-label">In this lesson</span>{' '}
+            <span class="lesson-steps-count">(<span class="numbers">{steps.length}</span> parts)</span>
+          </summary>
+          <ol class="lesson-steps-list">
+            {steps.map((step) => (
+              <li><a href={`#${step.id}`}>{step.text}</a></li>
             ))}
-            <p class="return-line" data-return-line hidden></p>
+          </ol>
+        </details>
+      </nav>
+
+      {d.objectives && (
+        <div class="lesson-after">
+          <p class="lesson-after-label">After this you can</p>
+          <ul>
+            {d.objectives.map((line) => <li>{line}</li>)}
+          </ul>
+        </div>
+      )}
+
+      <div class="lesson-main">
+        <p class="situation">{d.situation}</p>
+
+        {/* The real document, and a question the reader can answer from it alone. */}
+        {d.document && (
+          <section aria-labelledby="the-document">
+            <h2 id="the-document">{heading.document}</h2>
+            <p class="doc-task">Read it line by line. Tap a line to see what it is. One question follows.</p>
+            <Document kind={d.document.kind} title={d.document.title} lines={d.document.lines} />
+            <Poll
+              id="find"
+              question={d.document.find.q}
+              options={d.document.find.options}
+              answer={d.document.find.answer}
+              revealLabel="Show the line"
+              label="Find it on the document"
+            />
           </section>
+        )}
 
-          <section aria-labelledby="meet-it">
-            <h2 id="meet-it">Where this applies</h2>
-            <ul>
-              {d.transfer.map((line) => <li>{line}</li>)}
-            </ul>
-            <p>
-              To check it has stuck, explain the main idea to someone else in three sentences. Where you
-              hesitate is the part worth rereading.
-            </p>
+        {/* Watch, then the idea, then the same idea as a calculation, one line at a time. */}
+        {d.video && (
+          <section aria-labelledby="watch">
+            <h2 id="watch">{heading.watch}</h2>
+            <Video
+              youtubeId={d.video.youtubeId}
+              title={d.video.title}
+              channel={d.video.channel}
+              minutes={d.video.minutes}
+              startSeconds={d.video.startSeconds}
+              endSeconds={d.video.endSeconds}
+              note={d.video.note}
+            />
           </section>
+        )}
 
-          {d.reportTo && (
-            <section aria-labelledby="if-it-happens">
-              <h2 id="if-it-happens">If it happens to you</h2>
-              <p class="report">
-                {d.reportTo.label}{' '}
-                {d.reportTo.phone && (
-                  <>
-                    Call <a href={`tel:${d.reportTo.phone}`}><strong class="numbers">{d.reportTo.phone}</strong></a> or report at{' '}
-                  </>
-                )}
-                <a href={d.reportTo.url} rel="noopener noreferrer">{new URL(d.reportTo.url).hostname}</a>.
-              </p>
-            </section>
-          )}
+        <div class="lesson-body">
+          <slot />
+        </div>
 
-          {terms.length > 0 && (
-            <section aria-labelledby="terms">
-              <h2 id="terms">Terms in this lesson</h2>
-              <dl class="lesson-terms">
-                {terms.map((entry) => (
-                  <div id={`term-${entry.id}`}>
-                    <dt lang={entry.data.lang}>{entry.data.term}</dt>
-                    <dd>
-                      {entry.data.define} <span class="example">{entry.data.example}</span>
-                    </dd>
-                  </div>
+        {d.worked && (
+          <section aria-labelledby="show-me">
+            <h2 id="show-me">{heading.showMe}</h2>
+            <ShowMe context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
+            {d.keyIdea && <p class="key-idea inset"><strong>{d.keyIdea}</strong></p>}
+          </section>
+        )}
+
+        {practice && d.practice && (
+          <section aria-labelledby="your-turn">
+            <h2 id="your-turn">{heading.yourTurn}</h2>
+            <Practice
+              context={d.practice.context}
+              given={practice.given}
+              question={practice.question}
+              choices={practice.choices}
+              hints={practice.hints}
+              localeCode={region.locale}
+            />
+            {practiceMore && d.practiceMore && (
+              <details class="lesson-details practice-more fold">
+                <summary id="one-more">One more, with different numbers</summary>
+                <Practice
+                  id="practice-more"
+                  context={d.practiceMore.context}
+                  given={practiceMore.given}
+                  question={practiceMore.question}
+                  choices={practiceMore.choices}
+                  hints={practiceMore.hints}
+                  localeCode={region.locale}
+                />
+              </details>
+            )}
+          </section>
+        )}
+
+        {d.explorable && (
+          <section aria-labelledby="try-it">
+            <h2 id="try-it">{heading.tryIt}</h2>
+            {d.explorable.kind === 'margin' && (
+              <MarginExplorer
+                client:visible={{ rootMargin: '600px' }}
+                fixed={d.explorable.fixed}
+                variable={d.explorable.variable}
+                prices={d.explorable.prices}
+                unitName={d.explorable.unitName}
+                prompts={d.explorable.prompts}
+                localeCode={region.locale}
+                toolHref={`${prefix}/tools/${EXPLORER_TOOL.margin}`}
+                initial={d.worked?.kind === 'margin' ? d.worked.price : undefined}
+              />
+            )}
+            {d.explorable.kind === 'split' && (
+              <SplitExplorer
+                client:visible={{ rootMargin: '600px' }}
+                incomes={d.explorable.incomes}
+                lines={d.explorable.lines}
+                prompts={d.explorable.prompts}
+                localeCode={region.locale}
+                toolHref={`${prefix}/tools/${EXPLORER_TOOL.split}`}
+              />
+            )}
+            {d.explorable.kind === 'loan' && (
+              <LoanExplorer
+                client:visible={{ rootMargin: '600px' }}
+                principal={d.explorable.principal}
+                rate={d.explorable.rate}
+                terms={d.explorable.terms}
+                prompts={d.explorable.prompts}
+                localeCode={region.locale}
+                toolHref={`${prefix}/tools/${EXPLORER_TOOL.loan}`}
+              />
+            )}
+            {d.explorable.kind === 'growth' && (
+              <GrowthExplorer
+                client:visible={{ rootMargin: '600px' }}
+                amounts={d.explorable.amounts}
+                rate={d.explorable.rate}
+                horizons={d.explorable.horizons}
+                prompts={d.explorable.prompts}
+                localeCode={region.locale}
+                toolHref={`${prefix}/tools/${EXPLORER_TOOL.growth}`}
+              />
+            )}
+            {d.explorable.kind === 'deduction' && (
+              <DeductionExplorer
+                client:visible={{ rootMargin: '600px' }}
+                starts={d.explorable.starts}
+                startLabel={d.explorable.startLabel}
+                lines={d.explorable.lines}
+                endLabel={d.explorable.endLabel}
+                prompts={d.explorable.prompts}
+                localeCode={region.locale}
+              />
+            )}
+            {d.explorable.kind === 'drill' && (
+              <Drill
+                lessonId={lesson.id}
+                intro={d.explorable.intro}
+                scenarios={d.explorable.scenarios}
+                reflection={d.explorable.reflection}
+                localeCode={region.locale}
+              />
+            )}
+            {handoffs.length > 0 && (
+              <ul class="tool-handoffs list-plain">
+                {handoffs.map((h) => (
+                  <li><a href={`${prefix}/tools/${h.tool.slug}`}>{h.text}</a></li>
                 ))}
-              </dl>
-              <p><a href={`${base}/glossary`}>The full glossary</a></p>
-            </section>
-          )}
-
-          {/* Sources and the licence are the same boilerplate on every lesson: keep them out of search. */}
-          <footer class="lesson-fine" data-pagefind-ignore>
-            {isV2 && (
-              <p class="lesson-meta">
-                Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
-              </p>
+              </ul>
             )}
-            <h2 id="sources">Sources</h2>
+          </section>
+        )}
+
+        {!d.explorable && handoffs.length > 0 && (
+          <ul class="tool-handoffs list-plain">
+            {handoffs.map((h) => (
+              <li><a href={`${prefix}/tools/${h.tool.slug}`}>{h.text}</a></li>
+            ))}
+          </ul>
+        )}
+
+        <section aria-labelledby="for-you">
+          <h2 id="for-you">{heading.forYou}</h2>
+          <ul class="lesson-actions">
+            {d.takeaways.map((line) => <li>{line}</li>)}
+          </ul>
+        </section>
+
+        {d.details && d.details.length > 0 && (
+          <details class="lesson-details fold">
+            <summary>Details, if you want them</summary>
             <ul>
-              {d.sources.map((source) => (
-                <li>
-                  <a href={source.url} rel="noopener noreferrer">{source.title}</a>, {source.publisher}
-                </li>
-              ))}
+              {d.details.map((line) => <li>{line}</li>)}
             </ul>
-            <p>For learning only. Not financial, legal, or tax advice. <a href={`${base}/disclaimer`}>Why we say that</a>.</p>
+          </details>
+        )}
 
-            <h2 id="reuse">Copyright and reuse</h2>
-            <p>
-              © {year} {site.owner} and Business Lab contributors. You may copy, share and adapt this lesson
-              for non-commercial use, such as a class, a club or a handout, as long as you credit it,
-              link back, and share your version under the same licence:{' '}
-              <a href={site.contentLicence.url} rel="license noopener noreferrer">{site.contentLicence.fullName} ({site.contentLicence.name})</a>.
-            </p>
-            <p>
-              To credit it: “{d.title}”, {site.name}, <span class="cite-url">{pageUrl}</span>.
-            </p>
-            <p>
-              The {site.name} name and logo are not covered by that licence. Documents we link to
-              belong to their publishers, and are linked rather than copied for that reason.
-            </p>
-          </footer>
+        <section aria-labelledby="quick-check">
+          <h2 id="quick-check">{heading.checks}</h2>
+          <p>
+            {d.quiz.length} questions, about two minutes. Answer first, then reveal. A question you get
+            wrong comes back for review sooner than one you get right.
+          </p>
+          {d.quiz.map((check, index) => (
+            <Poll
+              id={`q${index + 1}`}
+              question={check.q}
+              options={check.options}
+              answer={check.answer}
+              checkId={`${lesson.id}#q${index + 1}`}
+              label={`Question ${index + 1} of ${d.quiz.length}`}
+            />
+          ))}
+          <p class="return-line" data-return-line hidden></p>
+        </section>
 
-          <div class="lesson-next">
-            {next && (
-              <a class="btn btn-link" href={`${base}/${lessonPath(next)}`}>Next: {next.data.title}</a>
-            )}
-            {!next && <a class="btn btn-link" href={`${prefix}/learn/${track.slug}`}>Back to {track.title}</a>}
-            {/* Rendered hidden: with no script it would be a dead control. Never gates anything. */}
-            <button type="button" class="btn btn-secondary btn-sm" data-mark-read hidden>Mark as read</button>
-            <span class="marked" data-marked role="status"></span>
-          </div>
+        <section aria-labelledby="meet-it">
+          <h2 id="meet-it">Where this applies</h2>
+          <ul>
+            {d.transfer.map((line) => <li>{line}</li>)}
+          </ul>
+          <p>
+            To check it has stuck, explain the main idea to someone else in three sentences. Where you
+            hesitate is the part worth rereading.
+          </p>
+        </section>
+
+        {d.reportTo && (
+          <section aria-labelledby="if-it-happens">
+            <h2 id="if-it-happens">{heading.report}</h2>
+            <p class="report">
+              {d.reportTo.label}{' '}
+              {d.reportTo.phone && (
+                <>
+                  Call <a href={`tel:${d.reportTo.phone}`}><strong class="numbers">{d.reportTo.phone}</strong></a> or report at{' '}
+                </>
+              )}
+              <a href={d.reportTo.url} rel="noopener noreferrer">{new URL(d.reportTo.url).hostname}</a>.
+            </p>
+          </section>
+        )}
+
+        {terms.length > 0 && (
+          <section aria-labelledby="terms">
+            <h2 id="terms">Terms in this lesson</h2>
+            <dl class="lesson-terms">
+              {terms.map((entry) => (
+                <div id={`term-${entry.id}`}>
+                  <dt lang={entry.data.lang}>{entry.data.term}</dt>
+                  <dd>
+                    {entry.data.define} <span class="example">{entry.data.example}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p><a class="glossary-link" href={`${base}/glossary`}>The full glossary</a></p>
+          </section>
+        )}
+
+        {/* Sources and the licence are the same boilerplate on every lesson: keep them out of search. */}
+        <footer class="lesson-fine" data-pagefind-ignore>
+          <p class="lesson-meta">
+            Reviewed {reviewed}. Written by {d.author.name}, {d.author.country}.
+          </p>
+          <h2 id="sources">Sources</h2>
+          <ul>
+            {d.sources.map((source) => (
+              <li>
+                <a href={source.url} rel="noopener noreferrer">{source.title}</a>, {source.publisher}
+              </li>
+            ))}
+          </ul>
+          <p>For learning only. Not financial, legal, or tax advice. <a href={`${base}/disclaimer`}>Why we say that</a>.</p>
+
+          <h2 id="reuse">Copyright and reuse</h2>
+          <p>
+            © {year} {site.owner} and Business Lab contributors. You may copy, share and adapt this lesson
+            for non-commercial use, such as a class, a club or a handout, as long as you credit it,
+            link back, and share your version under the same licence:{' '}
+            <a href={site.contentLicence.url} rel="license noopener noreferrer">{site.contentLicence.fullName} ({site.contentLicence.name})</a>.
+          </p>
+          <p>
+            To credit it: “{d.title}”, {site.name}, <span class="cite-url">{pageUrl}</span>.
+          </p>
+          <p>
+            The {site.name} name and logo are not covered by that licence. Documents we link to
+            belong to their publishers, and are linked rather than copied for that reason.
+          </p>
+        </footer>
+
+        <div class="lesson-next">
+          {next && <a class="btn-link" href={`${base}/${lessonPath(next)}`}>Next: {next.data.title}</a>}
+          {!next && <a class="btn-link" href={`${prefix}/learn/${track.slug}`}>Back to {track.title}</a>}
+          {/* Rendered hidden: with no script it would be a dead control. Never gates anything. */}
+          <button type="button" class="btn btn-secondary btn-sm" data-mark-read hidden>Mark as read</button>
+          <span class="marked" data-marked role="status"></span>
         </div>
       </div>
     </div>

@@ -108,7 +108,7 @@ const sources = drill?.bank.data.sources ?? [];
   path="tools"
   kind={tool.format === 'drill' ? 'Practice' : 'Calculator'}
 >
-  <section class="section">
+  <section class="section" data-tool-page>
     <div class="container">
       <div class="column">
         <p class="crumb"><a href={`${prefix}/tools`}>← All tools</a></p>
@@ -210,16 +210,47 @@ const sources = drill?.bank.data.sources ?? [];
   {drill && <LessonScript />}
 </BaseLayout>
 
+<script>
+  /* The results bench sits beside the fields from 900px and stays in view while the reader scrolls
+     them (tools.css), but only while the whole bench fits in the window: a bench taller than the
+     window would keep its own last lines out of sight. Without JavaScript it simply scrolls with
+     the page. The attribute goes on this page's own section, never on an island's markup. */
+  const page = document.querySelector<HTMLElement>('[data-tool-page]');
+  if (page && page.querySelector('.tool .results') && 'ResizeObserver' in window) {
+    const fits = () => {
+      const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sticky-top')) || 0;
+      const room = document.documentElement.clientHeight - 2 * gap;
+      const benches = [...page.querySelectorAll<HTMLElement>('.tool .results')];
+      page.toggleAttribute('data-bench-fits', benches.every((bench) => bench.offsetHeight <= room));
+    };
+    const watch = new ResizeObserver(fits);
+    for (const bench of page.querySelectorAll<HTMLElement>('.tool .results')) watch.observe(bench);
+    window.addEventListener('resize', fits);
+  }
+</script>
+
 <style>
-  .crumb { font-size: var(--text-sm); margin-bottom: var(--space-4); }
-  .crumb a { text-decoration: none; }
-  .crumb a:hover { text-decoration: underline; }
-  .answers { font-size: var(--text-lg); color: var(--ink-2); margin-bottom: var(--space-3); }
-  .scenario { color: var(--muted); margin-bottom: var(--space-7); }
-  .related { margin-top: var(--space-7); }
-  .related h2 { font-size: var(--text-h3); margin-top: 0; }
-  .related ul, .tool-sources ul { padding-left: var(--space-5); }
+  /* The crumb, the fold, the ruled rows and the note come from base.css; the page sets only its
+     own lines. The one-line example under the h1 is quiet, so the calculator is the first loud
+     thing on the page. */
+  .answers { margin-bottom: var(--space-3); color: var(--ink-2); font-size: var(--text-lg); line-height: var(--leading-ui); }
+  .answers:last-child { margin-bottom: var(--space-5); }
+  .scenario { margin-bottom: var(--space-7); color: var(--muted); }
+
+  /* Below the calculator: short sections under a small heading, each a quiet ruled list. */
+  .related, .tool-sources { margin-top: var(--space-7); }
+  .related h2, .tool-sources h2 { margin: 0 0 var(--space-3); font-size: var(--text-lg); }
+  .related ul, .tool-sources ul { margin: 0; padding: 0; list-style: none; border-top: var(--rule-w) solid var(--rule); }
+  .related li, .tool-sources li { margin: 0; border-bottom: var(--rule-w) solid var(--rule); }
+  /* A lesson title in a list is a row link (base.css): ink 700, underlined on hover, 44px tall. */
+  .related li a { display: flex; align-items: center; min-height: var(--target); padding-block: var(--space-2); }
+  /* Sources are running text with a link in it, so the link stays blue. */
+  .tool-sources li { padding-block: var(--space-3); color: var(--ink-2); font-size: var(--text-sm); }
+
+  /* The drill's reporting line: the one thing to do if it happens for real. */
+  .report { margin-top: var(--space-6); color: var(--ink); font-weight: 700; }
+  /* The helpline number is bold inside its link; it keeps the link's blue rather than base's ink. */
+  .report a strong { color: inherit; }
+
   .note { margin-top: var(--space-7); }
-  .tool-sources { margin-top: var(--space-7); }
-  .tool-sources h2 { font-size: var(--text-h3); margin-top: 0; }
 </style>

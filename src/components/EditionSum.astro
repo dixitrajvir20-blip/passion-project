@@ -2,7 +2,8 @@
 /**
  * One edition's break-even example, set as a ledger: price, cost, what is kept (double rule),
  * then the sentence it adds up to. Computed from finance.ts with the edition's own calculator
- * defaults, so the page and the calculator can never disagree.
+ * defaults, so the page and the calculator can never disagree. It takes the page's own ink: the
+ * page puts it in a .box, never on a pinned receipt.
  */
 import { breakEven } from '../lib/finance';
 import { money, number, localeByCode } from '../lib/format';
@@ -18,14 +19,17 @@ const locale = localeByCode(region.locale);
 const [fixed, variable, price] = [s.fixed, s.variable, s.price].map(Number);
 const result = breakEven(fixed, variable, price);
 const one = s.unitName.replace(/s$/, '');
+// The ledger has to add up as printed. When any line has cents (the US shirt costs $7.50), every
+// line shows them; otherwise $18 − $8 would print a total of $11.
+const cents = [price, variable, result.contributionMargin].some((value) => !Number.isInteger(value)) ? 2 : 0;
 ---
 
 <figure class="sum">
   <figcaption class="sum-title">{s.scenario}</figcaption>
   <ol class="ledger">
-    <li class="ledger-row"><span class="ledger-label">Charged per {one}</span><span class="ledger-figure">{money(price, locale)}</span></li>
-    <li class="ledger-row"><span class="ledger-label">Spent on each {one}</span><span class="ledger-figure">−{money(variable, locale)}</span></li>
-    <li class="ledger-row ledger-total"><span class="ledger-label">Kept per {one}</span><span class="ledger-figure">{money(result.contributionMargin, locale)}</span></li>
+    <li class="ledger-row"><span class="ledger-label">Charged per {one}</span><span class="ledger-figure">{money(price, locale, cents)}</span></li>
+    <li class="ledger-row"><span class="ledger-label">Spent on each {one}</span><span class="ledger-figure">−{money(variable, locale, cents)}</span></li>
+    <li class="ledger-row ledger-total"><span class="ledger-label">Kept per {one}</span><span class="ledger-figure">{money(result.contributionMargin, locale, cents)}</span></li>
   </ol>
   {result.viable && (
     <p class="sum-result">
@@ -41,5 +45,5 @@ const one = s.unitName.replace(/s$/, '');
   .sum .ledger { margin: var(--space-2) 0 var(--space-4); }
   .sum .ledger-row { padding: var(--space-2) 0; }
   .sum .ledger-total { padding-top: var(--space-3); }
-  .sum-result { font-size: var(--text-ui); margin: 0; }
+  .sum-result { margin: 0; font-size: var(--text-md); }
 </style>

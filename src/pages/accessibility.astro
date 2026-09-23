@@ -29,10 +29,10 @@ import { site } from '../lib/site';
 
       <h2>What we do</h2>
       <ul>
-        <li>Body text is set in Atkinson Hyperlegible Next, a typeface designed for low-vision readers, at 17px or larger, and the layout survives 200% zoom.</li>
-        <li>Every colour pair used for text meets at least 4.5:1 contrast in both light and dark mode; the figures are published in our design documentation.</li>
-        <li>Everything works with a keyboard alone, with a visible focus ring, and the sticky header never hides the focused element.</li>
-        <li>Buttons and links have at least a 44×44 pixel target. Nothing is conveyed by colour alone.</li>
+        <li>Body text is set in Atkinson Hyperlegible Next, a typeface designed for low-vision readers, at 18px or larger, and the layout survives 200% zoom.</li>
+        <li>Every colour pair used for text meets at least 4.5:1 contrast. The site is light on every page; your browser's own dark or high-contrast mode works with it. The figures are published in our design documentation.</li>
+        <li>Everything works with a keyboard alone, with a visible focus ring. Nothing fixed on the screen hides the focused element.</li>
+        <li>Buttons, menus and lists of links have targets at least 44 pixels tall; a link inside a sentence is smaller, as WCAG allows, and every target is at least 24 by 24 pixels. Nothing is conveyed by colour alone.</li>
         <li>Animations are short, optional and switched off when your system asks for reduced motion.</li>
         <li>Calculators explain their results in a sentence, not only in a number, and every input has a visible label.</li>
         <li>Automated checks (axe-core) run on every page, on phone and desktop sizes, before any change is published, and the build fails on serious issues.</li>
@@ -54,10 +54,11 @@ import { site } from '../lib/site';
 
       <h2>How this was assessed</h2>
       <p>
-        Self-assessment against WCAG 2.2 AA using automated testing (axe-core via Playwright at
-        360px and 1280px), manual keyboard and screen-reader checks, and contrast calculations
-        for every token in the design system. Technologies relied on: HTML, CSS, JavaScript and
-        WAI-ARIA.
+        Self-assessment against WCAG 2.2 AA using manual keyboard and screen-reader checks,
+        contrast calculations for every token in the design system, and automated testing:
+        axe-core via Playwright at 393px and 1280px, reflow checks at 320px, 360px and 640×400
+        (200% zoom), forced colours and keyboard checks. Technologies relied on: HTML, CSS,
+        JavaScript and WAI-ARIA.
       </p>
     </div>
   </section>

@@ -1,14 +1,27 @@
 ---
 /**
- * The one script a lesson needs: score each check on its first reveal, schedule it for review,
- * say when the questions come back, upgrade glossary links to popovers, and run "Mark as read".
- * It reads [data-lesson-id] on lesson pages and on drill tool pages: a situation practised on a
- * tool page is scheduled under its own review id (the lesson's '#d1' for a lesson's screen), and
- * after a reveal the drill's return line says when its situations come back.
+ * The one script a lesson needs: open "In this lesson" in the wide rail, score each check on its
+ * first reveal, schedule it for review, say when the questions come back, upgrade glossary links
+ * to popovers, and run "Mark as read". It reads [data-lesson-id] on lesson pages and on drill tool
+ * pages: a situation practised on a tool page is scheduled under its own review id (the lesson's
+ * '#d1' for a lesson's screen), and after a reveal the drill's return line says when its
+ * situations come back.
  */
 ---
 <script>
   import { loadProgress, markDone, nextReturn, nextReturnAmong, recordQuiz, saveProgress, schedule } from '../../lib/progress';
+
+  // "In this lesson": open while the left rail shows (1024px and wider), one closed line below it.
+  // Without a script it stays a closed fold at every width, and one tap opens it.
+  const stepsFold = document.querySelector<HTMLDetailsElement>('[data-steps-fold]');
+  if (stepsFold) {
+    const wide = window.matchMedia('(min-width: 1024px)');
+    const sync = () => {
+      stepsFold.open = wide.matches;
+    };
+    sync();
+    wide.addEventListener('change', sync);
+  }
 
   const root = document.querySelector<HTMLElement>('[data-lesson-id]');
   if (root) {
@@ -86,6 +99,8 @@
               : correct
                 ? 'Correct.'
                 : 'Not quite.';
+          // Words carry the result; the colour only repeats it ("Correct." in the success green).
+          status.dataset.result = picked === null ? 'none' : correct ? 'right' : 'wrong';
         }
         if (!isQuiz(id) && kept && drillReturn) {
           const back = nextReturnAmong(progress, drillIds);

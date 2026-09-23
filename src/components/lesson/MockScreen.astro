@@ -1,7 +1,8 @@
 ---
 /**
- * A made-up phone screen, drawn in HTML and tokens so it is ~1 KB, legible at 200% zoom, right in
- * dark mode and readable by a screen reader. Never a screenshot, and never a real bank, app,
+ * A made-up phone screen, drawn in HTML and tokens so it is ~1 KB, legible at 200% zoom and
+ * readable by a screen reader: a white .box with square corners, not a drawn phone. Never a
+ * screenshot, and never a real bank, app,
  * police or regulator name or mark: an accurate-looking fake of a real brand is impersonation,
  * and it teaches that the real one looks like this. `kind` sets only the caption.
  */
@@ -28,7 +29,7 @@ const label = {
 }[kind];
 ---
 
-<figure class="mock-screen">
+<figure class="mock-screen box">
   <figcaption class="ms-kind">{label}</figcaption>
   <div class="ms-body">
     <p class="ms-from">{from}</p>

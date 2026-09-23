@@ -1,16 +1,21 @@
 ---
 /**
- * A track's lessons. Published ones are links with two quiet marks (read, checks done) filled in
- * from this device's progress; planned ones are plain text, not tappable-looking tiles, so a
- * screen-reader user does not meet a run of dead stops. The number is the lesson's place in the
- * track (a real sequence). role="list" keeps list semantics in Safari despite list-style: none.
+ * A track's lessons as a plain numbered list of ruled rows. Published ones are links: the whole row
+ * is the link, the title is ink and underlines on hover, and two quiet marks (read, checks done) are
+ * filled in from this device's progress as words, never circles or filled states. Planned ones are
+ * plain text, not tappable-looking rows, so a screen-reader user does not meet a run of dead stops.
+ * The number is the lesson's place in the track (a real sequence). role="list" keeps list semantics
+ * in Safari despite list-style: none.
+ *
+ * The styles are scoped here (v5.1), so this component and lesson.css are edited separately; the
+ * scoped selectors also outrank the old global rules until those are deleted.
  */
 import { lessonPath, type Lesson } from '../../lib/lessons';
 
 interface Props {
   lessons: Lesson[];
   planned: string[];
-  /** Title and a minutes sticker only, for the edition front where three tracks sit side by side. */
+  /** Title and minutes only, for the learn index and the edition front where tracks are stacked. */
   compact?: boolean;
 }
 
@@ -18,25 +23,101 @@ const { lessons, planned, compact = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<ol class:list={['lesson-list', { 'is-compact': compact }]} role="list">
-  {lessons.map((lesson, index) => (
-    <li>
-      <a class="lesson-row" href={`${base}/${lessonPath(lesson)}`} data-lesson-row={lesson.id}>
-        <span class="lesson-num numbers">{index + 1}</span>
-        <span class="lesson-title">{lesson.data.title}</span>
-        {!compact && <span class="lesson-sub">{lesson.data.summary}</span>}
-        <span class="lesson-marks">
-          <span>{lesson.data.readingMinutes} min</span>
-          <span data-mark="read" hidden> · Read</span>
-          <span data-mark="checks" hidden> · Checks done</span>
-        </span>
-      </a>
-    </li>
-  ))}
-  {planned.map((title, index) => (
-    <li class="lesson-planned">
-      <span class="lesson-num numbers">{lessons.length + index + 1}</span>
-      <span>{title} <span class="muted">(being written)</span></span>
-    </li>
-  ))}
-</ol>
+{(lessons.length > 0 || planned.length > 0) && (
+  <ol class:list={['lesson-list', { 'is-compact': compact }]} role="list">
+    {lessons.map((lesson, index) => (
+      <li>
+        <a class="lesson-row" href={`${base}/${lessonPath(lesson)}`} data-lesson-row={lesson.id}>
+          <span class="lesson-num numbers">{index + 1}</span>
+          <span class="lesson-title">{lesson.data.title}</span>
+          {!compact && <span class="lesson-sub">{lesson.data.summary}</span>}
+          <span class="lesson-marks">
+            <span>{lesson.data.readingMinutes} min</span>
+            <span data-mark="read" hidden> · Read</span>
+            <span data-mark="checks" hidden> · Checks done</span>
+          </span>
+        </a>
+      </li>
+    ))}
+    {planned.map((title, index) => (
+      <li class="lesson-planned">
+        <span class="lesson-num numbers">{lessons.length + index + 1}</span>
+        <span class="lesson-planned-title">{title} <span class="muted">(being written)</span></span>
+      </li>
+    ))}
+  </ol>
+)}
+
+<style>
+  /* Ruled rows: a 1px rule above the list and under every row, as in .index-list (base.css). */
+  .lesson-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--rule-w) solid var(--rule);
+  }
+  .lesson-list > li { margin: 0; border-bottom: var(--rule-w) solid var(--rule); }
+
+  /* A row: a 32px number column and the text. The whole row is the link (base.css sets ink 700,
+     no underline); it is at least 44px tall. */
+  .lesson-row,
+  .lesson-planned {
+    display: grid;
+    grid-template-columns: var(--space-6) minmax(0, 1fr);
+    gap: var(--space-1) var(--space-3);
+    align-items: baseline;
+    min-height: var(--target);
+    padding: var(--space-4) 0;
+  }
+  .lesson-row { color: var(--ink); font-weight: 700; text-decoration: none; }
+
+  .lesson-num {
+    grid-row: 1 / span 3;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: var(--text-md);
+    font-weight: 700;
+    line-height: var(--leading-heading);
+    font-variant-numeric: tabular-nums;
+  }
+  .lesson-title,
+  .lesson-sub,
+  .lesson-marks { grid-column: 2; }
+
+  .lesson-title {
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: var(--leading-heading);
+  }
+  .lesson-sub { color: var(--ink-2); font-size: var(--text-md); font-weight: 400; line-height: var(--leading-ui); }
+  .lesson-marks { color: var(--muted); font-size: var(--text-sm); font-weight: 400; font-variant-numeric: tabular-nums; }
+  .lesson-marks [data-mark] { color: var(--success); font-weight: 700; }
+
+  /* Hover and keyboard focus: the title underlines; nothing turns blue. */
+  .lesson-row:is(:hover, :focus-visible) { color: var(--ink); }
+  .lesson-row:is(:hover, :focus-visible) .lesson-num { color: var(--muted); }
+  .lesson-row:is(:hover, :focus-visible) .lesson-title {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: var(--control-w);
+    text-underline-offset: 0.16em;
+  }
+
+  /* A lesson still being written: plain muted text, not a link. */
+  .lesson-planned { color: var(--muted); font-size: var(--text-md); }
+  .lesson-planned-title { grid-column: 2; }
+
+  /* Compact (the learn index, the edition front): the title at body size, tighter rows. */
+  .is-compact .lesson-row,
+  .is-compact .lesson-planned { padding: var(--space-3) 0; }
+  .is-compact .lesson-title { font-size: var(--text-md); line-height: var(--leading-ui); }
+  .is-compact .lesson-num { line-height: var(--leading-ui); }
+
+  @media print {
+    /* A worksheet handed round a club must not carry one reader's progress. */
+    .lesson-marks { display: none; }
+  }
+</style>

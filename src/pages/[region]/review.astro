@@ -45,11 +45,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </BaseLayout>
 
 <style>
-  .crumb { font-size: var(--text-sm); margin-bottom: var(--space-4); }
-  .crumb a { text-decoration: none; }
-  .crumb a:hover { text-decoration: underline; }
+  /* The crumb is base.css's. Each question is the lessons' framed .poll (lesson.css). */
   .lede { margin-bottom: var(--space-7); }
-  :global(.review-from) { color: var(--muted); font-size: var(--text-sm); margin-bottom: var(--space-3); }
-  :global(.review-context) { background: var(--bg-2); border-radius: var(--radius-m); padding: var(--space-4); font-size: var(--text-ui); }
+  :global(.review-from) { margin-bottom: var(--space-3); color: var(--muted); font-size: var(--text-sm); }
+  /* The situation a question was asked about: set apart by a 4px rule at its start, no fill. */
+  :global(.review-context) {
+    padding-inline-start: var(--space-4);
+    border-inline-start: var(--bar-w) solid var(--rule);
+    font-size: var(--text-sm);
+  }
   :global(.review-action) { margin-top: var(--space-4); }
 </style>

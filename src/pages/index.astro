@@ -1,9 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EditionSum from '../components/EditionSum.astro';
-import HandNote from '../components/HandNote.astro';
-import Blobs from '../components/Blobs.astro';
-import Doodle from '../components/Doodle.astro';
+import Flag from '../components/Flag.astro';
 import { REGIONS, getRegion } from '../lib/regions';
 import { GROUPS, TOOLS, type ToolMeta } from '../lib/tools';
 import { toolAvailable } from '../lib/drills';
@@ -11,7 +9,6 @@ import { site } from '../lib/site';
 import { lessonPath, lessonsFor } from '../lib/lessons';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const panels = ['panel-field', 'panel-gold', 'panel-pale'];
 
 // "Start with these": the first money-basics and how-business-works lesson of each edition.
 const starters = (
@@ -25,7 +22,6 @@ const starters = (
     }),
   )
 ).flat();
-const doodles = ['coin', 'phone', 'tag', 'calculator', 'plane', 'coin'] as const;
 // One question per life moment that every edition can answer: the first all-edition tool of each
 // group that every edition has ready (a drill only when every edition has its bank). Each link goes
 // through the reader's edition.
@@ -44,115 +40,93 @@ const reasons = ['Free, with nothing to sell', 'No ads and no tracking', 'No sig
 const india = getRegion('in');
 ---
 
-<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description} bare>
-  <section class="hero on-field">
-    <Blobs />
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <HandNote text="free, forever" class="hero-note" />
-        <h1 class="mega">Money and business, taught for where you live.</h1>
+<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description}>
+  <div class="container home">
+    <div class="front">
+      <section class="intro" aria-labelledby="home-h">
+        <h1 id="home-h">Money and business, taught for where you live.</h1>
         <p class="lede">
           Free lessons and calculators for ages 15 to 21. Each edition has its own currency, payment
           apps, rules and scams, because a lesson about money only helps if it is about your money.
         </p>
         <div class="btn-row">
-          <a class="cta" href="#editions"><span class="cta-label">Choose your edition</span><span class="cta-arrow" aria-hidden="true">↓</span></a>
-          <p class="resume" id="resume" hidden><a class="btn btn-secondary" id="resume-link" href={`${base}/`}>Continue where you left off</a></p>
+          {/* The one primary button. It opens the edition list; once this device has chosen an
+              edition, the script below turns it into "Continue with <edition>". */}
+          <p class="resume" id="resume"><a class="btn" id="resume-link" href="#editions">Choose your edition</a></p>
+          <a class="btn-link" href="#calculators">Try a tool</a>
         </div>
-      </div>
-      <div class="flashcards" aria-label="A worked example from a lesson">
-        <div class="flashcard flashcard-back" aria-hidden="true"></div>
-        <div class="flashcard flashcard-mid" aria-hidden="true"></div>
-        <div class="flashcard flashcard-front">
-          <HandNote text="a worked example" tilt="none" class="flashcard-note" />
-          <EditionSum region={india} />
-        </div>
-        <p class="sticky-rule" aria-hidden="true">Price − cost = kept</p>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <section id="editions" class="section editions-section" aria-labelledby="editions-h">
-    <div class="container">
-      <h2 id="editions-h" class="section-title">Choose your edition</h2>
-      <ul class="list-plain editions">
-        {REGIONS.map((region, index) => (
-          <li class:list={['panel', 'edition', panels[index]]}>
-            <span class="pill pill-white currency">{region.currency}</span>
-            <h3 class="edition-name">{region.name}</h3>
-            <p class="edition-problem">{region.problem}</p>
-            <div class="edition-sum"><EditionSum region={region} /></div>
-            <ul class="pills" aria-label={`${region.name} topics`}>
-              {region.tags.map((tag) => <li><span class="pill">{tag}</span></li>)}
-            </ul>
-            <a class="btn-link edition-link" href={`${base}/${region.code}`} data-astro-prefetch>Open the {region.name} edition</a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section steps-section" aria-labelledby="steps-h">
-    <div class="container">
-      <h2 id="steps-h" class="section-title">How a lesson works</h2>
-      <ol class="list-plain steps-cards">
-        <li class="step-card step-1"><span class="step-num">Step 1</span><h3>Start from the real thing</h3><p>A payslip, a loan sheet, a payment screen, drawn line by line. Find the line that matters before anyone explains it.</p></li>
-        <li class="step-card step-2"><span class="step-num">Step 2</span><h3>Watch, then see it worked</h3><p>A short video from a regulator or a teacher, then the calculation one line at a time, each line explained.</p></li>
-        <li class="step-card step-3"><span class="step-num">Step 3</span><h3>Your turn, then change one thing</h3><p>The same sum with new numbers and three hints, then the levers, to see what moves the answer.</p></li>
-        <li class="step-card step-4"><span class="step-num">Step 4</span><h3>Check your understanding</h3><p>Three questions, which come back for review a few days later.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="calculators" class="section" aria-labelledby="calc-h">
-    <div class="container">
-      <div class="panel panel-gold taxonomy">
-        <h2 id="calc-h" class="taxonomy-title">Tools that answer</h2>
-        <ul class="list-plain taxonomy-list">
-          {everywhere.map((tool) => (
-            <li><a href="#editions" data-edition-path={`tools/${tool.slug}`}>{tool.short}</a></li>
-          ))}
-        </ul>
-        <p class="taxonomy-foot">Nothing you type leaves your phone.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section why" aria-labelledby="why-h">
-    <div class="container">
-      <div class="panel panel-pale why-panel">
-        <h2 id="why-h">Why {site.name}</h2>
-        <p class="why-lede">
-          Most people learn money at home, if at all. {site.name} grew out of a school club built on
-          one idea, that business is a life skill, and this site is for everyone who has no one to ask.
-        </p>
-        <ul class="why-list">
-          {reasons.map((reason) => <li>{reason}</li>)}
-        </ul>
-        <p class="why-more"><a href={`${base}/about`}>More about {site.name}</a></p>
-      </div>
-    </div>
-  </section>
-
-  {starters.length > 0 && (
-    <section class="sheet starters" aria-labelledby="start-h">
-      <div class="container">
-        <div class="starters-head">
-          <h2 id="start-h" class="section-title">Start with these</h2>
-        </div>
-        <ul class="grid-table cols-3">
-          {starters.map(({ region, lesson }, index) => (
-            <li class="starter">
-              <span class:list={['sticker', { 'sticker-left': index % 2 === 1 }]}>{region.name} · {lesson.data.readingMinutes} min</span>
-              {index < doodles.length && index % 3 === 0 && <Doodle name={doodles[index]} class="starter-doodle" />}
-              <h3><a href={`${base}/${lessonPath(lesson)}`}>{lesson.data.title}</a></h3>
-              <p>{lesson.data.summary}</p>
+      <section id="editions" class="editions" aria-labelledby="editions-h">
+        <h2 id="editions-h">Choose your edition</h2>
+        <ul class="index-list">
+          {REGIONS.map((region) => (
+            <li>
+              <a class="index-row" href={`${base}/${region.code}`} data-astro-prefetch>
+                <Flag code={region.code as 'in' | 'eu' | 'us'} class="index-flag" />
+                <h3 class="index-title">{region.name} edition</h3>
+                <span class="index-meta">{[region.currency, ...region.tags].join(' · ')}</span>
+              </a>
             </li>
           ))}
         </ul>
-      </div>
+      </section>
+
+      <figure class="box example-box">
+        <figcaption class="example-label">A worked example</figcaption>
+        <EditionSum region={india} />
+      </figure>
+    </div>
+
+    <section id="how" class="column" aria-labelledby="steps-h">
+      <h2 id="steps-h">How a lesson works</h2>
+      <ol class="how-list">
+        <li><h3>Start from the real thing</h3><p>A payslip, a loan sheet, a payment screen, drawn line by line. Find the line that matters before anyone explains it.</p></li>
+        <li><h3>Watch, then see it worked</h3><p>A short video from a regulator or a teacher, then the calculation one line at a time, each line explained.</p></li>
+        <li><h3>Your turn, then change one thing</h3><p>The same sum with new numbers and three hints, then the levers, to see what moves the answer.</p></li>
+        <li><h3>Check your understanding</h3><p>Three questions, which come back for review a few days later.</p></li>
+      </ol>
     </section>
-  )}
+
+    <section id="calculators" class="column taxonomy" aria-labelledby="calc-h">
+      <h2 id="calc-h" class="taxonomy-title">Tools that answer</h2>
+      <ul class="index-list taxonomy-list">
+        {everywhere.map((tool) => (
+          <li><a class="index-row" href="#editions" data-edition-path={`tools/${tool.slug}`}><span class="index-title">{tool.short}</span></a></li>
+        ))}
+      </ul>
+      <p class="taxonomy-foot">Nothing you type leaves your phone.</p>
+    </section>
+
+    <section class="column why" aria-labelledby="why-h">
+      <h2 id="why-h">Why {site.name}</h2>
+      <p>
+        Most people learn money at home, if at all. {site.name} grew out of a school club built on
+        one idea, that business is a life skill, and this site is for everyone who has no one to ask.
+      </p>
+      <ul class="why-list">
+        {reasons.map((reason) => <li>{reason}</li>)}
+      </ul>
+      <p class="why-more"><a class="btn-link" href={`${base}/about`}>More about {site.name}</a></p>
+    </section>
+
+    {starters.length > 0 && (
+      <section class="column" aria-labelledby="start-h">
+        <h2 id="start-h">Start with these</h2>
+        <ul class="index-list">
+          {starters.map(({ region, lesson }) => (
+            <li>
+              <a class="index-row" href={`${base}/${lessonPath(lesson)}`}>
+                <h3 class="index-title">{lesson.data.title}</h3>
+                <span class="index-sub">{lesson.data.summary}</span>
+                <span class="index-meta">{region.name} · {lesson.data.readingMinutes} min</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
 </BaseLayout>
 
 <script>
@@ -181,85 +155,36 @@ const india = getRegion('in');
 </script>
 
 <style>
-  /* Hero: a dark-blue field with blobs, a giant flush-left headline, and a stack of flashcards. */
-  .hero { position: relative; overflow: hidden; padding: var(--space-7) 0 var(--space-8); }
-  @media (min-width: 900px) { .hero { padding: var(--space-8) 0 var(--space-9); } }
-  .hero-grid { position: relative; z-index: 1; display: grid; gap: var(--space-8); align-items: center; }
-  @media (min-width: 980px) { .hero-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
-  .hero-copy :global(.hero-note) { margin-bottom: var(--space-4); }
-  .hero h1 { margin-bottom: var(--space-5); max-width: 15ch; }
-  .hero .lede { color: var(--ink-2); margin-bottom: var(--space-6); }
+  /* Flush left on white. Below 1024px one column in reading order: the intro, the editions, the
+     worked example. From 1024px the worked example sits beside the intro and the editions, so the
+     ledger and the choice of edition are both on the first screen. */
+  .home { padding-block: var(--space-section); }
+  .front { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--space-section); align-items: start; }
+  @media (min-width: 1024px) {
+    .front { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); column-gap: var(--space-6); }
+    .intro, .editions { grid-column: 1; }
+    .example-box { grid-column: 2; grid-row: 1 / span 2; }
+  }
+  .home > section { margin-top: var(--space-section); }
+
+  .intro h1 { font-size: var(--text-display); max-width: 15ch; }
+  .intro .lede { margin-bottom: var(--space-5); }
   .resume { margin: 0; }
 
-  .flashcards { position: relative; min-height: 360px; max-width: 460px; width: 100%; justify-self: center; }
-  .flashcard { position: absolute; inset: 0 var(--space-5) var(--space-6) var(--space-5); background: var(--paper); border: 2px solid var(--line-strong); border-radius: var(--radius-l); }
-  .flashcard-back { transform: rotate(7deg) translate(var(--space-4), var(--space-2)); background: var(--gold-pale); }
-  .flashcard-mid { transform: rotate(-4deg); }
-  .flashcard-front { position: relative; inset: auto; margin: 0 var(--space-5) var(--space-6); padding: var(--space-5) var(--space-5) var(--space-6); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
-  .flashcard-front :global(.flashcard-note) { margin-bottom: var(--space-2); }
-  .sticky-rule {
-    position: absolute; left: 0; bottom: 0; margin: 0; padding: var(--space-3) var(--space-4);
-    background: var(--gold); color: var(--on-gold); border: 2px solid var(--line-strong); border-radius: var(--radius-s);
-    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h3);
-  }
+  .example-box { margin: 0; max-width: var(--measure); }
+  .example-label { margin: 0 0 var(--space-2); color: var(--muted); font-size: var(--text-sm); font-weight: 700; }
 
-  .section-title { font-size: var(--text-h1); margin: 0 0 var(--space-6); text-align: center; }
+  /* How a lesson works: the list numbers the steps. */
+  .how-list { margin: 0; padding-inline-start: var(--space-5); }
+  .how-list li { margin: 0 0 var(--space-5); padding-inline-start: var(--space-1); }
+  .how-list li:last-child { margin-bottom: 0; }
+  .how-list li::marker { color: var(--ink); font-size: var(--text-lg); font-weight: 700; }
+  .how-list h3 { margin: 0 0 var(--space-1); }
+  .how-list p { margin: 0; }
 
-  /* Editions: three big rounded panels, each its own colour, on white. */
-  .editions-section { background: var(--bg); }
-  .editions { display: grid; gap: var(--space-4); }
-  @media (min-width: 980px) { .editions { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .edition { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6) var(--space-5); margin: 0; }
-  @media (min-width: 980px) { .edition { padding: var(--space-6); } }
-  .currency { align-self: flex-end; margin-bottom: calc(var(--space-6) * -1); border: 1.5px solid var(--brand-navy); }
-  .edition-name { font-size: var(--text-h1); line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
-  .edition-problem { margin: 0; color: var(--ink-2); }
-  /* A receipt: white paper and navy ink in both themes. */
-  .edition-sum { background: var(--paper); color: var(--brand-navy); border: 1.5px solid var(--brand-navy); border-radius: var(--radius-m); padding: var(--space-4); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
-  .edition-link { align-self: flex-start; margin-top: auto; padding-left: 0; }
+  .taxonomy-foot { margin: var(--space-4) 0 0; color: var(--muted); }
 
-  /* How a lesson works: four tilted cards. */
-  .steps-section { background: var(--bg); }
-  .steps-cards { display: grid; gap: var(--space-5); }
-  @media (min-width: 720px) { .steps-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1100px) { .steps-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); } }
-  .step-card { margin: 0; padding: var(--space-5); border-radius: var(--radius-l); border: 2px solid var(--line-strong); min-height: calc(var(--space-10) + var(--space-8)); color: var(--ink-2); }
-  .step-card h3 { font-size: var(--text-h3); line-height: var(--leading-tight); margin: var(--space-3) 0 var(--space-3); }
-  .step-card p { margin: 0; font-size: var(--text-ui); }
-  .step-num { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); color: var(--gold-text); }
-  .step-1 { background: var(--field-pale); }
-  .step-2 { background: var(--gold); --ink: var(--on-gold); --ink-2: var(--on-gold); --gold-text: var(--on-gold); --focus: var(--on-gold); border-color: var(--on-gold); }
-  .step-3 { background: var(--bg); }
-  .step-4 { background: var(--field-deep); }
-
-  /* The gold taxonomy panel: stacked giant questions, each a link. */
-  .taxonomy { text-align: center; }
-  .taxonomy-title { margin: 0 0 var(--space-5); font-size: var(--text-h3); color: var(--on-gold); }
-  .taxonomy-list { display: grid; gap: var(--space-2); }
-  .taxonomy-list li { margin: 0; }
-  .taxonomy-list a {
-    font-family: var(--font-display); font-weight: 800; font-size: var(--text-h1); line-height: var(--leading-tight);
-    letter-spacing: var(--tracking-display); color: var(--on-gold); text-decoration: none; text-wrap: balance;
-  }
-  .taxonomy-list a:hover { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; }
-  .taxonomy-foot { margin: var(--space-6) auto 0; font-weight: 700; }
-
-  /* Why: pills scattered around the badge on wide screens, a tilted wrap on phones. */
-  .why-panel h2 { margin-top: 0; font-size: var(--text-h1); }
-  .why-lede { font-size: var(--text-lg); max-width: 60ch; }
-  .why-list { columns: 2; column-gap: var(--space-7); margin: var(--space-5) 0; padding-left: var(--space-5); }
-  .why-list li { break-inside: avoid; }
-  @media (max-width: 639px) { .why-list { columns: 1; } }
-  .why-more { margin: 0; font-weight: 700; }
-
-  /* Start with these: the Ivy Kids sheet with an outlined grid and tilted stickers. */
-  .starters { margin-top: var(--space-6); }
-  .starters-head { text-align: center; }
-  .starter { padding-top: var(--space-8); }
-  .starter h3 { font-size: var(--text-h3); margin: 0 0 var(--space-2); }
-  .starter h3 a { color: var(--ink); text-decoration: none; }
-  .starter h3 a:hover { text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 3px; }
-  .starter p { margin: 0; font-size: var(--text-ui); color: var(--ink-2); }
-  .starter :global(.sticker) { position: absolute; top: var(--space-4); right: var(--space-4); }
-  .starter :global(.starter-doodle) { position: absolute; top: calc(var(--space-5) * -1); left: var(--space-4); background: var(--bg); }
+  .why-list { padding-inline-start: var(--space-5); }
+  .why-list li { margin-bottom: var(--space-1); }
+  .why-more { margin: 0; }
 </style>

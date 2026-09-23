@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import TrackCard from '../../../components/lesson/TrackCard.astro';
+import LessonList from '../../../components/lesson/LessonList.astro';
 import ProgressMarks from '../../../components/lesson/ProgressMarks.astro';
 import { REGIONS, getRegion } from '../../../lib/regions';
 import { inTrack, lessonsFor } from '../../../lib/lessons';
@@ -15,7 +15,6 @@ const region = getRegion(code!);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
 const lessons = await lessonsFor(region.code);
-const doodles = ['coin', 'tag', 'calculator'] as const;
 ---
 
 <BaseLayout
@@ -35,28 +34,40 @@ const doodles = ['coin', 'tag', 'calculator'] as const;
           takes under ten minutes.
         </p>
         <ProgressMarks reviewHref={`${prefix}/review`} />
-      </div>
 
-      <div class="course-grid">
-        {region.tracks.map((track, index) => (
-          <TrackCard track={track} index={index} lessons={inTrack(lessons, track.slug)} prefix={prefix} doodle={doodles[index % doodles.length]} />
+        {region.tracks.map((track) => (
+          <section class="track" aria-labelledby={`track-${track.slug}`}>
+            <h2 id={`track-${track.slug}`}><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></h2>
+            <p class="track-summary">{track.summary}</p>
+            <LessonList lessons={inTrack(lessons, track.slug)} planned={track.planned} compact />
+          </section>
         ))}
-      </div>
 
-      {lessons.length === 0 && (
-        <div class="column">
+        {lessons.length === 0 && (
           <p class="note">
             The {region.name} lessons are being written. The
             <a href={`${prefix}/tools/break-even`}>break-even calculator</a> already works with{' '}
             {region.name} numbers, and the <a href={`${base}/in/learn`}>India edition</a> has the first lessons.
           </p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .lede { margin-bottom: var(--space-6); }
+  .lede { margin-bottom: var(--space-5); }
+
+  /* One ruled section per track: a 1px rule, 32px above the heading, 48px between tracks. */
+  .track {
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
+    border-top: var(--rule-w) solid var(--rule);
+  }
+  .track h2 { margin: 0 0 var(--space-2); }
+  /* The whole heading is the link (ink, underlined on hover from base.css), at least 44px tall. */
+  .track h2 a { display: inline-flex; align-items: center; min-height: var(--target); }
+  .track-summary { margin: 0 0 var(--space-4); color: var(--ink-2); font-size: var(--text-md); }
+
   .note { margin-top: var(--space-8); }
 </style>

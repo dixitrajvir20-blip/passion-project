@@ -50,33 +50,33 @@ const description = `${available.length} free tools in the ${region.name} editio
             {groups.map(({ group }) => <li><a href={`#${group.id}`}>{group.title}</a></li>)}
           </ul>
         </nav>
-      </div>
 
-      {groups.map(({ group, tools }) => (
-        <section class="tool-group" id={group.id} aria-labelledby={`${group.id}-h`}>
-          <h2 id={`${group.id}-h`}>{group.title}</h2>
-          <ul class="index-list tool-index">
-            {tools.map((tool) => (
-              <li>
-                <a class="index-row" href={`${prefix}/tools/${tool.slug}`}>
-                  <h3 class="index-title">{tool.answers}</h3>
-                  <span class="index-sub">{titleFor(tool, region.code)}</span>
-                  <span class="index-meta">{toolMetaLine(tool, situations.get(tool.slug))}</span>
-                  <span class="index-go">Open</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
+        {groups.map(({ group, tools }) => (
+          <section class="tool-group" id={group.id} aria-labelledby={`${group.id}-h`}>
+            <h2 id={`${group.id}-h`}>{group.title}</h2>
+            <ul class="index-list tool-index">
+              {tools.map((tool) => (
+                <li>
+                  <a class="index-row" href={`${prefix}/tools/${tool.slug}`}>
+                    <h3 class="index-title">{tool.answers}</h3>
+                    <span class="index-sub">{titleFor(tool, region.code)}</span>
+                    <span class="index-meta">{toolMetaLine(tool, situations.get(tool.slug))}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .tool-jumps ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: var(--space-5) 0 0; }
-  .tool-group { margin-top: var(--space-8); }
-  .tool-group h2 { font-size: var(--text-h2); margin: 0 0 var(--space-4); }
-  .tool-index { max-width: var(--column); }
-  .tool-index .index-title { margin: 0; }
+  /* One 640 column at every width. The rows are base.css's ruled .index-list; the page adds only the
+     jump links (standalone links: ink 700, always underlined, 44px tall) and the space between groups. */
+  .tool-jumps ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); margin: var(--space-5) 0 0; }
+  .tool-jumps a { display: inline-flex; align-items: center; min-height: var(--target); }
+  .tool-group { margin-top: var(--space-7); }
+  .tool-group h2 { margin: 0 0 var(--space-4); }
 </style>

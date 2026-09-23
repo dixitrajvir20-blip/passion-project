@@ -34,9 +34,26 @@ const entries = await Promise.all(
 </section>
 
 <style>
+  /* Ruled rows under a small heading. Each term is a row title that links to its glossary entry:
+     ink 700, underlined on hover and focus, 44px tall; the definition is the body text under it. */
   .tool-terms { margin-top: var(--space-7); }
-  .tool-terms h2 { font-size: var(--text-h3); margin-top: 0; }
-  .tool-terms dl { margin: 0; }
-  .tool-terms dt { font-weight: 700; color: var(--ink); margin-top: var(--space-4); }
-  .tool-terms dd { margin: 0; font-size: var(--text-ui); }
+  .tool-terms h2 { margin: 0 0 var(--space-3); font-size: var(--text-lg); }
+  .tool-terms dl { margin: 0; border-top: var(--rule-w) solid var(--rule); }
+  .tool-terms dl > div { padding-block: var(--space-2) var(--space-4); border-bottom: var(--rule-w) solid var(--rule); }
+  .tool-terms dt { margin: 0; }
+  .tool-terms dt a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target);
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .tool-terms dt a:is(:hover, :focus-visible) {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: var(--control-w);
+    text-underline-offset: 0.16em;
+  }
+  .tool-terms dd { margin: 0; color: var(--ink-2); }
 </style>

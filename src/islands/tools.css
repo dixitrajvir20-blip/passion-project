@@ -1,65 +1,92 @@
-/* Calculator shell. Shared by every tool island; keep tool-specific rules out of here. */
+/* Calculator shell, v5.1. Shared by every tool island; keep tool-specific rules out of here.
+   base.css already sets the fields (label, hint, 2px ink input, note, error), the buttons, the
+   ledger, tables and the fold summary; this file lays them out as a tool. Tokens only. */
 
-.tool-grid { display: grid; gap: var(--space-6); }
+.tool-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
 @media (min-width: 900px) {
-  .tool-grid { grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: start; }
+  .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); align-items: start; }
 }
-.tool .inputs h2, .tool .results h2 { margin-top: 0; font-size: var(--text-h3); }
-.tool .field { margin-bottom: var(--space-5); }
-.tool .field > label { font-size: var(--text-md); }
-.tool .btn-row { margin-top: var(--space-2); }
+.tool .inputs h2, .tool .results h2 { margin-top: 0; font-size: var(--text-lg); }
 
-/* The results panel: a headline figure where the answer is a count or a payment, then a ledger
-   (base.css) whose rows add up to the double-ruled total. The panel is the bench the sum is
-   worked on, so it is the page's one tinted fill. */
+/* The results bench: the one box on the page, holding the answer. A headline figure where the answer
+   is a count or a payment, then a ledger (base.css) whose rows add up to the double-ruled total.
+   From 900px it stays beside the fields while the reader scrolls them, and only while the whole
+   bench fits in the window ([data-bench-fits], set by the tool page); otherwise, and without
+   JavaScript, it scrolls with the page, so none of its lines is ever held out of sight. */
 .tool .results {
-  background: var(--bg-2);
-  border-radius: var(--radius-l);
-  padding: var(--space-5) var(--space-6) var(--space-6);
-  position: sticky;
-  top: calc(var(--header-h) + var(--space-4));
+  padding: var(--space-5);
+  border: var(--rule-w) solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
   font-variant-numeric: tabular-nums;
 }
-.tool .result-figure { padding: var(--space-2) 0 var(--space-4); border-bottom: 1px solid var(--line); margin-bottom: var(--space-2); }
+@media (max-width: 399px) { .tool .results { padding: var(--space-4); } }
+@media (min-width: 900px) {
+  [data-bench-fits] .tool .results { position: sticky; top: var(--sticky-top); }
+}
+
+.tool .result-figure { margin-bottom: var(--space-2); padding: var(--space-2) 0 var(--space-4); border-bottom: var(--rule-w) solid var(--rule); }
 .tool .result-figure p { margin: 0; }
-.tool .result-figure-value { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 800; letter-spacing: var(--tracking-display); line-height: 1; color: var(--ink); }
+/* The answer: the loudest thing on the bench. A figure wider than the bench breaks only as a last
+   resort, instead of pushing the page sideways. */
+.tool .result-figure-value {
+  color: var(--ink);
+  font-size: var(--text-h1);
+  font-weight: 700;
+  line-height: var(--leading-h1);
+  overflow-wrap: anywhere;
+}
 .tool .result-figure-value.is-loss { color: var(--error); }
-.tool .result-figure-label { margin-top: var(--space-2); color: var(--ink-2); font-size: var(--text-ui); }
-.tool .result-block { border-bottom: 1px solid var(--line); }
-.tool .result-block p { margin: 0; }
-.tool .result-label { font-size: var(--text-ui); }
-.tool .result-block.ledger-total { border-bottom: 0; margin: var(--space-2) 0; }
-.tool .result-block.ledger-subtotal { border-bottom: 0; }
-.tool .result-fact { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; color: var(--ink-2); font-size: var(--text-ui); }
-.tool .result-fact p { margin: 0; }
-.tool .result-fact-value { font-weight: 700; color: var(--ink); white-space: nowrap; }
-.tool .result-fact-value.is-loss { color: var(--error); }
-.tool .result-value.is-loss { color: var(--error); }
-.tool .plain { margin: var(--space-5) 0 0; font-size: var(--text-md); }
-.tool .link-note { margin: var(--space-2) 0 0; color: var(--muted); font-size: var(--text-sm); }
-.tool .copied { min-height: 24px; margin: var(--space-2) 0 0; color: var(--success); font-size: var(--text-sm); }
+.tool .result-figure-label { margin-top: var(--space-2); color: var(--ink-2); font-size: var(--text-sm); }
 
-.tool .how { margin-top: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); }
-.tool summary { cursor: pointer; font-weight: 700; color: var(--ink); min-height: 44px; display: flex; align-items: center; gap: var(--space-2); list-style: none; }
-.tool summary::-webkit-details-marker { display: none; }
-/* display:flex removes the native marker, so the control says what it is with its own. */
-.tool summary::before { content: '›'; font-family: var(--font-display); color: var(--muted); transition: transform var(--dur-fast) var(--ease); }
-.tool details[open] > summary::before { transform: rotate(90deg); }
+/* Ledger rows on the bench: a hairline between the lines of the sum, none under a total. */
+.tool .result-block { border-bottom: var(--rule-w) solid var(--rule); }
+.tool .result-block p { margin: 0; }
+.tool .result-label { font-size: var(--text-sm); }
+.tool .result-block.ledger-total { margin: var(--space-2) 0; border-bottom: 0; }
+.tool .result-block.ledger-subtotal { border-bottom: 0; }
+.tool .result-value.is-loss { color: var(--error); }
+
+/* A figure that follows from the sum but is not part of it: a plain row below the ledger. */
+.tool .result-fact { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; color: var(--ink-2); font-size: var(--text-sm); }
+.tool .result-fact p { margin: 0; }
+.tool .result-fact-value { color: var(--ink); font-weight: 700; white-space: nowrap; }
+.tool .result-fact-value.is-loss { color: var(--error); }
+
+/* What the result means, in a sentence, then what the tool assumed or left out. */
+.tool .plain { margin: var(--space-5) 0 0; font-size: var(--text-md); }
+.tool .notice { margin: var(--space-4) 0 0; color: var(--muted); font-size: var(--text-sm); }
+.tool-notes { margin: var(--space-4) 0 0; padding-inline-start: var(--space-5); color: var(--ink-2); font-size: var(--text-sm); }
+
+/* Reset, 'Copy link to these numbers' and Share: neutral small buttons, never a primary. The
+   calculator has no primary button. */
+.tool .btn-row { margin-top: var(--space-2); gap: var(--space-2); }
+.tool .btn-row .btn-secondary { min-height: var(--target); padding: 0 var(--space-4); font-size: var(--text-sm); }
+.tool .btn-row + .link-note { margin: var(--space-2) 0 0; color: var(--muted); font-size: var(--text-sm); }
+.tool .copied { min-height: var(--space-5); margin: var(--space-2) 0 0; color: var(--success); font-size: var(--text-sm); }
+
+/* "How this is worked out" and the other tool folds: base.css draws the summary ('+', '−' once
+   open, ink 700, 44px); this is the fold's own edge, a hairline above it and no fill. */
+.tool details.how { margin: var(--space-6) 0 0; padding-top: var(--space-3); border-top: var(--rule-w) solid var(--rule); }
+.tool details.how + details.how { margin-top: 0; }
+.tool details.how[open] > summary { margin-bottom: var(--space-3); }
 .tool .formula {
-  font-family: var(--font-display);
-  background: var(--bg-2);
-  border-radius: var(--radius-m);
   padding: var(--space-3) var(--space-4);
+  border: var(--rule-w) solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
   font-variant-numeric: tabular-nums;
 }
 
-.tool .notice { margin: var(--space-4) 0 0; color: var(--muted); font-size: var(--text-sm); }
-.tool .how + .how { margin-top: var(--space-5); padding-top: var(--space-4); }
+/* Year and repayment tables (base .table): the money columns line up on the right. */
 .tool .table-wrap { margin-top: var(--space-3); }
+.tool .table td, .tool .table thead th + th { text-align: end; }
 
-/* Savings chart. The viewBox is 320 wide and the chart never renders much wider than that, so
-   the labels stay near their token size instead of scaling up with the drawing. Two lines, told
-   apart by dash pattern and direct labels as well as colour, and always a table underneath. */
+/* Savings chart. The viewBox is 320 wide and the chart never renders much wider than that, so the
+   labels stay near their token size instead of scaling up with the drawing. Two lines, told apart
+   by dash pattern and direct labels as well as colour, and always a table underneath. */
 .growth { margin: var(--space-7) 0 0; }
 .growth-chart { display: block; width: 100%; max-width: 440px; height: auto; }
 .growth-chart .axis { stroke: var(--chart-grid); stroke-width: 1; }
@@ -68,39 +95,46 @@
 .growth-chart .chart-text { paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; fill: var(--ink-2); font-family: var(--font-body); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
 .growth-chart .chart-text.strong { fill: var(--ink); font-weight: 700; }
 .growth figcaption { margin-top: var(--space-3); }
-.growth summary { font-weight: 400; color: var(--accent-text); }
+.growth details { padding-top: var(--space-3); border-top: var(--rule-w) solid var(--rule); }
 
-/* Budget lines: name on its own row on a phone, one row from 640px. */
-.budget-rows { border: 0; margin: 0 0 var(--space-5); padding: 0; min-width: 0; }
-.budget-rows legend { padding: 0; margin-bottom: var(--space-2); color: var(--ink); font-size: var(--text-md); font-weight: 700; }
-.budget-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto; gap: var(--space-2); align-items: center; padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+/* Repeated rows (budget lines, payslip lines, pay-later plans): each row under a hairline. */
+.budget-rows, .row-list { min-width: 0; margin: 0 0 var(--space-5); padding: 0; border: 0; }
+.budget-rows legend, .row-list > legend { margin-bottom: var(--space-2); padding: 0; color: var(--ink); font-size: var(--text-md); font-weight: 700; }
+.row-list-row { min-width: 0; margin: 0; padding: var(--space-3) 0; border: 0; border-top: var(--rule-w) solid var(--rule); }
+.row-list-row > legend { padding: 0; color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
+.row-list > .btn-secondary, .budget-rows > .btn { margin-top: var(--space-3); }
+
+/* Budget lines: the name on its own row on a phone, one row from 640px. */
+.budget-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto; gap: var(--space-2); align-items: center; padding: var(--space-3) 0; border-top: var(--rule-w) solid var(--rule); }
 .budget-row .budget-name { grid-column: 1 / -1; }
-.budget-rows > .btn { margin-top: var(--space-3); }
 .budget-head { display: none; }
-/* A text control, not another pill: the row's action should be quieter than Add, Reset and Copy. */
-.remove-line {
-  min-height: 44px;
-  padding: 0 var(--space-2);
-  border: 0;
-  background: none;
-  color: var(--accent-text);
-  font: inherit;
-  font-size: var(--text-sm);
-  cursor: pointer;
-}
-.remove-line:hover { text-decoration: underline; }
 @media (min-width: 640px) {
   .budget-row { grid-template-columns: 2fr 1fr 1fr auto; }
   .budget-row .budget-name { grid-column: auto; }
   .budget-head { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: var(--space-2); padding-bottom: var(--space-2); color: var(--muted); font-size: var(--text-sm); }
-  .budget-head span:last-child { min-width: 64px; }
+  .budget-head span:last-child { min-width: var(--space-8); }
 }
 
-/* Assumptions and what a result leaves out, as plain notes under it. */
-.tool-notes { margin: var(--space-4) 0 0; padding-left: var(--space-5); color: var(--ink-2); font-size: var(--text-sm); }
+/* Remove a line: a text button, quieter than Add, Reset and Copy. Ink 700, always underlined, 44px. */
+.remove-line {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding: 0 var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.16em;
+  cursor: pointer;
+}
+.remove-line:hover { text-decoration-thickness: 3px; }
 
-/* Repeated rows (payslip lines, pay-later plans): each row is its own small group with a legend. */
-.row-list { border: 0; margin: 0 0 var(--space-5); padding: 0; min-width: 0; }
-.row-list > legend { padding: 0; margin-bottom: var(--space-2); color: var(--ink); font-size: var(--text-md); font-weight: 700; }
-.row-list-row { border: 0; border-top: 1px solid var(--line); margin: 0; padding: var(--space-3) 0; min-width: 0; }
-.row-list-row > legend { padding: 0; font-size: var(--text-sm); font-weight: 700; color: var(--ink); }
+@media print {
+  .tool .results { position: static; }
+  .tool .formula { background: none; border-color: var(--print-line); }
+}

@@ -36,7 +36,8 @@ const last = rest.length === 0;
 {!last && (
   <li class="showme-next">
     <details class="showme-more">
-      <summary>
+      {/* A small secondary button; once opened it stays as quiet text naming the line it showed. */}
+      <summary class="btn btn-secondary btn-sm">
         <span class="showme-next-label">Show line <span class="numbers">{index + 2}</span></span>
         <span class="showme-open-label">Line <span class="numbers">{index + 2}</span></span>
         <span class="showme-count numbers">of {total}</span>

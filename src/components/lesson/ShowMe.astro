@@ -1,9 +1,10 @@
 ---
 /**
- * The calculation, taught one line at a time. The reader presses "Next line" and each line
- * arrives with a one-sentence caption: what it is, who gets it. The last line is the answer,
- * closed with the ledger's double rule. The lines come from lesson-math, never from prose, so
- * the arithmetic on screen is the arithmetic in finance.ts.
+ * The calculation, taught one line at a time. The reader presses "Show line N" (a small secondary
+ * button) and each line arrives with a one-sentence caption: what it is, who gets it. The lines
+ * sit on the page as a plain ledger, no box; the last is the answer, closed with the ledger's
+ * double rule. The lines come from lesson-math, never from prose, so the arithmetic on screen is
+ * the arithmetic in finance.ts.
  *
  * "Show every line" (script) opens the chain for readers who want the whole ledger; printing
  * opens it too. With JavaScript off the chain still works line by line.
@@ -23,7 +24,7 @@ const { context, steps, localeCode } = Astro.props;
 <div class="showme" data-showme>
   <p class="showme-context">{context}</p>
   <p class="showme-controls">
-    <button type="button" class="showme-all" data-showme-all hidden>Show every line</button>
+    <button type="button" class="showme-all btn-link btn-sm" data-showme-all hidden>Show every line</button>
   </p>
   <ol class="ledger showme-lines">
     <ShowMeStep steps={steps} index={0} total={steps.length} localeCode={localeCode} />

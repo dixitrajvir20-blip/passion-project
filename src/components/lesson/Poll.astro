@@ -38,8 +38,9 @@ const { id, question, options, answer, checkId, revealLabel = 'Show the answer',
     </div>
   </fieldset>
 
+  {/* The reveal is a secondary button: a lesson's one primary is never a check. */}
   <details class="reveal">
-    <summary class="btn">{revealLabel}</summary>
+    <summary class="btn btn-secondary">{revealLabel}</summary>
     <div class="reveal-body">
       {/* Filled by the lesson script when a check is scored. Words, not colour: "Correct." / "Not quite." */}
       <p class="poll-status" role="status"></p>

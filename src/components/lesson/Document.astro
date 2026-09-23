@@ -1,8 +1,8 @@
 ---
 /**
- * The real artefact the lesson is about, drawn in tokens: a payslip, a pay stub, a loan
- * key-facts sheet, a platform payout, an aid letter. Each line can carry a plain-language hint
- * the reader opens in place. The same rule as MockScreen: never a screenshot, never a real
+ * The real artefact the lesson is about, drawn in tokens on a white .box: a payslip, a pay stub,
+ * a loan key-facts sheet, a platform payout, an aid letter. Each line can carry a plain-language
+ * hint the reader opens in place (the label wears a dotted underline, like a term). The same rule as MockScreen: never a screenshot, never a real
  * employer, bank, app or regulator name or mark; an accurate-looking fake of a real brand is
  * impersonation and teaches the wrong tell.
  */
@@ -23,7 +23,7 @@ const kindLabel = {
 }[kind];
 ---
 
-<figure class="doc" data-doc-kind={kind}>
+<figure class="doc box" data-doc-kind={kind}>
   <figcaption class="doc-head">
     <span class="doc-kind">{kindLabel}</span>
     <span class="doc-title">{title}</span>

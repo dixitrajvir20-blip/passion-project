@@ -58,33 +58,38 @@ export default function VideoPlayer({ youtubeId, title, channel, minutes, startS
     );
   }
 
+  // One primary per screen: Play is the primary until the question is put, then "Choose, then
+  // play" is, and Play steps back to secondary beside it.
+  const asking = state === 'ask';
   return (
     <div class="video-frame video-poster">
       <p class="video-poster-head">
         <span class="video-poster-title">{title}</span>
         <span class="video-poster-channel">{channel}</span>
       </p>
-      <button type="button" class="video-play" onClick={() => setState(allowed ? 'playing' : 'ask')}>
-        <svg class="video-play-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M8 5v14l11-7z" />
-        </svg>
-        <span class="video-play-text">
-          Play <span class="numbers">{minutes} min</span>
-        </span>
-      </button>
-      {state === 'ask' && (
-        <div class="video-ask">
-          <p role="status">Playing loads YouTube's player from youtube-nocookie.com. YouTube may set its own cookies once a video plays.</p>
-          <p class="btn-row">
-            <button type="button" class="btn btn-sm" onClick={() => document.dispatchEvent(new CustomEvent('lp:open-consent'))}>
-              Choose, then play
-            </button>
-            <a class="btn btn-secondary btn-sm" href={watchHref} rel="noopener noreferrer">
-              Watch on YouTube instead
-            </a>
-          </p>
-        </div>
-      )}
+      <div class="video-poster-main">
+        <button type="button" class={asking ? 'btn btn-secondary video-play' : 'btn video-play'} onClick={() => setState(allowed ? 'playing' : 'ask')}>
+          <svg class="video-play-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <span class="video-play-text">
+            Play <span class="numbers">{minutes} min</span>
+          </span>
+        </button>
+        {asking && (
+          <div class="video-ask">
+            <p role="status">Playing loads YouTube's player from youtube-nocookie.com. YouTube may set its own cookies once a video plays.</p>
+            <p class="btn-row">
+              <button type="button" class="btn btn-sm" onClick={() => document.dispatchEvent(new CustomEvent('lp:open-consent'))}>
+                Choose, then play
+              </button>
+              <a class="btn btn-secondary btn-sm" href={watchHref} rel="noopener noreferrer">
+                Watch on YouTube instead
+              </a>
+            </p>
+          </div>
+        )}
+      </div>
       <a class="video-link" href={watchHref} rel="noopener noreferrer">
         Watch on YouTube
       </a>

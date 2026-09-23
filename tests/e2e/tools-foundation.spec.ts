@@ -448,3 +448,68 @@ test('the registry and the built pages agree on which tools exist', async ({ pag
   }
   expect(TOOLS.length).toBe(14);
 });
+
+// ---- Design v5.1: the tools index and the tool page frame ----
+
+/** --ink, #0b1240: row titles, standalone links, text buttons and the crumb are never blue. */
+const INK = 'rgb(11, 18, 64)';
+
+test.describe('design v5.1: the tools frame', () => {
+  test('the index rows are ink titles with no Open label, and every jump link is 44px tall', async ({ page }) => {
+    await page.goto('in/tools');
+    await expect(page.locator('.index-go')).toHaveCount(0);
+    await expect(page.locator('.tool-group .index-title').first()).toHaveCSS('color', INK);
+    const jumps = await page.locator('.tool-jumps a').all();
+    expect(jumps.length).toBeGreaterThan(0);
+    for (const link of jumps) {
+      await expect(link).toHaveCSS('color', INK);
+      expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    }
+  });
+
+  test('a calculator has no primary button, and its crumb and lesson links are ink, the rows 44px tall', async ({ page }) => {
+    await page.goto('in/tools/break-even');
+    await waitForIslands(page);
+    await expect(page.locator('.tool .btn:not(.btn-secondary)')).toHaveCount(0);
+    await expect(page.locator('.crumb a')).toHaveCSS('color', INK);
+    const lessons = await page.locator('.related li a').all();
+    expect(lessons.length).toBeGreaterThan(0);
+    for (const link of lessons) {
+      await expect(link).toHaveCSS('color', INK);
+      expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    }
+  });
+
+  test('the results bench sticks from 900px, and only while the whole bench fits in the window', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('in/tools/break-even');
+    await waitForIslands(page);
+    const frame = page.locator('[data-tool-page]');
+    const bench = page.locator('.tool .results');
+    await expect(frame).toHaveAttribute('data-bench-fits');
+    await expect(bench).toHaveCSS('position', 'sticky');
+
+    // A window shorter than the bench: it scrolls with the page, so none of its lines is held out of sight.
+    const height = await bench.evaluate((e) => Math.floor(e.getBoundingClientRect().height));
+    await page.setViewportSize({ width: 1280, height });
+    await expect(frame).not.toHaveAttribute('data-bench-fits');
+    await expect(bench).toHaveCSS('position', 'static');
+
+    // One column on a phone: never sticky.
+    await page.setViewportSize({ width: 360, height: 800 });
+    await expect(bench).toHaveCSS('position', 'static');
+  });
+
+  test('the budget planner’s remove buttons are underlined ink text buttons at least 44px tall', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 800 });
+    await page.goto('in/tools/budget');
+    await waitForIslands(page);
+    const removes = await page.locator('.budget-row .remove-line').all();
+    expect(removes.length).toBeGreaterThan(0);
+    for (const button of removes) {
+      await expect(button).toHaveCSS('color', INK);
+      await expect(button).toHaveCSS('text-decoration-line', 'underline');
+      expect((await button.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    }
+  });
+});
