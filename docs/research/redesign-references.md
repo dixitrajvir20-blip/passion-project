@@ -50,3 +50,5 @@ tab and looking, not reading about them.
   with stickers or minute pills.
 - Tables and figures carry the data; decoration is absent or hand-drawn and inside the column.
 - No gold panels, no rounded 32px blocks, no hand-lettered notes, no blobs, no dark theme.
+
+Built 23 September 2026 as design v5.1 (`docs/BRAND_GUIDE.md` v4, `docs/DESIGN.md` v5.1): white at every OS setting, one blue bar, navy ink, one typeface, no gold and no decoration.

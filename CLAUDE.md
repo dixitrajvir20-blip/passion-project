@@ -19,18 +19,26 @@ of his school club, Business Lab).
 - @docs/BOSS_PLAYBOOK.md — how this gets built, sprint by sprint, with the gates
 - docs/KICKOFF_PROMPTS.md is Rajvir's paste-in prompts; the *_Build_Brief.pdf files are these docs as PDFs
 
-## Current state (22 Sept 2026) — Phases 1–4 done; design v4.1 (white page) and every lesson on template v2
+## Current state (23 Sept 2026) — Phases 1–4 done; design v5.1 (white, one blue), every lesson on template v2, fourteen tools
 - **Astro 7 static build** with **Preact islands**, deployed to **GitHub Pages** under
   `/passion-project` (`astro.config.mjs` sets `base`; every internal link goes through it).
 - Three editions — **India `/in`, Europe `/eu`, United States `/us`** — rendered from one
   `src/lib/regions.ts` data file, switched by a dropdown with flags in the header. The front
   page asks the reader to choose rather than guessing from their IP.
 - **Name and brand.** Renamed from LaunchPad to **Business Lab** (Rajvir's school club) on 18 Sept.
-  Design v4 (`docs/BRAND_GUIDE.md` v3, `docs/DESIGN.md` v4): a dark-blue field with white sheets and
-  gold, rounded panels, the ledger as the signature, an edition dropdown with flags, no shadows or
-  fade-ins. Display Bricolage Grotesque + body Atkinson Hyperlegible Next, self-hosted; Kalam is
-  used only at build time to draw a few hand-lettered notes. The logo is an interim drawn badge
-  until the licensed file arrives (see BRAND_GUIDE §4).
+  **Design v5.1 (23 Sept; `docs/BRAND_GUIDE.md` v4, `docs/DESIGN.md` v5.1)**: after Rajvir saw the
+  site's dark theme in Chrome and asked for "the entire page white with blue accents, as
+  professional as possible", the site is white at every OS setting (no dark theme), with one blue
+  (`#0b4aa2`) in five jobs only: the header bar, links in running text, the one primary button per
+  screen, the focus ring and the current-item bar (chart series may use it as data). Headings are
+  navy ink; list-row titles are ink with the whole row as the link. No gold, stickers, hand-lettered
+  notes, blobs, rounded panels, pill navigation or Academy-style cards; the ledger stays as the
+  signature; folds use a plain "+"/"−" summary; the consent notice is a static block under the
+  header. One typeface, Atkinson Hyperlegible Next (Bricolage is kept only as a build-time TTF for
+  the share images). Reference sites viewed for the direction: Zerodha Varsity, Khan Academy, CFPB,
+  GOV.UK (`docs/research/redesign-references.md`; the spec and its skeptic rounds are in
+  `docs/research/redesign-v5*.json`). The logo is an interim drawn badge (inverse, white disc with
+  a blue B, on the bar) until the licensed file arrives (see BRAND_GUIDE §4).
 - **Tone.** Rajvir wants lessons that are serious, professional and research-based. No
   street-stall or toy-business framing; every lesson answers a documented struggle in its region.
   Section labels are "Key points", "The calculation", "Check your understanding".
@@ -89,7 +97,10 @@ of his school club, Business Lab).
   (default off); the build fails if it is on without `PUBLIC_AUTH_ORIGIN`. Going live is Phase 6.
 - **Security**: strict CSP (meta, per-inline hashes), pinned GitHub Actions, Dependabot with
   cooldown, `.npmrc ignore-scripts`, least-privilege workflows, CodeQL.
-- **Gates**: `npm run ship-check` = build + `scripts/js-budget.mjs` + contrast + unit + rules + e2e/axe.
+- **Gates**: `npm run ship-check` = build + `scripts/js-budget.mjs` + contrast + unit + rules + e2e/axe
+  (`tests/e2e/design.spec.ts` proves the page stays white with the OS in dark mode, never scrolls
+  sideways at 320px or at 200% zoom, keeps 44px targets, ships no Bricolage and no style attributes;
+  axe runs at 393px and 1280px).
   Content rules are tests (`tests/unit/lessons.test.ts`): sentence/section length, banned words,
   market-signal language, undefined terms, quote length, no embedded media.
 - **Share images** are drawn at build time (`scripts/og-images.mjs`, resvg); `scripts/brand-icons.mjs`
@@ -115,14 +126,16 @@ of his school club, Business Lab).
   promised returns. Market data ≥30 days old (SEBI). No product recommendations.
 - **Privacy-first.** No accounts, personal-data forms, or third-party trackers on by default.
   Progress is localStorage; documented keys only. Honour Global Privacy Control.
-- **Accessibility is enforced.** WCAG 2.2 AA, keyboard, both appearances, reduced motion; `npm run
-  test:e2e` fails on any serious/critical axe issue at 360px and 1280px. `npm run contrast` must pass.
+- **Accessibility is enforced.** WCAG 2.2 AA, keyboard, forced colours and `prefers-contrast: more`,
+  reduced motion (no dark theme: the site is light-only by the owner's decision); `npm run test:e2e`
+  fails on any serious/critical axe issue at 393px and 1280px. `npm run contrast` must pass.
 - Follow BRAND_GUIDE.md and DESIGN.md. No purple/gradients, glows, glassmorphism-as-decoration,
   stat banners without sources, default fonts, ALL CAPS labels, or emoji icons.
 
 ## Workflow
 - Plan first for anything over two files; then build. Prove it with `npm run ship-check` (build +
-  unit + e2e/axe + contrast) and screenshots at 360px and 1280px, light and dark.
+  unit + e2e/axe + contrast) and screenshots at 360px, 768px and 1280px (`npm run screenshots` needs
+  a preview on :4321; check the files' dates before showing them).
 - Ask the reviewer subagents (design-reviewer, content-reviewer, a11y-perf-auditor,
   security-reviewer) before committing the kind of change each covers.
 - Small commits on a feature branch. **Never push, merge, or deploy** — Rajvir does that.

@@ -1,18 +1,18 @@
 /* The consent banner and the Privacy choices dialog. Base tokens only.
 
    The first-visit banner is a block in the normal flow directly under the header: white, with a
-   4px blue rule on top, the same buttons as before. It is never fixed, so it can never cover a
+   2px ink rule on top (blue keeps its five jobs), the same buttons as before. It is never fixed, so it can never cover a
    focused control, at any size or zoom. It is in the server's HTML and shown only while
    html[data-consent-ask] is set (by the inline check in BaseLayout's head, then by the island), so
    it is there from the first paint and never pushes the page down after load. With JavaScript off
    it stays hidden: nothing optional can run then anyway. */
 .consent-banner {
   display: none;
-  /* A white gap first, so the blue rule reads as the banner's own and not as the bar grown taller. */
+  /* A white gap first, so the rule reads as the banner's own and not as the header's edge. */
   margin-top: var(--space-4);
   background: var(--bg);
   color: var(--ink-2);
-  border-top: var(--bar-w) solid var(--blue);
+  border-top: var(--control-w) solid var(--ink);
   border-bottom: var(--rule-w) solid var(--rule);
 }
 html[data-consent-ask] .consent-banner { display: block; }

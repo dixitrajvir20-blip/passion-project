@@ -58,10 +58,9 @@
 .tool .notice { margin: var(--space-4) 0 0; color: var(--muted); font-size: var(--text-sm); }
 .tool-notes { margin: var(--space-4) 0 0; padding-inline-start: var(--space-5); color: var(--ink-2); font-size: var(--text-sm); }
 
-/* Reset, 'Copy link to these numbers' and Share: neutral small buttons, never a primary. The
-   calculator has no primary button. */
+/* Reset, 'Copy link to these numbers' and Share: neutral small buttons (.btn-secondary .btn-sm),
+   never a primary. The calculator has no primary button. */
 .tool .btn-row { margin-top: var(--space-2); gap: var(--space-2); }
-.tool .btn-row .btn-secondary { min-height: var(--target); padding: 0 var(--space-4); font-size: var(--text-sm); }
 .tool .btn-row + .link-note { margin: var(--space-2) 0 0; color: var(--muted); font-size: var(--text-sm); }
 .tool .copied { min-height: var(--space-5); margin: var(--space-2) 0 0; color: var(--success); font-size: var(--text-sm); }
 
@@ -104,15 +103,27 @@
 .row-list-row > legend { padding: 0; color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
 .row-list > .btn-secondary, .budget-rows > .btn { margin-top: var(--space-3); }
 
-/* Budget lines: the name on its own row on a phone, one row from 640px. */
-.budget-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto; gap: var(--space-2); align-items: center; padding: var(--space-3) 0; border-top: var(--rule-w) solid var(--rule); }
-.budget-row .budget-name { grid-column: 1 / -1; }
+/* Budget lines. The name has its own line; under it the amount, the kind and Remove, which wrap
+   onto a third line on the narrowest phones rather than squeezing. The kind is never narrower than
+   128px, which holds its longest option ("Savings", about 65px at 19px) with the 36px that holds the
+   arrow, the left padding and the 2px edges; Remove keeps one width too, so the column heads can
+   line up with both. */
+.budget-row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; padding: var(--space-3) 0; border-top: var(--rule-w) solid var(--rule); }
+.budget-row .budget-name { flex: 1 1 100%; }
+.budget-row input[type='number'] { flex: 1 1 calc(var(--space-9) + var(--space-3)); min-width: 0; max-width: none; }
+.budget-row select { flex: 0 0 auto; width: auto; min-width: calc(var(--space-9) + var(--space-6)); }
+.budget-row .remove-line { flex: none; min-width: calc(var(--space-8) + var(--space-3)); }
 .budget-head { display: none; }
-@media (min-width: 640px) {
-  .budget-row { grid-template-columns: 2fr 1fr 1fr auto; }
-  .budget-row .budget-name { grid-column: auto; }
-  .budget-head { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: var(--space-2); padding-bottom: var(--space-2); color: var(--muted); font-size: var(--text-sm); }
-  .budget-head span:last-child { min-width: var(--space-8); }
+/* One line per budget line, with visible column heads, only where the fields have the page's whole
+   width (640 to 899px). From 900px the calculator sits beside its results, too narrow for four
+   controls in a row, so the lines go back to two rows. */
+@media (min-width: 640px) and (max-width: 899px) {
+  .budget-row, .budget-head { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto auto; gap: var(--space-2); }
+  .budget-row select { width: 100%; }
+  .budget-head { align-items: end; padding-bottom: var(--space-2); color: var(--muted); font-size: var(--text-sm); }
+  /* The same widths as the kind and Remove above, so the heads sit over their fields. */
+  .budget-head span:nth-child(3) { min-width: calc(var(--space-9) + var(--space-6)); }
+  .budget-head span:last-child { min-width: calc(var(--space-8) + var(--space-3)); }
 }
 
 /* Remove a line: a text button, quieter than Add, Reset and Copy. Ink 700, always underlined, 44px. */

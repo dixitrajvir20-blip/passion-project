@@ -139,7 +139,8 @@ export default function Review({ region, checksUrl, base, localeCode }: Props) {
           )}
           {item.shown && (
             <div class="reveal-body" role="status">
-              <p class="poll-status">
+              {/* Words carry the result; the colour only repeats it, as in a lesson (lesson.css). */}
+              <p class="poll-status" data-result={item.picked === null ? 'none' : item.picked === item.check.answer ? 'right' : 'wrong'}>
                 {item.picked === null ? 'No pick this time.' : item.picked === item.check.answer ? 'Correct.' : 'Not quite.'}
               </p>
               <p class="answer">

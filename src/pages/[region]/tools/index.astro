@@ -73,10 +73,9 @@ const description = `${available.length} free tools in the ${region.name} editio
 </BaseLayout>
 
 <style>
-  /* One 640 column at every width. The rows are base.css's ruled .index-list; the page adds only the
-     jump links (standalone links: ink 700, always underlined, 44px tall) and the space between groups. */
+  /* One 640 column at every width. The rows are base.css's ruled .index-list, and the jump links are
+     its standalone links (ink 700, always underlined, 44px tall); the page adds only their spacing. */
   .tool-jumps ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); margin: var(--space-5) 0 0; }
-  .tool-jumps a { display: inline-flex; align-items: center; min-height: var(--target); }
   .tool-group { margin-top: var(--space-7); }
   .tool-group h2 { margin: 0 0 var(--space-4); }
 </style>

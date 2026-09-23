@@ -2,22 +2,18 @@
  * Reads colour tokens out of src/styles/tokens.css for the build scripts (contrast-check.mjs and
  * og-images.mjs), so neither keeps a copy of a colour. Deliberately small and strict:
  *
- * - everything from the LEGACY comment on is ignored, so the retired names mapped there are never
- *   checked or drawn with;
  * - comments are stripped before parsing, so a word inside a comment cannot be read as a selector;
- * - the token set is every top-level root block before that point, merged in order;
+ * - the token set is every top-level root block, merged in order (the v4 names were retired on
+ *   23 September 2026, so there is no alias block to skip);
  * - a missing token, or one whose value is not a 6-digit hex, throws with the token's name.
  */
 import { readFileSync } from 'node:fs';
 
 export const TOKENS_URL = new URL('../src/styles/tokens.css', import.meta.url);
 
-/** The token file up to the LEGACY block, with comments removed. */
+/** The token file with comments removed. */
 export function readTokenSource(url = TOKENS_URL) {
-  const raw = readFileSync(url, 'utf8');
-  const legacy = raw.search(/\/\*\s*LEGACY:/);
-  const live = legacy === -1 ? raw : raw.slice(0, legacy);
-  return live.replace(/\/\*[\s\S]*?\*\//g, '');
+  return readFileSync(url, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
 }
 
 /** The body of the brace block that starts at `open` (the index of its '{'). */

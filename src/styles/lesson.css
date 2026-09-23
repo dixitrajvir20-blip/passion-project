@@ -253,8 +253,11 @@ button.term { padding: 0; border: 0; background: none; font: inherit; }
 
 .hints { list-style: none; margin: 0 0 var(--space-4); padding: 0; border-top: var(--rule-w) solid var(--rule); }
 .hints li { margin: 0; border-bottom: var(--rule-w) solid var(--rule); }
-/* In line with the summary's words, after its '+'. */
-.practice-hint > p { margin: 0 0 var(--space-3); padding-inline-start: calc(1ch + var(--space-2)); color: var(--ink-2); }
+.practice-hint > p { margin: 0 0 var(--space-3); color: var(--ink-2); }
+/* Where the open fold has no inset rule (base.css), the hint lines up with the summary's words. */
+@supports not selector(::details-content) {
+  .practice-hint > p { padding-inline-start: calc(1ch + var(--space-2)); }
+}
 
 /* ---- The drawn document: a white .box, lines like a statement's, a hint behind each label ---- */
 
@@ -360,7 +363,6 @@ html:not(.js) .video-play { display: none; }
 /* Named links from a lesson to its tools (ink 700, underlined: base.css), server-rendered. */
 .tool-handoffs { margin: var(--space-5) 0 0; }
 .tool-handoffs li { margin: 0; }
-.tool-handoffs a { display: inline-flex; align-items: center; min-height: var(--target); }
 
 .lesson-fine { margin-top: var(--space-7); color: var(--muted); font-size: var(--text-xs); }
 .lesson-fine .lesson-meta { margin: 0 0 var(--space-4); font-size: var(--text-sm); }
@@ -371,68 +373,9 @@ html:not(.js) .video-play { display: none; }
 .lesson-next { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); margin-top: var(--space-7); padding-top: var(--space-5); border-top: var(--rule-w) solid var(--rule); }
 .marked { color: var(--success); font-size: var(--text-sm); font-weight: 700; }
 
-/* Track and learn pages: a numbered contents list with two quiet marks, never a bar or a
-   percentage. */
-.lesson-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
-.lesson-list > li { margin: 0; border-bottom: 1px solid var(--line); }
-.lesson-row, .lesson-planned {
-  display: grid;
-  grid-template-columns: var(--space-6) minmax(0, 1fr);
-  gap: var(--space-1) var(--space-3);
-  padding: var(--space-4) 0;
-  color: inherit;
-  text-decoration: none;
-}
-.lesson-num { grid-row: 1 / span 3; font-family: var(--font-display); font-weight: 700; font-size: var(--text-h3); line-height: var(--leading-snug); color: var(--muted); }
-.lesson-title, .lesson-sub, .lesson-marks { grid-column: 2; }
-a.lesson-row:hover .lesson-title { color: var(--accent-text); text-decoration: underline; }
-a.lesson-row:hover .lesson-num { color: var(--accent-text); }
-.lesson-title { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; color: var(--ink); letter-spacing: var(--tracking-heading); line-height: var(--leading-snug); }
-.lesson-sub { color: var(--ink-2); font-size: var(--text-ui); }
-.lesson-marks { color: var(--muted); font-size: var(--text-sm); }
-.lesson-marks [data-mark] { color: var(--success); font-weight: 700; }
-.lesson-planned { color: var(--muted); font-size: var(--text-ui); }
-.lesson-planned .lesson-num { font-size: var(--text-md); line-height: var(--leading-body); }
-/* Three tracks side by side on the edition front: title and time only. */
-.is-compact .lesson-row, .is-compact .lesson-planned { padding: var(--space-3) 0; }
-.is-compact .lesson-num { font-size: var(--text-md); line-height: var(--leading-body); }
-.is-compact .lesson-title { font-family: var(--font-body); font-size: var(--text-md); font-weight: 700; letter-spacing: 0; line-height: var(--leading-body); }
-
-/* Track cards and the track header, after Claude Academy's course cards and course page
-   (their layout, our colours): a drawn thumbnail, a small type label, the title, one line of
-   description, the lesson titles, a metadata line from the real lessons, one action. */
-.course-grid { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
-/* Three across only where three cards get a readable measure; 720–979px (and a laptop at 200%
-   zoom) would squeeze each to ~220px, so it stays one column until then. */
-@media (min-width: 980px) { .course-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.course-card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); }
-.course-thumb { display: grid; place-items: center; aspect-ratio: 16 / 9; border-radius: var(--radius-m); border: 1.5px solid var(--line); background: var(--field-pale); margin: 0 0 var(--space-2); }
-.course-thumb .doodle { position: static; width: 36%; height: auto; transform: none; }
-.course-kind { margin: 0; }
-.course-title { margin: 0; font-size: var(--text-h3); }
-.course-title a { color: inherit; text-decoration: none; }
-.course-title a:hover { color: var(--accent-text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.course-desc { margin: 0; color: var(--ink-2); }
-.course-card .lesson-list { margin: var(--space-2) 0; flex: 1; }
-.course-meta { margin: 0; color: var(--muted); font-size: var(--text-sm); }
-.course-go { margin: var(--space-2) 0 0; }
-/* The panel keeps a hairline so it still reads as a panel where the pale tint is close to the sheet (dark mode). */
-.course-head { display: grid; gap: var(--space-5); padding: var(--space-6) var(--space-5); border-radius: var(--radius-l); border: 1.5px solid var(--line); background: var(--field-pale); }
-.course-head h1 { margin: var(--space-2) 0 var(--space-3); }
-.course-head .lede { margin-bottom: var(--space-5); }
-.course-head .btn-row { margin-bottom: var(--space-4); }
-.course-head .review-line[data-review-line] { margin-bottom: 0; }
-/* A receipt-white thumbnail: white in both modes, so its ink is pinned to navy like every other --paper surface. */
-.course-head .course-thumb { display: none; aspect-ratio: 4 / 3; background: var(--paper); --ink: var(--brand-navy); margin: 0; }
-@media (min-width: 900px) {
-  .course-head { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: center; padding: var(--space-7); }
-  .course-head .course-thumb { display: grid; }
-}
-.course-list-title { margin: var(--space-7) 0 var(--space-4); }
-
 @media print {
   /* A worksheet handed round a club must not carry one reader's progress. */
-  .poll-status, .return-line, .lesson-next, .marked, .lesson-marks, .term-pop, .explorer-actions, .lesson-steps { display: none !important; }
+  .poll-status, .return-line, .lesson-next, .marked, .term-pop, .explorer-actions, .lesson-steps { display: none !important; }
   .reveal[open] > .reveal-body { display: none; }
   .video-frame { display: none; }
   .showme-more > summary { display: none; }

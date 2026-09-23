@@ -63,7 +63,7 @@ export default function CompoundGrowth({ defaults, localeCode }: Props) {
           <Result label="Growth on top" value={money(result.growth, locale)} />
           <Result main label={`After ${number(years, locale)} ${years === 1 ? 'year' : 'years'}`} value={money(result.finalValue, locale)} />
 
-          <p class="plain">
+          <p class="plain" role="status">
             {years === 0
               ? 'Add a number of years to see the growth.'
               : result.growth > 0
@@ -98,7 +98,8 @@ export default function CompoundGrowth({ defaults, localeCode }: Props) {
           <figcaption>
             <details>
               <summary>The same numbers as a table</summary>
-              <div class="table-wrap">
+              {/* A scrollable wrap is a named, focusable region, so a keyboard can scroll it too. */}
+              <div class="table-wrap" role="region" aria-label="Savings growth, year by year" tabIndex={0}>
                 <table class="table numbers">
                   <thead>
                     <tr>

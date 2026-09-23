@@ -58,7 +58,7 @@ export default function BreakEven({ defaults, unitName, fixedHint, variableHint,
           <Fact label="Sales needed to break even" value={result.viable ? money(result.revenue!, locale) : '—'} />
           <Fact label={`Profit at ${number(units, locale)} ${unitName}`} value={money(profit, locale)} loss={profit < 0} />
 
-          <p class="plain">
+          <p class="plain" role="status">
             {result.viable
               ? `You keep ${exact(result.contributionMargin, locale)} from every sale. Once you have sold ${number(result.units!, locale)} ${unitName} in a month, your fixed costs are covered and everything after that is profit.`
               : 'Right now each sale costs you more than it brings in, so selling more makes the loss bigger. Raise the price or cut the cost to make one.'}

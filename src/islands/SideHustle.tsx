@@ -60,7 +60,7 @@ export default function SideHustle({ defaults, unitName, localeCode }: Props) {
           <Result minus label="Fees" value={money(result.fees, locale)} />
           <Result main label="Left for you" value={money(result.profit, locale)} loss={result.profit < 0} />
 
-          <p class="plain">
+          <p class="plain" role="status">
             {result.profitPerHour === null
               ? 'Add the hours you put in. The hourly figure is the one that tells you whether this is worth your time.'
               : result.profit < 0

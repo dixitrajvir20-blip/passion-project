@@ -55,10 +55,10 @@ export interface Region {
   currency: string;
   /** The edition front's headline: what this edition is about, in its own terms. */
   headline: string;
-  /** Three topics shown as tag pills on the front page's edition card. */
+  /** Three topics, listed after the currency on the front page's edition row. */
   tags: string[];
   /** The official route to report a scam, shown on the edition front. */
-  report: { stamp: string; text: string; link?: { label: string; url: string } };
+  report: { text: string; link?: { label: string; url: string } };
   /** One sentence naming the gap this edition exists to close. */
   problem: string;
   intro: string;
@@ -80,7 +80,6 @@ export const REGIONS: Region[] = [
     headline: 'Your first salary: the payslip, the tax, the fund and the buffer.',
     tags: ['UPI', 'Scams', 'First job'],
     report: {
-      stamp: '1930',
       text: 'Lost money to a scam? Call 1930, the national cybercrime helpline, or report it online, as fast as you can. The sooner it is reported, the better the chance of stopping the money.',
       link: { label: 'cybercrime.gov.in', url: 'https://cybercrime.gov.in' },
     },
@@ -183,7 +182,6 @@ export const REGIONS: Region[] = [
     headline: 'Read the payslip, check the payee, count the instalments.',
     tags: ['Payslips', 'Buy now, pay later', 'Selling abroad'],
     report: {
-      stamp: 'Act fast',
       text: 'Lost money to a scam? Call your bank straight away to try to stop the payment, then report it to the police in your country. The reporting route is national, so it differs from country to country.',
     },
     problem:
@@ -294,7 +292,6 @@ export const REGIONS: Region[] = [
     headline: 'Student loans, credit and taxes arrive before anyone explains them.',
     tags: ['Credit scores', 'Student loans', 'Side hustles'],
     report: {
-      stamp: 'FTC',
       text: 'Lost money to a scam? Contact your bank or payment app straight away, then report it to the Federal Trade Commission.',
       link: { label: 'reportfraud.ftc.gov', url: 'https://reportfraud.ftc.gov' },
     },

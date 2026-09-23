@@ -8,7 +8,9 @@ build), `LEARNING_DESIGN.md` (how lessons teach), `REGIONAL_TEACHING.md` (what's
 edition), `SECURITY.md`, `LEGAL_AND_PRIVACY.md`, `AUTH_AND_ACCOUNTS.md`, and `BOSS_PLAYBOOK.md`
 (the phased build plan and gates). What changed in v2: the site is now Astro with three live
 editions (India/Europe/US), the brand is blue/gold/black, and the accounts and advanced-visual
-work below is specified rather than hypothetical.
+work below is specified rather than hypothetical. Since 23 September 2026 (design v5.1, brand guide
+v4) the look is white pages with one blue header bar, navy ink and one typeface: gold, the dark
+theme and the decorative layer are retired.
 
 ## 1. Vision
 Business Lab is a free, clean, fast website where anyone aged 15-21, anywhere in the world, can learn how money and business work, then practice with interactive tools. It's a hub: short articles on ideas that affect this age group, plus calculators, quizzes, and builders you can use on a phone.
@@ -35,7 +37,7 @@ Business Lab is a free, clean, fast website where anyone aged 15-21, anywhere in
 6. **Do, don't just read.** Every article ends with a tool, a quiz, or a small challenge.
 7. **Honest.** Sources on every article, clear "education, not advice" limits.
 8. **Accessible to everyone.** WCAG 2.2 AA minimum.
-9. **Human-designed look, quietly advanced.** See BRAND_GUIDE.md and DESIGN.md. Modern web-platform features (View Transitions, scroll-reveal, frosted bars, container/anchor queries) are used only as progressive enhancement behind `@supports`/`prefers-reduced-motion`, so the page is complete with them off. The test: does it still look finished with the feature disabled?
+9. **Human-designed look, quietly advanced.** See BRAND_GUIDE.md and DESIGN.md. No page transitions and no scroll effects; modern CSS (`:has()`, `clamp()`, `<details>`) only where the page still works without it, and anything newer behind `@supports`. The site is light only: white at every OS setting, with forced colours and `prefers-contrast: more` still honoured. The test: does it still look finished with the feature disabled?
 10. **Built to last cheaply.** Static site, free hosting tier, no servers to maintain in v1.
 
 ## 4. Scope
@@ -144,8 +146,9 @@ dates) and maths live in `src/lib/tools/<slug>.ts`, not in `finance.ts`.
 **Where the project is now (Phase 1):** an Astro static build with Preact islands, deployed to
 GitHub Pages under `/passion-project`, with three editions (`/in`, `/eu`, `/us`) rendered from
 `src/lib/regions.ts`, the break-even calculator, the full legal layer, a consent manager, an
-account preview, and a strict security posture. The blue/gold/black brand from `BRAND_GUIDE.md`
-is applied. See `CLAUDE.md` "Current state" for the exact list and `BOSS_PLAYBOOK.md` for what's next.
+account preview, and a strict security posture. The brand from `BRAND_GUIDE.md` v4 is applied:
+white pages, one blue header bar, navy ink, Atkinson Hyperlegible Next only (design v5.1,
+23 September 2026). See `CLAUDE.md` "Current state" for the exact list and `BOSS_PLAYBOOK.md` for what's next.
 
 **Base-path gotcha (still true, still bites):** for a project site at
 `https://<user>.github.io/passion-project/`, `astro.config.mjs` sets `site` and
@@ -156,7 +159,7 @@ regress this.
 - Astro static site, `output: "static"`. MDX content collections for `articles`, `tracks`, `glossary`, `tools` (metadata).
 - Preact islands for tools, quiz, glossary popovers, and the locale/currency picker. Default `client:visible`.
 - CSS: `tokens.css` (DESIGN.md), `base.css`, component-scoped styles. No CSS framework.
-- Fonts: self-hosted, subset, `font-display: swap`, at most 2 families (+ Devanagari in v2).
+- Fonts: self-hosted, subset, `font-display: swap`, at most 2 families (+ Devanagari in v2); one family (Atkinson Hyperlegible Next) since design v5.1.
 - Images: Astro `<Image>` with AVIF/WebP, explicit width/height, lazy below the fold.
 - Search: Pagefind index at build time.
 - i18n: Astro i18n routing (`defaultLocale: "en"`, `locales: ["en","hi"]`, `prefixDefaultLocale: false`, fallback hi→en). UI strings in `src/i18n/*.json`.

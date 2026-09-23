@@ -46,16 +46,7 @@ const { reviewHref } = Astro.props;
 </script>
 
 <style>
-  /* One line, set bold, with 24px below it. The link is a standalone link, so it is ink 700 and
+  /* One line, set bold, with 24px below it. The link is one of base.css's standalone links: ink 700,
      always underlined (blue is for links inside running text), and at least 44px tall. */
   .review-line { margin: 0 0 var(--space-5); font-weight: 700; }
-  .review-line a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--target);
-    color: var(--ink);
-    font-weight: 700;
-    text-decoration-line: underline;
-  }
-  .review-line a:hover { color: var(--ink); }
 </style>

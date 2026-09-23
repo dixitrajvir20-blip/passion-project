@@ -72,6 +72,10 @@ agent (their notes: `docs/research/lesson-v2-editor-notes.md`; the video picks:
    folded away. No check may turn on a figure that only the details fold explains.
 8. **Check your understanding.** Three `quiz` checks, one per `objectives` line ("After this you can…").
 
+The "In this lesson" list at the top names the template steps a lesson has, using its h2 words
+exactly (Check your understanding, Decide before you look), so a lesson without a document or a
+video simply has fewer parts (design v5.1, 23 September 2026).
+
 The caps the tests enforce: 400 words of prose outside the fold (body, situation, contexts, key
 idea, prompts, captions, objectives, takeaways); 1,250 reader-facing words in all outside the details;
 hints and the key idea of 25 words or fewer;

@@ -90,12 +90,21 @@ a:hover { color: var(--blue-dark); text-decoration-thickness: 3px; }
 }
 
 /* (c) A standalone link: ink 700, always underlined. */
-.crumb a, .tool-handoffs a, .taxonomy-all a, .tool-jumps a, .glossary-link, .video-link {
+.crumb a, .tool-handoffs a, .taxonomy-all a, .tool-jumps a, .review-line a, .lesson-next a, .glossary-link, .video-link {
   color: var(--ink);
   font-weight: 700;
   text-decoration-line: underline;
 }
-:is(.crumb a, .tool-handoffs a, .taxonomy-all a, .tool-jumps a, .glossary-link, .video-link):hover { color: var(--ink); }
+:is(.crumb a, .tool-handoffs a, .taxonomy-all a, .tool-jumps a, .review-line a, .lesson-next a, .glossary-link, .video-link):hover { color: var(--ink); }
+
+/* A standalone link, and a heading that is nothing but a link (a track title), is a 44px target
+   (WCAG 2.5.8 asks for 24px; the site keeps 44 for every text control), centred on its line. */
+:is(.crumb, .tool-handoffs, .taxonomy-all, .tool-jumps, .review-line, .lesson-next) a,
+:is(h2, h3) > a:only-child {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+}
 
 strong { color: var(--ink); font-weight: 700; }
 small, .small { font-size: var(--text-sm); }
@@ -208,13 +217,11 @@ img, svg, video { max-width: 100%; height: auto; }
   margin: 0 0 var(--space-4);
   font-size: var(--text-sm);
 }
-.crumb a { display: inline-flex; align-items: center; min-height: var(--target); }
 .crumb-pos { color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* Folds: the site's own plain disclosure. The summary is ink 700 led by '+' ('−' once open), 44px
-   tall; no triangle and no left bar. :where() keeps it at zero specificity, so a component's own
-   rules win while the B groups rewrite them. The poll reveal, Show me and the header menus are not
-   folds: they have their own looks. */
+   tall; no triangle. :where() keeps it at zero specificity, so a component's own rules still win.
+   The poll reveal, Show me and the header menus are not folds: they have their own looks. */
 :where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table, details.lesson-steps-fold) > summary {
   display: flex;
   align-items: center;
@@ -230,6 +237,18 @@ img, svg, video { max-width: 100%; height: auto; }
 :where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table, details.lesson-steps-fold)[open] > summary::before { content: '−'; }
 :where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table, details.lesson-steps-fold) > summary:hover { text-decoration: underline; }
 .fold { margin: var(--space-5) 0; padding-top: var(--space-3); border-top: var(--rule-w) solid var(--rule); }
+/* An open fold's body is set in from a 4px rule, so what the fold holds reads as one piece under
+   its summary. One continuous rule needs the ::details-content box (Baseline since 2025); a browser
+   without it shows the same body, flush left, with no rule. The lesson rail is a list of links, not
+   a fold body, so it keeps its own rules. */
+@supports selector(::details-content) {
+  :where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table)[open]::details-content {
+    margin-bottom: var(--space-3);
+    padding: var(--space-1) 0 var(--space-1) var(--space-4);
+    border-inline-start: var(--bar-w) solid var(--rule);
+  }
+  :where(.fold, .lesson-details, .practice-hint, .tool details.how, .growth details, .week-table)[open] > :last-child { margin-bottom: 0; }
+}
 
 /* Forms. The order is the tool kit's: label, hint, input, note, error. */
 .field { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-5); max-width: none; }
@@ -281,8 +300,9 @@ input[aria-invalid='true'], select[aria-invalid='true'], textarea[aria-invalid='
 .table th { color: var(--ink); font-weight: 700; }
 .table thead th { border-bottom: var(--control-w) solid var(--ink); }
 .table .num { text-align: end; }
-/* Money stays whole: a figure never breaks between its digits; the table scrolls in its wrap. */
-.table td.num, .table .numbers td { white-space: nowrap; overflow-wrap: normal; }
+/* Money stays whole: a figure never breaks between its digits, whether the table itself or a part of
+   it carries .numbers; the table scrolls in its wrap. */
+.table td.num, .table.numbers td, .table .numbers td { white-space: nowrap; overflow-wrap: normal; }
 /* Tables of words (the /cookies storage list) wrap instead, so they never scroll sideways at 320px. */
 .prose .table th, .prose .table td, .prose .table code { overflow-wrap: anywhere; }
 .table-wrap { overflow-x: auto; }
@@ -354,8 +374,11 @@ mark { background: var(--tint); color: var(--ink); font-weight: 700; padding: 0 
   min-height: var(--target);
   padding: var(--space-4) 0;
 }
-.index-row:has(> .index-flag) { grid-template-columns: auto minmax(0, 1fr); }
-.index-row > .index-flag { grid-row: 1 / span 3; align-self: start; width: calc(var(--space-6)); height: auto; margin-top: var(--space-1); }
+/* A flagged row (the home editions): the flag in its own column beside every line of the row. The
+   two rows are explicit (title, then meta) so 1 / -1 reaches the last of them; a span into implicit
+   rows would add an empty row and its gap under the meta line. */
+.index-row:has(> .index-flag) { grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; }
+.index-row > .index-flag { grid-row: 1 / -1; align-self: start; width: var(--space-6); height: auto; margin-top: var(--space-1); }
 .index-row:has(> .index-flag) > :not(.index-flag) { grid-column: 2; }
 .index-row .index-title { margin: 0; font-size: var(--text-lg); font-weight: 700; line-height: var(--leading-heading); color: var(--ink); }
 .index-row .index-sub { color: var(--ink-2); font-size: var(--text-md); font-weight: 400; }
@@ -447,68 +470,3 @@ mark { background: var(--tint); color: var(--ink); font-weight: 700; padding: 0 
   .table thead th { border-bottom-color: var(--print-ink); }
   .inset { border-color: var(--print-ink); }
 }
-
-/* LEGACY: deleted in step 22. The v4 decorative classes, neutralised so pages the B groups have not
-   rewritten yet read white, gold-free, square and in one typeface: no rotation, no gold, the 4px
-   radius, fills only --surface, outlines 1px --rule, nothing that moves. */
-.index-go { display: none; }
-
-.card { display: block; position: relative; padding: var(--space-5); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--bg); color: inherit; text-decoration: none; }
-.card h2, .card h3 { margin-top: 0; margin-bottom: var(--space-2); }
-.card p { margin-bottom: 0; }
-.card-meta { margin-top: var(--space-4); color: var(--muted); font-size: var(--text-sm); }
-a.card:hover { background: var(--surface); }
-.card-outline { border-color: var(--rule); }
-
-.panel { position: relative; padding: var(--space-6) var(--space-5); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--bg); color: var(--ink-2); }
-.panel-deep, .panel-pale, .panel-gold { background: var(--surface); }
-
-.sheet { background: var(--bg); padding: var(--space-section) 0; }
-.page-sheet { background: var(--bg); }
-
-.pill { display: inline-flex; align-items: center; min-height: var(--space-6); padding: 0 var(--space-3); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--surface); color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
-.pill-white, .pill-outline { background: var(--bg); }
-a.pill { min-height: var(--target); }
-.pills { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
-.pills li { margin: 0; }
-.sticker, .sticker-gold { display: inline-block; padding: var(--space-1) var(--space-3); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--surface); color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
-.sticker-left { transform: none; }
-
-.grid-table { display: grid; grid-template-columns: minmax(0, 1fr); margin: 0; padding: 0; list-style: none; border-top: var(--rule-w) solid var(--rule); border-inline-start: var(--rule-w) solid var(--rule); background: var(--bg); }
-.grid-table > * { position: relative; margin: 0; padding: var(--space-5); border-inline-end: var(--rule-w) solid var(--rule); border-bottom: var(--rule-w) solid var(--rule); }
-@media (min-width: 720px) { .grid-table { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .grid-table.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.grid-table > * > .sticker { position: absolute; top: var(--space-4); inset-inline-end: var(--space-4); }
-
-/* Hand-lettered notes: the drawing (a second typeface) goes; the words stay, set as a small label. */
-.hand { display: inline-block; color: var(--muted); font-size: var(--text-sm); font-weight: 700; }
-.hand svg { display: none; }
-.hand > .visually-hidden { position: static !important; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; }
-.doodle, .blobs { display: none; }
-/* The frames that held a doodle (the track cards and the track page head) would be empty boxes. */
-.course-card div.course-thumb, .course-head div.course-thumb { display: none; }
-
-/* The page-level call to action, as a plain primary button; its arrow is type. */
-.cta { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--target-lg); padding: 0 calc(var(--space-4) + var(--space-1)); border: var(--control-w) solid var(--blue); border-radius: var(--radius); background: var(--blue); color: var(--on-blue); font-weight: 700; text-decoration: none; }
-.cta:hover { background: var(--blue-dark); border-color: var(--blue-dark); color: var(--on-blue); }
-
-.mega, .display { font-size: var(--text-display); line-height: var(--leading-h1); letter-spacing: var(--tracking-h1); }
-
-.callout { margin: var(--space-6) 0; padding: var(--space-5); border: var(--rule-w) solid var(--rule); border-radius: var(--radius); background: var(--surface); color: var(--ink-2); }
-.callout h2, .callout h3 { margin-top: 0; font-size: var(--text-md); }
-.callout ul { margin-bottom: 0; padding-inline-start: var(--space-5); }
-.hl { color: var(--ink); font-weight: 700; }
-
-.section-alt { background: var(--surface); }
-.section-tight { padding-block: var(--space-7); }
-.section-dark { background: var(--bg); color: var(--ink-2); }
-section.on-field, header.on-field { background: var(--bg); border-bottom: var(--rule-w) solid var(--rule); }
-
-.stack > * + * { margin-top: var(--space-4); }
-.cluster { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
-@media (min-width: 980px) { .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.centered { margin-inline: auto; text-align: center; }
-.centered p, .centered .lede { margin-inline: auto; }
-.btn-row.centered { justify-content: center; }
-.btn-lg { min-height: var(--target-lg); padding: 0 calc(var(--space-4) + var(--space-1)); font-size: var(--text-md); }
-.hairline { border: 0; border-top: var(--rule-w) solid var(--rule); margin: var(--space-7) 0; }

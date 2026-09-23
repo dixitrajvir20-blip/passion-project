@@ -397,9 +397,9 @@ export function ToolActions({ query, onReset }: { query: Record<string, string>;
   return (
     <>
       <div class="btn-row">
-        <button type="button" class="btn btn-secondary" onClick={() => { onReset(); setSaid(''); }}>Reset</button>
-        <button type="button" class="btn btn-secondary" onClick={copy}>Copy link to these numbers</button>
-        {canShare && <button type="button" class="btn btn-secondary" onClick={share}>Share</button>}
+        <button type="button" class="btn btn-secondary btn-sm" onClick={() => { onReset(); setSaid(''); }}>Reset</button>
+        <button type="button" class="btn btn-secondary btn-sm" onClick={copy}>Copy link to these numbers</button>
+        {canShare && <button type="button" class="btn btn-secondary btn-sm" onClick={share}>Share</button>}
       </div>
       <p class="link-note">
         The link holds the numbers on screen, so anyone you send it to will see them. This site never receives them.

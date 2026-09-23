@@ -164,7 +164,8 @@ export default function CardMinimum({ config, localeCode }: Props) {
       {run && run.months !== null && run.months > 1 && (
         <details class="how">
           <summary>Year by year</summary>
-          <div class="table-wrap">
+          {/* A scrollable wrap is a named, focusable region, so a keyboard can scroll it too. */}
+          <div class="table-wrap" role="region" aria-label="Paying only the minimum, year by year" tabIndex={0}>
             <table class="table numbers">
               <caption class="visually-hidden">Paying only the minimum, year by year</caption>
               <thead>

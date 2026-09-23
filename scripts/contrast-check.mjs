@@ -5,7 +5,7 @@
  * throws, naming the token, when a checked token is missing or is not a 6-digit hex.
  *
  * It reads the top-level token block, the prefers-contrast block and the two band remaps
- * (.on-band, and .on-band-wide from 1024px). The LEGACY block is never read (scripts/tokens.mjs).
+ * (.on-band, and .on-band-wide from 1024px), through scripts/tokens.mjs.
  */
 import { blockTokens, contrast, hex, readTokenSource, rootTokens } from './tokens.mjs';
 

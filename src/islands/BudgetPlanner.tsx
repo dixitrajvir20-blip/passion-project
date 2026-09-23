@@ -132,7 +132,7 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
             loss={result.leftover < 0}
           />
 
-          <p class="plain">
+          <p class="plain" role="status">
             {income <= 0
               ? 'Enter what comes in each month to see the split.'
               : result.leftover < 0
