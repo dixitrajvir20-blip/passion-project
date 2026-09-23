@@ -23,6 +23,7 @@ import LessonScript from '../components/lesson/LessonScript.astro';
 import { getRegion } from '../lib/regions';
 import { site } from '../lib/site';
 import { lessonPath, type Lesson } from '../lib/lessons';
+import { EXPLORER_TOOL, lessonToolLinks } from '../lib/tools';
 import {
   deductionChoices,
   deductionSteps,
@@ -113,6 +114,9 @@ const practiceMore = d.practiceMore ? practiceFor(d.practiceMore) : null;
 const isV2 = d.template === 'v2';
 // A drill is decided, not adjusted: its heading says so.
 const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you look' : 'Try it') : isV2 ? 'Change one thing' : 'Try your own numbers';
+// Named links to the lesson's tools. An explorer opens its own calculator (fixed by its kind), so
+// that one is not repeated here. Server-rendered: they work with JavaScript off.
+const handoffs = lessonToolLinks(region.code, d.tool, d.moreTools, d.explorable?.kind);
 ---
 
 <BaseLayout
@@ -294,7 +298,7 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
                   unitName={d.explorable.unitName}
                   prompts={d.explorable.prompts}
                   localeCode={region.locale}
-                  toolHref={`${prefix}/tools/${d.tool ?? 'break-even'}`}
+                  toolHref={`${prefix}/tools/${EXPLORER_TOOL.margin}`}
                   initial={d.worked?.kind === 'margin' ? d.worked.price : undefined}
                 />
               )}
@@ -305,7 +309,7 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
                   lines={d.explorable.lines}
                   prompts={d.explorable.prompts}
                   localeCode={region.locale}
-                  toolHref={`${prefix}/tools/${d.tool ?? 'budget'}`}
+                  toolHref={`${prefix}/tools/${EXPLORER_TOOL.split}`}
                 />
               )}
               {d.explorable.kind === 'loan' && (
@@ -316,7 +320,7 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
                   terms={d.explorable.terms}
                   prompts={d.explorable.prompts}
                   localeCode={region.locale}
-                  toolHref={`${prefix}/tools/${d.tool ?? 'loan'}`}
+                  toolHref={`${prefix}/tools/${EXPLORER_TOOL.loan}`}
                 />
               )}
               {d.explorable.kind === 'growth' && (
@@ -327,7 +331,7 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
                   horizons={d.explorable.horizons}
                   prompts={d.explorable.prompts}
                   localeCode={region.locale}
-                  toolHref={`${prefix}/tools/${d.tool ?? 'savings'}`}
+                  toolHref={`${prefix}/tools/${EXPLORER_TOOL.growth}`}
                 />
               )}
               {d.explorable.kind === 'deduction' && (
@@ -350,6 +354,13 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
                   localeCode={region.locale}
                 />
               )}
+              {handoffs.length > 0 && (
+                <ul class="tool-handoffs list-plain">
+                  {handoffs.map((h) => (
+                    <li><a href={`${prefix}/tools/${h.tool.slug}`}>{h.text}</a></li>
+                  ))}
+                </ul>
+              )}
             </section>
           )}
 
@@ -364,6 +375,14 @@ const tryItHeading = d.explorable?.kind === 'drill' ? (isV2 ? 'Decide before you
                 localeCode={region.locale}
               />
             </section>
+          )}
+
+          {!d.explorable && handoffs.length > 0 && (
+            <ul class="tool-handoffs list-plain">
+              {handoffs.map((h) => (
+                <li><a href={`${prefix}/tools/${h.tool.slug}`}>{h.text}</a></li>
+              ))}
+            </ul>
           )}
 
           {isV2 && (

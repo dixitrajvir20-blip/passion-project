@@ -10,7 +10,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 /** Every option explains itself, so a wrong pick gets feedback about that slip, not a generic "no". */
 const option = z.object({ text: z.string().min(1), why: z.string().min(8) });
 
-const check = z
+export const check = z
   .object({
     /** A situation with a choice to make, not a number to recall from the text. */
     q: z.string().min(12),
@@ -19,15 +19,31 @@ const check = z
   })
   .refine((c) => c.answer < c.options.length, { message: '`answer` must be the index of one of the options' });
 
-/** A mock phone screen, drawn in HTML and tokens. Never a screenshot, never a real brand. */
-const screen = z.object({
-  kind: z.enum(['request', 'message', 'call', 'chat', 'qr']),
+/**
+ * A mock phone screen, drawn in HTML and tokens. Never a screenshot, never a real brand. `kind`
+ * sets only the caption above it ("Confirm transfer", "Email"); nothing new is drawn per kind.
+ */
+export const screen = z.object({
+  kind: z.enum(['request', 'message', 'call', 'chat', 'qr', 'transfer', 'email']),
   from: z.string().min(2),
   lines: z.array(z.string().min(2)).min(1).max(4),
-  amount: z.number().positive().optional(),
+  amount: z.number().positive().max(10_000_000).optional(),
   /** Label of the button the scam wants pressed, e.g. "Enter UPI PIN to receive". */
   action: z.string().optional(),
 });
+
+/** The official route to report a scam. https only: it renders as a "report here" link, the worst place for a lookalike. */
+export const reportToSchema = z.object({
+  phone: z.string().regex(/^[0-9+][0-9 ]{2,19}$/).optional(),
+  url: z.string().url().startsWith('https://'),
+  label: z.string(),
+});
+
+/**
+ * One drill situation in a lesson. `ordinary` marks a screen that is what it seems, so refusing
+ * everything is never the answer; it is never rendered, only counted by the tests.
+ */
+export const drillScenario = z.object({ screen, check, ordinary: z.boolean().optional() });
 
 const marginNumbers = { fixed: z.number().positive(), variable: z.number().nonnegative(), price: z.number().positive() };
 const share = z.object({ label: z.string(), percent: z.number().min(0).max(100), hint: z.string().optional() });
@@ -153,7 +169,7 @@ const explorable = z.discriminatedUnion('kind', [
   z.object({
     kind: z.literal('drill'),
     intro: z.string(),
-    scenarios: z.array(z.object({ screen, check })).min(3).max(7),
+    scenarios: z.array(drillScenario).min(3).max(7),
     /** One reflection line at the end; the simulation effect is much larger with one. */
     reflection: z.string(),
   }),
@@ -229,13 +245,12 @@ export const lessonSchema = z
       details: z.array(z.string().min(10)).max(10).optional(),
 
       glossary: z.array(z.string()).default([]),
-      /** Slug of the full calculator this lesson hands off to. */
+      /** Slug of the tool a reader uses with their own numbers after this lesson. */
       tool: z.string().optional(),
+      /** Up to two more tools the lesson links to by name (src/lib/tools.ts lessonToolLinks). */
+      moreTools: z.array(z.string().regex(/^[a-z0-9-]+$/)).max(2).optional(),
       /** Scam lessons end with the official reporting route for their edition. */
-      // https only: this renders as a "report here" link on a scam lesson, the worst place for a lookalike.
-      reportTo: z
-        .object({ phone: z.string().regex(/^[0-9+][0-9 ]{2,19}$/).optional(), url: z.string().url().startsWith('https://'), label: z.string() })
-        .optional(),
+      reportTo: reportToSchema.optional(),
       sources: z
         .array(z.object({ title: z.string(), url: z.string().url().startsWith('https://'), publisher: z.string() }))
         .min(2),
@@ -263,3 +278,75 @@ export const glossarySchema = z.object({
   /** Set for romanised words from another language, e.g. "hi-Latn" for udhaar. */
   lang: z.string().optional(),
 });
+
+/**
+ * A drill tool's own situations for one edition: src/content/drills/<edition>/<tool>.json. The
+ * page shows the fromLesson's screens first, then these.
+ *
+ * A bank scenario's id is permanent once shipped: it is the reader's review key
+ * ('<edition>/tools/<tool>#<id>'), so renaming one orphans every reader's review item. It never
+ * starts with q (LessonScript scores '#q1' as a quiz) or d plus a digit (a lesson's '#d1'), and
+ * holds no '#' or '/'.
+ */
+export const BANK_SCENARIO_ID = /^(?!q)(?!d\d)[a-z][a-z0-9-]{2,39}$/;
+
+export const drillBankSchema = z
+  .object({
+    tool: z.string().regex(/^[a-z0-9-]+$/),
+    region: z.enum(['in', 'eu', 'us']),
+    fromLesson: z.string().regex(/^(in|eu|us)\/[a-z-]+\/[a-z0-9-]+$/),
+    intro: z.string().min(20).max(200),
+    reflection: z.string().min(20).max(200),
+    /** A line under the intro saying what the set covers, e.g. the euro area only. */
+    scopeNote: z.string().max(400).optional(),
+    /** Default: the fromLesson's. */
+    reportTo: reportToSchema.optional(),
+    glossary: z.array(z.string()).default([]),
+    sources: z
+      .array(
+        z.object({
+          id: z.string().regex(/^[a-z0-9-]+$/),
+          title: z.string().min(4),
+          url: z.string().url().startsWith('https://'),
+          publisher: z.string().min(2),
+        }),
+      )
+      .default([]),
+    /** The day every invented name on a screen was searched for a real business. */
+    namesCheckedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+    inventedNames: z.array(z.string().min(2)).default([]),
+    /** Empty in a stub bank: its builder adds the situations. */
+    scenarios: z
+      .array(
+        z.object({
+          id: z.string().regex(BANK_SCENARIO_ID),
+          ordinary: z.boolean(),
+          flow: z.enum(['to-you', 'from-you', 'through-you']).optional(),
+          sourceIds: z.array(z.string()).default([]),
+          screen,
+          check,
+        }),
+      )
+      .max(4),
+  })
+  .superRefine((bank, ctx) => {
+    const seen = new Set<string>();
+    bank.scenarios.forEach((scenario, index) => {
+      if (seen.has(scenario.id)) {
+        ctx.addIssue({ code: 'custom', path: ['scenarios', index, 'id'], message: `Scenario id "${scenario.id}" is used twice in this bank` });
+      }
+      seen.add(scenario.id);
+    });
+    const sourceIds = new Set(bank.sources.map((source) => source.id));
+    bank.scenarios.forEach((scenario, index) => {
+      scenario.sourceIds.forEach((id, j) => {
+        if (!sourceIds.has(id)) {
+          ctx.addIssue({ code: 'custom', path: ['scenarios', index, 'sourceIds', j], message: `Source id "${id}" is not in this bank's sources` });
+        }
+      });
+    });
+  });
+
+export type DrillBankData = z.infer<typeof drillBankSchema>;
+export type DrillScreen = z.infer<typeof screen>;
+export type DrillCheck = z.infer<typeof check>;

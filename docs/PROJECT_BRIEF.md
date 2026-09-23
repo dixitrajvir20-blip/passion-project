@@ -104,7 +104,7 @@ Main nav (max 5): Learn · Tools · Glossary · About · Search. Language and cu
 7. Sources (2+ reputable, linked), "education not advice" line
 8. Next lesson / previous lesson
 
-**Tool page.** Tool title, one sentence on what it answers, inputs on top (or left on desktop), results update live, a plain-language "What this means" sentence under the results, "How it works" (formula, collapsible), and "Learn more" links. Includes a reset button. Share = copy link with inputs in the URL query string (no personal data).
+**Tool page.** Tool title, one sentence on what it answers, inputs on top (or left on desktop), results update live, a plain-language "What this means" sentence under the results, "How it works" (formula, collapsible), and "Learn more" links. Includes a reset button. Share = copy link with inputs after the # (never the query string), so the figures are never sent to a server; links made before September 2026 used the query string and still open.
 
 **Glossary.** A-Z list, search filter, each term with a 1-2 sentence definition + an example. Terms in articles get dotted underlines; tapping one opens a small popover (keyboard accessible).
 
@@ -122,6 +122,14 @@ All math lives in `src/lib/*.ts` as pure functions with unit tests. All money us
 | **Pricing & Break-even** | Fixed costs, variable cost per unit, price per unit | Contribution margin, break-even units and revenue, profit at N units | Formula: BE units = fixed / (price − variable). Handle price ≤ variable with a clear message. |
 | **Side-Hustle Profit** | Units sold/month, price, cost per unit, platform fees %, hours/month | Monthly profit, profit per hour | Helps compare "is this worth my time?" |
 | **Loan / EMI** | Principal, annual rate, months | EMI, total interest, total paid, amortization table | EMI = P·r·(1+r)^n / ((1+r)^n − 1), r = monthly rate. Handle rate = 0. |
+
+**Beyond v1 (September 2026).** The tool set grows to fourteen, listed once in `src/lib/tools.ts`
+and grouped by life moment (your first pay, a buffer, borrowing, moving out, working for yourself,
+before you send): take-home pay, buffer target, a loan's yearly rate, card minimum, pay-later
+against payday, rent share and side-income tax as calculators, and "spot the fake" and job-offer
+drills built from each edition's lessons plus a bank of made-up screens. Not every tool is in
+every edition. Each tool's spec is in `docs/research/interactive-tools-revised.json`; its edition
+rules (with sources and dates) and maths live in `src/lib/tools/<slug>.ts`, not in `finance.ts`.
 
 **Quiz component.** Multiple choice (and true/false). One question at a time, instant feedback with a 1-2 sentence explanation, score at the end, retry. Stores "passed" (≥80%) in localStorage under `lp:progress` (see `src/lib/progress.ts`; the same record powers the cross-device sync code). Retrieval practice (quizzing) is a well-studied way to strengthen long-term learning, so every lesson gets one.
 

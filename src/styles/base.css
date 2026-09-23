@@ -295,6 +295,8 @@ a.card:hover { background: var(--field-pale); }
 .field { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-5); max-width: none; }
 .field > label, .field-label { font-weight: 700; color: var(--ink); font-size: var(--text-sm); }
 .hint { color: var(--muted); font-size: var(--text-sm); }
+/* A field's non-error line ("Counted as 2"): read with the field, never styled as a warning. */
+.field-note { color: var(--ink-2); font-size: var(--text-sm); }
 .input, input[type='text'], input[type='email'], input[type='number'], input[type='search'], select, textarea {
   font-family: var(--font-body);
   font-size: var(--text-md);
@@ -404,6 +406,11 @@ input[aria-invalid='true'] { border-color: var(--error); }
 /* The double rule of a closed sum, drawn in the ink of wherever the ledger sits. */
 .ledger-total .ledger-figure { font-size: var(--text-result); border-bottom: 3px double var(--ink); padding-bottom: 1px; }
 .ledger .is-loss { color: var(--error); }
+/* A running figure inside a longer sum: a single rule above, never the double rule of the answer. */
+.ledger-subtotal { border-top: 1px solid var(--ink); margin-top: var(--space-2); }
+.ledger-subtotal .ledger-label { color: var(--ink); font-weight: 700; }
+/* A line under a row that says what the figure is ("comes to 9.0% of gross"), on its own line. */
+.ledger-note { order: 4; flex: 1 0 100%; margin: 0; color: var(--muted); font-size: var(--text-sm); }
 
 /* The highlighter: one sentence per lesson worth remembering, marked the way a student marks a
    textbook. Text stays ink; the colour sits behind it, so contrast holds (15.6:1, dark 9.9:1). */
@@ -431,6 +438,7 @@ input[aria-invalid='true'] { border-color: var(--error); }
 }
 .index-row .index-title { font-family: var(--font-display); font-weight: 600; font-size: var(--text-h3); color: var(--ink); letter-spacing: var(--tracking-heading); line-height: var(--leading-snug); }
 .index-row .index-sub { grid-column: 1; color: var(--ink-2); font-size: var(--text-ui); }
+.index-row .index-meta { grid-column: 1; color: var(--muted); font-size: var(--text-sm); }
 .index-row .index-go { grid-column: 2; grid-row: 1; color: var(--accent-text); font-weight: 700; font-size: var(--text-ui); white-space: nowrap; }
 .index-row .index-go::after { content: ' ↗'; }
 a.index-row:hover .index-title { color: var(--accent-text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }

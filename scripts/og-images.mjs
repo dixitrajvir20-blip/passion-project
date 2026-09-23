@@ -55,7 +55,9 @@ function describe(file, html) {
   // Page titles are "<Page> — Business Lab <edition>"; the home page is "Business Lab — <tagline>".
   const title = parts[0] === NAME && parts[1] ? parts[1] : parts[0];
   const region = rel.match(/^\/(in|eu|us)\//)?.[1];
-  const kind = /\/learn\/[^/]+\/[^/]+\//.test(rel) ? 'Lesson' : /\/tools\/[^/]+\//.test(rel) ? 'Calculator' : /\/learn\//.test(rel) ? 'Lessons' : null;
+  // A tool page is a drill when the page says so to search (data-pagefind-meta="kind:Practice").
+  const toolKind = html.includes('data-pagefind-meta="kind:Practice"') ? 'Practice' : 'Calculator';
+  const kind = /\/learn\/[^/]+\/[^/]+\//.test(rel) ? 'Lesson' : /\/tools\/[^/]+\//.test(rel) ? toolKind : /\/learn\//.test(rel) ? 'Lessons' : null;
   const label = [kind, region ? REGION[region] : null].filter(Boolean).join('  ·  ');
   return { title, label, skip: /\/(account|review)\//.test(rel) || rel === '/404/' };
 }

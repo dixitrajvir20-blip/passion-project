@@ -8,16 +8,18 @@ interface Props {
   region?: string;
   /** Sub-path the edition switch keeps when changing edition. */
   regionSub?: string;
+  /** Per-edition sub-paths, where an edition lacks this page. */
+  regionSubs?: Partial<Record<string, string>>;
   path?: string;
 }
 
-const { region, regionSub = '', path = '' } = Astro.props;
+const { region, regionSub = '', regionSubs, path = '' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = region ? `${base}/${region}` : base;
 
 const links = [
   { label: 'Learn', to: region ? `${prefix}/learn` : `${base}/#editions`, key: 'learn' },
-  { label: 'Calculators', to: region ? `${prefix}/tools` : `${base}/#calculators`, key: 'tools' },
+  { label: 'Tools', to: region ? `${prefix}/tools` : `${base}/#calculators`, key: 'tools' },
   { label: 'Glossary', to: `${base}/glossary`, key: 'glossary', wide: true },
   { label: 'Dashboard', to: `${base}/dashboard`, key: 'dashboard' },
   { label: 'About', to: `${base}/about`, key: 'about', wide: true },
@@ -43,7 +45,7 @@ const links = [
         )}
       </ul>
     </nav>
-    <RegionTabs current={region} sub={regionSub} />
+    <RegionTabs current={region} sub={regionSub} subs={regionSubs} />
   </div>
 </header>
 
@@ -51,7 +53,11 @@ const links = [
   /* The header sits on the dark-blue field: white wordmark, a white pill group for the site's
      sections, and the edition menu at the right. */
   .site-header { background: var(--band); position: relative; z-index: 40; }
-  @media (min-width: 900px) { .site-header { position: sticky; top: 0; } }
+  /* One row and sticky only from 1040px, where the six pills and the longest edition name fit
+     beside the brand (they wrap below about 1020px). A one-row header is 72px, which is
+     --header-h, and the scroll padding and sticky offsets are sized from it. Narrower, the nav
+     takes its own row and the header scrolls away. */
+  @media (min-width: 1040px) { .site-header { position: sticky; top: 0; } }
 
   .header-inner {
     display: grid;
@@ -62,7 +68,7 @@ const links = [
     padding-top: var(--space-3);
     padding-bottom: var(--space-3);
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1040px) {
     .header-inner { grid-template-columns: auto 1fr auto; grid-template-areas: 'brand nav editions'; min-height: var(--header-h); }
   }
   .brand { grid-area: brand; display: inline-flex; align-items: center; gap: var(--space-3); color: var(--ink); text-decoration: none; min-height: 44px; }
@@ -71,7 +77,7 @@ const links = [
   .site-header :global(.region-tabs) { grid-area: editions; justify-self: end; }
 
   .main-nav { grid-area: nav; justify-self: start; }
-  @media (min-width: 900px) { .main-nav { justify-self: center; } }
+  @media (min-width: 1040px) { .main-nav { justify-self: center; } }
   .main-nav ul {
     display: flex;
     flex-wrap: wrap;

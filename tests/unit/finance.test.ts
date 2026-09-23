@@ -8,6 +8,20 @@ import {
   sideHustleProfit,
   budgetSplit,
   deductions,
+  toCents,
+  fromCents,
+  roundMoney,
+  roundTo,
+  round1,
+  round2,
+  toBasisPoints,
+  divRoundHalfUp,
+  shareOf,
+  percent1,
+  PAYDAYS_PER_YEAR,
+  PAYDAYS,
+  isPayFrequency,
+  parsePayFrequency,
 } from '../../src/lib/finance';
 import { money, number, parseAmount, localeByCode, DEFAULT_LOCALE } from '../../src/lib/format';
 
@@ -227,5 +241,121 @@ describe('deductions', () => {
     const r = deductions(1600, [{ label: 'Social Security', amount: 99.2 }, { label: 'Medicare', amount: 23.2 }]);
     expect(r.running).toEqual([1500.8, 1477.6]);
     expect(r.net).toBe(1477.6);
+  });
+});
+
+describe('deductions on whole cents', () => {
+  it('gives the same running figures as before for whole amounts', () => {
+    const r = deductions(35000, [
+      { label: 'a', amount: 2100 },
+      { label: 'b', amount: 2100 },
+      { label: 'c', amount: 200 },
+    ]);
+    expect(r.running).toEqual([32900, 30800, 30600]);
+    expect(r.deducted).toBe(4400);
+  });
+
+  it('keeps a chain of decimals exact', () => {
+    const r = deductions(1600, [{ label: 'a', amount: 99.2 }, { label: 'b', amount: 23.2 }]);
+    expect(r.running).toEqual([1500.8, 1477.6]);
+    expect(r.net).toBe(1477.6);
+  });
+
+  it('ignores a subtotal label', () => {
+    const plain = deductions(1600, [{ label: 'a', amount: 99.2 }, { label: 'b', amount: 23.2 }]);
+    const labelled = deductions(1600, [{ label: 'a', amount: 99.2, subtotalLabel: 'After a' }, { label: 'b', amount: 23.2 }]);
+    expect(labelled).toEqual(plain);
+  });
+});
+
+describe('toCents, fromCents, roundMoney', () => {
+  it('rounds half away from zero on the decimal as typed', () => {
+    expect(toCents(575.625)).toBe(57563);
+    expect(toCents(1.005)).toBe(101);
+    expect(toCents(-2.5)).toBe(-250);
+    expect(toCents(182.5)).toBe(18250);
+    expect(toCents(999999999999.99)).toBe(99999999999999);
+  });
+
+  it('turns what is not a number into 0, and never -0', () => {
+    expect(toCents(NaN)).toBe(0);
+    expect(toCents(Infinity)).toBe(0);
+    expect(Object.is(toCents(-0.001), 0)).toBe(true);
+  });
+
+  it('comes back from cents and rounds money to the cent', () => {
+    expect(fromCents(57563)).toBe(575.63);
+    expect(roundMoney(2.675)).toBe(2.68);
+  });
+});
+
+describe('roundTo, round1, round2', () => {
+  it('rounds half away from zero at any number of places', () => {
+    expect(roundTo(1.4225123, 3)).toBe(1.423);
+    expect(roundTo(1.005, 2)).toBe(1.01);
+    expect(roundTo(-2.5, 0)).toBe(-3);
+    expect(roundTo(1e-7, 2)).toBe(0);
+    expect(roundTo(82.35, 1)).toBe(82.4);
+    expect(round1(87.43)).toBe(87.4);
+    expect(round2(1.005)).toBe(1.01);
+  });
+
+  it('never returns -0, and returns a non-finite value as it is', () => {
+    expect(Object.is(roundTo(-0.001, 2), 0)).toBe(true);
+    expect(roundTo(Infinity, 2)).toBe(Infinity);
+    expect(Number.isNaN(roundTo(NaN, 2))).toBe(true);
+  });
+});
+
+describe('basis points and integer division', () => {
+  it('turns a percentage into whole basis points', () => {
+    expect(toBasisPoints(27.5)).toBe(2750);
+    expect(toBasisPoints(1.45)).toBe(145);
+  });
+
+  it('divides integers rounding half up', () => {
+    expect(divRoundHalfUp(990000 * 2750, 120000)).toBe(22688);
+    expect(divRoundHalfUp(5, 2)).toBe(3);
+    expect(divRoundHalfUp(4, 3)).toBe(1);
+  });
+
+  it('refuses a negative, a zero divisor or a fraction', () => {
+    expect(() => divRoundHalfUp(-1, 2)).toThrow(RangeError);
+    expect(() => divRoundHalfUp(1, 0)).toThrow(RangeError);
+    expect(() => divRoundHalfUp(1.5, 2)).toThrow(RangeError);
+  });
+
+  it('takes a share of an amount in cents', () => {
+    const cases: [number, number, number][] = [
+      [150, 6.2, 930],
+      [150, 1.45, 218],
+      [162.5, 6.2, 1008],
+      [1050, 1.45, 1523],
+      [1600, 6.2, 9920],
+      [1600, 1.45, 2320],
+    ];
+    for (const [amount, rate, cents] of cases) expect(shareOf(toCents(amount), rate), `${amount} at ${rate}%`).toBe(cents);
+  });
+
+  it('gives a part as a percentage to one place, or null for nothing', () => {
+    expect(percent1(131760, 160000)).toBe(82.4);
+    expect(percent1(3060000, 3500000)).toBe(87.4);
+    expect(percent1(5, 0)).toBeNull();
+  });
+});
+
+describe('pay frequency', () => {
+  it('counts paydays in a year', () => {
+    expect(PAYDAYS_PER_YEAR).toEqual({ weekly: 52, fortnightly: 26, 'twice-monthly': 24, monthly: 12 });
+    expect(PAYDAYS).toBe(PAYDAYS_PER_YEAR);
+  });
+
+  it('accepts only its own keys', () => {
+    expect(isPayFrequency('fortnightly')).toBe(true);
+    expect(isPayFrequency('daily')).toBe(false);
+    expect(isPayFrequency('toString')).toBe(false);
+    expect(isPayFrequency(undefined)).toBe(false);
+    expect(parsePayFrequency('daily', 'fortnightly')).toBe('fortnightly');
+    expect(parsePayFrequency('weekly', 'fortnightly')).toBe('weekly');
   });
 });

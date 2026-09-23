@@ -1,0 +1,10 @@
+{
+  "tool": "spot-the-fake",
+  "region": "eu",
+  "fromLesson": "eu/credit-and-fraud/instant-transfer-check",
+  "intro": "Three screens. One is an ordinary payment, so refusing everything is not the answer.",
+  "reflection": "Which cue would you have missed, and where does it appear in your own bank app?",
+  "glossary": [],
+  "sources": [],
+  "scenarios": []
+}

@@ -5,7 +5,8 @@ import HandNote from '../components/HandNote.astro';
 import Blobs from '../components/Blobs.astro';
 import Doodle from '../components/Doodle.astro';
 import { REGIONS, getRegion } from '../lib/regions';
-import { TOOLS } from '../lib/tools';
+import { GROUPS, TOOLS, type ToolMeta } from '../lib/tools';
+import { toolAvailable } from '../lib/drills';
 import { site } from '../lib/site';
 import { lessonPath, lessonsFor } from '../lib/lessons';
 
@@ -25,7 +26,20 @@ const starters = (
   )
 ).flat();
 const doodles = ['coin', 'phone', 'tag', 'calculator', 'plane', 'coin'] as const;
-const everywhere = TOOLS.filter((tool) => !tool.regions);
+// One question per life moment that every edition can answer: the first all-edition tool of each
+// group that every edition has ready (a drill only when every edition has its bank). Each link goes
+// through the reader's edition.
+const inEvery = async (tool: ToolMeta) =>
+  (await Promise.all(REGIONS.map((region) => toolAvailable(region.code, tool.slug)))).every(Boolean);
+const everywhere: ToolMeta[] = [];
+for (const group of GROUPS) {
+  for (const tool of TOOLS.filter((t) => t.group === group.id && !t.regions)) {
+    if (await inEvery(tool)) {
+      everywhere.push(tool);
+      break;
+    }
+  }
+}
 const reasons = ['Free, with nothing to sell', 'No ads and no tracking', 'No sign-up needed', 'Real numbers in your currency', 'A source and a date on every figure', 'Built to load on a cheap phone'];
 const india = getRegion('in');
 ---
@@ -93,7 +107,7 @@ const india = getRegion('in');
   <section id="calculators" class="section" aria-labelledby="calc-h">
     <div class="container">
       <div class="panel panel-gold taxonomy">
-        <h2 id="calc-h" class="taxonomy-title">Calculators that answer</h2>
+        <h2 id="calc-h" class="taxonomy-title">Tools that answer</h2>
         <ul class="list-plain taxonomy-list">
           {everywhere.map((tool) => (
             <li><a href="#editions" data-edition-path={`tools/${tool.slug}`}>{tool.short}</a></li>

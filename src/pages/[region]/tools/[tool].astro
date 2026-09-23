@@ -1,9 +1,14 @@
 ---
 /**
- * Every calculator page, from one template: what it answers, the example it opens on, the tool,
- * the lessons that use it, and the edition's note. client:load, not client:visible: on a phone
- * the tool sits below the fold, and a calculator that looks ready but ignores taps is worse than
- * a moment of JavaScript.
+ * Every tool page, from one template: what it answers, the example it opens on, the tool (a
+ * calculator island or a drill of made-up screens), the rules and terms it uses, the lessons
+ * linked to it, and the edition's note. client:load, not client:visible: on a phone the tool sits
+ * below the fold, and a calculator that looks ready but ignores taps is worse than a moment of
+ * JavaScript.
+ *
+ * Each calculator's example, rules and terms come from its own module (src/lib/tools/<slug>.ts)
+ * for this page's edition, never from the currency picker. A drill comes from its bank
+ * (src/content/drills/<edition>/<tool>.json) and the lesson that bank names.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BreakEven from '../../../islands/BreakEven.tsx';
@@ -11,23 +16,48 @@ import BudgetPlanner from '../../../islands/BudgetPlanner.tsx';
 import CompoundGrowth from '../../../islands/CompoundGrowth.tsx';
 import SideHustle from '../../../islands/SideHustle.tsx';
 import LoanEmi from '../../../islands/LoanEmi.tsx';
+import TakeHomePay from '../../../islands/TakeHomePay.tsx';
+import YearlyRate from '../../../islands/YearlyRate.tsx';
+import CardMinimum from '../../../islands/CardMinimum.tsx';
+import BufferTarget from '../../../islands/BufferTarget.tsx';
+import PayLaterPayday from '../../../islands/PayLaterPayday.tsx';
+import RentShare from '../../../islands/RentShare.tsx';
+import SideIncomeTax from '../../../islands/SideIncomeTax.tsx';
 import Drill from '../../../components/lesson/Drill.astro';
 import LessonScript from '../../../components/lesson/LessonScript.astro';
+import RulesLine from '../../../components/RulesLine.astro';
+import ToolTerms from '../../../components/ToolTerms.astro';
 import { REGIONS, getRegion } from '../../../lib/regions';
-import { toolsFor, type ToolMeta } from '../../../lib/tools';
+import { toolsFor, titleFor, type ToolMeta } from '../../../lib/tools';
+import { CONFIGS, configFor } from '../../../lib/tools/configs';
+import type { Edition } from '../../../lib/tools/types';
+import { CONFIG as takeHomePay } from '../../../lib/tools/take-home-pay';
+import { CONFIG as yearlyRate } from '../../../lib/tools/yearly-rate';
+import { CONFIG as cardMinimum } from '../../../lib/tools/card-minimum';
+import { CONFIG as bufferTarget } from '../../../lib/tools/buffer-target';
+import { CONFIG as payLaterPayday } from '../../../lib/tools/pay-later-payday';
+import { CONFIG as rentShare } from '../../../lib/tools/rent-share';
+import { CONFIG as sideIncomeTax } from '../../../lib/tools/side-income-tax';
+import { drillFor, toolAvailable, type ToolDrill } from '../../../lib/drills';
 import { lessonPath, lessonsFor, type Lesson } from '../../../lib/lessons';
 import '../../../styles/lesson.css';
 
 export async function getStaticPaths() {
-  const paths: { params: { region: string; tool: string }; props: { tool: ToolMeta; drill?: Lesson; related: Lesson[] } }[] = [];
+  const paths: { params: { region: string; tool: string }; props: { tool: ToolMeta; drill: ToolDrill | null; related: Lesson[] } }[] = [];
   for (const region of REGIONS) {
-    const lessons = await lessonsFor(region.code);
-    for (const tool of toolsFor(region.code)) {
-      // The payment-scam drill is the one with a report route; other lessons have drills of their own.
-      const drill = tool.slug === 'spot-the-fake' ? lessons.find((l) => l.data.explorable?.kind === 'drill' && l.data.reportTo) : undefined;
-      if (tool.slug === 'spot-the-fake' && !drill) continue; // nothing to practise until its lesson exists
-      const related = drill ? [drill] : lessons.filter((l) => l.data.tool === tool.slug);
-      paths.push({ params: { region: region.code, tool: tool.slug }, props: { tool, drill, related } });
+    const code = region.code;
+    const lessons = await lessonsFor(code);
+    for (const tool of toolsFor(code)) {
+      let drill: ToolDrill | null = null;
+      if (tool.format === 'drill') {
+        drill = await drillFor(code, tool.slug);
+        if (!drill) continue; // no bank for this edition yet: no page, and no link to one
+      } else if (CONFIGS[tool.slug] && !CONFIGS[tool.slug][code as Edition]) {
+        throw new Error(`${tool.slug} lists the ${code} edition, but src/lib/tools/${tool.slug}.ts has no CONFIG.${code}`);
+      }
+      let related = lessons.filter((l) => l.data.tool === tool.slug || (l.data.moreTools ?? []).includes(tool.slug));
+      if (drill) related = [drill.lesson, ...related.filter((l) => l.id !== drill!.lesson.id)];
+      paths.push({ params: { region: code, tool: tool.slug }, props: { tool, drill, related } });
     }
   }
   return paths;
@@ -39,32 +69,53 @@ const region = getRegion(code!);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
 const t = region.tools;
+const edition = region.code as Edition;
+const config = configFor(tool.slug, edition);
 
-const scenario: Record<string, string> = {
+const legacy: Record<string, string> = {
   'break-even': region.breakEven.scenario,
   'side-hustle': t.sideHustle.scenario,
   loan: t.loan.scenario,
-  budget: 'A first month of money with a job for every part of it.',
-  savings: 'A small amount, put aside every month.',
+  budget: t.budget.scenario,
+  savings: t.savings.scenario,
 };
+const scenario = tool.format === 'drill' ? undefined : (config?.scenario ?? legacy[tool.slug]);
+const title = titleFor(tool, region.code);
+// From a tool another edition lacks, that edition's link lands on its tools index.
+const regionSubs = Object.fromEntries(
+  await Promise.all(REGIONS.map(async (r) => [r.code, (await toolAvailable(r.code, tool.slug)) ? `tools/${tool.slug}` : 'tools'])),
+);
+
+const thp = takeHomePay[edition];
+const yr = yearlyRate[edition];
+const cm = cardMinimum[edition];
+const bt = bufferTarget[edition];
+const pl = payLaterPayday[edition];
+const rs = rentShare[edition];
+const sit = sideIncomeTax[edition];
+
+const terms = drill ? drill.bank.data.glossary : (config?.glossary ?? []);
+const reportTo = drill?.reportTo;
+const sources = drill?.bank.data.sources ?? [];
 ---
 
 <BaseLayout
-  title={`${tool.title} — Business Lab ${region.name}`}
+  title={`${title} — Business Lab ${region.name}`}
   description={`${tool.answers} Free, and nothing you type is sent anywhere.`}
   region={region.code}
-  regionSub={tool.regions ? 'tools' : `tools/${tool.slug}`}
+  regionSub={`tools/${tool.slug}`}
+  regionSubs={regionSubs}
   path="tools"
-  kind={tool.regions ? 'Practice' : 'Calculator'}
+  kind={tool.format === 'drill' ? 'Practice' : 'Calculator'}
 >
   <section class="section">
     <div class="container">
       <div class="column">
-        <p class="crumb"><a href={`${prefix}/tools`}>← All calculators</a></p>
-        <h1>{tool.title}</h1>
+        <p class="crumb"><a href={`${prefix}/tools`}>← All tools</a></p>
+        <h1>{title}</h1>
         <p class="answers">{tool.intro}</p>
-        {scenario[tool.slug] && (
-          <p class="scenario">It opens on an example: {scenario[tool.slug].charAt(0).toLowerCase() + scenario[tool.slug].slice(1)} Change any number to match your own.</p>
+        {scenario && (
+          <p class="scenario">It opens on an example: {scenario.charAt(0).toLowerCase() + scenario.slice(1)} Change any number to match your own.</p>
         )}
       </div>
 
@@ -91,32 +142,52 @@ const scenario: Record<string, string> = {
       {tool.slug === 'loan' && (
         <LoanEmi client:load defaults={{ principal: t.loan.principal, rate: t.loan.rate, months: t.loan.months }} localeCode={region.locale} />
       )}
+      {tool.slug === 'take-home-pay' && thp && <TakeHomePay client:load config={thp} edition={edition} localeCode={region.locale} prefix={prefix} />}
+      {tool.slug === 'yearly-rate' && yr && <YearlyRate client:load config={yr} edition={edition} localeCode={region.locale} prefix={prefix} />}
+      {tool.slug === 'card-minimum' && cm && <CardMinimum client:load config={cm} edition={edition} localeCode={region.locale} prefix={prefix} />}
+      {tool.slug === 'buffer-target' && bt && <BufferTarget client:load config={bt} edition={edition} localeCode={region.locale} prefix={prefix} />}
+      {tool.slug === 'pay-later-payday' && pl && <PayLaterPayday client:load config={pl} edition={edition} localeCode={region.locale} prefix={prefix} />}
+      {tool.slug === 'rent-share' && rs && <RentShare client:load config={rs} edition={edition} localeCode={region.locale} prefix={prefix} />}
+      {tool.slug === 'side-income-tax' && sit && <SideIncomeTax client:load config={sit} edition={edition} localeCode={region.locale} prefix={prefix} />}
 
-      {drill && drill.data.explorable?.kind === 'drill' && (
-        <div class="column" data-lesson-id={drill.id} data-locale={region.locale}>
+      {drill && (
+        <div class="column" data-lesson-id={drill.lesson.id} data-locale={region.locale}>
           <Drill
-            lessonId={drill.id}
-            intro={drill.data.explorable.intro}
-            scenarios={drill.data.explorable.scenarios}
-            reflection={drill.data.explorable.reflection}
+            lessonId={drill.lesson.id}
+            intro={drill.bank.data.intro}
+            scopeNote={drill.bank.data.scopeNote}
+            scenarios={drill.situations}
+            reflection={drill.bank.data.reflection}
             localeCode={region.locale}
           />
-          {drill.data.reportTo && (
+          {reportTo && (
             <p class="report">
-              {drill.data.reportTo.label}{' '}
-              {drill.data.reportTo.phone && (
-                <>Call <a href={`tel:${drill.data.reportTo.phone}`}><strong class="numbers">{drill.data.reportTo.phone}</strong></a> or report at{' '}</>
+              {reportTo.label}{' '}
+              {reportTo.phone && (
+                <>Call <a href={`tel:${reportTo.phone}`}><strong class="numbers">{reportTo.phone}</strong></a> or report at{' '}</>
               )}
-              <a href={drill.data.reportTo.url} rel="noopener noreferrer">{new URL(drill.data.reportTo.url).hostname}</a>.
+              <a href={reportTo.url} rel="noopener noreferrer">{new URL(reportTo.url).hostname}</a>.
             </p>
+          )}
+          {sources.length > 0 && (
+            <section class="tool-sources" aria-labelledby="tool-sources-h">
+              <h2 id="tool-sources-h">Sources for these situations</h2>
+              <ul>
+                {sources.map((source) => (
+                  <li><a href={source.url} rel="noopener noreferrer">{source.title}</a>, {source.publisher}</li>
+                ))}
+              </ul>
+            </section>
           )}
         </div>
       )}
 
       <div class="column">
+        {config?.rules && <RulesLine rules={config.rules} lead={config.rulesLead} />}
+        {terms.length > 0 && <ToolTerms ids={terms} />}
         {related.length > 0 && (
           <div class="related">
-            <h2>{drill ? 'The lesson behind this' : 'Lessons that use this'}</h2>
+            <h2>{drill ? (related.length === 1 ? 'The lesson behind this' : 'The lessons behind this') : 'Lessons that use this'}</h2>
             <ul>
               {related.map((lesson) => (
                 <li><a href={`${base}/${lessonPath(lesson)}`}>{lesson.data.title}</a></li>
@@ -124,11 +195,15 @@ const scenario: Record<string, string> = {
             </ul>
           </div>
         )}
-        {/* The edition's market-data note only where a rate is involved; elsewhere it is noise. */}
-        <p class="note">
-          For learning only. Not financial, legal, or tax advice. The numbers it opens with are an
-          example, not a prediction. {tool.slug === 'savings' && region.note}
-        </p>
+        {drill ? (
+          <p class="note">For learning only. Not financial, legal, or tax advice. Every screen and message here is made up.</p>
+        ) : (
+          /* The edition's market-data note only where a rate is involved; elsewhere it is noise. */
+          <p class="note">
+            For learning only. Not financial, legal, or tax advice. The numbers it opens with are an
+            example, not a prediction. {tool.slug === 'savings' && region.note}
+          </p>
+        )}
       </div>
     </div>
   </section>
@@ -143,6 +218,8 @@ const scenario: Record<string, string> = {
   .scenario { color: var(--muted); margin-bottom: var(--space-7); }
   .related { margin-top: var(--space-7); }
   .related h2 { font-size: var(--text-h3); margin-top: 0; }
-  .related ul { padding-left: var(--space-5); }
+  .related ul, .tool-sources ul { padding-left: var(--space-5); }
   .note { margin-top: var(--space-7); }
+  .tool-sources { margin-top: var(--space-7); }
+  .tool-sources h2 { font-size: var(--text-h3); margin-top: 0; }
 </style>

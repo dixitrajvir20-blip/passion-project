@@ -7,7 +7,8 @@ import Doodle from '../../components/Doodle.astro';
 import LessonList from '../../components/lesson/LessonList.astro';
 import ProgressMarks from '../../components/lesson/ProgressMarks.astro';
 import { REGIONS, getRegion } from '../../lib/regions';
-import { toolsFor } from '../../lib/tools';
+import { groupsFor } from '../../lib/tools';
+import { availableTools } from '../../lib/drills';
 import { site } from '../../lib/site';
 import { inTrack, lessonPath, lessonsFor } from '../../lib/lessons';
 import '../../styles/lesson.css';
@@ -23,8 +24,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
 // The first lesson of the first track with one, the natural place to begin.
 const first = region.tracks.map((track) => inTrack(lessons, track.slug)[0]).find(Boolean);
-const hasDrill = lessons.some((lesson) => lesson.data.explorable?.kind === 'drill');
-const tools = toolsFor(region.code).filter((tool) => tool.slug !== 'spot-the-fake' || hasDrill);
+// One giant question per life moment: the first tool this edition has in each group.
+const available = await availableTools(region.code);
+const panel = groupsFor(region.code, available).map((group) => group.tools[0]);
 const trackDoodles = ['coin', 'tag', 'calculator'] as const;
 ---
 
@@ -48,7 +50,7 @@ const trackDoodles = ['coin', 'tag', 'calculator'] as const;
           ) : (
             <a class="cta" href={`${prefix}/learn`}><span class="cta-label">See the lessons</span><span class="cta-arrow" aria-hidden="true">→</span></a>
           )}
-          <a class="btn btn-secondary btn-lg" href={`${prefix}/tools`}>Open the calculators</a>
+          <a class="btn btn-secondary btn-lg" href={`${prefix}/tools`}>Open the tools</a>
         </div>
       </div>
       <div class="receipt-wrap">
@@ -84,11 +86,12 @@ const trackDoodles = ['coin', 'tag', 'calculator'] as const;
   <section id="calculators" class="section calculators" aria-labelledby="calc-h">
     <div class="container">
       <div class="panel panel-gold taxonomy">
-        <h2 id="calc-h" class="taxonomy-title">Calculators that answer</h2>
+        <h2 id="calc-h" class="taxonomy-title">Tools that answer</h2>
         <ul class="list-plain taxonomy-list">
-          {tools.map((tool) => <li><a href={`${prefix}/tools/${tool.slug}`}>{tool.short}</a></li>)}
+          {panel.map((tool) => <li><a href={`${prefix}/tools/${tool.slug}`}>{tool.short}</a></li>)}
         </ul>
-        <p class="taxonomy-foot">Set up with {region.name} numbers. Change any of them to match your own.</p>
+        <p class="taxonomy-all"><a href={`${prefix}/tools`}>All {available.length} tools</a></p>
+        <p class="taxonomy-foot">Calculators set up with {region.name} numbers, and drills of made-up screens. Change any number to match your own.</p>
       </div>
     </div>
   </section>
@@ -179,6 +182,8 @@ const trackDoodles = ['coin', 'tag', 'calculator'] as const;
     letter-spacing: var(--tracking-display); color: var(--on-gold); text-decoration: none; text-wrap: balance;
   }
   .taxonomy-list a:hover { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; }
+  .taxonomy-all { margin: var(--space-5) 0 0; }
+  .taxonomy-all a { color: var(--on-gold); font-weight: 700; font-size: var(--text-lg); }
   .taxonomy-foot { margin: var(--space-6) auto 0; font-weight: 700; }
 
   .why { background: var(--field-pale); }

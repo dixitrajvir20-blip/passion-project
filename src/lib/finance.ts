@@ -194,6 +194,8 @@ export function amortization(principal: number, annualRatePercent: number, month
 export interface DeductionLine {
   label: string;
   amount: number;
+  /** Names the running figure after this line ("Gross salary"). A label only: deductions() ignores it. */
+  subtotalLabel?: string;
 }
 
 export interface DeductionResult {
@@ -207,14 +209,91 @@ export interface DeductionResult {
 /**
  * A chain of subtractions from one starting figure: a payslip from CTC or gross to in-hand, a
  * platform payout from the price to what arrives, an aid letter from the award to the loan. The
- * running figures are what a "show me" ledger prints one line at a time.
+ * running figures are what a "show me" ledger prints one line at a time. Worked in whole cents,
+ * so a chain of decimals never drifts by a float's last digit.
  */
 export function deductions(start: number, lines: DeductionLine[]): DeductionResult {
   const running: number[] = [];
-  let current = start;
+  let currentC = toCents(start);
   for (const line of lines) {
-    current = Math.round((current - line.amount) * 100) / 100;
-    running.push(current);
+    currentC -= toCents(line.amount);
+    running.push(fromCents(currentC));
   }
-  return { start, running, deducted: Math.round((start - current) * 100) / 100, net: current };
+  return { start, running, deducted: fromCents(toCents(start) - currentC), net: fromCents(currentC) };
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * Shared money helpers for every calculator. Nothing tool-specific lives here: each tool's own
+ * maths is in src/lib/tools/<slug>.ts.
+ * ------------------------------------------------------------------------------------------- */
+
+/**
+ * Whole cents (or paise), half away from zero on the decimal as typed: toCents(1.005) is 101,
+ * where Math.round(1.005 * 100) gives 100. toPrecision(15) drops the float's noise digit; 12 would
+ * turn 999,999,999,999.99 into 1e14. Not finite gives 0, and never -0.
+ */
+export function toCents(v: number): number {
+  if (!Number.isFinite(v)) return 0;
+  const c = Math.round(Number((Math.abs(v) * 100).toPrecision(15)));
+  if (c === 0) return 0;
+  return v < 0 ? -c : c;
+}
+
+export const fromCents = (c: number): number => c / 100;
+
+/** A money amount rounded to the cent, half away from zero. */
+export const roundMoney = (v: number): number => fromCents(toCents(v));
+
+/**
+ * x rounded to dp decimal places, half away from zero, by shifting the decimal point in the
+ * number's own text: roundTo(1.005, 2) is 1.01. Non-finite x is returned as it is; never -0.
+ */
+export function roundTo(x: number, dp: number): number {
+  if (!Number.isFinite(x)) return x;
+  const a = Math.abs(x);
+  const r = String(a).includes('e')
+    ? Math.round(a * 10 ** dp) / 10 ** dp
+    : Number(Math.round(Number(`${a}e${dp}`)) + `e-${dp}`);
+  if (r === 0) return 0;
+  return x < 0 ? -r : r;
+}
+
+export const round1 = (x: number): number => roundTo(x, 1);
+export const round2 = (x: number): number => roundTo(x, 2);
+
+/** A percentage as whole basis points: 27.5% is 2750, 1.45% is 145. */
+export const toBasisPoints = (percent: number): number => Math.round(percent * 100);
+
+/** n ÷ d rounded half up, for integers n >= 0 and d > 0. Exact while n stays below 2^53. */
+export function divRoundHalfUp(n: number, d: number): number {
+  if (!Number.isInteger(n) || !Number.isInteger(d) || n < 0 || d <= 0) {
+    throw new RangeError(`divRoundHalfUp needs integers n >= 0 and d > 0, got ${n} and ${d}`);
+  }
+  const q = Math.floor(n / d);
+  const rem = n - q * d;
+  return rem * 2 >= d ? q + 1 : q;
+}
+
+/** ratePercent of an amount in cents, in cents: shareOf(15000, 1.45) is 218 ($2.175 rounds up). */
+export function shareOf(cents: number, ratePercent: number): number {
+  return Math.round((cents * toBasisPoints(ratePercent)) / 10000);
+}
+
+/** part as a percentage of whole, to one decimal place, from cents; null when whole is not positive. */
+export function percent1(partCents: number, wholeCents: number): number | null {
+  return wholeCents > 0 ? Math.round((partCents * 1000) / wholeCents) / 10 : null;
+}
+
+/** Paydays in a year, by how often pay arrives. One allow-list for every tool and every link. */
+export const PAYDAYS_PER_YEAR = { weekly: 52, fortnightly: 26, 'twice-monthly': 24, monthly: 12 } as const;
+export type PayFrequency = keyof typeof PAYDAYS_PER_YEAR;
+export const PAYDAYS = PAYDAYS_PER_YEAR;
+
+/** An own-key check, so 'toString' or '__proto__' from a link is never a frequency. */
+export function isPayFrequency(v: unknown): v is PayFrequency {
+  return typeof v === 'string' && Object.hasOwn(PAYDAYS_PER_YEAR, v);
+}
+
+export function parsePayFrequency(v: unknown, fallback: PayFrequency): PayFrequency {
+  return isPayFrequency(v) ? v : fallback;
 }

@@ -15,6 +15,8 @@ interface Props {
   region?: string;
   /** Sub-path the region tabs should preserve when switching edition. */
   regionSub?: string;
+  /** Per-edition sub-paths, where an edition lacks this page (a tool it does not have). */
+  regionSubs?: Partial<Record<string, string>>;
   /** Social image, relative to the site root. */
   image?: string;
   noindex?: boolean;
@@ -25,7 +27,7 @@ interface Props {
   bare?: boolean;
 }
 
-const { title, description, path = '', region, regionSub = '', image = '/og-default.png', noindex = false, kind, bare = false } = Astro.props;
+const { title, description, path = '', region, regionSub = '', regionSubs, image = '/og-default.png', noindex = false, kind, bare = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // Search: an edition's pages are found from that edition; shared pages are found from all of them.
@@ -86,7 +88,7 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header region={region} regionSub={regionSub} path={path} />
+    <Header region={region} regionSub={regionSub} regionSubs={regionSubs} path={path} />
     {/* data-pagefind-body: only <main> is indexed, so the header, tabs and footer never match a search. */}
     <main id="main" tabindex="-1" class:list={[{ 'page-sheet': !bare }]} data-pagefind-body={noindex ? undefined : ''} data-pagefind-ignore={noindex ? '' : undefined}>
       {!noindex && editions.map((r) => <span data-pagefind-filter={`edition:${r.name}`}></span>)}

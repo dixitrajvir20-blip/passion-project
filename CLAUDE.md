@@ -59,6 +59,18 @@ of his school club, Business Lab).
 - **Five calculators** in every edition (break-even, budget, savings growth, side-hustle, loan) on one
   kit (`src/islands/tool-kit.tsx`), plus India's **"UPI: spot the fake"** drill, from
   `src/pages/[region]/tools/[tool].astro` and `src/lib/tools.ts`. Per-edition defaults in `regions.ts`.
+- **Tools foundation (22 Sept, branch `interactive-tools`)**: the registry `src/lib/tools.ts` lists
+  every tool with its group (life moment), minutes and copy; `/<edition>/tools` is grouped by moment
+  with jump links, and the edition fronts and home show one question per group. New calculators
+  keep their edition rules (value, source, `asOf`) and maths in `src/lib/tools/<slug>.ts`, reached
+  through `src/lib/tools/configs.ts`, keyed on the page's edition; the page prints them in
+  `RulesLine` and `ToolTerms`. Drill tools are built from their lesson's screens plus a bank in
+  `src/content/drills/<edition>/<tool>.json` (`src/lib/drills.ts`); a drill exists in an edition
+  only when its bank does. Copy link puts the figures after the `#` (read once, then cleared from the
+  address bar; old `?` links still open). Lessons link out through `tool` and `moreTools`.
+  `npm run rules` (in ship-check) warns on a rule 11 months old and fails at 12. Seven new
+  calculators and the drill banks are stubs until their builders land; the integrator updates the
+  tool counts here then. Specs: `docs/research/interactive-tools-revised.json`.
 - **Dashboard** at `/dashboard` (`src/islands/Dashboard.tsx`): lessons done, checks, review queue,
   learning time by day, next lesson, progress by track. All from this device. Learning time
   (`lp:activity`, `src/lib/activity.ts`) is recorded only after a yes to the `stats` consent
@@ -72,7 +84,7 @@ of his school club, Business Lab).
   (default off); the build fails if it is on without `PUBLIC_AUTH_ORIGIN`. Going live is Phase 6.
 - **Security**: strict CSP (meta, per-inline hashes), pinned GitHub Actions, Dependabot with
   cooldown, `.npmrc ignore-scripts`, least-privilege workflows, CodeQL.
-- **Gates**: `npm run ship-check` = build + `scripts/js-budget.mjs` + contrast + unit + e2e/axe.
+- **Gates**: `npm run ship-check` = build + `scripts/js-budget.mjs` + contrast + unit + rules + e2e/axe.
   Content rules are tests (`tests/unit/lessons.test.ts`): sentence/section length, banned words,
   market-signal language, undefined terms, quote length, no embedded media.
 - **Share images** are drawn at build time (`scripts/og-images.mjs`, resvg); `scripts/brand-icons.mjs`

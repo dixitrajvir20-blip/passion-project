@@ -169,6 +169,7 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
 .drill-list > li { margin: 0; padding: var(--space-6) 0; border-top: 1px solid var(--line); }
 .drill-count { color: var(--muted); font-size: var(--text-sm); margin-bottom: var(--space-3); }
 .reflection { border-top: 1px solid var(--line); padding-top: var(--space-5); color: var(--ink); font-size: var(--text-lg); }
+.drill-scope { color: var(--ink-2); font-size: var(--text-sm); }
 
 .mock-screen {
   margin: 0 0 var(--space-5);
@@ -396,3 +397,8 @@ html:not(.js) .video-play { display: none; }
 .lesson-v2 .steps { border: 0; padding: 0; background: none; }
 .lesson-details ul { margin: var(--space-3) 0 0; }
 .explorer-change { margin: 0 0 var(--space-3); color: var(--muted); font-size: var(--text-sm); }
+
+/* Named links from a lesson to its tools, server-rendered so they work without a script. */
+.tool-handoffs { margin: var(--space-5) 0 0; }
+.tool-handoffs li + li { margin-top: var(--space-2); }
+.tool-handoffs a { font-weight: 700; }

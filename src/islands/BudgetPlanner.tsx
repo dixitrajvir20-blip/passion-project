@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { budgetSplit, type BudgetCategory } from '../lib/finance';
 import { money, number } from '../lib/format';
-import { CurrencyField, HowItWorks, NumberField, Result, ToolActions, toNumber, useFields, useLocale } from './tool-kit';
+import { CurrencyField, HowItWorks, NumberField, Result, ToolActions, readLinkParam, toNumber, useFields, useLocale } from './tool-kit';
 import { MAX_ROWS, decodeRows, encodeRows } from '../lib/budget-link';
 import './tools.css';
 
@@ -29,7 +29,8 @@ export default function BudgetPlanner({ defaults, localeCode }: Props) {
   const [rows, setRows] = useState<Row[]>(defaults.rows);
 
   useEffect(() => {
-    const shared = new URLSearchParams(window.location.search).get('rows');
+    // After the # or, for older links and the lesson explorers' hand-offs, in the ?query.
+    const shared = readLinkParam('rows');
     const decoded = shared ? decodeRows(shared) : null;
     if (decoded) setRows(decoded);
   }, []);

@@ -61,8 +61,10 @@ banned-font list there is enforced in review.
 - **Edition menu** `RegionTabs.astro` — a `<details>` dropdown in the header with `Flag.astro`
   (drawn SVG flags, the one place besides the logo where raw hex is allowed). Escape and outside
   clicks close it; the choice is remembered in `lp:region`.
-- **Header** — on the field: badge + wordmark, a white pill group (Learn, Calculators, Glossary,
-  Dashboard, About, Search), the edition menu. Sticky from 900px.
+- **Header** — on the field: badge + wordmark, a white pill group (Learn, Tools, Glossary,
+  Dashboard, About, Search), the edition menu. One row and sticky from 1040px, where the pills fit
+  beside the brand; the one-row header is 72px (`--header-h`), which the scroll padding and sticky
+  offsets are sized from. Below 1040px the nav takes its own row and the header scrolls away.
 - **Footer** — navy, badge + wordmark, editions, site, legal.
 - **Button** `.btn` (navy on sheets, gold on the field), `.btn-secondary` (white pill with a
   navy outline, everywhere), `.btn-link`, and `.cta` (label block + separate arrow box).
@@ -92,6 +94,47 @@ banned-font list there is enforced in review.
   first optional category to be active, so the banner now appears on a first visit.
 - **SignIn** island — the account flow, a preview until Phase 6 (see `docs/AUTH_AND_ACCOUNTS.md`).
 - **Tool shell** — `.tool`: inputs left, a sticky results bench right with a `Figure` and a ledger.
+- **Tool kit** (`src/islands/tool-kit.tsx`), shared by every calculator:
+  - `NumberField` — label, optional hint, and an optional `note` (`.field-note`, `--text-sm` in
+    `--ink-2`: a line that is not an error, such as "Counted as 2"), all tied to the input with
+    `aria-describedby`; errors are text, never the border alone.
+  - `SelectField` — a choice from a fixed list, with the same markup as `NumberField`. It renders
+    only its listed options, and a link may set only one of them (`allowed` in `useFields`).
+  - `RowList` — repeated rows (payslip lines, pay-later plans) in a `fieldset`, each row its own
+    `fieldset` with a numbered legend. After Add, focus moves to the new row's first field; after
+    Remove, to the first field of the row now in that place, or to Add when none is left; the
+    removal is announced in a `role="status"` line. At the cap, Add is disabled and says why in
+    visible text.
+  - `Result` rows — `op` prints the step before the figure (`minus` is '−'); `subtotal` draws a
+    single rule above a running figure (`.ledger-subtotal`, never the double rule); `note` sits on
+    its own line under the row (`.ledger-note`); `main` closes the answer with the double rule.
+  - `ToolNotes` — plain-text notes under a result (`.tool-notes`): what the tool assumed or left out.
+  - `ToolActions` — Reset, Copy link and (where the device has one) Share, with the link note under
+    the buttons (`.link-note`): "The link holds the numbers on screen, so anyone you send it to
+    will see them. This site never receives them."
+  - `useLocale` — **a tool whose config carries edition rules shows no currency field**: it formats
+    in its edition's locale (or calls `useLocale(code, { fixed: true })`, which never reads or
+    writes `lp:locale`), so a saved currency can never put one country's rates in another's money.
+- **RulesLine** `RulesLine.astro` — server-rendered under a calculator: "Rules as of {date}:" and
+  each edition rule the tool uses, with its source link and the day it was checked. Rules come
+  from the tool's own module (`src/lib/tools/<slug>.ts`), keyed on the page's edition.
+- **ToolTerms** `ToolTerms.astro` — "Terms on this page": the glossary entries a tool page uses, as
+  a definition list linked to `/glossary`. A missing glossary id fails the build.
+- **Tools index** `/<edition>/tools` — grouped by life moment (`GROUPS` in `src/lib/tools.ts`):
+  plain jump links under the lede (`.tool-jumps`, no pills), then one `section.tool-group` per group
+  with an `h2` and `.index-list` rows. Each row is the question it answers (`h3`), the tool's
+  title, and a meta line in set type (`.index-meta`, `--text-sm`, `--muted`): "Calculator, about 2
+  minutes" or "Drill, 6 situations, about 5 minutes". No icon, pill, sticker or badge. Group sizes
+  differ, so the page is not a stack of equal bands. The edition fronts' gold panel shows one
+  giant question per group plus "All N tools"; the home panel shows the all-edition ones.
+- **Lesson hand-offs** `.tool-handoffs` — server-rendered links from a lesson to its `tool` and
+  `moreTools` ("Try your own numbers: what reaches my account?", "Practise on more situations in
+  “UPI: spot the fake”"), inside the explorable section; the explorer's own link is fixed by its
+  kind (`EXPLORER_TOOL`).
+- **Tools still being built** — a calculator whose island is a stub carries `ready: false` in
+  `TOOLS`. It gets no page, no index row, no line on the fronts or the home panel and no lesson
+  hand-off (`toolsFor` leaves it out; `registeredFor` still lists it, for checking lesson links).
+  The builder deletes the line when the island is real; the release check allows none.
 
 ## 5. The advanced visual layer (progressive enhancement)
 

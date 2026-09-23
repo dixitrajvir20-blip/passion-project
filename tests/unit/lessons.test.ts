@@ -14,20 +14,8 @@ import { join, relative } from 'node:path';
 import yaml from 'js-yaml';
 import { glossarySchema, lessonSchema } from '../../src/content/schema';
 import { growthChoices, loanChoices, marginChoices, splitChoices } from '../../src/lib/lesson-math';
-
-/**
- * Markup out, words in, for counting. Only for measuring prose (nothing here is ever rendered),
- * but written so no tag can survive: strip until nothing changes, then drop stray brackets.
- */
-function stripTags(text: string): string {
-  let out = text;
-  let previous;
-  do {
-    previous = out;
-    out = out.replace(/<[^<>]*>/g, '');
-  } while (out !== previous);
-  return out.replace(/[<>]/g, ' ');
-}
+import { EXPLORER_TOOL, registeredFor, toolsFor } from '../../src/lib/tools';
+import { BANNED, MARKET_SIGNALS, acronymsIn, collectStrings, sentences, stripTags, words } from './content-rules';
 
 const ROOT = join(__dirname, '../../src/content/lessons');
 const GLOSSARY_DIR = join(__dirname, '../../src/content/glossary');
@@ -49,16 +37,6 @@ interface Loaded {
   prose: string;
   /** Every reader-facing string in the frontmatter. */
   strings: string[];
-}
-
-function collectStrings(value: unknown, skipKeys: Set<string>, key = ''): string[] {
-  if (skipKeys.has(key)) return [];
-  if (typeof value === 'string') return [value];
-  if (Array.isArray(value)) return value.flatMap((v) => collectStrings(v, skipKeys, key));
-  if (value && typeof value === 'object') {
-    return Object.entries(value).flatMap(([k, v]) => collectStrings(v, skipKeys, k));
-  }
-  return [];
 }
 
 interface Broken {
@@ -87,33 +65,12 @@ for (const path of walk(ROOT)) {
       data,
       body,
       prose,
-      strings: collectStrings(data, new Set(['url', 'sources', 'glossary', 'tool', 'kind', 'track', 'region'])),
+      strings: collectStrings(data, new Set(['url', 'sources', 'glossary', 'tool', 'moreTools', 'kind', 'track', 'region'])),
     });
   } catch (error) {
     broken.push({ id, error: (error as Error).message });
   }
 }
-
-const sentences = (text: string) =>
-  text
-    .split(/(?<=[.?!])\s+(?=[A-Z₹"“])/)
-    .map((s) => s.trim())
-    .filter(Boolean);
-const words = (text: string) => text.split(/\s+/).filter(Boolean).length;
-
-// docs/BRAND_GUIDE.md §7
-const BANNED = [
-  'unlock', 'supercharge', 'seamless', 'revolutionary', 'revolutionize', 'game-changer', 'game changer',
-  'effortless', 'empower', 'elevate', 'oops', 'fast-paced world', 'financial journey', 'your journey',
-  'get rich', 'passive income',
-];
-
-// Anything that reads as a market signal. SEBI's education-only rule (docs/LEGAL_AND_PRIVACY.md).
-const MARKET_SIGNALS = [
-  /\bnifty\b/i, /\bsensex\b/i, /\bNSE:\s*\w+/, /\bBSE:\s*\w+/, /\btarget price\b/i, /\bprice target\b/i,
-  /\bwill (reach|hit|touch|cross)\b/i, /\bguaranteed returns?\b/i, /\breturns? of \d/i, /\bmultibagger\b/i,
-  /\b(buy|sell|hold) (this|the) (stock|share|fund|coin)\b/i,
-];
 
 describe('lesson content', () => {
   it('there is something to check', () => {
@@ -221,7 +178,7 @@ describe('lesson content', () => {
 
       it('v2: keeps everything a reader can meet outside the details fold to 1,250 words', () => {
         if (!v2) return;
-        const skip = new Set(['url', 'sources', 'glossary', 'tool', 'kind', 'track', 'region', 'details', 'prediction', 'video', 'youtubeId', 'author', 'reviewedBy']);
+        const skip = new Set(['url', 'sources', 'glossary', 'tool', 'moreTools', 'kind', 'track', 'region', 'details', 'prediction', 'video', 'youtubeId', 'author', 'reviewedBy']);
         const total = words(lesson.prose) + wordsIn(collectStrings(lesson.data, skip));
         expect(total, `${total} reader-facing words outside the details fold`).toBeLessThanOrEqual(1250);
       });
@@ -275,9 +232,9 @@ describe('lesson content', () => {
 
       it('v2: every acronym a reader meets is a term the lesson defines', () => {
         if (!v2) return;
-        const skip = new Set(['url', 'sources', 'glossary', 'tool', 'kind', 'track', 'region', 'details', 'prediction', 'video', 'author', 'reviewedBy']);
+        const skip = new Set(['url', 'sources', 'glossary', 'tool', 'moreTools', 'kind', 'track', 'region', 'details', 'prediction', 'video', 'author', 'reviewedBy']);
         const text = [lesson.prose, ...collectStrings(lesson.data, skip)].join(' ');
-        const acronyms = new Set((text.match(/\b[A-Z]{2,6}\b/g) ?? []).filter((a) => !/^(US|EU|UK|USA)$/.test(a)));
+        const acronyms = acronymsIn(text);
         const defined = new Set((lesson.data.glossary ?? []).map((id: string) => id.toUpperCase().replace(/-/g, '')));
         for (const acronym of acronyms) {
           expect(defined.has(acronym), `"${acronym}" is used but is not one of the lesson's glossary terms`).toBe(true);
@@ -298,6 +255,25 @@ describe('lesson content', () => {
             }
           }
         }
+      });
+
+      it('links only to tools its edition has', () => {
+        // Its edition's registry, ready or not: a tool still being built is simply not linked yet.
+        const available = registeredFor(lesson.data.region).map((t) => t.slug);
+        const tool: string | undefined = lesson.data.tool;
+        const more: string[] = lesson.data.moreTools ?? [];
+        if (tool) expect(available, `tool: ${tool}`).toContain(tool);
+        for (const slug of more) expect(available, `moreTools: ${slug}`).toContain(slug);
+        expect(new Set(more).size, 'moreTools repeats a slug').toBe(more.length);
+        if (tool) expect(more, 'moreTools repeats tool').not.toContain(tool);
+      });
+
+      it('hands its explorer to a calculator its edition has', () => {
+        const kind: string | undefined = lesson.data.explorable?.kind;
+        const target = kind ? (EXPLORER_TOOL as Record<string, string>)[kind] : undefined;
+        if (!target) return;
+        // Ready, not just listed: the explorer's own link is always shown.
+        expect(toolsFor(lesson.data.region).map((t) => t.slug)).toContain(target);
       });
 
       it('has no inline style, style block or script (the CSP drops them silently)', () => {

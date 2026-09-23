@@ -1,0 +1,10 @@
+{
+  "tool": "job-offer-check",
+  "region": "eu",
+  "fromLesson": "eu/credit-and-fraud/money-mule",
+  "intro": "Three messages. One is ordinary, so refusing everything is not the answer. Decide, then look.",
+  "reflection": "Which message were you least sure of, and which line would you ask about?",
+  "glossary": [],
+  "sources": [],
+  "scenarios": []
+}

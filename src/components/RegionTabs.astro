@@ -12,11 +12,19 @@ interface Props {
   current?: string;
   /** Sub-path within the edition, so switching keeps you on the same kind of page. */
   sub?: string;
+  /**
+   * Per-edition sub-paths where they differ: from a tool another edition lacks, that edition's
+   * link lands on its tools index instead ('tools'), and on the same tool where it exists.
+   */
+  subs?: Partial<Record<string, string>>;
 }
 
-const { current, sub = '' } = Astro.props;
+const { current, sub = '', subs } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const tail = current && sub ? `/${sub}` : '';
+const tailFor = (code: string) => {
+  const path = subs?.[code] ?? sub;
+  return current && path ? `/${path}` : '';
+};
 const active = REGIONS.find((r) => r.code === current);
 ---
 
@@ -31,7 +39,7 @@ const active = REGIONS.find((r) => r.code === current);
       {REGIONS.map((region) => (
         <li>
           <a
-            href={`${base}/${region.code}${tail}`}
+            href={`${base}/${region.code}${tailFor(region.code)}`}
             aria-current={region.code === current ? 'true' : undefined}
             data-region={region.code}
           >
