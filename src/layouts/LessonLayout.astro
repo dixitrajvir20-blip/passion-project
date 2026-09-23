@@ -163,7 +163,7 @@ const handoffs = lessonToolLinks(region.code, d.tool, d.moreTools, d.explorable?
   <article class="lesson" data-lesson-id={lesson.id} data-locale={region.locale}>
     <div class="container lesson-grid">
       <p class="crumb">
-        <a href={`${prefix}/learn/${track.slug}`}>← {track.title}</a>{' '}
+        <a href={`${prefix}/learn/${track.slug}`}>{track.title}</a>{' '}
         <span class="crumb-pos">Lesson {position} of {count} · {d.readingMinutes} min</span>
       </p>
 
@@ -240,8 +240,7 @@ const handoffs = lessonToolLinks(region.code, d.tool, d.moreTools, d.explorable?
         {d.worked && (
           <section aria-labelledby="show-me">
             <h2 id="show-me">{heading.showMe}</h2>
-            <ShowMe context={d.worked.context} steps={workedSteps} localeCode={region.locale} />
-            {d.keyIdea && <p class="key-idea inset"><strong>{d.keyIdea}</strong></p>}
+            <ShowMe context={d.worked.context} steps={workedSteps} localeCode={region.locale} keyIdea={d.keyIdea} />
           </section>
         )}
 

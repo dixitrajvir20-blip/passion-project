@@ -97,7 +97,7 @@ a:hover { color: var(--blue-dark); text-decoration-thickness: 3px; }
 }
 :is(.crumb a, .tool-handoffs a, .taxonomy-all a, .tool-jumps a, .review-line a, .lesson-next a, .glossary-link, .video-link):hover { color: var(--ink); }
 
-/* A standalone link, and a heading that is nothing but a link (a track title), is a 44px target
+/* A standalone link, and a heading that is nothing but a link, is a 44px target
    (WCAG 2.5.8 asks for 24px; the site keeps 44 for every text control), centred on its line. */
 :is(.crumb, .tool-handoffs, .taxonomy-all, .tool-jumps, .review-line, .lesson-next) a,
 :is(h2, h3) > a:only-child {
@@ -108,6 +108,8 @@ a:hover { color: var(--blue-dark); text-decoration-thickness: 3px; }
 
 strong { color: var(--ink); font-weight: 700; }
 small, .small { font-size: var(--text-sm); }
+/* An exponent in a formula ((1 + r)<sup>n</sup>): raised without opening up its line. */
+sup { line-height: 0; }
 .muted { color: var(--muted); }
 .numbers { font-variant-numeric: tabular-nums; }
 /* Key names such as lp:region: the same typeface, set bold on the surface. */
@@ -207,7 +209,8 @@ img, svg, video { max-width: 100%; height: auto; }
 .btn-link.btn-sm { padding-inline: var(--space-1); }
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
 
-/* The crumb: one line, one link back ('← All tools'), and on a lesson its position. */
+/* The crumb: one line, one standalone link back ('All tools', or the track's name), and on a lesson
+   its position. No arrow glyph in the link (BRAND_GUIDE §7). */
 .crumb {
   display: flex;
   flex-wrap: wrap;
@@ -327,27 +330,48 @@ input[aria-invalid='true'], select[aria-invalid='true'], textarea[aria-invalid='
   padding: var(--space-3) 0;
 }
 .ledger-label { order: 1; flex: 0 1 auto; min-width: 0; color: var(--ink-2); }
-.ledger-row::after {
-  content: '';
-  order: 2;
-  flex: 1 1 var(--space-5);
-  min-width: var(--space-4);
-  border-bottom: var(--control-w) dotted var(--muted);
-}
+/* The figure carries the dotted leader as its own ::before, so the two wrap as one: when a long
+   figure drops to its own line, the leader goes with it and runs from the left edge up to the
+   figure, instead of being left stranded at the end of the label's line. */
 .ledger-figure {
   order: 3;
-  flex: none;
-  margin-inline-start: auto;
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
+  max-width: none;
   font-family: var(--font-body);
   font-size: var(--text-lg);
   font-weight: 700;
   color: var(--ink);
+  text-align: end;
   white-space: nowrap;
+}
+/* The basis equals the minimum on purpose: the browser sizes the figure from the leader's minimum,
+   so a larger basis would squeeze the figure's text by a pixel or two, and a figure allowed to break
+   (rent-share) would split across two lines beside its label. */
+.ledger-figure::before {
+  content: '';
+  flex: 1 1 var(--space-4);
+  min-width: var(--space-4);
+  border-bottom: var(--control-w) dotted var(--muted);
 }
 .ledger-total { border-top: var(--rule-w) solid var(--ink); margin-top: var(--space-2); padding-top: var(--space-4); }
 .ledger-total .ledger-label { color: var(--ink); font-weight: 700; }
-/* The double rule of a closed sum. */
-.ledger-total .ledger-figure { font-size: var(--text-h2); border-bottom: 3px double var(--ink); padding-bottom: 1px; }
+/* The double rule of a closed sum, under the figure's own text (a border would run under the
+   leader too). A double line at --rule-w is two 1px lines 1px apart, the old 3px double border. The
+   ink stays ink under a loss, and the rule is unbroken under commas. */
+.ledger-total .ledger-figure {
+  font-size: var(--text-h2);
+  text-decoration-line: underline;
+  text-decoration-style: double;
+  text-decoration-color: var(--ink);
+  text-decoration-thickness: var(--rule-w);
+  text-underline-offset: 0.15em;
+  text-decoration-skip-ink: none;
+}
 .ledger .is-loss { color: var(--error); }
 /* A running figure inside a longer sum: a single rule above, never the double rule of the answer. */
 .ledger-subtotal { border-top: var(--rule-w) solid var(--ink); margin-top: var(--space-2); }
@@ -380,7 +404,9 @@ mark { background: var(--tint); color: var(--ink); font-weight: 700; padding: 0 
 .index-row:has(> .index-flag) { grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; }
 .index-row > .index-flag { grid-row: 1 / -1; align-self: start; width: var(--space-6); height: auto; margin-top: var(--space-1); }
 .index-row:has(> .index-flag) > :not(.index-flag) { grid-column: 2; }
-.index-row .index-title { margin: 0; font-size: var(--text-lg); font-weight: 700; line-height: var(--leading-heading); color: var(--ink); }
+/* The title is an h3 on the tools index and the home starters, but a row title, not a heading block:
+   pretty keeps a 1.2-line title as one full line and a short second, where balance halves it. */
+.index-row .index-title { margin: 0; font-size: var(--text-lg); font-weight: 700; line-height: var(--leading-heading); color: var(--ink); text-wrap: pretty; }
 .index-row .index-sub { color: var(--ink-2); font-size: var(--text-md); font-weight: 400; }
 .index-row .index-meta { color: var(--muted); font-size: var(--text-sm); font-weight: 400; font-variant-numeric: tabular-nums; }
 

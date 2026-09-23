@@ -85,11 +85,14 @@ export default function CompoundGrowth({ defaults, localeCode }: Props) {
             <line class="axis" x1={PAD.left} y1={H - PAD.bottom} x2={W - PAD.right} y2={H - PAD.bottom} />
             <polyline class="line-b" points={line('contributed')} stroke-dasharray="5 4" />
             <polyline class="line-a" points={line('balance')} />
-            {/* Direct labels at the line ends; the dash pattern, not only the colour, tells them apart. */}
+            {/* Direct labels; the dash pattern, not only the colour, tells the lines apart. The value
+                sits at the end of its line. "Put in" starts at the top left, in the band above
+                PAD.top that no line enters (y() puts the largest figure at PAD.top); set beside the
+                dashed line's end, it was crossed by the value line rising past. */}
             <text class="chart-text strong" x={W - PAD.right} y={Math.max(12, y(last.balance) - 8)} text-anchor="end">
               Value {money(last.balance, locale)}
             </text>
-            <text class="chart-text" x={W - PAD.right} y={Math.min(H - PAD.bottom - 6, y(last.contributed) + 16)} text-anchor="end">
+            <text class="chart-text" x={PAD.left} y={12} text-anchor="start">
               Put in {money(last.contributed, locale)} (dashed)
             </text>
             <text class="chart-text" x={PAD.left} y={H - 6}>Today</text>

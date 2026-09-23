@@ -59,9 +59,10 @@ const questions = groupsFor(region.code, available).map((group) => group.tools[0
       <ProgressMarks reviewHref={`${prefix}/review`} />
       {region.tracks.map((track) => (
         <section class="front-track" aria-labelledby={`track-${track.slug}`}>
-          <h3 id={`track-${track.slug}`}><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></h3>
+          <h3 id={`track-${track.slug}`}>{track.title}</h3>
           <p class="track-summary">{track.summary}</p>
           <LessonList lessons={inTrack(lessons, track.slug)} planned={track.planned} compact />
+          <p class="taxonomy-all"><a href={`${prefix}/learn/${track.slug}`}>Open this track<span class="visually-hidden">: {track.title}</span></a></p>
         </section>
       ))}
     </section>
@@ -125,8 +126,10 @@ const questions = groupsFor(region.code, available).map((group) => group.tools[0
   .example-box { margin: 0; max-width: var(--measure); }
   .example-label { margin: 0 0 var(--space-2); color: var(--muted); font-size: var(--text-sm); font-weight: 700; }
 
-  /* Tracks: stacked at every width, each under a hairline, with its numbered lessons. */
+  /* Tracks: stacked at every width, with their numbered lessons. The first sits under a hairline;
+     after it, each list's own rules divide the tracks, so a second rule would only double them. */
   .front-track { margin-top: var(--space-6); padding-top: var(--space-6); border-top: var(--rule-w) solid var(--rule); }
+  .front-track + .front-track { border-top: 0; padding-top: 0; }
   .front-track h3 { margin-bottom: var(--space-2); }
   .track-summary { margin-bottom: var(--space-4); }
 
@@ -152,8 +155,8 @@ const questions = groupsFor(region.code, available).map((group) => group.tools[0
   .covers h4 { margin: 0 0 var(--space-1); }
   .covers p { margin: 0; }
 
-  /* The official route to report a scam: plain text under a hairline. */
-  .report-route { padding-top: var(--space-6); border-top: var(--rule-w) solid var(--rule); }
+  /* The official route to report a scam: plain text. The covers list above ends on a rule already. */
+  .report-route { padding-top: 0; border-top: 0; }
   .report-text { margin: 0; color: var(--ink); font-weight: 700; }
   .note { margin: var(--space-6) 0 0; }
 </style>

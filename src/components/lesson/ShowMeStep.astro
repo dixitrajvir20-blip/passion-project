@@ -3,7 +3,8 @@
  * One line of a "show me" walkthrough, and the door to the next. Each line is a ledger row with
  * its caption; the following lines sit inside a <details> so the reader reveals them one at a
  * time. Nested lists, not a script: correct with JavaScript off, every line in the page for
- * search and print, and instant under reduced motion.
+ * search and print, and instant under reduced motion. The fold that holds the last line also holds
+ * the key idea, after that line, so the rule is stated only once the answer is on screen.
  */
 import ShowMeStep from './ShowMeStep.astro';
 import { money, number, localeByCode } from '../../lib/format';
@@ -14,9 +15,10 @@ interface Props {
   index: number;
   total: number;
   localeCode: string;
+  keyIdea?: string;
 }
 
-const { steps, index, total, localeCode } = Astro.props;
+const { steps, index, total, localeCode, keyIdea } = Astro.props;
 const [step, ...rest] = steps;
 const locale = localeByCode(localeCode);
 const show = (value: { money: number } | { count: number }) =>
@@ -43,8 +45,9 @@ const last = rest.length === 0;
         <span class="showme-count numbers">of {total}</span>
       </summary>
       <ol class="ledger showme-lines" start={index + 2}>
-        <ShowMeStep steps={rest} index={index + 1} total={total} localeCode={localeCode} />
+        <ShowMeStep steps={rest} index={index + 1} total={total} localeCode={localeCode} keyIdea={keyIdea} />
       </ol>
+      {rest.length === 1 && keyIdea && <p class="key-idea inset"><strong>{keyIdea}</strong></p>}
     </details>
   </li>
 )}

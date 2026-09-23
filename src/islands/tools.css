@@ -45,6 +45,9 @@
 .tool .result-label { font-size: var(--text-sm); }
 .tool .result-block.ledger-total { margin: var(--space-2) 0; border-bottom: 0; }
 .tool .result-block.ledger-subtotal { border-bottom: 0; }
+/* The row above a total or subtotal gives up its hairline: the total's ink rule is the only line. */
+.tool .result-block:has(+ .ledger-total),
+.tool .result-block:has(+ .ledger-subtotal) { border-bottom: 0; }
 .tool .result-value.is-loss { color: var(--error); }
 
 /* A figure that follows from the sum but is not part of it: a plain row below the ledger. */

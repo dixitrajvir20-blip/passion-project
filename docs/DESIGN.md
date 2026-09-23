@@ -34,6 +34,8 @@ Rules:
 
 - No raw hex, px radius, px font-size, shadow or `font-family` in a component. Add a token.
   (`Logo.astro` and `Flag.astro` draw the badge and the flags and are the only raw-hex exceptions.)
+  One documented duplicate: `themeColor` in `src/lib/site.ts` repeats `--blue` (`#0b4aa2`) for
+  `<meta name="theme-color">`, because a meta attribute cannot read a CSS token; change both together.
 - No `style=""` attributes and no runtime-injected `<style>`. The site ships a strict Content
   Security Policy with per-inline hashes (see `docs/SECURITY.md`); an inline style attribute or a
   script-built style tag is blocked. Put the value in a stylesheet or a token and toggle a class.
@@ -138,16 +140,20 @@ a background, so it survives forced colours.
   edge, ink label; `--surface` on hover), `.btn-sm` (44px), `.btn-link` (a text button: ink 700,
   underlined, 44px), `.btn-row`. No transforms, transitions, arrow boxes or shadows. A calculator
   has no primary: Reset, Copy link and Share are `.btn-secondary .btn-sm`.
-- **Crumb** `.crumb`: one line, one standalone link back ("← All tools", "← <track>"), and on a
-  lesson `.crumb-pos` ("Lesson n of N · m min").
+- **Crumb** `.crumb`: one line, one standalone link back ("All tools", "All tracks", "Learn", or on a
+  lesson the track's name), with no arrow glyph, and on a lesson `.crumb-pos` ("Lesson n of N · m
+  min").
 - **Forms**: the tool kit's order, label, hint, input, note, error. Inputs have a 2px ink edge and
   are 48px tall; radios and checkboxes are 24px in ink.
 - **Tables** `.table`: ruled rows, a 2px ink rule under the head, no stripes; money never breaks
   between digits (`.table td.num`, `.table.numbers td`, `.table .numbers td`), so a wide table
   scrolls inside `.table-wrap`; word tables in `.prose` wrap instead.
 - **Ledger** `.ledger` / `.ledger-row` / `.ledger-label` / `.ledger-figure` / `.ledger-total`
-  (double rule) / `.ledger-subtotal` (single rule) / `.ledger-note`: the signature. Rows wrap on
-  narrow screens so a long figure drops to its own line (WCAG 1.4.10). Used by `Worked.astro`,
+  (double rule) / `.ledger-subtotal` (single rule) / `.ledger-note`: the signature. The dotted
+  leader is the figure's own `::before`, so the two wrap as one: on a narrow screen a long figure
+  drops to its own line with its leader (WCAG 1.4.10). The total's double rule is a double underline
+  under the figure's text, not a border, so it never runs under the leader. On the results bench the
+  row above a total or subtotal drops its hairline, leaving the ink rule alone. Used by `Worked.astro`,
   `ShowMe.astro`, `EditionSum.astro`, the explorers and every calculator's `Result`.
 - **Index list** `.index-list` / `.index-row` / `.index-title` / `.index-sub` / `.index-meta` /
   `.index-flag`: ruled rows, the row is the link; a flag spans every line of its row. The home
@@ -167,13 +173,16 @@ a background, so it survives forced colours.
 - **Poll** (`Poll.astro`; `Review.tsx` repeats the markup): a framed question, options as outlined
   rows (checked: a 2px ink edge, the tint, 700), the reveal a secondary button, the result in words
   (`.poll-status`, "Correct." in the success green via `data-result`).
-- **Document** (`Document.astro`): the payslip or statement drawn in tokens in a white `.box`, a
-  dotted hint under each label.
+- **Document** (`Document.astro`): the payslip or statement drawn in tokens in a white `.box`, its
+  lines split by solid `--rule` hairlines; the dotted underline is kept for the tappable label only.
 - **Show me** (`ShowMe.astro`, `ShowMeStep.astro`): one ledger line at a time behind a small
   secondary button that turns into quiet text once open.
-- **Key idea** `.inset`: a 4px ink bar, ink 700 at `--text-lg`. Never a highlighter, never blue.
-- **Video** (`Video.astro`, `VideoPlayer.tsx`): a drawn poster in a 16:9 `--surface` frame; Play is
-  the one primary until the question is put, then "Choose, then play" is.
+- **Key idea** `.inset`: a 4px ink bar, ink 700 at `--text-lg`. Never a highlighter, never blue. In
+  a lesson it sits inside Show me's last fold, after the answer, so it arrives with the last line.
+- **Video** (`Video.astro`, `VideoPlayer.tsx`): a compact drawn poster on `--surface` (title,
+  channel, Play, the link out), left-aligned at every width; the 16:9 frame is the player's, once it
+  loads. The caption under it is the meta line only (channel · minutes · note). Play is the one
+  primary until the question is put, then "Choose, then play" is.
 - **Mock screen, term and popover** (`MockScreen.astro`, `Term.astro`): a white `.box` with square
   corners; a dotted-underlined term that opens a sheet at the foot of the screen (Popover API behind
   `@supports`).

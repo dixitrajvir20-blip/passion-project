@@ -211,9 +211,9 @@ Rules for either version:
 - **The ledger** is the signature (`.ledger` in `base.css`): label left, figure right, dotted
   leader, a single rule above a total, a **double rule under the final answer**. Worked examples,
   calculator results and every sum on the site use it. Never decoration.
-- **A lesson** opens with the crumb line ("← <track>" and "Lesson n of N · m min"), the title, the
-  summary, "In this lesson" on one line (closed on a phone, an open list in the left rail on a
-  laptop) and "After this you can". The byline sits at its foot.
+- **A lesson** opens with the crumb line (the track name as a link, and "Lesson n of N · m min"),
+  the title, the summary, "In this lesson" on one line (closed on a phone, an open list in the left
+  rail on a laptop) and "After this you can". The byline sits at its foot.
 - **The dashboard** (`/dashboard`) is a side nav and a grid of ruled boxes: four figures, a weekly
   bar chart with a table, the next lesson, progress by track, a timer. Every number on it comes
   from this device.

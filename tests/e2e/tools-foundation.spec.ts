@@ -185,7 +185,7 @@ test.describe('the tool page template', () => {
 
   test('the crumb goes back to all tools', async ({ page }) => {
     await page.goto('in/tools/loan');
-    await expect(page.locator('.crumb a')).toHaveText('← All tools');
+    await expect(page.locator('.crumb a')).toHaveText('All tools');
     await expect(page.locator('.crumb a')).toHaveAttribute('href', `${BASE}in/tools`);
   });
 });

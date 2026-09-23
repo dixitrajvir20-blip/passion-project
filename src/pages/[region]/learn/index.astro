@@ -27,7 +27,6 @@ const lessons = await lessonsFor(region.code);
   <section class="section" data-review-region={region.code}>
     <div class="container">
       <div class="column">
-        <span class="eyebrow">{region.name} edition</span>
         <h1>Learn</h1>
         <p class="lede">
           Three tracks, written for {region.name}. Start anywhere: each lesson stands on its own and
@@ -37,9 +36,10 @@ const lessons = await lessonsFor(region.code);
 
         {region.tracks.map((track) => (
           <section class="track" aria-labelledby={`track-${track.slug}`}>
-            <h2 id={`track-${track.slug}`}><a href={`${prefix}/learn/${track.slug}`}>{track.title}</a></h2>
+            <h2 id={`track-${track.slug}`}>{track.title}</h2>
             <p class="track-summary">{track.summary}</p>
             <LessonList lessons={inTrack(lessons, track.slug)} planned={track.planned} compact />
+            <p class="taxonomy-all"><a href={`${prefix}/learn/${track.slug}`}>Open this track<span class="visually-hidden">: {track.title}</span></a></p>
           </section>
         ))}
 
@@ -58,16 +58,18 @@ const lessons = await lessonsFor(region.code);
 <style>
   .lede { margin-bottom: var(--space-5); }
 
-  /* One ruled section per track: a 1px rule, 32px above the heading, 48px between tracks. */
+  /* One section per track, 48px apart. The first sits under a 1px rule, 32px above its heading;
+     after it, each list's own rules divide the tracks, so a second rule would only double them. */
   .track {
     margin-top: var(--space-7);
     padding-top: var(--space-6);
     border-top: var(--rule-w) solid var(--rule);
   }
+  .track + .track { border-top: 0; padding-top: 0; }
   .track h2 { margin: 0 0 var(--space-2); }
-  /* The whole heading is the link (ink, underlined on hover from base.css), at least 44px tall. */
-  .track h2 a { display: inline-flex; align-items: center; min-height: var(--target); }
   .track-summary { margin: 0 0 var(--space-4); color: var(--ink-2); font-size: var(--text-md); }
+  /* The way into the track: a standalone link (base.css: ink 700, underlined, 44px) under its list. */
+  .taxonomy-all { margin: var(--space-4) 0 0; }
 
   .note { margin-top: var(--space-8); }
 </style>

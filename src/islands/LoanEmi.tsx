@@ -96,7 +96,7 @@ export default function LoanEmi({ defaults, localeCode }: Props) {
 
       <HowItWorks>
         <p>Lenders work out one fixed monthly payment that clears the loan and its interest by the last month:</p>
-        <p class="formula numbers">payment = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1)</p>
+        <p class="formula numbers">payment = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1)</p>
         <p>
           P is the amount borrowed, r is the yearly rate divided by 12, and n is the number of months.
           A longer loan makes each payment smaller and the total larger, because interest is charged

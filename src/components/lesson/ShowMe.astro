@@ -6,8 +6,10 @@
  * double rule. The lines come from lesson-math, never from prose, so the arithmetic on screen is
  * the arithmetic in finance.ts.
  *
- * "Show every line" (script) opens the chain for readers who want the whole ledger; printing
- * opens it too. With JavaScript off the chain still works line by line.
+ * The key idea, the one-sentence rule the calculation shows, closes the chain: it sits inside the
+ * last fold, after the answer, so it arrives when the last line does and never before lines two and
+ * three. "Show every line" (script) opens the chain, key idea included, for readers who want the
+ * whole ledger; printing opens it too. With JavaScript off the chain still works line by line.
  */
 import ShowMeStep from './ShowMeStep.astro';
 import type { Step } from '../../lib/lesson-math';
@@ -16,9 +18,10 @@ interface Props {
   context: string;
   steps: Step[];
   localeCode: string;
+  keyIdea?: string;
 }
 
-const { context, steps, localeCode } = Astro.props;
+const { context, steps, localeCode, keyIdea } = Astro.props;
 ---
 
 <div class="showme" data-showme>
@@ -27,8 +30,10 @@ const { context, steps, localeCode } = Astro.props;
     <button type="button" class="showme-all btn-link btn-sm" data-showme-all hidden>Show every line</button>
   </p>
   <ol class="ledger showme-lines">
-    <ShowMeStep steps={steps} index={0} total={steps.length} localeCode={localeCode} />
+    <ShowMeStep steps={steps} index={0} total={steps.length} localeCode={localeCode} keyIdea={keyIdea} />
   </ol>
+  {/* A one-line chain has no fold to close, so its key idea follows the line directly. */}
+  {keyIdea && steps.length < 2 && <p class="key-idea inset"><strong>{keyIdea}</strong></p>}
 </div>
 
 <script>

@@ -67,7 +67,7 @@ host. Say "open phase 6" when that is the plan.
   example (`interest`, `budget`, `money-mule`). Per-edition examples are a content change Claude
   can make once you say which entries matter most.
 
-## 7. Design v5.1 is built (23 Sep 2026): five things for you
+## 7. Design v5.1 is built (23 Sep 2026): seven things for you
 
 The site is now white at every setting, with one blue bar, navy ink and one typeface
 (`docs/BRAND_GUIDE.md` v4, `docs/DESIGN.md` v5.1). None of these blocks the build.
@@ -124,6 +124,14 @@ The site is now white at every setting, with one blue bar, navy ink and one type
      block or a blue heading is a finding; one primary per view, a neutral secondary, a 4px radius,
      rules instead of boxes, no card unless it holds a figure, list-row titles in ink; check 320 and
      360 for overflow and that a dark OS still shows white.
+6. **The old name on the protected pages.** `src/pages/privacy.astro` and `src/pages/terms.astro`
+   (and `cookies.astro`) still say "LaunchPad": replace it with `{site.name}` in the text, and in
+   the `title` and `description` attributes use a template, e.g. ``title={`Privacy — ${site.name}`}``
+   (`site` is already imported in all three).
+7. **Lost spaces before links on the protected pages.** Where a line ends in a word and the next
+   line starts with `<a`, the build drops the space ("emailhello@…", "on theCookies & storage
+   page"): end each such line with `{' '}` (privacy.astro lines 27, 39, 51, 97 and 138; terms.astro
+   34, 48, 51 and 58; cookies.astro 94).
 
 Also, for later:
 
