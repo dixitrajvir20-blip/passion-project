@@ -463,7 +463,7 @@ export const CONFIG: EditionConfigs<SideIncomeTaxConfig> = {
         key: 'standardDeductionSingle2026',
         value: 16100,
         label: 'Standard deduction for a single filer, 2026: $16,100 (named in the hint; not used in the sum)',
-        source: { title: 'IRS, IR-2025-103, tax inflation adjustments for tax year 2026 (9 October 2025)', url: 'https://www.irs.gov/node/151941' },
+        source: { title: 'IRS, IR-2025-103, tax inflation adjustments for tax year 2026 (9 October 2025)', url: 'https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026' },
         asOf: CHECKED,
         reviewBy: '2027-01-01',
       },

@@ -38,7 +38,7 @@ async function expectNoBlockingAxe(page: Page) {
   expect(blocking, blocking.map((v) => `${v.id}: ${v.help} (${v.nodes.length} nodes)`).join('\n')).toEqual([]);
 }
 
-const US_OPENING = 'Of $6,000 in, $5,000 is profit after costs. Self-employment tax on it is $707, set by law. With income tax at 0%, set aside $707 on these figures.';
+const US_OPENING = 'Of $6,000 in, $5,000 is profit after costs. Self-employment tax on it is $707, set by law. With income tax at 0%, the sum to set aside on these figures is $707.';
 const IN_OPENING =
   '₹15,000 of tax is on record in your name for the year you are filing for. With ₹0 due on that year’s whole income, ₹15,000 can come back. It is paid once that year’s return is filed, within the time allowed, and verified, into a bank account the portal has validated.';
 const SCOPE_LINE =
@@ -248,7 +248,7 @@ test.describe('United States results by case', () => {
   test('a rate that rounds to 0 basis points reads as 0%, never "your example 0%"', async ({ page }) => {
     await open(page, `${US_PAGE}#incomeTaxPercent=0.001`);
     await expect(sentence(page)).toHaveText(US_OPENING);
-    await expect(sentence(page)).toContainText('With income tax at 0%, set aside $707 on these figures.');
+    await expect(sentence(page)).toContainText('With income tax at 0%, the sum to set aside on these figures is $707.');
     await expect(results(page)).not.toContainText('plus your example');
     await expect(notes(page).first()).toHaveText('Self-employment tax is 14.1% of profit, set by law.');
     await expect(answer(page).locator('.ledger-figure')).toHaveText('$707');

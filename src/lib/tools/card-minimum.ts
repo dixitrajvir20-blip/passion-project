@@ -82,7 +82,7 @@ export const CONFIG: EditionConfigs<CardMinimumConfig> = {
     },
     paidInFull: {
       text: 'Paid in full by the due date, with nothing left from the bill before, the purchases on a statement usually carry no interest.',
-      source: { title: 'RBI Directions 2025, paras 16(1) and 23(3)', url: RBI_DIRECTIONS },
+      source: { title: 'RBI Directions 2025, definition (16) “interest-free credit period”, and para 23(3)', url: RBI_DIRECTIONS },
     },
     assumptions: [
       'Assumes nothing new goes on the card, no fees or late charges, and the same rate throughout.',
@@ -187,7 +187,7 @@ export const CONFIG: EditionConfigs<CardMinimumConfig> = {
     },
     paidInFull: {
       text: 'Paid in full by the due date, with nothing carried from the statement before, the purchases on a statement usually carry no interest.',
-      source: { title: 'CFPB, What is a grace period and how does it work?', url: 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-grace-period-how-does-it-work-en-47/' },
+      source: { title: 'CFPB, What is a grace period and how does it work? (reviewed 23 September 2024)', url: 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-grace-period-how-does-it-work-en-47/' },
     },
     assumptions: [
       'Assumes nothing new goes on the card, no fees or late charges, and the same APR throughout.',
@@ -204,7 +204,7 @@ export const CONFIG: EditionConfigs<CardMinimumConfig> = {
       ],
       paragraphs: [
         'Most cards set the minimum at 1% plus interest and fees, and floors in 2025 agreements ran from $15 to $50 (CFPB, The Consumer Credit Card Market, December 2025, p.70). As in the lesson, the first statement has no interest. What is left after each payment is charged the APR ÷ 12 for the month.',
-        'Your statement’s minimum-payment box (Regulation Z §1026.7(b)(12)) is worked as if there were no grace period and each payment arrived on the last day of the cycle (Appendix M1). It also shows whole years once the time passes two years. So it usually shows more time and more interest than this: worked that way, the lesson’s $400 statement takes 21 months and $104.02, against 20 months and $89.79 on this tool.',
+        'Your statement’s minimum-payment box (the federal rule on card statements, Regulation Z §1026.7(b)(12)) is worked as if there were no grace period and each payment arrived on the last day of the cycle (Appendix M1). It also shows whole years once the time passes two years. So it usually shows more time and more interest than this: worked that way, the lesson’s $400 statement takes 21 months and $104.02, against 20 months and $89.79 on this tool.',
         BOTH_EDITIONS,
       ],
     },
@@ -259,7 +259,7 @@ export const CONFIG: EditionConfigs<CardMinimumConfig> = {
         key: 'gracePeriodLost',
         value: 2,
         label: 'Grace periods are not required, but most cards give one on purchases; missing a full payment loses it for that month and the next',
-        source: { title: 'CFPB, What is a grace period and how does it work?', url: 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-grace-period-how-does-it-work-en-47/' },
+        source: { title: 'CFPB, What is a grace period and how does it work? (reviewed 23 September 2024)', url: 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-grace-period-how-does-it-work-en-47/' },
         asOf: CHECKED,
       },
     ],

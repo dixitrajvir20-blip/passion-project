@@ -76,10 +76,10 @@ export const CONFIG: EditionConfigs<PayLaterPaydayConfig> = {
     rulesLead: 'Figure checked',
     rules: [
       {
-        key: 'lateFeeAverage2023',
-        value: 9.7,
+        key: 'lateFeeShare2023',
+        value: 4.1,
         label:
-          'Average late fee in 2023 at the four of six large pay-in-four lenders that charged late fees: $9.70 a fee, not any one plan’s fee. 4.1% of their loans were charged one',
+          'Share of loans charged a late fee in 2023 at the four of six large pay-in-four lenders that charged one: 4.1%. The fee in the note is an example close to that year’s average, not any one plan’s fee',
         source: CFPB_2025,
         asOf: '2026-09-22',
       },
@@ -97,13 +97,13 @@ export const CONFIG: EditionConfigs<PayLaterPaydayConfig> = {
     words: { one: 'installment', other: 'installments' },
     feeNote: {
       label: 'Late fee if a payment is missed',
-      fee: { kind: 'rule', ruleKey: 'lateFeeAverage2023' },
-      text: 'in 2023 the average late fee charged by four large pay-in-four lenders was {fee} ({link}). Each plan’s terms set the real fee, and some states limit it. Your bank can add an overdraft or non-sufficient funds fee when an automatic payment finds too little in the account.',
+      fee: { kind: 'example', amount: 10 },
+      text: 'a late fee of {fee} is an example, close to the 2023 average the CFPB reports at four large pay-in-four lenders, where 4.1% of loans were charged one ({link}). Each plan’s terms set the real fee, and some states limit it. Your bank can add an overdraft or non-sufficient funds fee when an automatic payment finds too little in the account.',
       link: { text: 'Consumer Financial Protection Bureau, December 2025', url: CFPB_2025.url },
     },
     details: [
       {
-        text: 'The fee note’s {fee} is the 2023 average late fee at the four of six large lenders that charged one, not any plan’s fee.',
+        text: 'The fee note’s {fee} is an example close to the 2023 average the CFPB reports at the four of six large lenders that charged one, not any plan’s fee.',
         source: CFPB_2025,
       },
       {

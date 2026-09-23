@@ -116,7 +116,7 @@ test.describe('each edition opens on its lesson’s payday', () => {
         'After living costs, $132 to savings and 3 installments, $323 is left of $1,317. The plans take $45, 3.4% of this pay, and $90 is still owed on them after these installments.',
       );
       await expect(feeNote(page)).toHaveText(
-        'Late fee if a payment is missed: in 2023 the average late fee charged by four large pay-in-four lenders was $9.70 (Consumer Financial Protection Bureau, December 2025). Each plan’s terms set the real fee, and some states limit it. Your bank can add an overdraft or non-sufficient funds fee when an automatic payment finds too little in the account.',
+        'Late fee if a payment is missed: a late fee of $10 is an example, close to the 2023 average the CFPB reports at four large pay-in-four lenders, where 4.1% of loans were charged one (Consumer Financial Protection Bureau, December 2025). Each plan’s terms set the real fee, and some states limit it. Your bank can add an overdraft or non-sufficient funds fee when an automatic payment finds too little in the account.',
       );
       const link = feeNote(page).getByRole('link', { name: 'Consumer Financial Protection Bureau, December 2025' });
       await expect(link).toHaveAttribute('href', CFPB_2025);
@@ -134,7 +134,7 @@ test.describe('the US edition’s sourced rule', () => {
     await expect(total(page).locator('.ledger-figure')).toHaveText('$323');
     await expect(page.locator('#plp-currency')).toHaveCount(0);
     await expect(page.getByLabel('Currency')).toHaveCount(0);
-    await expect(feeNote(page)).toContainText('$9.70');
+    await expect(feeNote(page)).toContainText('$10');
     expect(await page.evaluate(() => window.localStorage.getItem('lp:locale'))).toBe('en-IN'); // left alone
   });
 
@@ -148,7 +148,7 @@ test.describe('the US edition’s sourced rule', () => {
     const rules = page.locator('.rules-line');
     await expect(rules.locator('.rules-lead')).toHaveText('Figure checked 22 September 2026:');
     await expect(rules.locator('li')).toHaveCount(1);
-    await expect(rules.locator('li')).toContainText('Average late fee in 2023 at the four of six large pay-in-four lenders that charged late fees: $9.70 a fee');
+    await expect(rules.locator('li')).toContainText('Share of loans charged a late fee in 2023 at the four of six large pay-in-four lenders that charged one: 4.1%');
     await expect(rules.locator('li')).toContainText('checked 22 September 2026');
     const source = rules.getByRole('link');
     await expect(source).toHaveAttribute('href', CFPB_2025);
@@ -439,7 +439,7 @@ test.describe('around the tool', () => {
     await expect(page.locator('.related').getByRole('link', { name: 'How pay-in-four makes money, and what it costs you' })).toBeVisible();
   });
 
-  test('both lessons hand off to it, and the US lesson’s screen uses the 2023 figure', async ({ page }) => {
+  test('both lessons hand off to it, and the US lesson’s screen calls its fee an example', async ({ page }) => {
     await page.goto('eu/learn/credit-and-fraud/bnpl-is-credit');
     await expect(page.locator(`.tool-handoffs a[href="${BASE}eu/tools/pay-later-payday"]`)).toHaveText(
       'Try your own numbers: what do my pay-later plans leave?',
@@ -448,7 +448,7 @@ test.describe('around the tool', () => {
     await expect(page.locator(`.tool-handoffs a[href="${BASE}us/tools/pay-later-payday"]`)).toHaveText(
       'Try your own numbers: what do my pay-later plans leave?',
     );
-    await expect(page.locator('main')).toContainText('In 2023 the average late fee at four large lenders was $9.70');
+    await expect(page.locator('main')).toContainText('An example, close to the average the US consumer regulator reported for 2023');
   });
 
   test('How this is worked out links the budget planner, the loan calculator and each source', async ({ page }) => {
@@ -463,7 +463,7 @@ test.describe('around the tool', () => {
 
     await open(page, US);
     await page.locator('.tool details.how summary').click();
-    await expect(page.locator('.tool details.how')).toContainText('The fee note’s $9.70 is the 2023 average late fee');
+    await expect(page.locator('.tool details.how')).toContainText('The fee note’s $10 is an example close to the 2023 average');
     await expect(page.locator('.tool details.how')).toContainText('New York proposed rules in 2026');
   });
 

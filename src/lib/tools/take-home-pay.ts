@@ -142,10 +142,10 @@ export const CONFIG: EditionConfigs<TakeHomePayConfig> = {
       {
         key: 'epfShareAtCeiling',
         value: 3000,
-        label: 'Where contributions are held to the ceiling, 12% of ₹25,000 is ₹3,000 a side (it was ₹1,800)',
+        label: 'Where contributions are held to the ceiling, 12% of ₹25,000 is ₹3,000 a side (it was ₹1,800), worked from the ceiling Akashvani reports',
         source: {
-          title: 'Raising the EPFO bar: central government increases wage ceiling to INR 25,000 (National Law Review, 21 September 2026)',
-          url: 'https://natlawreview.com/article/raising-epfo-bar-central-government-increases-wage-ceiling-inr-25000',
+          title: 'Cabinet raises EPFO mandatory coverage wage ceiling from ₹15,000 to ₹25,000 (Akashvani News, 17 September 2026)',
+          url: 'https://newsonair.gov.in/cabinet-raises-epfo-mandatory-coverage-wage-ceiling-from-%E2%82%B915000-to-%E2%82%B925000/',
         },
         asOf: CHECKED,
         reviewBy: '2027-03-22',
@@ -153,10 +153,10 @@ export const CONFIG: EditionConfigs<TakeHomePayConfig> = {
       {
         key: 'wagesHalfRule',
         value: 50,
-        label: 'Basic pay, dearness allowance and retaining allowance must be at least half of total pay; allowances beyond half count as wages for PF (Code on Social Security 2020, in force 21 November 2025)',
+        label: 'Basic pay, dearness allowance and retaining allowance must be at least half of total pay; allowances beyond half count as wages for PF (Code on Social Security 2020, section 2(88))',
         source: {
-          title: 'Myth busted: how your salary has changed under new labour codes vs EPF Scheme 2026 (Business Today, 11 July 2026)',
-          url: 'https://www.businesstoday.in/personal-finance/news/story/myth-busted-how-your-salary-has-changed-under-new-labour-codes-vs-epf-scheme-2026-542371-2026-07-11',
+          title: 'The Code on Social Security, 2020, section 2(88), the definition of wages (India Code)',
+          url: 'https://www.indiacode.nic.in/handle/123456789/16178',
         },
         asOf: CHECKED,
         reviewBy: '2027-03-22',
@@ -736,7 +736,7 @@ const hoursText = (h: number, locale: Locale) => number(h, locale, Number.isInte
 const CENT_APART = 'a cent apart, which is how payroll rounds part of a cent.';
 
 const EXEMPTIONS =
-  'A pre-tax health plan lowers the pay this is worked on; students working for their own school, under-18s working in a business owned only by a parent, and some international students on F-1 or J-1 student visas pay none. Payroll can say which applies.';
+  'A pre-tax health plan lowers the pay this is worked on. Some workers pay none: students working for their own school, under-18s in a business owned only by a parent, and some international students on F-1 or J-1 visas (IRS Publication 15). Payroll can say which applies.';
 
 /**
  * The US checks list, text only. Never the word "error": a difference is a question for payroll,

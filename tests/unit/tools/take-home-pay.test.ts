@@ -617,7 +617,7 @@ describe('the US checks, never the word error', () => {
     expect(lines({ start: 1550 })[0]).toContain('the gross line is $1,550.00, $50.00 less.');
     const noFica = lines({ socialSecurity: 0 });
     expect(noFica[1]).toBe(
-      'Social Security: 6.2% of $1,600.00 is $99.20; the stub shows $0.00. A pre-tax health plan lowers the pay this is worked on; students working for their own school, under-18s working in a business owned only by a parent, and some international students on F-1 or J-1 student visas pay none. Payroll can say which applies.',
+      'Social Security: 6.2% of $1,600.00 is $99.20; the stub shows $0.00. A pre-tax health plan lowers the pay this is worked on. Some workers pay none: students working for their own school, under-18s in a business owned only by a parent, and some international students on F-1 or J-1 visas (IRS Publication 15). Payroll can say which applies.',
     );
     for (const text of [...lines({ start: 1650 }), ...noFica, ...lines({ start: 200 })]) expect(text).not.toMatch(/error/i);
   });

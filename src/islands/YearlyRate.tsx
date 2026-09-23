@@ -103,7 +103,7 @@ export default function YearlyRate({ config, localeCode }: Props) {
           <NumberField
             id="yr-fee"
             label="Fees and charges at the start"
-            hint="Processing fees, insurance and other charges collected through the lender, with the GST you pay on them, and interest taken up front. A Key Facts Statement may list fees before GST; a card’s instalment plan lists them in its terms."
+            hint="Processing fees, insurance and other charges collected through the lender, any GST you pay on them, and interest taken up front. Check whether the fees on your Key Facts Statement already include GST. A card’s instalment plan lists its charges in its terms."
             value={fields.fee}
             onInput={set('fee')}
             error={error('fee')}
@@ -195,18 +195,18 @@ export default function YearlyRate({ config, localeCode }: Props) {
           week). Rates are rounded for display, and the yearly rate is worked out from the rate shown.
         </p>
         <p>
-          For equal monthly instalments with the fees taken at the start, this follows the method in the Reserve Bank’s Key
-          Facts Statement illustration: the rate at which the repayments are worth what reached you, times{' '}
-          {number(basis.monthsPerYear, locale)}. There, {m(20000)} with {m(400)} of fees and 24 instalments of {m(970)} ({m(969.73)}{' '}
-          before rounding) gives {kfsApr !== undefined ? ratePercent(kfsApr, locale, 2) : 'its APR'}; here, with {m(969.73)}, it
-          shows {yearlyText(kfs, locale)}. The Reserve Bank’s illustration labels that line “Annual Percentage rate – Effective
-          annualized interest rate”. If your result is not within rounding
-          of the statement’s APR, check for a charge you have not typed, a different first repayment date, unequal
-          instalments, or GST you added that the statement’s fee line leaves out.
+          For equal monthly instalments with the fees taken at the start, this follows the Reserve Bank’s Key Facts
+          Statement illustration. It finds the rate at which the repayments are worth what reached you, then multiplies by{' '}
+          {number(basis.monthsPerYear, locale)}. In the illustration, {m(20000)} with {m(400)} of fees and 24 instalments of{' '}
+          {m(970)} ({m(969.73)} before rounding) gives {kfsApr !== undefined ? ratePercent(kfsApr, locale, 2) : 'its APR'}. Here,
+          with {m(969.73)}, it shows {yearlyText(kfs, locale)}. The illustration labels that line “Annual Percentage rate –
+          Effective annualized interest rate”. If your result is not within rounding of the statement’s APR, look for a
+          charge you have not typed, a different first repayment date or unequal instalments. GST counted here but not in
+          the statement’s fee line moves it too.
         </p>
         <p>
           For loans counted in days, a lender may turn the rate into a yearly one day by day, so its APR can differ from this.
-          On the 7-day loan here, a daily rate times 365 gives 500.4% instead of 521.4%.
+          On the 7-day loan here, the daily rate that grows to 10% over seven days is 1.371%; times 365 that is 500.4%, not 521.4%.
         </p>
         <p>
           A flat rate is charged on the whole amount even as you repay it, so it is not a yearly rate: 18% flat on {m(20000)}{' '}

@@ -169,7 +169,7 @@ function UnitedStates({ config, locale }: { config: SideIncomeTaxConfig; locale:
   const sentence = valid ? usSentence() : '';
 
   function paidSentence(): string {
-    if (r.balance > 0) return `After the ${$(paidMoney)} already paid toward it, set aside ${$(r.balance)} on these figures.`;
+    if (r.balance > 0) return `After the ${$(paidMoney)} already paid toward it, the sum to set aside on these figures is ${$(r.balance)}.`;
     if (r.balance === 0) return 'What you have paid toward it covers this sum.';
     return `More has been paid than this sum shows, by ${$(-r.balance)}; the year’s return settles it.`;
   }
@@ -193,7 +193,7 @@ function UnitedStates({ config, locale }: { config: SideIncomeTaxConfig; locale:
         paidMoney > 0
           ? paidSentence()
           : rateBp === 0
-            ? `With income tax at ${rateText}, set aside ${$(r.balance)} on these figures.`
+            ? `With income tax at ${rateText}, the sum to set aside on these figures is ${$(r.balance)}.`
             : `Set aside ${$(r.balance)} on these figures.`;
       return `${opening} ${body} ${last}`;
     }
@@ -201,7 +201,7 @@ function UnitedStates({ config, locale }: { config: SideIncomeTaxConfig; locale:
     if (rateBp > 0) {
       return paidMoney > 0
         ? `${under} At your example ${rateText}, income tax comes to ${$(r.incomeTax)}. ${paidSentence()}`
-        : `${under} At your example ${rateText}, set aside ${$(r.balance)}.`;
+        : `${under} At your example ${rateText}, the sum to set aside is ${$(r.balance)}.`;
     }
     return paidMoney > 0 ? `${under} The year’s return settles the ${$(paidMoney)} already paid.` : under;
   }
@@ -317,7 +317,7 @@ function UnitedStates({ config, locale }: { config: SideIncomeTaxConfig; locale:
           to set aside = self-employment tax + income tax − already paid toward it
         </p>
         <p>
-          Net earnings are {share} of net profit: Schedule SE’s line 4a, which is 100% less the 7.65% an employer would pay.
+          Net earnings are {share} of net profit: line 4a of Schedule SE, the IRS form for self-employment tax, which is 100% less the 7.65% an employer would pay.
           Self-employment tax is due once net earnings reach {threshold} in a year, about {startProfit} of profit. It is{' '}
           {ratePercent(rules.seSocialSecurityRate, locale, 2)} for Social Security on net earnings up to {$(rules.ssWageBase)} in 2026,
           plus {ratePercent(rules.seMedicareRate, locale, 2)} for Medicare on all of them, {combined} in all, rounded to the dollar.

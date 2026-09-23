@@ -13,16 +13,10 @@
       "publisher": "Akashvani News, Prasar Bharati"
     },
     {
-      "id": "mha-task-fraud-theprint",
-      "title": "Ministry of Home Affairs: over 100 websites blocked for task-based part-time job frauds, in which a small commission is paid first and larger deposits are then frozen (6 December 2023)",
-      "url": "https://theprint.in/india/over-100-job-fraud-websites-promising-quick-money-for-work-from-home-blocked-for-laundering-money/1874090/",
-      "publisher": "ThePrint"
-    },
-    {
-      "id": "mha-task-fraud-tribune",
-      "title": "More than 100 websites blocked for organised investment and task-based part-time job frauds, Ministry of Home Affairs statement (6 December 2023)",
-      "url": "https://www.tribuneindia.com/news/india/more-than-100-websites-blocked-for-facilitating-organised-illegal-investments-569317",
-      "publisher": "The Tribune"
+      "id": "mha-task-fraud-pib",
+      "title": "Ministry of Home Affairs: over 100 websites blocked for task-based part-time job frauds, in which a small commission is paid first and larger deposits are then frozen (Press Information Bureau, 6 December 2023)",
+      "url": "https://pib.gov.in/PressReleaseIframePage.aspx?PRID=1983070",
+      "publisher": "Press Information Bureau, Government of India"
     },
     {
       "id": "ncs-no-fees",
@@ -73,7 +67,7 @@
       "id": "premium-tasks",
       "ordinary": false,
       "flow": "from-you",
-      "sourceIds": ["mha-task-fraud-theprint", "mha-task-fraud-tribune"],
+      "sourceIds": ["mha-task-fraud-pib"],
       "screen": {
         "kind": "chat",
         "from": "Task group admin",

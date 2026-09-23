@@ -69,8 +69,8 @@ describe('rent-share', () => {
     it('keeps the figures used only in How this is worked out out of the line under the tool', () => {
       const copyOnly = eu.rules.filter((r) => r.key !== LINE_KEY);
       expect(copyOnly.map((r) => [r.key, r.value])).toEqual([
-        ['overburdenYoung2025', 9.1],
-        ['overburdenAll2025', 7.7],
+        ['overburdenYoung2024', 9.7],
+        ['overburdenAll2024', 8.2],
         ['depositCapFrUnfurnished', 1],
         ['depositCapFrFurnished', 2],
         ['depositCapDe', 3],

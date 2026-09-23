@@ -78,13 +78,14 @@ describe('pay-later-payday', () => {
       }
     });
 
-    it('keeps the US fee as a sourced rule: the CFPB’s 2023 average, $9.70', () => {
-      const rule = CONFIG.us!.rules!.find((r) => r.key === 'lateFeeAverage2023')!;
-      expect(rule.value).toBe(9.7);
+    it('keeps the US fee as a $10 example, with the CFPB’s confirmed 2023 share of loans charged one as the sourced rule', () => {
+      const rule = CONFIG.us!.rules!.find((r) => r.key === 'lateFeeShare2023')!;
+      expect(rule.value).toBe(4.1);
       expect(rule.source.url).toBe('https://files.consumerfinance.gov/f/documents/cfpb_bnpl-market-report_2025-12.pdf');
       expect(rule.asOf).toBe('2026-09-22');
-      expect(rule.label).toContain('$9.70');
-      expect(lateFeeAmount(CONFIG.us!)).toBe(9.7);
+      expect(rule.label).toContain('4.1%');
+      expect(rule.label).not.toContain('$');
+      expect(lateFeeAmount(CONFIG.us!)).toBe(10);
     });
 
     it('keeps Europe’s fee as the lesson’s made-up example, with no rule', () => {
@@ -118,10 +119,10 @@ describe('pay-later-payday', () => {
       );
     });
 
-    it('US: the 2023 average, linked to the CFPB', () => {
+    it('US: an example fee beside the CFPB’s 2023 share, linked to the report', () => {
       const parts = textParts(CONFIG.us!.feeNote.text, CONFIG.us!, EN_US);
       expect(`${CONFIG.us!.feeNote.label}: ${plainText(parts)}`).toBe(
-        'Late fee if a payment is missed: in 2023 the average late fee charged by four large pay-in-four lenders was $9.70 (Consumer Financial Protection Bureau, December 2025). Each plan’s terms set the real fee, and some states limit it. Your bank can add an overdraft or non-sufficient funds fee when an automatic payment finds too little in the account.',
+        'Late fee if a payment is missed: a late fee of $10 is an example, close to the 2023 average the CFPB reports at four large pay-in-four lenders, where 4.1% of loans were charged one (Consumer Financial Protection Bureau, December 2025). Each plan’s terms set the real fee, and some states limit it. Your bank can add an overdraft or non-sufficient funds fee when an automatic payment finds too little in the account.',
       );
       expect(parts.find((p) => 'href' in p)).toEqual({
         text: 'Consumer Financial Protection Bureau, December 2025',
@@ -132,7 +133,7 @@ describe('pay-later-payday', () => {
     it('is written in the edition’s currency, whatever the picker says', () => {
       // The island passes localeByCode(localeCode), the edition's own locale; the picker never reaches it.
       expect(plainText(textParts(CONFIG.eu!.feeNote.text, CONFIG.eu!, EN_IE))).toContain('€15');
-      expect(plainText(textParts('{fee}', CONFIG.us!, EN_US))).toBe('$9.70');
+      expect(plainText(textParts('{fee}', CONFIG.us!, EN_US))).toBe('$10');
     });
   });
 

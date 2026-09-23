@@ -41,7 +41,7 @@ export const CONFIG: EditionConfigs<YearlyRateConfig> = {
       {
         key: 'monthsPerYear',
         value: 12,
-        label: 'The APR on a Key Facts Statement is worked out on what reaches you, as a monthly rate times 12',
+        label: 'The APR on a Key Facts Statement is worked out on the amount that reaches you, by the IRR and reducing-balance method; in the Directions’ own example that is the monthly rate times 12',
         source: { title: 'Reserve Bank of India, Responsible Business Conduct Directions, 2025, updated 1 July 2026', url: RBI_DIRECTIONS },
         asOf: '2026-09-22',
       },

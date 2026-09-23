@@ -204,7 +204,7 @@ test.describe('in/tools/yearly-rate', () => {
     const rules = page.locator('.rules-line');
     await expect(rules.locator('.rules-lead')).toHaveText('Method as of 22 September 2026:');
     await expect(rules.locator('li')).toHaveCount(1);
-    await expect(rules).toContainText('The APR on a Key Facts Statement is worked out on what reaches you, as a monthly rate times 12');
+    await expect(rules).toContainText('The APR on a Key Facts Statement is worked out on the amount that reaches you, by the IRR and reducing-balance method');
     await expect(rules.locator('a')).toHaveAttribute('href', 'https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12942');
     await expect(rules.locator('a')).toHaveAttribute('rel', 'noopener noreferrer');
     await expect(page.locator('.tool-terms dt')).toHaveText([
@@ -220,10 +220,10 @@ test.describe('in/tools/yearly-rate', () => {
     await open(page);
     await page.locator('.tool .how summary').click();
     await expect(page.locator('.tool .how')).toContainText(
-      'instalments of ₹970 (₹969.73 before rounding) gives 17.07%; here, with ₹969.73, it shows 17.1%.',
+      'instalments of ₹970 (₹969.73 before rounding) gives 17.07%. Here, with ₹969.73, it shows 17.1%.',
     );
     await expect(page.locator('.tool .how')).toContainText(
-      'The Reserve Bank’s illustration labels that line “Annual Percentage rate – Effective annualized interest rate”.',
+      'The illustration labels that line “Annual Percentage rate – Effective annualized interest rate”.',
     );
     await expect(page.locator('.tool .how')).toContainText('with more than one repayment, a table below shows it repayment by repayment');
     await expect(page.locator('.tool .how')).toContainText('works out to 31.7% a year here');

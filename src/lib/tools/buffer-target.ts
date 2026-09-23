@@ -63,7 +63,7 @@ export const CONFIG: EditionConfigs<BufferTargetConfig> = {
     monthsHint:
       'The lesson uses three: the length the EU’s 2023 survey asked about, reported in the Commission’s 2025 strategy. A measure, not a rule.',
     howNote: {
-      text: 'Three months is the length the EU’s 2023 survey asked about. Almost half of people aged 18 to 65 could not cover three months of living costs without borrowing. It is a measure, not a rule.',
+      text: 'Three months is the length the EU’s 2023 survey asked about. Almost half (49%) of people aged 18 to 65 did not have enough emergency savings to cover at least three months of living costs. It is a measure, not a rule.',
       source: {
         title:
           'European Commission, Communication on a Financial Literacy Strategy for the EU, COM(2025) 681 (30 September 2025), reporting Flash Eurobarometer 525 (2023)',
