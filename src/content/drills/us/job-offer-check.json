@@ -2,9 +2,160 @@
   "tool": "job-offer-check",
   "region": "us",
   "fromLesson": "us/how-business-works/job-scam",
-  "intro": "Three screens. One is an ordinary advert, so refusing everything is not the skill.",
-  "reflection": "Which screen were you least sure about, and which line gave it away?",
-  "glossary": [],
-  "sources": [],
-  "scenarios": []
+  "intro": "Six messages about work. Some are ordinary jobs, so refusing everything is not the skill. Decide, then look.",
+  "reflection": "Which message were you least sure of, and which way would the money have moved?",
+  "glossary": ["ftc", "task-scam", "reshipping", "w-4", "form-i-9", "fake-check", "identity-theft"],
+  "sources": [
+    {
+      "id": "ftc-fake-checks",
+      "title": "How to spot, avoid, and report fake check scams: personal assistant jobs are a named pattern, funds showing in your account do not make a check good, and you repay the bank when a fake is found weeks later (updated June 2025)",
+      "url": "https://consumer.ftc.gov/articles/how-spot-avoid-and-report-fake-check-scams",
+      "publisher": "Federal Trade Commission"
+    },
+    {
+      "id": "ftc-job-scams",
+      "title": "Job scams: honest employers never ask you to pay to get a job, and no honest employer sends a check to deposit and then asks you to send on part of the money (updated March 2023)",
+      "url": "https://consumer.ftc.gov/articles/job-scams",
+      "publisher": "Federal Trade Commission"
+    },
+    {
+      "id": "ftc-job-text-alert",
+      "title": "That job offer text is probably a scam: unexpected job messages by text, and never pay to get paid or to get a job (30 April 2026)",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2026/04/job-offer-text-probably-scam",
+      "publisher": "Federal Trade Commission"
+    },
+    {
+      "id": "ftc-identity-theft",
+      "title": "What to know about identity theft: someone using your details without permission can open accounts or get a job in your name (updated September 2024)",
+      "url": "https://consumer.ftc.gov/articles/what-know-about-identity-theft",
+      "publisher": "Federal Trade Commission"
+    },
+    {
+      "id": "ftc-remote-job-alert",
+      "title": "Searching for a job to work remotely? Avoid scams and identity theft: an interview in a text-only app, a quick 'you got the job', then direct deposit and tax forms asking for your bank account and personal information (13 November 2023)",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2023/11/searching-job-work-remotely-avoid-scams-identity-theft",
+      "publisher": "Federal Trade Commission"
+    },
+    {
+      "id": "ftc-job-platform-alert",
+      "title": "Scammers impersonate well-known companies and recruit for fake jobs on job platforms: after the offer they push for your Social Security or bank account number for 'employment paperwork' (8 August 2023)",
+      "url": "https://consumer.ftc.gov/consumer-alerts/2023/08/scammers-impersonate-well-known-companies-recruit-fake-jobs-linkedin-other-job-platforms",
+      "publisher": "Federal Trade Commission"
+    },
+    {
+      "id": "uscis-i9-section-2",
+      "title": "I-9 Central, completing Section 2: documents within three business days of starting work, and the employee chooses one List A document or one List B plus one List C (updated 18 September 2026)",
+      "url": "https://www.uscis.gov/i-9-central/completing-form-i-9/completing-section-2-employer-review-and-attestation",
+      "publisher": "U.S. Citizenship and Immigration Services"
+    },
+    {
+      "id": "irs-hiring-employees",
+      "title": "Hiring employees: employers complete Form I-9 for every hire and ask for a signed Form W-4 when work starts (updated 18 February 2026)",
+      "url": "https://www.irs.gov/businesses/small-businesses-self-employed/hiring-employees",
+      "publisher": "Internal Revenue Service"
+    }
+  ],
+  "namesCheckedOn": "2026-09-22",
+  "inventedNames": ["Hiring team, events company", "Campus jobs office"],
+  "scenarios": [
+    {
+      "id": "fake-check",
+      "ordinary": false,
+      "flow": "from-you",
+      "sourceIds": ["ftc-fake-checks", "ftc-job-scams"],
+      "screen": {
+        "kind": "email",
+        "from": "Hiring team, events company",
+        "amount": 3160,
+        "lines": [
+          "You're hired as a personal assistant.",
+          "We mailed you a check for $3,160.",
+          "Keep $260 and pay the rest to our event supplier through a payment app."
+        ],
+        "action": "Send $2,900 to the supplier"
+      },
+      "check": {
+        "q": "You deposited it, and the money shows in your banking app the next day. What do you do?",
+        "options": [
+          {
+            "text": "Send the $2,900, since the money has arrived",
+            "why": "Money showing in your banking app does not make the check good. Found fake weeks later, it comes back and you owe the bank $2,900."
+          },
+          {
+            "text": "Send half now, and the rest once it clears",
+            "why": "Whatever you send is your own money once the check bounces, and the whole $3,160 comes back off your balance."
+          },
+          {
+            "text": "Send nothing, and tell your bank the check may be fake",
+            "why": "No real employer sends a check for you to pay on. Funds showing in your account do not make it a good check."
+          }
+        ],
+        "answer": 2
+      }
+    },
+    {
+      "id": "text-interview",
+      "ordinary": false,
+      "flow": "from-you",
+      "sourceIds": ["ftc-remote-job-alert", "ftc-job-text-alert", "ftc-identity-theft", "ftc-job-platform-alert"],
+      "screen": {
+        "kind": "chat",
+        "from": "Recruiter, text only",
+        "lines": [
+          "Great chat. You're hired, no call needed.",
+          "Send your Social Security number and online banking login for direct deposit."
+        ],
+        "action": "Send details"
+      },
+      "check": {
+        "q": "The job looked real on a big job site. What do you do?",
+        "options": [
+          {
+            "text": "Stop, and check the job through the company's own contact details",
+            "why": "Hired by text with no call, and asked for a banking login, which no employer needs."
+          },
+          {
+            "text": "Send them, since payroll needs both",
+            "why": "Direct deposit needs an account number on a form, never your login. With the login, someone else controls your account."
+          },
+          {
+            "text": "Send only the Social Security number",
+            "why": "Sent to a stranger, it can be used for identity theft. Check the employer before any form asks for it."
+          }
+        ],
+        "answer": 0
+      }
+    },
+    {
+      "id": "campus-job",
+      "ordinary": true,
+      "flow": "to-you",
+      "sourceIds": ["uscis-i9-section-2", "irs-hiring-employees"],
+      "screen": {
+        "kind": "message",
+        "from": "Campus jobs office",
+        "lines": [
+          "Library assistant, $15 an hour, 10 hours a week.",
+          "Paid through the college payroll every two weeks.",
+          "Form I-9: bring your documents within three business days of starting.",
+          "You choose which ones, from the list on the form."
+        ],
+        "action": "Accept the offer"
+      },
+      "check": {
+        "q": "You interviewed at the library desk on Monday. What do you do?",
+        "options": [
+          {
+            "text": "Accept, and bring the documents in your first days",
+            "why": "An interview in person, pay from the college payroll, and the forms after the offer."
+          },
+          {
+            "text": "Refuse, since it asks for documents",
+            "why": "Every employer completes Form I-9 with each new hire, after the offer. You pick the documents."
+          }
+        ],
+        "answer": 0
+      }
+    }
+  ]
 }

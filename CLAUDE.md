@@ -56,9 +56,14 @@ of his school club, Business Lab).
   editor agent per lesson on 22 Sept (`workflows/scripts/lessons-to-template-v2-*.js`). CSP allows
   frames from youtube-nocookie.com only; the `embeds` consent category is on by default. The
   v1 fields (`prediction`, `transfer`) are still in the schema and can go.
-- **Five calculators** in every edition (break-even, budget, savings growth, side-hustle, loan) on one
-  kit (`src/islands/tool-kit.tsx`), plus India's **"UPI: spot the fake"** drill, from
-  `src/pages/[region]/tools/[tool].astro` and `src/lib/tools.ts`. Per-edition defaults in `regions.ts`.
+- **Fourteen tools, 12 in India and 11 each in Europe and the US** (22–23 Sept), on one kit
+  (`src/islands/tool-kit.tsx`), from `src/pages/[region]/tools/[tool].astro` and `src/lib/tools.ts`.
+  Twelve calculators: take-home pay line by line, budget, buffer target, savings growth, loan,
+  a loan's yearly rate (India), card minimum (India, US), pay-later against payday (Europe, US),
+  rent share (Europe), side-hustle, break-even, side-income tax (India, US). Two drills of six
+  made-up screens each: **"Payments: spot the fake"** ("UPI: spot the fake" in India; India and
+  Europe) and **"Job offers: spot the fake"** (all three). The five older calculators take their
+  defaults from `regions.ts`; the seven new ones from their own `src/lib/tools/<slug>.ts`.
 - **Tools foundation (22 Sept, branch `interactive-tools`)**: the registry `src/lib/tools.ts` lists
   every tool with its group (life moment), minutes and copy; `/<edition>/tools` is grouped by moment
   with jump links, and the edition fronts and home show one question per group. New calculators
@@ -68,9 +73,9 @@ of his school club, Business Lab).
   `src/content/drills/<edition>/<tool>.json` (`src/lib/drills.ts`); a drill exists in an edition
   only when its bank does. Copy link puts the figures after the `#` (read once, then cleared from the
   address bar; old `?` links still open). Lessons link out through `tool` and `moreTools`.
-  `npm run rules` (in ship-check) warns on a rule 11 months old and fails at 12. Seven new
-  calculators and the drill banks are stubs until their builders land; the integrator updates the
-  tool counts here then. Specs: `docs/research/interactive-tools-revised.json`.
+  `npm run rules` (in ship-check) warns on a rule 11 months old and fails at 12. Every tool is
+  built: no registry entry is `ready: false` and no drill bank is a stub (the ship-check release
+  check keeps it that way). Specs: `docs/research/interactive-tools-revised.json`.
 - **Dashboard** at `/dashboard` (`src/islands/Dashboard.tsx`): lessons done, checks, review queue,
   learning time by day, next lesson, progress by track. All from this device. Learning time
   (`lp:activity`, `src/lib/activity.ts`) is recorded only after a yes to the `stats` consent
@@ -92,8 +97,7 @@ of his school club, Business Lab).
 - **Not built yet**: Hindi/i18n, root LICENSE files, the real account backend, the `lp:activity`
   row on `/cookies` and the learning-time sentence on `/privacy` (protected pages, Rajvir's edit),
   per-edition glossary examples (shared entries such as `interest` show ₹ examples in Europe and
-  US popovers), and the standalone interactive tools beyond the five calculators (research and
-  spec in progress on 22 Sept). See docs/BOSS_PLAYBOOK.md.
+  US popovers). See docs/BOSS_PLAYBOOK.md.
 
 ## Stack
 - Astro static output, Preact islands (`client:load`/`client:visible`), plain CSS custom

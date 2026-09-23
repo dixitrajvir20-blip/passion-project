@@ -30,3 +30,18 @@ export function readAmount(raw: string): ReadAmount {
 export function isBlank(raw: unknown): boolean {
   return String(raw ?? '').trim() === '';
 }
+
+/** What an <input type="number"> can hold (the HTML floating-point syntax); it blanks anything else. */
+const NUMBER_INPUT = /^-?(\d+|\d*\.\d+)(e[+-]?\d+)?$/i;
+
+/**
+ * A value from a shared link as a number field can show it, so the field shows the figure the sum
+ * uses: '35,000' becomes '35000', '₹5,000' '5000', '+5' '5', and text with no number in it ''.
+ * A value the field can already show is kept exactly as it came.
+ */
+export function numberInputValue(raw: string): string {
+  const text = String(raw ?? '').trim();
+  if (text === '' || NUMBER_INPUT.test(text)) return text;
+  const { value } = readAmount(text);
+  return value === null ? '' : String(value);
+}

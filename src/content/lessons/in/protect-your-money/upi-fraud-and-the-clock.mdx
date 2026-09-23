@@ -51,7 +51,7 @@ explorable:
   scenarios:
     - screen:
         kind: qr
-        from: "Order Refunds Desk"
+        from: "Refund team"
         lines:
           - "Your refund of ₹1,250 is ready."
           - "Scan and enter your PIN to receive it."
@@ -62,23 +62,23 @@ explorable:
           - text: "Scan it, since a refund is money coming in"
             why: "A code is scanned to pay. This one pays a stranger."
           - text: "Leave it, and check the refund on the seller's own order page"
-            why: "A real refund shows there, and needs no scan or PIN."
+            why: "A real refund shows there, and needs no scan or approval."
           - text: "Scan it, but stop before the PIN page"
             why: "The cue came earlier: money promised for a scan."
         answer: 1
     - screen:
         kind: qr
-        from: "Sharma General Store"
+        from: "Tulvana General Store"
         amount: 85
         lines:
-          - "Paying Sharma General Store"
+          - "Paying Tulvana General Store"
           - "You scanned this code at the counter."
         action: "Enter UPI PIN to pay"
       ordinary: true
       check:
         q: "You scanned the code on the counter yourself, and the name matches the shop. What do you do?"
         options:
-          - text: "Refuse, because every code carries a risk"
+          - text: "Refuse, because every payment code carries some risk"
             why: "A code you chose to scan, to pay the shop in front of you, is ordinary."
           - text: "Check the name and the amount, then enter your PIN"
             why: "You started it and you mean to pay. That is the PIN doing its one job."
@@ -93,13 +93,13 @@ explorable:
       check:
         q: "A six-digit code arrives by text while he waits on the call. What do you do?"
         options:
-          - text: "Read it out, to stop the payment"
-            why: "Read aloud, a one-time code approves the action for him."
           - text: "Hang up, and call your bank on a number you already have"
             why: "Your bank can tell you if anything is pending. His hurry proves nothing."
+          - text: "Read it out, to stop the payment"
+            why: "Read aloud, a one-time code approves the action for him."
           - text: "Read out only the first three digits"
             why: "Half a code is still the start of one. Share an OTP with nobody."
-        answer: 1
+        answer: 0
     - screen:
         kind: call
         from: "Video call: caller in uniform"
@@ -113,11 +113,11 @@ explorable:
         options:
           - text: "Transfer the money so it can be checked"
             why: "Indian law has no digital arrest. The transfer is the tell."
-          - text: "Hang up, tell someone at home, and report the call on 1930"
-            why: "The script works only while the call lasts."
-          - text: "Stay on, but ask to see an identity card"
+          - text: "Stay on, but ask him to show his identity card on camera"
             why: "A card on camera is as easy to fake as the uniform."
-        answer: 1
+          - text: "Hang up, tell someone at home, and report it on 1930"
+            why: "The script works only while the call lasts."
+        answer: 2
   reflection: "Which screen were you slowest on, and where would its cue appear on your phone?"
 
 takeaways:
@@ -127,7 +127,7 @@ takeaways:
 
 details:
   - "Since 1 October 2025, UPI no longer processes collect requests between two people (NPCI circular OC 220 of 2025-26, 29 July 2025). Requests from business accounts still run, so any request that reaches you now comes from an account set up as a business, honest or not."
-  - "NPCI's guidelines say the UPI PIN is needed for every payment, only sending money requires it, and it is shared with no one. A QR code is shared to be paid and scanned to pay."
+  - "NPCI's guidelines say the UPI PIN is needed for every payment, only sending money requires it, and it is shared with no one. Since October 2025 an app may, with your consent, let your fingerprint or face approve smaller payments instead (NPCI circular OC 226 of 2025-26); that approval sends money too. A QR code is shared to be paid and scanned to pay."
   - "Have these ready for the 1930 helpline: your mobile number, the bank or app the money left from, the account or UPI ID it left from, the transaction ID, the date and a screenshot."
   - "The helpline gives an acknowledgement number, and the official instructions say the complaint must then be completed on cybercrime.gov.in within 24 hours."
   - "More than ₹11,158 crore was saved through the reporting system in over 32.80 lakh complaints, counted to 30 June 2026 (Lok Sabha answer, 21 July 2026)."
@@ -191,6 +191,9 @@ sources:
     publisher: "National Payments Corporation of India"
   - title: "UPI OC No. 220 of 2025-26: discontinuing the UPI collect request for person-to-person transactions, with none processed after 1 October 2025 (29 July 2025)"
     url: "https://www.npci.org.in/PDF/npci/upi/circular/2025/UPI-OC-No-220-FY-2025-26-Discontinuing-the-service-of-UPI-Collect-Request-for-Person-to-Person-P2P-transactions.pdf"
+    publisher: "National Payments Corporation of India"
+  - title: "UPI OC No. 226 of 2025-26: introduction of additional authentication methods in UPI, with on-device fingerprint or face authentication as an optional alternative to the UPI PIN (7 October 2025)"
+    url: "https://www.npci.org.in/uploads/UPI_OC_No_226_FY_2025_26_Introduction_of_Additional_Authentication_methods_in_UPI_42c3693399.pdf"
     publisher: "National Payments Corporation of India"
   - title: "NPCI to discontinue P2P collect payments from 1 October: under UPI-OC-No-220-FY-2025-26, no person-to-person collect request is initiated, routed or processed on UPI after 1 October 2025 (19 August 2025)"
     url: "https://www.medianama.com/2025/08/223-npci-p2p-collect-payments-oct-1-what-it-means/"

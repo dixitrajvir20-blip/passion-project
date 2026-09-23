@@ -2,9 +2,135 @@
   "tool": "job-offer-check",
   "region": "eu",
   "fromLesson": "eu/credit-and-fraud/money-mule",
-  "intro": "Three messages. One is ordinary, so refusing everything is not the answer. Decide, then look.",
-  "reflection": "Which message were you least sure of, and which line would you ask about?",
-  "glossary": [],
-  "sources": [],
-  "scenarios": []
+  "intro": "Six messages about work. Some are ordinary jobs, so refusing everything is not the skill. Decide, then look.",
+  "reflection": "Which message were you least sure of, and which way would the money have moved?",
+  "glossary": ["money-mule", "iban"],
+  "sources": [
+    {
+      "id": "europol-dont-be-a-mule",
+      "title": "Money muling, a way to launder money: job adverts from overseas companies seeking local agents, free email addresses, jobs that use your bank account to move money, and never opening an account for somebody you just met (read 22 September 2026)",
+      "url": "https://www.europol.europa.eu/sites/default/files/documents/lux_flyers_en.pdf",
+      "publisher": "Europol"
+    },
+    {
+      "id": "bgb-107",
+      "title": "Bürgerliches Gesetzbuch §107: a minor needs the legal representative's consent for a declaration that is not purely to their advantage (Germany, current version, read 22 September 2026)",
+      "url": "https://www.gesetze-im-internet.de/bgb/__107.html",
+      "publisher": "Federal Ministry of Justice, Germany (Gesetze im Internet)"
+    },
+    {
+      "id": "bbig-11",
+      "title": "Berufsbildungsgesetz §11: the written apprenticeship contract is handed to the trainee and to their legal representatives (Germany, current version, read 22 September 2026)",
+      "url": "https://www.gesetze-im-internet.de/bbig_2005/__11.html",
+      "publisher": "Federal Ministry of Justice, Germany (Gesetze im Internet)"
+    }
+  ],
+  "namesCheckedOn": "2026-09-22",
+  "inventedNames": ["Overseas trading company", "The bakery where you did a trial shift"],
+  "scenarios": [
+    {
+      "id": "payment-agent",
+      "ordinary": false,
+      "flow": "through-you",
+      "sourceIds": ["europol-dont-be-a-mule"],
+      "screen": {
+        "kind": "email",
+        "from": "Overseas trading company (a free email address)",
+        "amount": 900,
+        "lines": [
+          "Local finance assistant, remote: €900 a month.",
+          "Our customers in your country pay into your own account.",
+          "Pay the money on to our suppliers the same day."
+        ],
+        "action": "Reply with your IBAN"
+      },
+      "check": {
+        "q": "The pay is a fixed salary, not a cut of what arrives. What do you do?",
+        "options": [
+          {
+            "text": "Refuse: a real company takes its customers' payments into its own account",
+            "why": "Your account is the job, however the pay is dressed. Moving that money for them can be a crime, and your name is on it."
+          },
+          {
+            "text": "Accept, since a salary is how real jobs pay",
+            "why": "The salary is the bait. The work is other people's money passing through your account."
+          },
+          {
+            "text": "Accept, but only pay on money from customers you can see",
+            "why": "You could not check where the money came from, and every payment you send on carries your name."
+          }
+        ],
+        "answer": 0
+      }
+    },
+    {
+      "id": "apprenticeship",
+      "ordinary": true,
+      "flow": "to-you",
+      "sourceIds": ["bgb-107", "bbig-11"],
+      "screen": {
+        "kind": "email",
+        "from": "The bakery where you did a trial shift",
+        "lines": [
+          "Your apprenticeship contract is attached.",
+          "Pay on the 25th of each month, with a payslip.",
+          "Bring your tax number and bank details on your first day."
+        ],
+        "action": "Sign the contract"
+      },
+      "check": {
+        "q": "You did a trial shift there last week and met the owner. What do you do?",
+        "options": [
+          {
+            "text": "Refuse, since it asks for your bank details",
+            "why": "An employer needs them to pay you. Here the money comes from the bakery to you."
+          },
+          {
+            "text": "Sign straight away without reading it",
+            "why": "The job is real, but read what you agree to first: the hours, the pay, and how either side can end it."
+          },
+          {
+            "text": "Read the contract, then sign it",
+            "why": "A contract, a payslip, pay from the employer. Under 18, a parent or guardian usually has to agree too; it depends on your country."
+          }
+        ],
+        "answer": 2
+      }
+    },
+    {
+      "id": "account-for-hire",
+      "ordinary": false,
+      "flow": "through-you",
+      "sourceIds": ["europol-dont-be-a-mule"],
+      "screen": {
+        "kind": "chat",
+        "from": "Recruiter, met in a group chat",
+        "amount": 300,
+        "lines": [
+          "Open a new online bank account in your name.",
+          "Send us the login and the card.",
+          "€300 a month, no work needed."
+        ],
+        "action": "Send the login"
+      },
+      "check": {
+        "q": "They say the account is only for their international clients. What do you do?",
+        "options": [
+          {
+            "text": "Agree, since it is a new account you would not use",
+            "why": "It is still in your name. Every payment through it is recorded against you, and moving that money can be a crime."
+          },
+          {
+            "text": "Refuse, and keep any login and card to yourself",
+            "why": "Your name and account are the job. Europol's advice: never open an account at the request of somebody you just met."
+          },
+          {
+            "text": "Agree, but ask for the €300 up front",
+            "why": "Being paid first changes nothing: the money moving through the account would still carry your name."
+          }
+        ],
+        "answer": 1
+      }
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 {
   "term": "Self-employment tax",
-  "define": "The Social Security and Medicare tax paid by people in the US who work for themselves. It applies once net earnings from self-employment reach $400 in a year. As of 2026, the IRS puts the rate at 15.3%.",
-  "example": "A student who keeps $1,800 after costs from a summer of mowing lawns is past the $400 line, so self-employment tax applies."
+  "define": "The Social Security and Medicare tax paid by people in the US who work for themselves. It applies once net earnings from self-employment, 92.35% of net profit, reach $400 in a year. As of 2026, the IRS puts the rate at 15.3%.",
+  "example": "A student who keeps $1,800 after costs from a summer of mowing lawns has $1,662 of net earnings, past the $400 line, so self-employment tax applies."
 }

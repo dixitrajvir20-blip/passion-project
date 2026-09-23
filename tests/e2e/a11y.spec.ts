@@ -68,10 +68,10 @@ for (const path of PAGES) {
 }
 
 test('every tool page is in the audit', () => {
-  // 29 calculators and 5 drills with banks when the tools foundation landed, less the pages of any
-  // calculator still marked ready: false (it has no page until its island is built).
+  // 29 calculators and 5 drills with banks (India 12, Europe 11, the United States 11), less the
+  // pages of any calculator whose island is still a stub (it has no page until it is built).
   const unbuilt = REGIONS.flatMap((edition) => registeredFor(edition).filter((tool) => tool.ready === false)).length;
-  expect(TOOL_PAGES.length).toBeGreaterThanOrEqual(34 - unbuilt);
+  expect(TOOL_PAGES).toHaveLength(34 - unbuilt);
   expect(TOOL_PAGES).toContain('in/tools/spot-the-fake');
   expect(TOOL_PAGES).not.toContain('us/tools/spot-the-fake');
 });

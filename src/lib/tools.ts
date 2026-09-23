@@ -5,8 +5,8 @@
  * Registry copy (title, answers, short, intro, minutes) is fixed here by the foundation. A tool's
  * own numbers and rules live in src/lib/tools/<slug>.ts; import those by their full path.
  *
- * A calculator whose island is still a stub carries `ready: false` and is shown nowhere; its
- * builder deletes that one line when the island is real.
+ * A calculator whose island is still a stub carries a false `ready` flag and is shown nowhere;
+ * its builder deletes that one line when the island is real.
  */
 
 export type ToolFormat = 'calculator' | 'drill';
@@ -65,7 +65,6 @@ export const TOOLS: ToolMeta[] = [
     format: 'calculator',
     group: 'first-pay',
     minutes: 3,
-    ready: false,
   },
   {
     slug: 'budget',
@@ -86,7 +85,6 @@ export const TOOLS: ToolMeta[] = [
     format: 'calculator',
     group: 'buffer',
     minutes: 2,
-    ready: false,
   },
   {
     slug: 'savings',
@@ -118,7 +116,6 @@ export const TOOLS: ToolMeta[] = [
     group: 'borrowing',
     minutes: 2,
     regions: ['in'],
-    ready: false,
   },
   {
     slug: 'card-minimum',
@@ -130,7 +127,6 @@ export const TOOLS: ToolMeta[] = [
     group: 'borrowing',
     minutes: 2,
     regions: ['in', 'us'],
-    ready: false,
   },
   {
     slug: 'pay-later-payday',
@@ -142,19 +138,17 @@ export const TOOLS: ToolMeta[] = [
     group: 'borrowing',
     minutes: 2,
     regions: ['eu', 'us'],
-    ready: false,
   },
   {
     slug: 'rent-share',
     title: 'Rent and bills as a share of net pay',
     answers: 'How much of my net pay would this room take?',
-    short: 'How much would this room take?',
+    short: 'How much of my pay goes on rent and bills?',
     intro: 'Answers one question: rent and bills together, what share of your net pay do they take?',
     format: 'calculator',
     group: 'moving-out',
     minutes: 2,
     regions: ['eu'],
-    ready: false,
   },
   {
     slug: 'side-hustle',
@@ -186,7 +180,6 @@ export const TOOLS: ToolMeta[] = [
     group: 'own-work',
     minutes: 2,
     regions: ['in', 'us'],
-    ready: false,
   },
   {
     slug: 'spot-the-fake',

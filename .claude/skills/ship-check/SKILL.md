@@ -29,7 +29,13 @@ Run every step; do not skip one because an earlier one passed. Paste real output
     - `grep -n "ready: false" src/lib/tools.ts` finds nothing (a calculator still a stub);
     - `npx vitest run tests/unit` reports zero skipped in `tests/unit/drills.test.ts` (stub banks)
       and zero todo in `tests/unit/tools/` and `tests/unit/tools.test.ts`;
-    - `grep -rn "test.fixme" tests/e2e/tools` finds nothing: zero test.fixme in tests/e2e/tools.
+    - `grep -rnE "test\.(fixme|skip)" tests/e2e/tools` finds nothing: no tool proof is parked or skipped;
+    - `node scripts/js-budget.mjs` shows every `/<edition>/tools/<slug>/` page under 90 KB, and
+      `grep -c "style=\"" dist/*/tools/*/index.html` is 0 for every tool page;
+    - the tool counts in CLAUDE.md (Current state), `docs/PROJECT_BRIEF.md` §7 and
+      `docs/CONTENT_GUIDE.md` match `registeredFor()` in `tests/unit/tools.test.ts` (today India 12,
+      Europe 11, the United States 11).
+    Last cleared on 23 September 2026, when all nine tools of `docs/research/interactive-tools-revised.json` landed.
 
 Finish with a report:
 

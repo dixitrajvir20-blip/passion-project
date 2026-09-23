@@ -1,0 +1,9 @@
+/* Card balance at the minimum payment. Tokens only; the shell is tools.css. The results panel
+   holds two short ledgers, month one and the whole run, each under a small heading set like the
+   body text rather than like a card title, so the ledger figures stay the loudest thing in it. */
+.card-minimum .results h3 {
+  margin: var(--space-5) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  letter-spacing: 0;
+}

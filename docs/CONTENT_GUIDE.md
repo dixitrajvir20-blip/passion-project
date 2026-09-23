@@ -83,6 +83,7 @@ stay in the schema until the last lesson migrates, then go.
 
 The registry of tools is `src/lib/tools.ts` (title, the question each answers, its group and
 minutes); a lesson names tools by slug, and the tests fail a slug its edition does not have.
+It holds fourteen tools: India has 12, Europe 11 and the United States 11.
 
 - **`tool`** is the calculator a reader uses with their own numbers after the lesson.
 - **`moreTools`** lists at most two more. Both appear as named links in the lesson's explorable

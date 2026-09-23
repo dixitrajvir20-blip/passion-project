@@ -12,9 +12,10 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { ComponentChildren } from 'preact';
 import { LOCALES, localeByCode, money, type Locale } from '../lib/format';
+import { numberInputValue } from '../lib/fields';
 import { linkFor, parseLinkParams } from '../lib/link-params';
 
-export { isBlank, readAmount, type ReadAmount } from '../lib/fields';
+export { isBlank, numberInputValue, readAmount, type ReadAmount } from '../lib/fields';
 
 export const LOCALE_KEY = 'lp:locale';
 
@@ -35,11 +36,18 @@ export const exact = (value: number, locale: Locale) => money(value, locale, Num
  * pay figures do not stay there on a shared device. A bare '#main' from the skip link is left
  * alone. Later calls on the page return the same snapshot. Nothing is ever written to the address
  * bar while the reader types.
+ *
+ * A link to this same page pasted into the address bar changes only the fragment, which does not
+ * load the page again, so nothing would read it. When the new fragment carries figures, the page
+ * is loaded again and reads it like any other link.
  */
 let snapshot: { hash: string; search: string } | null = null;
 
 export function linkSnapshot(): { hash: string; search: string } {
   if (snapshot) return snapshot;
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash.includes('=')) window.location.reload();
+  });
   snapshot = { hash: window.location.hash, search: window.location.search };
   if (snapshot.hash.includes('=')) {
     try {
@@ -89,6 +97,12 @@ export function useFields<T extends Fields>(prefix: string, defaults: T, options
       }
     }
     const fromLink = readLinkParams(defaults, options);
+    // A number field blanks what it cannot show ('₹5,000'), while the sum would still read it:
+    // show the figure the sum uses instead, so the field and the result agree.
+    for (const key of Object.keys(fromLink) as (keyof T & string)[]) {
+      const el = document.getElementById(`${prefix}-${key}`);
+      if (el instanceof HTMLInputElement && el.type === 'number') fromLink[key] = numberInputValue(fromLink[key] as string) as T[typeof key];
+    }
     if (Object.keys(fromDom).length > 0 || Object.keys(fromLink).length > 0) {
       // A shared link is explicit, so it wins over anything typed early.
       setFields((current) => ({ ...current, ...fromDom, ...fromLink }));

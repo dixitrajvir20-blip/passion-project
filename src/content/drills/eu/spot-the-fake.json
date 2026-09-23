@@ -2,9 +2,147 @@
   "tool": "spot-the-fake",
   "region": "eu",
   "fromLesson": "eu/credit-and-fraud/instant-transfer-check",
-  "intro": "Three screens. One is an ordinary payment, so refusing everything is not the answer.",
+  "intro": "Six screens on the way to paying. Two are ordinary payments, so refusing everything is not the answer.",
   "reflection": "Which cue would you have missed, and where does it appear in your own bank app?",
-  "glossary": [],
-  "sources": [],
-  "scenarios": []
+  "scopeNote": "Banks in the euro area have had to run the name check on euro transfers since 9 October 2025. Banks in EU countries outside the euro area add it by 9 July 2027; until then, the checks are yours to run.",
+  "glossary": ["iban", "verification-of-payee", "instant-credit-transfer"],
+  "sources": [
+    {
+      "id": "ecb-ipr",
+      "title": "Instant Payments Regulation: the timeline for euro-area and non-euro-area providers, and verification of payee with its four results, match, close match, no match or other (accessed 22 September 2026)",
+      "url": "https://www.ecb.europa.eu/paym/retail/instant_payments/html/instant_payments_regulation.en.html",
+      "publisher": "European Central Bank"
+    },
+    {
+      "id": "eu-2024-886",
+      "title": "Regulation (EU) 2024/886 on instant credit transfers in euro: Article 5a (ten seconds) and Article 5c (verification of the payee, required of euro-area providers from 9 October 2025 and of the others by 9 July 2027) (13 March 2024)",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/886/oj",
+      "publisher": "Official Journal of the European Union, via EUR-Lex"
+    },
+    {
+      "id": "psd2",
+      "title": "Directive (EU) 2015/2366 (PSD2), Article 80: a payment order cannot be revoked once your bank has received it (25 November 2015)",
+      "url": "https://eur-lex.europa.eu/eli/dir/2015/2366/oj",
+      "publisher": "Official Journal of the European Union, via EUR-Lex"
+    },
+    {
+      "id": "ecc-cz-2025",
+      "title": "ECC: warnings against practices in the sales period. Before a first purchase from a shop, check whether the seller is identified and whether there are payment options other than bank transfer (28 November 2025)",
+      "url": "https://evropskyspotrebitel.gov.cz/news/ecc-warnings-agaist-practices-in-the-sales-period/",
+      "publisher": "European Consumer Centre Czech Republic"
+    },
+    {
+      "id": "ccpc-fake-shops",
+      "title": "Fake online shops, what to watch out for: large discounts and requests for unusual payment methods are warning signs (accessed 22 September 2026)",
+      "url": "https://www.ccpc.ie/manage-your-money/scams-and-frauds/common-scams/fake-online-shops",
+      "publisher": "Competition and Consumer Protection Commission, Ireland"
+    }
+  ],
+  "namesCheckedOn": "2026-09-22",
+  "inventedNames": ["Rovaskel Property", "Lirmavik Rowing Club", "Ostrakel Driving School", "Velquist Phones"],
+  "scenarios": [
+    {
+      "id": "no-check",
+      "ordinary": false,
+      "sourceIds": ["ecb-ipr", "eu-2024-886"],
+      "screen": {
+        "kind": "transfer",
+        "from": "Your bank app",
+        "amount": 95,
+        "lines": [
+          "To: Ostrakel Driving School",
+          "New payee: first payment to this IBAN",
+          "Name check: not possible."
+        ],
+        "action": "Send anyway"
+      },
+      "check": {
+        "q": "The invoice for your first driving lessons came by email, with this IBAN. You have not paid this school before. What do you do?",
+        "options": [
+          {
+            "text": "Send it. The name check is only a formality",
+            "why": "Not possible means nobody has confirmed the name. The money follows the IBAN, whoever holds it."
+          },
+          {
+            "text": "Cancel for good. A failed check means a scam",
+            "why": "Not possible is not a no match. It says only that no check was made."
+          },
+          {
+            "text": "Confirm the IBAN with the school first",
+            "why": "Use a phone number, web address or front desk you find yourself, not the email. No check means no confirmation. Where your bank shows no name check at all, as some outside the euro area may until July 2027, do the same."
+          }
+        ],
+        "answer": 2
+      }
+    },
+    {
+      "id": "club-match",
+      "ordinary": true,
+      "sourceIds": ["ecb-ipr"],
+      "screen": {
+        "kind": "transfer",
+        "from": "Your bank app",
+        "amount": 45,
+        "lines": [
+          "To: Lirmavik Rowing Club",
+          "Name check: match.",
+          "You paid this account in March."
+        ],
+        "action": "Confirm and send"
+      },
+      "check": {
+        "q": "At training, the treasurer asked every member in person for the €45 season fee, to the account the club used in March. What do you do?",
+        "options": [
+          {
+            "text": "Cancel, since any transfer could be a scam",
+            "why": "You heard it in person, and the check agrees. Refusing this one protects nothing."
+          },
+          {
+            "text": "Check the amount and the name, then confirm",
+            "why": "An in-person request, a match and an account you paid before: an ordinary payment. Where a bank runs no name check yet, the other two still hold."
+          },
+          {
+            "text": "Ask the treasurer to confirm it by email first",
+            "why": "You already heard it from her in person. An email adds a route that can be faked."
+          }
+        ],
+        "answer": 1
+      }
+    },
+    {
+      "id": "shop-match",
+      "ordinary": false,
+      "sourceIds": ["ecc-cz-2025", "ccpc-fake-shops", "psd2"],
+      "screen": {
+        "kind": "transfer",
+        "from": "Your bank app",
+        "amount": 240,
+        "lines": [
+          "To: Velquist Phones",
+          "Name check: match.",
+          "Speed: instant",
+          "Reference: order 4471"
+        ],
+        "action": "Confirm and send"
+      },
+      "check": {
+        "q": "An online shop sells this phone at 60% below other shops, and its checkout offers instant transfer only. The name check says match. What do you do?",
+        "options": [
+          {
+            "text": "Stop, and pay this shop nothing",
+            "why": "A price far below other shops and a transfer-only checkout are the tells. A match says whose account it is, not that the shop will deliver. Once sent, an instant transfer cannot be taken back."
+          },
+          {
+            "text": "Send it. The name check says match",
+            "why": "A match proves whose account it is. It says nothing about whether a phone will arrive."
+          },
+          {
+            "text": "Send half now and the rest on delivery",
+            "why": "Half sent to a shop that never delivers is still gone."
+          }
+        ],
+        "answer": 0
+      }
+    }
+  ]
 }

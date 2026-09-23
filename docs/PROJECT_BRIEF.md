@@ -123,13 +123,14 @@ All math lives in `src/lib/*.ts` as pure functions with unit tests. All money us
 | **Side-Hustle Profit** | Units sold/month, price, cost per unit, platform fees %, hours/month | Monthly profit, profit per hour | Helps compare "is this worth my time?" |
 | **Loan / EMI** | Principal, annual rate, months | EMI, total interest, total paid, amortization table | EMI = P·r·(1+r)^n / ((1+r)^n − 1), r = monthly rate. Handle rate = 0. |
 
-**Beyond v1 (September 2026).** The tool set grows to fourteen, listed once in `src/lib/tools.ts`
+**Beyond v1 (September 2026, built).** The tool set is now fourteen, listed once in `src/lib/tools.ts`
 and grouped by life moment (your first pay, a buffer, borrowing, moving out, working for yourself,
 before you send): take-home pay, buffer target, a loan's yearly rate, card minimum, pay-later
 against payday, rent share and side-income tax as calculators, and "spot the fake" and job-offer
-drills built from each edition's lessons plus a bank of made-up screens. Not every tool is in
-every edition. Each tool's spec is in `docs/research/interactive-tools-revised.json`; its edition
-rules (with sources and dates) and maths live in `src/lib/tools/<slug>.ts`, not in `finance.ts`.
+drills of six situations each, built from each edition's lessons plus a bank of made-up screens.
+Not every tool is in every edition: India has 12, Europe 11 and the United States 11. Each tool's
+spec is in `docs/research/interactive-tools-revised.json`; its edition rules (with sources and
+dates) and maths live in `src/lib/tools/<slug>.ts`, not in `finance.ts`.
 
 **Quiz component.** Multiple choice (and true/false). One question at a time, instant feedback with a 1-2 sentence explanation, score at the end, retry. Stores "passed" (≥80%) in localStorage under `lp:progress` (see `src/lib/progress.ts`; the same record powers the cross-device sync code). Retrieval practice (quizzing) is a well-studied way to strengthen long-term learning, so every lesson gets one.
 

@@ -1,5 +1,5 @@
 {
   "term": "Net earnings from self-employment",
-  "define": "What your own work brought in over the year, minus the business expenses of doing it. In the US, self-employment tax is worked out from this figure, not from everything that came in.",
-  "example": "$800 from mowing lawns in July, minus $120 for gas and trimmer line, is $680 of net earnings for that month."
+  "define": "Net profit from your own work, times 92.35%. In the US, self-employment tax is worked out from this figure, and is due once it reaches $400 in a year.",
+  "example": "$800 from mowing lawns in a summer, minus $120 for gas and trimmer line, is $680 of net profit and $628 of net earnings."
 }

@@ -2,9 +2,102 @@
   "tool": "spot-the-fake",
   "region": "in",
   "fromLesson": "in/protect-your-money/upi-fraud-and-the-clock",
-  "intro": "Four screens. One is an ordinary payment, so refusing everything is not the skill.",
+  "intro": "Six screens. Two are ordinary payments, so refusing everything is not the answer.",
   "reflection": "Which screen were you slowest on, and where would its cue appear on your phone?",
-  "glossary": [],
-  "sources": [],
-  "scenarios": []
+  "glossary": ["upi", "pin", "kyc", "otp", "qr-code", "digital-arrest"],
+  "sources": [
+    {
+      "id": "rbi-kyc-2024",
+      "title": "RBI cautions against frauds in the name of KYC updation: false urgency, threats to freeze or block the account, and apps installed through links in messages; contact your bank directly, and do not click suspicious or unverified links (2 February 2024)",
+      "url": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=57244",
+      "publisher": "Reserve Bank of India"
+    },
+    {
+      "id": "rbi-kyc-faq",
+      "title": "FAQs on the Master Direction on KYC, questions 27 to 29: a bank tells you in advance when a KYC update is due and reminds you after the due date, closes an account only after due notice, and asks for utmost caution with links in KYC texts and emails (9 June 2025)",
+      "url": "https://www.rbi.org.in/commonman/Upload/English/FAQs/PDFs/KYC09062025.pdf",
+      "publisher": "Reserve Bank of India"
+    },
+    {
+      "id": "npci-upi-guidelines",
+      "title": "BHIM UPI brand guidelines: only sending money requires the UPI PIN, and a QR code is shared to be paid and scanned to pay (accessed 21 September 2026)",
+      "url": "https://www.npci.org.in/uploads/BHIM_UPI_Guidelines_2026_012a0b1bce.pdf",
+      "publisher": "National Payments Corporation of India"
+    },
+    {
+      "id": "npci-oc-226",
+      "title": "UPI OC No. 226 of 2025-26: introduction of additional authentication methods in UPI, with on-device fingerprint or face authentication as an optional alternative to the UPI PIN (7 October 2025)",
+      "url": "https://www.npci.org.in/uploads/UPI_OC_No_226_FY_2025_26_Introduction_of_Additional_Authentication_methods_in_UPI_42c3693399.pdf",
+      "publisher": "National Payments Corporation of India"
+    }
+  ],
+  "namesCheckedOn": "2026-09-22",
+  "inventedNames": ["Tulvana General Store", "Account alert", "Your app: receive money"],
+  "scenarios": [
+    {
+      "id": "kyc-link",
+      "ordinary": false,
+      "sourceIds": ["rbi-kyc-2024", "rbi-kyc-faq"],
+      "screen": {
+        "kind": "message",
+        "from": "Account alert",
+        "lines": [
+          "Your bank KYC expires today.",
+          "Update now or your account will be blocked: kyc-update.example/verify"
+        ],
+        "action": "Open link"
+      },
+      "check": {
+        "q": "This text arrives in the morning, and your account works fine. What do you do?",
+        "options": [
+          {
+            "text": "Open the link and update it, just in case",
+            "why": "A same-day deadline, a threat to block the account and a link: the pattern of a KYC scam. The page can take your details or get you to install an app."
+          },
+          {
+            "text": "Reply to ask whether it is real",
+            "why": "The reply goes to whoever sent the text, and they will say yes."
+          },
+          {
+            "text": "Leave it, and check in your bank's app",
+            "why": "Banks tell you in advance when KYC is due, and remind you after the due date. Whoever the sender seems to be, update only in your bank's own app or at the branch."
+          }
+        ],
+        "answer": 2
+      }
+    },
+    {
+      "id": "own-code",
+      "ordinary": true,
+      "sourceIds": ["npci-upi-guidelines", "npci-oc-226"],
+      "screen": {
+        "kind": "qr",
+        "from": "Your app: receive money",
+        "amount": 300,
+        "lines": [
+          "Your own payment code",
+          "Whoever scans this pays you."
+        ],
+        "action": "Show code"
+      },
+      "check": {
+        "q": "A friend owes you ₹300 for lunch and asks how to pay you back. Your app shows this. What do you do?",
+        "options": [
+          {
+            "text": "Show your code and let your friend scan it",
+            "why": "Being paid needs only your code or your number. No scan, and no PIN, fingerprint or face from you."
+          },
+          {
+            "text": "Scan your friend's code and approve it, to receive",
+            "why": "Scanning and approving pays out, by PIN, fingerprint or face. That is the refund-code trick."
+          },
+          {
+            "text": "Refuse, and ask for cash, since codes are risky",
+            "why": "Showing your own code to a friend is how being paid by UPI works. Nothing leaves your account."
+          }
+        ],
+        "answer": 0
+      }
+    }
+  ]
 }

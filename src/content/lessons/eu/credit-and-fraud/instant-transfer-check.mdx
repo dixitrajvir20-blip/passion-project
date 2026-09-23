@@ -22,7 +22,7 @@ document:
   kind: app-screen
   title: "Confirm transfer"
   lines:
-    - { label: "Paying", value: "Valtari Property", hint: "The name you typed. The money follows the IBAN, whatever name is here." }
+    - { label: "Paying", value: "Rovaskel Property", hint: "The name you typed. The money follows the IBAN, whatever name is here." }
     - { label: "IBAN", value: "ending 7731", hint: "The account number, copied from the message. It decides where the money lands." }
     - { label: "Amount", value: "€450.00" }
     - { label: "Speed", value: "Instant", hint: "It arrives within ten seconds and cannot be taken back once sent." }
@@ -69,17 +69,17 @@ explorable:
             why: "Fifty euros sent to a stranger is still gone. A smaller sum checks nothing."
         answer: 1
     - screen:
-        kind: request
-        from: "Your bank app: confirm transfer"
+        kind: transfer
+        from: "Your bank app"
         amount: 450
         lines:
-          - "To: Valtari Property, account ending 2208"
-          - "Name check: close match. Name on the account: Valtari Property Oy."
+          - "To: Rovaskel Property, account ending 2208"
+          - "Name check: close match. Name on the account: Rovaskel Property Oy."
           - "You paid this account last month."
         action: "Confirm and send"
       ordinary: true
       check:
-        q: "Your saved payee for the landlord reads ‘Valtari Property’. What do you do?"
+        q: "Your saved payee for the landlord reads ‘Rovaskel Property’. What do you do?"
         options:
           - text: "Cancel. Any difference in the name is a warning"
             why: "A close match shows the real name. ‘Oy’ is the Finnish ‘Ltd’, and this is last month's account."

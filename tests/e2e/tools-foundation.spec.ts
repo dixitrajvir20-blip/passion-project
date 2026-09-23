@@ -60,6 +60,30 @@ test.describe('calculator links carry the figures after the #', () => {
     await expect(price(page)).toHaveValue('1500');
   });
 
+  test('a figure a number field cannot show arrives as the figure the sum uses', async ({ page }) => {
+    await page.goto('in/tools/break-even#fixed=5000');
+    await waitForIslands(page);
+    const expected = (await page.locator('.results').textContent()) ?? '';
+    await page.goto('about:blank');
+    await page.goto(`in/tools/break-even#fixed=${encodeURIComponent('₹5,000')}`);
+    await waitForIslands(page);
+    await expect(fixed(page)).toHaveValue('5000');
+    await expect(page.locator('.results')).toHaveText(expected);
+  });
+
+  test('a link to the same page pasted into the address bar is read too', async ({ page }) => {
+    await page.goto('in/tools/break-even');
+    await waitForIslands(page);
+    await expect(fixed(page)).toHaveValue('18000');
+    await page.evaluate(() => {
+      window.location.hash = 'fixed=5000&variable=8&price=20&units=600';
+    });
+    await expect(fixed(page)).toHaveValue('5000');
+    await expect(price(page)).toHaveValue('20');
+    await expect(page.locator('.results')).toContainText('417');
+    await expect.poll(() => page.url()).not.toContain('#');
+  });
+
   test('Copy link writes the figures after the # and no query', async ({ page, context }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await page.goto('in/tools/break-even?fixed=5000&variable=8&price=20&units=600');
@@ -388,7 +412,7 @@ test.describe('the edition fronts and the home page', () => {
   test('Europe adds moving out, and the United States ends with the job drill', async ({ page }) => {
     await page.goto('eu');
     await expect(panel(page).locator('.taxonomy-list a')).toHaveCount(groupsFor('eu').length);
-    if (ready('rent-share')) await expect(panel(page).locator('.taxonomy-list')).toContainText('How much would this room take?');
+    if (ready('rent-share')) await expect(panel(page).locator('.taxonomy-list')).toContainText('How much of my pay goes on rent and bills?');
     await expect(panel(page).getByRole('link', { name: `All ${toolsFor('eu').length} tools` })).toBeVisible();
     await page.goto('us');
     await expect(panel(page).locator('.taxonomy-list a').last()).toHaveText('Would I spot a fake job?');

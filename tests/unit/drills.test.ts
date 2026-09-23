@@ -50,6 +50,8 @@ const REAL_NAMES = [
   'Zomato', 'Meesho', 'Myntra', 'Wells Fargo', 'Bank of America', 'Capital One', 'Citi', 'Affirm', 'Sezzle', 'Monzo',
   'Santander', 'BNP', 'Sparkasse', 'Deutsche Bank', 'Marktplaats', 'Leboncoin', 'Kleinanzeigen', 'TRAI',
   'Enforcement Directorate', 'FBI', 'SSA', 'Interpol',
+  // Coined names that turned out to be real businesses, since renamed on every screen (job-offer-check).
+  'Brightline', 'TaskPay', 'Parcelroute', 'Tutorful',
 ];
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 // Case-sensitive and whole-word, so 'Wise' is caught and 'wise' in a sentence is not.

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isBlank, readAmount } from '../../src/lib/fields';
+import { isBlank, numberInputValue, readAmount } from '../../src/lib/fields';
 
 describe('readAmount', () => {
   it('reads what people type, and an exponent as a number would', () => {
@@ -33,5 +33,26 @@ describe('isBlank', () => {
     expect(isBlank('  ')).toBe(true);
     expect(isBlank('0')).toBe(false);
     expect(isBlank(undefined)).toBe(true);
+  });
+});
+
+describe('numberInputValue', () => {
+  it('keeps what a number field can already show, exactly', () => {
+    for (const v of ['', '5000', '-5', '12.5', '.5', '1e5', '1E-3', '1e400']) expect(numberInputValue(v)).toBe(v);
+  });
+
+  it('rewrites a readable figure the field would blank, so the field and the sum agree', () => {
+    expect(numberInputValue('₹5,000')).toBe('5000');
+    expect(numberInputValue('35,000')).toBe('35000');
+    expect(numberInputValue('1,00,000')).toBe('100000');
+    expect(numberInputValue('+5')).toBe('5');
+    expect(numberInputValue('5.')).toBe('5');
+    expect(numberInputValue(' 12 ')).toBe('12');
+  });
+
+  it('gives blank for text with no number in it', () => {
+    expect(numberInputValue('abc')).toBe('');
+    expect(numberInputValue('1.2.3')).toBe('');
+    expect(numberInputValue('<script>')).toBe('');
   });
 });

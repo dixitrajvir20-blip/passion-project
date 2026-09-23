@@ -59,10 +59,6 @@
         const picked = poll.querySelector<HTMLInputElement>('input:checked');
         const correct = picked !== null && picked.value === poll.dataset.answer;
         seen.set(id, correct);
-        if (status) {
-          status.textContent =
-            picked === null ? 'No pick this time, so this one comes back tomorrow.' : correct ? 'Correct.' : 'Not quite.';
-        }
 
         let progress = schedule(loadProgress(storage), id, correct);
         const quizDone = quiz.length > 0 && quiz.every((q) => seen.has(q.dataset.checkId!));
@@ -78,8 +74,20 @@
           }
         }
         const saved = saveProgress(storage, progress);
-        // Only when this device actually kept the schedule: with storage blocked nothing comes back.
-        if (!isQuiz(id) && saved && storage && drillReturn) {
+        // Only when this device actually kept the schedule: with storage blocked nothing comes back,
+        // so a reveal with no pick promises no return.
+        const kept = saved && storage !== undefined;
+        if (status) {
+          status.textContent =
+            picked === null
+              ? kept
+                ? 'No pick this time, so this one comes back tomorrow.'
+                : 'No pick this time.'
+              : correct
+                ? 'Correct.'
+                : 'Not quite.';
+        }
+        if (!isQuiz(id) && kept && drillReturn) {
           const back = nextReturnAmong(progress, drillIds);
           if (back) {
             drillReturn.textContent = `These situations come back from ${dayFormat.format(back)}. Nothing to do until then.`;
