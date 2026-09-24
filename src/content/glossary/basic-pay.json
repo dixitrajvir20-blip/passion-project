@@ -1,5 +1,5 @@
 {
   "term": "Basic pay",
-  "define": "The fixed core of a salary, before allowances. EPF is worked out as a percentage of basic pay, not of the whole CTC.",
+  "define": "The fixed core of a salary, before allowances. EPF is worked out on basic pay plus dearness allowance, and under the labour codes on allowances above half of pay too, not on the whole CTC.",
   "example": "In an offer of ₹30,000 a month CTC, basic pay might be ₹15,000."
 }

@@ -14,6 +14,8 @@ export const site = {
   /** Replace with a real mailbox before launch. Used on Privacy, Terms, Accessibility. */
   contactEmail: 'hello@business-lab.example',
   repo: 'https://github.com/dixitrajvir20-blip/passion-project',
+  /** The browser bar's colour: the header's blue (--blue in tokens.css). The site has no dark theme. */
+  themeColor: '#0b4aa2',
   /**
    * Who owns what (docs/PROJECT_BRIEF.md §12). Lessons and other text are shared so teachers and
    * clubs can reuse them with credit; the code is open source. The name and logo are neither.

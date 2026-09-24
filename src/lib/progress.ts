@@ -148,6 +148,19 @@ export function nextReturn(progress: Progress, prefix = ''): Date | null {
 }
 
 /**
+ * The earliest day any of these checks comes back, or null when none is scheduled. A drill page
+ * mixes lesson ids and tool ids, so a prefix cannot say when its situations return.
+ */
+export function nextReturnAmong(progress: Progress, ids: readonly string[]): Date | null {
+  const review = progress.review ?? {};
+  const days = ids
+    .filter((id) => Object.hasOwn(review, id))
+    .map((id) => review[id].due.slice(0, 10))
+    .sort();
+  return days.length ? dayToDate(days[0]) : null;
+}
+
+/**
  * Union of two records: done lists merge, the newer quiz result per lesson wins, and for a
  * check on both devices the lower box wins (then the earlier date). Too much review is a minor
  * cost; silently skipping it is the failure spaced practice exists to prevent.

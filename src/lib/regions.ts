@@ -41,8 +41,8 @@ export interface BudgetRow {
 
 /** Opening numbers for each calculator. Examples to be replaced, never predictions. */
 export interface ToolDefaults {
-  budget: { income: string; incomeHint: string; rows: BudgetRow[] };
-  savings: { start: string; monthly: string; rate: string; years: string };
+  budget: { income: string; incomeHint: string; rows: BudgetRow[]; scenario: string };
+  savings: { start: string; monthly: string; rate: string; years: string; scenario: string };
   sideHustle: { units: string; price: string; cost: string; fee: string; hours: string; unitName: string; scenario: string };
   loan: { principal: string; rate: string; months: string; scenario: string };
 }
@@ -55,10 +55,10 @@ export interface Region {
   currency: string;
   /** The edition front's headline: what this edition is about, in its own terms. */
   headline: string;
-  /** Three topics shown as tag pills on the front page's edition card. */
+  /** Three topics, listed after the currency on the front page's edition row. */
   tags: string[];
   /** The official route to report a scam, shown on the edition front. */
-  report: { stamp: string; text: string; link?: { label: string; url: string } };
+  report: { text: string; link?: { label: string; url: string } };
   /** One sentence naming the gap this edition exists to close. */
   problem: string;
   intro: string;
@@ -80,7 +80,6 @@ export const REGIONS: Region[] = [
     headline: 'Your first salary: the payslip, the tax, the fund and the buffer.',
     tags: ['UPI', 'Scams', 'First job'],
     report: {
-      stamp: '1930',
       text: 'Lost money to a scam? Call 1930, the national cybercrime helpline, or report it online, as fast as you can. The sooner it is reported, the better the chance of stopping the money.',
       link: { label: 'cybercrime.gov.in', url: 'https://cybercrime.gov.in' },
     },
@@ -166,8 +165,9 @@ export const REGIONS: Region[] = [
           { name: 'Subscriptions', amount: '300', category: 'wants' },
           { name: 'Put aside', amount: '1600', category: 'savings' },
         ],
+        scenario: 'A first month of money with a job for every part of it.',
       },
-      savings: { start: '0', monthly: '500', rate: '6', years: '10' },
+      savings: { start: '0', monthly: '500', rate: '6', years: '10', scenario: 'A small amount, put aside every month.' },
       sideHustle: { units: '40', price: '250', cost: '110', fee: '5', hours: '30', unitName: 'orders', scenario: 'Reselling phone cases on Instagram and WhatsApp.' },
       loan: { principal: '50000', rate: '12', months: '24', scenario: 'A ₹50,000 loan for a second-hand scooter.' },
     },
@@ -182,7 +182,6 @@ export const REGIONS: Region[] = [
     headline: 'Read the payslip, check the payee, count the instalments.',
     tags: ['Payslips', 'Buy now, pay later', 'Selling abroad'],
     report: {
-      stamp: 'Act fast',
       text: 'Lost money to a scam? Call your bank straight away to try to stop the payment, then report it to the police in your country. The reporting route is national, so it differs from country to country.',
     },
     problem:
@@ -276,8 +275,9 @@ export const REGIONS: Region[] = [
           { name: 'Subscriptions', amount: '20', category: 'wants' },
           { name: 'Buffer', amount: '100', category: 'savings' },
         ],
+        scenario: 'A first month of money with a job for every part of it.',
       },
-      savings: { start: '0', monthly: '50', rate: '2.5', years: '10' },
+      savings: { start: '0', monthly: '50', rate: '2.5', years: '10', scenario: 'A small amount, put aside every month.' },
       sideHustle: { units: '30', price: '18', cost: '6', fee: '10', hours: '25', unitName: 'orders', scenario: 'A small online shop selling across the EU.' },
       loan: { principal: '2000', rate: '8', months: '24', scenario: 'A €2,000 loan for a laptop.' },
     },
@@ -292,7 +292,6 @@ export const REGIONS: Region[] = [
     headline: 'Student loans, credit and taxes arrive before anyone explains them.',
     tags: ['Credit scores', 'Student loans', 'Side hustles'],
     report: {
-      stamp: 'FTC',
       text: 'Lost money to a scam? Contact your bank or payment app straight away, then report it to the Federal Trade Commission.',
       link: { label: 'reportfraud.ftc.gov', url: 'https://reportfraud.ftc.gov' },
     },
@@ -386,8 +385,9 @@ export const REGIONS: Region[] = [
           { name: 'Subscriptions', amount: '30', category: 'wants' },
           { name: 'Savings', amount: '240', category: 'savings' },
         ],
+        scenario: 'A first month of money with a job for every part of it.',
       },
-      savings: { start: '0', monthly: '50', rate: '4', years: '10' },
+      savings: { start: '0', monthly: '50', rate: '4', years: '10', scenario: 'A small amount, put aside every month.' },
       sideHustle: { units: '25', price: '25', cost: '9', fee: '12', hours: '20', unitName: 'orders', scenario: 'A custom-print shop on a marketplace that takes a cut.' },
       loan: { principal: '10000', rate: '6.5', months: '120', scenario: 'A $10,000 student loan repaid over ten years.' },
     },

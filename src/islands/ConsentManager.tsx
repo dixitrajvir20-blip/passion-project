@@ -33,15 +33,31 @@ function publish(record: ConsentRecord | null, categories: CategoryDef[]) {
   document.dispatchEvent(new CustomEvent('lp:consent-changed', { detail: record }));
 }
 
+/**
+ * The first-visit banner is a block in the flow directly under the header (BaseLayout places the
+ * island there), so it never covers a focused control. It is rendered on the server whenever
+ * something optional exists, and shown from the first paint only where the inline check in
+ * BaseLayout's head set html[data-consent-ask] (no current choice stored, no Global Privacy
+ * Control), so it never pushes the page down after load. Once hydrated, the island decides: it
+ * keeps or drops the attribute and the banner. Its buttons stay disabled until then, because they
+ * need the script to work.
+ */
+const ASK = 'data-consent-ask';
+
 export default function ConsentManager({ categories, version }: Props) {
+  const active = activeCategories(categories);
   const [record, setRecord] = useState<ConsentRecord | null>(null);
-  const [banner, setBanner] = useState(false);
+  const [banner, setBanner] = useState(active.length > 0);
   const [draft, setDraft] = useState<Partial<Record<ConsentCategory, boolean>>>({});
   const [saved, setSaved] = useState('');
   const [hydrated, setHydrated] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
-  const active = activeCategories(categories);
+
+  const showBanner = (show: boolean) => {
+    document.documentElement.toggleAttribute(ASK, show);
+    setBanner(show);
+  };
 
   const storage = () => {
     try {
@@ -57,7 +73,7 @@ export default function ConsentManager({ categories, version }: Props) {
     setRecord(rec);
     setDraft({ ...rec.choices });
     publish(rec, categories);
-    setBanner(false);
+    showBanner(false);
     return rec;
   };
 
@@ -84,9 +100,10 @@ export default function ConsentManager({ categories, version }: Props) {
       if (gpcEnabled(navigator as unknown as { globalPrivacyControl?: boolean })) {
         commit(allChoices(categories, false), 'gpc');
       } else {
-        setBanner(true);
+        showBanner(true);
       }
     } else {
+      showBanner(false);
       publish(existing, categories);
     }
 
@@ -115,23 +132,25 @@ export default function ConsentManager({ categories, version }: Props) {
     <div data-consent data-hydrated={hydrated ? 'true' : undefined}>
       {banner && (
         <section class="consent-banner" role="region" aria-label="Privacy choices">
-          <h2>Your progress stays on this device</h2>
-          <p>
-            Business Lab sets no cookies and builds no profile. Your lesson progress is kept in this
-            browser so you can pick up where you left off. Two things need a yes from you: lessons
-            include short videos from YouTube, which load only when you tap play, and the dashboard
-            can record your learning time on this device. Nothing optional runs until you choose.
-          </p>
-          <div class="btn-row">
-            <button type="button" class="btn btn-secondary btn-sm" onClick={() => commit(allChoices(categories, false))}>
-              Reject all
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm" onClick={() => commit(allChoices(categories, true))}>
-              Accept all
-            </button>
-            <button type="button" class="btn btn-link btn-sm" onClick={(e) => openDialog(e.currentTarget as HTMLElement)}>
-              Choose
-            </button>
+          <div class="container consent-banner-inner">
+            <h2>Your progress stays on this device</h2>
+            <p>
+              Business Lab sets no cookies and builds no profile. Your lesson progress is kept in this
+              browser so you can pick up where you left off. Two things need a yes from you: lessons
+              include short videos from YouTube, which load only when you tap play, and the dashboard
+              can record your learning time on this device. Nothing optional runs until you choose.
+            </p>
+            <div class="btn-row">
+              <button type="button" class="btn btn-secondary btn-sm" disabled={!hydrated} onClick={() => commit(allChoices(categories, false))}>
+                Reject all
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" disabled={!hydrated} onClick={() => commit(allChoices(categories, true))}>
+                Accept all
+              </button>
+              <button type="button" class="btn btn-link btn-sm" disabled={!hydrated} onClick={(e) => openDialog(e.currentTarget as HTMLElement)}>
+                Choose
+              </button>
+            </div>
           </div>
         </section>
       )}
@@ -165,14 +184,19 @@ export default function ConsentManager({ categories, version }: Props) {
                   <p class="hint">{c.description}</p>
                 </div>
                 {c.active ? (
-                  <input
-                    id={`consent-${c.id}`}
-                    class="switch"
-                    type="checkbox"
-                    role="switch"
-                    checked={draft[c.id] === true}
-                    onChange={(e) => setDraft({ ...draft, [c.id]: (e.currentTarget as HTMLInputElement).checked })}
-                  />
+                  <span class="consent-switch">
+                    <input
+                      id={`consent-${c.id}`}
+                      class="switch"
+                      type="checkbox"
+                      role="switch"
+                      checked={draft[c.id] === true}
+                      onChange={(e) => setDraft({ ...draft, [c.id]: (e.currentTarget as HTMLInputElement).checked })}
+                    />
+                    {/* The state in words beside the switch, so it never rests on the knob's position or
+                        colour alone (forced colours included). The switch itself announces it. */}
+                    <span class="consent-onoff" aria-hidden="true">{draft[c.id] === true ? 'On' : 'Off'}</span>
+                  </span>
                 ) : (
                   <span class="consent-state" id={`consent-${c.id}`}>Not in use</span>
                 )}

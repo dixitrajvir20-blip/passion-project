@@ -17,3 +17,6 @@ Business_Lab_Hub_*
 
 # Superdesign working state (design drafts live on its canvas)
 .superdesign/
+# Agent worktrees: whole copies of the repo on other branches (vitest.config.ts skips them too).
+.claude/worktrees/
+screenshots-v5/

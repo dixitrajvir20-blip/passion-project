@@ -6,27 +6,31 @@ import Hi from '../../../../components/lesson/Hi.astro';
 import { REGIONS } from '../../../../lib/regions';
 import { inTrack, lessonsFor, slugOf, type Lesson } from '../../../../lib/lessons';
 
+type LessonProps = { lesson: Lesson; next?: Lesson; position: number; count: number };
+
 export async function getStaticPaths() {
-  const paths: { params: { region: string; track: string; slug: string }; props: { lesson: Lesson; next?: Lesson } }[] = [];
+  const paths: { params: { region: string; track: string; slug: string }; props: LessonProps }[] = [];
   for (const region of REGIONS) {
     const lessons = await lessonsFor(region.code);
     for (const lesson of lessons) {
       const siblings = inTrack(lessons, lesson.data.track);
+      const index = siblings.indexOf(lesson);
       paths.push({
         params: { region: region.code, track: lesson.data.track, slug: slugOf(lesson) },
-        props: { lesson, next: siblings[siblings.indexOf(lesson) + 1] },
+        // The crumb says "Lesson 2 of 4": the place among the track's published lessons, in order.
+        props: { lesson, next: siblings[index + 1], position: index + 1, count: siblings.length },
       });
     }
   }
   return paths;
 }
 
-const { lesson, next } = Astro.props;
+const { lesson, next, position, count } = Astro.props;
 const { Content } = await render(lesson);
 ---
 
 {/* MDX bodies are prose plus <Term> and <Hi> only. Interactive parts are mounted by the layout
     from frontmatter, so every lesson has the same shape and the no-JS test covers all of them. */}
-<LessonLayout lesson={lesson} next={next}>
+<LessonLayout lesson={lesson} next={next} position={position} count={count}>
   <Content components={{ Term, Hi }} />
 </LessonLayout>

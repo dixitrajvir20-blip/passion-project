@@ -8,7 +8,9 @@ build), `LEARNING_DESIGN.md` (how lessons teach), `REGIONAL_TEACHING.md` (what's
 edition), `SECURITY.md`, `LEGAL_AND_PRIVACY.md`, `AUTH_AND_ACCOUNTS.md`, and `BOSS_PLAYBOOK.md`
 (the phased build plan and gates). What changed in v2: the site is now Astro with three live
 editions (India/Europe/US), the brand is blue/gold/black, and the accounts and advanced-visual
-work below is specified rather than hypothetical.
+work below is specified rather than hypothetical. Since 23 September 2026 (design v5.1, brand guide
+v4) the look is white pages with one blue header bar, navy ink and one typeface: gold, the dark
+theme and the decorative layer are retired.
 
 ## 1. Vision
 Business Lab is a free, clean, fast website where anyone aged 15-21, anywhere in the world, can learn how money and business work, then practice with interactive tools. It's a hub: short articles on ideas that affect this age group, plus calculators, quizzes, and builders you can use on a phone.
@@ -35,7 +37,7 @@ Business Lab is a free, clean, fast website where anyone aged 15-21, anywhere in
 6. **Do, don't just read.** Every article ends with a tool, a quiz, or a small challenge.
 7. **Honest.** Sources on every article, clear "education, not advice" limits.
 8. **Accessible to everyone.** WCAG 2.2 AA minimum.
-9. **Human-designed look, quietly advanced.** See BRAND_GUIDE.md and DESIGN.md. Modern web-platform features (View Transitions, scroll-reveal, frosted bars, container/anchor queries) are used only as progressive enhancement behind `@supports`/`prefers-reduced-motion`, so the page is complete with them off. The test: does it still look finished with the feature disabled?
+9. **Human-designed look, quietly advanced.** See BRAND_GUIDE.md and DESIGN.md. No page transitions and no scroll effects; modern CSS (`:has()`, `clamp()`, `<details>`) only where the page still works without it, and anything newer behind `@supports`. The site is light only: white at every OS setting, with forced colours and `prefers-contrast: more` still honoured. The test: does it still look finished with the feature disabled?
 10. **Built to last cheaply.** Static site, free hosting tier, no servers to maintain in v1.
 
 ## 4. Scope
@@ -104,7 +106,7 @@ Main nav (max 5): Learn · Tools · Glossary · About · Search. Language and cu
 7. Sources (2+ reputable, linked), "education not advice" line
 8. Next lesson / previous lesson
 
-**Tool page.** Tool title, one sentence on what it answers, inputs on top (or left on desktop), results update live, a plain-language "What this means" sentence under the results, "How it works" (formula, collapsible), and "Learn more" links. Includes a reset button. Share = copy link with inputs in the URL query string (no personal data).
+**Tool page.** Tool title, one sentence on what it answers, inputs on top (or left on desktop), results update live, a plain-language "What this means" sentence under the results, "How it works" (formula, collapsible), and "Learn more" links. Includes a reset button. Share = copy link with inputs after the # (never the query string), so the figures are never sent to a server; links made before September 2026 used the query string and still open.
 
 **Glossary.** A-Z list, search filter, each term with a 1-2 sentence definition + an example. Terms in articles get dotted underlines; tapping one opens a small popover (keyboard accessible).
 
@@ -123,6 +125,15 @@ All math lives in `src/lib/*.ts` as pure functions with unit tests. All money us
 | **Side-Hustle Profit** | Units sold/month, price, cost per unit, platform fees %, hours/month | Monthly profit, profit per hour | Helps compare "is this worth my time?" |
 | **Loan / EMI** | Principal, annual rate, months | EMI, total interest, total paid, amortization table | EMI = P·r·(1+r)^n / ((1+r)^n − 1), r = monthly rate. Handle rate = 0. |
 
+**Beyond v1 (September 2026, built).** The tool set is now fourteen, listed once in `src/lib/tools.ts`
+and grouped by life moment (your first pay, a buffer, borrowing, moving out, working for yourself,
+before you send): take-home pay, buffer target, a loan's yearly rate, card minimum, pay-later
+against payday, rent share and side-income tax as calculators, and "spot the fake" and job-offer
+drills of six situations each, built from each edition's lessons plus a bank of made-up screens.
+Not every tool is in every edition: India has 12, Europe 11 and the United States 11. Each tool's
+spec is in `docs/research/interactive-tools-revised.json`; its edition rules (with sources and
+dates) and maths live in `src/lib/tools/<slug>.ts`, not in `finance.ts`.
+
 **Quiz component.** Multiple choice (and true/false). One question at a time, instant feedback with a 1-2 sentence explanation, score at the end, retry. Stores "passed" (≥80%) in localStorage under `lp:progress` (see `src/lib/progress.ts`; the same record powers the cross-device sync code). Retrieval practice (quizzing) is a well-studied way to strengthen long-term learning, so every lesson gets one.
 
 **Glossary popover.** `<Term id="compound-interest">` renders a button with `aria-expanded`. It opens a popover, closes on Esc or tap outside, and returns focus.
@@ -135,8 +146,9 @@ All math lives in `src/lib/*.ts` as pure functions with unit tests. All money us
 **Where the project is now (Phase 1):** an Astro static build with Preact islands, deployed to
 GitHub Pages under `/passion-project`, with three editions (`/in`, `/eu`, `/us`) rendered from
 `src/lib/regions.ts`, the break-even calculator, the full legal layer, a consent manager, an
-account preview, and a strict security posture. The blue/gold/black brand from `BRAND_GUIDE.md`
-is applied. See `CLAUDE.md` "Current state" for the exact list and `BOSS_PLAYBOOK.md` for what's next.
+account preview, and a strict security posture. The brand from `BRAND_GUIDE.md` v4 is applied:
+white pages, one blue header bar, navy ink, Atkinson Hyperlegible Next only (design v5.1,
+23 September 2026). See `CLAUDE.md` "Current state" for the exact list and `BOSS_PLAYBOOK.md` for what's next.
 
 **Base-path gotcha (still true, still bites):** for a project site at
 `https://<user>.github.io/passion-project/`, `astro.config.mjs` sets `site` and
@@ -147,7 +159,7 @@ regress this.
 - Astro static site, `output: "static"`. MDX content collections for `articles`, `tracks`, `glossary`, `tools` (metadata).
 - Preact islands for tools, quiz, glossary popovers, and the locale/currency picker. Default `client:visible`.
 - CSS: `tokens.css` (DESIGN.md), `base.css`, component-scoped styles. No CSS framework.
-- Fonts: self-hosted, subset, `font-display: swap`, at most 2 families (+ Devanagari in v2).
+- Fonts: self-hosted, subset, `font-display: swap`, at most 2 families (+ Devanagari in v2); one family (Atkinson Hyperlegible Next) since design v5.1.
 - Images: Astro `<Image>` with AVIF/WebP, explicit width/height, lazy below the fold.
 - Search: Pagefind index at build time.
 - i18n: Astro i18n routing (`defaultLocale: "en"`, `locales: ["en","hi"]`, `prefixDefaultLocale: false`, fallback hi→en). UI strings in `src/i18n/*.json`.

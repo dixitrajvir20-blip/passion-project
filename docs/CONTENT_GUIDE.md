@@ -72,12 +72,58 @@ agent (their notes: `docs/research/lesson-v2-editor-notes.md`; the video picks:
    folded away. No check may turn on a figure that only the details fold explains.
 8. **Check your understanding.** Three `quiz` checks, one per `objectives` line ("After this you can…").
 
+The "In this lesson" list at the top names the template steps a lesson has, using its h2 words
+exactly (Check your understanding, Decide before you look), so a lesson without a document or a
+video simply has fewer parts (design v5.1, 23 September 2026).
+
 The caps the tests enforce: 400 words of prose outside the fold (body, situation, contexts, key
 idea, prompts, captions, objectives, takeaways); 1,250 reader-facing words in all outside the details;
 hints and the key idea of 25 words or fewer;
 a body of at most two sections and 200 words; captions of twenty words or fewer; every acronym a
 reader meets is one of the lesson's glossary terms. The v1 fields (`prediction`, "Key points")
 stay in the schema until the last lesson migrates, then go.
+
+## Tools, moreTools and drill banks
+
+The registry of tools is `src/lib/tools.ts` (title, the question each answers, its group and
+minutes); a lesson names tools by slug, and the tests fail a slug its edition does not have.
+It holds fourteen tools: India has 12, Europe 11 and the United States 11.
+
+- **`tool`** is the calculator a reader uses with their own numbers after the lesson.
+- **`moreTools`** lists at most two more. Both appear as named links in the lesson's explorable
+  section: "Try your own numbers: {the short question}" for a calculator, "Practise on more
+  situations in “{title}”" for a drill. The tool the explorer already opens is not repeated, and a
+  calculator still marked `ready: false` in the registry is not linked until it is built.
+- **Explorer hand-offs are fixed by kind**, not chosen per lesson: margin opens break-even, split
+  opens the budget planner, loan opens loans, growth opens savings.
+- **`ordinary: true`** marks a drill screen in a lesson that is exactly what it seems. It is never
+  shown to the reader; it lets the tests count the mix.
+
+**Drill banks.** A drill tool's own situations live in `src/content/drills/<edition>/<tool>.json`
+(schema `drillBankSchema` in `src/content/schema.ts`). The tool page shows the screens of the
+bank's `fromLesson` first, then the bank's own.
+
+- `fromLesson` is a drill lesson of the same edition that links to this tool.
+- A situation's `id` is permanent once shipped: it is the reader's review key
+  (`<edition>/tools/<tool>#<id>`), so renaming it orphans their review. Lower case, never starting
+  with `q` or `d` plus a digit, no `#` or `/`.
+- Five to eight situations in all (the lesson's plus the bank's), with between 2 and n − 2 of them
+  ordinary, so refusing everything is not the skill. The intro's counts must match the set
+  ("Six messages. Two are ordinary …"); rewrite the intro whenever the set grows.
+- Every address on a screen ends in `.example`. No real bank, app, platform, employer or regulator
+  appears on a screen. Search every invented name for a real business before shipping, list the
+  names in `inventedNames` and the day in `namesCheckedOn`; the denylist test catches only the
+  obvious, so the content-reviewer still reads every screen.
+- Reveals explain the pattern and never blame the reader.
+- Every acronym on a screen, question or reveal is one of the bank's `glossary` terms.
+- `sources` each carry an `id`, and a situation's `sourceIds` name the ones behind it.
+  `reportTo` defaults to the lesson's; `scopeNote` says what the set covers (e.g. the euro area).
+
+**Tool rules.** Every rate, threshold or method a calculator uses is a `Rule` in that tool's own
+module (`src/lib/tools/<slug>.ts`), keyed on the page's edition, never on the currency picker,
+with a label, an https source and `asOf`, the day the source was last opened (`reviewBy` when the
+figure is known to change). The page prints them in its RulesLine. `npm run rules` warns at
+eleven months and fails at twelve.
 
 ## Voice
 - Second person ("you"), short sentences, active voice, grade ~8 reading level.

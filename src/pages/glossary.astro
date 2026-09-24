@@ -70,26 +70,27 @@ const terms = (await getCollection('glossary')).sort((a, b) => a.data.term.local
 
 <style>
   .lede { margin-bottom: var(--space-6); }
-  .filter { max-width: 420px; margin-bottom: var(--space-7); }
-  /* One reading column of hairline rows: a list of definitions, not a wall of cards. */
-  .terms { margin: 0; border-top: 1px solid var(--line); }
-  .entry { padding: var(--space-5) 0; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + var(--space-5)); }
+  .filter { margin-bottom: var(--space-6); }
+  /* One reading column of ruled entries: a list of definitions, not a wall of cards. */
+  .terms { margin: 0; border-top: var(--rule-w) solid var(--rule); }
+  .entry { padding: var(--space-5) 0; border-bottom: var(--rule-w) solid var(--rule); }
+  /* The entry a lesson or tool linked to: the tint behind it and a 4px blue bar at its start, pulled
+     into the gutter so the text barely moves. base.css gives :target its scroll margin. */
   .entry:target {
-    background: color-mix(in srgb, var(--gold) 20%, var(--bg));
-    padding-inline: var(--space-4);
     margin-inline: calc(var(--space-4) * -1);
-    border-radius: var(--radius-s);
+    padding-inline: var(--space-4);
+    border-inline-start: var(--bar-w) solid var(--blue);
+    background: var(--tint);
   }
   dt {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--text-h3);
-    letter-spacing: var(--tracking-heading);
-    color: var(--ink);
     margin-bottom: var(--space-2);
+    color: var(--ink);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: var(--leading-heading);
   }
   dd { margin: 0; }
-  dd p { margin-bottom: var(--space-2); font-size: var(--text-md); }
-  .example { color: var(--muted); font-size: var(--text-sm); margin-bottom: 0; }
+  dd p { margin-bottom: var(--space-2); }
+  .example { margin-bottom: 0; color: var(--muted); font-size: var(--text-sm); }
   .note { margin-top: var(--space-7); }
 </style>

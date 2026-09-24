@@ -1,13 +1,27 @@
 ---
 /**
- * The one script a lesson needs: score each check on its first reveal, schedule it for review,
- * say when the questions come back, upgrade glossary links to popovers, and run "Mark as read".
- * It looks for [data-lesson-id], so the "spot the fake" tool reuses it with the lesson's own ids
- * and a situation practised there is scheduled exactly as it would be in the lesson.
+ * The one script a lesson needs: open "In this lesson" in the wide rail, score each check on its
+ * first reveal, schedule it for review, say when the questions come back, upgrade glossary links
+ * to popovers, and run "Mark as read". It reads [data-lesson-id] on lesson pages and on drill tool
+ * pages: a situation practised on a tool page is scheduled under its own review id (the lesson's
+ * '#d1' for a lesson's screen), and after a reveal the drill's return line says when its
+ * situations come back.
  */
 ---
 <script>
-  import { loadProgress, markDone, nextReturn, recordQuiz, saveProgress, schedule } from '../../lib/progress';
+  import { loadProgress, markDone, nextReturn, nextReturnAmong, recordQuiz, saveProgress, schedule } from '../../lib/progress';
+
+  // "In this lesson": open while the left rail shows (1024px and wider), one closed line below it.
+  // Without a script it stays a closed fold at every width, and one tap opens it.
+  const stepsFold = document.querySelector<HTMLDetailsElement>('[data-steps-fold]');
+  if (stepsFold) {
+    const wide = window.matchMedia('(min-width: 1024px)');
+    const sync = () => {
+      stepsFold.open = wide.matches;
+    };
+    sync();
+    wide.addEventListener('change', sync);
+  }
 
   const root = document.querySelector<HTMLElement>('[data-lesson-id]');
   if (root) {
@@ -40,9 +54,14 @@
     // Checks: score the first reveal of each, schedule it for review, and once every quick-check
     // question has been looked at, record the result and say when they come back.
     const checks = Array.from(root.querySelectorAll<HTMLElement>('.poll[data-check-id]'));
-    const quiz = checks.filter((poll) => poll.dataset.checkId!.includes('#q'));
+    // A quiz id ends '#q<n>'. A drill bank's id may start with other letters, never 'q<digit>'.
+    const isQuiz = (id: string) => /#q\d+$/.test(id);
+    const quiz = checks.filter((poll) => isQuiz(poll.dataset.checkId!));
+    const drillIds = checks.map((poll) => poll.dataset.checkId!).filter((id) => !isQuiz(id));
     const seen = new Map<string, boolean>();
     const returnLine = root.querySelector<HTMLElement>('[data-return-line]');
+    const drillReturn = root.querySelector<HTMLElement>('[data-drill-return]');
+    const dayFormat = new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long' });
 
     for (const poll of checks) {
       const details = poll.querySelector('details');
@@ -53,25 +72,43 @@
         const picked = poll.querySelector<HTMLInputElement>('input:checked');
         const correct = picked !== null && picked.value === poll.dataset.answer;
         seen.set(id, correct);
-        if (status) {
-          status.textContent =
-            picked === null ? 'No pick this time, so this one comes back tomorrow.' : correct ? 'Correct.' : 'Not quite.';
-        }
 
         let progress = schedule(loadProgress(storage), id, correct);
         const quizDone = quiz.length > 0 && quiz.every((q) => seen.has(q.dataset.checkId!));
-        if (quizDone && id.includes('#q')) {
+        if (quizDone && isQuiz(id)) {
           const right = quiz.filter((q) => seen.get(q.dataset.checkId!)).length;
           progress = recordQuiz(progress, lessonId, right, quiz.length);
           const back = nextReturn(progress, `${lessonId}#`);
           if (returnLine && back) {
-            const when = new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long' }).format(back);
+            const when = dayFormat.format(back);
             // A date and a full stop. Never "due", never a count of what is owed.
             returnLine.textContent = `${right} of ${quiz.length}. These questions come back from ${when}. Nothing to do until then.`;
             returnLine.hidden = false;
           }
         }
-        saveProgress(storage, progress);
+        const saved = saveProgress(storage, progress);
+        // Only when this device actually kept the schedule: with storage blocked nothing comes back,
+        // so a reveal with no pick promises no return.
+        const kept = saved && storage !== undefined;
+        if (status) {
+          status.textContent =
+            picked === null
+              ? kept
+                ? 'No pick this time, so this one comes back tomorrow.'
+                : 'No pick this time.'
+              : correct
+                ? 'Correct.'
+                : 'Not quite.';
+          // Words carry the result; the colour only repeats it ("Correct." in the success green).
+          status.dataset.result = picked === null ? 'none' : correct ? 'right' : 'wrong';
+        }
+        if (!isQuiz(id) && kept && drillReturn) {
+          const back = nextReturnAmong(progress, drillIds);
+          if (back) {
+            drillReturn.textContent = `These situations come back from ${dayFormat.format(back)}. Nothing to do until then.`;
+            drillReturn.hidden = false;
+          }
+        }
       });
     }
 

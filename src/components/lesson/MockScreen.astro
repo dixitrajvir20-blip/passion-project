@@ -1,14 +1,15 @@
 ---
 /**
- * A made-up phone screen, drawn in HTML and tokens so it is ~1 KB, legible at 200% zoom, right in
- * dark mode and readable by a screen reader. Never a screenshot, and never a real bank, app,
+ * A made-up phone screen, drawn in HTML and tokens so it is ~1 KB, legible at 200% zoom and
+ * readable by a screen reader: a white .box with square corners, not a drawn phone. Never a
+ * screenshot, and never a real bank, app,
  * police or regulator name or mark: an accurate-looking fake of a real brand is impersonation,
- * and it teaches that the real one looks like this.
+ * and it teaches that the real one looks like this. `kind` sets only the caption.
  */
 import { money, localeByCode } from '../../lib/format';
 
 interface Props {
-  kind: 'request' | 'message' | 'call' | 'chat' | 'qr';
+  kind: 'request' | 'message' | 'call' | 'chat' | 'qr' | 'transfer' | 'email';
   from: string;
   lines: string[];
   amount?: number;
@@ -20,17 +21,19 @@ const { kind, from, lines, amount, action, localeCode } = Astro.props;
 const label = {
   request: 'Payment request',
   message: 'Text message',
-  call: 'Incoming video call',
+  call: 'Incoming call',
   chat: 'Chat',
   qr: 'QR code',
+  transfer: 'Confirm transfer',
+  email: 'Email',
 }[kind];
 ---
 
-<figure class="mock-screen">
+<figure class="mock-screen box">
   <figcaption class="ms-kind">{label}</figcaption>
   <div class="ms-body">
     <p class="ms-from">{from}</p>
-    {amount !== undefined && <p class="ms-amount numbers">{money(amount, localeByCode(localeCode))}</p>}
+    {amount !== undefined && <p class="ms-amount numbers">{money(amount, localeByCode(localeCode), Number.isInteger(amount) ? 0 : 2)}</p>}
     {kind === 'qr' && (
       <svg class="ms-qr" viewBox="0 0 7 7" role="img" aria-label="A QR code" shape-rendering="crispEdges">
         <path fill="currentColor" d="M0 0h3v3H0zM4 0h3v3H4zM0 4h3v3H0zM1 1v1h1V1zM5 1v1h1V1zM1 5v1h1V5zM4 4h1v1H4zM6 4h1v1H6zM5 5h1v1H5zM4 6h1v1H4zM6 6h1v1H6z" />

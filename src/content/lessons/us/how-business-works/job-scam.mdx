@@ -92,7 +92,7 @@ explorable:
   scenarios:
     - screen:
         kind: chat
-        from: "Support, taskpay.example"
+        from: "Support, a task app you joined"
         amount: 50
         lines:
           - "12 tasks done. Balance shown: $184."
@@ -109,14 +109,15 @@ explorable:
         answer: 1
     - screen:
         kind: message
-        from: "Careers page, brightlinegrocers.example"
+        from: "The grocery store's own careers page"
         lines:
           - "Stock assistant, $16 an hour."
           - "Apply online. Interview in store."
           - "Forms once you start: W-4 and Form I-9."
         action: "Open the application form"
+      ordinary: true
       check:
-        q: "You found this on the store's own website. What do you do?"
+        q: "You looked it up yourself. What do you do?"
         options:
           - text: "Refuse, since any advert online is a risk"
             why: "It asks for no money and no private details before an offer."
@@ -125,7 +126,7 @@ explorable:
         answer: 1
     - screen:
         kind: chat
-        from: "Recruiter, parcelroute.example"
+        from: "Recruiter, parcel forwarding job"
         lines:
           - "Receive parcels at home, remove the receipts, repost them."
           - "$25 a parcel, paid monthly."
@@ -190,6 +191,7 @@ transfer:
   - "When a chat asks for your Social Security number before a written offer."
 
 glossary: [ftc, task-scam, reshipping, w-4, form-i-9, identity-theft, available-balance, fake-check]
+tool: job-offer-check
 
 reportTo:
   url: "https://reportfraud.ftc.gov"

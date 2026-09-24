@@ -1,62 +1,124 @@
-/* Inline explorables: one or two things to change, a sentence that answers, then the full tool. */
+/* Inline explorables ("Change one thing"): one or two things to change, a sentence that answers,
+   then the full tool. v5.1: a box on the one pale surface, keys with a real edge, the figure as the
+   loudest line. Tokens only; the island markup is unchanged. */
 
-.explorer { background: var(--bg-2); border-radius: var(--radius-l); padding: var(--space-5); margin: var(--space-5) 0; }
-@media (min-width: 640px) { .explorer { padding: var(--space-6); } }
-.explorer-label { margin: 0 0 var(--space-2); color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
-/* A row of keys: a tinted track, the chosen one white and bold. Square-cornered like the buttons. */
-.explorer-presets {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-  padding: var(--space-1);
-  margin-bottom: var(--space-5);
-  background: var(--bg-3);
-  border-radius: var(--radius-s);
+/* The same box as base.css's .box-surface. */
+.explorer {
+  margin: var(--space-5) 0;
+  padding: var(--space-5);
+  border: var(--rule-w) solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
-/* A key says what it is: the figure, then its unit on a second line ("₹1,500 / per student",
-   "36 months / (3 years)"), so five keys still share a phone screen and none is a bare number. */
+@media (max-width: 399px) { .explorer { padding: var(--space-4); } }
+.explorer-label { margin: 0 0 var(--space-2); color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
+
+/* A row of keys that wraps. Each key says what it is: the figure, then its unit on a second line
+   ("₹1,500 / per student", "36 months / (3 years)"), so no key is a bare number. */
+.explorer-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
 .preset {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  min-width: 64px;
+  min-height: var(--target);
+  min-width: var(--space-8);
   padding: var(--space-2) var(--space-3);
-  border: 0;
-  border-radius: var(--radius-xs);
-  background: transparent;
-  color: var(--ink-2);
+  border: var(--rule-w) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
   font-family: var(--font-body);
-  font-size: var(--text-ui);
+  font-size: var(--text-sm);
+  font-weight: 400;
   font-variant-numeric: tabular-nums;
-  line-height: var(--leading-snug);
+  line-height: var(--leading-ui);
   text-align: center;
   cursor: pointer;
 }
-.preset-unit { display: block; color: var(--muted); font-size: var(--text-sm); font-weight: 400; }
-.preset:hover { color: var(--ink); background: var(--bg-2); }
-/* Fill and weight carry the state, not colour alone. */
-/* The chosen key is white and bold with a navy ring; the page's primary button stays the only navy fill. */
-.preset[aria-pressed='true'] { background: var(--bg); color: var(--ink); font-weight: 700; outline: 2px solid var(--ink); outline-offset: -2px; }
+.preset-unit { display: block; color: var(--muted); font-size: var(--text-xs); font-weight: 400; }
+.preset:hover { border-color: var(--ink); }
+/* The chosen key: a 2px ink edge, the tint and bold, so the state is never colour alone. The padding
+   gives back the extra pixel of edge, so the key does not grow when pressed. */
+.preset[aria-pressed='true'] {
+  padding: calc(var(--space-2) - var(--rule-w)) calc(var(--space-3) - var(--rule-w));
+  border: var(--control-w) solid var(--ink);
+  background: var(--tint);
+  font-weight: 700;
+}
 .preset[aria-pressed='true'] .preset-unit { color: var(--ink); }
 
-.explorer-figure { margin: 0; font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; line-height: 1; letter-spacing: var(--tracking-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+/* The answer. A figure wider than the box breaks only as a last resort, never pushing the page. */
+.explorer-figure {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-h1);
+  font-weight: 700;
+  line-height: var(--leading-h1);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
 .explorer-figure.is-loss { color: var(--error); }
 .explorer-says { margin: var(--space-3) 0 0; color: var(--ink-2); font-size: var(--text-md); }
-/* The answer is the one bold sentence in the explorer; the change since the last tap sits under it, quieter. */
+/* The one bold sentence in the explorer; the change since the last tap sits under it, quieter. */
 .explorer-result { color: var(--ink); font-weight: 700; }
 .explorer-change { margin: var(--space-2) 0 0; color: var(--muted); font-size: var(--text-sm); font-weight: 400; }
-.explorer-prompts { margin: var(--space-5) 0 0; padding: var(--space-4) 0 0 var(--space-5); border-top: 1px solid var(--line); color: var(--ink-2); font-size: var(--text-ui); }
+.explorer-prompts {
+  margin: var(--space-5) 0 0;
+  padding: var(--space-4) 0 0 var(--space-5);
+  border-top: var(--rule-w) solid var(--rule);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+/* The hand-off to the full calculator is base.css's .btn-link: ink 700, always underlined, 44px. */
 .explorer-actions { margin: var(--space-4) 0 0; }
 
-.split-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.split-row { display: grid; grid-template-columns: 1fr auto; gap: var(--space-1) var(--space-3); align-items: center; margin: 0; padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
+/* The budget split: one ruled row per line, the amount in bold figures, a stepper under each. */
+.split-rows { margin: 0; padding: 0; list-style: none; border-top: var(--rule-w) solid var(--rule); }
+.split-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-1) var(--space-3);
+  align-items: center;
+  margin: 0;
+  padding: var(--space-3) 0;
+  border-bottom: var(--rule-w) solid var(--rule);
+}
 .split-name { color: var(--ink); font-weight: 700; }
 .split-hint { grid-column: 1 / -1; color: var(--muted); font-size: var(--text-sm); }
-.split-amount { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; text-align: right; }
+.split-amount {
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
 .split-step { display: inline-flex; align-items: center; gap: var(--space-2); grid-column: 1 / -1; }
 /* The step is on the button ("+5%"), so the reader knows what one tap does before tapping. */
-.split-step button { font: inherit; font-weight: 700; min-width: 44px; min-height: 44px; padding: 0 var(--space-3); border: 1px solid var(--line-strong); border-radius: var(--radius-s); background: var(--bg); color: var(--ink); font-size: var(--text-md); font-weight: 700; font-variant-numeric: tabular-nums; cursor: pointer; }
-.split-step button:hover { background: var(--bg-3); }
-.split-step output { min-width: 4ch; text-align: center; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.split-step button {
+  min-width: var(--target);
+  min-height: var(--target);
+  padding: 0 var(--space-3);
+  border: var(--rule-w) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--text-md);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.split-step button:hover { border-color: var(--ink); }
+.split-step output { min-width: 4ch; color: var(--ink-2); font-variant-numeric: tabular-nums; text-align: center; }
+
+@media print {
+  .explorer { background: none; border-color: var(--print-line); }
+}

@@ -53,7 +53,7 @@ export default function LoanEmi({ defaults, localeCode }: Props) {
           <Result label="Interest over the whole loan" value={usable ? money(result.totalInterest, locale) : '—'} />
           <Result main label="Total you pay back" value={usable ? money(result.totalPaid, locale) : '—'} />
 
-          <p class="plain">
+          <p class="plain" role="status">
             {usable
               ? result.totalInterest > 0
                 ? `You borrow ${money(principal, locale)} and pay back ${money(result.totalPaid, locale)}. The ${money(result.totalInterest, locale)} difference is the price of borrowing: ${percent(result.totalInterest / principal, locale, 0)} on top of what you borrowed.`
@@ -67,7 +67,9 @@ export default function LoanEmi({ defaults, localeCode }: Props) {
         <details class="how">
           <summary>Year by year</summary>
           <p>Early payments are mostly interest, because that is when you owe the most. Later ones mostly pay off the loan itself.</p>
-          <div class="table-wrap">
+          {/* Figures never break, so a large loan's table can scroll sideways in its wrap: the wrap is
+              a named, focusable region so a keyboard can scroll it too (WCAG 2.1.1). */}
+          <div class="table-wrap" role="region" aria-label="Year by year" tabIndex={0}>
             <table class="table numbers">
               <thead>
                 <tr>
@@ -94,7 +96,7 @@ export default function LoanEmi({ defaults, localeCode }: Props) {
 
       <HowItWorks>
         <p>Lenders work out one fixed monthly payment that clears the loan and its interest by the last month:</p>
-        <p class="formula numbers">payment = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1)</p>
+        <p class="formula numbers">payment = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1)</p>
         <p>
           P is the amount borrowed, r is the yearly rate divided by 12, and n is the number of months.
           A longer loan makes each payment smaller and the total larger, because interest is charged

@@ -9,6 +9,7 @@ import {
   markDone,
   merge,
   nextReturn,
+  nextReturnAmong,
   readyItems,
   recordQuiz,
   schedule,
@@ -147,5 +148,25 @@ describe('progress', () => {
     const old = { v: 1 as const, done: [], quiz: {}, updatedAt: '2026-09-01T10:00:00Z', review: { 'a#q1': { box: 1 as const, due: '2026-09-02T10:00:00.000Z' } } };
     expect(readyItems(old, new Date(2026, 8, 3))).toEqual(['a#q1']);
     expect(dayString(nextReturn(old)!)).toBe('2026-09-02');
+  });
+});
+
+describe('nextReturnAmong', () => {
+  it('returns the earliest day among the given checks only', () => {
+    const now = new Date(2026, 8, 22);
+    let p = schedule(emptyProgress(now), 'in/protect-your-money/upi-fraud-and-the-clock#d1', false, now); // box 1, back tomorrow
+    p = schedule(p, 'in/tools/spot-the-fake#kyc-link', true, now); // box 1 too
+    p = schedule(p, 'in/tools/spot-the-fake#kyc-link', true, now); // box 2, three days
+    p = schedule(p, 'us/other#q1', false, new Date(2026, 8, 1)); // earlier, but not asked about
+    const back = nextReturnAmong(p, ['in/tools/spot-the-fake#kyc-link', 'in/protect-your-money/upi-fraud-and-the-clock#d1']);
+    expect(dayString(back!)).toBe('2026-09-23');
+    expect(dayString(nextReturnAmong(p, ['in/tools/spot-the-fake#kyc-link'])!)).toBe('2026-09-25');
+  });
+
+  it('is null for an empty list or ids never scheduled', () => {
+    const p = schedule(emptyProgress(), 'a#d1', true);
+    expect(nextReturnAmong(p, [])).toBeNull();
+    expect(nextReturnAmong(p, ['b#d1'])).toBeNull();
+    expect(nextReturnAmong(emptyProgress(), ['a#d1'])).toBeNull();
   });
 });

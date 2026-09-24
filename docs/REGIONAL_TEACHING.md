@@ -85,7 +85,7 @@ personal-finance course (NGPF, Sep 2026), so many readers have *some* schooling 
 
 **Money situations:** student loans (major 2026 changes under OBBBA — Grad PLUS closed, new caps
 and Repayment Assistance Plan, from 1 Jul 2026); the credit score nobody teaches; BNPL stacked
-across apps (FICO now scores it); self-employment/gig tax arriving late (15.3% SE tax over $400).
+across apps (FICO now scores it); self-employment/gig tax arriving late (15.3% SE tax once net earnings, 92.35% of profit, reach $400).
 
 **Rails:** Venmo/Zelle/Cash App (and the scams that ride them — FTC: payment-app scam median loss
 $380); Roth IRA as a "first-job superpower".

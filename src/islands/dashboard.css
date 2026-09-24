@@ -1,74 +1,152 @@
-/* The dashboard: a sidebar of links and a grid of cards, all read from this device. */
+/* The dashboard (v5.1): plain text links down the side, four figures in boxes, the week chart, the
+   ring and the clock in boxes, the next lesson and the finished ones as ruled rows. Everything is
+   read from this device. base.css provides the type, .box, .btn, .btn-secondary, .index-list rows,
+   .table and the fold summary; this file adds only the layout and the two charts. */
 
 .dash { display: grid; gap: var(--space-6); }
-@media (min-width: 900px) { .dash { grid-template-columns: 220px minmax(0, 1fr); gap: var(--space-7); align-items: start; } }
-
-.dash-side ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
-@media (min-width: 900px) { .dash-side { position: sticky; top: calc(var(--header-h) + var(--space-4)); } .dash-side ul { flex-direction: column; } }
-.dash-side li { margin: 0; }
-.dash-side a, .dash-side button {
-  display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-pill);
-  color: var(--ink); background: none; border: 1.5px solid transparent; font: inherit; font-size: var(--text-ui); font-weight: 700; text-decoration: none; cursor: pointer;
+/* From 900px the side nav sits left in a 208px column (--rail less 48px). */
+@media (min-width: 900px) {
+  .dash { grid-template-columns: calc(var(--rail) - var(--space-7)) minmax(0, 1fr); gap: var(--space-7); align-items: start; }
 }
-@media (min-width: 900px) { .dash-side a, .dash-side button { width: 100%; justify-content: flex-start; } }
-.dash-side a:hover, .dash-side button:hover { background: var(--field-pale); }
-.dash-side a[aria-current='page'] { background: var(--gold-pale); color: var(--on-gold); }
-.dash-side-head { margin: var(--space-5) 0 var(--space-2); font-size: var(--text-xs); font-weight: 700; color: var(--muted); text-transform: none; }
 
+/* Side nav: plain ink text links. Below 900px a wrapped row over a rule, the current link with a
+   4px blue bar under it; from 900px vertical 44px rows, the current row with the bar on its left.
+   The bar is a border (not a fill) so it survives forced colours; the other links carry the same
+   space as padding, never a transparent border, which forced colours would draw. */
+.dash-side ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: var(--rule-w) solid var(--rule);
+}
+.dash-side li { margin: 0; }
+.dash-side a,
+.dash-side button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  margin: 0;
+  padding: var(--bar-w) 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: var(--leading-ui);
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dash-side :is(a, button):hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: var(--control-w);
+  text-underline-offset: 0.16em;
+}
+.dash-side a[aria-current='page'] { padding-bottom: 0; border-bottom: var(--bar-w) solid var(--blue); }
+
+@media (min-width: 900px) {
+  .dash-side { position: sticky; top: var(--sticky-top); }
+  .dash-side ul { flex-direction: column; flex-wrap: nowrap; gap: 0; border-top: var(--rule-w) solid var(--rule); border-bottom: 0; }
+  .dash-side li { border-bottom: var(--rule-w) solid var(--rule); }
+  .dash-side a,
+  .dash-side button { display: flex; width: 100%; padding: var(--space-1) var(--space-3); }
+  .dash-side a[aria-current='page'] {
+    padding-bottom: var(--space-1);
+    padding-inline-start: calc(var(--space-3) - var(--bar-w));
+    border-bottom: 0;
+    border-inline-start: var(--bar-w) solid var(--blue);
+  }
+}
+
+/* The head: the title, the sentence, the one primary button. */
 .dash-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-6); }
-.dash-head h1 { margin: 0 0 var(--space-2); font-size: var(--text-h1); }
+.dash-head h1 { margin: 0 0 var(--space-2); }
 .dash-head p { margin: 0; color: var(--muted); }
 
-.dash-stats { list-style: none; margin: 0 0 var(--space-5); padding: 0; display: grid; gap: var(--space-4); }
+/* Four figures, each in a .box: one column on a phone, two by two from 640px. The figure is at
+   --text-h1 and may wrap at its spaces ("1 h 05 min"), never past its box. */
+.dash-stats { display: grid; gap: var(--space-4); margin: 0 0 var(--space-6); padding: 0; list-style: none; }
 @media (min-width: 640px) { .dash-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1100px) { .dash-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.stat-card { margin: 0; padding: var(--space-5); border-radius: var(--radius-l); border: 1.5px solid var(--line-strong); background: var(--bg); display: grid; gap: var(--space-1); align-content: start; }
-.stat-card .stat-name { font-size: var(--text-ui); color: var(--ink-2); }
-.stat-card .stat-value { font-family: var(--font-display); font-size: var(--text-result); font-weight: 800; letter-spacing: var(--tracking-display); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; margin: var(--space-2) 0; }
-.stat-card .stat-note { font-size: var(--text-sm); color: var(--muted); }
-.stat-primary { background: var(--field-pale); border-color: var(--frame); color: var(--ink-2); }
+.stat-card { display: grid; gap: var(--space-1); align-content: start; margin: 0; }
+.stat-card .stat-name { color: var(--ink-2); font-size: var(--text-sm); }
+.stat-card .stat-value {
+  margin: var(--space-1) 0;
+  color: var(--ink);
+  font-size: var(--text-h1);
+  font-weight: 700;
+  line-height: var(--leading-h1);
+  overflow-wrap: anywhere;
+}
+.stat-card .stat-note { color: var(--muted); font-size: var(--text-sm); }
 
-.dash-grid { display: grid; gap: var(--space-4); }
-@media (min-width: 900px) { .dash-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .dash-card.wide { grid-column: span 2; } }
-.dash-card { padding: var(--space-5); border-radius: var(--radius-l); border: 1.5px solid var(--line-strong); background: var(--bg); }
-.dash-card h2 { margin: 0 0 var(--space-4); font-size: var(--text-h3); }
+/* The sections: the next lesson, the week chart, the ring, the clock and the finished lessons.
+   Only those holding a figure are boxes; the two lists are plain ruled rows. */
+.dash-grid { display: grid; gap: var(--space-6) var(--space-4); }
+@media (min-width: 640px) {
+  .dash-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dash-card.wide { grid-column: 1 / -1; }
+}
+.dash-card { min-width: 0; }
+.dash-card h2 { margin: 0 0 var(--space-4); font-size: var(--text-lg); }
 .dash-card .hint { margin: 0; }
+.dash-empty { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+/* A finished-lesson row underlines its title on hover, not its score (base.css underlines both). */
+.dash-card .recent a.index-row:is(:hover, :focus-visible) { text-decoration: none; }
 
-/* Weekly chart: seven bars, today marked, a table for anyone who wants the numbers. */
-.week-chart { display: block; width: 100%; max-width: 560px; height: auto; }
-.week-chart .bar { fill: var(--field-pale); }
+/* The week chart: seven bars in the first series colour; a day with no time is a 4px stub; today
+   is ink and named 'Today'. Its viewBox is 252 wide, so labels are 14px at a 320px screen, and the
+   cap (336px, 3.5 x 96) keeps them under 19px on a wide one. The table is in the fold below it. */
+.week-chart { display: block; width: 100%; max-width: calc(var(--space-9) * 3.5); height: auto; }
+.week-chart .bar { fill: var(--chart-grid); }
 .week-chart .bar.has-time { fill: var(--series-1); }
-.week-chart .bar.today { fill: var(--gold); }
-.week-chart .label { fill: var(--muted); font-family: var(--font-body); font-size: var(--text-xs); text-anchor: middle; }
-.week-chart .value { fill: var(--ink); font-family: var(--font-body); font-size: var(--text-xs); font-weight: 700; text-anchor: middle; }
-.week-table { margin-top: var(--space-3); }
-.week-table summary { cursor: pointer; color: var(--accent-text); font-size: var(--text-sm); }
+.week-chart .bar.today { fill: var(--ink); }
+.week-chart text { font-size: var(--text-xs); text-anchor: middle; font-variant-numeric: tabular-nums; }
+.week-chart .label { fill: var(--ink-2); }
+.week-chart .label.today { fill: var(--ink); font-weight: 700; }
+.week-chart .value { fill: var(--ink); font-weight: 700; }
+/* The fold's own top rule and space (base .fold) stay; its bottom margin would double the box's padding. */
+.dash-card .week-table { margin-bottom: 0; }
+.dash-card .week-table .table { margin-bottom: 0; }
 
-.next-lesson { display: grid; gap: var(--space-3); }
-.next-lesson .pill { justify-self: start; }
-.next-lesson h3 { margin: 0; font-size: var(--text-h3); }
-.next-lesson p { margin: 0; font-size: var(--text-ui); color: var(--ink-2); }
-.next-lesson .btn { justify-self: start; margin-top: var(--space-2); }
-
-.ring-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-5); align-items: center; }
-.ring { width: 96px; height: 96px; }
-.ring .track { fill: none; stroke: var(--field-pale); stroke-width: 12; }
-.ring .done { fill: none; stroke: var(--series-1); stroke-width: 12; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+/* Progress by track: the ring beside the rows, or above them when the box is narrow. */
+.ring-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5); }
+.ring { flex: none; width: var(--space-9); height: var(--space-9); }
+.ring .track { fill: none; stroke: var(--chart-grid); stroke-width: 12; }
+.ring .done { fill: none; stroke: var(--series-1); stroke-width: 12; stroke-linecap: butt; transform: rotate(-90deg); transform-origin: 50% 50%; }
 .ring .done.is-empty { display: none; }
-.ring-value { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 800; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
-.track-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
-.track-rows li { margin: 0; display: flex; justify-content: space-between; gap: var(--space-3); align-items: start; font-size: var(--text-ui); }
+.ring-value { fill: var(--ink); font-size: var(--text-lg); font-weight: 700; text-anchor: middle; dominant-baseline: central; font-variant-numeric: tabular-nums; }
+.track-rows { flex: 1 1 calc(var(--space-9) * 2); min-width: 0; margin: 0; padding: 0; list-style: none; border-top: var(--rule-w) solid var(--rule); }
+.track-rows li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-2) 0;
+  border-bottom: var(--rule-w) solid var(--rule);
+  font-size: var(--text-sm);
+}
 .track-rows strong { white-space: nowrap; }
-.track-rows strong { font-variant-numeric: tabular-nums; }
 
-.recent { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.recent li { margin: 0; padding: var(--space-3) 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); align-items: center; }
-.recent a { color: var(--ink); text-decoration: none; font-weight: 700; }
-.recent a:hover { text-decoration: underline; }
-.recent .pill { font-size: var(--text-xs); min-height: 26px; }
+/* Learning time today: the clock as a headline figure. */
+.timer .clock { margin: 0 0 var(--space-3); color: var(--ink); font-size: var(--text-h1); font-weight: 700; line-height: var(--leading-h1); }
+.timer .btn { margin-top: var(--space-4); }
 
-.timer { color: var(--ink-2); }
-.timer .clock { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 800; letter-spacing: var(--tracking-display); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; margin: var(--space-3) 0; }
-.timer .btn { margin-top: var(--space-3); }
+@media (forced-colors: active) {
+  .week-chart .bar, .week-chart .bar.has-time { fill: CanvasText; }
+  .week-chart .bar.today { fill: Highlight; }
+  .week-chart text, .ring-value { fill: CanvasText; }
+  .ring .track { stroke: GrayText; }
+  .ring .done { stroke: CanvasText; }
+}
 
-.dash-empty { margin: 0; color: var(--muted); font-size: var(--text-ui); }
+@media print {
+  .dash { display: block; }
+  .dash-side, .dash-head .btn, .timer .btn { display: none; }
+}

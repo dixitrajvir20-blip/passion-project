@@ -249,13 +249,13 @@ export default function SignIn({ homeHref, live }: Props) {
         </p>
       )}
 
-      <div class="signin-card">
+      <div class="signin-card box">
         {step === 'entry' && (
           <div>
             {heading('Keep your progress on every device.')}
             <p>Sign in with your email. No password needed.</p>
             <div class="signin-actions">
-              <button type="button" class="btn btn-lg" onClick={startEmail}>
+              <button type="button" class="btn" onClick={startEmail}>
                 Continue with email
               </button>
               <button type="button" class="btn btn-secondary" onClick={() => go('sync')}>
@@ -263,7 +263,7 @@ export default function SignIn({ homeHref, live }: Props) {
               </button>
             </div>
             <p class="signin-alt">
-              <a class="btn btn-link" href={homeHref}>
+              <a class="btn-link" href={homeHref}>
                 Keep going without an account
               </a>
             </p>
@@ -304,10 +304,10 @@ export default function SignIn({ homeHref, live }: Props) {
               <span class="hint">Rules about accounts differ by country, so we ask rather than guess.</span>
             </p>
             <div class="signin-actions">
-              <button type="submit" class="btn btn-lg">
+              <button type="submit" class="btn">
                 Continue
               </button>
-              <button type="button" class="btn btn-link" onClick={() => go('entry')}>
+              <button type="button" class="btn-link" onClick={() => go('entry')}>
                 Back
               </button>
             </div>
@@ -353,10 +353,10 @@ export default function SignIn({ homeHref, live }: Props) {
               )}
             </p>
             <div class="signin-actions">
-              <button type="submit" class="btn btn-lg" disabled={busy}>
+              <button type="submit" class="btn" disabled={busy}>
                 Send request
               </button>
-              <button type="button" class="btn btn-link" onClick={() => go('local')}>
+              <button type="button" class="btn-link" onClick={() => go('local')}>
                 Keep progress on this device instead
               </button>
             </div>
@@ -401,10 +401,10 @@ export default function SignIn({ homeHref, live }: Props) {
               )}
             </p>
             <div class="signin-actions">
-              <button type="submit" class="btn btn-lg" disabled={busy}>
+              <button type="submit" class="btn" disabled={busy}>
                 Continue
               </button>
-              <button type="button" class="btn btn-link" onClick={() => go('entry')}>
+              <button type="button" class="btn-link" onClick={() => go('entry')}>
                 Back
               </button>
             </div>
@@ -450,13 +450,13 @@ export default function SignIn({ homeHref, live }: Props) {
               )}
             </p>
             <div class="signin-actions">
-              <button type="submit" class="btn btn-lg" disabled={busy}>
+              <button type="submit" class="btn" disabled={busy}>
                 Sign in
               </button>
               <button type="button" class="btn btn-secondary" onClick={() => sendCode()} disabled={cooldown > 0 || busy}>
                 {cooldown > 0 ? `Resend code (${cooldown}s)` : 'Resend code'}
               </button>
-              <button type="button" class="btn btn-link" onClick={() => go('email')}>
+              <button type="button" class="btn-link" onClick={() => go('email')}>
                 Use a different email
               </button>
             </div>
@@ -471,10 +471,10 @@ export default function SignIn({ homeHref, live }: Props) {
               lock. No code to type.
             </p>
             <div class="signin-actions">
-              <button type="button" class="btn btn-lg" onClick={createPasskey} disabled={busy || !passkeyOk}>
+              <button type="button" class="btn" onClick={createPasskey} disabled={busy || !passkeyOk}>
                 Create a passkey
               </button>
-              <button type="button" class="btn btn-link" onClick={() => go('merge')}>
+              <button type="button" class="btn-link" onClick={() => go('merge')}>
                 Not now
               </button>
             </div>
@@ -495,7 +495,7 @@ export default function SignIn({ homeHref, live }: Props) {
               </div>
             </div>
             <div class="signin-actions">
-              <button type="button" class="btn btn-lg" onClick={() => go('done')}>
+              <button type="button" class="btn" onClick={() => go('done')}>
                 Combine
               </button>
               <button type="button" class="btn btn-secondary" onClick={() => go('done')}>
@@ -513,7 +513,7 @@ export default function SignIn({ homeHref, live }: Props) {
               you to any device you sign in on.
             </p>
             <div class="signin-actions">
-              <a class="btn btn-lg" href={homeHref}>
+              <a class="btn" href={homeHref}>
                 Back to lessons
               </a>
             </div>
@@ -545,7 +545,7 @@ export default function SignIn({ homeHref, live }: Props) {
               <button type="submit" class="btn">
                 Add that progress here
               </button>
-              <button type="button" class="btn btn-link" onClick={() => go('entry')}>
+              <button type="button" class="btn-link" onClick={() => go('entry')}>
                 Back
               </button>
             </div>

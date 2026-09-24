@@ -1,70 +1,67 @@
-/* Sign-in flow. One thing per screen, one primary action, calm. */
+/* Sign-in flow. One thing per screen, one primary action, calm. Left-aligned under the page's h1.
+   The card is a .box (base.css): white, a 1px rule, the one radius. */
 
-.signin { max-width: 440px; margin: 0 auto; }
-.signin-card {
-  background: var(--field-pale);
-  border: 1.5px solid var(--line);
-  border-radius: var(--radius-l);
-  padding: var(--space-6);
-}
-@media (min-width: 640px) { .signin-card { padding: var(--space-7); } }
-.signin-card h2 {
-  margin: 0 0 var(--space-2);
-  font-size: var(--text-h3);
-}
-.signin-card p { font-size: var(--text-md); }
+/* About 440px at the body size; there is no token for a form's width. */
+.signin { max-width: 24em; margin: 0; }
+/* The card holds a form, so it is a box, with more room than a figure box. Two classes, so this
+   beats .box's own padding whatever order the stylesheets load in. */
+.signin .signin-card { padding: var(--space-6); }
+@media (max-width: 399px) { .signin .signin-card { padding: var(--space-5); } }
+.signin-card h2 { margin: 0 0 var(--space-2); font-size: var(--text-lg); }
+.signin-card h2:focus-visible { outline-offset: var(--space-1); }
 .signin-card .field { margin-bottom: var(--space-4); }
-.signin-card .field > label { font-size: var(--text-md); }
-.signin-card input, .signin-card select { background: var(--bg); }
+
+/* The one primary and any secondary are full width at 48px; a text button stays its own width. */
 .signin-actions { display: grid; gap: var(--space-2); margin-top: var(--space-5); }
 .signin-actions .btn { width: 100%; }
-.signin-alt { text-align: center; margin-top: var(--space-4); }
-.signin-alt .btn-link::after { content: none; }
+.signin-actions .btn-link { justify-self: start; }
+.signin-alt { margin-top: var(--space-4); }
 .signin-status { margin: var(--space-3) 0 0; font-size: var(--text-sm); }
 .signin-status:empty { margin: 0; }
-.signin-card h2:focus-visible { outline-offset: 6px; }
 
-.code-input {
-  font-family: var(--font-display);
-  font-size: var(--text-result);
+/* The six-digit code: large, bold and spaced so each digit reads on its own. */
+.signin-card .code-input {
+  padding-inline-start: 0.35em;
+  font-size: var(--text-h2);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
   letter-spacing: 0.35em;
   text-align: center;
-  font-weight: 600;
-  padding-left: 0.35em;
 }
 
+/* The preview note, set apart by a 4px ink bar at its start; no fill and no box. */
 .preview-note {
   display: flex;
   gap: var(--space-3);
-  align-items: flex-start;
-  background: var(--gold-pale);
-  color: var(--on-gold);
-  border-radius: var(--radius-m);
-  padding: var(--space-3) var(--space-4);
-  font-size: var(--text-sm);
+  align-items: baseline;
   margin-bottom: var(--space-5);
+  padding: var(--space-1) 0 var(--space-1) var(--space-4);
+  border-inline-start: var(--bar-w) solid var(--ink);
+  color: var(--ink-2);
+  font-size: var(--text-sm);
 }
 .preview-note strong { white-space: nowrap; }
 .preview-code {
-  font-family: var(--font-display);
-  font-size: var(--text-h3);
-  letter-spacing: 0.2em;
   color: var(--ink);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2em;
 }
 
 .email-echo { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
 
+/* The sync code: long and unbroken, so it wraps anywhere. 16px, so a phone does not zoom in. */
 .sync-code {
   display: block;
   width: 100%;
-  min-height: 96px;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  line-height: var(--leading-snug);
+  min-height: var(--space-9);
+  font-size: var(--text-sm);
+  line-height: var(--leading-heading);
   overflow-wrap: anywhere;
   resize: vertical;
 }
 .merge-counts { display: flex; gap: var(--space-5); margin: var(--space-4) 0; }
 .merge-counts div { flex: 1; }
-.merge-counts .figure { font-size: var(--text-result); margin-bottom: var(--space-1); }
+.merge-counts .figure { font-size: var(--text-h2); margin-bottom: var(--space-1); }
 .merge-counts .hint { margin: 0; }

@@ -1,0 +1,8 @@
+/* Pay-later plans: the payment number and its total sit side by side, even at 360px, the way a
+   plan's screen prints "payment 2 of 4". Tokens only; the row itself is the kit's .row-list-row. */
+.plp-counts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+}

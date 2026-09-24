@@ -1,0 +1,40 @@
+---
+/**
+ * The edition-bound figures a calculator uses, each with its source and the day it was checked.
+ * Server-rendered with no script, so it reads the same with JavaScript off; the page, not the
+ * island, owns this text. A rule with inLine: false (a test-only pin) is left out.
+ */
+import { formatCheckedDate, latestAsOf, type Rule } from '../lib/tools/types';
+
+interface Props {
+  rules: Rule[];
+  /** Default 'Rules as of'. */
+  lead?: string;
+}
+
+const { rules, lead = 'Rules as of' } = Astro.props;
+const shown = rules.filter((rule) => rule.inLine !== false);
+const latest = latestAsOf(shown);
+---
+
+{shown.length > 0 && latest && (
+  <section class="rules-line" aria-label="Figures this tool uses">
+    <p class="rules-lead">{lead} {formatCheckedDate(latest)}:</p>
+    <ul>
+      {shown.map((rule) => (
+        <li>
+          {rule.label} (<a href={rule.source.url} rel="noopener noreferrer">{rule.source.title}</a>, checked {formatCheckedDate(rule.asOf)})
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  /* A quiet note: small ink-2 type, one ruled row per figure, and each source a link inside the
+     sentence, so it stays blue and underlined. */
+  .rules-line { margin-top: var(--space-7); color: var(--ink-2); font-size: var(--text-sm); }
+  .rules-lead { margin: 0 0 var(--space-2); }
+  .rules-line ul { margin: 0; padding: 0; list-style: none; border-top: var(--rule-w) solid var(--rule); }
+  .rules-line li { margin: 0; padding-block: var(--space-3); border-bottom: var(--rule-w) solid var(--rule); }
+</style>

@@ -3,13 +3,18 @@
  * A run of situations, each a mock screen and a decision. It is the poll repeated, not an island:
  * nothing here needs JavaScript. Each situation joins the review queue, because a scam you have
  * met once is forgotten about as fast as any other fact.
+ *
+ * On a drill tool page the situations come from the lesson and the tool's bank, each with its own
+ * review id (src/lib/drill-merge.ts); in a lesson they default to '<lesson id>#d<n>'. Whether a
+ * screen is ordinary is never rendered, in text, a class or an attribute.
  */
 import MockScreen from './MockScreen.astro';
 import Poll from './Poll.astro';
 
 interface Scenario {
-  screen: { kind: 'request' | 'message' | 'call' | 'chat' | 'qr'; from: string; lines: string[]; amount?: number; action?: string };
+  screen: { kind: 'request' | 'message' | 'call' | 'chat' | 'qr' | 'transfer' | 'email'; from: string; lines: string[]; amount?: number; action?: string };
   check: { q: string; options: { text: string; why: string }[]; answer: number };
+  checkId?: string;
 }
 
 interface Props {
@@ -18,13 +23,16 @@ interface Props {
   scenarios: Scenario[];
   reflection: string;
   localeCode: string;
+  /** A line under the intro saying what the set covers. */
+  scopeNote?: string;
 }
 
-const { lessonId, intro, scenarios, reflection, localeCode } = Astro.props;
+const { lessonId, intro, scenarios, reflection, localeCode, scopeNote } = Astro.props;
 ---
 
 <div class="drill">
   <p>{intro}</p>
+  {scopeNote && <p class="drill-scope">{scopeNote}</p>}
   <ol class="drill-list">
     {scenarios.map((scenario, index) => (
       <li>
@@ -35,11 +43,14 @@ const { lessonId, intro, scenarios, reflection, localeCode } = Astro.props;
           question={scenario.check.q}
           options={scenario.check.options}
           answer={scenario.check.answer}
-          checkId={`${lessonId}#d${index + 1}`}
+          checkId={scenario.checkId ?? `${lessonId}#d${index + 1}`}
           revealLabel="Show what it was"
         />
       </li>
     ))}
   </ol>
   <p class="reflection">{reflection}</p>
+  {/* Filled by the lesson script after a reveal, from this device's own schedule. Hidden with
+      JavaScript off or storage blocked, rather than promising a return that will not happen. */}
+  <p class="return-line" data-drill-return hidden></p>
 </div>

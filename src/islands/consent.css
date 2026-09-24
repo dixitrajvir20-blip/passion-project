@@ -1,77 +1,99 @@
-/* Consent banner + Privacy choices dialog. Both use base tokens only. */
+/* The consent banner and the Privacy choices dialog. Base tokens only.
 
+   The first-visit banner is a block in the normal flow directly under the header: white, with a
+   2px ink rule on top (blue keeps its five jobs), the same buttons as before. It is never fixed, so it can never cover a
+   focused control, at any size or zoom. It is in the server's HTML and shown only while
+   html[data-consent-ask] is set (by the inline check in BaseLayout's head, then by the island), so
+   it is there from the first paint and never pushes the page down after load. With JavaScript off
+   it stays hidden: nothing optional can run then anyway. */
 .consent-banner {
-  position: fixed;
-  inset-inline: var(--space-4);
-  bottom: var(--space-4);
-  z-index: 60;
-  max-width: 460px;
-  margin-inline-start: auto;
+  display: none;
+  /* A white gap first, so the rule reads as the banner's own and not as the header's edge. */
+  margin-top: var(--space-4);
   background: var(--bg);
   color: var(--ink-2);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-l);
-  padding: var(--space-5);
+  border-top: var(--control-w) solid var(--ink);
+  border-bottom: var(--rule-w) solid var(--rule);
 }
-.consent-banner h2 { font-family: var(--font-body); font-size: var(--text-md); margin: 0 0 var(--space-2); }
-.consent-banner p { font-size: var(--text-sm); margin-bottom: var(--space-4); }
+html[data-consent-ask] .consent-banner { display: block; }
+.consent-banner-inner { padding-block: var(--space-5); }
+.consent-banner h2 { margin: 0 0 var(--space-2); font-size: var(--text-md); }
+.consent-banner p { margin: 0 0 var(--space-4); font-size: var(--text-sm); }
 .consent-banner .btn-row { gap: var(--space-2); }
 
 .consent-dialog {
-  border: 0;
-  border-radius: var(--radius-l);
-  padding: 0;
   width: min(560px, calc(100vw - 2 * var(--space-4)));
   max-height: min(85vh, 720px);
+  padding: 0;
+  border: var(--rule-w) solid var(--border);
+  border-radius: var(--radius);
   background: var(--bg);
   color: var(--ink-2);
 }
-.consent-dialog::backdrop { background: color-mix(in srgb, var(--brand-black) 55%, transparent); }
-.consent-dialog-inner { padding: var(--space-6); overflow: auto; max-height: inherit; }
-.consent-dialog h2 { margin-top: 0; font-size: var(--text-h3); }
+.consent-dialog::backdrop { background: color-mix(in srgb, var(--ink) 55%, transparent); }
+.consent-dialog-inner { max-height: inherit; padding: var(--space-6); overflow: auto; }
+@media (max-width: 399px) { .consent-dialog-inner { padding: var(--space-5) var(--space-4); } }
+.consent-dialog h2 { margin-top: 0; font-size: var(--text-lg); }
 .consent-dialog p { font-size: var(--text-sm); }
 
-.consent-list { list-style: none; padding: 0; margin: var(--space-5) 0; border-top: 1px solid var(--line); }
+.consent-list { list-style: none; margin: var(--space-5) 0; padding: 0; border-top: var(--rule-w) solid var(--rule); }
 .consent-item {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--space-2) var(--space-4);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--line);
   align-items: start;
   margin: 0;
+  padding: var(--space-4) 0;
+  border-bottom: var(--rule-w) solid var(--rule);
 }
 .consent-item strong { display: block; color: var(--ink); font-size: var(--text-md); }
 .consent-item .hint { margin: 0; }
-.consent-state { font-size: var(--text-sm); color: var(--muted); white-space: nowrap; padding-top: 2px; }
+.consent-state { padding-top: var(--space-1); color: var(--muted); font-size: var(--text-sm); white-space: nowrap; }
 
+/* The switch: an ink track when on, a --border track when off (4.05:1 on white), a white knob, and
+   the words On or Off beside it. Only the knob moves, and only for readers who have not asked for
+   less motion. */
+.consent-switch { display: inline-flex; align-items: center; gap: var(--space-2); }
+.consent-onoff { min-width: 3ch; color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
 .switch {
-  appearance: none;
-  width: 48px;
-  height: 28px;
-  border-radius: var(--radius-pill);
-  background: var(--line-strong);
   position: relative;
-  cursor: pointer;
-  border: 0;
+  flex: none;
+  width: calc(var(--space-7) + var(--space-1));
+  height: var(--space-6);
   margin: 0;
-  transition: background var(--dur-fast);
+  border: var(--control-w) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--border);
+  cursor: pointer;
+  appearance: none;
 }
 .switch::after {
   content: '';
   position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 22px;
-  height: 22px;
+  top: calc(var(--space-1) - var(--control-w) / 2);
+  inset-inline-start: calc(var(--space-1) - var(--control-w) / 2);
+  width: calc(var(--space-5) - var(--control-w));
+  height: calc(var(--space-5) - var(--control-w));
   border-radius: var(--radius-pill);
-  background: var(--on-accent);
-  transition: transform var(--dur-fast) var(--ease);
+  background: var(--bg);
 }
-.switch:checked { background: var(--accent); }
-.switch:checked::after { transform: translateX(20px); }
-.switch:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.switch:checked { border-color: var(--ink); background: var(--ink); }
+.switch:checked::after { transform: translateX(calc(var(--space-5) - var(--space-1))); }
+.switch:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .switch[disabled] { opacity: 0.4; cursor: not-allowed; }
+@media (prefers-reduced-motion: no-preference) {
+  .switch::after { transition: transform var(--dur-fast) var(--ease); }
+}
 
-.consent-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-5); }
-.consent-actions .btn-link { margin-right: auto; }
+/* Forced colours: the track and the knob each keep a 2px edge in system colours, the checked
+   track takes Highlight with a HighlightText knob (readable in the dark contrast themes too), and
+   the On/Off words carry the state. */
+@media (forced-colors: active) {
+  .switch { forced-color-adjust: none; border: var(--control-w) solid ButtonText; background: ButtonFace; }
+  .switch::after { forced-color-adjust: none; border: var(--control-w) solid ButtonText; background: ButtonText; }
+  .switch:checked { border-color: ButtonText; background: Highlight; }
+  .switch:checked::after { border-color: HighlightText; background: HighlightText; }
+}
+
+.consent-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-5); }
+.consent-actions .btn-link { margin-inline-end: auto; }

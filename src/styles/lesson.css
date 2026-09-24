@@ -1,148 +1,204 @@
 /*
-  Lesson pages. One continuous editorial column, separated by whitespace and hairlines. Exactly
-  two filled boxes per lesson: the gold "In 30 seconds" note and the explorable. Everything else
-  is type on the page, which is what keeps this from reading as a course platform. Sums are set
-  as a ledger (base.css) and the key sentence of a section wears the highlighter.
+  Lesson pages, design v5.1. One 640px reading column on a white page; from 1024px a left rail
+  keeps "In this lesson" in view. Type and rules do the work: every heading is ink, sums are the
+  ledger (base.css), and the only framed things are the instruments a reader uses: the drawn
+  document and mock screens (.box), the questions, the video frame and the explorer (a
+  .box-surface in explorer.css). No highlighter, no gold, no shadows, no motion. Every value is a
+  token; what base.css already sets (h2 size, folds, buttons, the crumb, the inset, the ledger) is
+  not repeated here.
+
+  The review page, the drill tool pages, the track pages and the edition fronts load this file too:
+  they share the question, the drill, the mock screen, the report line and the lesson list.
 */
 
-/* The title band sits on the dark-blue field; the lesson itself is a white sheet below it. */
-.lesson-head { padding: var(--space-6) 0 var(--space-8); }
-@media (min-width: 900px) { .lesson-head { padding: var(--space-7) 0 var(--space-9); } }
-.lesson-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin: 0 0 var(--space-5); }
-.lesson-crumbs .pill { text-decoration: none; }
-.lesson-crumbs .pill:hover { text-decoration: underline; }
-.lesson-crumbs .sticker { transform: none; }
-.lesson-head h1 { font-size: var(--text-h1); }
-.lesson-head .lede { color: var(--ink-2); }
-.lesson-meta { color: var(--muted); font-size: var(--text-sm); margin: var(--space-4) 0 0; }
-.lesson-expect { color: var(--muted); font-size: var(--text-sm); margin: var(--space-2) 0 0; }
+/* ---- The frame: crumb, title, "In this lesson", "After this you can", then the lesson ---- */
 
-.lesson-main { padding-bottom: var(--space-8); }
-.lesson-main.sheet { padding-top: var(--space-7); }
-@media (min-width: 900px) { .lesson-main.sheet { padding-top: var(--space-8); } }
-.lesson-main h2 { font-size: var(--text-h3); margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--line); }
-/* The hairline belongs to section headings, not to the heading inside the summary box or the fine print. */
-.lesson-main .callout h2 { margin-top: 0; padding-top: 0; border-top: 0; font-size: var(--text-md); }
-.lesson-main .lesson-fine h2 { font-family: var(--font-body); font-size: var(--text-sm); letter-spacing: 0; color: var(--muted); }
-.lesson-body h2:first-child { margin-top: var(--space-7); }
-.lesson-body ul, .lesson-body ol { padding-left: var(--space-5); }
-.situation { font-size: var(--text-lg); color: var(--ink); }
+.lesson-grid { padding-block: var(--space-5) var(--space-8); }
+.lesson-grid > * { max-width: var(--column); }
 
-/* The key sentence of a section, marked the way a student marks a textbook. */
-.lesson-body p strong {
-  background: var(--highlight);
-  padding: 0 0.15em;
-  border-radius: var(--radius-xs);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+.lesson-head h1 { margin-bottom: var(--space-3); }
+.lesson-head .lede { margin-bottom: var(--space-5); }
+
+/* On a phone, one closed 44px line between two rules. The summary is the shared fold summary
+   (base.css): ink 700, '+' before it and '−' once open. */
+.lesson-steps { margin: 0 0 var(--space-5); border-block: var(--rule-w) solid var(--rule); }
+.lesson-steps-count { color: var(--muted); font-weight: 400; }
+.lesson-steps-list { list-style: none; margin: 0; padding: 0; border-top: var(--rule-w) solid var(--rule); }
+.lesson-steps-list li { margin: 0; }
+.lesson-steps-list li + li { border-top: var(--rule-w) solid var(--rule); }
+.lesson-steps-list a {
+  display: flex;
+  align-items: center;
+  min-height: var(--target);
+  padding-block: var(--space-1);
+  color: var(--ink);
+  text-decoration: none;
 }
-@media (forced-colors: active) { .lesson-body p strong { background: Mark; color: MarkText; } }
+.lesson-steps-list a:is(:hover, :focus-visible) {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: var(--control-w);
+  text-underline-offset: 0.16em;
+}
 
-/* On a wide screen the "In 30 seconds" note steps into the empty margin beside the lesson, the
-   way a textbook prints its summary beside the text. It keeps its place in the reading order
-   (after the guess, so it never gives the answer away) and takes no width from the column. */
-@media (min-width: 1180px) {
-  .lesson-main .callout {
-    float: right;
-    clear: right;
-    width: calc(var(--wide) - var(--column) - var(--space-8) - 2 * var(--gutter));
-    margin: 0 calc((var(--wide) - var(--column) - 2 * var(--gutter)) * -1) var(--space-5) 0;
+.lesson-after-label { margin: 0 0 var(--space-2); color: var(--ink); font-size: var(--text-sm); font-weight: 700; }
+.lesson-after ul { margin: 0; padding-inline-start: var(--space-5); }
+.lesson-after li { margin: 0 0 var(--space-1); }
+
+.lesson-main { margin-top: var(--space-6); }
+
+/* From 1024px: the rail on the left, the column on the right, the crumb above the column. */
+@media (min-width: 1024px) {
+  .lesson-grid {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, var(--column));
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+      '. crumb'
+      'rail head'
+      'rail after'
+      'rail main';
+    column-gap: var(--space-8);
+    padding-top: var(--space-6);
   }
+  .lesson-grid > .crumb { grid-area: crumb; }
+  .lesson-head { grid-area: head; }
+  .lesson-after { grid-area: after; }
+  .lesson-main { grid-area: main; }
+  /* Opened by the lesson script and kept in view while the lesson scrolls past. The padding keeps
+     the focus ring inside the scroll box; the negative margin keeps the words in line. */
+  .lesson-steps {
+    grid-area: rail;
+    align-self: start;
+    position: sticky;
+    top: var(--sticky-top);
+    max-height: calc(100vh - 2 * var(--sticky-top));
+    max-height: calc(100dvh - 2 * var(--sticky-top));
+    overflow-y: auto;
+    margin: calc(-1 * var(--space-2));
+    padding: var(--space-2);
+    border-block: 0;
+  }
+  .lesson-steps-fold > summary, .lesson-steps-list a { font-size: var(--text-sm); }
 }
 
-/* Glossary terms in prose: dotted underline, link first, popover where the platform has one. */
+/* ---- Sections. The h2 is base.css's (--text-h2, ink 700, 16px below). A section's heading is its
+   first child, which base.css sets flush, so the 48px above is restored here. No hairline. ---- */
+
+.lesson-main :is(section, .lesson-body) > h2 { margin-top: var(--space-7); }
+.situation { color: var(--ink); font-size: var(--text-lg); line-height: var(--leading-ui); }
+.lesson-main :is(ul, ol):not([class]), .lesson-actions { padding-inline-start: var(--space-5); }
+.lesson-actions li { margin-bottom: var(--space-2); }
+/* The details fold and "one more" are .fold (base.css): a rule above, the shared summary. */
+.lesson-details > ul { margin: var(--space-3) 0 0; }
+
+/* Diagrams and tables in lesson prose. Colour by class, never a style attribute (the CSP drops
+   inline styles). Every chart carries direct labels and a table, so colour is never the only signal. */
+.chart { display: block; width: 100%; height: auto; margin: var(--space-5) 0 var(--space-3); }
+.chart-a { fill: var(--series-1); }
+.chart-b { fill: var(--series-2); }
+.chart-label { fill: var(--ink); font-size: var(--text-xs); font-weight: 700; }
+.chart-note { fill: var(--muted); font-size: var(--text-xs); }
+.lesson-body table { width: 100%; margin: 0 0 var(--space-6); border-collapse: collapse; font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+.lesson-body :is(th, td) { padding: var(--space-2) var(--space-3) var(--space-2) 0; border-bottom: var(--rule-w) solid var(--rule); text-align: start; }
+.lesson-body th { color: var(--ink); }
+.lesson-body :is(th, td):last-child { padding-inline-end: 0; text-align: end; }
+
+/* ---- Glossary terms: a dotted underline in the sentence, a sheet at the foot of the screen ---- */
+
 .term {
   color: inherit;
   text-decoration: underline dotted var(--muted);
-  text-underline-offset: 4px;
+  text-decoration-thickness: var(--rule-w);
+  text-underline-offset: var(--space-1);
   cursor: help;
 }
-button.term { background: none; border: 0; padding: 0; font: inherit; }
-.term:hover { color: var(--accent-text); }
+button.term { padding: 0; border: 0; background: none; font: inherit; }
+.term:hover { color: inherit; text-decoration: underline solid var(--blue); text-decoration-thickness: var(--control-w); }
 
 .term-pop { display: none; }
 @supports selector(:popover-open) {
-  /* A sheet at the foot of the screen: no anchor positioning needed (not Baseline yet), and it
-     cannot cover the sentence the reader is in the middle of. */
+  /* No anchor positioning (not Baseline yet): a sheet at the foot of the screen cannot cover the
+     sentence the reader is in the middle of. */
   .term-pop:popover-open {
     display: block;
     position: fixed;
     inset: auto var(--gutter) var(--space-5) var(--gutter);
     margin-inline: auto;
-    max-inline-size: 480px;
+    max-inline-size: calc(var(--column) * 0.75);
     max-block-size: 60dvh;
     overflow: auto;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius-l);
+    padding: var(--space-5);
+    border: var(--rule-w) solid var(--border);
+    border-radius: var(--radius);
     background: var(--bg);
     color: var(--ink-2);
-    padding: var(--space-5);
   }
   .term-pop::backdrop { background: transparent; }
 }
-.term-pop h3 { margin: 0 0 var(--space-2); font-size: var(--text-h3); }
-.term-pop p { margin: 0 0 var(--space-2); font-size: var(--text-ui); }
+.term-pop h3 { margin: 0 0 var(--space-2); font-size: var(--text-lg); }
+.term-pop p { margin: 0 0 var(--space-2); }
 .term-pop .example { color: var(--muted); font-size: var(--text-sm); }
 
-/* Diagrams in lesson prose. Colour by class, never a style attribute: the CSP drops inline
-   styles silently, so an SVG styled that way is fine in dev and black blobs in production.
-   Every chart carries direct labels and a table beside it, so colour is never the only signal. */
-.chart { display: block; width: 100%; max-width: 440px; height: auto; margin: var(--space-5) 0 var(--space-3); }
-.chart-a { fill: var(--series-1); }
-.chart-b { fill: var(--series-2); }
-.chart-label { fill: var(--ink); font-family: var(--font-body); font-size: var(--text-xs); font-weight: 700; }
-.chart-note { fill: var(--muted); font-family: var(--font-body); font-size: var(--text-xs); }
+/* ---- Questions: the document question, practice, the checks, drill situations and the review
+   page. A framed question, options as outlined rows, the reveal a secondary button. ---- */
 
-.lesson-body table { width: 100%; max-width: 440px; border-collapse: collapse; font-size: var(--text-sm); margin: 0 0 var(--space-6); font-variant-numeric: tabular-nums; }
-.lesson-body th, .lesson-body td { text-align: left; padding: var(--space-2) var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--line); }
-.lesson-body th { color: var(--ink); }
-.lesson-body td:last-child, .lesson-body th:last-child { text-align: right; padding-right: 0; }
-.lesson-body tbody tr:last-child td { border-bottom: 0; }
-
-/* The question card: a pale panel with the options as outlined rows and one navy button. */
-.poll { position: relative; margin: var(--space-5) 0 var(--space-6); padding: var(--space-5); background: var(--field-pale); border-radius: var(--radius-l); }
-@media (min-width: 640px) { .poll { padding: var(--space-6); } }
-.poll-label { margin: 0 0 var(--space-2); font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; color: var(--gold-text); }
-.poll fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
-/* Body face, not display: a question can run to three sentences, and that much display type shouts. */
+.poll {
+  margin: var(--space-6) 0;
+  padding: calc(var(--space-4) + var(--space-1));
+  border: var(--rule-w) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+@media (min-width: 640px) { .poll { padding: var(--space-5); } }
+.poll-label { margin: 0 0 var(--space-2); color: var(--muted); font-size: var(--text-sm); }
+.poll fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .poll legend {
-  padding: 0;
   margin-bottom: var(--space-3);
+  padding: 0;
+  color: var(--ink);
   font-size: var(--text-lg);
   font-weight: 700;
-  line-height: var(--leading-snug);
-  color: var(--ink);
+  line-height: var(--leading-heading);
 }
 .opts { display: grid; gap: var(--space-2); }
 .opt {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  min-height: 48px;
+  min-height: var(--target-lg);
   padding: var(--space-2) var(--space-4);
+  border: var(--rule-w) solid var(--border);
+  border-radius: var(--radius);
   background: var(--bg);
-  border: 1.5px solid var(--line);
-  border-radius: var(--radius-s);
   color: var(--ink-2);
   cursor: pointer;
 }
-.opt:hover { border-color: var(--line-strong); }
-.opt input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
+.opt:hover { border-color: var(--ink); }
+/* The radio is base.css's: 24px, ink. */
+.opt input { flex: none; margin: 0; }
 
 .reveal { margin-top: var(--space-4); }
-/* The reveal is a real .btn.btn-secondary (Poll.astro); only the native marker is removed here. */
 .reveal > summary { list-style: none; }
 .reveal > summary::-webkit-details-marker { display: none; }
-.reveal-body { margin-top: var(--space-4); }
-.reveal-body p { font-size: var(--text-ui); }
+.reveal-body { margin-top: var(--space-4); padding-top: var(--space-3); border-top: var(--rule-w) solid var(--rule); }
 .answer { color: var(--ink); }
-.poll-status { font-weight: 700; color: var(--ink); }
+.poll-status { color: var(--ink); font-weight: 700; }
+/* Words carry the result ("Correct.", "Not quite."); the green only repeats it. */
+.poll-status[data-result='right'] { color: var(--success); }
 .poll-status:empty { display: none; }
 
 /* Only inside @supports, and only hiding: a browser without :has() shows every line (a short
    explanation of each option) rather than losing the answer. */
 @supports selector(:has(*)) {
-  .opt:has(input:checked) { color: var(--ink); font-weight: 700; border-color: var(--line-strong); }
+  /* Checked: a 2px ink edge (the padding gives back the extra pixel), the tint and bold. */
+  .opt:has(input:checked) {
+    padding: calc(var(--space-2) - var(--rule-w)) calc(var(--space-4) - var(--rule-w));
+    border: var(--control-w) solid var(--ink);
+    background: var(--tint);
+    color: var(--ink);
+    font-weight: 700;
+  }
   .poll .fb { display: none; }
   .poll:has(.opt:nth-child(1) input:checked) .fb:nth-child(1),
   .poll:has(.opt:nth-child(2) input:checked) .fb:nth-child(2),
@@ -151,248 +207,182 @@ button.term { background: none; border: 0; padding: 0; font: inherit; }
   .poll .fb-pick::before { content: 'Your pick: '; color: var(--muted); }
 }
 
-/* Worked calculation: a ledger on a receipt. Each step names what it finds, shows the working
-   under the name, and puts the result on the right; the final step is the total, closed with a
-   double rule. */
+/* ---- The calculation: the ledger on the page, rows split by a rule, no box. Each step names what
+   it finds, shows the working under the name and puts the figure on the right. ---- */
+
 .worked > p { margin-bottom: var(--space-3); }
-.steps { margin: 0 0 var(--space-5); padding: var(--space-2) var(--space-5); border: 1.5px solid var(--line-strong); border-radius: var(--radius-m); background: var(--bg); }
-.steps .ledger-row { border-top: 1px solid var(--line); }
-.steps .ledger-row:first-child { border-top: 0; }
+.steps { margin: 0 0 var(--space-5); }
+.steps .ledger-row + .ledger-row { border-top: var(--rule-w) solid var(--rule); }
 .steps .ledger-row.ledger-total { border-top-color: var(--ink); }
-.steps .ledger-label, .steps .ledger-total .ledger-label { display: grid; gap: var(--space-1); font-weight: 400; }
+:is(.steps, .showme-lines) .ledger-row .ledger-label { display: grid; gap: var(--space-1); font-weight: 400; }
 .step-label { color: var(--ink); font-weight: 700; }
-.step-sum { color: var(--ink-2); font-size: var(--text-ui); }
+.step-sum { color: var(--ink-2); font-size: var(--text-sm); }
 .step-note { order: 4; flex-basis: 100%; color: var(--muted); font-size: var(--text-sm); }
 
-/* Drill: mock screens */
-.drill-list { list-style: none; padding: 0; margin: var(--space-5) 0 0; }
-.drill-list > li { margin: 0; padding: var(--space-6) 0; border-top: 1px solid var(--line); }
-.drill-count { color: var(--muted); font-size: var(--text-sm); margin-bottom: var(--space-3); }
-.reflection { border-top: 1px solid var(--line); padding-top: var(--space-5); color: var(--ink); font-size: var(--text-lg); }
-
-.mock-screen {
-  margin: 0 0 var(--space-5);
-  max-width: 320px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-l);
-  /* A screen edge, not a card: outline only, so the lesson keeps its two filled boxes. */
-  background: transparent;
-  overflow: hidden;
-}
-.ms-kind { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--line); color: var(--muted); font-size: var(--text-sm); }
-.ms-body { padding: var(--space-4); }
-.ms-body p { margin: 0 0 var(--space-2); font-size: var(--text-sm); }
-.ms-from { color: var(--ink); font-weight: 700; }
-.ms-amount { font-family: var(--font-display); font-size: var(--text-result); font-weight: 700; color: var(--ink); line-height: var(--leading-tight); }
-.ms-qr { display: block; width: 112px; height: 112px; margin: var(--space-2) 0 var(--space-3); color: var(--ink); }
-.ms-action {
-  display: inline-block;
-  margin-top: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-s);
-  color: var(--ink);
-  font-weight: 700;
-}
-.ms-tag { margin: 0; padding: var(--space-2) var(--space-4); border-top: 1px solid var(--line); color: var(--muted); font-size: var(--text-sm); }
-
-/* The foot of a lesson: type, not blocks. */
-.return-line { color: var(--ink); font-weight: 700; }
-.lesson-terms dt { font-weight: 700; color: var(--ink); margin-top: var(--space-4); }
-.lesson-terms dd { margin: 0; font-size: var(--text-ui); }
-.lesson-terms dd .example { color: var(--muted); font-size: var(--text-sm); }
-.lesson-terms :target {
-  background: color-mix(in srgb, var(--gold) 20%, var(--bg));
-  padding: var(--space-2) var(--space-3);
-  margin-inline: calc(var(--space-3) * -1);
-  border-radius: var(--radius-s);
-}
-.report { color: var(--ink); }
-.lesson-fine { color: var(--muted); font-size: var(--text-xs); }
-.lesson-fine ul { padding-left: var(--space-5); margin-bottom: var(--space-3); }
-.lesson-fine a { color: var(--muted); }
-.lesson-fine .cite-url { overflow-wrap: anywhere; }
-.lesson-next { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); align-items: center; margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--line); }
-.marked { color: var(--success); font-size: var(--text-sm); font-weight: 700; }
-
-/* Track and learn pages: a numbered contents list with two quiet marks, never a bar or a
-   percentage. */
-.lesson-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
-.lesson-list > li { margin: 0; border-bottom: 1px solid var(--line); }
-.lesson-row, .lesson-planned {
-  display: grid;
-  grid-template-columns: var(--space-6) minmax(0, 1fr);
-  gap: var(--space-1) var(--space-3);
-  padding: var(--space-4) 0;
-  color: inherit;
-  text-decoration: none;
-}
-.lesson-num { grid-row: 1 / span 3; font-family: var(--font-display); font-weight: 700; font-size: var(--text-h3); line-height: var(--leading-snug); color: var(--muted); }
-.lesson-title, .lesson-sub, .lesson-marks { grid-column: 2; }
-a.lesson-row:hover .lesson-title { color: var(--accent-text); text-decoration: underline; }
-a.lesson-row:hover .lesson-num { color: var(--accent-text); }
-.lesson-title { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; color: var(--ink); letter-spacing: var(--tracking-heading); line-height: var(--leading-snug); }
-.lesson-sub { color: var(--ink-2); font-size: var(--text-ui); }
-.lesson-marks { color: var(--muted); font-size: var(--text-sm); }
-.lesson-marks [data-mark] { color: var(--success); font-weight: 700; }
-.lesson-planned { color: var(--muted); font-size: var(--text-ui); }
-.lesson-planned .lesson-num { font-size: var(--text-md); line-height: var(--leading-body); }
-/* Three tracks side by side on the edition front: title and time only. */
-.is-compact .lesson-row, .is-compact .lesson-planned { padding: var(--space-3) 0; }
-.is-compact .lesson-num { font-size: var(--text-md); line-height: var(--leading-body); }
-.is-compact .lesson-title { font-family: var(--font-body); font-size: var(--text-md); font-weight: 700; letter-spacing: 0; line-height: var(--leading-body); }
-
-@media print {
-  /* A worksheet handed round a club must not carry one reader's progress. */
-  .poll-status, .return-line, .lesson-next, .marked, .lesson-marks, .term-pop, .explorer-actions { display: none !important; }
-  .reveal[open] > .reveal-body { display: none; }
-}
-
-/* Track cards and the track header, after Claude Academy's course cards and course page
-   (their layout, our colours): a drawn thumbnail, a small type label, the title, one line of
-   description, the lesson titles, a metadata line from the real lessons, one action. */
-.course-grid { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
-/* Three across only where three cards get a readable measure; 720–979px (and a laptop at 200%
-   zoom) would squeeze each to ~220px, so it stays one column until then. */
-@media (min-width: 980px) { .course-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.course-card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); }
-.course-thumb { display: grid; place-items: center; aspect-ratio: 16 / 9; border-radius: var(--radius-m); border: 1.5px solid var(--line); background: var(--field-pale); margin: 0 0 var(--space-2); }
-.course-thumb .doodle { position: static; width: 36%; height: auto; transform: none; }
-.course-kind { margin: 0; }
-.course-title { margin: 0; font-size: var(--text-h3); }
-.course-title a { color: inherit; text-decoration: none; }
-.course-title a:hover { color: var(--accent-text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.course-desc { margin: 0; color: var(--ink-2); }
-.course-card .lesson-list { margin: var(--space-2) 0; flex: 1; }
-.course-meta { margin: 0; color: var(--muted); font-size: var(--text-sm); }
-.course-go { margin: var(--space-2) 0 0; }
-/* The panel keeps a hairline so it still reads as a panel where the pale tint is close to the sheet (dark mode). */
-.course-head { display: grid; gap: var(--space-5); padding: var(--space-6) var(--space-5); border-radius: var(--radius-l); border: 1.5px solid var(--line); background: var(--field-pale); }
-.course-head h1 { margin: var(--space-2) 0 var(--space-3); }
-.course-head .lede { margin-bottom: var(--space-5); }
-.course-head .btn-row { margin-bottom: var(--space-4); }
-.course-head .review-line[data-review-line] { margin-bottom: 0; }
-/* A receipt-white thumbnail: white in both modes, so its ink is pinned to navy like every other --paper surface. */
-.course-head .course-thumb { display: none; aspect-ratio: 4 / 3; background: var(--paper); --ink: var(--brand-navy); margin: 0; }
-@media (min-width: 900px) {
-  .course-head { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: center; padding: var(--space-7); }
-  .course-head .course-thumb { display: grid; }
-}
-.course-list-title { margin: var(--space-7) 0 var(--space-4); }
-
-/* ---- Lesson template v2: the video, the stepped walkthrough, the drawn document ---- */
-
-/* The video: a drawn poster, then the player in the same frame. 16:9, never taller than a phone screen. */
-.video { margin: var(--space-6) 0; }
-.video-frame { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius-l); overflow: hidden; background: var(--brand-navy); }
-.video-poster-head { position: absolute; top: var(--space-4); left: var(--space-4); right: var(--space-4); margin: 0; display: grid; gap: var(--space-1); color: var(--paper); font-size: var(--text-sm); text-align: left; }
-.video-poster-title { font-weight: 700; }
-.video-poster-channel { color: var(--paper); opacity: 0.85; }
-.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.video-poster { display: grid; place-items: center; align-content: center; gap: var(--space-3); padding: var(--space-5); color: var(--paper); }
-.video-play {
-  display: inline-flex; align-items: center; gap: var(--space-3); min-height: 56px; padding: 0 var(--space-5) 0 var(--space-4);
-  border: 2px solid var(--paper); border-radius: var(--radius-pill); background: var(--gold); color: var(--brand-navy);
-  font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); cursor: pointer;
-}
-.video-play:hover, .video-play:focus-visible { background: var(--gold-pale); }
-.video-play:focus-visible { outline: 3px solid var(--paper); outline-offset: 2px; }
-.video-play-glyph { width: var(--space-5); height: var(--space-5); fill: currentColor; }
-.video-ask { max-width: 100%; padding: var(--space-4); border-radius: var(--radius-m); background: var(--paper); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); }
-html:not(.js) .video-play { display: none; }
-/* On a phone the poster is 16:9 of ~312px: the head stacks above the play pill instead of sitting under it. */
-@media (max-width: 559px) {
-  .video-poster { align-content: start; justify-items: start; gap: var(--space-2); padding: var(--space-3) var(--space-4); }
-  .video-poster-head { position: static; text-align: left; }
-}
-.video-ask p { margin: 0 0 var(--space-3); font-size: var(--text-sm); }
-.video-ask .btn-row { margin: 0; }
-.video-link { display: inline-flex; align-items: center; min-height: var(--space-6); color: var(--paper); font-size: var(--text-sm); text-decoration-color: var(--gold); }
-.video-caption { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); margin-top: var(--space-2); font-size: var(--text-sm); color: var(--muted); }
-.video-title { font-weight: 700; color: var(--ink); }
-
-/* Show me: one ledger line at a time. Each "Next line" is a details summary styled as a quiet button. */
+/* Show me: one ledger line at a time, each behind "Show line N" (.btn-secondary .btn-sm on the summary). */
 .showme { margin: var(--space-5) 0; }
 .showme-context { margin-bottom: var(--space-3); }
-.showme-controls { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-3); font-size: var(--text-sm); color: var(--muted); }
-.showme-all { display: inline-flex; align-items: center; min-height: var(--space-6); background: none; border: 0; padding: 0; color: var(--accent-text); font: inherit; font-size: var(--text-sm); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-.showme-all:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-/* Set as a ledger on the sheet, not in a box: rules and the double rule carry it (BRAND_GUIDE §5). */
-.showme > .showme-lines { margin: 0 0 var(--space-5); }
+.showme-controls { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-2); }
 .showme-lines { list-style: none; margin: 0; padding: 0; }
-.showme-lines .showme-lines { margin: 0; padding: 0; border: 0; background: none; }
-.showme-line { border-top: 1px solid var(--line); padding-bottom: var(--space-3); }
+.showme > .showme-lines { margin: 0 0 var(--space-5); }
+.showme-lines .showme-lines { margin: 0; }
+.showme-line { border-top: var(--rule-w) solid var(--rule); }
 .showme > .showme-lines > .showme-line:first-child { border-top: 0; }
 .showme-line.ledger-total { border-top-color: var(--ink); }
-.showme-line .ledger-label { display: grid; gap: var(--space-1); font-weight: 400; }
-.showme-caption { order: 5; flex-basis: 100%; margin-top: var(--space-1); font-size: var(--text-ui); color: var(--ink-2); }
+.showme-caption { order: 5; flex-basis: 100%; margin-top: var(--space-1); color: var(--ink-2); font-size: var(--text-md); }
 .showme-next { margin: 0; padding: 0; }
-.showme-more > summary {
-  display: inline-flex; align-items: center; gap: var(--space-3); min-height: 44px; margin: var(--space-2) 0 var(--space-3);
-  padding: 0 var(--space-4); border: 1.5px solid var(--line-strong); border-radius: var(--radius-s); background: var(--bg);
-  color: var(--ink); font-weight: 700; cursor: pointer; list-style: none;
-}
+.showme-more > summary { margin: var(--space-2) 0 var(--space-3); list-style: none; }
 .showme-more > summary::-webkit-details-marker { display: none; }
-.showme-more > summary::before { content: '+'; font-family: var(--font-display); font-weight: 800; }
-/* Once opened the control stays, so focus has somewhere to be, and it now names the line it revealed. */
-.showme-more[open] > summary { border-color: transparent; background: none; color: var(--muted); font-weight: 400; padding-left: 0; cursor: default; }
-.showme-more[open] > summary::before { content: none; }
+.showme-count { color: var(--muted); font-weight: 400; }
 .showme-more > summary .showme-open-label { display: none; }
 .showme-more[open] > summary .showme-next-label { display: none; }
 .showme-more[open] > summary .showme-open-label { display: inline; }
-.showme-more > summary:hover { background: var(--field-pale); }
-.showme-more > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.showme-count { color: var(--muted); font-weight: 400; font-size: var(--text-sm); }
-
-/* The drawn document. A sheet of paper: white in both modes, navy ink, a ruled list of lines. */
-.doc-task { margin: 0 0 var(--space-3); color: var(--muted); font-size: var(--text-sm); }
-.doc { margin: var(--space-5) 0; padding: var(--space-5); border: 1.5px solid var(--line-strong); border-radius: var(--radius-l); background: var(--paper); color: var(--brand-navy); --ink: var(--brand-navy); --ink-2: var(--brand-navy); --muted: var(--brand-navy); }
-.doc-head { display: grid; gap: var(--space-1); margin-bottom: var(--space-4); }
-.doc-kind { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0; }
-.doc-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h3); }
-.doc-note { font-size: var(--text-xs); }
-.doc-lines { margin: 0; }
-/* Both columns may shrink, so a long value ("Friday 3 October") wraps instead of starving the label at 360px. */
-.doc-line { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, auto); gap: var(--space-1) var(--space-3); padding: var(--space-2) 0; border-top: 1px dotted var(--brand-navy); margin: 0; }
-.doc-label { margin: 0; }
-.doc-value { margin: 0; font-weight: 700; text-align: right; overflow-wrap: anywhere; }
-.doc-hint summary { display: inline-flex; align-items: center; min-height: var(--space-6); cursor: pointer; list-style: none; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: var(--gold); }
-.doc-hint summary::-webkit-details-marker { display: none; }
-.doc-hint p { margin: var(--space-1) 0 0; font-size: var(--text-sm); font-weight: 400; }
-
-@media print {
-  .video-frame { display: none; }
-  .showme-more > summary { display: none; }
+/* The key idea closes the chain inside the last fold; the list's own margin spaces what follows. */
+.showme .key-idea { margin-bottom: 0; }
+/* Once opened the control stays (44px, focusable) as quiet text naming the line it showed. */
+.showme-more[open] > summary,
+.showme-more[open] > summary:is(:hover, :active) {
+  padding-inline: 0;
+  border-color: transparent;
+  background: none;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  cursor: default;
 }
 
-/* v2: the step list, hints, the key idea, one more */
-.lesson-steps { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: var(--space-3) 0 0; font-size: var(--text-sm); }
-.lesson-steps-label { color: var(--muted); font-weight: 700; }
-.lesson-steps a { display: inline-flex; align-items: center; min-height: var(--space-6); color: var(--accent-text); text-decoration: none; }
-.lesson-steps a:hover, .lesson-steps a:focus-visible { text-decoration: underline; }
-.hints { list-style: none; margin: 0 0 var(--space-4); padding: 0; }
-.hints li { margin: 0; }
-.practice-hint > summary { display: inline-flex; align-items: center; min-height: 44px; cursor: pointer; font-weight: 700; color: var(--accent-text); list-style: none; }
-.practice-hint > summary::-webkit-details-marker { display: none; }
-.practice-hint > summary::before { content: '+'; margin-right: var(--space-2); font-family: var(--font-display); font-weight: 800; }
-.practice-hint[open] > summary::before { content: '−'; }
-.practice-hint > p { margin: 0 0 var(--space-3) var(--space-5); font-size: var(--text-md); color: var(--ink-2); }
-.key-idea { margin: var(--space-4) 0 0; font-size: var(--text-lg); }
-/* "One more" is folded: a second run for readers who want it, not a third box for everyone. */
-.practice-more { margin-top: var(--space-5); }
-.practice-more > summary { font-size: var(--text-md); }
+/* ---- Your turn: three hints, each the shared fold summary (base.css), all free to open ---- */
 
-/* v2 header and folds */
-/* Type under a hairline, not a box: the title band is white now. */
-.lesson-after { margin-top: var(--space-5); padding: var(--space-4) 0 0; border-top: 1px solid var(--line); }
-.lesson-after-label { margin: 0 0 var(--space-2); font-size: var(--text-sm); font-weight: 700; }
-.lesson-after ul { margin: 0; padding-left: var(--space-5); }
-.lesson-after li { margin: 0; }
-.lesson-actions li { margin-bottom: var(--space-2); }
-/* A text disclosure under a hairline, not another box. */
-.lesson-details { margin: var(--space-6) 0; padding: var(--space-3) 0 0; border-top: 1px solid var(--line); }
-.lesson-details > summary { font-weight: 700; cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--accent-text); }
-/* In v2 the practice ledger sits on the sheet too. */
-.lesson-v2 .steps { border: 0; padding: 0; background: none; }
-.lesson-details ul { margin: var(--space-3) 0 0; }
-.explorer-change { margin: 0 0 var(--space-3); color: var(--muted); font-size: var(--text-sm); }
+.hints { list-style: none; margin: 0 0 var(--space-4); padding: 0; border-top: var(--rule-w) solid var(--rule); }
+.hints li { margin: 0; border-bottom: var(--rule-w) solid var(--rule); }
+.practice-hint > p { margin: 0 0 var(--space-3); color: var(--ink-2); }
+/* Where the open fold has no inset rule (base.css), the hint lines up with the summary's words. */
+@supports not selector(::details-content) {
+  .practice-hint > p { padding-inline-start: calc(1ch + var(--space-2)); }
+}
+
+/* ---- The drawn document: a white .box, lines like a statement's, a hint behind each label ---- */
+
+.doc-task { margin: 0 0 var(--space-3); color: var(--muted); font-size: var(--text-sm); }
+.doc { margin: var(--space-4) 0 var(--space-5); }
+.doc-head { display: grid; gap: var(--space-1); margin-bottom: var(--space-4); }
+.doc-kind { color: var(--muted); font-size: var(--text-xs); font-weight: 700; }
+.doc-title { color: var(--ink); font-size: var(--text-lg); font-weight: 700; line-height: var(--leading-heading); }
+.doc-note { color: var(--muted); font-size: var(--text-xs); }
+.doc-lines { margin: 0; }
+/* Both columns may shrink, so a long value ("Friday 3 October") wraps instead of starving the label. */
+.doc-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: var(--space-2) 0;
+  border-top: var(--rule-w) solid var(--rule);
+}
+.doc-label { margin: 0; color: var(--ink-2); }
+.doc-value { margin: 0; color: var(--ink); font-weight: 700; text-align: end; overflow-wrap: break-word; }
+.doc-hint > summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  color: var(--ink);
+  text-decoration: underline dotted var(--ink);
+  text-decoration-thickness: var(--rule-w);
+  text-underline-offset: var(--space-1);
+  cursor: pointer;
+  list-style: none;
+}
+.doc-hint > summary::-webkit-details-marker { display: none; }
+.doc-hint > summary:hover { text-decoration-style: solid; }
+.doc-hint > p { margin: 0 0 var(--space-2); padding-top: var(--space-2); border-top: var(--rule-w) solid var(--rule); color: var(--ink-2); font-size: var(--text-sm); }
+
+/* ---- The video: a compact drawn poster; the 16:9 player replaces it after a tap and a yes ---- */
+
+.video { margin: var(--space-4) 0 var(--space-5); }
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: var(--rule-w) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: inherit; }
+/* The poster is only as tall as what it holds (title, Play, the link), left-aligned at every width:
+   a 16:9 box of pale surface around one button reads as a broken player on a laptop. The 16:9 frame
+   is the iframe's, once it loads. Never a scroll box, so the question gets the room it needs. */
+.video-frame.video-poster { aspect-ratio: auto; }
+.video-poster { display: grid; grid-template-rows: auto 1fr auto; gap: var(--space-3); padding: var(--space-4); }
+.video-poster-head { display: grid; gap: var(--space-1); max-width: none; margin: 0; }
+.video-poster-title { color: var(--ink); font-size: var(--text-md); font-weight: 700; line-height: var(--leading-ui); }
+.video-poster-channel { color: var(--muted); font-size: var(--text-sm); }
+.video-poster-main { display: grid; align-content: center; justify-items: start; gap: var(--space-3); }
+.video-play-glyph { flex: none; width: var(--space-5); height: var(--space-5); fill: currentColor; }
+html:not(.js) .video-play { display: none; }
+.video-ask { max-width: 100%; padding: var(--space-4); border: var(--rule-w) solid var(--border); border-radius: var(--radius); background: var(--bg); font-size: var(--text-sm); }
+.video-ask p { margin: 0 0 var(--space-3); }
+.video-ask .btn-row { margin: 0; }
+.video-link { display: inline-flex; align-items: center; justify-self: start; min-height: var(--target); font-size: var(--text-sm); }
+.video-caption { margin-top: var(--space-2); color: var(--muted); font-size: var(--text-sm); }
+
+/* ---- Drills: situations split by rules, each a made-up screen and a question ---- */
+
+.drill-list { list-style: none; margin: var(--space-5) 0 0; padding: 0; }
+.drill-list > li { margin: 0; padding-top: var(--space-6); border-top: var(--rule-w) solid var(--rule); }
+.drill-count { margin-bottom: var(--space-3); color: var(--muted); font-size: var(--text-sm); }
+.drill-scope { color: var(--ink-2); font-size: var(--text-sm); }
+.reflection { padding-top: var(--space-5); border-top: var(--rule-w) solid var(--rule); color: var(--ink); font-size: var(--text-lg); }
+
+/* A made-up screen: a white .box with square corners, not a drawn phone. */
+.mock-screen { max-width: calc(var(--column) / 2); margin: 0 0 var(--space-5); }
+.ms-kind { margin: 0 0 var(--space-3); padding-bottom: var(--space-2); border-bottom: var(--rule-w) solid var(--rule); color: var(--muted); font-size: var(--text-sm); }
+.ms-body p { margin: 0 0 var(--space-2); font-size: var(--text-sm); }
+.ms-from { color: var(--ink); font-weight: 700; }
+.ms-body .ms-amount { color: var(--ink); font-size: var(--text-h2); font-weight: 700; line-height: var(--leading-heading); }
+.ms-qr { display: block; width: calc(var(--space-8) + var(--space-7)); height: calc(var(--space-8) + var(--space-7)); margin: var(--space-2) 0 var(--space-3); color: var(--ink); }
+.ms-body .ms-action {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: var(--rule-w) solid var(--border);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-weight: 700;
+}
+.ms-tag { margin: var(--space-3) 0 0; padding-top: var(--space-2); border-top: var(--rule-w) solid var(--rule); color: var(--muted); font-size: var(--text-sm); }
+
+/* ---- The foot of a lesson: type, not blocks ---- */
+
+.return-line { color: var(--ink); font-weight: 700; }
+.lesson-terms dt { margin-top: var(--space-4); color: var(--ink); font-weight: 700; }
+.lesson-terms dd { margin: 0; }
+.lesson-terms dd .example { color: var(--muted); font-size: var(--text-sm); }
+.lesson-terms :target { margin-inline: calc(-1 * var(--space-3)); padding: var(--space-2) var(--space-3); border-radius: var(--radius); background: var(--tint); }
+.glossary-link { display: inline-flex; align-items: center; min-height: var(--target); }
+/* "If it happens to you": ink 700, with the number and the site as blue links in the sentence. */
+.report { color: var(--ink); font-weight: 700; }
+.report a strong { color: inherit; }
+/* Named links from a lesson to its tools (ink 700, underlined: base.css), server-rendered. */
+.tool-handoffs { margin: var(--space-5) 0 0; }
+.tool-handoffs li { margin: 0; }
+/* Two 44px links stacked would touch; 8px keeps each its own target. */
+.tool-handoffs li + li { margin-top: var(--space-2); }
+
+.lesson-fine { margin-top: var(--space-7); color: var(--muted); font-size: var(--text-xs); }
+.lesson-fine .lesson-meta { margin: 0 0 var(--space-4); font-size: var(--text-sm); }
+.lesson-fine h2 { margin: var(--space-5) 0 var(--space-2); font-size: var(--text-sm); }
+.lesson-fine ul { margin-bottom: var(--space-3); }
+.lesson-fine a, .lesson-fine a:hover { color: inherit; }
+.lesson-fine .cite-url { overflow-wrap: anywhere; }
+.lesson-next { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); margin-top: var(--space-7); padding-top: var(--space-5); border-top: var(--rule-w) solid var(--rule); }
+.marked { color: var(--success); font-size: var(--text-sm); font-weight: 700; }
+
+@media print {
+  /* A worksheet handed round a club must not carry one reader's progress. */
+  .poll-status, .return-line, .lesson-next, .marked, .term-pop, .explorer-actions, .lesson-steps { display: none !important; }
+  .reveal[open] > .reveal-body { display: none; }
+  .video-frame { display: none; }
+  .showme-more > summary { display: none; }
+  .lesson-grid { display: block; }
+  .poll, .doc, .mock-screen { border-color: var(--print-line); }
+}

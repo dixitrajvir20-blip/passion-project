@@ -1,0 +1,19 @@
+/* Rent and bills as a share of net pay. Tokens only; the shell is tools.css. */
+
+/* rent-share: these facts carry words, not only a figure, so they may wrap. Held on one line,
+   "exactly at it; …" or a long figure pushes the results panel, and every ledger figure in it,
+   past the right edge of a phone (WCAG 1.4.10). The row wraps the way a ledger row does
+   (base.css): the label takes what room is left and wraps inside it, and only when the value
+   will not fit beside the label's longest word does the value drop to its own line. So a short
+   figure such as €450 stays whole beside its label, and is never split to make room for it. */
+.tool .rent-share-facts .result-fact { flex-wrap: wrap; }
+.tool .rent-share-facts .result-fact-label { flex: 1 1 0; }
+.tool .rent-share-facts .result-fact-value { white-space: normal; text-align: end; overflow-wrap: anywhere; margin-left: auto; }
+
+/* The largest amounts a field takes (up to 100,000,000,000) and the shares they make can be wider
+   than a 320px panel. Such a figure breaks inside itself rather than push the panel sideways. At
+   ordinary sizes nothing changes: a ledger figure still drops to its own row first (base.css) and
+   breaks only when that row is too narrow for it. */
+.tool.rent-share .result-figure-value,
+.tool.rent-share .ledger-figure { overflow-wrap: anywhere; }
+.tool.rent-share .ledger-figure { white-space: normal; flex-shrink: 1; min-width: 0; }

@@ -1,0 +1,59 @@
+---
+/**
+ * "Terms on this page": the glossary entries a tool page uses (CTC, EPF, TDS, FICA, KYC, IBAN…),
+ * for readers who arrive without the lesson that defines them. Server-rendered. A missing id fails
+ * the build, the same as a lesson's glossary.
+ */
+import { getEntry } from 'astro:content';
+
+interface Props {
+  ids: string[];
+}
+
+const { ids } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const entries = await Promise.all(
+  ids.map(async (id) => {
+    const entry = await getEntry('glossary', id);
+    if (!entry) throw new Error(`ToolTerms: glossary id "${id}" is not in src/content/glossary/`);
+    return entry;
+  }),
+);
+---
+
+<section class="tool-terms" aria-labelledby="tool-terms-h">
+  <h2 id="tool-terms-h">Terms on this page</h2>
+  <dl>
+    {entries.map((entry) => (
+      <div id={`term-${entry.id}`}>
+        <dt lang={entry.data.lang}><a href={`${base}/glossary#${entry.id}`}>{entry.data.term}</a></dt>
+        <dd>{entry.data.define}</dd>
+      </div>
+    ))}
+  </dl>
+</section>
+
+<style>
+  /* Ruled rows under a small heading. Each term is a row title that links to its glossary entry:
+     ink 700, underlined on hover and focus, 44px tall; the definition is the body text under it. */
+  .tool-terms { margin-top: var(--space-7); }
+  .tool-terms h2 { margin: 0 0 var(--space-3); font-size: var(--text-lg); }
+  .tool-terms dl { margin: 0; border-top: var(--rule-w) solid var(--rule); }
+  .tool-terms dl > div { padding-block: var(--space-2) var(--space-4); border-bottom: var(--rule-w) solid var(--rule); }
+  .tool-terms dt { margin: 0; }
+  .tool-terms dt a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target);
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .tool-terms dt a:is(:hover, :focus-visible) {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: var(--control-w);
+    text-underline-offset: 0.16em;
+  }
+  .tool-terms dd { margin: 0; color: var(--ink-2); }
+</style>

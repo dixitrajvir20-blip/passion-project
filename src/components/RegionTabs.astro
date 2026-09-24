@@ -1,9 +1,13 @@
 ---
 /**
- * The edition menu: a dropdown showing the current edition's flag and name; open it to pick
- * another. Built on <details>, so it opens and closes without JavaScript, and the choices are
- * ordinary links. A little script closes it on Escape or on a click elsewhere. It is on every page
- * in the same place (WCAG 3.2.3); inside an edition, switching keeps you on the same kind of page.
+ * The edition menu: the current edition's flag and name; open it to pick another. Built on
+ * <details>, so it opens and closes without JavaScript, and the choices are ordinary links. It is on
+ * every page in the same place (WCAG 3.2.3); inside an edition, switching keeps you on the same kind
+ * of page. Escape, an outside click and focus leaving it close it (the script in Header.astro,
+ * shared with Menu through data-disclosure).
+ *
+ * Below 1024px it is a white row under the blue bar and its list opens in the flow, pushing the page
+ * down. From 1024px the summary sits in the bar in white and the list is a 280px dropdown.
  */
 import Flag from './Flag.astro';
 import { REGIONS } from '../lib/regions';
@@ -12,32 +16,41 @@ interface Props {
   current?: string;
   /** Sub-path within the edition, so switching keeps you on the same kind of page. */
   sub?: string;
+  /**
+   * Per-edition sub-paths where they differ: from a tool another edition lacks, that edition's
+   * link lands on its tools index instead ('tools'), and on the same tool where it exists.
+   */
+  subs?: Partial<Record<string, string>>;
 }
 
-const { current, sub = '' } = Astro.props;
+const { current, sub = '', subs } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const tail = current && sub ? `/${sub}` : '';
+const tailFor = (code: string) => {
+  const path = subs?.[code] ?? sub;
+  return current && path ? `/${path}` : '';
+};
 const active = REGIONS.find((r) => r.code === current);
 ---
 
 <nav class="region-tabs" aria-label="Choose your edition">
-  <details class="edition-menu" data-edition-menu>
-    <summary class="edition-current">
+  <details class="edition-menu" data-edition-menu data-disclosure>
+    <summary class="edition-current on-band-wide">
       {active ? <Flag code={active.code as 'in' | 'eu' | 'us'} /> : null}
-      <span class="edition-current-label">{active ? `${active.name} edition` : 'Choose an edition'}</span>
-      <span class="edition-caret" aria-hidden="true">▾</span>
+      <span class="edition-current-label">
+        {active ? <>{active.name}<span class="edition-word"> edition</span></> : 'Choose an edition'}
+      </span>
+      <span class="edition-caret" aria-hidden="true"></span>
     </summary>
     <ul class="edition-list">
       {REGIONS.map((region) => (
         <li>
           <a
-            href={`${base}/${region.code}${tail}`}
+            href={`${base}/${region.code}${tailFor(region.code)}`}
             aria-current={region.code === current ? 'true' : undefined}
             data-region={region.code}
           >
             <Flag code={region.code as 'in' | 'eu' | 'us'} />
             <span>{region.name}</span>
-            {region.code === current && <span class="edition-mark" aria-hidden="true">✓</span>}
           </a>
         </li>
       ))}
@@ -46,18 +59,6 @@ const active = REGIONS.find((r) => r.code === current);
 </nav>
 
 <script>
-  const menu = document.querySelector<HTMLDetailsElement>('[data-edition-menu]');
-  if (menu) {
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && menu.open) {
-        menu.open = false;
-        menu.querySelector('summary')?.focus();
-      }
-    });
-    document.addEventListener('click', (event) => {
-      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
-    });
-  }
   // Remember the edition so the front page can offer it next time. Preference only:
   // exempt from consent (WP29 Opinion 04/2012; UK PECR preference exception).
   const current = document.querySelector('.region-tabs a[aria-current]');
@@ -71,59 +72,109 @@ const active = REGIONS.find((r) => r.code === current);
 </script>
 
 <style>
-  .region-tabs { position: relative; }
-  .edition-menu { position: relative; }
+  /* Below 1024px: a white row under the bar. */
+  .region-tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: var(--edition-row-h);
+  }
   .edition-current {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    min-height: 44px;
-    padding: 0 var(--space-3) 0 var(--space-3);
-    border-radius: var(--radius-pill);
-    background: var(--paper);
-    color: var(--brand-navy);
-    border: 1.5px solid var(--brand-navy);
-    font-family: var(--font-display);
+    min-height: var(--target);
+    color: var(--ink);
     font-size: var(--text-sm);
     font-weight: 700;
+    line-height: var(--leading-ui);
+    white-space: nowrap;
     cursor: pointer;
     list-style: none;
-    white-space: nowrap;
   }
   .edition-current::-webkit-details-marker { display: none; }
-  .edition-current:hover { background: var(--gold-pale); }
-  .edition-menu[open] .edition-current { background: var(--gold-pale); }
-  .edition-caret { font-size: var(--text-xs); }
-  .edition-menu[open] .edition-caret { transform: rotate(180deg); }
-
-  .edition-list {
-    position: absolute;
-    right: 0;
-    top: calc(100% + var(--space-2));
-    z-index: 50;
-    min-width: 240px;
-    margin: 0;
-    padding: var(--space-2);
-    list-style: none;
-    background: var(--paper);
-    border: 1.5px solid var(--brand-navy);
-    border-radius: var(--radius-m);
+  .edition-current:hover .edition-current-label { text-decoration: underline; text-decoration-thickness: var(--control-w); text-underline-offset: 0.16em; }
+  .edition-current :global(.flag) { flex: none; border-radius: calc(var(--radius) / 2); }
+  /* A small chevron drawn with two borders in the text colour: it points down, and up once open. It
+     is not a glyph ('▾' is outside the self-hosted font, so it would come from a system font) and
+     not a border triangle (its transparent sides can fill in under forced colours). */
+  .edition-caret {
+    flex: none;
+    width: calc(var(--space-2) - var(--space-1) / 2);
+    height: calc(var(--space-2) - var(--space-1) / 2);
+    margin: 0 var(--space-1) var(--space-1);
+    border-inline-end: var(--control-w) solid currentColor;
+    border-bottom: var(--control-w) solid currentColor;
+    transform: rotate(45deg);
   }
+  .edition-menu[open] .edition-caret { margin: var(--space-1) var(--space-1) 0; transform: rotate(-135deg); }
+
+  .edition-list { width: 100%; margin: 0; padding: 0; list-style: none; border-top: var(--rule-w) solid var(--rule); }
   .edition-list li { margin: 0; }
+  .edition-list li + li { border-top: var(--rule-w) solid var(--rule); }
   .edition-list a {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    min-height: 44px;
-    padding: 0 var(--space-3);
-    border-radius: var(--radius-s);
-    color: var(--brand-navy);
-    font-family: var(--font-body);
-    font-size: var(--text-ui);
+    min-height: var(--target-lg);
+    padding-inline: var(--space-4);
+    color: var(--ink);
+    font-size: var(--text-md);
+    line-height: var(--leading-ui);
     text-decoration: none;
   }
-  .edition-list a:hover { background: var(--field-pale); }
-  .edition-list a[aria-current] { font-weight: 700; background: var(--gold-pale); }
-  .edition-mark { margin-left: auto; font-weight: 700; }
-  .edition-list :global(.flag), .edition-current :global(.flag) { flex: none; border-radius: var(--radius-xs); }
+  .edition-list a:hover span { text-decoration: underline; text-decoration-thickness: var(--control-w); text-underline-offset: 0.16em; }
+  .edition-list :global(.flag) {
+    flex: none;
+    width: calc(var(--space-6) - var(--space-1));
+    height: auto;
+    aspect-ratio: 3 / 2;
+    border-radius: calc(var(--radius) / 2);
+  }
+  /* The current edition: 700, a 4px blue bar (a border, so it survives forced colours) and a drawn
+     check at the end of the row. */
+  .edition-list a[aria-current] {
+    padding-inline-start: calc(var(--space-4) - var(--bar-w));
+    border-inline-start: var(--bar-w) solid var(--blue);
+    font-weight: 700;
+  }
+  .edition-list a[aria-current]::after {
+    content: '';
+    flex: none;
+    width: var(--space-3);
+    height: calc(var(--space-2) - var(--space-1) / 2);
+    margin-inline: auto var(--space-1);
+    border-inline-start: var(--control-w) solid currentColor;
+    border-bottom: var(--control-w) solid currentColor;
+    transform: translateY(-25%) rotate(-45deg);
+  }
+
+  /* From 1024px: the summary is white in the bar, the word "edition" is kept for screen readers
+     only, and the list is a dropdown under the bar. With JavaScript off, an open dropdown can sit
+     over the top right of the page until it is closed: the one documented limit. */
+  @media (min-width: 1024px) {
+    .region-tabs { position: relative; min-height: 0; }
+    .edition-current :global(.flag) { outline: var(--rule-w) solid var(--on-blue); }
+    .edition-word {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .edition-list {
+      position: absolute;
+      top: 100%;
+      inset-inline-end: 0;
+      z-index: 50;
+      width: calc(var(--rail) + var(--space-5));
+      border: var(--rule-w) solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+    }
+  }
 </style>

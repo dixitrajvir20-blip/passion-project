@@ -1,4 +1,17 @@
 ---
+/**
+ * The header: one blue bar at every width, static (it never sticks, so it can never cover focus).
+ *
+ * - Below 1024px: the bar holds the inverse badge, the wordmark and a Menu disclosure; the edition
+ *   menu sits in a white row under the bar. Both panels open in the normal flow, so they push the
+ *   page down and never cover the next thing to focus, with or without JavaScript.
+ * - From 1024px: the bar holds the badge and wordmark, the six links in white, and the edition
+ *   summary in white with its dropdown.
+ *
+ * Exactly one nav named "Main" is exposed at a time: the other is display:none, or inside the
+ * closed Menu. Both are native <details>; the script below only adds Escape, outside click,
+ * focus-leaving and one-open-at-a-time.
+ */
 import Logo from './Logo.astro';
 import RegionTabs from './RegionTabs.astro';
 import { site } from '../lib/site';
@@ -8,96 +21,225 @@ interface Props {
   region?: string;
   /** Sub-path the edition switch keeps when changing edition. */
   regionSub?: string;
+  /** Per-edition sub-paths, where an edition lacks this page. */
+  regionSubs?: Partial<Record<string, string>>;
   path?: string;
 }
 
-const { region, regionSub = '', path = '' } = Astro.props;
+const { region, regionSub = '', regionSubs, path = '' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = region ? `${base}/${region}` : base;
 
+// One list for both navs. When accounts go live the seventh link does not fit the bar at 1024px:
+// Phase 6 raises the breakpoint to 1100px (docs/OWNER_TODO.md).
 const links = [
   { label: 'Learn', to: region ? `${prefix}/learn` : `${base}/#editions`, key: 'learn' },
-  { label: 'Calculators', to: region ? `${prefix}/tools` : `${base}/#calculators`, key: 'tools' },
-  { label: 'Glossary', to: `${base}/glossary`, key: 'glossary', wide: true },
+  { label: 'Tools', to: region ? `${prefix}/tools` : `${base}/#calculators`, key: 'tools' },
+  { label: 'Glossary', to: `${base}/glossary`, key: 'glossary' },
   { label: 'Dashboard', to: `${base}/dashboard`, key: 'dashboard' },
-  { label: 'About', to: `${base}/about`, key: 'about', wide: true },
+  { label: 'About', to: `${base}/about`, key: 'about' },
   { label: 'Search', to: `${base}/search`, key: 'search' },
+  ...(site.accountsEnabled ? [{ label: 'Sign in', to: `${base}/account`, key: 'account' }] : []),
 ];
 ---
 
-<header class="site-header on-band" id="top">
+<header class="site-header" id="top">
   <div class="container header-inner">
-    <a class="brand" href={region ? prefix : `${base}/`} aria-label={`${site.name} home`}>
-      <Logo size={40} />
+    <a class="brand on-band" href={region ? prefix : `${base}/`} aria-label={`${site.name} home`}>
+      <Logo size={32} variant="inverse" />
       <span class="wordmark">{site.name}</span>
     </a>
-    <nav class="main-nav" aria-label="Main">
+    <nav class="main-nav on-band" aria-label="Main">
       <ul>
         {links.map((l) => (
-          <li class={l.wide ? 'nav-wide' : undefined}>
-            <a href={l.to} aria-current={path === l.key ? 'page' : undefined} data-astro-prefetch>{l.label}</a>
-          </li>
+          <li><a href={l.to} aria-current={path === l.key ? 'page' : undefined} data-astro-prefetch>{l.label}</a></li>
         ))}
-        {site.accountsEnabled && (
-          <li><a href={`${base}/account`} aria-current={path === 'account' ? 'page' : undefined}>Sign in</a></li>
-        )}
       </ul>
     </nav>
-    <RegionTabs current={region} sub={regionSub} />
+    <details class="nav-menu" data-disclosure>
+      <summary class="on-band">Menu<span class="nav-menu-mark" aria-hidden="true"></span></summary>
+      <nav class="menu-panel" aria-label="Main">
+        <ul>
+          {links.map((l) => (
+            <li><a href={l.to} aria-current={path === l.key ? 'page' : undefined} data-astro-prefetch>{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+    <RegionTabs current={region} sub={regionSub} subs={regionSubs} />
   </div>
 </header>
 
+<script>
+  // The header's two disclosures (Menu below 1024px, the edition menu everywhere) are native
+  // <details>, so they open and close without JavaScript. This adds the rest: Escape closes the
+  // open one and returns focus to its summary; a click outside closes it; focus leaving it closes
+  // it; opening one closes the other.
+  const menus = Array.from(document.querySelectorAll<HTMLDetailsElement>('details[data-disclosure]'));
+  // Focus leaving a menu closes it only when the keyboard moved it. A tap or click moves focus on
+  // pointer down; closing an in-flow panel then would shift the page under the pointer and lose the
+  // click (and Safari, and Firefox on macOS, do not focus a link on click at all). Pointer moves are
+  // left to the outside-click handler, which runs after the click has landed.
+  let pointing = false;
+  document.addEventListener('pointerdown', () => { pointing = true; }, true);
+  document.addEventListener('click', () => { pointing = false; }, true);
+  document.addEventListener('keydown', () => { pointing = false; }, true);
+  for (const menu of menus) {
+    menu.addEventListener('toggle', () => {
+      if (menu.open) for (const other of menus) if (other !== menu) other.open = false;
+    });
+    menu.addEventListener('focusout', (event) => {
+      const next = event.relatedTarget;
+      if (!pointing && menu.open && next instanceof Node && !menu.contains(next)) menu.open = false;
+    });
+  }
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const open = menus.find((menu) => menu.open);
+    if (!open) return;
+    open.open = false;
+    open.querySelector('summary')?.focus();
+  });
+  document.addEventListener('click', (event) => {
+    for (const menu of menus) {
+      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    }
+  });
+</script>
+
 <style>
-  /* The header sits on the dark-blue field: white wordmark, a white pill group for the site's
-     sections, and the edition menu at the right. */
-  .site-header { background: var(--band); position: relative; z-index: 40; }
-  @media (min-width: 900px) { .site-header { position: sticky; top: 0; } }
+  /* The one blue block: a ::before under the whole width, so the content keeps the container. In
+     forced colours it becomes Canvas and the white text CanvasText. */
+  .site-header {
+    position: relative;
+    background: var(--bg);
+    border-bottom: var(--rule-w) solid var(--rule);
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: var(--bar-h);
+    background: var(--blue);
+  }
 
+  /* Below 1024px: the bar (brand, and the Menu summary placed up into it), the Menu panel in the
+     flow, then the white edition row. */
   .header-inner {
+    position: relative;
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-areas: 'brand editions' 'nav nav';
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: var(--bar-h) auto auto;
     align-items: center;
-    gap: var(--space-3) var(--space-3);
-    padding-top: var(--space-3);
-    padding-bottom: var(--space-3);
   }
-  @media (min-width: 900px) {
-    .header-inner { grid-template-columns: auto 1fr auto; grid-template-areas: 'brand nav editions'; min-height: var(--header-h); }
-  }
-  .brand { grid-area: brand; display: inline-flex; align-items: center; gap: var(--space-3); color: var(--ink); text-decoration: none; min-height: 44px; }
-  .wordmark { font-family: var(--font-display); font-weight: 800; font-size: var(--text-wordmark); letter-spacing: -0.02em; color: var(--ink); }
-  @media (max-width: 559px) { .wordmark { display: none; } }
-  .site-header :global(.region-tabs) { grid-area: editions; justify-self: end; }
 
-  .main-nav { grid-area: nav; justify-self: start; }
-  @media (min-width: 900px) { .main-nav { justify-self: center; } }
-  .main-nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1);
-    list-style: none;
-    margin: 0;
-    padding: var(--space-1);
-    border-radius: var(--radius-pill);
-  }
-  .main-nav li { margin: 0; }
-  @media (max-width: 419px) { .nav-wide { display: none; } }
-  .main-nav ul { background: var(--paper); }
-  .main-nav a {
+  .brand {
+    grid-row: 1;
+    justify-self: start;
     display: inline-flex;
     align-items: center;
-    min-height: 40px;
-    padding: 0 var(--space-3);
-    border-radius: var(--radius-pill);
-    color: var(--brand-navy);
-    font-family: var(--font-display);
-    font-size: var(--text-sm);
-    font-weight: 700;
+    gap: var(--space-3);
+    min-height: var(--target);
+    color: var(--ink);
     text-decoration: none;
   }
-  @media (min-width: 640px) { .main-nav a { padding: 0 var(--space-4); } }
-  .main-nav a:hover { background: var(--field-pale); }
-  .main-nav a[aria-current='page'] { background: var(--gold-pale); color: var(--on-gold); }
-  .main-nav a:focus-visible { outline-offset: 1px; }
+  .brand :global(svg) { flex: none; }
+  .wordmark {
+    color: var(--ink);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: var(--leading-heading);
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+  .brand:hover .wordmark { text-decoration: underline; text-decoration-thickness: var(--control-w); text-underline-offset: 0.16em; }
+
+  .main-nav { display: none; }
+
+  .nav-menu { grid-row: 2; }
+  /* A closed Menu takes no height: its summary sits up in the bar, 44px tall and centred, so its
+     3px ring (2px offset) stays on the blue, one gutter in from the edge. */
+  .nav-menu > summary {
+    position: absolute;
+    top: calc((var(--bar-h) - var(--target)) / 2);
+    inset-inline-end: var(--gutter);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: var(--target);
+    min-height: var(--target);
+    padding: 0 var(--space-3);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: var(--leading-ui);
+    cursor: pointer;
+    list-style: none;
+  }
+  .nav-menu > summary::-webkit-details-marker { display: none; }
+  /* The site's own disclosure marker: '+' closed, '−' open. */
+  .nav-menu-mark::before { content: '+'; display: inline-block; min-width: 1ch; }
+  .nav-menu[open] .nav-menu-mark::before { content: '−'; }
+  .nav-menu > summary:hover { text-decoration: underline; text-decoration-thickness: var(--control-w); text-underline-offset: 0.16em; }
+
+  .menu-panel ul { list-style: none; margin: 0; padding: 0; }
+  .menu-panel li { margin: 0; border-bottom: var(--rule-w) solid var(--rule); }
+  .menu-panel a {
+    display: flex;
+    align-items: center;
+    min-height: var(--target-lg);
+    padding-inline: var(--space-4);
+    color: var(--ink);
+    font-size: var(--text-md);
+    font-weight: 700;
+    line-height: var(--leading-ui);
+    text-decoration: none;
+  }
+  .menu-panel a:hover { text-decoration: underline; text-decoration-thickness: var(--control-w); text-underline-offset: 0.16em; }
+  /* The current row: a 4px blue bar, drawn as a border so it survives forced colours. */
+  .menu-panel a[aria-current='page'] {
+    padding-inline-start: calc(var(--space-4) - var(--bar-w));
+    border-inline-start: var(--bar-w) solid var(--blue);
+  }
+
+  .site-header :global(.region-tabs) { grid-row: 3; }
+
+  /* From 1024px: one row in the bar. Brand, the six links, the edition summary. */
+  @media (min-width: 1024px) {
+    .site-header { border-bottom: 0; }
+    .header-inner {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-rows: var(--bar-h);
+      column-gap: var(--space-6);
+    }
+    .brand { grid-column: 1; }
+    .nav-menu { display: none; }
+
+    .main-nav { display: block; grid-row: 1; grid-column: 2; align-self: stretch; }
+    .main-nav ul { display: flex; gap: var(--space-2); height: 100%; margin: 0; padding: 0; list-style: none; }
+    .main-nav li { display: flex; margin: 0; }
+    /* Each link is the bar's full height, so the current link's 4px white border sits on the bar's
+       bottom edge. The ring is drawn inside the link (the bar ends at its edge). */
+    .main-nav a {
+      display: flex;
+      align-items: center;
+      padding: var(--bar-w) var(--space-2);
+      color: var(--ink);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      line-height: var(--leading-ui);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .main-nav a:hover { text-decoration: underline; text-decoration-thickness: var(--control-w); text-underline-offset: var(--space-1); }
+    .main-nav a[aria-current='page'] { padding-bottom: 0; border-bottom: var(--bar-w) solid var(--ink); }
+    .main-nav a:focus-visible { outline-offset: calc(var(--space-1) * -1); }
+
+    .site-header :global(.region-tabs) { grid-row: 1; grid-column: 3; align-self: stretch; }
+  }
+
+  @media (forced-colors: active) {
+    .site-header::before { border-bottom: var(--rule-w) solid CanvasText; }
+  }
 </style>

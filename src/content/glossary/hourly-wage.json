@@ -1,0 +1,5 @@
+{
+  "term": "Hourly wage",
+  "define": "What an employer pays you for each hour worked, before anything comes off. Hours times the hourly wage gives gross pay.",
+  "example": "80 hours at an hourly wage of $20 is $1,600 of gross pay on a paycheck."
+}

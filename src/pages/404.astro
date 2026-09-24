@@ -15,7 +15,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <p class="lede">
         The link may be old, or the page may not be written yet. These work:
       </p>
-      <ul>
+      <ul class="ways">
         <li><a href={`${base}/#editions`}>Choose an edition</a> — India, Europe or the United States</li>
         <li><a href={`${base}/in/tools/break-even`}>Break-even calculator</a></li>
         <li><a href={`${base}/glossary`}>Glossary</a></li>
@@ -26,5 +26,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </BaseLayout>
 
 <style>
-  li { margin-bottom: var(--space-3); }
+  /* A list of links: blue and underlined like any link in a sentence, each 44px tall to tap. */
+  .ways { padding-inline-start: var(--space-5); }
+  .ways li { margin: 0; }
+  .ways a { display: inline-flex; align-items: center; min-height: var(--target); }
 </style>

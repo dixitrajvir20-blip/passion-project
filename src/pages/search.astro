@@ -183,14 +183,19 @@ Astro.csp?.insertScriptResource("'wasm-unsafe-eval'");
 
 <style>
   .lede { margin-bottom: var(--space-6); }
+  /* The field and the edition side by side from 640px; base.css draws the fields themselves. */
   .search { display: grid; gap: var(--space-4); margin-bottom: var(--space-5); }
   @media (min-width: 640px) { .search { grid-template-columns: 2fr 1fr; align-items: end; } }
   .search .field { margin-bottom: 0; }
-  .search-status { min-height: 1.6em; color: var(--muted); font-size: var(--text-sm); }
+  .search-status { min-height: var(--space-5); color: var(--muted); font-size: var(--text-sm); }
+  /* Ruled rows. The title is the link (ink 700, underlined on hover and focus, from base.css), and
+     it is stretched over its row, so the whole row is the target while the link's name stays the
+     title. <mark> is base.css's: the tint behind ink 700. */
   .results { list-style: none; margin: 0; padding: 0; }
-  .results :global(li) { margin: 0; padding: var(--space-4) 0; border-top: 1px solid var(--line); }
-  .results :global(.r-title) { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; letter-spacing: var(--tracking-heading); }
-  .results :global(.r-excerpt) { margin: var(--space-2) 0 0; font-size: var(--text-ui); color: var(--ink-2); }
-  .results :global(.r-meta) { margin: var(--space-2) 0 0; font-size: var(--text-sm); color: var(--muted); }
-  .results :global(mark) { background: color-mix(in srgb, var(--gold) 45%, var(--bg)); color: var(--ink); padding: 0 2px; border-radius: var(--radius-xs); }
+  .results :global(li) { position: relative; margin: 0; padding: var(--space-4) 0; border-top: var(--rule-w) solid var(--rule); }
+  .results :global(li:last-child) { border-bottom: var(--rule-w) solid var(--rule); }
+  .results :global(.r-title) { font-size: var(--text-lg); line-height: var(--leading-heading); }
+  .results :global(.r-title)::after { content: ''; position: absolute; inset: 0; }
+  .results :global(.r-excerpt) { margin: var(--space-2) 0 0; color: var(--ink-2); }
+  .results :global(.r-meta) { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--text-sm); }
 </style>

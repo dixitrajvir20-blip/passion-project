@@ -1,0 +1,1144 @@
+{
+ "v51": {
+  "decisions": [
+   "Owner decision 1 applied: 'blue heading' means the header bar. There is one blue block (#0B4AA2) at the top of every page. Every h1-h4 is navy ink #0B1240 at 700 and is never blue, including when a heading is a link (ink, underlined on hover).",
+   "Owner decision 2 applied: the page is white at every OS setting. src/styles/tokens.css sets :root { color-scheme: light }, BaseLayout sets <meta name='color-scheme' content='light'> and one theme-color from site.themeColor '#0b4aa2', and the dark and dark+more blocks and the dark chart values are deleted. The browser's own force-dark, forced colours and prefers-contrast: more still work.",
+   "Owner decision 3 applied: gold leaves the interface. --gold, --gold-pale, --gold-text, --on-gold, --highlight and --brand-gold are deleted, and so are gold panels, stickers, the highlighter, tag pills, the gold 'today' bar and the gold share-image label. The badge contains no gold, so gold appears nowhere.",
+   "Owner decision 4 applied: navy #0B1240 stays as the ink. Body #262F57 and muted #434D73, the navy-derived values from v3, stay. The rule, border, surface and tint greys are navy mixed into white at 20%, 55%, 4% and 8%, so every grey comes from the ink. Recomputed with the WCAG formula, navy on white is 17.88:1. BRAND_GUIDE printed 16.0:1, and its 12.6:1 and 8.0:1 are really 12.91:1 and 8.24:1; the guide is corrected.",
+   "Owner decision 5 applied: Atkinson Hyperlegible Next 400/700 is the only typeface, used for headings, body, UI, figures, the ledger and the wordmark. Bricolage's @font-face rules, preload, --font-display and public/fonts/bricolage-*.woff2 are deleted. The badge keeps its drawn B, which is a path. Share images keep the Bricolage TTF at build time only, until Rajvir approves downloading an Atkinson TTF (OFL).",
+   "Owner decision 6 applied: blue has exactly five jobs: links inside running text, the one primary button per screen, the focus ring, the 4px current-item bars, and the header bar. Titles in list rows (editions, lessons, tracks, tools, starters, search results) are ink 700, the whole row is the link, and the title underlines on hover. Standalone links (the crumb, tool hand-offs, 'All 12 tools', 'Next: <title>', 'More about Business Lab') are ink 700 and always underlined. Secondary buttons, checked options, pressed keys, the consent switch, disclosure summaries and hints are ink.",
+   "Owner decision 7 applied: Logo.astro gets variant 'inverse'. On the bar the badge is a white disc with the badge's own #0C61C4 ring and B, the drawing's two colours swapped, and nothing is recoloured. Everywhere else (footer, favicon, app icons) it stays a blue disc with a white B. scripts/brand-mark.mjs gains badgeInverse() for the share images.",
+   "Owner decision 8 applied: the lesson's first screen is one crumb line ('<- <track>' plus 'Lesson n of N · m min'), the h1, the lede, 'In this lesson' on one line (a closed fold on phones, an open sticky list in a left rail from 1024px) and 'After this you can'. The byline p.lesson-meta ('Reviewed ... Written by ...') stays in the lesson footer unchanged. There is no caption and no 'Checked by'.",
+   "Owner decision 9 applied: there is no decorative motion. @view-transition, smooth scroll, button scale, .cta transforms, the chevron rotation and colour transitions are removed. Only the consent switch knob moves (150ms, and only under prefers-reduced-motion: no-preference).",
+   "Owner decision 10 applied: GOV.UK is followed for type rules, rhythm and restraint only. There is no white service-nav strip (the desktop nav sits in white inside the one bar), no caption over the h1, no phase banner, no warning-text '!' circle, no step-by-step circles, no inset, summary-box or notification components, no Breadcrumbs component (the existing one-link '<- All tools' crumb is the pattern) and no reorder of error-above-input. The secondary button is neutral: white fill, 2px ink border, ink label.",
+   "Reviser: no copy changes beyond what the decisions force. 'Tools that answer', the tools index h1 'Tools', the footer 'Tools', 'Start with the first lesson', 'Open the tools', 'Details, if you want them', 'Next: <title>', 'Back to <track>' and the consent banner text all stay. Each page lists the strings that change.",
+   "Reviser: v5 additions nobody asked for, which made the page longer or more like a template, are dropped: numbered h2s (and lesson-steps.ts and BodyHeading.astro, which would have moved every MDX body into Show me), Breadcrumbs.astro, SideNav.astro, the two-way pager, the 'In this track' and 'Other tracks' navs, glossary A-Z groups, the /about 'Changes' section, the footer contact line, the home trust line, the summary box, the notification and warning-text components, and step-list circles.",
+   "Reviser: every hook and copy string asserted in tests/e2e/*.spec.ts is kept, including the untracked tools-foundation.spec.ts and tests/e2e/tools/*. No step edits an existing assertion. New checks go into a new tests/e2e/design.spec.ts and into og.spec.ts.",
+   "Reviser: the migration uses a LEGACY token block. Step 2 maps every retired token name to a v5.1 hex value: gold names to the tint or muted, radii to 4px, --font-display to the Atkinson stack, --dur to 0ms, --header-h to 0px. After group A every page is therefore white, gold-free, square-cornered and in one typeface, even before its own B rewrite. Step 22 deletes the block behind a grep gate.",
+   "Reviser: the header is one blue bar at every width (56px below 1024px, 64px from 1024px). Below 1024px the edition menu sits in a white 48px row under the bar, because the badge, wordmark, Menu and a flagged edition name do not fit 360px on one line. Both disclosure panels open in normal flow below 1024px, so they push content down and never cover it.",
+   "Reviser: group B builders work in parallel, each in its own git worktree made from the last group A commit, on disjoint files. Their commits are cherry-picked onto design-v5 in the order B1 to B6, never merged and never pushed. Each builder runs the full gate before handing back.",
+   "Reviser: Rajvir reviews screenshots at step 21, after group B and before anything old is deleted or the docs are rewritten. The screenshots are 360, 768 and 1280 in light, plus dark-OS captures that prove the page is white. His answers go into docs/OWNER_TODO.md and BRAND_GUIDE v4.",
+   "Reviser: three things still wait for Rajvir and do not block the build: shorter consent-banner wording, which is optional (today's copy ships and --banner-reserve is measured with it); downloading an Atkinson Hyperlegible Next TTF for the share images; and the CLAUDE.md, .claude/skills/ship-check and .claude/agents edits. Only his own edit or his yes in chat counts for those."
+  ],
+  "tokens": [
+   {
+    "token": "--blue",
+    "value": "#0b4aa2",
+    "role": "The one blue. It fills the header bar (painted by .site-header::before), the primary .btn and its border, links in running text, and the 4px current-item bars: the Menu panel row, the edition menu row, the dashboard side nav, and the :target term or glossary entry. It is never used on headings, labels, figures, list-row titles, secondary buttons, option borders or rules. It replaces --band, --accent and --accent-text.",
+    "contrast": "8.35:1 on white, 7.72:1 on --surface, 7.07:1 on --tint; white on it 8.35:1. Against --ink it is only 2.14:1 and against --ink-2 1.55:1, so a link inside running text is always underlined (WCAG 1.4.1)."
+   },
+   {
+    "token": "--blue-dark",
+    "value": "#08357a",
+    "role": "Hover and active state for links and the primary button. It replaces --accent-hover.",
+    "contrast": "11.66:1 on white, 10.78:1 on --surface, 9.88:1 on --tint; white on it 11.66:1."
+   },
+   {
+    "token": "--on-blue",
+    "value": "#ffffff",
+    "role": "Label of the primary button; text, current bars and the focus ring inside the blue bar; the skip link's focus outline. It replaces --on-accent.",
+    "contrast": "8.35:1 on --blue; 11.66:1 on --blue-dark"
+   },
+   {
+    "token": "--bg",
+    "value": "#ffffff",
+    "role": "Every page, the footer, boxes, panels, dialogs, the edition dropdown, the Menu panel and the term popover. There is no field and no sheet any more. It replaces --field, --paper, --band-surface and --bg-inverse.",
+    "contrast": "surface"
+   },
+   {
+    "token": "--surface",
+    "value": "#f5f6f7 (navy #0B1240 mixed 4% into white)",
+    "role": "The one pale surface, always with a 1px edge. Used for the calculator results bench, the lesson explorer, the video poster, the formula box, inline code and the secondary-button hover. It replaces --bg-2, --field-deep and --field-pale.",
+    "contrast": "1.08:1 against white, so it is a surface and never text. On it: --ink 16.52, --ink-2 11.93, --muted 7.62, --blue 7.72, --error 6.04, --success 6.28, --border 3.74."
+   },
+   {
+    "token": "--tint",
+    "value": "#ebecf0 (navy mixed 8% into white)",
+    "role": "Selected states only: the checked poll option, the pressed explorer key, the :target glossary or lesson-term entry, and search <mark>. It replaces --accent-soft, --gold-pale, --highlight and --bg-3. It is not blue, following decision 6.",
+    "contrast": "1.18:1 against white, 1.09:1 against --surface. On it: --ink 15.14, --ink-2 10.94, --muted 6.98, --blue 7.07, --border 3.43, --error 5.54, --success 5.76."
+   },
+   {
+    "token": "--ink",
+    "value": "#0b1240",
+    "role": "Navy ink, kept by owner decision 4. Used for headings (never blue), labels, strong, figures, list-row titles, standalone links, ledger total rules, 2px input borders, the secondary button's border and label, the checked-option and pressed-key 2px borders, the consent switch's 'on' track, the 2px table-head rule, the key-idea bar and the 2px consent-banner top rule. It replaces --brand-navy and --line-strong.",
+    "contrast": "17.88:1 on white (BRAND_GUIDE's '16.0:1' was a misprint), 16.52:1 on --surface, 15.14:1 on --tint"
+   },
+   {
+    "token": "--ink-2",
+    "value": "#262f57",
+    "role": "Body text and footer links. Navy-derived, unchanged from v3.",
+    "contrast": "12.91:1 on white (BRAND_GUIDE printed 12.6), 11.93:1 on --surface, 10.94:1 on --tint"
+   },
+   {
+    "token": "--muted",
+    "value": "#434d73",
+    "role": "Captions, meta lines, the crumb position, hints, source lines, lesson numbers, minutes and fine print. Navy-derived, unchanged from v3.",
+    "contrast": "8.24:1 on white (BRAND_GUIDE printed 8.0), 7.62:1 on --surface, 6.98:1 on --tint"
+   },
+   {
+    "token": "--rule",
+    "value": "#ced0d9 (navy mixed 20% into white)",
+    "role": "Decorative 1px dividers: list and table rows, section rules, box edges, the footer's top edge, the header's bottom edge below 1024px, and empty chart days. It is never the only boundary of a control. It replaces --line and --frame.",
+    "contrast": "1.54:1 on white; decorative, so exempt from 1.4.11"
+   },
+   {
+    "token": "--border",
+    "value": "#797d96 (navy mixed 55% into white)",
+    "role": "The 1px boundary of anything that is a control or an instrument: the poll frame and option rows, the drawn document, mock screens, the video frame, preset keys, split steppers, the edition dropdown, the consent dialog, the term popover and the switch's 'off' track.",
+    "contrast": "4.05:1 on white, 3.74:1 on --surface, 3.43:1 on --tint (1.4.11 needs 3:1)"
+   },
+   {
+    "token": "--error",
+    "value": "#b3261e",
+    "role": "Error text (with a visually hidden 'Error:' where the island already has one), the 2px aria-invalid border, and .is-loss figures, always shown with a minus sign or words.",
+    "contrast": "6.54:1 on white, 6.04:1 on --surface, 5.54:1 on --tint"
+   },
+   {
+    "token": "--success",
+    "value": "#17683f",
+    "role": "'· Read', '· Checks done', 'Correct.', 'Marked as read.' and 'Link copied.'. The words carry the meaning.",
+    "contrast": "6.80:1 on white, 6.28:1 on --surface, 5.76:1 on --tint"
+   },
+   {
+    "token": "--focus",
+    "value": "#0b4aa2 (a literal hex, so scripts/contrast-check.mjs can read it)",
+    "role": "A 3px solid focus outline at 2px offset (0 on inputs and selects). Inside .on-band and .on-band-wide it is #ffffff.",
+    "contrast": "8.35:1 on white, 7.72:1 on --surface, 7.07:1 on --tint; the white ring on the bar is 8.35:1"
+   },
+   {
+    "token": ".on-band (remap block in tokens.css)",
+    "value": "--ink #ffffff; --ink-2 #ffffff; --muted #ffffff; --focus #ffffff",
+    "role": "Applied only to things that always sit on the blue bar: the brand link, the Menu summary and nav.main-nav. It is never applied to the header element, so the white Menu panel and edition row keep normal ink. It lands in step 5 together with the new Header.astro. Until then the old gold .on-band block stays, which avoids a white ring on white pills (P9).",
+    "contrast": "#ffffff against :root --blue: 8.35:1 (checked by the contrast script)"
+   },
+   {
+    "token": ".on-band-wide (inside @media (min-width: 1024px))",
+    "value": "--ink #ffffff; --ink-2 #ffffff; --muted #ffffff; --focus #ffffff",
+    "role": "Only on the edition summary (.edition-current). From 1024px the summary sits in the bar and is white; below 1024px it sits in the white edition row and uses normal ink.",
+    "contrast": "8.35:1 against :root --blue"
+   },
+   {
+    "token": "@media (prefers-contrast: more)",
+    "value": "--muted #262f57; --rule #6d718c; --border #484d70",
+    "role": "The only override block left, and it is light. The dark and dark+more blocks are deleted.",
+    "contrast": "--muted 12.91:1 on white, 11.93:1 on --surface; --rule 4.78:1; --border 8.17:1 on white, 7.55:1 on --surface, 6.92:1 on --tint"
+   },
+   {
+    "token": "--series-1 to --series-8, --chart-grid",
+    "value": "#0c61c4 #eb6834 #1baf7a #e0a400 #e87ba4 #008300 #4a3aa7 #e34948; grid #e2e5ea",
+    "role": "Chart data only, in fixed order. Light values are unchanged and already validated with validate_palette.js; the dark values are deleted. Slot 1 is the badge blue, not --blue, so a chart line never reads as a link. Slot 4 is data, not brand gold.",
+    "contrast": "5.96, 3.20, 2.82, 2.22, 2.69, 4.95, 8.56, 3.95 on white. Slots 3-5 are under 3:1, so every chart keeps direct labels and a table. The grid is 1.26:1 and decorative."
+   },
+   {
+    "token": "--print-paper / --print-ink / --print-muted / --print-line",
+    "value": "#ffffff / #000000 / #444444 / #999999",
+    "role": "Print stylesheet only; unchanged.",
+    "contrast": "21:1; 9.74:1; the rule is 2.85:1"
+   },
+   {
+    "token": "--font-body / --font-mono",
+    "value": "'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif / ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+    "role": "--font-body is the only web font, used for headings, body, UI, figures, the ledger and the wordmark. Mono is used only for inline code and the sync code. --font-display is deleted.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--text-xs / --text-sm / --text-md",
+    "value": "14px / 16px / clamp(18px, 17.4px + 0.2vw, 19px)",
+    "role": "--text-xs: fine print, sources, licence, chart labels. --text-sm: UI (nav, crumb, meta, hints, captions, table text, footer, small buttons). --text-md: body, labels, inputs, options, buttons. They replace --text-ui and --text-sticker.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--text-lg / --text-h2 / --text-h1 / --text-display",
+    "value": "clamp(20px, 18.5px + 0.42vw, 24px) / clamp(24px, 21px + 0.85vw, 32px) / clamp(32px, 27px + 1.4vw, 44px) / clamp(36px, 29px + 2vw, 52px)",
+    "role": "--text-lg: lede (once per page), h3, poll legends, key idea, list-row titles, ledger figures, wordmark. --text-h2: h2, ledger totals, dashboard values, the one-time code. --text-h1: page titles, headline figures, edition figures, the explorer figure, the clock. --text-display: the home h1 only. They replace --text-h3, --text-result, --text-figure and --text-mega. --text-hand and --text-wordmark are deleted.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--leading-body / --leading-ui / --leading-heading / --leading-h1 / --tracking-h1",
+    "value": "1.5 / 1.35 / 1.2 / 1.1 / -0.01em",
+    "role": "Body; buttons, nav and table cells; h2 and h3; h1, display and figures. Tracking applies to h1 and display only. --leading-tight, --leading-mega, --leading-snug, --tracking-display and --tracking-heading are deleted.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--space-1 to --space-9 / --space-section",
+    "value": "4, 8, 12, 16, 24, 32, 48, 64, 96px / clamp(40px, 24px + 4vw, 64px)",
+    "role": "The 4px grid is unchanged. --space-section is the vertical gap between top-level sections. --space-10 is deleted.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--gutter / --wide / --column / --measure / --rail",
+    "value": "clamp(16px, 3.2vw, 32px) / 960px / 640px / 32em / 256px",
+    "role": "Side padding. The container is max-width calc(var(--wide) + 2 * var(--gutter)). --column is the reading column. --measure caps p at about 70 characters of Atkinson (the old 64ch was about 90). --rail is the lesson's left rail from 1024px, with a --space-8 gap: 256 + 64 + 640 = 960.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--bar-h / --edition-row-h / --sticky-top",
+    "value": "56px below 1024px, 64px from 1024px / 48px (below 1024px only) / 24px",
+    "role": "--bar-h is the height of the blue bar. --edition-row-h is the white edition row under it. --sticky-top is the top offset for the lesson rail, the results bench and the dashboard side nav. The header never sticks, so --header-h and --edition-h are deleted.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--target / --target-lg",
+    "value": "44px / 48px",
+    "role": "--target is the minimum height of crumb links, summaries, small buttons, 'In this lesson' rows, footer rows and nav rows. --target-lg is for primary and secondary buttons, inputs, option rows and Menu rows.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--radius / --radius-pill",
+    "value": "4px / 999px",
+    "role": "--radius is the only corner radius: buttons, inputs, selects, boxes, the poll frame, option rows, the document, mock screens, the video frame, the dialog, the dropdown and the popover. Rules and bars are square. --radius-pill is used only by the consent switch. --radius-xs, -s, -m, -l and -xl are deleted.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--rule-w / --control-w / --bar-w",
+    "value": "1px / 2px / 4px",
+    "role": "--rule-w: rows, rules and box edges. --control-w: input borders, the secondary-button border, checked-option and pressed-key borders, the table-head rule and the banner's top rule. --bar-w: current-item bars (always a border, never box-shadow) and the key-idea bar. The 1.5px widths are gone.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--dur-fast / --ease",
+    "value": "150ms / cubic-bezier(0.2, 0.7, 0.2, 1)",
+    "role": "The consent switch knob only; 0 under reduced motion. --dur and --dur-slow are deleted.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "--banner-reserve (a component property in src/islands/consent.css, not a design token)",
+    "value": "the built banner's height, rounded up to the next rem, in three width bands: below 640px (about 25rem with today's copy), 640-1023px, and 1024px up (about 15rem)",
+    "role": "scroll-padding-bottom while the first-visit banner is fixed, set inside @media (min-height: 561px) only. It is measured from the built page, not guessed, and re-measured if Rajvir approves shorter copy.",
+    "contrast": "n/a"
+   },
+   {
+    "token": "LEGACY block (a second :root block after a 'LEGACY' comment; step 2 adds it, step 22 deletes it)",
+    "value": "--field #ffffff; --field-deep #f5f6f7; --band #0b4aa2; --frame #ced0d9; --band-surface #ffffff; --field-pale #f5f6f7; --bg-2 #f5f6f7; --bg-3 #ebecf0; --bg-inverse #0b1240; --line #ced0d9; --line-strong #0b1240; --accent #0b4aa2; --accent-hover #08357a; --accent-text #0b4aa2; --accent-soft #ebecf0; --on-accent #ffffff; --gold #ebecf0; --gold-pale #ebecf0; --gold-text #434d73; --on-gold #0b1240; --highlight #ebecf0; --brand-black #0b1240; --brand-blue #0c61c4; --brand-navy #0b1240; --brand-gold #f2c14e (read only by og-images.mjs until step 7); --paper #ffffff; --font-display = the Atkinson stack; --text-ui 16px; --text-h3 = the --text-lg clamp; --text-figure = the --text-h1 clamp; --text-result = the --text-h2 clamp; --text-mega = the --text-display clamp; --text-hand 20px; --text-sticker 16px; --text-wordmark 20px; --leading-tight 1.1; --leading-mega 1.1; --leading-snug 1.2; --tracking-display -0.01em; --tracking-heading 0em; --radius-xs, -s, -m, -l and -xl all 4px; --dur 0ms; --dur-slow 0ms; --header-h 0px; --edition-h 0px; --space-10 128px",
+    "role": "Plain hex values, with no var() aliases (the contrast script and og-images read hex). They keep un-migrated pages rendering in v5.1 colours, type and corners while the B groups rewrite them. The contrast script never reads this block.",
+    "contrast": "not checked; every value is a v5.1 value already checked above"
+   }
+  ],
+  "typography": "One family: Atkinson Hyperlegible Next (Braille Institute, SIL OFL 1.1). It is self-hosted as public/fonts/atkinson-latin.woff2 (preloaded) and atkinson-latin-ext.woff2. The files are variable 200-800, but @font-face declares 'font-weight: 400 700' and only two weights are used. 400 is for reading and UI text. 700 is for h1-h4, labels, nav, buttons, strong, list-row titles, standalone links, ledger figures, table heads and the wordmark. No italics are shipped. The GSUB table has tnum, so every ledger, table, input, stat, meta line and figure sets font-variant-numeric: tabular-nums.\n\nBricolage Grotesque leaves the pages: both @font-face rules in src/styles/fonts.css, the preload in BaseLayout.astro, --font-display, and public/fonts/bricolage-latin.woff2 and bricolage-latin-ext.woff2 are deleted. It survives only at build time: in scripts/fonts for the share images, until Rajvir approves an Atkinson TTF, and as the outline of the badge's B. Kalam is deleted with the hand notes.\n\nScale, from 360 to 1280:\n- --text-xs 14px: fine print, source lines, licence, chart labels.\n- --text-sm 16px: nav, crumb, meta, hints, captions, table text, footer, small buttons.\n- --text-md 18-19px: body, labels, inputs, option rows, buttons, the 'In this lesson' rows on phones.\n- --text-lg 20-24px: the lede (once per page), h3, poll legends, the key idea, list-row titles, ledger figures, the wordmark.\n- --text-h2 24-32px: h2, ledger totals, dashboard values, the one-time code.\n- --text-h1 32-44px: page titles, calculator headline figures, edition figures, the explorer figure, the dashboard clock.\n- --text-display 36-52px: the home h1 only.\n\nThat is seven sizes, never more than three in one view. Reading text never drops below 18px and nothing drops below 14px.\n\nHeadings are --ink #0B1240 at 700 and never blue, even when a heading is a link. h1 and display use line-height 1.1 and tracking -0.01em. h2 and h3 use 1.2 and tracking 0. An h2 has 48px above and 16px below, with no hairline. All headings use text-wrap: balance.\n\nBody uses line-height 1.5; UI and table cells use 1.35. A p has max-width 32em (about 70 characters) inside a 640px column, text-wrap: pretty, and margin 0 0 1em; an li has 0.5em. Sentence case everywhere, no letter-spacing on body, no ALL CAPS. The eyebrow stays as a small --text-sm 700 --muted text label, because the protected legal pages use it.\n\nHindi, later: Noto Sans Devanagari 400/700 at the same sizes, with the measure re-checked for that script.",
+  "header": "One <header class='site-header' id='top'>, static at every width. It never sticks, so it can never cover focus. There is one blue block, per owner decision 1: .site-header has background --bg, and .site-header::before paints the bar (position absolute, inset-block-start 0, inset-inline 0, height var(--bar-h), background var(--blue), no gradient). Inside, .container.header-inner (position relative) is a grid.\n\nDOM order: a.brand, nav.main-nav, details.nav-menu, then RegionTabs (nav.region-tabs).\n\nBelow 1024px the grid is one column with rows var(--bar-h), auto, auto:\n- a.brand sits in row 1.\n- details.nav-menu[data-disclosure] sits in row 2. Its summary is absolutely positioned up into the bar: top 0, inset-inline-end 0, height var(--bar-h). A closed menu therefore takes no height, and the open panel sits in normal flow under the bar and pushes the edition row down, so it never covers it (P1/F1).\n- nav.region-tabs sits in row 3: a white row, min-height var(--edition-row-h), with the header's 1px --rule bottom border under it.\n- nav.main-nav is display:none.\n\nFrom 1024px the grid is 'brand nav editions' (auto 1fr auto) in one row of var(--bar-h). details.nav-menu is display:none, and the header has no bottom border.\n\n(1) a.brand.on-band, aria-label 'Business Lab home', min-height var(--target), inline-flex, 12px gap. It holds Logo variant='inverse' at 32px and the wordmark 'Business Lab' (span.wordmark) in Atkinson 700 at --text-lg, colour --ink (white under .on-band), tracking 0, shown at every width. Width check at 360: 16 gutter + 32 + 12 + about 134 (wordmark at 20px) + about 76 (Menu) + 16 = 286px. At 320 it is the same 286px, which fits the 320px width.\n\n(2) details.nav-menu[data-disclosure], below 1024px only:\n- summary.on-band reads 'Menu' (16px 700), followed by an 8px CSS border triangle. It has no border and no fill, is at least 44x44, has padding 0 12px, and the native marker is removed. When open the triangle points up and a 4px white border-bottom sits under the label.\n- The panel is nav.menu-panel[aria-label='Main']: white, full container width, 1px --rule bottom, no shadow. It has six rows, Learn, Calculators, Glossary, Dashboard, About, Search (plus Sign in when site.accountsEnabled). Each row is min-height var(--target-lg), --text-md 700 --ink, no underline until hover, with a 1px --rule between rows.\n- The current row has aria-current='page', a 4px --blue border-inline-start and padding-inline-start 12px.\n\n(3) nav.main-nav.on-band[aria-label='Main'], from 1024px only:\n- An inline list with 16px gaps. Each link is var(--bar-h) tall, 16px 700 white, no underline; hover gives a 2px underline at offset 4px.\n- The current link has aria-current='page' and a 4px white border-bottom. It is a border, not a box-shadow, so it survives forced colours.\n- Exactly one nav[aria-label='Main'] is in the accessibility tree at a time: the other is display:none. The .nav-wide rule that hid Glossary and About under 420px is deleted.\n\n(4) RegionTabs keeps nav.region-tabs[aria-label='Choose your edition'] > details.edition-menu[data-edition-menu][data-disclosure] > summary.edition-current.on-band-wide. The summary holds Flag 24x16 (radius 2px), then span.edition-current-label containing the region name and span.edition-word ' edition'. The label is 'India edition', 'Europe edition', 'United States edition', or 'Choose an edition' on shared pages, unchanged. A 6px CSS triangle follows. The summary is min-height var(--target) and has no border, fill or pill.\n- Below 1024px the summary is --ink 700 16px in the white row. The list ul.edition-list is position static and width 100%, so it opens in flow and pushes main down. It has three rows of var(--target-lg): flag 28x19, 12px gap, name at --text-md --ink, 1px --rule between. The current row is 700, with a 4px --blue border-inline-start, aria-current='true' (kept) and a CSS-drawn check at the end, replacing the aria-hidden '✓' glyph span.\n- From 1024px the summary sits at the right of the bar in white (.on-band-wide). The flag gets a 1px white outline (the EU flag's blue would otherwise merge with the bar), and span.edition-word becomes visually hidden, so the accessible name is still 'India edition'. The list is a dropdown: position absolute, top 100%, inset-inline-end 0, width 280px, white, 1px --border, --radius, same rows.\n- Width check at 1024 and 1280, inside the 960px container: brand about 178px, then 32px, six links about 392px + 5 x 16 = 472px, then 32px, the edition summary about 162px. That is about 876px, leaving about 84px slack.\n- When accounts go live, the seventh link will not fit at 1024px. Phase 6 must raise this breakpoint to 1100px; this is recorded in OWNER_TODO.\n\nBehaviour. Both controls are native <details>, so they open with JavaScript off and cause no layout shift. One script in Header.astro, a few hundred bytes that replace the edition-menu part of the RegionTabs script, handles every details[data-disclosure]:\n- Escape closes the open one and focuses its summary.\n- A click outside closes it.\n- focusout closes it when relatedTarget is outside it (F1).\n- Opening one closes the other.\nRegionTabs keeps only the lp:region write, reading '.region-tabs a[aria-current]' and data-region. The sub and subs props are kept (regionSub and regionSubs from the calculator work).\n\nWith JavaScript off:\n- Below 1024px both panels are in flow, so nothing can be covered.\n- From 1024px only an open edition dropdown can overlay the top right of main, until it is closed. This is documented as the one JS-off limit.\n\nFocus: a 3px white outline at 2px offset on the bar (.on-band and .on-band-wide set --focus #ffffff); a 3px --blue outline in the white row and in both panels.\n\nHeights: collapsed, 104px at 360 (56 + 48) and 64px at 1280.\n\nThe skip link stays the first element in body. It is a white box with a 2px --ink border, --radius, 12px 16px padding, 700 --ink text, shown at top var(--space-2) on focus, and targets #main. Its focus outline is --on-blue: white on the bar, 8.35:1 (P8).\n\nPrint hides the header.",
+  "pages": [
+   {
+    "route": "(every page) shell: src/layouts/BaseLayout.astro, src/components/Header.astro, src/components/RegionTabs.astro, src/components/Logo.astro, src/components/Footer.astro, src/styles/tokens.css, src/styles/base.css, src/styles/fonts.css",
+    "layout": "White (--bg) at every OS setting: :root color-scheme light, <meta name='color-scheme' content='light'>, and one <meta name='theme-color' content={site.themeColor}> with themeColor '#0b4aa2' in src/lib/site.ts, matching public/manifest.webmanifest. The header is as specified. <main id='main' tabindex='-1'> carries no class; page-sheet is removed, and the 'bare' prop keeps its type but adds nothing. Each page keeps its own .section > .container. Reading pages sit in the 640px column, left-aligned in the 960px container, never centred. The footer is white under a 1px --rule. ConsentManager stays after the footer, so the skip link is still the first Tab stop. No page draws a band, sheet, panel, blob, doodle, sticker or hand-lettered note.",
+    "remove": [
+     "<meta name='color-scheme' content='light dark'>, both media theme-color metas and the raw hex #071a4a",
+     "The Bricolage preload and @font-face rules, and public/fonts/bricolage-latin.woff2 and bricolage-latin-ext.woff2",
+     "main.page-sheet: its 32px rounded top corners, top margin and min-height",
+     "@view-transition, the ::view-transition rules, html scroll-behavior: smooth, and the dark-mode a:hover rule",
+     "The sticky header from 900px and every use of --header-h",
+     "The white pill nav group, the gold-pale current pill and the .nav-wide hiding under 420px",
+     "The white-pill edition trigger with its gold-pale hover, open and current states, and the '✓' glyph",
+     "The footer's .section-dark navy block, its gold headings and its 36px rows"
+    ],
+    "add": [
+     "Logo variant 'inverse' on the bar",
+     "details.nav-menu[data-disclosure] below 1024px, with its in-flow panel",
+     "The white edition row below 1024px",
+     "One disclosure script in Header.astro (Escape, outside click, focusout, one open at a time)",
+     "site.themeColor"
+    ],
+    "keepsForTests": [
+     ".skip-link as the first Tab stop, focusing #main on Enter (a11y.spec)",
+     "'.region-tabs summary' opens the menu; '.region-tabs' contains links named 'Europe' etc. (regions.spec)",
+     "'.region-tabs a[aria-current]' contains the edition name (regions.spec)",
+     ".region-tabs a[data-region='eu'] and [data-region='us'] with the sub or subs hrefs (tools-foundation 'the edition menu from a tool')",
+     "[data-edition-menu] and the lp:region write",
+     "nav[aria-label='Main'] with the links Learn, Calculators, Glossary, Dashboard, About, Search",
+     "Footer button.linklike[data-open-consent] 'Privacy choices' (consent.spec)",
+     "meta[property='og:image'] paths (og.spec)",
+     "data-pagefind-body, data-pagefind-ignore, data-pagefind-filter and [data-pagefind-meta] ('kind:Calculator', 'kind:Practice'; tools-foundation)",
+     "The WebSite JSON-LD, the CSP meta with per-inline hashes, and html.js"
+    ]
+   },
+   {
+    "route": "/",
+    "layout": "At 360:\n- Intro (.section): h1 'Money and business, taught for where you live.' at --text-display (700, ink, line-height 1.1, max 15ch), then the existing lede at --text-lg. Then p#resume, hidden until the kept script finds lp:region, holding the page's one primary a.btn#resume-link; the script writes its text, 'Continue with India'.\n- Section#editions (aria-labelledby): h2 'Choose your edition', then ul.index-list of three rows. Each is li > a.index-row (href /in etc., data-astro-prefetch) holding a 32x22 Flag in a leading 40px column, h3.index-title '<name> edition' (--text-lg 700 ink, underlined on row hover) and span.index-meta built from region.currency and region.tags ('INR · UPI · Scams · First job').\n- Section 'The same sum in three editions': h2, one sentence, then three blocks 32px apart. Each is an h3 with the edition name (--text-lg 700) over EditionSum: its scenario line, the ledger with the double-ruled total, and the result sentence. No box, no receipt, no tilt.\n- Section 'How a lesson works': h2 and an ol with decimal markers and 24px inline padding, holding the four existing h3 + sentence pairs.\n- section#calculators.taxonomy: h2.taxonomy-title 'Tools that answer' (--text-h2 ink). ul.taxonomy-list is ruled rows: 1px --rule, each link a var(--target-lg) row in ink 700 --text-lg, underlined on hover; href '#editions' and data-edition-path are kept and rewritten by the script. Then p.taxonomy-foot 'Nothing you type leaves your phone.' in --muted.\n- Section 'Why Business Lab': h2, the paragraph, a bulleted ul of the six reasons, and the ink 700 underlined link 'More about Business Lab'.\n- Section 'Start with these': h2 and ul.index-list of the six starters. Each has h3.index-title (the lesson title), .index-sub (the summary) and .index-meta ('India · 10 min').\n- Sections are separated by --space-section. Nothing is filled or centred.\n\nFrom 1024px: the intro (640px) and #editions (288px, its h2 at --text-lg) sit side by side in the 960px container, a grid of 2fr and 1fr with a 32px gap. 'The same sum in three editions' follows straight after as the page's one full-width band, three columns with 32px gaps. At 1280x800 this puts the first ledger's double rule inside the first 900px, answering the skeptic's 'no ledger on the first screen'. The remaining sections sit in the 640 column at the left.",
+    "remove": [
+     "Blobs; both HandNotes ('free, forever', 'a worked example'); the flashcard stack and its rotations; the gold 'Price − cost = kept' sticky label",
+     "The .cta 'Choose your edition ↓' arrow button. The edition list is now on the first screen, so the reader chooses there.",
+     "The .mega h1 size and the centred h1-size section titles",
+     "The three colour panels (.panel-field, .panel-gold, .panel-pale), the white currency pill and the gold-pale tag pills",
+     "The four-colour step cards and their 'Step 1'-'Step 4' labels (the ol numbers them)",
+     "The gold taxonomy panel with its h1-size questions, and the pale 'Why' panel",
+     "The grid-table, the minutes stickers and the doodles in 'Start with these'",
+     "About 80 lines of page-scoped CSS and the imports of Blobs, HandNote and Doodle"
+    ],
+    "add": [
+     "ul.index-list of edition rows with flags",
+     "The 'The same sum in three editions' section. New copy: the h2 and one sentence, 'Each edition works the same break-even sum with its own prices and currency.'",
+     "The side-by-side intro and editions from 1024px"
+    ],
+    "keepsForTests": [
+     "Visible links whose names contain 'India', 'Europe' and 'United States' (regions.spec 'the front page offers all three editions')",
+     "No redirect: the URL stays /passion-project/",
+     "section#calculators.taxonomy > h2 'Tools that answer' and .taxonomy-list with 5 links whose data-edition-path values are tools/take-home-pay, tools/buffer-target, tools/loan, tools/side-hustle and tools/job-offer-check, in that order (tools-foundation 'the home page shows the five all-edition questions')",
+     "#resume, #resume-link and the resume + data-edition-path script, verbatim",
+     "#editions as the anchor that header 'Learn' and 'Calculators' link to on shared pages"
+    ]
+   },
+   {
+    "route": "/in, /eu, /us",
+    "layout": "At 360:\n- Intro (.section): span.eyebrow '<name> edition', h1 region.headline at --text-h1, the lede region.intro, and a .btn-row with the one primary a.btn 'Start with the first lesson' (or 'See the lessons') and the ink 700 underlined text link 'Open the tools'.\n- A .box figure (white, 1px --rule, --radius, 24px padding, 16px at 360) with figcaption 'A worked example' (--text-sm 700 --muted) around EditionSum.\n- section#lessons[data-review-region]: h2 'Lessons', the sentence, ProgressMarks (the only [data-review-line]), then the three tracks stacked in the 640 column at every width. Each track is a section under a 1px --rule with 32px padding-top: an h3 whose content is the link to the track (ink 700 --text-h2, underlined on hover), the summary (--text-md --ink-2), and LessonList compact.\n- section#calculators.taxonomy: h2.taxonomy-title 'Tools that answer'; ul.taxonomy-list as ruled ink 700 link rows (one question per group); p.taxonomy-all with the ink 700 underlined link 'All N tools'; p.taxonomy-foot in --muted.\n- section#why: h2 'Why this edition exists' and region.problem as a paragraph. Then ul.figures of li.stat ruled rows: 1px --rule top, 16px padding. From 768px each is a grid of 10em and 1fr: p.figure (--text-h2 700 ink tabular) on the left; p.stat-label (--text-md) and p.stat-source ('Source: ' plus a link, --text-xs --muted, underlined) on the right. Then h3 'What it covers' and region.problems as one column of ruled rows (h4 --text-md 700 + paragraph).\n- Section 'If it happens to you': h2 and p.report-text in 700 ink at --text-md, with the official link blue and underlined inline. Then region.note as a .note.\n\nFrom 1024px: the intro (640px) and the worked-example box (288px) sit side by side, top-aligned. Everything else stays in the 640 column at the left.",
+    "remove": [
+     "Blobs, HandNote 'a worked example' and the gold 'Price − cost = kept' label",
+     "The receipt card's 2px navy border and 20px radius (the ledger stays, in the .box)",
+     "The .cta arrow box and the .btn-secondary .btn-lg for 'Open the tools'",
+     "The track doodles, the grid-table outlines and the three-across track grid",
+     "The gold taxonomy panel with giant questions",
+     "The .stat-gold card, the stat cards and the pale #why band",
+     "The navy report panel (.panel.section-dark) and the rotated gold stamp (region.report.stamp is no longer rendered; the field is deleted in step 22)",
+     "Centred h1-size section heads and .mega"
+    ],
+    "add": [
+     "The worked-example .box with the set-type caption 'A worked example'",
+     "Stats as ruled figure rows",
+     "Tracks stacked in one column"
+    ],
+    "keepsForTests": [
+     "main contains 'UPI' (in), 'pay later' (eu) and 'credit score' (us) (regions.spec)",
+     ".stat with .stat-source a (https href), count(.stat) === count(.stat-source a) >= 2 (regions.spec)",
+     ".taxonomy h2 with the text 'Tools that answer'; .taxonomy-list a with the exact five India questions, six links on eu including 'How much of my pay goes on rent and bills?', the last us link 'Would I spot a fake job?' (tools-foundation)",
+     "Links 'All 12 tools' (in, href /passion-project/in/tools) and 'All 11 tools' (eu, us)",
+     "section#lessons[data-review-region], ProgressMarks [data-review-line] and [data-lesson-row] with [data-mark='read'] and [data-mark='checks']"
+    ]
+   },
+   {
+    "route": "/[region]/learn",
+    "layout": "The 640 column, left in the 960 container at 1280. In order: span.eyebrow '<name> edition', h1 'Learn', the lede, and ProgressMarks (the only [data-review-line]) inside section[data-review-region]. Then one section per track, under a 1px --rule with 32px padding-top: an h2 (--text-h2 ink 700) whose content is the link to the track page (ink, underlined on hover), the track summary (--text-md --ink-2), and LessonList compact (number --muted 700, title --text-md ink 700, '10 min · Read · Checks done'). The 'being written' note branch is kept.",
+    "remove": [
+     "TrackCard.astro, the Academy-style course card (its file is deleted in step 22)",
+     "Its content order: the 'Track N' label, the 'N lessons · N checks · N min' meta line and the 'Start with lesson 1' pill button",
+     "The doodle thumbnails, 20px card outlines, the .course-grid and the gold eyebrow"
+    ],
+    "add": [
+     "Ruled track sections with a heading link, a summary and the numbered list"
+    ],
+    "keepsForTests": [
+     "[data-review-line] with the text 'Ready to review: 1 check' and its link to /in/review; section[data-review-region] (lessons.spec 'a check that is ready comes back on the review page')",
+     "[data-lesson-row] and [data-mark] on every lesson row"
+    ]
+   },
+   {
+    "route": "/[region]/learn/[track]",
+    "layout": "The 640 column, the same at every width. In order:\n- p.crumb with the existing link text '← All tracks' (ink 700, underlined, 44px).\n- h1 track title, then the lede (summary).\n- ProgressMarks inside section[data-review-region].\n- h2 'Lessons' and LessonList in full rows: a 32px number column (--muted 700 tabular); the title (--text-lg ink 700); the summary (--text-md --ink-2); marks (--text-sm) with '· Read' and '· Checks done' in --success 700. The whole row is the link and the title underlines on hover. Planned rows are muted, with '(being written)'.\n- The existing line 'Rather do than read? Open the calculators and put your own numbers in.' with its inline blue link.\n\nThere is no start button: the first row is where you start.",
+    "remove": [
+     "The .course-head pale panel with its hairline border and the 4:3 doodle thumbnail",
+     "The eyebrow 'Track N · N lessons · N checks · N min'",
+     "The .cta 'Start with lesson 1'",
+     "The page-scoped .crumb CSS (base.css now owns .crumb)"
+    ],
+    "add": [
+     "Nothing new: the page is the crumb, the h1, the lede, the marks and the list"
+    ],
+    "keepsForTests": [
+     "[data-lesson-row='in/start-something/break-even-coaching-centre'] with [data-mark='read'] visible after 'Mark as read' and [data-mark='checks'] hidden (lessons.spec)",
+     "[data-review-line] (exactly one) and data-review-region"
+    ]
+   },
+   {
+    "route": "/[region]/learn/[track]/[slug] (all 36 template v2 lessons)",
+    "layout": "DOM: article.lesson[data-lesson-id][data-locale] > div.container.lesson-grid holding p.crumb, header.lesson-head (h1, p.lede), nav.lesson-steps, div.lesson-after, div.lesson-main. The term popovers follow the grid.\n\nAt 360:\n- p.crumb: the link '← <track title>' (ink 700 underlined, 44px) to the track, then span.crumb-pos 'Lesson 1 of 4 · 10 min' (--muted, tabular). [slug].astro passes position and count from the siblings it already computes.\n- h1 (--text-h1 ink 700) and p.lede (--text-lg --ink-2).\n- nav.lesson-steps[aria-labelledby='lesson-steps-label'] > details.lesson-steps-fold[data-steps-fold] (no data-disclosure). Closed, it is one 44px line: summary with span#lesson-steps-label 'In this lesson' and a muted '(7 parts)', ink 700 underlined, after a 7px CSS triangle. Opened, it is an ol of 44px rows: --text-md ink links, 1px --rule between.\n- The items are built in LessonLayout from the fields present, in DOM order: The document, Watch, Show me, Your turn, Change one thing or Decide before you look, What this means for you, Check your understanding, If it happens to you. That is 5-8 items, and each link text equals its h2 text exactly.\n- div.lesson-after: 'After this you can' (--text-sm 700) and the objectives ul (--text-md).\n\ndiv.lesson-main:\n- p.situation (--text-lg ink).\n- The sections, in the existing template v2 order with the existing h2 words and ids: #the-document (the h2 is now visible), #watch, the MDX body in .lesson-body with its own ## headings as h2, #show-me, #your-turn, #try-it, #for-you, the details fold, #quick-check, #meet-it, #if-it-happens, #terms. Every h2 is --text-h2 ink 700, with 48px above, 16px below, and no hairline.\n- The key idea follows Show me as p.key-idea: a 4px --ink border-inline-start, padding-inline-start 20px, --text-lg 700 ink. The .hl highlighter goes; the strong stays.\n- 'What this means for you' is a plain section: h2 and ul. It has no box.\n- The three checks are framed questions, 32px apart, followed by the return line.\n- 'If it happens to you' is the h2 and p.report in 700 ink, with the tel: link and the site link blue and underlined inline.\n- footer.lesson-fine[data-pagefind-ignore] holds the unchanged byline p.lesson-meta first ('Reviewed 20 September 2026. Written by Rajvir, US.'), then Sources, the disclaimer and reuse, at --text-xs --muted with underlined links.\n- .lesson-next: 'Next: <title>' as an ink 700 underlined text link (the ↗ goes) or 'Back to <track>'; the hidden 'Mark as read' .btn-secondary .btn-sm; span.marked[data-marked].\n\nFrom 1024px:\n- .lesson-grid is a grid: columns var(--rail) and minmax(0, var(--column)), column-gap var(--space-8), areas '. crumb' / 'rail head' / 'rail after' / 'rail main', rows auto auto auto 1fr.\n- nav.lesson-steps sits in 'rail': align-self start, position sticky, top var(--sticky-top), max-height calc(100dvh - 2 * var(--sticky-top)), overflow-y auto.\n- LessonScript sets the fold open while matchMedia('(min-width: 1024px)') matches and closed below it. The summary reads as the label 'In this lesson' (--text-sm 700, no triangle), and the links are --text-sm rows of 44px with a 1px --rule between.\n- With JavaScript off the rail shows the closed fold, and one tap opens it.\n\nExactly one nav.lesson-steps exists at every width.\n\nLessonLayout throws at build time if a lesson is not template v2.",
+    "remove": [
+     "header.lesson-head.on-field: the white band and its 3px rule",
+     "The outline-pill crumb 'India · <track> · Lesson N' and the gold-pale minutes pill (the same facts move to the crumb line)",
+     "div.lesson-main.sheet: the rounded sheet",
+     "Every v1 branch in LessonLayout.astro: the prediction poll, the 'Key points' callout and its margin float, lesson-expect, the v1 top lesson-meta, the v1 'The calculation' and the v1 Practice placement (all 36 lessons are v2)",
+     "The gold-pale highlighter on .lesson-body p strong and .hl on the key idea",
+     "The gold 20% :target tint on terms and the gold poll labels",
+     "The navy video poster and its white-bordered gold pill Play button",
+     "The gold dotted underline on document hints",
+     "The '↗' after 'Next: <title>' and the hairline above every h2",
+     "The visually-hidden class on h2#the-document"
+    ],
+    "add": [
+     "p.crumb with the track link and 'Lesson n of N · m min'",
+     "The 'In this lesson' fold, which becomes the sticky rail from 1024px. Copy: item 'Decide' becomes 'Decide before you look' and 'Checks' becomes 'Check your understanding', so the labels match the h2s; 'What this means for you' and 'If it happens to you' are added.",
+     "The 1024px grid",
+     "The build-time throw on a non-v2 lesson",
+     "About 150 bytes in LessonScript.astro to open the fold on wide screens"
+    ],
+    "keepsForTests": [
+     "h1; .poll[data-answer] with input[type=radio], 'summary', .answer and .fb (lessons.spec JS-off tests)",
+     ".poll[data-check-id] (3); .poll-status 'Correct.', 'Not quite.' and 'No pick…'; [data-return-line] with '1 of 3' and 'come back from', never due or overdue",
+     ".showme, .showme-line (3 on first-payslip), and '.showme-more > summary' with 'Show line 2' then 'Line 2'",
+     ".practice, .practice .steps, .practice-hint (3) with '> summary' and '> p'; the label '₹24,440'",
+     "a.term with href '#term-variable-cost'; #term-variable-cost; button.term; #pop-variable-cost (popover, Escape, focus back)",
+     ".explorer with buttons named '₹1,500 per student' and aria-pressed; .explorer-result; .explorer-change; .split-amount; '.explorer-result [data-left]'; links /full calculator/, /budget planner/, /loan calculator/",
+     ".tool-handoffs a texts and hrefs (tools-foundation)",
+     "[data-mark-read] hidden with JS off; the button 'Mark as read'; [data-marked] 'Marked as read.'",
+     "main a[href^='http'] with rel noopener and no target=_blank; .lesson-fine with ©, 'non-commercial', 'To credit it', 'name and logo are not covered'; the rel=license deed link; head link[rel=license]; the LearningResource JSON-LD",
+     ".lesson-meta containing 'Reviewed <date>' (exactly one per page, inside .lesson-fine)",
+     ".drill-list > li, .mock-screen 'A made-up screen for practice', .ms-from, .ms-action",
+     ".report with the link '1930' (tel:1930) and 'cybercrime.gov.in'",
+     ".video; .video-poster-title 'How to Read Your Salary Slip'; the button /^Play/; .video-ask; the iframe src youtube-nocookie",
+     "Every section id: #the-document #watch #show-me #your-turn #one-more #try-it #for-you #quick-check #meet-it #if-it-happens #terms #sources #reuse"
+    ]
+   },
+   {
+    "route": "/[region]/review",
+    "layout": "The 640 column: p.crumb '← All tracks' (existing), h1 'Review', the lede, then the Review island. Each item is a framed .poll: 1px --border, --radius, white, 20px padding (24px from 640px), 32px apart. .review-from is --text-sm --muted. .review-context is a 4px --rule border-inline-start with padding-inline-start 16px and no fill. Option rows match the lessons. 'Show the answer' stays .btn .btn-secondary, now neutral. .return-line is 700. noindex is kept. The same at 1280.",
+    "remove": [
+     "The page-scoped .crumb CSS",
+     "The --bg-2 12px-radius .review-context box",
+     "The pale 20px poll cards (shared CSS)"
+    ],
+    "add": [
+     "Nothing new"
+    ],
+    "keepsForTests": [
+     ".poll (1), .poll legend, .poll input[type=radio], the button 'Show the answer', .poll-status 'Correct.', .return-line '1 of 1', never due or overdue (lessons.spec)",
+     "main contains 'Nothing to review right now'",
+     "og:image stays og-default.png (og.spec)"
+    ]
+   },
+   {
+    "route": "/[region]/tools",
+    "layout": "The 640 column at every width. In order:\n- span.eyebrow '<name> edition', h1 'Tools' (kept, because the index lists drills too), and the lede (unchanged copy).\n- nav.tool-jumps: an inline list of ink 700 underlined links, 44px tall.\n- One section.tool-group[id] per moment: h2 (--text-h2) and ul.index-list.tool-index. Each li > a.index-row holds h3.index-title = tool.answers (--text-lg ink 700, underlined on row hover), span.index-sub = the tool name, and span.index-meta = 'Calculator, about 2 minutes' or 'Drill, N situations, about 5 minutes'. There is a 1px --rule between rows and 16px of padding.",
+    "remove": [
+     "span.index-go 'Open' and its '↗'",
+     "Gold eyebrow styling (via base)"
+    ],
+    "add": [
+     "Nothing new"
+    ],
+    "keepsForTests": [
+     ".tool-group h2 in the registry's order per edition (tools-foundation GROUP_TITLES)",
+     ".tool-group a.index-row counts: in 12, eu 11, us 11",
+     "a.index-row[href$='/in/tools/loan'] contains 'Calculator, about 2 minutes'; the spot-the-fake row contains 'UPI: spot the fake', and its .index-meta matches /Drill, \\d+ situations, about 5 minutes/",
+     ".tool-jumps link 'Moving out' going to #moving-out",
+     "Link accessible names containing 'Break-even calculator', 'Budget planner', 'Savings growth', 'Side-hustle profit', 'Loan repayments' (tools-more)",
+     "No spot-the-fake link on /us/tools"
+    ]
+   },
+   {
+    "route": "/[region]/tools/[tool] (the five calculators and the seven added by the calculator work)",
+    "layout": "At 360:\n- p.crumb '← All tools' (exact text kept), h1, p.answers (--text-lg --ink-2), p.scenario (--muted).\n- .tool-grid is one column.\n- Fields keep the tool kit's order: label, hint, input, note, error. Labels are --text-md 700 ink. Inputs have a 2px ink border and are 48px tall; number inputs are max 14em. .row-list and .budget-rows fieldsets have 1px --rule rows. 'Add a line' is .btn-secondary. .remove-line is an ink underlined text button.\n- The results bench .results: --surface, 1px --rule, --radius, 24px padding. Inside:\n  - h2 at --text-lg.\n  - .result-figure: the value at --text-h1 700 ink tabular with overflow-wrap anywhere, .is-loss in --error; the label at --text-sm --ink-2; a 1px --rule under it.\n  - The ledger, with .ledger-subtotal, .ledger-note and the double-ruled total.\n  - .plain at --text-md; .tool-notes at --text-sm.\n  - .btn-row of .btn-secondary .btn-sm: Reset, 'Copy link to these numbers', Share.\n  - .link-note (--text-sm --muted) directly after the row; .copied in --success.\n- Below the grid:\n  - details.how 'How this is worked out', styled as a .fold.\n  - .formula on --surface with a 1px --rule, --font-body, tabular.\n  - The year and amortisation tables in .table style; cells wrap, so the table never scrolls sideways at 320.\n  - The savings chart with direct labels and a halo, and its table in a fold.\n  - RulesLine as a --text-sm --ink-2 note with inline links.\n  - ToolTerms: h2 at --text-lg, dl rows under a 1px --rule.\n  - .related: h2 at --text-lg and a plain list of lesson links.\n  - .note.\n- The calculator has no primary button.\n\nFrom 900px .tool-grid is two equal columns with a 48px gap. The bench is sticky only in (min-width: 900px) and (min-height: 760px): top var(--sticky-top), max-height calc(100dvh - 2 * var(--sticky-top)), overflow-y auto. It is static on shorter screens and whenever the consent banner shows.",
+    "remove": [
+     "The page-scoped .crumb CSS",
+     "Pill secondary buttons",
+     "The 20px bench radius and the --bg-2 fill",
+     "The display font on figures and .formula",
+     "The muted '›' summary marker and its rotate transition",
+     "The unconditional sticky bench"
+    ],
+    "add": [
+     "Conditional sticky with max-height",
+     "overflow-wrap guards on figures and table cells"
+    ],
+    "keepsForTests": [
+     "p.crumb a with the exact text '← All tools' and href /passion-project/in/tools (tools-foundation 'the crumb goes back to all tools')",
+     ".tool (visible), .results, .result-figure-value ('15', '20')",
+     "Labels 'Fixed costs per month', 'Price you charge', 'Currency', 'Amount borrowed', 'Interest rate, % a year', 'Months to repay', 'What comes in each month', 'Name of line N', 'Amount for Books', 'Hours you put in each month', 'What one costs you', 'Added every month', 'Yearly rate, %'",
+     "#be-price-error, #loan-months-error, aria-invalid",
+     "Buttons 'Reset', 'Copy link to these numbers', 'Add a line', 'Remove Books'; .copied 'Link copied.'",
+     "'.tool .btn-row + .link-note' with the exact link-note text",
+     ".budget-row; details.how table tbody tr; 'Year by year'; svg.growth-chart[role=img] with an aria-label /curves upward/; 'The same numbers as a table'; .growth table tbody tr (10)",
+     ".scenario 'It opens on an example:' (none on drills); .related heading 'Lessons that use this' and .related li",
+     "The h1 texts for the seven new calculators (tests/e2e/tools/*.spec.ts)",
+     "[data-pagefind-meta] 'kind:Calculator'"
+    ]
+   },
+   {
+    "route": "/in/tools/spot-the-fake, /[region]/tools/job-offer-check and every drill page",
+    "layout": "The same frame as a tool page, in one 640 column:\n- p.crumb '← All tools', h1, the intro, .drill-scope (--text-sm --ink-2).\n- ol.drill-list: items 1px --rule apart with 32px padding. Each has .drill-count 'Situation n of N' (--text-sm 700 --muted), the MockScreen, and the framed poll.\n- .reflection at --text-lg under a 1px --rule.\n- The [data-drill-return] line, 700.\n- p.report: 700 ink; the tel:1930 link bold; blue underlined inline links.\n- 'Sources for these situations' (h2 --text-lg) and .note.",
+    "remove": [
+     "The 20px mock-screen radius and the pale poll cards (shared lesson.css)"
+    ],
+    "add": [
+     "Nothing new"
+    ],
+    "keepsForTests": [
+     ".drill-list > li (at least 3) with input[type=radio], summary and .answer, working with JS off (tools-foundation, lessons.spec, tests/e2e/tools/spot-the-fake.spec.ts and job-offer-check.spec.ts)",
+     ".poll[data-answer], .poll-status 'Correct.', [data-drill-return] hidden and then 'come back from'",
+     "The figcaption 'Incoming call' on the third India situation",
+     "No 'ordinary' attribute, class or data value anywhere in the markup",
+     "'.related li' first item 'The part-time job that makes you a money mule'",
+     "[data-pagefind-meta] 'kind:Practice'",
+     ".mock-screen .ms-from and .ms-action (no real brand names)"
+    ]
+   },
+   {
+    "route": "/dashboard",
+    "layout": "The DOM order inside the Dashboard island is unchanged: aside.dash-side, then div.dash-main.\n\nAt 360:\n- The side nav is a wrapped row of 44px ink 700 links. The current 'Dashboard' carries aria-current='page' and a 4px --blue border-bottom. 'Privacy choices' is a button styled as a link row.\n- .dash-head: h1 'Dashboard', the sentence in --muted, and the one primary .btn 'Continue: <title>' (copy kept).\n- ul.dash-stats: four blocks, 2x2 from 640px and four across from 1100px. Each li.stat-card is a 1px --rule top and 12px padding-top, not a card: .stat-name (--text-sm --ink-2), .stat-value (--text-h2 700 tabular Atkinson), .stat-note (--text-xs --muted).\n- The five sections are .dash-card boxes: white, 1px --rule, --radius, 24px padding, h2 at --text-lg. These are the only container cards on the site, because their content is mixed.\n- 'This week': bars in --series-1 with rx 2. Days with no time are a 4px --chart-grid stub. Today's bar has a 2px --ink stroke and its label reads 'Today' in 700. The table sits in a .fold.\n- 'Next up': a --muted line 'India · Your first salary', the h3, '10 min', and the .btn-link 'Open the lesson'.\n- 'Progress by track': the ring (track --chart-grid, done --series-1, butt caps, value 700) and the track rows.\n- 'Recently completed': ruled rows, each a title link with '2 of 3 right' in --muted tabular.\n- 'Learning time today': the clock at --text-h1 700 tabular, the hint, and the .btn-secondary 'Privacy choices'.\n\nFrom 900px .dash is a grid of 208px and 1fr. The side nav becomes vertical rows (--text-sm, 44px, 1px --rule between, the current row 700 with a 4px --blue border-inline-start). It is sticky at top var(--sticky-top), except while the consent banner shows. The cards sit in two columns, with 'This week' and 'Recently completed' spanning both.",
+    "remove": [
+     "Pill sidebar links and the gold-pale current pill",
+     "The gold 'today' bar and rx=6 bars",
+     "Both span.pill in 'Next up' and 'Recently completed' (they become span.dash-meta text)",
+     "The 1.5px navy outlines and 20px radius on stat and dash cards",
+     "The 'stat-primary on-field' classes at src/islands/Dashboard.tsx:133",
+     "The display font on values, the ring value and the clock"
+    ],
+    "add": [
+     "The 'Today' label for the seventh bar (weekLabels[6] in Dashboard.tsx)",
+     "span.dash-meta"
+    ],
+    "keepsForTests": [
+     "The 'Privacy choices' buttons dispatching lp:open-consent",
+     "table.table inside the week fold",
+     "noindex; the noscript note",
+     "axe clean at both projects (a11y.spec)"
+    ]
+   },
+   {
+    "route": "/glossary",
+    "layout": "The 640 column: span.eyebrow 'Reference', h1 'Glossary', the lede, the JS filter field (label, 2px ink input, the count status), then dl.terms of ruled entries (1px --rule, 20px vertical padding). Each entry has a dt at --text-lg 700 ink (Atkinson), the definition at --text-md, and the example at --text-sm --muted. A :target entry gets a --tint fill, a 4px --blue border-inline-start and 16px inline padding, with scroll-margin-top var(--space-6). Entry ids are unchanged. The same at 1280.",
+    "remove": [
+     "The gold 20% :target tint",
+     "The display font on dt",
+     "scroll-margin based on --header-h"
+    ],
+    "add": [
+     "The --tint :target entry with a 4px blue bar"
+    ],
+    "keepsForTests": [
+     "Entry ids such as #fixed-cost (lesson and tool links land on them)",
+     "[data-filter], #term-filter and [data-filter-count]",
+     "og:image for /glossary (og.spec)"
+    ]
+   },
+   {
+    "route": "/search",
+    "layout": "The 640 column: h1 'Search', the lede, then the search field (2px ink input) and the #edition select, side by side from 640px (2fr 1fr). Then the [data-status] line (--text-sm --muted) and .results rows with a 1px --rule between. .r-title is a link at --text-lg 700 ink, underlined on hover (a list-row title, owner decision 6). .r-excerpt is --text-md, with <mark> on --tint, ink 700. .r-meta is --text-sm --muted. 'wasm-unsafe-eval' stays on this page only. The same at 1280.",
+    "remove": [
+     "The gold 45% <mark> tint",
+     "The display font on .r-title"
+    ],
+    "add": [
+     "Nothing new"
+    ],
+    "keepsForTests": [
+     "The label 'Search for'; .results li; .r-title (href under /passion-project, contains 'payslip'); .r-excerpt mark; [data-status] 'result' and 'Nothing found'; #edition with values 'India' and '' (search.spec)",
+     "The Pagefind engine loads only on use; the CSP 'wasm-unsafe-eval' appears here and on no lesson (search.spec)"
+    ]
+   },
+   {
+    "route": "/account (preview, noindex)",
+    "layout": "The 640 column, left-aligned: h1 'Sign in', the lede and the note. Then the SignIn island (.signin, max-width 440px, left-aligned) with .signin-card as a .box: white, 1px --rule, --radius, 32px padding (24px at 360). .preview-note: --surface, 1px --rule, --radius, 12px 16px padding, --text-sm, 'Preview' in 700. Each step's one primary .btn is full width at 48px: every 'btn btn-lg' in SignIn.tsx becomes 'btn'. Alternatives are .btn-secondary or .btn-link. The code input is Atkinson 700 at --text-h2, tabular, letter-spacing 0.35em. .preview-code is Atkinson 700 at --text-lg. The sync code stays mono. The same at 1280.",
+    "remove": [
+     "The .centered columns",
+     "The gold-pale preview note",
+     "The pale-blue 20px card",
+     "The display font on the code and on .preview-code",
+     ".btn-lg"
+    ],
+    "add": [
+     "Nothing new"
+    ],
+    "keepsForTests": [
+     ".signin[data-hydrated], .preview-note 'Preview', .preview-code, .signin-status, #si-code-error ('didn't match') with aria-invalid",
+     "Buttons 'Continue with email', 'Continue', 'Sign in', 'Not now', 'Combine'; labels 'What year were you born?', 'Where do you live?', 'Email', 'Six-digit code'; the headings 'Check your email.', 'You’re signed in.', /parent or guardian/, 'Your progress stays on this device.' (signin.spec)",
+     "og:image og-default.png (og.spec)"
+    ]
+   },
+   {
+    "route": "/about, /write, /disclaimer, /accessibility",
+    "layout": ".container.column.prose, restyled through base.css: .eyebrow as a small --text-sm 700 --muted label, h1, the lede, h2 at --text-h2, h3 at --text-lg, bulleted lists, body at --text-md. /about ends with its button and link as today. /accessibility gets rewritten sentences (listed under add). The same at 1280.",
+    "remove": [
+     "The gold eyebrow (restyled globally; the class is kept)",
+     "The '↗' after internal links styled .btn-link (deleted in base.css)",
+     "The false /accessibility claims: 'in both light and dark mode', 'the sticky header never hides the focused element', 'at 17px or larger', 'Buttons and links have at least a 44×44 pixel target', and 'axe-core via Playwright at 360px and 1280px'"
+    ],
+    "add": [
+     "/accessibility copy: 'Every colour pair used for text meets at least 4.5:1 contrast. The site is light on every page; your browser's own dark or high-contrast mode works with it.'",
+     "'Nothing fixed on the screen hides the focused element.'",
+     "'at 18px or larger'",
+     "'Buttons, menus and lists of links have targets at least 44 pixels tall; a link inside a sentence is smaller, as WCAG allows, and every target is at least 24 by 24 pixels.'",
+     "'axe-core via Playwright at 393px and 1280px, reflow checks at 320px, 360px and 640×400 (200% zoom), forced colours and keyboard checks'"
+    ],
+    "keepsForTests": [
+     "axe clean and no sideways scroll on each page (a11y.spec)",
+     ".container .column .prose .eyebrow .lede by name"
+    ]
+   },
+   {
+    "route": "/privacy, /cookies, /terms (protected: .claude/hooks/protect-files.sh blocks edits)",
+    "layout": "Unchanged markup: section.section > div.container.column.prose with span.eyebrow, h1, p.lede, p.updated, and on /cookies two div.table-wrap > table.table. They restyle only through base.css. The .container.column combination is one left-aligned 640px column that lines up with every other page. .eyebrow is a small muted label. .updated is --text-sm --muted. h2 is --text-h2 and h3 --text-lg. .table uses a 2px ink head rule, 1px --rule rows, and th, td and code with overflow-wrap: anywhere, so the cookies tables never scroll sideways at 320px, where .table-wrap cannot be given tabindex. /cookies' promise that videos show 'as a still image with a play button' stays true of the new poster.",
+    "remove": [
+     "Nothing in these files"
+    ],
+    "add": [
+     "Rajvir's own edits only (OWNER_TODO): the lp:activity row and the video lines, and optionally a Contents list"
+    ],
+    "keepsForTests": [
+     ".section .container .column .prose .eyebrow .lede .updated .table .table-wrap defined in base.css with these exact names",
+     "axe clean and no sideways scroll at Pixel 5, desktop, and now 320x640 (design.spec)"
+    ]
+   },
+   {
+    "route": "/404",
+    "layout": "The existing .container.column: h1 'That page does not exist', the lede and the four links as a plain list of blue underlined links. They are links in sentences, so they stay blue. The same at 1280.",
+    "remove": [
+     "Nothing beyond the shell"
+    ],
+    "add": [],
+    "keepsForTests": [
+     "The h1 text 'That page does not exist' (a11y.spec guards against auditing the 404)"
+    ]
+   },
+   {
+    "route": "(every page) consent banner and Privacy choices dialog: src/islands/ConsentManager.tsx, src/islands/consent.css",
+    "layout": "Banner (section.consent-banner, role region, aria-label 'Privacy choices', copy unchanged until Rajvir approves shorter text):\n- It is a full-width bar: --bg, a 2px --ink top border, no shadow, no radius, and its content in .container. Padding is 16px at 360 and 24px from 1024px. It has no max-height.\n- Inside: an h2 at --text-md 700, the paragraph at --text-sm, and one .btn-row with 'Reject all' and 'Accept all' as two equal .btn-secondary .btn-sm (as rendered today: parity without two blue primaries), plus 'Choose' as a .btn-link.\n- @media (min-height: 561px): position fixed, inset-inline 0, bottom 0, z-index 60. Only there, html:has(.consent-banner) gets scroll-padding-bottom: var(--banner-reserve).\n- @media (max-height: 560px) (200% and 400% zoom, landscape phones): position static, so it renders after the footer in DOM order and both buttons stay reachable.\n- --banner-reserve is defined in consent.css per band: below 640px, 640-1023px, and 1024px up. Each value is measured from the built banner's height and rounded up to the next rem.\n- While the banner shows: html:has(.consent-banner) :is(.lesson-steps, .tool .results, .dash-side) { position: static; max-height: none; overflow: visible }.\n\nDialog (dialog.consent-dialog): white, 1px --border, --radius, width min(560px, 100vw - 32px), 32px padding (20px at 360), ::backdrop color-mix(in srgb, var(--ink) 55%, transparent). The consent list has 1px --rule rows. Each active category shows its label (--text-md 700), its hint (--text-sm --muted) and input.switch[role=switch] with a visible aria-hidden span 'On' or 'Off' (--text-sm --muted) beside it.\n\nThe switch: 48x28, --radius-pill. The track is --border when off and --ink when on. The knob is white, 22px, and moves over --dur-fast only under no-preference. It has the 3px --blue focus ring. In forced colours it has a 2px ButtonText border, a ButtonText knob and a Highlight checked track.\n\nThe island stays after the footer.",
+    "remove": [
+     "The bottom-right 460px floating card with its 20px radius",
+     "The dialog's 20px radius",
+     "var(--brand-black) in the backdrop",
+     "The --line-strong and --accent switch colours"
+    ],
+    "add": [
+     "The full-width bar, fixed only on tall viewports",
+     "The per-band --banner-reserve",
+     "Sticky boxes turned off while the banner shows",
+     "Visible 'On' and 'Off' text",
+     "The forced-colors rules for the switch"
+    ],
+    "keepsForTests": [
+     ".consent-banner containing 'learning time'; the button 'Reject all' removes it; lp:consent choices.stats false (consent.spec)",
+     "GPC: no banner and source 'gpc'; [data-consent][data-hydrated]",
+     "dialog.consent-dialog containing 'lp:region', 'lp:progress', 'Not in use', 'Learning time on this device', with 'Save choices' enabled; Escape closes it and focus returns to the opener",
+     "The 'Reject all' click in lessons.spec's video test",
+     "No cookies, no third-party requests, no CSP violations (consent.spec)"
+    ]
+   }
+  ],
+  "components": [
+   {
+    "name": "Buttons (.btn, .btn-secondary, .btn-sm, .btn-link, .btn-row)",
+    "spec": ".btn is the primary, at most one per screen. It has a --blue fill and a 2px --blue border (so its edge shows in forced colours), a white 700 label at --text-md, min-height var(--target-lg), padding 0 20px, --radius and line-height 1.2. Hover and active use --blue-dark for fill and border. Disabled is opacity .5 with a not-allowed cursor. It has no transform, transition, arrow box or shadow.\n\n.btn-secondary is neutral, per decision 10: --bg fill, 2px --ink border, --ink 700 label, same size; hover gives a --surface fill. It is used for poll reveals (Poll.astro's summary class becomes 'btn btn-secondary'), Show me steps, Reset, Copy link, Share, Mark as read, Privacy choices, Add a line, and the banner's Reject all and Accept all.\n\n.btn-sm has min-height var(--target), padding 0 16px and --text-sm.\n\n.btn-link is a text button or link: no fill or border, --ink 700, always underlined (1px, offset .16em, 3px on hover), min-height var(--target), inline-flex. Its '↗' ::after is deleted.\n\n.btn-lg, .cta, .cta-label and .cta-arrow are LEGACY until step 22 (.btn-lg equals .btn). SignIn.tsx's 'btn btn-lg' becomes 'btn'."
+   },
+   {
+    "name": "Links",
+    "spec": "There are three kinds, per owner decision 6.\n\n(a) A link inside running text (p, li, dd, .prose, .lesson-body, .lesson-fine, .note, .stat-source, 404): --blue, underline 1px with max(1px, .0625rem) thickness at offset .16em. Hover is --blue-dark with a 3px underline. The fine-print variants (.lesson-fine, .stat-source, .note) inherit --muted and keep the underline.\n\n(b) A row in a ruled list (.index-row, .lesson-row, .taxonomy-list a, search .r-title): --ink 700. The whole row is the link, and the title underlines on hover and focus.\n\n(c) A standalone link (.crumb a, .tool-handoffs a, .taxonomy-all a, 'More about Business Lab', 'Next: <title>', .tool-jumps a): --ink 700, always underlined.\n\nOn the bar, links are white under .on-band. There is no visited colour and no arrow glyph in any link. External links keep rel='noopener noreferrer' and no target=_blank."
+   },
+   {
+    "name": "Crumb (.crumb, base.css; used by the track page, lesson, review and tool pages)",
+    "spec": "One line, following owner decision 8. It is a p.crumb with display flex, flex-wrap, gap 0 12px, --text-sm and 16px below. The link is inline-flex, min-height var(--target), --ink 700 and underlined. Its text is the existing '← All tools' or '← All tracks', and on a lesson '← <track title>'. span.crumb-pos is --muted and tabular ('Lesson 1 of 4 · 10 min'). The page-scoped .crumb rules in the track, review and tool pages are deleted. This replaces v5's Breadcrumbs.astro, which is not built."
+   },
+   {
+    "name": "Inputs, labels, hints, notes and errors",
+    "spec": "Text, email, number and search inputs and textareas have a 2px solid --ink border, --radius, min-height var(--target-lg), padding 8px 12px, --text-md (at least 16px, so iOS never zooms), --bg and tabular-nums. Focus is a 3px --blue outline at offset 0; the border is unchanged. aria-invalid='true' gives a 2px --error border.\n\n.field keeps the tool kit's order: label, hint, input, note, error. There is no markup change in tool-kit.tsx. The label is --text-md 700 --ink, .hint is --text-sm --muted, .field-note is --text-sm --ink-2, and .error is --text-sm 700 --error.\n\nNumber inputs are max-width 14em; text and email inputs are 100% up to 30em."
+   },
+   {
+    "name": "Select, radios and checkboxes",
+    "spec": "The select is the native control (appearance: auto). color-scheme light keeps its popup light on a dark OS. It uses the same box as inputs: 2px --ink border, --radius, 48px, --text-md, padding 0 36px 0 12px. There is no custom arrow and no customizable-select styling.\n\nRadios and checkboxes are 24x24 with accent-color var(--ink), not blue (decision 6)."
+   },
+   {
+    "name": "Disclosures (.fold in base.css, applied via :where() to .lesson-details, .practice-hint, .doc-hint, .tool details.how, .growth details, .week-table and details.lesson-steps-fold)",
+    "spec": "The summary is --ink 700, underlined, with min-height var(--target), preceded by a 7px CSS border triangle that points right, and down when open. The change is instant. The native marker is removed with list-style none and ::-webkit-details-marker.\n\nThe body has a 4px --rule border-inline-start and padding 16px 0 16px 20px, with no fill.\n\nPractice hints keep 'Hint 1 of 3, the method' etc. They are free to open and several can be open at once. The '+' and '−' glyphs are deleted. Critical information never sits only in a fold.\n\nThe poll reveal, Show me steps and the header disclosures are not .fold: they have their own looks."
+   },
+   {
+    "name": "Table (.table; calculator year and amortisation tables; the dashboard table; the cookies tables)",
+    "spec": "width 100%, border-collapse collapse, --text-sm, --leading-ui. The caption is left-aligned, 700 and --text-md. thead th is 700 --ink with a 2px --ink bottom border and no fill. td has a 1px --rule bottom border and padding 12px 16px 12px 0; the last cell has no right padding. Cells are vertical-align top.\n\nNumeric cells (.num, or the last column in tool tables) are right-aligned and tabular. th, td and code use overflow-wrap: anywhere. There are no stripes.\n\n.table-wrap is overflow-x auto as a safety net only; tables are built not to overflow at 320. In print the head gets a 2px --print-ink rule."
+   },
+   {
+    "name": "Ledger (.ledger and its rows; EditionSum, Worked, ShowMe, calculator results, explorers)",
+    "spec": "The signature. Its structure is unchanged: label left, figure right, a 2px dotted --muted leader, a 1px --ink rule above a total, and a 3px double --ink rule under the final figure.\n\n.ledger-figure moves from Bricolage to --font-body 700 at --text-lg; the total figure is --text-h2. .ledger-subtotal keeps a single 1px --ink rule and never the double. .ledger-note is --text-sm --muted on its own line. .is-loss stays --error, with words or a minus sign.\n\nRows keep flex-wrap, and the figure adds overflow-wrap: anywhere and white-space normal below 400px, so a figure such as ₹1,23,45,678 at 32px drops to its own line instead of overflowing (F14).\n\nIn Show me and .steps, rows have a 1px --rule between them and no box: the .steps box and its 1.5px navy border are removed."
+   },
+   {
+    "name": "Index list (.index-list, .index-row, .index-title, .index-sub, .index-meta, .index-flag)",
+    "spec": "Ruled rows: 1px --rule at the top of the list and under every row, 16px vertical padding. The row is one link with display grid. An optional leading column holds a 32x22 flag (.index-flag) or a number.\n\n.index-title (h3 or span) is --text-lg 700 --ink, underlined on row hover and focus. .index-sub is --text-md --ink-2. .index-meta is --text-sm --muted and tabular. .index-go and its arrow are deleted.\n\nThe list is used for the home editions and starters and the tools index. The taxonomy lists use the same row look under their own class names, which are kept for the tests."
+   },
+   {
+    "name": "Lesson list (LessonList.astro, with styles moved into its own scoped <style> so B2 and B3 edit disjoint files)",
+    "spec": "Props are unchanged (lessons, planned, compact). ol.lesson-list[role=list] of ruled rows. a.lesson-row[data-lesson-row] is a grid of 32px and 1fr:\n- span.lesson-num: --muted 700 tabular.\n- span.lesson-title: --text-lg 700 --ink, or --text-md in compact; underlined on row hover.\n- span.lesson-sub: --text-md --ink-2, full rows only.\n- span.lesson-marks: --text-sm --muted with the minutes, and [data-mark='read'] ' · Read' and [data-mark='checks'] ' · Checks done' in --success 700, hidden until ProgressMarks reveals them.\n\nPlanned rows are muted plain text with '(being written)'. There are no circles, no connectors and no filled states. Step 22 deletes the old global .lesson-list and .course-* rules in lesson.css."
+   },
+   {
+    "name": "Poll (Poll.astro: the find-it question, practice, the three checks, drill situations; Review.tsx repeats the markup)",
+    "spec": "A framed question: 1px --border, --radius, white, padding 20px (24px from 640px), margin 32px 0, no fill.\n- .poll-label is --text-sm --muted ('Question 1 of 3', 'Find it on the document').\n- The legend is --text-lg 700 --ink, 12px below.\n- .opts is a grid with an 8px gap. Each .opt label row is min-height 48px, padding 8px 16px, white, 1px --border, --radius, with a 24px radio. Hover sets the border to --ink. Checked (:has) gives a 2px --ink border (padding adjusted), a --tint fill and 700 --ink.\n- The reveal summary is .btn .btn-secondary with the marker removed.\n- .reveal-body has a 4px --rule border-inline-start and padding 16px 0 16px 20px.\n- .poll-status is 700: 'Correct.' in --success, 'Not quite.' in --ink.\n\nThe @supports selector(:has(*)) feedback rules and the .fb and .answer markup are unchanged, so everything works with JS off."
+   },
+   {
+    "name": "Document (Document.astro)",
+    "spec": "A figure with a 1px --border, --radius, white, and 24px padding (16px at 360). The --paper and --brand-navy pinning goes.\n- .doc-head: .doc-kind at --text-xs 700 --muted; .doc-title at --text-lg 700 --ink (Atkinson); .doc-note at --text-xs --muted.\n- Lines are a grid of label and right-aligned 700 tabular value (minmax(0, 1fr) minmax(0, auto)) with a 1px dotted --border top rule.\n- A hint summary is --ink with a 1px dotted --ink underline at offset 3px, 44px tall. The opened hint is --text-sm with a 4px --rule inline-start bar.\n- .doc-task above it is --text-sm --muted."
+   },
+   {
+    "name": "Show me (ShowMe.astro, ShowMeStep.astro)",
+    "spec": "The ledger rows sit on the page with no box.\n\nEach '.showme-more > summary' looks like .btn-secondary .btn-sm and reads 'Show line 2', with 'of 5' in --muted 400. The '+' ::before is deleted. Once open it becomes --text-sm --muted text ('Line 2 of 5'), with no border, and stays focusable.\n\n.showme-caption is --text-md --ink-2 on its own line. 'Show every line' (.showme-all) is an ink 700 underlined text button. The key idea follows as p.key-idea.\n\nThe hooks .showme, .showme-line, '.showme-more > summary' with its texts, the nested details and the beforeprint open-all script are unchanged."
+   },
+   {
+    "name": "Key idea (.key-idea, lesson.css; .inset in base.css)",
+    "spec": "A 4px --ink border-inline-start, padding 4px 0 4px 20px, margin 24px 0, --text-lg 700 --ink. There is no highlighter and it is not blue."
+   },
+   {
+    "name": "Video poster (Video.astro, VideoPlayer.tsx)",
+    "spec": "A 16:9 frame with a --surface fill, 1px --border and --radius.\n- Top-left at 16px: the title (--text-md 700 --ink) and the channel (--text-sm --muted).\n- Centred: the Play button as the primary .btn. VideoPlayer.tsx's class becomes 'btn video-play', with the drawn triangle in currentColor and 'Play 4 min'. The gold pill and white border go.\n- Bottom-left: 'Watch on YouTube', --text-sm --blue underlined.\n- .video-ask inside the frame: white, 1px --border, --radius, 16px padding, --text-sm, with the existing .btn .btn-sm and .btn-secondary .btn-sm.\n\nBelow 560px the head, Play and the link stack from the top-left. The caption under the frame is unchanged. Nothing loads from YouTube before a tap and a yes."
+   },
+   {
+    "name": "Mock screen, term and term popover (MockScreen.astro, Term.astro, lesson.css)",
+    "spec": ".mock-screen: 1px --border, --radius, white, max-width 320px, no phone corners.\n- .ms-kind and .ms-tag are --text-sm --muted rows split by a 1px --rule.\n- .ms-from is 700 --ink; .ms-amount is --text-h2 700 tabular (Atkinson).\n- .ms-action has a 1px --border, --radius and a 700 --ink label.\n\n.term in prose has a dotted 1px --muted underline at offset 4px, turning to a solid --blue underline on hover. It is a link in running text.\n\n.term-pop:popover-open (behind @supports) is a bottom sheet: fixed, inset auto var(--gutter) 24px, max 480px wide, max-height 60dvh, white, 1px --border, --radius, 24px padding, transparent backdrop, h3 at --text-lg. The ids #term-* and #pop-* are unchanged."
+   },
+   {
+    "name": "Explorer (explorer.css; 'Change one thing')",
+    "spec": ".explorer is a .box-surface: --surface, 1px --rule, --radius, 24px padding (16px at 360). .explorer-label is --text-sm 700.\n\nPreset keys wrap with an 8px gap; the tinted track goes. Each .preset is a button at least 44px tall and 64px wide: white, 1px --border, --radius, the figure at --text-sm tabular, .preset-unit at --text-xs --muted. aria-pressed='true' gives a 2px --ink border, a --tint fill and 700 --ink.\n\n.explorer-figure is --text-h1 700 tabular (Atkinson) with overflow-wrap anywhere. .explorer-result is 700 --ink. .explorer-change and the prompts are --text-sm --muted under a 1px --rule. Split steppers are 44x44 with a 1px --border and --radius. The full-calculator link is an ink 700 underlined standalone link.\n\nThe hooks .explorer, .explorer-result, .explorer-change, .split-amount and [data-left] are unchanged."
+   },
+   {
+    "name": "Results bench (tools.css .tool .results)",
+    "spec": "A --surface fill, 1px --rule, --radius and 24px padding. It is sticky only inside @media (min-width: 900px) and (min-height: 760px): top var(--sticky-top), max-height calc(100dvh - 2 * var(--sticky-top)), overflow-y auto. Because it holds buttons it is focusable, so axe's scrollable-region-focusable passes. It is static on shorter screens and while the consent banner shows (the rule lives in consent.css).\n\n.result-figure-value is --text-h1 700 ink tabular with overflow-wrap anywhere. .result-fact rows are --text-sm."
+   },
+   {
+    "name": "Boxes (.box, .box-surface)",
+    "spec": ".box is white with a 1px --rule, --radius, and 24px padding (16px at 360). .box-surface is the same on --surface.\n\nThey are allowed only where a box holds a figure or mixed content: the edition front's worked example, the results bench, the explorer, the five dashboard sections, the sign-in card and the consent dialog. The poll, document, mock screen and video frame are bordered instruments, not cards.\n\nDeleted in step 22 after LEGACY: .card, .card-outline, .panel*, .sheet, .page-sheet, .grid-table, .pill*, .sticker*, .hand*, .doodle, .blobs, .grid-3, .cluster, .stack, .display, .hairline, .section-alt, .section-tight, .mega, .callout, .hl, .on-field, .section-dark, .course-*."
+   },
+   {
+    "name": "Notes and edition statistics",
+    "spec": ".note is --text-sm --muted under a 1px --rule with 16px padding-top; its links inherit and stay underlined.\n\nul.figures > li.stat is a ruled row (1px --rule top, 16px padding). From 768px it is a grid of 10em and 1fr: p.figure (--text-h2 700 ink tabular), then p.stat-label (--text-md) and p.stat-source ('Source: ' plus an underlined link, --text-xs --muted).\n\nEvery figure carries its sentence and its source, so this is not a stat banner, and it is never three big numbers across."
+   },
+   {
+    "name": "Charts (savings growth, dashboard week, the ring, lesson SVGs)",
+    "spec": "Series colours in fixed order, light values only. Axes and grid use --chart-grid. Labels are --text-xs in --ink-2; strong labels are --ink 700 with a --bg halo stroke. Every chart has direct labels and a data table.\n\nWeek bars use rx 2. Today is marked by a 2px --ink stroke and the word 'Today', not by colour. The ring has a --chart-grid track, a --series-1 done arc and butt caps.\n\nNo dual axis, no gradient, no animation."
+   },
+   {
+    "name": "Logo (Logo.astro) and brand mark (scripts/brand-mark.mjs)",
+    "spec": "Logo.astro gets a variant prop: 'default' | 'inverse', default 'default'.\n- Default is the drawing unchanged: a #0C61C4 disc, a 1.5px white ring and a white B. It is used in the footer at 32px on white (the disc is 5.96:1 against white).\n- Inverse is a #FFFFFF disc with a #0C61C4 ring and B. It is used in the header at 32px on the bar: the disc is 8.35:1 against #0B4AA2 and the B is 5.96:1 on the disc.\n\nThe raw hex stays here, the one allowed place besides Flag.astro. scripts/brand-mark.mjs adds badgeInverse(), drawing the same thing for the share images. The favicon, logo-mark.svg and the app icons keep the default badge. The maskable icon's navy field (#0B1240, the ink) is 3.0:1 against the disc and is unchanged, so brand-icons.mjs is not re-run."
+   },
+   {
+    "name": "Footer (Footer.astro)",
+    "spec": "White (--bg) with a 1px --rule top border and padding 48px 0 32px. It has no .section-dark.\n\nThe grid is one column at 360, two from 640 (the brand block across both), and four from 1024 (2fr 1fr 1fr 1fr, 48px gap).\n- The brand block: default Logo at 32px, a 12px gap, the wordmark in Atkinson 700 at --text-lg --ink, and the blurb at --text-sm --muted (max 36ch).\n- The headings 'Editions', 'Site' and 'Legal' are h2 at --text-sm 700 --ink.\n- Links are --text-sm --ink-2 with no underline until hover, in rows of min-height var(--target) (44px, so /accessibility's target sentence holds). The current edition row is 700 --ink.\n- 'Privacy choices' stays button.linklike[data-open-consent].\n- The base row, under a 1px --rule: 'For learning only. Not financial, legal, or tax advice.' and '© <year> Rajvir Dixit. Text is CC BY-NC-SA 4.0; code is MIT.' at --text-xs --muted.\n\nThe copy is unchanged, including 'Tools'."
+   },
+   {
+    "name": "Focus ring and skip link",
+    "spec": ":focus-visible { outline: 3px solid var(--focus); outline-offset: 2px }, with offset 0 on inputs and selects. The ring is white inside .on-band and .on-band-wide. There is no box-shadow ring and no yellow.\n\n:target and :focus-visible get scroll-margin-top var(--space-6). html gets scroll-padding-top var(--space-5), and scroll-padding-bottom var(--banner-reserve) only while the fixed banner shows.\n\nThe skip link is the first element: white, 2px --ink border, --radius, 12px 16px padding, 700 --ink, shown at top var(--space-2), with its outline in --on-blue. That is a white ring on the bar at 8.35:1, and the link's own ink border is 17.88:1 on its white fill (P8)."
+   },
+   {
+    "name": "Forced colours (base.css, consent.css)",
+    "spec": "Every current-item bar and state edge is a border, never a box-shadow or background: the Menu row, the edition row, the nav link's 4px white border-bottom, the dashboard side nav, the :target entry, the checked option and the pressed key.\n\nThe header's blue is a ::before background, which becomes Canvas, and its tokenised white text becomes CanvasText. mark keeps Mark/MarkText. The switch gets a 2px ButtonText border, a ButtonText knob with forced-color-adjust none, and a Highlight checked track.\n\nThere are no filled circles or other background-only state marks anywhere."
+   },
+   {
+    "name": "Print",
+    "spec": "Hide the header, the footer, the skip link, the consent island, .btn-row, nav.lesson-steps, .lesson-next, .video-frame, Show me summaries, poll statuses, reveals, the return line, the marks and explorer actions.\n\nbody is 12pt, in --print-ink on --print-paper. Boxes print as a 1px --print-line border with no fill. The key idea keeps its border and the ledger's double rule is kept. Table heads get a 2px --print-ink rule. External links print their URL in --print-muted. Show me opens every line on beforeprint (the existing script). A worksheet never carries one reader's progress."
+   }
+  ],
+  "accessibility": [
+   "P1 (the header disclosures overlap the strip and the breadcrumbs, and never close on focus loss). Below 1024px both panels are in normal flow:\n- details.nav-menu sits in the header grid between the bar and the edition row. Its summary is absolutely placed into the bar (top 0, inset-inline-end 0, height var(--bar-h)), so the open panel pushes the edition row down.\n- ul.edition-list is position static and width 100%, so it pushes main down.\n- Nothing can cover the next Tab stop, with or without JavaScript.\n\nFrom 1024px there is no Menu, and the 280px edition dropdown closes on focusout (relatedTarget outside), Escape and outside click, from the one Header.astro script. The only JS-off exception is an open edition dropdown at 1024px and up; it is documented.\n\ndesign.spec, at 360x800 with JS on and off: open Menu, Tab to the edition summary, and assert that its rect does not intersect the Menu panel. Open the edition menu, Tab past the last link, and assert that the focused element does not intersect the list.",
+   "P2 (the full-width fixed banner hides focus inside sticky boxes). consent.css adds html:has(.consent-banner) :is(.lesson-steps, .tool .results, .dash-side) { position: static; max-height: none; overflow: visible }, so while the banner shows every focus target scrolls with the root scroller, which scroll-padding-bottom governs. The bench is also sticky only in (min-width: 900px) and (min-height: 760px). design.spec, at 1280x720 and 360x800 with a fresh context: Tab 40 times through in/learn/money-basics/first-payslip and in/tools/break-even, and at every stop assert that the focused element's rect.top is above the banner's rect.top.",
+   "P3 (one --banner-reserve is wrong at other sizes, and zoom can push the buttons off screen). The banner is position fixed only in @media (min-height: 561px) and position static below that, so at 200% and 400% zoom it renders after the footer and both buttons are reachable. --banner-reserve is a component property in consent.css with three measured values: below 640px, 640-1023px, and 1024px up. Each is the built banner's getBoundingClientRect().height at 360x800, 768x1024 and 1280x720, rounded up to the next rem, and recorded in a comment with the date and the copy measured. scroll-padding-bottom is set only inside the min-height query. design.spec at 640x400: computed position is 'static', and Reject all is reachable by Tab and clickable.",
+   "P4 (the spec dropped the calculator work's test hooks). Every hook is kept by name and text: .taxonomy, h2.taxonomy-title 'Tools that answer', .taxonomy-list a (texts and data-edition-path), .taxonomy-all 'All N tools', .tool-jumps, section.tool-group[id] h2 in registry order, a.index-row, .index-meta, p.crumb a '← All tools', h1 'Tools', .tool-handoffs, .scenario, .related, '.tool .btn-row + .link-note', [data-pagefind-meta], .drill-list, [data-drill-return]. There is no rename to 'Calculators'. The proves of steps 8, 9, 14, 15 and 16 run tests/e2e/tools-foundation.spec.ts and tests/e2e/tools/.",
+   "P5 (the protected legal pages depend on classes not listed as kept). base.css goes on defining .section, .container, .column, .prose, .eyebrow, .lede, .updated, .table and .table-wrap under these exact names. The .container.column combination stays one left-aligned 640px column. .table th, .table td and .table code get overflow-wrap: anywhere, so the /cookies tables cannot scroll sideways at 320px, where .table-wrap cannot be given tabindex. privacy, cookies and terms are in the 320x640 reflow test. No protected file is edited.",
+   "P6 (the reflow and zoom claims are untested). tests/e2e/design.spec.ts adds three describe blocks, each asserting documentElement.scrollWidth <= clientWidth:\n- test.use({ viewport: { width: 320, height: 640 } }) and 360x800, on '', in, in/learn/start-something, in/learn/money-basics/first-payslip, in/tools/budget, in/tools/loan#principal=123456789 with 'Year by year' opened, glossary, privacy, cookies, terms and dashboard.\n- 640x400, standing in for 200% zoom, on '', first-payslip and in/tools/break-even, which also checks the header and the static banner.\n\n/accessibility's sentence changes to name what is tested: 393px (Pixel 5) and 1280px axe runs, and reflow at 320px, 360px and 640x400.",
+   "P7 (forced colours was claimed but unsupported for background-drawn controls). consent.css adds @media (forced-colors: active) { .switch { border: 2px solid ButtonText } .switch::after { background: ButtonText; forced-color-adjust: none } .switch:checked { background: Highlight; forced-color-adjust: none } }. v5.1 has no filled step circles at all. Every current-item bar is a border-bottom or border-inline-start, never a box-shadow or background, and DESIGN v5.1 §4 says so. design.spec runs page.emulateMedia({ forcedColors: 'active' }), opens Privacy choices, and asserts that the switch's computed border-top-width is not '0px' and that the aria-current nav item has a non-zero border.",
+   "P8 (the skip link's focus ring is invisible on the blue bar). The skip link is a white box with a 2px --ink border, shown at top var(--space-2) inside the bar, and .skip-link:focus-visible { outline-color: var(--on-blue) }. The ring is white on the bar at 8.35:1, and the box's ink border is 17.88:1 on its white fill. contrast-check adds --on-blue on --blue as a non-text pair.",
+   "P9 (the .on-band change breaks focus visibility until the header lands). Step 2 (tokens) leaves the existing .on-band block untouched. The white-only .on-band, and the new .on-band-wide, land in step 5 in the same commit as the new Header.astro, by the same group A builder. There is no window in which a white ring sits on white pills.",
+   "P10 (the sticky results bench can be taller than the viewport). The bench is sticky only where it fits: @media (min-width: 900px) and (min-height: 760px) { .tool .results { position: sticky; top: var(--sticky-top); max-height: calc(100dvh - 2 * var(--sticky-top)); overflow-y: auto } }. It is static below that and while the banner shows. The lesson rail has the same max-height and overflow. Figures get overflow-wrap: anywhere (F14). design.spec at 1280x720 on break-even: Reset, Copy link and Share are each reachable by Tab and inside the viewport when focused.",
+   "P11 (the /accessibility 44x44 claim breaks for breadcrumbs and rail rows). The crumb link, 'In this lesson' rows (phone and rail), Menu rows (48px), footer rows, index rows, lesson rows, .btn-sm and summaries all have min-height var(--target). /accessibility is reworded to the true claim: buttons, menus and lists of links are at least 44px tall; links inside sentences are smaller, as WCAG allows; every target is at least 24x24. design.spec at 360x800 on '', a lesson and a tool: every visible a, button and summary inside .site-header, .site-footer, .crumb, .lesson-steps, .index-list, .lesson-list, .taxonomy-list, and every .btn, has a bounding box at least 44px tall and 24px wide. Links inside p and li running text are excluded.",
+   "P12 (steps too big to review, with subset proves). Group A has six steps: tokens, font, base, header, footer, share images. The lesson is three steps (frame; polls, Show me and document; video, drill, mock screen and term), tools are three (index and page frame; tools.css; explorer.css), and the utility pages are three (reference pages; review and account; consent). Every step's proves run the full gate G: npm run build && npm run budget && npm run contrast && npm run test:unit && npx playwright test tests/e2e/a11y.spec.ts, on every page at both projects, not a -g subset. The base.css step runs the whole npm run ship-check, because it restyles every page.",
+   "P13 (the logo claim is overstated). v5's sentence that the white ring (8.35:1) carries the edge is deleted. Per owner decision 7, the badge on the bar is the inverse: a white disc, 8.35:1 against #0B4AA2, with a #0C61C4 ring and B at 5.96:1 on the disc. The 0.75px ring is decorative. Elsewhere the default badge's disc is 5.96:1 against white. A logo is exempt from 1.4.11; these figures are stated only so the brand guide is accurate.",
+   "P14 (scripts/contrast-check.mjs is fragile). The step 2 rewrite:\n- strips /* ... */ comments before parsing;\n- finds the first :root block with /^:root\\s*\\{/m, so the LEGACY block (a second :root block) is never read;\n- reads '@media (prefers-contrast: more)', '.on-band {' and, from step 5, the '.on-band-wide' block;\n- throws with the token's name when a checked token is missing or its value is not a 6-digit hex, where today a missing token gives NaN.\n\nPairs checked:\n- Text at 4.5:1: ink, ink-2, muted, blue, blue-dark, error and success on bg, surface and tint; on-blue on blue and blue-dark.\n- Non-text at 3:1: border and focus on bg, surface and tint; on-blue on blue.\n- More contrast: muted at 7:1 on bg and surface; border at 3:1.\n- .on-band and .on-band-wide ink, ink-2 and muted at 4.5:1, and focus at 3:1, against :root --blue.\n\nThe dark, dark+more and .section-dark markers are no longer read.",
+   "F14 (figure overflow at 320-360px). overflow-wrap: anywhere is added to .result-figure-value, .explorer-figure, .figure and .ledger-total .ledger-figure. Below 400px the ledger figure also becomes white-space normal. The reflow test includes in/tools/loan#principal=123456789, whose fragment link fills a 9-digit principal."
+  ],
+  "implementationPlan": [
+   {
+    "step": 1,
+    "files": [
+     "(no repository files) git: branch design-v5 from the commit that lands the tools foundation"
+    ],
+    "what": "Baseline.\n\nWait until the concurrent tools foundation is committed by its own session. Its files include the edits to Header.astro, RegionTabs.astro, BaseLayout.astro, LessonLayout.astro, base.css, lesson.css, tools.css, the tools pages, regions.ts and og-images.mjs, plus the untracked src/lib/tools/, src/content/drills/, the seven islands, tests/e2e/tools-foundation.spec.ts and tests/e2e/tools/. Then create branch design-v5 from that commit.\n\nRe-read every file this plan names. It was written against the working tree of 22 September 2026, and the plan assumes the files as they will be after that commit. Grep the seven new islands (TakeHomePay, YearlyRate, CardMinimum, BufferTarget, PayLaterPayday, RentShare, SideIncomeTax) and src/lib/tools/ for class names not yet styled in base.css or tools.css, and list them for step 15.\n\nDefine the gate G = npm run build && npm run budget && npm run contrast && npm run test:unit && npx playwright test tests/e2e/a11y.spec.ts (every page, mobile and desktop projects).\n\nNever push or merge.",
+    "proves": "git status is clean before branching, and npm run ship-check is green on the base commit, so any later failure belongs to the redesign. The class-name list for step 15 is written in the step's notes.",
+    "parallelGroup": "A"
+   },
+   {
+    "step": 2,
+    "files": [
+     "src/styles/tokens.css",
+     "scripts/contrast-check.mjs",
+     "src/lib/site.ts",
+     "src/layouts/BaseLayout.astro"
+    ],
+    "what": "Tokens v5.1, light only.\n\ntokens.css:\n- Header comment rewritten, without the string ':root'.\n- :root { color-scheme: light }.\n- The v5.1 tokens as 6-digit hex and plain values, exactly as in the tokens table. This includes the new values for --ink #0b1240, --ink-2 #262f57, --muted #434d73, --focus #0b4aa2, --text-*, --measure 32em, --column 640px, --wide 960px, --gutter, and the new names --blue, --blue-dark, --on-blue, --surface, --tint, --rule, --border, --bar-h (plus @media (min-width: 1024px) { :root { --bar-h: 64px } }), --edition-row-h, --sticky-top, --target, --target-lg, --radius, --rule-w, --control-w, --bar-w, --space-section, --rail, --leading-ui, --leading-heading, --leading-h1 and --tracking-h1.\n- Delete '@media (prefers-color-scheme: dark)', '@media (prefers-contrast: more) and (prefers-color-scheme: dark)', the dark series values and the .section-dark block.\n- The prefers-contrast: more block becomes --muted #262f57, --rule #6d718c, --border #484d70.\n- Leave the .on-band block as it is: it changes in step 5 (P9).\n- Add a second :root block after a 'LEGACY: deleted in step 22' comment, mapping every retired name to a v5.1 hex or plain value as listed in the tokens table.\n\nsite.ts gains themeColor: '#0b4aa2'. BaseLayout gets <meta name='color-scheme' content='light'> and one <meta name='theme-color' content={site.themeColor}>, and the two media theme-colors go.\n\ncontrast-check.mjs is rewritten as described in P14.",
+    "proves": "npm run contrast lists only v5.1 pairs, all ok, with the figures in the tokens table (ink 17.88 on bg, border 3.43 on tint, on-band white 8.35 against --blue). G passes. npx playwright test tests/e2e/regions.spec.ts tests/e2e/consent.spec.ts passes. With the preview running, a one-off Playwright screenshot with colorScheme 'dark' of '', in, in/learn/money-basics/first-payslip and in/tools/break-even shows white pages, with no gold and square corners.",
+    "parallelGroup": "A"
+   },
+   {
+    "step": 3,
+    "files": [
+     "src/styles/fonts.css",
+     "src/layouts/BaseLayout.astro",
+     "public/fonts/bricolage-latin.woff2 (delete)",
+     "public/fonts/bricolage-latin-ext.woff2 (delete)"
+    ],
+    "what": "One font. Delete both Bricolage Grotesque @font-face rules and the bricolage-latin preload, and delete the two woff2 files. Atkinson's two faces keep font-weight 400 700 and the preload. The LEGACY --font-display already points at the Atkinson stack (step 2), so every heading, figure and button is Atkinson from here on.",
+    "proves": "G passes. grep -ril bricolage dist --include=*.html --include=*.css prints nothing. A Playwright request log on '' and on a lesson shows no request matching /bricolage/i. npm run budget reports the same or smaller page weights.",
+    "parallelGroup": "A"
+   },
+   {
+    "step": 4,
+    "files": [
+     "src/styles/base.css",
+     "src/layouts/BaseLayout.astro"
+    ],
+    "what": "Rewrite base.css in v5.1 names, top to bottom:\n- Reset and [hidden]. html and body on --bg, colour --ink-2, --font-body, --text-md, --leading-body; scroll-padding-top var(--space-5).\n- Delete @view-transition, the ::view-transition rules, smooth scroll and the dark a:hover.\n- Headings (all ink 700, sizes and spacing per the typography); p (32em, pretty); li; .lede; .eyebrow as a small muted label.\n- The three link kinds; strong; code on --surface; hr in --rule.\n- :focus-visible; scroll-margin; .container, .column and .container.column (P5); .section; .list-plain; .grid.\n- Buttons (.btn, .btn-secondary, .btn-sm, .btn-link, .btn-row) with no transforms or transitions.\n- The shared .crumb and .crumb-pos.\n- .fold and its :where() list.\n- Forms (.field, label, .hint, .field-note, .error, .success, inputs, select, radios accent --ink).\n- .table and .table-wrap with the overflow-wrap rules.\n- The ledger (Atkinson figures, .ledger-subtotal, .ledger-note, F14 guards).\n- mark (--tint, ink 700).\n- The .index-list family (.index-go deleted).\n- .box, .box-surface, .note, .inset, .figure (--text-h1 700 tabular, overflow-wrap anywhere), .prose and .updated.\n- .skip-link (P8), .visually-hidden, the reduced-motion safety block, the forced-colors block and print.\n\nMove every decorative class into one LEGACY block at the end, neutralised: no rotation, no gold, 4px radius, fills only --surface, outlines 1px --rule. The block covers .panel*, .card*, .pill*, .pills, .sticker*, .hand*, .doodle, .blobs, .grid-table, .cta*, .mega, .display, .sheet, .page-sheet, .callout, .hl, .section-alt, .section-tight, .section-dark, .on-field, .cluster, .stack, .grid-3, .centered, .btn-lg and .hairline.\n\nBaseLayout: main loses the page-sheet class. The 'bare' prop is kept in the type and does nothing.\n\nKeeps by name: .section .container .column .prose .eyebrow .lede .updated .table .table-wrap .field .hint .field-note .error .success .ledger .ledger-row .ledger-label .ledger-figure .ledger-total .ledger-subtotal .ledger-note .is-loss .index-list .index-row .index-title .index-sub .index-meta .note .figure .btn .btn-secondary .btn-sm .btn-link .btn-row .list-plain .numbers .muted .small .skip-link .visually-hidden.",
+    "proves": "The whole npm run ship-check passes (build, budget, contrast, unit, rules, every e2e spec on both projects), because base.css restyles every page. Screenshots at 360 and 1280 of '', in, first-payslip, in/tools/break-even, privacy and cookies show white, square, one-font pages with every ledger's double rule intact.",
+    "parallelGroup": "A"
+   },
+   {
+    "step": 5,
+    "files": [
+     "src/components/Header.astro",
+     "src/components/RegionTabs.astro",
+     "src/components/Logo.astro",
+     "src/styles/tokens.css",
+     "scripts/contrast-check.mjs"
+    ],
+    "what": "The header, exactly as in the header spec:\n- The .site-header::before bar.\n- The header-inner grid with its two layouts: below 1024px and from 1024px.\n- a.brand.on-band with Logo variant 'inverse' at 32px and the wordmark.\n- details.nav-menu[data-disclosure] with its absolutely placed summary and in-flow nav.menu-panel[aria-label=Main] (below 1024px).\n- nav.main-nav.on-band[aria-label=Main] in the bar (from 1024px), with the current link's 4px white border-bottom.\n- RegionTabs: the white edition row below 1024px, the in-bar white summary (.on-band-wide) with a flag outline and a visually hidden 'edition' word from 1024px, an in-flow list below 1024px and a 280px dropdown from 1024px, the current row with a 4px --blue border-inline-start and a CSS check (the ✓ span goes).\n- One Header.astro script for every details[data-disclosure]: Escape plus focus return, outside click, focusout, one open at a time. RegionTabs keeps only the lp:region write.\n\nDelete the sticky rule, the pill group, the gold states and .nav-wide.\n\nLogo.astro gains the variant prop (default | inverse).\n\ntokens.css: .on-band becomes the white remap (--ink, --ink-2, --muted and --focus all #ffffff), and a new .on-band-wide block inside @media (min-width: 1024px) gets the same values. contrast-check.mjs also reads .on-band-wide.\n\nKeeps: .region-tabs, the edition-menu summary, a[aria-current], a[data-region], [data-edition-menu], the sub and subs props, the nav label 'Choose your edition', the edition names, and nav aria-label 'Main'.",
+    "proves": "G passes. npx playwright test tests/e2e/regions.spec.ts passes. npx playwright test tests/e2e/tools-foundation.spec.ts -g 'edition menu' passes. The a11y.spec 'skip link' test passes. npm run contrast shows .on-band and .on-band-wide at 8.35.\n\nBy hand at 360x800: Menu opens with Enter; Escape closes it and focus returns; Tab from the Search row lands on the visible edition summary below the panel; with JavaScript disabled, Menu and the edition list both open and push content down.\n\nBy hand at 1280: one Main nav in the bar, the edition dropdown right-aligned, and the badge a white disc with a blue B. Screenshots at 360 and 1280.",
+    "parallelGroup": "A"
+   },
+   {
+    "step": 6,
+    "files": [
+     "src/components/Footer.astro"
+    ],
+    "what": "The footer, as in the component spec:\n- White, with a 1px --rule top and no .section-dark.\n- The default Logo at 32px and the wordmark in Atkinson 700 ink.\n- Headings as h2 at --text-sm 700 ink.\n- Links in --ink-2 in 44px rows, underlined on hover; the current edition in 700 ink.\n- The base row in --text-xs --muted.\n\nbutton.linklike[data-open-consent] is kept and the copy is unchanged.",
+    "proves": "G passes. npx playwright test tests/e2e/consent.spec.ts -g 'privacy choices open from the footer' passes. At 360, page.evaluate confirms every footer a and button has a bounding height of at least 44px.",
+    "parallelGroup": "A"
+   },
+   {
+    "step": 7,
+    "files": [
+     "scripts/brand-mark.mjs",
+     "scripts/og-images.mjs",
+     "scripts/screenshots.mjs"
+    ],
+    "what": "Share images and screenshots.\n\nbrand-mark.mjs adds badgeInverse(), which is the same geometry with the disc #FFFFFF and the ring and B #0C61C4.\n\nog-images.mjs draws a new card, 1200x630:\n- A white field.\n- A 96px --blue bar across the top, with badgeInverse() at 60px and 'Business Lab' in white at 36px 700.\n- The title in --ink 700 at 58, 68 or 78px by length, left at x 72, up to three lines, centred in the white area.\n- A 1px --rule at y 540.\n- Along the bottom, the label ('Lesson · India edition') in --muted at 26px 700 on the left, and the existing 'Free. No ads, nothing to sell.' in --muted on the right. There is no gold.\n\nColours are read from tokens.css's first :root block by name (blue, ink, muted, rule, bg), after stripping comments, with no #FFFFFF or #C2D4F0 literals. The script throws if a token is missing or if --ink on --bg is under 4.5:1, using the same WCAG formula, so a blank card fails the build. The unused dark slice is deleted. The font stays scripts/fonts/BricolageGrotesque TTF (build time only) until Rajvir approves adding an Atkinson Hyperlegible Next TTF (OFL); then FONT and defaultFontFamily swap.\n\nscreenshots.mjs:\n- schemes ['light'].\n- Viewports 360x800, 768x1024 and 1280x800.\n- The pages list adds in/tools/spot-the-fake, search and about.\n- One extra pass with colorScheme 'dark' for '', in, first-payslip and in/tools/break-even, saved as *_dark-os.png, to show that the page stays white.\n\nbrand-icons.mjs is unchanged and not re-run: the favicon and icons keep the default badge.",
+    "proves": "npm run build prints 'Share images: N written'. md5 -q dist/og/home.png dist/og/about.png dist/og-default.png prints three different hashes (today all three are e996dedb…). Opening dist/og/in.png shows a readable ink title under the blue bar with the white badge. npx playwright test tests/e2e/og.spec.ts passes. npm run screenshots writes only *_light files at the three widths, plus the four *_dark-os files, all white.",
+    "parallelGroup": "A"
+   },
+   {
+    "step": 8,
+    "files": [
+     "src/pages/index.astro"
+    ],
+    "what": "The home page, as in the page spec:\n- The intro with the h1 at --text-display and the resume primary .btn.\n- section#editions as an .index-list of flagged edition rows.\n- 'The same sum in three editions', with each EditionSum under an h3.\n- 'How a lesson works' as a plain ol with h3s.\n- section#calculators.taxonomy, keeping the h2 'Tools that answer' and ul.taxonomy-list as ruled rows with data-edition-path.\n- 'Why Business Lab' with its bulleted list.\n- 'Start with these' as an .index-list.\n- From 1024px, intro and editions side by side, and the full-width three-column sums band straight after.\n\nRemove Blobs, HandNote, Doodle, the flashcards, the panels, pills, stickers, the .cta 'Choose your edition ↓' and about 80 lines of page CSS. Keep the resume and data-edition-path script verbatim.\n\nWork in a git worktree from the step 7 commit.",
+    "proves": "G passes. npx playwright test tests/e2e/regions.spec.ts -g 'front page' passes. npx playwright test tests/e2e/tools-foundation.spec.ts -g 'home page' passes. With lp:region=in in localStorage, the page shows the primary 'Continue with India'. At 1280x800 the first EditionSum double rule is above y 900. Screenshots at 360, 768 and 1280.",
+    "parallelGroup": "B1"
+   },
+   {
+    "step": 9,
+    "files": [
+     "src/pages/[region]/index.astro",
+     "src/components/EditionSum.astro"
+    ],
+    "what": "The edition fronts, as in the page spec:\n- The .eyebrow, the h1 at --text-h1, the lede, the primary 'Start with the first lesson' and the ink underlined 'Open the tools'.\n- The worked-example .box with the figcaption 'A worked example', beside the intro from 1024px.\n- section#lessons with the three tracks stacked, each an h3 link, a summary and LessonList compact.\n- section#calculators.taxonomy with its hooks.\n- section#why: the stats as ruled figure rows and 'What it covers' in one column.\n- The report as an h2 and a 700 paragraph, and region.note as a .note.\n\nStop rendering region.report.stamp; the field is deleted in step 22. EditionSum: drop the receipt pinning and set .sum-result at --text-md.\n\nWork in the same B1 worktree.",
+    "proves": "G passes. npx playwright test tests/e2e/regions.spec.ts passes, including 'each edition names problems' and 'every regional statistic cites a source'. npx playwright test tests/e2e/tools-foundation.spec.ts -g 'edition fronts' passes. npx playwright test tests/e2e/tools/ passes. Screenshots of in, eu and us at 360 and 1280.",
+    "parallelGroup": "B1"
+   },
+   {
+    "step": 10,
+    "files": [
+     "src/pages/[region]/learn/index.astro",
+     "src/pages/[region]/learn/[track]/index.astro",
+     "src/components/lesson/LessonList.astro",
+     "src/components/lesson/ProgressMarks.astro"
+    ],
+    "what": "The learn index is ruled track sections: an h2 link, the summary and LessonList compact. It has no counts line, no Track N label, no card and no start button. TrackCard is no longer imported; the file is deleted in step 22.\n\nThe track page is p.crumb '← All tracks', the h1, the lede, ProgressMarks, h2 'Lessons', the full LessonList and the existing practice line. The course-head panel, thumbnail, eyebrow meta line, .cta and page-scoped .crumb CSS go.\n\nLessonList keeps its props and markup (data-lesson-row, data-mark, role=list) and gains a scoped <style> holding its v5.1 row styles. It does not touch lesson.css, which B3 owns, so the files stay disjoint. The old global rules are deleted in step 22.\n\nProgressMarks: .review-line becomes 700 with a blue underlined link, 24px below. Its script is unchanged.\n\nWork in a git worktree from the step 7 commit.",
+    "proves": "G passes. npx playwright test tests/e2e/lessons.spec.ts -g 'marking a lesson read|check that is ready' passes. At 360 and 1280, in/learn and in/learn/start-something show numbered rows with no cards, and exactly one [data-review-line] on each (page.locator count).",
+    "parallelGroup": "B2"
+   },
+   {
+    "step": 11,
+    "files": [
+     "src/layouts/LessonLayout.astro",
+     "src/pages/[region]/learn/[track]/[slug].astro",
+     "src/components/lesson/LessonScript.astro",
+     "src/styles/lesson.css"
+    ],
+    "what": "The lesson frame.\n\n[slug].astro passes position and count from the siblings it already computes.\n\nLessonLayout:\n- Delete every v1 branch, and throw at build time naming the file if d.template !== 'v2'.\n- New DOM: div.container.lesson-grid holding p.crumb ('← <track>' + span.crumb-pos 'Lesson n of N · m min'), header.lesson-head (h1, lede), nav.lesson-steps (details.lesson-steps-fold[data-steps-fold] with summary 'In this lesson' '(n parts)' and an ol whose items are built from the fields present, each link text equal to its h2), div.lesson-after (objectives), and div.lesson-main.\n- h2#the-document becomes visible, and every other h2 and id is unchanged.\n- The key idea without .hl.\n- 'What this means for you' as a plain section.\n- The unchanged byline p.lesson-meta in .lesson-fine.\n- .lesson-next without ↗.\n\nLessonScript: open the fold while matchMedia('(min-width: 1024px)') matches, close it below, and listen for change.\n\nlesson.css: the head, crumb-pos, fold and rail styles, the 1024px grid with the sticky rail, the section rhythm (h2 at --text-h2, 48 above and 16 below, no hairline), .situation, .lesson-body, .lesson-fine and .lesson-next. It must not delete .lesson-list or .course-* rules; step 22 does that.\n\nWork in a git worktree from the step 7 commit; steps 12 and 13 follow in the same worktree.",
+    "proves": "G passes. npm run test:unit passes, with lessons.test unchanged; a temporary v1 lesson makes the build throw and is then removed. npx playwright test tests/e2e/lessons.spec.ts passes. npx playwright test tests/e2e/tools-foundation.spec.ts -g 'hand-offs' passes.\n\nBy hand: at 1280 the 'In this lesson' rail is open and stays in view while scrolling; at 360 it is one closed line; with JS off at 1280 it is a closed fold in the rail. At 360x800 with the banner dismissed, the objectives end above y 800 on first-payslip. Screenshots of first-payslip and upi-fraud-and-the-clock at 360 and 1280.",
+    "parallelGroup": "B3"
+   },
+   {
+    "step": 12,
+    "files": [
+     "src/components/lesson/Poll.astro",
+     "src/components/lesson/Practice.astro",
+     "src/components/lesson/ShowMe.astro",
+     "src/components/lesson/ShowMeStep.astro",
+     "src/components/lesson/Worked.astro",
+     "src/components/lesson/Document.astro",
+     "src/styles/lesson.css"
+    ],
+    "what": "Lesson parts I, as in the component specs:\n- Framed polls. Poll.astro's summary class changes from 'btn' to 'btn btn-secondary'. Options get 1px --border rows; checked is a 2px ink border with --tint and 700.\n- .reveal-body with a 4px --rule bar; .poll-status words.\n- Practice hints as .fold, with the '+' and '−' glyphs deleted.\n- Show me on the page: '.showme-more > summary' as a neutral small button that becomes muted text once open, and .showme-all as an ink underlined text button.\n- Worked and .steps without a box.\n- The key idea's 4px ink bar.\n- Document: the --paper and --brand-navy pinning goes, with a 1px --border frame and an ink dotted hint underline.\n\nDelete the highlighter, the gold tints and the gold labels. Keep every hook listed on the lesson page.",
+    "proves": "G passes. npx playwright test tests/e2e/lessons.spec.ts passes: every JS-off test (the document question, Show me, your turn, checks, terms), arrow keys, the quick check, practice, and review.",
+    "parallelGroup": "B3"
+   },
+   {
+    "step": 13,
+    "files": [
+     "src/components/lesson/Video.astro",
+     "src/islands/VideoPlayer.tsx",
+     "src/components/lesson/Drill.astro",
+     "src/components/lesson/MockScreen.astro",
+     "src/components/lesson/Term.astro",
+     "src/styles/lesson.css"
+    ],
+    "what": "Lesson parts II:\n- The --surface video poster with its 1px --border frame. VideoPlayer.tsx's Play class becomes 'btn video-play', the primary. The ink and muted poster head; the blue underlined 'Watch on YouTube'; .video-ask white with a 1px --border.\n- Drill: rows with a 1px --rule, .drill-count, .reflection, and [data-drill-return] 700.\n- Mock screens with a 1px --border, 4px radius and no phone corners.\n- Terms: a dotted underline and the bottom-sheet popover.\n- .tool-handoffs as ink 700 underlined standalone links.\n\nDelete the navy poster, the gold pill and the pinned --paper and --brand-navy values. The Drill and MockScreen changes also restyle the drill tool pages, which import lesson.css.",
+    "proves": "G passes. npx playwright test tests/e2e/lessons.spec.ts passes: the video test (nothing loads before a tap and a yes), the scam drill with JS off, mock screens with no real brands, and the report route with tel:1930. npx playwright test tests/e2e/tools-foundation.spec.ts -g 'drill pages' passes. npx playwright test tests/e2e/tools/spot-the-fake.spec.ts tests/e2e/tools/job-offer-check.spec.ts passes. npx playwright test tests/e2e/consent.spec.ts -g 'CSP' passes.",
+    "parallelGroup": "B3"
+   },
+   {
+    "step": 14,
+    "files": [
+     "src/pages/[region]/tools/index.astro",
+     "src/pages/[region]/tools/[tool].astro",
+     "src/components/RulesLine.astro",
+     "src/components/ToolTerms.astro"
+    ],
+    "what": "The tools index keeps its structure (eyebrow, h1 'Tools', the lede, nav.tool-jumps, section.tool-group h2, a.index-row with h3.index-title, .index-sub and .index-meta). Delete span.index-go, and style .tool-jumps as ink underlined 44px links.\n\nThe tool page keeps p.crumb '← All tools' (its page-scoped .crumb CSS goes; base.css owns it), the h1, .answers, .scenario, the drill column, p.report, .tool-sources, .related and .note, all restyled to v5.1 names.\n\nRulesLine is a --text-sm --ink-2 note. ToolTerms has an h2 at --text-lg and ruled dt/dd rows.\n\nWork in a git worktree from the step 7 commit; steps 15 and 16 follow in the same worktree.",
+    "proves": "G passes. npx playwright test tests/e2e/tools-foundation.spec.ts tests/e2e/tools/ passes. npx playwright test tests/e2e/tools-more.spec.ts -g 'lists all five' passes. npx playwright test tests/e2e/regions.spec.ts -g 'region tabs' passes.",
+    "parallelGroup": "B4"
+   },
+   {
+    "step": 15,
+    "files": [
+     "src/islands/tools.css"
+    ],
+    "what": "The calculator shell in v5.1:\n- .tool-grid, two columns from 900px.\n- The .results bench on --surface with a 1px --rule and --radius, sticky only in (min-width: 900px) and (min-height: 760px), with max-height and overflow-y auto.\n- .result-figure-value at --text-h1 Atkinson 700 with overflow-wrap anywhere.\n- .result-block and .result-fact rows; .plain; .tool-notes; .link-note directly after .btn-row; .copied in --success.\n- details.how as .fold, with the '›' and its rotate transition deleted.\n- .formula on --surface in --font-body.\n- .table-wrap spacing.\n- The growth chart labels and its summary in ink.\n- .budget-rows, .budget-row, .row-list and .row-list-row with 1px --rule.\n- .remove-line as an ink underlined text button.\n\nRestyle every class that step 1 listed from the seven new islands (for example .field-note and .ledger-note if the islands add variants) in v5.1 tokens. Delete every legacy var() in the file.",
+    "proves": "G passes. npx playwright test tests/e2e/tools.spec.ts tests/e2e/tools-more.spec.ts tests/e2e/tools-foundation.spec.ts tests/e2e/tools/ passes. npx playwright test tests/e2e/regions.spec.ts -g 'currency and scenario' passes. npm run budget stays within 90 KB on every tool page. At 1280x720, Reset, 'Copy link to these numbers' and Share are each inside the viewport when focused by Tab. At 1280x900 the bench sticks.",
+    "parallelGroup": "B4"
+   },
+   {
+    "step": 16,
+    "files": [
+     "src/islands/explorer.css"
+    ],
+    "what": "The explorer as a .box-surface.\n- Preset keys wrap with an 8px gap, white with a 1px --border; the pressed key is a 2px ink border with --tint and 700. The tinted track goes.\n- .explorer-figure at --text-h1 Atkinson 700 with overflow-wrap anywhere; .explorer-result 700; .explorer-change and the prompts in --text-sm --muted under a 1px --rule.\n- Split steppers 44x44 with a 1px --border; .split-amount in Atkinson 700.\n\nThere are no island markup changes. Delete every legacy var().",
+    "proves": "G passes. npx playwright test tests/e2e/lessons.spec.ts -g 'explorable|split explorer|price that only covers|self-employment split' passes. npx playwright test tests/e2e/tools-foundation.spec.ts -g 'explorer hand-offs' passes.",
+    "parallelGroup": "B4"
+   },
+   {
+    "step": 17,
+    "files": [
+     "src/islands/Dashboard.tsx",
+     "src/islands/dashboard.css"
+    ],
+    "what": "Dashboard.tsx:\n- Remove 'stat-primary on-field' from the first li.stat-card (line 133).\n- Replace the two span.pill with span.dash-meta.\n- Set the week bars to rx 2.\n- Set weekLabels[6] to 'Today' and give it the class 'label today'.\n- The DOM order is unchanged.\n\ndashboard.css:\n- Side nav rows: a wrapped row of links below 900px, then vertical 44px rows with a 4px --blue border-inline-start on the current row, sticky at --sticky-top from 900px.\n- Stats as ruled blocks.\n- .dash-card as a .box.\n- The chart: --chart-grid stubs, today with a 2px --ink stroke and the label in 700.\n- The ring: --chart-grid track and 700 value.\n- The clock at --text-h1 Atkinson 700.\n\nDelete the pills, the gold and the legacy var() values.\n\nWork in a git worktree from the step 7 commit.",
+    "proves": "G passes, including axe on dashboard at both projects. npm run budget passes. Screenshots at 360 and 1280 with lp:progress and lp:activity seeded from the lessons.spec fixture show 'Today' on the seventh bar and no filled pills.",
+    "parallelGroup": "B5"
+   },
+   {
+    "step": 18,
+    "files": [
+     "src/pages/glossary.astro",
+     "src/pages/search.astro",
+     "src/pages/404.astro",
+     "src/pages/about.astro",
+     "src/pages/write.astro",
+     "src/pages/disclaimer.astro",
+     "src/pages/accessibility.astro"
+    ],
+    "what": "Glossary: the dt in Atkinson 700 at --text-lg, and :target on --tint with a 4px --blue border-inline-start and scroll-margin var(--space-6). The gold and the --header-h reference go.\n\nSearch: .r-title in ink 700 at --text-lg, underlined on hover; <mark> on --tint in ink 700; the display font goes.\n\n404, about, write and disclaimer: only check that they render correctly through base.css, and remove any page-scoped legacy var().\n\naccessibility.astro: reword the five claims exactly as listed on that page (light with the browser's own dark and high-contrast modes; nothing fixed hides focus; 18px or larger; target sizes; the sizes actually tested).\n\nWork in a git worktree from the step 7 commit; steps 19 and 20 follow in the same worktree.",
+    "proves": "G passes. npx playwright test tests/e2e/search.spec.ts passes. /glossary#fixed-cost lands on a tinted entry with a blue bar, below the header. The content-reviewer checks the /accessibility wording against what design.spec will test.",
+    "parallelGroup": "B6"
+   },
+   {
+    "step": 19,
+    "files": [
+     "src/pages/[region]/review.astro",
+     "src/islands/Review.tsx",
+     "src/pages/account/index.astro",
+     "src/islands/SignIn.tsx",
+     "src/islands/signin.css"
+    ],
+    "what": "review.astro: the page-scoped .crumb CSS goes, and .review-context becomes a 4px --rule inline-start inset with no fill. Review.tsx needs no markup change; it already renders .poll, .opts, .opt and .btn-secondary. Edit it only if a legacy class turns up.\n\naccount/index.astro: remove .centered and left-align the page.\n\nSignIn.tsx: every 'btn btn-lg' becomes 'btn' (eight places).\n\nsignin.css:\n- .signin max-width 440px with margin 0.\n- .signin-card as a .box.\n- .preview-note on --surface with a 1px --rule and 'Preview' in 700.\n- The code input in Atkinson 700 at --text-h2, tabular, with letter-spacing 0.35em.\n- .preview-code in Atkinson 700 at --text-lg.\n- The legacy var() values go.",
+    "proves": "G passes. npx playwright test tests/e2e/signin.spec.ts passes. npx playwright test tests/e2e/lessons.spec.ts -g 'review' passes. npx playwright test tests/e2e/og.spec.ts -g 'generic image' passes.",
+    "parallelGroup": "B6"
+   },
+   {
+    "step": 20,
+    "files": [
+     "src/islands/ConsentManager.tsx",
+     "src/islands/consent.css"
+    ],
+    "what": "ConsentManager.tsx adds an aria-hidden span.consent-onoff beside each switch, reading 'On' or 'Off' from draft state. The banner copy is unchanged until Rajvir approves new wording.\n\nconsent.css:\n- The full-width banner with a 2px --ink top border, fixed only in (min-height: 561px) and static below.\n- --banner-reserve in three bands, each measured from the built page and recorded in a comment with the date and the copy measured.\n- html:has(.consent-banner) { scroll-padding-bottom } inside the min-height query.\n- The sticky-off rule for .lesson-steps, .tool .results and .dash-side.\n- The dialog with a 1px --border, --radius, and the backdrop color-mix(in srgb, var(--ink) 55%, transparent) replacing --brand-black.\n- The switch: an --ink 'on' track, a --border 'off' track, knob motion only under no-preference, and the forced-colors rules (P7).",
+    "proves": "G passes. npx playwright test tests/e2e/consent.spec.ts passes. npx playwright test tests/e2e/lessons.spec.ts -g 'teaching video' passes (it clicks 'Reject all'). The three measured heights are in the commit message. By keyboard at 360x800 and 1280x720 with the banner showing, Tab through first-payslip and in/tools/break-even: no focused control is fully hidden. At 640x400 the banner is in the flow after the footer.",
+    "parallelGroup": "B6"
+   },
+   {
+    "step": 21,
+    "files": [
+     "(no repository files) screenshots/ from npm run screenshots"
+    ],
+    "what": "Owner review.\n\nCherry-pick the B commits onto design-v5 in the order B1 to B6, then run npm run ship-check. With the preview running, run npm run screenshots: 360, 768 and 1280 in light, plus the *_dark-os captures.\n\nShow Rajvir the ten decisions in those screenshots:\n- the white page under his Mac's dark mode;\n- the one blue bar with the white-disc badge;\n- ink headings;\n- ink list rows;\n- blue only in its five jobs;\n- no gold;\n- one typeface;\n- the lean lesson first screen with 'In this lesson' folded on a phone and in the rail on a laptop;\n- no motion;\n- the neutral secondary buttons.\n\nAsk the open questions: the shorter consent wording, adding an Atkinson TTF for share images, and the CLAUDE.md and .claude edits. Record his answers in the step 24 commit. Do not delete anything old or rewrite the docs before his yes. If he changes a decision, loop back to the step that owns it.",
+    "proves": "Rajvir's reply in chat approves the screenshots, or names changes, which are made and re-shown before step 22.",
+    "parallelGroup": "C"
+   },
+   {
+    "step": 22,
+    "files": [
+     "src/components/Blobs.astro (delete)",
+     "src/components/Doodle.astro (delete)",
+     "src/components/HandNote.astro (delete)",
+     "src/components/lesson/TrackCard.astro (delete)",
+     "src/lib/hand.ts (delete)",
+     "scripts/fonts/Kalam-Regular.ttf (delete)",
+     "scripts/fonts/Kalam-OFL.txt (delete)",
+     "src/styles/tokens.css",
+     "src/styles/base.css",
+     "src/styles/lesson.css",
+     "src/lib/regions.ts"
+    ],
+    "what": "Retire the old look.\n- Delete the decorative components, hand.ts and Kalam.\n- Delete the LEGACY :root block in tokens.css and the LEGACY block in base.css.\n- In lesson.css, delete the .course-* rules and the old global .lesson-list, .lesson-row, .lesson-num, .lesson-title, .lesson-sub, .lesson-marks, .lesson-planned and .is-compact rules (they now live scoped in LessonList.astro).\n- In regions.ts, delete report.stamp from the Region type and from the three editions.\n\nRetired names are gone, not aliased. The Bricolage TTF and scripts/fonts/OFL.txt stay until the Atkinson TTF is approved.",
+    "proves": "These greps return nothing:\n- grep -rnE 'var\\(--(gold|gold-pale|gold-text|on-gold|brand-[a-z]+|paper|highlight|field|field-deep|field-pale|band|band-surface|frame|bg-2|bg-3|bg-inverse|accent|accent-[a-z]+|on-accent|line|line-strong|font-display|text-(mega|hand|sticker|ui|result|wordmark|figure|h3)|radius-(xs|s|m|l|xl)|leading-(tight|mega|snug)|tracking-(display|heading)|header-h|edition-h|dur|dur-slow|space-10)\\)' src scripts\n- grep -rnE 'class(:list)?=.*(panel-|pill|sticker|doodle|blobs|grid-table|cta|mega|on-field|section-dark|course-|stat-primary|btn-lg|centered)' src\n- grep -rn 'HandNote\\|Blobs\\|Doodle\\|TrackCard\\|hand.ts\\|stamp' src --include=*.astro --include=*.ts --include=*.tsx\n\nnpm run ship-check is green.",
+    "parallelGroup": "C"
+   },
+   {
+    "step": 23,
+    "files": [
+     "tests/e2e/design.spec.ts (new)",
+     "tests/e2e/og.spec.ts"
+    ],
+    "what": "New tests/e2e/design.spec.ts:\n(a) Dark OS is white: test.use({ colorScheme: 'dark' }) on '', in, first-payslip and in/tools/break-even. The body background is rgb(255, 255, 255). documentElement's computed colorScheme is 'light'. .site-header::before is rgb(11, 74, 162). The h1 colour is rgb(11, 18, 64), and no h1-h4 computes to rgb(11, 74, 162).\n(b) No request matches /bricolage/i, and the h1 font-family starts with 'Atkinson Hyperlegible Next'.\n(c) The header at 360x800, with JS on and with JS off:\n- desktop nav hidden;\n- after Menu opens, exactly one visible nav[aria-label=Main];\n- the panel does not intersect the edition summary;\n- Tab from the last Menu link focuses the summary;\n- with JS on, Escape closes and refocuses, focusout closes, and opening the edition menu closes Menu.\nAt 1280: details.nav-menu is hidden, nav.main-nav is visible and has an aria-current link, and the edition list is a dropdown.\n(d) On first-payslip, upi-fraud-and-the-clock and us/learn/start-something/se-tax, every '.lesson-steps a' resolves to an h2 with the same text. At 1280 with JS, [data-steps-fold] is open and nav.lesson-steps is position sticky; at 360 it is closed.\n(e) At 360x800, with lp:consent set by an init script, the .lesson-after bottom is at most 800 on first-payslip.\n(f) The banner and focus test from P2 at 360x800 and 1280x720, and the static-banner test at 640x400 (P3).\n(g) The reflow blocks at 320x640, 360x800 and 640x400 (P6).\n(h) The target-size test (P11).\n(i) Forced colours (P7).\n(j) Exactly one [data-review-line] on in, in/learn and in/learn/start-something, and exactly one .lesson-meta on a lesson, inside .lesson-fine.\n(k) The switch shows 'On' and 'Off' as it flips.\n\nog.spec.ts adds a test that the home, about and default images have different sha1 hashes.\n\nNo existing assertion is edited.",
+    "proves": "npx playwright test tests/e2e/design.spec.ts tests/e2e/og.spec.ts is green on both projects. npm run ship-check is green end to end.",
+    "parallelGroup": "C"
+   },
+   {
+    "step": 24,
+    "files": [
+     "docs/BRAND_GUIDE.md",
+     "docs/DESIGN.md",
+     "docs/PROJECT_BRIEF.md",
+     "docs/CONTENT_GUIDE.md",
+     "docs/OWNER_TODO.md",
+     "docs/research/redesign-references.md",
+     "CLAUDE.md (Rajvir's own edit or his yes in chat)",
+     ".claude/skills/ship-check/SKILL.md (Rajvir's own edit or his yes in chat)",
+     ".claude/agents/design-reviewer.md (Rajvir's own edit or his yes in chat)",
+     ".claude/agents/a11y-perf-auditor.md (only if it checks dark mode; Rajvir's own edit or his yes in chat)"
+    ],
+    "what": "Write the docs listed in docsChanges, recording the ten owner decisions and Rajvir's step 21 answers with the date. Correct the contrast figures (navy 17.88, body 12.91, muted 8.24). Add the 'Sources for the redesign' section and cite only sources listed there. The CLAUDE.md and .claude/* edits are proposed as text in chat and applied only after Rajvir's explicit yes; no agent message authorises them.",
+    "proves": "grep -n 'prefers-color-scheme: dark\\|Bricolage\\|gold\\|Aardvark\\|Ivy Kids' docs/BRAND_GUIDE.md docs/DESIGN.md finds only 'removed' and changelog lines. grep -n 'Miniukovich' docs/BRAND_GUIDE.md is empty, unless the source was verified and listed. The design-reviewer, given the diff, reports that its checklist matches v5.1 (once Rajvir has approved its edit).",
+    "parallelGroup": "C"
+   },
+   {
+    "step": 25,
+    "files": [
+     "(no repository files) commit messages on design-v5"
+    ],
+    "what": "Final gate and reviews. Run npm run ship-check and npm run screenshots. Ask for verdicts from:\n- design-reviewer (tokens only, one primary per view, blue in its five jobs, no cards except figure boxes, light only);\n- a11y-perf-auditor (the design.spec results, 320 and 640x400 reflow, forced colours, the JS budget);\n- security-reviewer (the CSP is unchanged: no style attribute, no injected <style>, no new origin; the header script and LessonScript grew by a few hundred bytes);\n- content-reviewer (the /accessibility wording only).\n\nPut the verdicts in the commit messages. Small commits on design-v5. Never push, merge or deploy; Rajvir does that.",
+    "proves": "npm run ship-check is green, with its output pasted. The screenshots are reviewed at 360, 768 and 1280 plus dark-OS. The four verdicts say Ship or list fixes, and the fixes are made.",
+    "parallelGroup": "C"
+   }
+  ],
+  "docsChanges": [
+   "BRAND_GUIDE.md v4, header and changelog: 'Version 4 · 22 September 2026. The site is white at every setting, with one blue bar, one typeface and no decoration.' It records Rajvir's ten decisions of 22 September 2026, confirmed at step 21, as a numbered list. The v3 and v3.1 history moves to a changelog at the end.",
+   "BRAND_GUIDE v4 §1: audience and purpose are unchanged. The thesis becomes 'Work shown, nothing sold: white pages, navy type, one blue, and every sum set as a ledger.' 'Where each choice comes from' cites the ledger (cash books), the badge (the club's logo) and docs/research/redesign-references.md: Varsity's one blue and chapter pages, Khan Academy's single bar, CFPB's colour-only-for-links, and GOV.UK's type rules and restraint. Aardvark Book Club and Ivy Kids are removed as sources.",
+   "BRAND_GUIDE v4 §2 Colour: the brand colours are blue and navy; gold is retired from the interface (decision 3). The tables list every v5.1 token with its role and its contrast on white, --surface and --tint, plus the white-on-blue figures. Corrected figures: navy #0B1240 is 17.88:1 on white (v3 printed 16.0), #262F57 12.91:1 (12.6) and #434D73 8.24:1 (8.0). The greys are defined as navy mixed into white (4%, 8%, 20%, 55%). Blue's five jobs are listed, and 'headings are never blue'. 'Dark mode' becomes 'No dark theme: the site is light at every OS setting; the browser's own dark and forced-colours modes still work.' Don'ts add: no coloured panels or bands below the header; no blue headings, labels, rows or secondary buttons.",
+   "BRAND_GUIDE v4 §3 Typography: one family, Atkinson Hyperlegible Next 400/700, self-hosted; why it stays, and why Bricolage left (decision 5; it survives only at build time in the share images and as the badge's drawn B). The banned-font list is unchanged. The seven-size scale (14, 16, 18-19, 20-24, 24-32, 32-44, 36-52 on the home page only) with its rules: reading text never under 18px, nothing under 14px, at most three sizes per view, a 32em measure, a 640px column, tabular figures.",
+   "BRAND_GUIDE v4 §4 Logo: the interim status and the swap steps are unchanged. The wordmark is Atkinson Hyperlegible Next 700, tracking 0, white on the bar and ink in the footer. There are two versions of the drawing: the default (blue #0C61C4 disc, white ring and B) and the inverse on the blue bar (white disc, #0C61C4 ring and B; 8.35:1 against the bar, the B 5.96:1 on the disc). Sizes: header 32px, footer 32px, share images 60px. The licensed badge must be checked at 32px in both versions, and a mostly blue mark needs a one-colour white header version. The v5 sentence about the white ring carrying the edge is not carried over.",
+   "BRAND_GUIDE v4 §5 Layout and shape: a 960px container, 640px reading column and 256px lesson rail; a 16-32px gutter; the 4px grid; one 4px radius (a pill only on the consent switch); 1, 2 and 4px rule widths. 'The field and the sheet' and the Aardvark and Ivy panels are replaced with: white pages; sections separated by space and rules; boxes only where a box holds a figure or mixed content; ruled lists, not cards, for editions, tracks, lessons, tools and search. The ledger stays the signature. The header is one blue bar (a white edition row under it on phones). A lesson opens with a crumb line, the title, the summary, 'In this lesson' on one line (a left rail on laptops) and its objectives; the byline sits at its foot. Stickers, hand-lettering, blobs, doodles and track cards are removed.",
+   "BRAND_GUIDE v4 §6 and §6b: no shadows, no blur, no motion except the consent switch knob; the page-transition fade and smooth scrolling are removed. In the charts table the dark column is deleted and the light values are unchanged and still validated; 'today' is marked by an outline and the word 'Today', never by colour.",
+   "BRAND_GUIDE v4 §7 Voice: unchanged, plus no arrow glyphs in link text.",
+   "BRAND_GUIDE v4 §8 anti-slop checklist: item 9 becomes 'works at 320, 360, 768 and 1280, at 200% zoom (640×400), with reduced motion, prefers-contrast: more and forced colours; a dark OS shows white'. New items: headings are never blue; blue only in its five jobs; one primary button per screen; no card unless it holds a figure or mixed content; no stickers, hand notes, blobs, doodles or coloured panels; headings never above 52px.",
+   "DESIGN.md v5.1, header and §0: 'Version 5.1 · September 2026; supersedes v4.1.' Identity lives in the ledger, the badge, the navy ink and well-set type. Structure and controls are quiet and conventional, but not a copy of any one system (decision 10).",
+   "DESIGN v5.1 §1 Tokens: the token list in tokens.css order and the rename map used in the migration. It records: no dark block, no var() aliases, and scripts/contrast-check.mjs reads hex from the first :root block, the light more-contrast block, .on-band and .on-band-wide. The step 22 grep gate is the check that no retired name comes back. --banner-reserve is the one component-scoped property, measured, in src/islands/consent.css. The CSP rules (no style attributes, no injected <style>) are unchanged.",
+   "DESIGN v5.1 §2 Colour in practice: the three link kinds (running text blue; list rows ink with the row as the link; standalone ink underlined). .on-band sits on the brand, the Menu summary and the desktop nav; .on-band-wide on the edition summary. --surface is for the bench, explorer, poster and formula, always with an edge; --tint for selected states and marks only; --border on controls and --rule for decoration. There is no .on-field, .section-dark, --paper or gold. color-mix() stays allowed for the dialog backdrop.",
+   "DESIGN v5.1 §3 Type: Atkinson Hyperlegible Next only, preloaded atkinson-latin. Bricolage and Kalam are removed from the site. The build-time fonts in scripts/fonts are listed with their use, until the Atkinson TTF is approved.",
+   "DESIGN v5.1 §4 Components, rewritten to the v5.1 list:\n- header (one bar, the Menu disclosure below 1024px, the edition row, one disclosure script with focusout) and the edition menu;\n- Logo variants; footer;\n- buttons (neutral secondary); links; .crumb; form fields in the tool kit's order; tables with wrap guards; the ledger with overflow guards;\n- the .index-list family; LessonList with scoped styles;\n- framed polls; document; Show me; .fold disclosures; key idea; video poster; mock screen; term popover;\n- explorer; results bench (conditional sticky); .box; notes and stats; charts;\n- consent banner and dialog; forced colours; print.\nThe section adds the rule that every current-item bar is a border, never a box-shadow or background. HandNote, Blobs, Doodle and TrackCard are removed.",
+   "DESIGN v5.1 §5 and §6: cross-document View Transitions are removed. :has(), clamp(), color-mix(), text-wrap and native <details> disclosures are used directly; the Popover API stays behind @supports. There are still no scroll effects or frosted bars. The test 'does the page still look finished with the feature off' stays. Motion: none except the consent switch knob (150ms, instant under reduced motion).",
+   "DESIGN v5.1 §7 Screens to verify: 320×640, 360×800, 390×844, 768×1024 and 1280×800 in light, plus 640×400 (200% zoom), keyboard only, reduced motion, prefers-contrast: more and forced colours. npm run screenshots writes 360, 768 and 1280 light, plus dark-OS captures. tests/e2e/design.spec.ts proves the white dark-OS page, reflow, target sizes, the header disclosures and the banner and focus behaviour.",
+   "DESIGN v5.1 §8 What 'AI-made' looks like: default fonts, answered by one deliberate accessible face; gradients and glows, by flat white with rules; a centred hero and mock device, by left-aligned contents with real sums on the first screen; three identical cards, by ruled lists; scroll fade-ins, by none; slogan copy, by specific numbers; pill everything, by one 4px radius and text links; blue everywhere, by blue in five jobs.",
+   "PROJECT_BRIEF.md principle 9: replace 'View Transitions, scroll-reveal, frosted bars, container/anchor queries' with 'no page transitions and no scroll effects; modern CSS (:has(), clamp(), <details>) only where the page still works without it'.",
+   "CONTENT_GUIDE.md, template v2: add one sentence: 'The \"In this lesson\" list names the template steps a lesson has, using its h2 words exactly (Check your understanding, Decide before you look).'",
+   "docs/OWNER_TODO.md: add, dated:\n(1) approve or decline shorter consent-banner wording (optional; today's copy ships);\n(2) yes or no on downloading an Atkinson Hyperlegible Next TTF (OFL) to scripts/fonts so share images use the site's typeface;\n(3) approve the CLAUDE.md, ship-check and reviewer edits;\n(4) the ten design decisions as confirmed at step 21;\n(5) when accounts go live, the header's seventh link needs the 1024px breakpoint raised to 1100px;\n(6) optional: a Contents list on /privacy and /cookies (protected pages).",
+   "docs/research/redesign-references.md: add a 'Sources for the redesign' section with the full reference and a link for each study the docs cite (NN/g on dark mode summarising Piepenbrock 2013 and Dobres 2017; Rello 2016; Fogg 2003; Stanford-Makovsky 2002; Lindgaard 2006; Reber and Schwarz 1999; Tuch 2012; Labrecque and Milne 2012). Miniukovich and Figl 2023 is listed only if verified; otherwise it is dropped from every doc.",
+   "CLAUDE.md (only by Rajvir's own edit or his yes in chat): 'Name and brand' becomes 'Design v5.1 (docs/BRAND_GUIDE.md v4, docs/DESIGN.md v5.1): white pages at every OS setting, one blue header bar, navy ink, blue only for links in text, the one primary button, focus and current bars, Atkinson Hyperlegible Next only, the ledger as the signature, no dark theme, no motion'. The Kalam sentence goes. Stack: 'no page transitions and no scroll reveals'. Hard rules: 'both appearances' becomes 'light only, plus forced colours and prefers-contrast: more'. Workflow: screenshots 'at 360, 768 and 1280px, plus a dark-OS check that the page stays white'.",
+   ".claude/skills/ship-check/SKILL.md step 5 (only by Rajvir's own edit or his yes in chat): check that nothing overflows at 320 and 360; a dark OS still shows white; no focused element hides behind the consent banner; nothing is under 14px; radii are 4px; blue appears only in its five jobs; no cards except figure boxes; headings are ink.",
+   ".claude/agents/design-reviewer.md (only by Rajvir's own edit or his yes in chat): check 3 becomes 'one primary per view, a neutral secondary, 4px radius, rules instead of boxes, no card unless it holds a figure, list-row titles in ink, text-wrap balance, tabular money'. Check 4 becomes 'light only: forced colours, prefers-contrast: more, reduced motion; any prefers-color-scheme: dark block or blue heading is a finding'. .claude/agents/a11y-perf-auditor.md gets the same light-only wording if it mentions dark mode."
+  ],
+  "summaryForOwner": "Every page turns white, including when your Mac is in dark mode. The dark theme is removed; that is what painted the pages navy.\n\nWhat you will see:\n- One blue bar at the top. On a laptop it holds the badge, 'Business Lab', the six links in white and the edition menu with its flag. On a phone it holds the badge, the name and a Menu button, with the edition menu in a white row just under the bar.\n- The badge on the bar is a white disc with a blue B, so it never sits blue on blue. Everywhere else it stays blue with a white B.\n- Headings are your navy ink, never blue.\n- Blue appears in five places only: links inside sentences, the one main button on a screen, the focus ring, the thin bar marking where you are, and the top bar.\n- Lesson, track and calculator titles in lists are navy and bold, and the whole row is the link.\n- Gold, the rounded panels, stickers, hand-lettered notes, blobs, doodles and the Academy-style track cards are all gone. Every page uses one typeface, Atkinson Hyperlegible Next.\n- A lesson opens with one short line back to its track ('Lesson 1 of 4 · 10 min'), then the title, the summary, 'In this lesson' on one line, and 'After this you can'. 'In this lesson' opens into the list; on a laptop the list sits in a column on the left and stays in view. The 'Reviewed … Written by …' line stays at the foot of the lesson.\n- Every lesson, calculator, drill and legal page keeps its words, and the ledger keeps its double rule.\n- Nothing moves except the consent switch.\n\nWhile checking colours I found that your navy on white is 17.9:1, not the 16.0:1 the brand guide printed. The guide will be corrected.\n\nThree things need your yes, and none of them blocks the build:\n- shorter wording for the cookie banner (optional);\n- downloading the Atkinson font file, so share images use the same typeface (until then they keep Bricolage);\n- the edits to CLAUDE.md and the reviewer and ship-check files.\n\nBefore anything old is deleted, you will see screenshots at phone, tablet and laptop sizes, including your Mac in dark mode. The work starts on a new branch once the calculator work is committed. Nothing is pushed or merged; that stays your job.",
+  "changesFromV5": [
+   "Brand 1: the Academy design came back in another form. Fixed: the track page is now the crumb '← All tracks', the h1, the lede, the marks, h2 'Lessons' and the numbered list. The 'Track N · N lessons · N checks · N min' line and the 'Start lesson 1' button are gone. On /learn each track is an h2 link, one summary and the list, with no counts line and no Track N label.",
+   "Brand 2: the spec contradicted itself on blue headings. Fixed by decision 1: no h1-h4 is ever blue. Heading links on /learn, the edition fronts and the home rows are ink, underlined on hover. design.spec (a) asserts that no h1-h4 computes to #0B4AA2.",
+   "Brand 3: there was a lot of bold blue. Fixed by decision 6. List-row titles (editions, tracks, lessons, tools, starters, search results) are ink 700. Secondary buttons, poll reveals, Show me steps, hint and details summaries, checked options, pressed keys, the switch and the footer links are ink or ink-2. Blue does five jobs only.",
+   "Brand 4: v5 said 'one blue' but defined a family of eight. Fixed: v5.1 has --blue plus its hover --blue-dark only. --surface #f5f6f7 and --tint #ebecf0 are navy-derived near-neutrals, not blue-greys. --tint-rule and --link-visited are deleted. --tint is limited to checked, pressed, :target and <mark>. The summary box is dropped. #0C61C4 remains only as the badge's own colour and as chart slot 1 (data, validated).",
+   "Brand 5: the logo would look wrong by default (disc 1.40:1 against the bar). Superseded by decision 7: the badge on the bar is the inverse (white disc, blue B, 8.35:1 against the bar), and the drawing is not recoloured. The skeptic's 'two crops' request is not needed.",
+   "Brand 6: the spec read as a GOV.UK copy, with no ledger on the first screen. Fixed by decision 10. There is a single bar with white nav on desktop (no service-nav strip), no caption over h1, no warning-text circle, no step-by-step, no inset, summary-box or notification components, no Breadcrumbs component (the existing one-link crumb is extended), and a neutral secondary button. The home page at 1024px and up puts the editions beside the intro and the three ledgers straight after, so a double rule falls within 900px at 1280×800.",
+   "Brand 7: edition fronts repeated three-across blocks, and 'How a lesson works' was the SaaS 1-2-3-4. Fixed: tracks are stacked in the 640 column at every width. Stats are ruled rows (figure left, sentence and source right from 768px). 'What it covers' is one column. 'How a lesson works' is a plain ol with h3s.",
+   "Brand 8: the read-state circles filling blue came from no reference. Fixed: there are no circles anywhere. A read lesson shows the existing '· Read' in --success.",
+   "Brand 9: the lesson's first screen went against the tester's complaint. Fixed by decision 8: one crumb line, the h1, the lede, 'In this lesson' folded to one line on phones (a sticky rail from 1024px) and the objectives. There is no caption and no top byline. design.spec (e) asserts that the objectives end above y 800 at 360×800. The skeptic's fold label 'Contents (8 sections)' became 'In this lesson' per decision 8.",
+   "Brand 10: the byline 'Checked by Business Lab editor' claimed a review nobody had done. Fixed: there is no 'Checked by'. The byline stays unchanged in the lesson footer ('Reviewed … Written by …'). The skeptic's idea to fold 'Lesson 1 of 4' into a top meta line was not taken, because decision 8 keeps the byline in the footer; the position goes on the crumb line instead.",
+   "Brand 11: the evidence was not written down in the project. Fixed in the docs: a 'Sources for the redesign' section in redesign-references.md gives full citations. Miniukovich and Figl 2023 is dropped unless it is verified, and BRAND_GUIDE v4 cites only listed sources. v5.1 rests mainly on Rajvir's decisions and the reference notes.",
+   "Brand 12: branding decisions were being made quietly. Fixed: gold leaving, navy ink staying and Bricolage leaving are Rajvir's decisions 3, 4 and 5, shown to him in screenshots at step 21 before anything is deleted. The new home trust line is dropped. The share-card foot 'Free. No ads, nothing to sell.' is not new (it is live at scripts/og-images.mjs line 100), so it is kept and only its gold neighbour goes.",
+   "Brand 13: the /about 'Changes' section was content he did not ask for. Dropped.",
+   "Brand 14: secondary buttons used a blue USWDS outline. Fixed by decision 10: the secondary is neutral (white fill, 2px ink border, ink label, --surface on hover).",
+   "Brand 15: the copy changes misquoted the live site, and the CTA removal was not listed. Fixed: there is no rename. 'Tools that answer', h1 'Tools', footer 'Tools', 'Start with the first lesson' and 'Open the tools' all stay. The removal of the home 'Choose your edition ↓' CTA is listed, and every changed string is listed on its page.",
+   "Brand 16: his words ('just make it like a blue heading') were ambiguous. Settled by decision 1: it means the header bar, and headings are ink. The skeptic's A/B screenshot of a blue h1 is superseded; step 21 shows the chosen version.",
+   "P1-P14 and F14 are resolved as described in the accessibility field. P1: panels in flow plus focusout. P2: sticky boxes off while the banner shows. P3: fixed only on tall viewports, with a per-band measured reserve. P4: every tools-foundation hook kept. P5: protected classes kept, with table wrap. P6: reflow tests at 320, 360 and 640×400. P7: forced-colours rules and border bars. P8: white skip-link ring. P9: .on-band changes in the same commit as the header. P10: conditional sticky bench. P11: 44px rows and a true /accessibility sentence. P12: 25 small steps, each running the full gate. P13: inverse badge figures replace the ring claim. P14: a hardened contrast script. F14: figure overflow guards.",
+   "Also changed from v5 by owner decision 4: v5 swapped the ink to #111418 with neutral greys. v5.1 keeps navy #0B1240, body #262F57 and muted #434D73, and derives rule, border, surface and tint from navy. All contrast figures are recomputed, which also corrects the brand guide's misprinted 16.0, 12.6 and 8.0 to 17.88, 12.91 and 8.24.",
+   "Also changed from v5 by decision 6: v5 made index, lesson-list and search titles --blue and --text-lg 700, and the skeptic proposed --text-md --blue. v5.1 makes them ink 700 with the whole row as the link, which follows the owner decision over the skeptic.",
+   "Also changed from v5 by decision 2: v5 put the footer on --surface under a 4px blue rule. v5.1 makes it white under a 1px --rule, so the header bar is the only blue block.",
+   "Dropped from v5 to keep the lessons lean and the scope small: numbered h2s with src/lib/lesson-steps.ts and BodyHeading.astro (which would have moved every MDX body into Show me), Breadcrumbs.astro, SideNav.astro, the two-way pager, the 'In this track' and 'Other tracks' navs, glossary A-Z groups, the footer contact line, the GOV.UK error-above-input reorder, the maskable-icon recolour, and the brand-icons re-run.",
+   "Kept from v5: the white page at every OS setting, one font, a 4px radius, no motion, framed questions, the --surface results bench, the conditional in-flow disclosures, the rebuilt share cards (fixing today's blank white-on-white images), the light-only contrast script, the LEGACY-block migration, and the retirement grep gate."
+  ]
+ },
+ "checks": [
+  {
+   "lens": "Owner lens (Rajvir): would he still see too much blue, a template, the Academy cards under another name, or a first lesson screen heavier than today's? Is each of the ten decisions honoured? I checked V5.1 against the working tree: LessonLayout.astro, VideoPlayer.tsx, Dashboard.tsx, [tool].astro, [region]/index.astro, lesson.css, tools.css, dashboard.css, tokens.css, Footer.astro, Logo.astro, regions.ts, the 36 lesson frontmatters, tests/e2e and screenshots/. I measured the self-hosted Atkinson woff2 in Playwright with the fonts loaded, and simulated the V5.1 lesson head at 360 and 390 for all 36 lessons (assuming 24px above the crumb). Honoured: decision 1 (one blue bar, ink headings); decision 2 (color-scheme light, dark blocks gone); decision 4 (the figures are right: 17.88, 12.91, 8.24, 8.35, 7.72, 7.07, 4.05 and 3.43); decision 7 (white disc 8.35:1 on the bar, no gold in the badge); decision 9; and the secondary button is neutral. The lesson head is lighter than today's: today's header at 360 is 172px, V5.1's is 105px; today's first objective sits near y 785, V5.1's objectives end at y 656-833. The first screen is therefore not heavier, but three decisions leak (5, 6 and 8), part of decision 10 is copied, one lesson card survives on the dashboard, and step 2 breaks its own gate.",
+   "refuted": true,
+   "problems": [
+    "Decision 8 is not met: the crumb is not 'one short line'. Measured in Atkinson at 16px, the gap is 12px and 'Lesson 1 of 4 · 10 min' at 400 is 153.7px. The '← <track>' link at 700 is: 'Your first salary' 140, 'Money basics' 122, 'Protect your money' 167, 'Run it like a business' 182, 'Working for yourself' 172, 'Start a service business' 201, 'Credit, payments and fraud' 225, 'Who gets paid, and by whom' 237, and 'Your first pay and what it has to cover' 306. The column at 360 is 328px, so 7 of the 9 tracks wrap to two lines of about 66px (about 25 of 36 lessons at 360 in the simulation, 16 of 36 at 390). design.spec (e) tests only in/money-basics/first-payslip, whose track is one of the two that fit.",
+    "Decision 8's 'lean first screen' is tested only on the easiest lesson. In the simulation at 360x800 (105px header, V5.1 sizes), .lesson-after ends at y 833 on in/start-something/break-even-coaching-centre and y 830 on eu/start-something/income-statement, against 719 on first-payslip, the only lesson that design.spec (e) checks. So the objectives of the long-headed lessons fall below the fold, and no test would notice.",
+    "Decision 6 (one primary button per screen) is broken on every video lesson. In the 'ask' state VideoPlayer.tsx renders the Play button (which becomes the primary 'btn video-play' in step 13) and 'Choose, then play' (class 'btn btn-sm', VideoPlayer.tsx:79) at the same time. The spec keeps both, so after a first tap there are two filled blue buttons in one frame.",
+    "Decision 6 (list-row titles in ink) leaks blue, because link kind (c) is a closed list and every other link inside a p or li falls back to rule (a), which is blue. The leaks are:\n- the lesson titles under 'Lessons that use this' or 'The lesson(s) behind this' on every tool page ([tool].astro:190-194);\n- the lesson titles in the dashboard's 'Recently completed' list (Dashboard.tsx:219-222);\n- 'The full glossary' at the end of every lesson (LessonLayout.astro, the #terms section);\n- 'Watch on YouTube', which the Video poster spec explicitly sets to --text-sm --blue, on every video lesson.\nDecision 6 names lesson titles in lists as ink 700.",
+    "Decision 6 (blue in five jobs only) is broken by the charts. --series-1 #0C61C4 fills the dashboard week bars (dashboard.css:40), the progress ring (dashboard.css:56) and the savings total line (tools.css:66), and an orange --series-2 draws the second savings line. That gives blue a sixth job Rajvir did not list, and adds an orange he has not seen. Decision 4 also says every grey derives from the ink, but --chart-grid #e2e5ea is not navy-derived (navy mixed 12% into white is #e2e3e8).",
+    "Decision 5 (one typeface for everything) is not met in three places:\n- --font-mono stays. The /cookies tables and the Privacy choices dialog, which opens from every page's footer, show key names such as lp:region in the system monospace (base.css:84 code rule).\n- The sync code uses mono too (signin.css:61), even though Atkinson Hyperlegible already tells 0 from O and 1 from l and I.\n- The share cards keep Bricolage until he approves a download, and that question is only asked at step 21, after step 7 has already rebuilt every card. Share cards are the surface most seen when a lesson is passed on (WhatsApp previews).",
+    "An Academy lesson card survives under another name. The dashboard's 'Next up' .dash-card holds a track label, an h3 lesson title, '10 min' and 'Open the lesson' inside a bordered box: a single-lesson course card. It also repeats the head's primary 'Continue: <title>' (Dashboard.tsx:128), which links to the same lesson (Dashboard.tsx:186-196). V5.1 only swaps its pill for span.dash-meta and keeps the box.",
+    "Decision 10 (nothing part-for-part from GOV.UK) is broken:\n- .fold is GOV.UK's details component recoloured: a bold underlined summary after a small CSS triangle that turns down when open, and a body with a 4px left border and 16/20px padding. govuk-details has the same triangle, the same underlined summary, a 5px left border and 15/20px padding.\n- The phone 'Menu' summary (16px bold 'Menu' plus an 8px CSS triangle that flips up when open) is govuk-header's menu button.\n- To get there, V5.1 deletes the site's own '+' and '−' disclosure markers (lesson.css:337-340, 378-379) and spreads the GOV.UK 4px left bar to .fold, .reveal-body, .review-context, the key idea and the document hints. Today the site has no left bars.",
+    "The owner checkpoint comes too late. His assistant took the ten decisions and they are first shown at step 21, after 20 steps and six parallel builders. Everything decisions 1, 2, 3, 5, 7 and 9 change is already visible after group A (tokens, font, base, header, footer, share cards). A 'no' at step 21 would mean redoing group B.",
+    "Step 2 fails the gate it claims to pass. It deletes the .section-dark block in tokens.css, while LEGACY maps --gold to #ebecf0. That turns '.report-text a { color: var(--gold) }' ([region]/index.astro:211) into #ebecf0 on white, 1.18:1, for the report link on /in (cybercrime.gov.in) and /us (reportfraud.ftc.gov). axe color-contrast therefore fails the a11y.spec part of the gate from step 2 until B1 rewrites the page in step 9.",
+    "The first-visit consent banner, not the lean lesson head, fills the phone's first screen. It is about 25rem (400px) at 360x800, half the viewport, as today. V5.1 treats shorter copy as 'optional' and asks about it only at step 21, so the first view of a lesson Rajvir gets on a phone keeps half its height under the banner."
+   ],
+   "fixes": [
+    "Crumb (steps 11 and 23):\n- p.crumb holds only the link '← <track title>'. Drop 'Lesson n of N'.\n- Move the minutes into the fold summary as a muted suffix: summary = span#lesson-steps-label 'In this lesson' + span.steps-meta '· 7 parts · 10 min'. Measured: 102 + 119 + about 15px of marker = about 237px, which fits the 288px column at 320. From 1024px the same meta sits under the rail label.\n- The EU title (306px) then fits on one line from 360 up.\n- design.spec (e) loops over one lesson per track (9) plus in/start-something/break-even-coaching-centre and eu/start-something/income-statement at 360x800 with lp:consent set. It asserts p.crumb height <= 48 and .lesson-after bottom <= 800.\n- If the two long heads still fail, trim spacing only (16px above the crumb, 12px under the h1, lede line-height 1.4), never copy.",
+    "VideoPlayer.tsx (step 13): give the Play button class={state === 'ask' ? 'btn btn-secondary video-play' : 'btn video-play'}. While the ask box shows, 'Choose, then play' (btn btn-sm) is then the only filled blue button in the frame. Add to design.spec: after one tap on Play with embeds not yet allowed, .video-frame contains exactly one '.btn:not(.btn-secondary)'.",
+    "Links, base.css (step 4) and the owning pages:\n- The ink rules become selectors, not a closed list. Kind (b), ink 700 with underline on hover: '.related li a, .dash-card .recent a'.\n- Kind (c), ink 700 always underlined: '.video-link, .glossary-link'.\n- LessonLayout gives 'The full glossary' anchor class='glossary-link'.\n- The Video poster spec changes 'Watch on YouTube, --text-sm --blue underlined' to '--text-sm --ink 700 underlined'.\n- Hooks .related and .related li and the link names stay, so tools-foundation and the tools/*.spec assertions are untouched.\n- design.spec (a) adds: on in/tools/break-even and first-payslip, no a outside p/li running text, .btn and .site-header computes color rgb(11, 74, 162).",
+    "Charts (steps 15 and 17), and BRAND_GUIDE §6b:\n- Week bars fill var(--muted). Today's bar fills var(--ink) and keeps the 700 label 'Today' (drop the 2px stroke).\n- The ring's done arc is var(--ink) on a --chart-grid track.\n- The savings chart draws the total as var(--ink) 2.5px solid and the contributed line as var(--muted) 2px stroke-dasharray 4 3, both labelled directly, with the table kept.\n- --chart-grid becomes #e2e3e8 (navy mixed 12% into white).\n- The --series-* tokens stay defined but unused, and §6b says today's charts are ink and muted, so blue keeps its five jobs.",
+    "Fonts:\n- Delete --font-mono from tokens.css.\n- base.css: code { font-family: var(--font-body); font-weight: 700; font-size: 0.95em; background: var(--surface); padding: 0 4px; border-radius: var(--radius) }.\n- signin.css:61: the sync code uses var(--font-body) 700, tabular-nums, letter-spacing 0.08em.\n- design.spec (b) asserts that the computed font-family of every element in main, the footer and dialog.consent-dialog starts with 'Atkinson Hyperlegible Next'.\n- Ask the Atkinson TTF download question in chat at step 1 (filename, source, size), not at step 21, so step 7 draws the cards in Atkinson on a yes. On a no, OWNER_TODO names the share cards as the one Bricolage exception and he sees one at the checkpoint.",
+    "Dashboard.tsx (step 17):\n- Delete the whole section aria-labelledby='next-h' ('Next up').\n- Under the head's 'Continue: <title>' button, add p.dash-meta '<edition> · <track> · <n> min' at --text-sm --muted.\n- 'Progress by track' takes the freed grid cell.\n- No test asserts 'Next up' or 'Open the lesson' (grep of tests/ is empty).",
+    "Disclosures (steps 4, 5, 12 and 13):\n- .fold summaries, 'In this lesson', Show me steps and practice hints keep the site's own '+' marker, and '−' when open (the existing ::before rules at lesson.css:337-340 and 378-379), in Atkinson 700 ink. No CSS triangles.\n- The .fold body gets a 1px --rule top and 12px padding-top, as .lesson-details has today, and no left border.\n- .reveal-body, .review-context and .doc-hint drop the 4px left bar for a 1px --rule top.\n- The 4px bar stays only on the blue current-item bars and on the key idea (ink).\n- The phone Menu summary reads 'Menu' followed by the same '+' marker ('−' when open). No triangle and no white bottom bar.",
+    "Add an owner checkpoint as a new step between step 7 and group B, and start group B only after his yes. Run npm run screenshots at 360 and 1280, including the dark-OS set, of '', in, in/learn/money-basics/first-payslip (rendered through LEGACY) and in/tools/break-even. Add the header with Menu open and with the edition list open, and dist/og/in.png. Ask him to confirm decisions 1, 2, 3, 5, 7 and 9, plus the TTF and banner-copy questions. Step 21 stays as the review of the finished pages.",
+    "Step 2:\n- Add src/pages/[region]/index.astro to its files and change line 211 to '.report-text a { color: inherit; }'. B1 rewrites the page later.\n- Add to step 2's proof: grep -rnE 'color:\\s*var\\(--(gold|gold-pale|highlight|accent-soft|bg-3)\\)' src prints nothing, so no LEGACY near-white is ever a text colour.",
+    "At the new checkpoint, show the 360x800 first-visit screenshot of first-payslip with the banner, which takes about 400px. Ask for the shorter consent wording then, not at step 21. Re-measure --banner-reserve only if he approves new copy. Until then today's copy ships, as V5.1 says."
+   ]
+  },
+  {
+   "lens": "Accessibility and engineering. I checked the plan against the repo at 0b7862f plus the working tree. What I did: recomputed every token pair with the WCAG formula; measured Atkinson text widths and consent-banner heights in headless Chromium using public/fonts/atkinson-latin.woff2; read every tests/e2e/*.spec.ts, including tests/e2e/tools/*; ran the step 22 grep gates against src.\n\nWhat held up:\n- Every contrast figure in the tokens table reproduces exactly: ink 17.88, ink-2 12.91, muted 8.24, blue 8.35/7.72/7.07, border 4.05/3.74/3.43, white on blue 8.35, inverse disc 8.35 and B 5.96, maskable navy 3.00, and all the more-contrast values.\n- The header fits. At 320 the wordmark at 20px is 123.6px and 'Menu' is 41px, so row 1 is about 279px, and it still fits with 1.4.12 text spacing. From 1024 the six labels as live today ('Tools', not 'Calculators') total 323px, so the one-row bar is about 800px of the 960px container.\n- The lean lesson first screen fits: on first-payslip at 360x800 the objectives end at y 720 to 744.\n- All 36 lessons are template v2, so the build-time throw is safe.\n- The protected legal pages use only classes the plan keeps.",
+   "refuted": true,
+   "problems": [
+    "P4 and the reviser's 'no step edits an existing assertion' are false. tests/e2e/a11y.spec.ts:96-122 ('a sticky header fits inside the scroll padding') asserts `if (width >= 1280) expect(stuckAnywhere, 'the header is sticky on a wide screen').toBe(true)`. Once step 5 makes the header static, this test fails in gate G at step 5 and every step after it.",
+    "The LEGACY migration causes a real 2.4.11 failure and fails gate G in steps 2 to 4. Step 2 maps --header-h to 0px, but the old Header.astro stays sticky from 1040px until step 5. Its .header-inner min-height becomes 0, so the header is about 68px (12+44+12). base.css scroll-padding-top becomes calc(0px + 32px) = 32px in step 2 and 24px in step 4. The a11y test requires h <= pad - 8, so it fails at 1040 and 1280. In use, jump targets and focused elements scroll under a 68px sticky header, and the tools bench (tools.css:20, top: calc(var(--header-h) + 16px) = 16px) and the dashboard side nav (dashboard.css:7) slide under it.",
+    "The fixed consent banner hides the end of the page from keyboard focus. That is a 2.4.11 failure, and it breaks P2 and the new /accessibility claim 'Nothing fixed on the screen hides the focused element'. scroll-padding-bottom only affects where an element scrolls into view; it cannot scroll past the end of the document. At maximum scroll, the last 245px (1024 and up) to 413px (320 wide) of the page stays under the bar. That region holds the footer's last Legal and Site rows (Terms, Accessibility, Disclaimer, 'Privacy choices') and the base row. P2's own 40-stop Tab walk on in/tools/break-even at 1280x720 reaches about 42 stops, lands on those rows and fails. consent.spec.ts already notes 'The first-visit banner sits over the footer'.",
+    "P3 measures --banner-reserve at the wrong widths. With v5.1 metrics (Atkinson, 16px text, 16px gutter, the h2 at --text-md, 44px .btn-sm row) the measured banner heights are: 413px (25.8rem) at 320, 316px (19.7rem) at 360 and 390, 292px at 414, and 244-245px from 640 to 1280, where the paragraph is capped at 32em. P3 measures at 360x800, 768x1024 and 1280x720, which gives about 20rem for the band below 640px. At 320x640 (fixed, because 640 >= 561) the banner starts at y 227 while the scroll-padding safe region runs to y 320. Controls between y 227 and 320 are neither scrolled nor visible. The spec's own 'about 25rem' figure matches 320, not the 360 it says to measure at.",
+    "The P2 design.spec Tab-walk cannot pass as written. It asserts that every focused rect.top is above the banner's rect.top, but the walk eventually focuses the banner's own buttons (Reject all, Accept all, Choose), whose top is always below the banner's top. The check also runs only at 360x800 and 1280x720, not at 320x640, where the reserve is short.",
+    "The table rule 'cells wrap, so the table never scrolls sideways at 320' works by breaking money figures in the middle. The loan table (LoanEmi.tsx:71-77) has four columns. With #principal=123456789, each money cell such as '₹13,87,52,300' measures 106px at 16px, so Year plus three money columns plus 16px padding need about 406px in a 288px column. With overflow-wrap: anywhere on td, Chromium splits them into fragments such as '₹13,87,5' / '2,300', which read as two numbers on a money-teaching site. The same guard on .result-figure-value, .explorer-figure and .figure splits long figures at a random digit instead of at a group separator. WCAG 1.4.10 already exempts data tables.",
+    "The disclosure script's rule 'focusout closes it when relatedTarget is outside it' loses clicks in Safari and in Firefox on macOS. In both, clicking a link does not focus it, so focus falls to body and relatedTarget is null, which the rule treats as outside. If focus was inside the menu (opened by keyboard, or a VoiceOver or Switch Control user), the details closes on mousedown, the link stops rendering, and the click never navigates. Both Playwright projects are Chromium (playwright.config.ts: 'Pixel 5' and 'Desktop Chrome'), and Chromium focuses links on click, so no test catches this.",
+    "The header copy in the spec is stale. The header spec, the Menu rows and keepsForTests all say 'Learn, Calculators, Glossary, Dashboard, About, Search'. The landed foundation renamed the link to 'Tools' (0b7862f; src/components/Header.astro:22 `{ label: 'Tools', ... }`). A builder following the spec text makes an unlisted copy change, which contradicts the reviser's 'There is no rename to Calculators'. The home page keepsForTests also says header 'Calculators' links to #editions; header 'Tools' actually links to #calculators on shared pages.",
+    "The step 22 gate can never pass. `grep -rn 'HandNote\\|Blobs\\|Doodle\\|TrackCard\\|hand.ts\\|stamp' src ...` matches 'timestamp' in src/lib/progress.ts:46, 'timestamps' in src/lib/activity.ts:4 and 'timestamp' in src/lib/tools/side-income-tax.ts:265, none of which step 22 touches. The gate never 'returns nothing'.",
+    "The spec gives text buttons no minimum height, which breaks a kept test and the plan's own P11 test.\n- '.remove-line is an ink underlined text button' (component spec and step 15) has no min-height, and step 15 'deletes every legacy var()' in the file that holds today's min-height: 44px (tools.css:81-82). tests/e2e/tools/pay-later-payday.spec.ts:229-235 asserts the 'Remove Plan n' buttons are at least 44px tall. That test is not listed in keepsForTests.\n- The footer's a.brand has no min-height in the Footer spec: Logo 32px plus a --text-lg line is about 32px tall. It fails the plan's own P11 check that every a in .site-footer is at least 44px tall.\n- '.showme-all' and the opened '.showme-more > summary' have no min-height either, although /accessibility promises 44px buttons.",
+    "P7's forced-colours switch is unreadable in the Windows dark contrast themes. The checked track is Highlight, the knob is ButtonText, and both have forced-color-adjust: none. In the High Contrast Black theme ButtonText is #FFFFFF and Highlight is #1AEBFF, so the knob is about 1.3:1 against the track. The P7 test checks only border-top-width, so it passes anyway.",
+    "Group B's parallel gates will test each other's builds. playwright.config.ts uses a fixed port (localhost:4321) with reuseExistingServer: !process.env.CI. Six worktrees running gate G at once will reuse whichever preview server started first, so a B2 'pass' can be B1's build. The project also sits in an iCloud-synced folder (playwright.config.ts:15-18), which already causes flaky 404s right after a build. Extra worktrees under ~/Desktop make that worse.",
+    "The white focus ring on the bar is mostly invisible.\n- Desktop nav links and the Menu summary are exactly var(--bar-h) tall. The 3px ring at 2px offset falls outside the bar: its top edge is above y=0 and clipped, and its bottom edge sits on the white page or edition row, white on white.\n- The Menu summary also uses inset-inline-end: 0 inside the container's padding box, so below 1024px it sits flush with the viewport's right edge and the ring's right side is off-screen. Only the left 3px line shows. This contradicts the width check's 16px right gutter and the header spec's '3px white outline at 2px offset on the bar'.\n- The skip link is about 50px tall at top 8px, so its ring's bottom edge reaches about 60px, below the 56px bar.",
+    "The new /accessibility sentence contradicts itself. It says 'a link inside a sentence is smaller, as WCAG allows, and every target is at least 24 by 24 pixels'. Inline links in 18px text are about 22px tall, and short ones ('1930', 'RBI') are under 24px wide. The 16px 'Watch on YouTube' link is about 21px tall and passes 2.5.8 only through the spacing exception.",
+    "'Nothing drops below 14px' is false for the SVG charts. The week chart (viewBox 280 wide, width 100%) renders about 238px wide at 320, so its 14px labels become about 11.9px. The savings chart (viewBox 320 wide) renders its labels at about 12.6px at 320.",
+    "Consent at small heights: @media (max-height: 560px) makes the banner static after the footer. At 200% zoom (640x400) and on landscape phones, a first-time reader never sees the question unless they scroll to the very end. docs/LEGAL_AND_PRIVACY.md says 'a banner asks on the first visit'.",
+    "The contrast parser (P14) is ambiguous against step 2. Step 2 lists ':root { color-scheme: light }' as its own bullet, separate from 'The v5.1 tokens'. If it is written as a separate first block, /^:root\\s*\\{/m reads only that block, and the hardened script throws on every token."
+   ],
+   "fixes": [
+    "Sticky-header test and the LEGACY window:\n- The LEGACY block keeps --header-h: 72px and --edition-h: 44px, not 0px.\n- Step 4 keeps `scroll-padding-top: calc(var(--header-h) + var(--space-6))` and `:target, :focus-visible { scroll-margin-top: calc(var(--header-h) + var(--space-6)) }`.\n- Step 5, which makes the header static, does three things in one commit: sets LEGACY --header-h to 0px, switches base.css to scroll-padding-top var(--space-5), and replaces tests/e2e/a11y.spec.ts:96-122.\n- The replacement test: at 900, 1040 and 1280, getComputedStyle(.site-header).position === 'static'; after tabbing to a main link, its rect.top >= 0.\n- The reviser note changes to 'one existing assertion changes: the sticky-header test in a11y.spec.ts, replaced in step 5'. Steps 2 and 4 run G only with this in place.",
+    "Keep the end of the page reachable while the banner is fixed. In consent.css, inside the same @media (min-height: 561px): `html:has(.consent-banner) body { padding-block-end: var(--banner-reserve) }`, next to the scroll-padding-bottom. Add a design.spec check: at 320x640, 360x800 and 1280x720, Tab to the footer's last link and 'Privacy choices', and assert rect.bottom <= banner.getBoundingClientRect().top.",
+    "Measure --banner-reserve at each band's narrowest width: 320, 640 and 1024, not 360, 768 and 1280. With today's copy that gives about 26rem, 15.3rem and 15.3rem. Add a guard test at 320x640, 360x800, 639x800, 640x800 and 1024x768 asserting parseFloat(getComputedStyle(html).scrollPaddingBottom) >= banner height. If the copy changes and the reserve falls short, the build fails instead of hiding focus.",
+    "Fix the P2 Tab-walk:\n- Skip any stop where document.activeElement.closest('.consent-banner') is set.\n- Assert 'not hidden' as rect.bottom > 0 && rect.top < bannerTop.\n- Walk until focus wraps back to the skip link, not a fixed 40 stops, so the footer is always covered.\n- Add 320x640 to the viewports.",
+    "Keep money figures whole:\n- `.table td.num, .table .numbers td { white-space: nowrap; overflow-wrap: normal }`. Keep overflow-wrap: anywhere only on th/td text and code inside `.prose .table`; that covers the protected /cookies tables, which hold words.\n- In the editable islands (LoanEmi, CompoundGrowth, CardMinimum and any other tool table), give .table-wrap `tabindex=\"0\" role=\"region\" aria-labelledby=<caption id>`. The table scrolls inside its wrap, which 1.4.10 allows for data tables; the document never scrolls sideways, so P6 still passes.\n- For figures, insert <wbr> after each group separator using Intl formatToParts, instead of overflow-wrap: anywhere.",
+    "Disclosure script: close on focusout only when the new focus is a real element outside the details: `details.addEventListener('focusout', (e) => { const t = e.relatedTarget; if (t instanceof Node && !details.contains(t)) details.open = false; })`. A null relatedTarget is left to the outside-click handler. Add a design.spec case: open the edition menu with Enter, then page.mouse.click() on 'Europe'. It must navigate.",
+    "Header copy: use 'Tools' everywhere in v5.1. That covers the header spec, the Menu panel rows, the desktop nav, keepsForTests ('nav[aria-label=Main] with the links Learn, Tools, Glossary, Dashboard, About, Search') and the home note ('header Learn links to #editions and Tools to #calculators on shared pages'). Recompute the 1024 width check with the real labels: nav text 323px + 80px gaps.",
+    "Step 22 gate: replace the grep with `grep -rnwE 'HandNote|Blobs|Doodle|TrackCard|stamp' src --include='*.astro' --include='*.ts' --include='*.tsx'` plus `grep -rn 'hand\\.ts\\|report\\.stamp\\|stamp:' src`. The -w flag stops 'timestamp' from matching.",
+    "Text-button heights:\n- Step 15: `.remove-line { min-height: var(--target); padding-inline: var(--space-2) }`, and add tests/e2e/tools/pay-later-payday.spec.ts 'the remove buttons … are at least 44px tall' to the tool page's keepsForTests.\n- Footer: `.site-footer .brand { min-height: var(--target) }`.\n- '.showme-all' and the open '.showme-more > summary': min-height var(--target).\n- Add .remove-line, .showme-all and .showme-more > summary to the P11 selector list.",
+    "Forced colours for the switch: `.switch:checked::after { background: HighlightText }` and `.switch:not(:checked)::after { background: ButtonText }`, with the unchecked track left to forced ButtonFace. The P7 test also asserts that the checked knob's computed background-color differs from the track's.",
+    "Group B gates:\n- Make the port configurable in playwright.config.ts: `const PORT = Number(process.env.PW_PORT ?? 4321)`, used in BASE, webServer.command (--port) and url.\n- Give each worktree its own PW_PORT (4321 + n) and set reuseExistingServer: false for them.\n- Create the worktrees outside the iCloud folder, for example under the scratchpad directory, with node_modules symlinked to the main checkout, never installed afresh.\n- Or run the B gates one after another.",
+    "Focus ring on the bar:\n- `.on-band:focus-visible, .on-band :focus-visible, .on-band-wide:focus-visible { outline-offset: -6px }`, so the white ring is drawn inside the control on the blue.\n- Or make the desktop nav links and the Menu summary min-height var(--target), centred in the bar, keeping the 4px current border at the bar's bottom through a separate span.\n- Place the Menu summary at inset-inline-end: var(--gutter).\n- Give the skip link top: var(--space-1) and padding 8px 16px, so its ring stays inside the 56px bar.",
+    "/accessibility wording: 'Buttons, menus and lists of links are at least 44 pixels tall. Links inside sentences are smaller, as WCAG allows; every other target is at least 24 by 24 pixels, or has enough space around it that a 24-pixel circle touches no other target.'",
+    "Charts: set each viewBox width to at most the chart's rendered width at 320 (about 238 user units for the week chart, about 280 for the savings chart) and scale up from there, or cap the SVG with `width: max(100%, <viewBox width>px)` inside a scrolling figure. Otherwise, limit the 'nothing below 14px' rule to HTML text in BRAND_GUIDE v4 §3.",
+    "Small heights: render the static banner first in main, not after the footer. Move the ConsentManager island to just after the skip link and keep it position: fixed only inside @media (min-height: 561px). Or, below 561px, keep it fixed with max-block-size: 50dvh and overflow: auto, with the three buttons placed first. Either way, a first-time reader at 640x400 sees the question.",
+    "Contrast script: state in step 2 that `color-scheme: light` sits inside the single token :root block. Have contrast-check.mjs and og-images.mjs merge every top-level `:root {` block before the 'LEGACY' comment, and throw if a checked token is missing after the merge.",
+    "Test coverage: add a WebKit project to playwright.config.ts for tests/e2e/design.spec.ts only (banner and focus, the disclosure clicks, scroll-padding). Installing WebKit is a download, so it needs Rajvir's yes; until then, list the check as manual on an iPhone in OWNER_TODO."
+   ]
+  }
+ ]
+}

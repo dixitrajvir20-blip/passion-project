@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { REGIONS, getRegion } from '../../../lib/regions';
-import { toolsFor } from '../../../lib/tools';
-import { lessonsFor } from '../../../lib/lessons';
+import { groupsFor, titleFor, toolMetaLine } from '../../../lib/tools';
+import { availableTools, drillFor } from '../../../lib/drills';
 
 export function getStaticPaths() {
   return REGIONS.map((r) => ({ params: { region: r.code } }));
@@ -13,14 +13,25 @@ const region = getRegion(code!);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const prefix = `${base}/${region.code}`;
 
-// "Spot the fake" is built from its lesson's situations, so it exists once that lesson does.
-const hasDrill = (await lessonsFor(region.code)).some((lesson) => lesson.data.explorable?.kind === 'drill');
-const tools = toolsFor(region.code).filter((tool) => tool.slug !== 'spot-the-fake' || hasDrill);
+// A drill is listed only where its bank exists, so no edition promises a drill it does not have.
+const available = await availableTools(region.code);
+const groups = groupsFor(region.code, available);
+const situations = new Map<string, number>();
+for (const tool of available.filter((t) => t.format === 'drill')) {
+  const drill = await drillFor(region.code, tool.slug);
+  if (drill) situations.set(tool.slug, drill.situations.length);
+}
+const hasDrill = situations.size > 0;
+
+const phrases = groups.map(({ group }) => group.phrase);
+const joined = phrases.length > 1 ? `${phrases.slice(0, -1).join(', ')} and ${phrases[phrases.length - 1]}` : phrases.join('');
+// "in the United States edition", not "for United States": the name has no article of its own.
+const description = `${available.length} free tools in the ${region.name} edition, grouped by moment: ${joined}. Nothing you type leaves your browser.`;
 ---
 
 <BaseLayout
   title={`Tools — Business Lab ${region.name}`}
-  description="Free calculators for break-even, budgeting, savings growth, side-hustle profit and loan repayments. Nothing you type leaves your browser."
+  description={description}
   region={region.code}
   regionSub="tools"
   path="tools"
@@ -28,31 +39,42 @@ const tools = toolsFor(region.code).filter((tool) => tool.slug !== 'spot-the-fak
   <section class="section">
     <div class="container">
       <div class="column">
-        <span class="eyebrow">{region.name} edition</span>
         <h1>Tools</h1>
         <p class="lede">
-          Calculators that answer one question from your own numbers{hasDrill ? ', and a practice drill' : ''}.
-          Nothing you type is sent anywhere: it all runs in your browser.
+          Calculators that answer one question from your own numbers{hasDrill ? ', and drills of made-up screens' : ''}.
+          Nothing you type is sent anywhere.
         </p>
-      </div>
+        <nav class="tool-jumps" aria-label="Tool groups">
+          <ul class="list-plain">
+            {groups.map(({ group }) => <li><a href={`#${group.id}`}>{group.title}</a></li>)}
+          </ul>
+        </nav>
 
-      <ul class="index-list tool-index">
-        {tools.map((tool) => (
-          <li>
-            <a class="index-row" href={`${prefix}/tools/${tool.slug}`}>
-              <h2 class="index-title">{tool.answers}</h2>
-              <span class="index-sub">{tool.title}</span>
-              <span class="index-go">Open</span>
-            </a>
-          </li>
+        {groups.map(({ group, tools }) => (
+          <section class="tool-group" id={group.id} aria-labelledby={`${group.id}-h`}>
+            <h2 id={`${group.id}-h`}>{group.title}</h2>
+            <ul class="index-list tool-index">
+              {tools.map((tool) => (
+                <li>
+                  <a class="index-row" href={`${prefix}/tools/${tool.slug}`}>
+                    <h3 class="index-title">{tool.answers}</h3>
+                    <span class="index-sub">{titleFor(tool, region.code)}</span>
+                    <span class="index-meta">{toolMetaLine(tool, situations.get(tool.slug))}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
         ))}
-      </ul>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .lede { margin-bottom: var(--space-7); }
-  .tool-index { max-width: var(--column); }
-  .tool-index .index-title { margin: 0; }
+  /* One 640 column at every width. The rows are base.css's ruled .index-list, and the jump links are
+     its standalone links (ink 700, always underlined, 44px tall); the page adds only their spacing. */
+  .tool-jumps ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); margin: var(--space-5) 0 0; }
+  .tool-group { margin-top: var(--space-7); }
+  .tool-group h2 { margin: 0 0 var(--space-4); }
 </style>

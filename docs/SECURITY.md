@@ -40,8 +40,8 @@ Likelihood × Impact, and the phase each mitigation belongs to: **Now** / **Acco
 | 7 | Clickjacking once a session exists | L→M | M | `frame-ancestors 'none'` — needs a header host; ship at accounts launch | Accounts | Planned |
 | 8 | No HSTS on the custom domain → first-visit downgrade | L | M | "Enforce HTTPS" on Pages now; HSTS header at the header-capable host | Accounts | Planned |
 | 9 | localStorage misused for anything sensitive | M | M | Nothing personal in localStorage; documented keys only (`/cookies`); treat stored values as untrusted input on read. `lp:activity` (seconds per calendar day, consent-gated, no timestamps) is validated by shape like the rest | Now | Done |
-| 10 | Open redirect / reverse tabnabbing | M | M | No redirect from URL/localStorage values; every external link `rel="noopener noreferrer"` | Now | Done |
-| 11 | Prototype pollution / DOM clobbering via query or storage | L | M | JSON parses are validated by shape (`isProgress`, `readConsent`); no merge of untrusted keys into objects | Now | Done |
+| 10 | Open redirect / reverse tabnabbing; figures leaking through a shared link | M | M | No redirect from URL/localStorage values; every external link `rel="noopener noreferrer"`. Calculator links carry inputs in the `#` fragment, which browsers never send to a server; the fragment is read once and removed from the address bar (an old `?query` link still opens, and its query is removed the same way once read); the page tells the reader that anyone they send it to sees the numbers | Now | Done |
+| 11 | Prototype pollution / DOM clobbering via query, fragment or storage | L | M | JSON parses are validated by shape (`isProgress`, `readConsent`); no merge of untrusted keys into objects. Link values (`src/lib/link-params.ts`): only the calculator's own keys are read, each value at most 24 characters, a select only one of its listed options, and repeated rows (`rows`, `lines`, `others`, `plans`) only through their own validating codecs (at most 2,000 characters) | Now | Done |
 | 12 | Third-party embed tracks minors / is tampered | M | M | No third-party scripts or fonts; YouTube only as click-to-load `youtube-nocookie`, behind consent; SRI + `crossorigin` on any future CDN asset | Now/Later | Design in place |
 | 13 | Magic link consumed by mail scanners, or phished | H(ops)/M(sec) | M | 6-digit code is primary (scanner-proof); link is secondary and opens a "Continue" page (POST to consume); tokens CSPRNG, hashed, ≤10 min, single use | Accounts | Designed |
 | 14 | Account-enumeration / sign-up spam / email-send abuse | H | M | Identical responses; per-email 60s cooldown + daily cap; per-IP limits; Cloudflare Turnstile after a threshold | Accounts | Designed |
@@ -84,6 +84,20 @@ the meta CSP on 21 September 2026: that host and no other, and only the privacy-
 The iframe is created by `src/islands/VideoPlayer.tsx` after a tap on play and a yes to the
 `embeds` consent category; the poster is drawn in tokens (`img-src` still allows nothing from a
 third party). `frame-ancestors` remains unavailable on GitHub Pages as before.
+
+## Shared calculator links
+
+Copy link on a calculator writes the reader's figures after the `#` (`linkFor` in
+`src/lib/link-params.ts`), never in the query string, so they are not sent to GitHub Pages, a
+future host or any log. On load, `linkSnapshot()` in `src/islands/tool-kit.tsx` reads the
+fragment once and, when it carries figures (it contains `=`), removes it from the address bar with
+`history.replaceState`; a bare `#main` from the skip link is left alone. The fragment wins over the
+query key by key, and a key dropped from the fragment for being too long or not allowed never falls
+back to the query. Every value is untrusted input: unknown keys are ignored, each value is at most
+24 characters, select values must be on the island's allow-list, and the repeated-row keys go
+through their own decoders with their own caps. Limits worth knowing: a reload after clearing
+shows the default figures, some browsers keep the original address in global history, and old
+`?query` links stay in the address bar by design.
 
 ## Search and the CSP
 
